@@ -1739,20 +1739,20 @@ var vGridGenerator = function (defaultConfig, Mustache, element, parentCtx, Simp
 
     /*------------------------------------------------*/
     //adds sortable headers
+
     if (_private.isSortableHeader) {
-      _private.sortableCtx = new SimpleGridSortable(_private.htmlCache.header.firstChild.firstChild, function () {
+      _private.sortableCtx = new SimpleGridSortable(_private.htmlCache.header.firstChild.firstChild, function (oldIndex, newIndex) {
         var children = _private.htmlCache.header.firstChild.firstChild.children;
 
-        var oldIndex = null;
-        var newIndex = null;
+        
 
-        for (var i = 0; i < children.length; i++) {
-          var currentIndex = parseInt(children[i].getAttribute("column-no"));
-          if (currentIndex !== i && oldIndex === null) {
-            oldIndex = currentIndex;
-            newIndex = i;
-          }
-        }
+        // for (var i = 0; i < children.length; i++) {
+        //   var currentIndex = parseInt(children[i].getAttribute("column-no"));
+        //   if (currentIndex !== i && oldIndex === null) {
+        //     oldIndex = currentIndex;
+        //     newIndex = i;
+        //   }
+        // }
 
         var x;
         x = _private.attributeArray[oldIndex];
@@ -1777,10 +1777,11 @@ var vGridGenerator = function (defaultConfig, Mustache, element, parentCtx, Simp
         thisGrid.rebuildColumns();
         sortable = false;
 
-      }, function () {
+      }, function (n) {
+        console.log(n)
         //on end
         sortable = true;
-      },function(){
+      },function(n){
         //on cancel
         sortable = false;
       });

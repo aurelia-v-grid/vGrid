@@ -13,6 +13,8 @@ export class VGridSortable {
     this.internalTimeout;
     this.dragEl;
     this.nextEl;
+    this.oldIndex;
+    this.newIndex;
     this.rootEl = rootEl;
     this.onUpdate = onUpdate;
     this.onStart = onStart;
@@ -47,6 +49,7 @@ export class VGridSortable {
   onDragStart(evt) {
 
     this.dragEl = evt.target;
+    this.oldIndex = evt.target.getAttribute("column-no");
     this.onStart();
     this.nextEl = this.dragEl.nextSibling;
 
@@ -89,9 +92,9 @@ export class VGridSortable {
     evt.dataTransfer.dropEffect = 'move';
 
     var target = evt.target.offsetParent;
-
-    if (target && target !== this.dragEl && target.nodeName == 'DIV' && target.classList.contains("simpleGrid-row-cell-header")) {
-
+    //todo: create cant have hard coded strings here in classess
+    if (target && target !== this.dragEl && target.nodeName == 'DIV' && target.getAttribute("draggable")==="true") {
+      this.newIndex = target.getAttribute("column-no");
       var rect = target.getBoundingClientRect();
       var width = rect.right - rect.left;
       var height = rect.bottom - rect.top;
@@ -118,7 +121,7 @@ export class VGridSortable {
     this.rootEl.removeEventListener('dragend', this.onDragEnd, false);
 
     if (this.nextEl !== this.dragEl.nextSibling) {
-      this.onUpdate(this.dragEl);
+      this.onUpdate(parseInt(this.oldIndex), parseInt(this.newIndex));
     } else{
       this.onCancel();
     }
