@@ -1,0 +1,84 @@
+<template>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <require from="bootstrap/css/bootstrap.css"></require>
+    <require from="vGrid/v-grid.css"></require>
+    <require from="vGrid/v-grid"></require>
+
+    <div class="page-host">
+        <div class="row">
+            <div class="col-md-offset-3" style="margin-top:10px;">
+            <ul>
+                <li><strong>Under development- early demo</strong></li>
+                <li><strong>Demo v.0.25</strong></li>
+                <li><a href="https://github.com/vegarringdal/vGrid">open at github</a></li>
+            </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <v-grid
+                        style="position:relative;margin-left:25px;width:%; height:500px"
+                        row-height="25"
+                        header-height="50"
+                        resizable-headers="true"
+                        sortable-headers="true"
+                        sort-on-header-click="true"
+                        header-filter="true"
+                        header-filter-onkeydown="true"
+                        header-filter-not-to="phone"
+                        header-filter-top="true"
+                        multi-select="true"
+                        config="current-entity.bind:myCurrentEntity; collection.bind:myCollection ">
+                    <v-grid-row>
+                        <v-grid-col col-width="150" attribute="index" header="Index" default-filter=">=" read-only="true"></v-grid-col>
+                        <v-grid-col col-width="150" attribute="name" header="Name" default-filter="*="></v-grid-col>
+                        <v-grid-col col-width="160" attribute="country" header="Country" default-filter="="></v-grid-col>
+                        <v-grid-col col-width="150" attribute="email" header="Email" default-filter="*"></v-grid-col>
+                        <v-grid-col col-width="188" attribute="phone" header="Phone" default-filter="!*"></v-grid-col>
+                        <v-grid-col col-width="160" attribute="color" header="Color" default-filter="=*"></v-grid-col>
+                    </v-grid-row>
+                </v-grid>
+
+
+                <form class="form-horizontal" style="width:500px;margin-left:25px">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" value.bind="myCurrentEntity.name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">country</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" value.bind="myCurrentEntity.country">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">phone</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" value.bind="myCurrentEntity.phone">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2">
+                <li><strong>Test basic observables logic</strong></li>
+                <button class="btn btn-block" click.delegate="replaceBtn(10000)">replace ->10000 new "[x,x,x]"</button>
+                <button class="btn btn-block" click.delegate="replaceBtn(10)">replace ->10 new "[x,x,x]"</button>
+                <button class="btn btn-block" click.delegate="removeAllBtn(0)">remove all "[]"</button>
+                <button class="btn btn-block" click.delegate="addOneBtn()">add 1 "push()"</button>
+                <button class="btn btn-block" click.delegate="addBtn(5)">add 5 "push()"</button>
+                <button class="btn btn-block" click.delegate="addBtn(10)">add 10 "push()"</button>
+                <button class="btn btn-block" click.delegate="addBtn(100)">add 100 "push()"</button>
+                <button class="btn btn-block" click.delegate="addBtn(1000)">add 1000 "push()"</button>
+                <button class="btn btn-block" click.delegate="addBtn(10000)">add 10000 "push()"</button>
+                <button class="btn btn-block" click.delegate="removeLastBtn()">remove last "pop()"</button>
+                <button class="btn btn-block" click.delegate="removeFirstBtn()">remove first "splice(0,1)"</button>
+                <button class="btn btn-block" click.delegate="removeSecondBtn()">remove second "splice(0,1)"</button>
+            </div>
+        </div>
+    </div>
+
+
+</template>
