@@ -22,7 +22,8 @@ var vGridGenerator = function (defaultConfig, Mustache, element, parentCtx, Simp
       dataScrollDelay: options.dataScrollDelay || 200,                      //delay when doing large scroll before updating
       headerArray: options.headerArray || [],                               // header labels
       attributeArray: options.attributeArray || [],                         // attributes for cell and headers
-      columnWidthArray: options.columnWidthArray || [],                     //
+      columnWidthArray: options.columnWidthArray || [],                     // width of all columns
+      colStyleArray : options.colStyleArray || [],                          // text that will be put in column style tag
       isSortableHeader: options.isSortableHeader || false,                  //adds sortable headers
       sortOnHeaderClick: options.sortOnHeaderClick || false,                //enable sort event on header click
       isResizableHeaders: options.isResizableHeaders || false,              //adds resizable headers
@@ -342,7 +343,7 @@ var vGridGenerator = function (defaultConfig, Mustache, element, parentCtx, Simp
         rowTemplate = _private.configFunctions.onRowMarkupCreate(attributeNamesArray);
       } else {
         for (var i = 0; i < attributeNamesArray.length; i++) {
-          rowTemplate = rowTemplate + '<div><div class="' + _private.css.cellContent + '" ' + _private.atts.dataAttribute + '="' + attributeNamesArray[i] + '">{{' + attributeNamesArray[i] + '}}</div></div>';
+          rowTemplate = rowTemplate + '<div><div class="' + _private.css.cellContent + '" style="'+_private.colStyleArray[i]+' " ' + _private.atts.dataAttribute + '="' + attributeNamesArray[i] + '">{{' + attributeNamesArray[i] + '}}</div></div>';
         }
       }
     }

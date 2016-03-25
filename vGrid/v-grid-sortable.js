@@ -92,7 +92,6 @@ export class VGridSortable {
     evt.dataTransfer.dropEffect = 'move';
 
     var target = evt.target.offsetParent;
-    //todo: create cant have hard coded strings here in classess
     if (target && target !== this.dragEl && target.nodeName == 'DIV' && target.getAttribute("draggable")==="true") {
       this.newIndex = target.getAttribute("column-no");
       var rect = target.getBoundingClientRect();
