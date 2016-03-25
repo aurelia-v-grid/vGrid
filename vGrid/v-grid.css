@@ -339,8 +339,12 @@ z-index: 900;
   content: "\e155";
 }
 
+.vGrid-glyphicon-sort-desc{
+  transform: rotateX(180deg);
+}
+
 .vGrid-glyphicon-sort-desc:after {
-  content: "\e156";
+  content: "\e155";
 }
 
 
