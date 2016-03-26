@@ -87,7 +87,7 @@ export class VGrid {
 
 
     });
-    this.collectionSubscription = collectionSubscription;
+    this.collectionSubscription = this.__observers__.collection;
 
   }
 
@@ -175,7 +175,7 @@ export class VGrid {
           }
 
           //get removed ones and get rid of them
-         if (result.removed.length > 0) {
+          if (result.removed.length > 0) {
 
             //build array of new ones
             var toRemove = [];
@@ -632,8 +632,8 @@ export class VGrid {
    * unsubscribe property and array observers
    ***************************************************************************************/
   detached() {
-    disableObservablesAttributes();
-    disableObservablesCollection();
-    disableObservablesArray();
+    this.disableObservablesAttributes();
+    this.disableObservablesCollection();
+    this.disableObservablesArray();
   }
 }

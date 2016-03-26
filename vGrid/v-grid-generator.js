@@ -1772,6 +1772,12 @@ var vGridGenerator = function (defaultConfig, Mustache, element, parentCtx, Simp
         _private.columnWidthArray.splice(oldIndex, 1);
         _private.columnWidthArray.splice(newIndex, 0, x);
 
+        x = _private.colStyleArray[oldIndex];
+        _private.colStyleArray.splice(oldIndex, 1);
+        _private.colStyleArray.splice(newIndex, 0, x);
+
+
+
 
         _private.htmlCache.rowTemplate = null; //reset template and fill data
         cacheRowTemplate();
