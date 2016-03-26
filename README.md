@@ -5,7 +5,7 @@ vGrid - Custom Element for Aurelia
 [Demo](http://vegarringdal.github.io/vGrid/demo001/)
 
 ##### Using som icons/classes from bootstrap:
-* Encluded used classes/icons, no need to install bootstrap for it to work, huge thanks to http://glyphicons.com/ for giving bootstrap those amazing icons
+* Included used classes/icons, no need to install bootstrap for it to work, huge thanks to http://glyphicons.com/ for giving bootstrap those amazing icons
 
 
 ##### How to use: (no plugin yet):
