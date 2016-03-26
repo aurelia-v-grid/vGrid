@@ -33,7 +33,7 @@ export class VGrid {
     this.currentRow = -1;
     this.currentRowEntity = null;
     this.filterRow = -1;
-    this.__sgKey = 0;
+    this.sgkey = "sgKey" + Math.random() * 100;
     this.gridContextMissing = false; //to know if they have binded the context or not
     this.subscriptionsAttributes = []; //here I keep subscriptions to observer on attributes
     this.collectionSubscription = null; //here I keep subscriptions to observer on collection
@@ -61,11 +61,7 @@ export class VGrid {
       //clone array
       //key will be set in both collection and internal since with slice we get a refrence
       this.collectionFiltered = this.collection.slice(0);
-      this.__sgKey = 0; //reset it
-      this.collection.forEach(function (row) {
-        row.__sgKey = this.__sgKey;
-        this.__sgKey++;
-      }.bind(this));
+      this.resetKeys()
 
 
       //reset fileter/and collection/selection. (should I have option to check is they want to set something?)
@@ -81,9 +77,9 @@ export class VGrid {
           this.currentEntity[k] = undefined;
         }
       }
-      setTimeout(function () {
+      setTimeout(() => {
         this.rowEditMode = false
-      }.bind(this), 2000);
+      }, 2000);
       this.currentRow = -1;
 
       //set array observer
@@ -98,21 +94,45 @@ export class VGrid {
 
 
 
+
+  /***************************************************************************************
+   * resets internal key on collection/internal collection
+   ***************************************************************************************/
+  resetKeys() {
+    let key = 0; //reset it
+    this.collection.forEach((row) => {
+      row[this.sgkey] = key;
+      key++;
+    });
+  }
+
+
+
+
+  /***************************************************************************************
+   * gets the keys from the selection
+   ***************************************************************************************/
   getSelectionKeys() {
     var curSel = this.gridContext.ctx.selection.getSelectedRows();
     var selKeys = [];
     var collectionFiltered = this.collectionFiltered;
-    curSel.forEach(function (x) {
-      selKeys.push(collectionFiltered[x].__sgKey)
+    curSel.forEach((x) => {
+      selKeys.push(collectionFiltered[x][this.sgkey])
     });
     return selKeys;
   }
 
+
+
+
+  /***************************************************************************************
+   * sets selection from keys
+   ***************************************************************************************/
   setSelectionFromKeys(selKeys) {
     var newSelection = [];
     var count = 0;
-    this.collectionFiltered.forEach(function (x) {
-      if (selKeys.indexOf(x.__sgKey) !== -1) {
+    this.collectionFiltered.forEach((x) => {
+      if (selKeys.indexOf(x[this.sgkey]) !== -1) {
         newSelection.push(count);
       }
       count++;
@@ -122,13 +142,15 @@ export class VGrid {
 
 
 
+
+
   /***************************************************************************************
    * enable attributes observables, like collection.push/pop/slice, etc etc
    ***************************************************************************************/
   enableObservablesArray() {
 
     let arrayObserver = this.observerLocator.getArrayObserver(this.collection);
-    arrayObserver.subscribe(function (changes) {
+    arrayObserver.subscribe((changes) => {
 
       var result = changes[0];
       var colFiltered = this.collectionFiltered;
@@ -145,11 +167,11 @@ export class VGrid {
         try {
           //if anyone is added, then lets add them
           if (result.addedCount > 0) {
-            col.forEach(function (x) {
-              if (x.__sgKey === undefined) {
+            col.forEach((x) => {
+              if (x[this.sgkey] === undefined) {
                 colFiltered.push(x)
               }
-            }.bind(this));
+            });
           }
 
           //get removed ones and get rid of them
@@ -157,17 +179,17 @@ export class VGrid {
 
             //build array of new ones
             var toRemove = [];
-            result.removed.forEach(function (x) {
-              toRemove.push(x.__sgKey);
+            result.removed.forEach((x) => {
+              toRemove.push(x[this.sgkey]);
             });
 
             //do I really need to loop them?
-            colFiltered.forEach(function (x, index, object) {
-              if (toRemove.indexOf(x.__sgKey) !== -1) {
+            colFiltered.forEach((x, index, object) => {
+              if (toRemove.indexOf(x[this.sgkey]) !== -1) {
                 object.splice(index, 1);
-                var selKey = selKeys.indexOf(x.__sgKey);
+                var selKey = selKeys.indexOf(x[this.sgkey]);
                 //also remove selection key
-                if (selKeys.indexOf(x.__sgKey) !== -1) {
+                if (selKeys.indexOf(x[this.sgkey]) !== -1) {
                   selKeys.splice(selKey, 1)
                 }
               }
@@ -177,27 +199,17 @@ export class VGrid {
           //set the correct selection
           this.setSelectionFromKeys(selKeys);
 
-
-
-          //reset index
-          this.__sgKey = 0;
-          col.forEach(function (row) {
-            row.__sgKey = this.__sgKey;
-            this.__sgKey++;
-          }.bind(this));
-
-
-
-
-          //remove selection
-          // this.gridContext.selection.reset();
+          //reset the keys
+          this.resetKeys();
 
           //update grid
           grid.collectionChange(true);
+
         } catch (e) {
+          console.error("error, should not happend anymore")
         }
       }
-    }.bind(this));
+    });
     this.subscriptionsArray = arrayObserver
   }
 
@@ -210,19 +222,18 @@ export class VGrid {
    ***************************************************************************************/
   enableObservablesAttributes() {
 
-    this.gridOptions.attributeArray.forEach(function (property) {
-      let propertyObserver = this.observerLocator.getObserver(this.currentEntity, property)
-      propertyObserver.subscribe(function (newValue, oldValue) {
+    this.gridOptions.attributeArray.forEach((property) => {
+      let propertyObserver = this.observerLocator.getObserver(this.currentEntity, property);
+      propertyObserver.subscribe((newValue, oldValue) => {
         if (newValue !== oldValue) {
           if (!this.rowEditMode) {
             this.currentRowEntity[property] = newValue;
-            //todo: do I want to tag it ? this way user can get what rows are changed
             this.gridContext.ctx.updateRow(this.filterRow);
           }
         }
-      }.bind(this));
+      });
       this.subscriptionsAttributes.push(propertyObserver)
-    }.bind(this));
+    });
   }
 
 
@@ -246,11 +257,9 @@ export class VGrid {
 
     //clone collection and add key index, so we know it.
     this.collectionFiltered = this.collection.slice(0);
-    this.__sgKey = 0; //reset it
-    this.collection.forEach(function (row) {
-      row.__sgKey = this.__sgKey;
-      this.__sgKey++;
-    }.bind(this));
+
+    //resets the keys
+    this.resetKeys();
 
   }
 
@@ -339,9 +348,9 @@ export class VGrid {
       gridOptions.columnWidthArrayOverride = true;
 
       //this gets called when its building row
-      gridOptions.onRowMarkupCreate = function () {
+      gridOptions.onRowMarkupCreate = () => {
         return this.rowData.innerHTML;
-      }.bind(this);
+      };
 
       gridOptions.attributeArray = this.element.getAttribute("attibutes-used").split(",")
     } else {
@@ -410,7 +419,7 @@ export class VGrid {
      * This is called when grid runs filter
      ***************************************************************************************/
     if (gridOptions.addFilter) {
-      gridOptions.onFilterRun = function (filterObj) {
+      gridOptions.onFilterRun = (filterObj) => {
 
         //get sel keys
         var selKeys = this.getSelectionKeys();
@@ -426,11 +435,11 @@ export class VGrid {
             this.currentEntity[k] = undefined;
           }
         }
-        setTimeout(function () {
+        setTimeout(() => {
           this.rowEditMode = false
-        }.bind(this), 500);
+        }, 500);
 
-      }.bind(this)
+      }
     }
 
 
@@ -441,9 +450,9 @@ export class VGrid {
      * grid asks for the filter name from attibute
      ***************************************************************************************/
 
-    gridOptions.getFilterName = function (name) {
+    gridOptions.getFilterName = (name) => {
       return this.vGridFilter.getNameOfFilter(name)
-    }.bind(this);
+    };
 
 
 
@@ -453,7 +462,7 @@ export class VGrid {
      * This just sets data from array,
      * Use {} if you want markup of columns, or undefined for total blank rows
      ***************************************************************************************/
-    gridOptions.getDataElement =  function (row, isDown, isLargeScroll, callback) {
+    gridOptions.getDataElement =  (row, isDown, isLargeScroll, callback) => {
       if(this.gridContext.onRowDraw){
         //if user have added this then we call it so they can edit the row data before we display it
         this.gridContext.onRowDraw(this.collectionFiltered[row]);
@@ -461,7 +470,7 @@ export class VGrid {
       }else {
         callback(this.collectionFiltered[row]);
       }
-    }.bind(this);
+    };
 
 
 
@@ -473,7 +482,7 @@ export class VGrid {
      * This calls the order by function
      * Use {} if you want markup of columns, or undefined for total blank rows
      ***************************************************************************************/
-    gridOptions.onOrderBy = function (event, setheaders) {
+    gridOptions.onOrderBy = (event, setheaders) => {
 
       //get clicked
       var attribute = event.target.getAttribute("v-grid-data-attribute");
@@ -503,11 +512,11 @@ export class VGrid {
             this.currentEntity[k] = undefined;
           }
         }
-        setTimeout(function () {
+        setTimeout(() => {
           this.rowEditMode = false
-        }.bind(this), 500);
+        }, 500);
       }
-    }.bind(this);
+    };
 
 
 
@@ -518,7 +527,7 @@ export class VGrid {
      * Listen for click on rows,
      * Snd set current entity, and also allow edit of cell
      ***************************************************************************************/
-    gridOptions.onRowClick =  function (event, row, cellEditHelper) {
+    gridOptions.clickHandler =  (event, row, cellEditHelper) => {
 
       let isDoubleClick = (event.type === "dblclick");
       let attribute = event.target.getAttribute("v-grid-data-attribute");
@@ -563,7 +572,7 @@ export class VGrid {
         }.bind(this), 500);
 
       }
-    }.bind(this);
+    };
 
 
 
@@ -573,14 +582,14 @@ export class VGrid {
      * Just for knowing length,
      * Its this you will need to add for server source/paging with endless scrolling
      ***************************************************************************************/
-    gridOptions.getSourceLength =  function () {
+    gridOptions.getSourceLength =  () =>  {
       if (gridOptions.addFilter) {
         return this.collectionFiltered.length
       } else {
         return this.collection.length
       }
 
-    }.bind(this);
+    };
 
 
 
@@ -588,10 +597,10 @@ export class VGrid {
 
 
     this.gridOptions = gridOptions;
-    //set abservables
+
+    //set observables
     this.enableObservablesCollection();
     this.enableObservablesArray();
-
     this.enableObservablesAttributes();
 
 
@@ -602,16 +611,16 @@ export class VGrid {
     this.gridContext.ctx = new this.vGridGenerator(gridOptions, this.vGridInterpolate, this.element, this.$parent, VGridSortable);
 
     //helpers
-    this.gridContext.ctx.getSelectionKeys = function(){
+    this.gridContext.ctx.getSelectionKeys = function () {
       //returns the row number in parent collection
       return this.getSelectionKeys();
-    }.bind(this);
+    }.bind(this.$parent);
 
 
     this.gridContext.ctx.setSelectionFromKeys = function(x){
       //hightlights the rows that is visable in filtered collection from the
       this.setSelectionFromKeys(x);
-    }.bind(this);
+    }.bind(this.$parent);
 
 
 
