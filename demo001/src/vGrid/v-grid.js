@@ -33,7 +33,7 @@ export class VGrid {
     this.currentRow = -1;
     this.currentRowEntity = null;
     this.filterRow = -1;
-    this.__sgKey = 0;
+    this.sgkey = "sgKey" + Math.random() * 100;
     this.gridContextMissing = false; //to know if they have binded the context or not
     this.subscriptionsAttributes = []; //here I keep subscriptions to observer on attributes
     this.collectionSubscription = null; //here I keep subscriptions to observer on collection
@@ -61,18 +61,14 @@ export class VGrid {
       //clone array
       //key will be set in both collection and internal since with slice we get a refrence
       this.collectionFiltered = this.collection.slice(0);
-      this.__sgKey = 0; //reset it
-      this.collection.forEach(function (row) {
-        row.__sgKey = this.__sgKey;
-        this.__sgKey++;
-      }.bind(this));
+      this.resetKeys()
 
 
       //reset fileter/and collection/selection. (should I have option to check is they want to set something?)
       this.vGridSort.reset();
-      this.gridContext.clearHeaderFilter();
-      this.gridContext.selection.reset();
-      this.gridContext.collectionChange();
+      this.gridContext.ctx.clearHeaderFilter();
+      this.gridContext.ctx.selection.reset();
+      this.gridContext.ctx.collectionChange();
 
       //reset
       this.rowEditMode = true;
@@ -81,9 +77,9 @@ export class VGrid {
           this.currentEntity[k] = undefined;
         }
       }
-      setTimeout(function () {
+      setTimeout(() => {
         this.rowEditMode = false
-      }.bind(this), 2000);
+      }, 2000);
       this.currentRow = -1;
 
       //set array observer
@@ -98,27 +94,53 @@ export class VGrid {
 
 
 
-  getSelectionKeys (){
-    var curSel = this.gridContext.selection.getSelectedRows();
-    var selKeys =[];
+
+  /***************************************************************************************
+   * resets internal key on collection/internal collection
+   ***************************************************************************************/
+  resetKeys() {
+    let key = 0; //reset it
+    this.collection.forEach((row) => {
+      row[this.sgkey] = key;
+      key++;
+    });
+  }
+
+
+
+
+  /***************************************************************************************
+   * gets the keys from the selection
+   ***************************************************************************************/
+  getSelectionKeys() {
+    var curSel = this.gridContext.ctx.selection.getSelectedRows();
+    var selKeys = [];
     var collectionFiltered = this.collectionFiltered;
-    curSel.forEach(function(x){
-      selKeys.push(collectionFiltered[x].__sgKey)
+    curSel.forEach((x) => {
+      selKeys.push(collectionFiltered[x][this.sgkey])
     });
     return selKeys;
   }
 
-  setSelectionFromkeys(selKeys){
-    var newSelection =[];
+
+
+
+  /***************************************************************************************
+   * sets selection from keys
+   ***************************************************************************************/
+  setSelectionFromKeys(selKeys) {
+    var newSelection = [];
     var count = 0;
-    this.collectionFiltered.forEach(function(x){
-      if(selKeys.indexOf(x.__sgKey) !== -1){
+    this.collectionFiltered.forEach((x) => {
+      if (selKeys.indexOf(x[this.sgkey]) !== -1) {
         newSelection.push(count);
       }
       count++;
     });
-    this.gridContext.selection.setSelectedRows(newSelection);
+    this.gridContext.ctx.selection.setSelectedRows(newSelection);
   }
+
+
 
 
 
@@ -128,28 +150,28 @@ export class VGrid {
   enableObservablesArray() {
 
     let arrayObserver = this.observerLocator.getArrayObserver(this.collection);
-    arrayObserver.subscribe(function (changes) {
-      
+    arrayObserver.subscribe((changes) => {
+
       var result = changes[0];
       var colFiltered = this.collectionFiltered;
       var col = this.collection;
-      var grid = this.gridContext;
+      var grid = this.gridContext.ctx;
 
       //get selection and their keys
       var selKeys = this.getSelectionKeys();
 
-      
+
       //todo, improve so it loops the result set...
       //so atm there is a limit what you can do at once..
       if (result) {
         try {
           //if anyone is added, then lets add them
           if (result.addedCount > 0) {
-            col.forEach(function (x) {
-              if (x.__sgKey === undefined) {
+            col.forEach((x) => {
+              if (x[this.sgkey] === undefined) {
                 colFiltered.push(x)
               }
-            }.bind(this));
+            });
           }
 
           //get removed ones and get rid of them
@@ -157,47 +179,37 @@ export class VGrid {
 
             //build array of new ones
             var toRemove = [];
-            result.removed.forEach(function (x) {
-              toRemove.push(x.__sgKey);
+            result.removed.forEach((x) => {
+              toRemove.push(x[this.sgkey]);
             });
 
             //do I really need to loop them?
-            colFiltered.forEach(function (x, index, object) {
-              if (toRemove.indexOf(x.__sgKey) !== -1) {
+            colFiltered.forEach((x, index, object) => {
+              if (toRemove.indexOf(x[this.sgkey]) !== -1) {
                 object.splice(index, 1);
-                var selKey = selKeys.indexOf(x.__sgKey);
+                var selKey = selKeys.indexOf(x[this.sgkey]);
                 //also remove selection key
-                if(selKeys.indexOf(x.__sgKey) !== -1){
-                  selKeys.splice(selKey,1)
+                if (selKeys.indexOf(x[this.sgkey]) !== -1) {
+                  selKeys.splice(selKey, 1)
                 }
               }
             });
           }
 
           //set the correct selection
-          this.setSelectionFromkeys(selKeys);
+          this.setSelectionFromKeys(selKeys);
 
+          //reset the keys
+          this.resetKeys();
 
-
-          //reset index
-          this.__sgKey = 0;
-          col.forEach(function (row) {
-            row.__sgKey = this.__sgKey;
-            this.__sgKey++;
-          }.bind(this));
-          
-          
-          
-          
-          //remove selection
-         // this.gridContext.selection.reset();
-          
           //update grid
           grid.collectionChange(true);
+
         } catch (e) {
+          console.error("error, should not happend anymore")
         }
       }
-    }.bind(this));
+    });
     this.subscriptionsArray = arrayObserver
   }
 
@@ -210,19 +222,18 @@ export class VGrid {
    ***************************************************************************************/
   enableObservablesAttributes() {
 
-    this.gridOptions.attributeArray.forEach(function (property) {
-      let propertyObserver = this.observerLocator.getObserver(this.currentEntity, property)
-      propertyObserver.subscribe(function (newValue, oldValue) {
+    this.gridOptions.attributeArray.forEach((property) => {
+      let propertyObserver = this.observerLocator.getObserver(this.currentEntity, property);
+      propertyObserver.subscribe((newValue, oldValue) => {
         if (newValue !== oldValue) {
           if (!this.rowEditMode) {
             this.currentRowEntity[property] = newValue;
-            //todo: do I want to tag it ? this way user can get what rows are changed
-            this.gridContext.updateRow(this.filterRow);
+            this.gridContext.ctx.updateRow(this.filterRow);
           }
         }
-      }.bind(this));
+      });
       this.subscriptionsAttributes.push(propertyObserver)
-    }.bind(this));
+    });
   }
 
 
@@ -246,11 +257,9 @@ export class VGrid {
 
     //clone collection and add key index, so we know it.
     this.collectionFiltered = this.collection.slice(0);
-    this.__sgKey = 0; //reset it
-    this.collection.forEach(function (row) {
-      row.__sgKey = this.__sgKey;
-      this.__sgKey++;
-    }.bind(this));
+
+    //resets the keys
+    this.resetKeys();
 
   }
 
@@ -328,49 +337,20 @@ export class VGrid {
     };
 
 
-    /***************************************************************************************
-     * Helper for setting callbacks
-     ***************************************************************************************/
-    let setHelperFunction = function (gridFN, userCtxFn, internalFn, externalFN) {
-      //todo: needs some rebuild, this will set out the functions to the grid context if they have added the function
-      //if user have set function they want to use
-      if (externalFN) {
-        //does it exist?
-        if (this.$parent[externalFN]) {
-          //it exist, lets set it as grids callback
-          gridOptions[gridFN] = this.$parent[externalFN].bind(this.$parent)
-        } else {
-          //if it does not then tell them about it
-          console.warn(externalFN + ", function is not found while setting up: " + gridFN);
-          externalFN = false; //set it to false since it failed
-        }
-      }
-
-      //if not external is set, but user have added it to the context
-      if (userCtxFn && !externalFN) {
-        gridOptions[gridFN] = FN.bind(this.$parent);
-      }
-
-      //not user context, or direct function on partent, then lets use our internal so it works
-      if (!userCtxFn && !externalFN) {
-        gridOptions[gridFN] = internalFn.bind(this.$parent)
-      }
-    }.bind(this);
-
 
 
 
 
     if (this.columns.length === 0) {
-
+      //not in use atm, this will be the mobile view part, where you can set
       //if not columns, we want to set all inside row to repeat
       //this sets row to 100%
       gridOptions.columnWidthArrayOverride = true;
 
       //this gets called when its building row
-      gridOptions.onRowMarkupCreate = function () {
+      gridOptions.onRowMarkupCreate = () => {
         return this.rowData.innerHTML;
-      }.bind(this);
+      };
 
       gridOptions.attributeArray = this.element.getAttribute("attibutes-used").split(",")
     } else {
@@ -381,42 +361,54 @@ export class VGrid {
       gridOptions.headerArray = [];
       gridOptions.filterArray = [];
       gridOptions.readOnlyArray = [];
+      gridOptions.colStyleArray = [];
+
 
       for (var i = 0; i < this.columns.length; i++) {
         gridOptions.attributeArray.push(this.columns[i].getAttribute("attribute"));
         gridOptions.columnWidthArray.push(this.columns[i].getAttribute("col-width"));
         gridOptions.headerArray.push(this.columns[i].getAttribute("header") || "");
+        gridOptions.colStyleArray.push(this.columns[i].getAttribute("col-css") || "");
         gridOptions.filterArray.push(this.columns[i].getAttribute("default-filter") || "?");
         gridOptions.readOnlyArray.push(this.columns[i].getAttribute("read-only") === "true" ? this.columns[i].getAttribute("attribute") : false);
       }
+      
+      //incase user are overriding it, or just dont wanto use markup
+      gridOptions.attributeArray = this.gridContext.attributeArray || gridOptions.attributeArray;
+      gridOptions.columnWidthArray = this.gridContext.columnWidthArray || gridOptions.columnWidthArray;
+      gridOptions.headerArray = this.gridContext.headerArray || gridOptions.headerArray;
+      gridOptions.filterArray = this.gridContext.filterArray || gridOptions.filterArray;
+      gridOptions.readOnlyArray = this.gridContext.readOnlyArray || gridOptions.readOnlyArray;
+      gridOptions.colStyleArray = this.gridContext.colStyleArray || gridOptions.colStyleArray;
     }
+
+
 
 
 
     /***************************************************************************************
      * Set attibutes
-     * todo: add option for user not to use the html also..
      ***************************************************************************************/
     gridOptions.rowHeight = this.gridContext.rowHeight || parseInt(this.element.getAttribute("row-height")); //default = 50
     gridOptions.headerHeight = this.gridContext.headerHeight || parseInt(this.element.getAttribute("header-height")); //default = 50
     gridOptions.footerHeight = this.gridContext.footerHeight || parseInt(this.element.getAttribute("footer-height")); //default = 50
-    gridOptions.isResizableHeaders = this.gridContext.isResizableHeaders || type[this.element.getAttribute("resizable-headers")]; //default = false
-    gridOptions.isMultiSelect = this.gridContext.isMultiSelect || type[this.element.getAttribute("multi-select")]; //default = undefined = none
-    gridOptions.isSortableHeader = this.gridContext.isSortableHeader || type[this.element.getAttribute("sortable-headers")]; //default = false
+    gridOptions.isResizableHeaders = this.gridContext.resizableHeaders || type[this.element.getAttribute("resizable-headers")]; //default = false
+    gridOptions.isMultiSelect = this.gridContext.multiSelect || type[this.element.getAttribute("multi-select")]; //default = undefined = none
+    gridOptions.isSortableHeader = this.gridContext.sortableHeader || type[this.element.getAttribute("sortable-headers")]; //default = false
     gridOptions.requestAnimationFrame = this.gridContext.requestAnimationFrame || type[this.element.getAttribute("request-animation-frame")]; //default = true
-    gridOptions.resizableHeadersAndRows = this.gridContext.resizableHeadersAndRows || type[this.element.getAttribute("resize-also-rows")]; //default = false
+    gridOptions.resizableHeadersAndRows = this.gridContext.resizeAlsoRows || type[this.element.getAttribute("resize-also-rows")]; //default = false
     gridOptions.renderOnScrollbarScroll = this.gridContext.renderOnScrollbarScroll || type[this.element.getAttribute("render-on-scrollbar-scroll")]; //default = true
     gridOptions.lockedColumns = this.gridContext.lockedColumns || parseInt(this.element.getAttribute("locked-columns")); //default = 0
-    gridOptions.addFilter = this.gridContext.addFilter || type[this.element.getAttribute("header-filter")]; //default = false
-    gridOptions.filterOnAtTop = this.gridContext.filterOnAtTop || type[this.element.getAttribute("header-filter-top")]; //default = false
-    gridOptions.filterOnKey = this.gridContext.filterOnKey || type[this.element.getAttribute("header-filter-onkeydown")]; //default = false dont want this yet
+    gridOptions.addFilter = this.gridContext.headerFilter || type[this.element.getAttribute("header-filter")]; //default = false
+    gridOptions.filterOnAtTop = this.gridContext.headerFilterTop || type[this.element.getAttribute("header-filter-top")]; //default = false
+    gridOptions.filterOnKey = this.gridContext.headerFilterOnkeydown || type[this.element.getAttribute("header-filter-onkeydown")]; //default = false dont want this yet
     gridOptions.sortOnHeaderClick = this.gridContext.sortOnHeaderClick || type[this.element.getAttribute("sort-on-header-click")]; //default = false
-    
+
 
     if (this.element.getAttribute("header-filter-not-to")) {
-      gridOptions.doNotAddFilterTo = this.gridContext.rowHeight || this.element.getAttribute("header-filter-not-to").split(",")
+      gridOptions.doNotAddFilterTo = this.gridContext.headerFilterNotTo || this.element.getAttribute("header-filter-not-to").split(",")
     } else {
-      gridOptions.doNotAddFilterTo = this.gridContext.rowHeight || [];
+      gridOptions.doNotAddFilterTo = this.gridContext.headerFilterNotTo || [];
     }
 
 
@@ -427,36 +419,27 @@ export class VGrid {
      * This is called when grid runs filter
      ***************************************************************************************/
     if (gridOptions.addFilter) {
-      setHelperFunction(
-        //----------------------------------------------------------------------------//
-        "onFilterRun",
-        //----------------------------------------------------------------------------//
-        this.gridContext.onFilterRun,
-        //----------------------------------------------------------------------------//
-        function (filterObj) {
+      gridOptions.onFilterRun = (filterObj) => {
 
-          //get sel keys
-          var selKeys = this.getSelectionKeys();
+        //get sel keys
+        var selKeys = this.getSelectionKeys();
 
-          this.collectionFiltered = this.vGridFilter.run(this.collection, filterObj);
-          this.vGridSort.run(this.collectionFiltered);
-          //set selection
-          this.setSelectionFromkeys(selKeys);
-          this.gridContext.collectionChange(true);
-          this.rowEditMode = true;
-          for (var k in this.currentEntity) {
-            if (this.currentEntity.hasOwnProperty(k)) {
-              this.currentEntity[k] = undefined;
-            }
+        this.collectionFiltered = this.vGridFilter.run(this.collection, filterObj);
+        this.vGridSort.run(this.collectionFiltered);
+        //set selection
+        this.setSelectionFromKeys(selKeys);
+        this.gridContext.ctx.collectionChange(true);
+        this.rowEditMode = true;
+        for (var k in this.currentEntity) {
+          if (this.currentEntity.hasOwnProperty(k)) {
+            this.currentEntity[k] = undefined;
           }
-          setTimeout(function () {
-            this.rowEditMode = false
-          }.bind(this), 500);
+        }
+        setTimeout(() => {
+          this.rowEditMode = false
+        }, 500);
 
-        }.bind(this),
-        //----------------------------------------------------------------------------//
-        this.element.getAttribute("on-row-filter")
-      );
+      }
     }
 
 
@@ -466,18 +449,10 @@ export class VGrid {
     /***************************************************************************************
      * grid asks for the filter name from attibute
      ***************************************************************************************/
-    setHelperFunction(
-      //----------------------------------------------------------------------------//
-      "getFilterName",
-      //----------------------------------------------------------------------------//
-      this.gridContext.getFilterName,
-      //----------------------------------------------------------------------------//
-      function (name) {
-        return this.vGridFilter.getNameOfFilter(name)
-      }.bind(this),
-      //----------------------------------------------------------------------------//
-      this.element.getAttribute("get-filter-name")
-    );
+
+    gridOptions.getFilterName = (name) => {
+      return this.vGridFilter.getNameOfFilter(name)
+    };
 
 
 
@@ -487,17 +462,17 @@ export class VGrid {
      * This just sets data from array,
      * Use {} if you want markup of columns, or undefined for total blank rows
      ***************************************************************************************/
-    setHelperFunction(
-      "getDataElement",
-      //----------------------------------------------------------------------------//
-      this.gridContext.onRowClick,
-      //----------------------------------------------------------------------------//
-      function (row, isDown, isLargeScroll, callback) {
+    gridOptions.getDataElement =  (row, isDown, isLargeScroll, callback) => {
+      if(this.gridContext.onRowDraw){
+        //if user have added this then we call it so they can edit the row data before we display it
+        this.gridContext.onRowDraw(this.collectionFiltered[row]);
         callback(this.collectionFiltered[row]);
-      }.bind(this),
-      //----------------------------------------------------------------------------//
-      this.element.getAttribute("on-row-draw-callback")
-    );
+      }else {
+        callback(this.collectionFiltered[row]);
+      }
+    };
+
+
 
 
 
@@ -507,47 +482,42 @@ export class VGrid {
      * This calls the order by function
      * Use {} if you want markup of columns, or undefined for total blank rows
      ***************************************************************************************/
-    setHelperFunction(
-      //----------------------------------------------------------------------------//
-      "onOrderBy",
-      //----------------------------------------------------------------------------//
-      this.gridContext.onOrderBy,
-      //----------------------------------------------------------------------------//
-      function (event, setheaders) {
+    gridOptions.onOrderBy = (event, setheaders) => {
 
-        //get clicked
-        var attribute = event.target.getAttribute("v-grid-data-attribute");
+      //get clicked
+      var attribute = event.target.getAttribute("v-grid-data-attribute");
 
-        if (this.collectionFiltered.length > 0 && attribute) {
+      if (this.collectionFiltered.length > 0 && attribute) {
 
-          //set filter
-          this.vGridSort.setFilter({attribute: attribute, asc: true}, event.shiftKey);
-          //set headers
-          setheaders(this.vGridSort.getFilter());
-          //get sel keys
-          var selKeys = this.getSelectionKeys();
-          //run filter
-          this.vGridSort.run(this.collectionFiltered);
-          //update grid
-          //this.gridContext.selection.reset();
-          this.setSelectionFromkeys(selKeys);
-          this.gridContext.collectionChange();
-          this.gridContext.collectionChange();
+        //set filter
+        this.vGridSort.setFilter({
+          attribute: attribute,
+          asc: true
+        }, event.shiftKey);
+        //set headers
+        setheaders(this.vGridSort.getFilter());
+        //get sel keys
+        var selKeys = this.getSelectionKeys();
+        //run filter
+        this.vGridSort.run(this.collectionFiltered);
+        //update grid
+        //this.gridContext.selection.reset();
+        this.setSelectionFromKeys(selKeys);
+        this.gridContext.ctx.collectionChange();
+        this.gridContext.ctx.collectionChange();
 
-          this.rowEditMode = true;
-          for (var k in this.currentEntity) {
-            if (this.currentEntity.hasOwnProperty(k)) {
-              this.currentEntity[k] = undefined;
-            }
+        this.rowEditMode = true;
+        for (var k in this.currentEntity) {
+          if (this.currentEntity.hasOwnProperty(k)) {
+            this.currentEntity[k] = undefined;
           }
-          setTimeout(function () {
-            this.rowEditMode = false
-          }.bind(this), 500);
         }
-      }.bind(this),
-      //----------------------------------------------------------------------------//
-      this.element.getAttribute("on-order-by")
-    );
+        setTimeout(() => {
+          this.rowEditMode = false
+        }, 500);
+      }
+    };
+
 
 
 
@@ -557,61 +527,52 @@ export class VGrid {
      * Listen for click on rows,
      * Snd set current entity, and also allow edit of cell
      ***************************************************************************************/
-    setHelperFunction(
-      //----------------------------------------------------------------------------//
-      "clickHandler",
-      //----------------------------------------------------------------------------//
-      this.gridContext.onRowClick,
-      //----------------------------------------------------------------------------//
-      function (event, row, cellEditHelper) {
+    gridOptions.clickHandler =  (event, row, cellEditHelper) => {
 
-        let isDoubleClick = (event.type === "dblclick");
-        let attribute = event.target.getAttribute("v-grid-data-attribute");
-        let readonly = this.gridOptions.readOnlyArray.indexOf(attribute) ? false : true;
+      let isDoubleClick = (event.type === "dblclick");
+      let attribute = event.target.getAttribute("v-grid-data-attribute");
+      let readonly = this.gridOptions.readOnlyArray.indexOf(attribute) ? false : true;
 
-        //set current row of out filtered row
-        this.filterRow = row;
+      //set current row of out filtered row
+      this.filterRow = row;
 
-        //get data ref
-        this.currentRowEntity = this.collectionFiltered[row];
+      //get data ref
+      this.currentRowEntity = this.collectionFiltered[row];
 
-        //so row dont update... todo: find a way to pause the observer subscription
-        this.rowEditMode = true;
+      //so row dont update... todo: find a way to pause the observer subscription
+      this.rowEditMode = true;
 
-        ///loop properties and set them to current entity
-        let data = this.currentRowEntity;
-        for (var k in data) {
-          if (data.hasOwnProperty(k)) {
-            this.currentEntity[k] = data[k];
-          }
+      ///loop properties and set them to current entity
+      let data = this.currentRowEntity;
+      for (var k in data) {
+        if (data.hasOwnProperty(k)) {
+          this.currentEntity[k] = data[k];
         }
+      }
 
-        if (isDoubleClick) {
+      if (isDoubleClick) {
 
-          //use helper function to edit cell
-          cellEditHelper(event, readonly, function (obj) {
+        //use helper function to edit cell
+        cellEditHelper(event, readonly, function (obj) {
 
-            //open row for updates
-            this.rowEditMode = false;
+          //open row for updates
+          this.rowEditMode = false;
 
-            //set current entity and and update row data
-            this.currentRowEntity[obj.attribute] = obj.value;
-            this.currentEntity[obj.attribute] = obj.value;
+          //set current entity and and update row data
+          this.currentRowEntity[obj.attribute] = obj.value;
+          this.currentEntity[obj.attribute] = obj.value;
 
-          }.bind(this));
+        }.bind(this));
 
-        } else {
+      } else {
 
-          //if not double click then we open for editing after a little while
-          setTimeout(function () {
-            this.rowEditMode = false
-          }.bind(this), 500);
+        //if not double click then we open for editing after a little while
+        setTimeout(function () {
+          this.rowEditMode = false
+        }.bind(this), 500);
 
-        }
-      }.bind(this),
-      //----------------------------------------------------------------------------//
-      this.element.getAttribute("on-row-click")
-    );
+      }
+    };
 
 
 
@@ -621,33 +582,25 @@ export class VGrid {
      * Just for knowing length,
      * Its this you will need to add for server source/paging with endless scrolling
      ***************************************************************************************/
-    setHelperFunction(
-      //----------------------------------------------------------------------------//
-      "getSourceLength",
-      //----------------------------------------------------------------------------//
-      this.gridContext.getSourceLength,
-      //----------------------------------------------------------------------------//
-      function () {
-        if (gridOptions.addFilter) {
-          return this.collectionFiltered.length
-        } else {
-          return this.collection.length
-        }
+    gridOptions.getSourceLength =  () =>  {
+      if (gridOptions.addFilter) {
+        return this.collectionFiltered.length
+      } else {
+        return this.collection.length
+      }
 
-      }.bind(this),
-      //----------------------------------------------------------------------------//
-      this.element.getAttribute("get-source-length")
-    );
+    };
+
 
 
 
 
 
     this.gridOptions = gridOptions;
-    //set abservables
+
+    //set observables
     this.enableObservablesCollection();
     this.enableObservablesArray();
-
     this.enableObservablesAttributes();
 
 
@@ -655,7 +608,20 @@ export class VGrid {
     /***************************************************************************************
      * create the grid with all options
      ***************************************************************************************/
-    this.gridContext = new this.vGridGenerator(gridOptions, this.vGridInterpolate, this.element, this.$parent, VGridSortable);
+    this.gridContext.ctx = new this.vGridGenerator(gridOptions, this.vGridInterpolate, this.element, this.$parent, VGridSortable);
+
+    //helpers
+    this.gridContext.ctx.getSelectionKeys = function () {
+      //returns the row number in parent collection
+      return this.getSelectionKeys();
+    }.bind(this.$parent);
+
+
+    this.gridContext.ctx.setSelectionFromKeys = function(x){
+      //hightlights the rows that is visable in filtered collection from the
+      this.setSelectionFromKeys(x);
+    }.bind(this.$parent);
+
 
 
   }

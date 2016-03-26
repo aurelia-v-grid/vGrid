@@ -1,19 +1,19 @@
-System.register(['bootstrap'], function (_export) {
-  'use strict';
+'use strict';
 
-  _export('configure', configure);
-
-  function configure(aurelia) {
-    aurelia.use.standardConfiguration().developmentLogging().globalResources();
-
-    aurelia.start().then(function (a) {
-      return a.setRoot();
-    });
-  }
-
+System.register(['bootstrap'], function (_export, _context) {
   return {
     setters: [function (_bootstrap) {}],
-    execute: function () {}
+    execute: function () {
+      function configure(aurelia) {
+        aurelia.use.standardConfiguration().developmentLogging().globalResources();
+
+        aurelia.start().then(function (a) {
+          return a.setRoot();
+        });
+      }
+
+      _export('configure', configure);
+    }
   };
 });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1haW4uanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFHTyxXQUFTLFNBQVMsQ0FBQyxPQUFPLEVBQUU7QUFDakMsV0FBTyxDQUFDLEdBQUcsQ0FDUixxQkFBcUIsRUFBRSxDQUN2QixrQkFBa0IsRUFBRSxDQUNwQixlQUFlLEVBQUUsQ0FBQzs7QUFFckIsV0FBTyxDQUFDLEtBQUssRUFBRSxDQUFDLElBQUksQ0FBQyxVQUFBLENBQUM7YUFBSSxDQUFDLENBQUMsT0FBTyxFQUFFO0tBQUEsQ0FBQyxDQUFDO0dBQ3hDIiwiZmlsZSI6Im1haW4uanMiLCJzb3VyY2VSb290IjoiL3NyYyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1haW4uanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBR08sZUFBUyxTQUFULENBQW1CLE9BQW5CLEVBQTRCO0FBQ2pDLGdCQUFRLEdBQVIsQ0FDRyxxQkFESCxHQUVHLGtCQUZILEdBR0csZUFISCxHQURpQzs7QUFNakMsZ0JBQVEsS0FBUixHQUFnQixJQUFoQixDQUFxQjtpQkFBSyxFQUFFLE9BQUY7U0FBTCxDQUFyQixDQU5pQztPQUE1QiIsImZpbGUiOiJtYWluLmpzIiwic291cmNlUm9vdCI6Ii9zcmMifQ==

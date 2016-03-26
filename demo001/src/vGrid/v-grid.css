@@ -66,7 +66,7 @@
 .vGrid div.vGrid-body {
   position: relative;
   white-space: nowrap;
-  background-image: url("styles/spinner.gif");
+  background-image: url("/styles/spinner.gif");
   background-position: center;
   -webkit-overflow-scrolling: touch;
 }
@@ -339,8 +339,12 @@ z-index: 900;
   content: "\e155";
 }
 
+.vGrid-glyphicon-sort-desc{
+  transform: rotateX(180deg);
+}
+
 .vGrid-glyphicon-sort-desc:after {
-  content: "\e156";
+  content: "\e155";
 }
 
 
