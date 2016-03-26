@@ -492,18 +492,18 @@ var vGridGenerator = function (defaultConfig, Mustache, element, parentCtx, Simp
     //do this for I know very little about css, and doing it like this I didnt get those weird side effects
     //todo look at this again, do not like what Ive done here
     _private.htmlCache.grid.className = _private.css.wrapper;
-    _private.htmlCache.grid.style.margin = _private.node.style.margin;
-    _private.htmlCache.grid.style["margin-top"] = _private.node.style["margin-top"];
-    _private.htmlCache.grid.style["margin-left"] = _private.node.style["margin-left"];
-    _private.htmlCache.grid.style["margin-right"] = _private.node.style["margin-right"];
-    _private.htmlCache.grid.style["margin-bottom"] = _private.node.style["margin-bottom"];
-    _private.htmlCache.grid.style.position = _private.node.style.position;
-    _private.htmlCache.grid.style.left = _private.node.style.left;
+    // _private.htmlCache.grid.style.margin = _private.node.style.margin;
+    // _private.htmlCache.grid.style["margin-top"] = _private.node.style["margin-top"];
+    // _private.htmlCache.grid.style["margin-left"] = _private.node.style["margin-left"];
+    // _private.htmlCache.grid.style["margin-right"] = _private.node.style["margin-right"];
+    // _private.htmlCache.grid.style["margin-bottom"] = _private.node.style["margin-bottom"];
+    _private.htmlCache.grid.style.position = "relative"//_private.node.style.position;
+    /*_private.htmlCache.grid.style.left = _private.node.style.left;
     _private.htmlCache.grid.style.right = _private.node.style.right;
     _private.htmlCache.grid.style.top = _private.node.style.top;
-    _private.htmlCache.grid.style.bottom = _private.node.style.bottom;
-    _private.htmlCache.grid.style.height = _private.node.style.height;
-    _private.htmlCache.grid.style.width = _private.node.style.width;
+    _private.htmlCache.grid.style.bottom = _private.node.style.bottom;*/
+    _private.htmlCache.grid.style.height = _private.node.style.height || "100%";//;
+    _private.htmlCache.grid.style.width = _private.node.style.width || "100%";//;
 
     //get default height and width
     _private.gridHeight = _private.htmlCache.grid.clientHeight;
