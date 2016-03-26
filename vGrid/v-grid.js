@@ -175,25 +175,26 @@ export class VGrid {
           }
 
           //get removed ones and get rid of them
-          if (result.removed.length > 0) {
+         if (result.removed.length > 0) {
 
             //build array of new ones
             var toRemove = [];
             result.removed.forEach((x) => {
               toRemove.push(x[this.sgkey]);
             });
-
-            //do I really need to loop them?
-            colFiltered.forEach((x, index, object) => {
-              if (toRemove.indexOf(x[this.sgkey]) !== -1) {
-                object.splice(index, 1);
-                var selKey = selKeys.indexOf(x[this.sgkey]);
+            //todo: check this more, to tired to be sure Im thinking right
+            let i = colFiltered.length-1;
+            while(i !== -1){
+              if (toRemove.indexOf(colFiltered[i][this.sgkey]) !== -1) {
+                var x = colFiltered.splice(i, 1);
+                var selKey = selKeys.indexOf(x[0][this.sgkey]);
                 //also remove selection key
-                if (selKeys.indexOf(x[this.sgkey]) !== -1) {
+                if (selKey !== -1) {
                   selKeys.splice(selKey, 1)
                 }
               }
-            });
+              i--;
+            }
           }
 
           //set the correct selection
