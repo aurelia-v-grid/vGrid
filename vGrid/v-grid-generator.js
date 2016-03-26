@@ -1949,7 +1949,7 @@ var vGridGenerator = function (defaultConfig, Mustache, element, parentCtx, Simp
    * redraws most parts of grid...
    ****************************************************************************************************************************/
   var redrawGrid = function () {
-    _private.node.children[0].remove();
+    _private.node.getElementsByClassName(_private.css.wrapper)[0].remove();
     _private.htmlCache.rowsArray = [];
     _private.htmlCache.header = null;
     _private.htmlCache.content = null;
