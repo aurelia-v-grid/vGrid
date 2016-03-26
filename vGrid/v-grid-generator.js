@@ -2149,7 +2149,7 @@ var vGridGenerator = function (defaultConfig, Mustache, element, parentCtx, Simp
 
 
   //tested
-  this.disableSortablebleColumns = function () {
+  this.disableSortableColumns = function () {
     _private.isSortableHeader = false;
     rebuildGridHeaderHtml();
   };
