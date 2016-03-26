@@ -1,0 +1,110 @@
+<template>
+  <require from="vGrid/v-grid.css"></require>
+  <require from="app.css"></require>
+  <require from="vGrid/v-grid"></require>
+
+  <div class="myContainer">
+    <div class="myRow1">
+      <div class="myCol">
+        <h3 style="margin-left:25px">TestGrid (still under development)</h3>
+        <v-grid
+          style="position:absolute;top:50px;bottom:0px;right: 25px;left:25px"
+          config="current-entity.bind:myCurrentEntity; collection.bind:myCollection;grid-context.bind:myGrid">
+          <v-grid-row>
+            <v-grid-col attribute="index" header="Index"></v-grid-col>
+            <v-grid-col attribute="name" header="Name"></v-grid-col>
+            <v-grid-col attribute="country" header="Country"></v-grid-col>
+            <v-grid-col attribute="email" header="Email"></v-grid-col>
+            <v-grid-col attribute="phone" header="Phone"></v-grid-col>
+            <v-grid-col attribute="color" header="Color"></v-grid-col>
+          </v-grid-row>
+        </v-grid>
+      </div>
+      <div class="myCol">
+        <h3>Functions is setting the same as if you had set this in the html <span class="label label-default">html &lt;v-grid&gt;</span></h3>
+
+
+        <div class="btn-group btn-group-justified" role="group">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="headerHeightBtn(0)">header-height="0"</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="headerHeightBtn(25)">header-height="25"</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="headerHeightBtn(50)">header-height="50"</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="headerHeightBtn(75)">header-height="75"</button>
+          </div>
+        </div>
+
+
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:3px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="rowHeightBtn(25)">row-height="25"</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="rowHeightBtn(50)">row-height="50"</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="rowHeightBtn(75)">row-height="75"</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="rowHeightBtn(100)">row-height="100"</button>
+          </div>
+        </div>
+
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:3px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="footerHeightBtn(0)">footer-height="0"</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="footerHeightBtn(25)">footer-height="25"</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="footerHeightBtn(50)">footer-height="50"</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="footerHeightBtn(75)">footer-height="75"</button>
+          </div>
+        </div>
+
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:3px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="selectionBtn(0)"> no multi-select (none)</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="selectionBtn(1)">multi-select="false" (single)</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="selectionBtn(2)">multi-select="true" (multiple)</button>
+          </div>
+        </div>
+
+
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:3px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="sortableBtn(0)">sortable-header="false" (drag/drop) & headerheight</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" click.trigger="sortableBtn(1)">sortable-header="true" (drag/drop) & headerheight</button>
+          </div>
+        </div>
+
+
+
+
+
+      </div>
+    </div>
+
+    <div class="myRow1">
+      <div class="myCol">
+        <h3 style="margin-left:25px">Code</h3>
+        <pre class="html"  style="position:absolute;top:60px;bottom:0px;right: 25px;left:25px" ><code></code></pre>
+      </div>
+    </div>
+  </div>
+
+</template>

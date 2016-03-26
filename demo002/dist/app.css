@@ -1,0 +1,40 @@
+
+.myContainer {
+   height:100%;
+   width:100%;
+  position: relative;
+  min-height: 899px;
+  min-width: 1680px;
+ }
+.myRow1 {
+  height:50%;
+  width:100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.myCol {
+  float: left;
+  width:49%;
+  height:100%;
+  position: relative;
+}
+.myCol2 {
+  float: left;
+  width:75%;
+  height:100%;
+  position: relative;
+}
+.myCol3 {
+  float: left;
+  width:25%;
+  height:100%;
+  position: relative;
+}
+
+.myRow2 {
+  height:50%;
+  width:100%;
+  overflow-y: scroll;
+  position: relative;
+}
