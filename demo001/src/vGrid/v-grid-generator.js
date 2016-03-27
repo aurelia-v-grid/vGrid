@@ -1652,6 +1652,10 @@ var vGridGenerator = function (defaultConfig, Mustache, element, parentCtx, Simp
     }
 
 
+
+
+
+
     if (_private.isResizableHeaders) {
       var x = _private.htmlCache.header.querySelectorAll("." + _private.css.rowHeaderCell);
       for (var i = 0; i < x.length; i++) {
