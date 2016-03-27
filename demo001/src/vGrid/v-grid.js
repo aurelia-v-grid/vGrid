@@ -66,7 +66,7 @@ export class VGrid {
 
       //reset fileter/and collection/selection. (should I have option to check is they want to set something?)
       this.vGridSort.reset();
-      this.gridContext.ctx.clearHeaderFilter();
+      this.gridContext.ctx.clearHeaderSortFilter();
       this.gridContext.ctx.selection.reset();
       this.gridContext.ctx.collectionChange();
 
@@ -87,7 +87,7 @@ export class VGrid {
 
 
     });
-    this.collectionSubscription = collectionSubscription;
+    this.collectionSubscription = this.__observers__.collection;
 
   }
 
@@ -182,18 +182,19 @@ export class VGrid {
             result.removed.forEach((x) => {
               toRemove.push(x[this.sgkey]);
             });
-
-            //do I really need to loop them?
-            colFiltered.forEach((x, index, object) => {
-              if (toRemove.indexOf(x[this.sgkey]) !== -1) {
-                object.splice(index, 1);
-                var selKey = selKeys.indexOf(x[this.sgkey]);
+            //todo: check this more, to tired to be sure Im thinking right
+            let i = colFiltered.length-1;
+            while(i !== -1){
+              if (toRemove.indexOf(colFiltered[i][this.sgkey]) !== -1) {
+                var x = colFiltered.splice(i, 1);
+                var selKey = selKeys.indexOf(x[0][this.sgkey]);
                 //also remove selection key
-                if (selKeys.indexOf(x[this.sgkey]) !== -1) {
+                if (selKey !== -1) {
                   selKeys.splice(selKey, 1)
                 }
               }
-            });
+              i--;
+            }
           }
 
           //set the correct selection
@@ -631,8 +632,8 @@ export class VGrid {
    * unsubscribe property and array observers
    ***************************************************************************************/
   detached() {
-    disableObservablesAttributes();
-    disableObservablesCollection();
-    disableObservablesArray();
+    this.disableObservablesAttributes();
+    this.disableObservablesCollection();
+    this.disableObservablesArray();
   }
 }

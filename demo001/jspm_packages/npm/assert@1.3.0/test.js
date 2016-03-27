@@ -1,5 +1,5 @@
 /* */ 
-var assert = require('./assert');
+var assert = require('../assert@1.3.0');
 var keys = Object.keys;
 function makeBlock(f) {
   var args = Array.prototype.slice.call(arguments, 1);

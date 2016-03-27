@@ -66,7 +66,7 @@
 .vGrid div.vGrid-body {
   position: relative;
   white-space: nowrap;
-  background-image: url("/styles/spinner.gif");
+  background-image: url("styles/spinner.gif");
   background-position: center;
   -webkit-overflow-scrolling: touch;
 }
@@ -262,7 +262,7 @@ z-index: 900;
 
 @font-face{
   font-family:"Glyphicons Halflings";
-  src: url("/styles/glyphicons-halflings-regular.woff2");
+  src: url("/styles/glyphicons-halflings-regular-fromBootstrap.woff2");
 }
 
 .vGrid-glyphicon {

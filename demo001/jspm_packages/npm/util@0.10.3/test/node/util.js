@@ -1,7 +1,7 @@
 /* */ 
 var assert = require('assert');
 var context = require('vm').runInNewContext;
-var util = require('../../util');
+var util = require('../../../util@0.10.3');
 assert.equal(true, util.isArray([]));
 assert.equal(true, util.isArray(Array()));
 assert.equal(true, util.isArray(new Array()));

@@ -1,7 +1,7 @@
 /* */ 
 (function(process) {
   var assert = require('assert');
-  var util = require('../../util');
+  var util = require('../../../util@0.10.3');
   if (process.argv[2] === 'child')
     child();
   else
