@@ -502,18 +502,9 @@ export class VGridGenerator {
     //do this for I know very little about css, and doing it like this I didnt get those weird side effects
     //todo look at this again, do not like what Ive done here
    this._private.htmlCache.grid.className =this._private.css.wrapper;
-   this._private.htmlCache.grid.style.margin =this._private.node.style.margin;
-   this._private.htmlCache.grid.style["margin-top"] =this._private.node.style["margin-top"];
-   this._private.htmlCache.grid.style["margin-left"] =this._private.node.style["margin-left"];
-   this._private.htmlCache.grid.style["margin-right"] =this._private.node.style["margin-right"];
-   this._private.htmlCache.grid.style["margin-bottom"] =this._private.node.style["margin-bottom"];
-   this._private.htmlCache.grid.style.position =this._private.node.style.position;
-   this._private.htmlCache.grid.style.left =this._private.node.style.left;
-   this._private.htmlCache.grid.style.right =this._private.node.style.right;
-   this._private.htmlCache.grid.style.top =this._private.node.style.top;
-   this._private.htmlCache.grid.style.bottom =this._private.node.style.bottom;
-   this._private.htmlCache.grid.style.height =this._private.node.style.height;
-   this._private.htmlCache.grid.style.width =this._private.node.style.width;
+   this._private.htmlCache.grid.style.position ="relative";
+   this._private.htmlCache.grid.style.height =this._private.node.style.height || "100%";
+   this._private.htmlCache.grid.style.width =this._private.node.style.width  || "100%";
 
     //get default height and width
    this._private.gridHeight =this._private.htmlCache.grid.clientHeight;
@@ -1783,6 +1774,10 @@ export class VGridGenerator {
        this._private.columnWidthArray.splice(oldIndex, 1);
        this._private.columnWidthArray.splice(newIndex, 0, x);
 
+        x = this._private.colStyleArray[oldIndex];
+        this._private.colStyleArray.splice(oldIndex, 1);
+        this._private.colStyleArray.splice(newIndex, 0, x);
+
 
        this._private.htmlCache.rowTemplate = null; //reset template and fill data
        this.cacheRowTemplate();
@@ -1958,7 +1953,7 @@ export class VGridGenerator {
    * redraws most parts of grid...
    ****************************************************************************************************************************/
   redrawGrid () {
-   this._private.node.children[0].remove();
+   this._private.node.getElementsByClassName(this._private.css.wrapper)[0].remove();
    this._private.htmlCache.rowsArray = [];
    this._private.htmlCache.header = null;
    this._private.htmlCache.content = null;
@@ -2158,7 +2153,7 @@ export class VGridGenerator {
 
 
 
-  disableSortablebleColumns () {
+  disableSortableColumns () {
     this._private.isSortableHeader = false;
     this.rebuildGridHeaderHtml();
   };
