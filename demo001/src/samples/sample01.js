@@ -42,6 +42,7 @@ export class sample01 {
 
   replaceBtn(x) {
     //generate and add
+    this.dummyDataGenerator.reset();
     this.dummyDataGenerator.generateData(x, (data) => {
       this.myCollection = data;
     })

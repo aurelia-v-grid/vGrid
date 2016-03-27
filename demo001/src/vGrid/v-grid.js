@@ -204,7 +204,7 @@ export class VGrid {
           this.resetKeys();
 
           //update grid
-          grid.collectionChange(true);
+          grid.collectionChange();
 
         } catch (e) {
           console.error("error, should not happend anymore")
@@ -508,7 +508,7 @@ export class VGrid {
         //this.gridContext.selection.reset();
         this.setSelectionFromKeys(selKeys);
         this.gridContext.ctx.collectionChange();
-        this.gridContext.ctx.collectionChange();
+
 
         this.rowEditMode = true;
         for (var k in this.currentEntity) {

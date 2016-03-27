@@ -59,6 +59,9 @@ constructor(){
   }
 }
 
+  reset(){
+    this.totalGenerated = 0;
+  }
 
 
 generateData(number, callback){
