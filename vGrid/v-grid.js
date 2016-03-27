@@ -487,6 +487,9 @@ export class VGrid {
 
       //get clicked
       var attribute = event.target.getAttribute("v-grid-data-attribute");
+      if(attribute === null){
+         attribute = event.target.offsetParent.getAttribute("v-grid-data-attribute");
+      }
 
       if (this.collectionFiltered.length > 0 && attribute) {
 
