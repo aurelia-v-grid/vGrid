@@ -17,14 +17,14 @@ import {VGridSortable} from './v-grid-sortable';
 @processContent(false)
 @customAttribute("config")
 export class VGrid {
-  static inject = [Element, ObserverLocator, VGridGenerator, VGridFilter, VGridSort, VGridInterpolate];
+  static inject = [Element, ObserverLocator, VGridFilter, VGridSort, VGridInterpolate];
   @bindable gridContext;
   @bindable collection;
   @bindable currentEntity;
 
 
-  constructor(element, observerLocator, vGridGenerator, vGridFilter, vGridSort, vGridInterpolate) {
-    this.vGridGenerator = vGridGenerator; //create the entire grid
+  constructor(element, observerLocator, vGridFilter, vGridSort, vGridInterpolate) {
+
     this.vGridFilter = vGridFilter; //helper for filtering the cloned collection
     this.vGridSort = vGridSort; //helper for sorting the columns
     this.vGridInterpolate = vGridInterpolate;
@@ -588,9 +588,9 @@ export class VGrid {
      ***************************************************************************************/
     gridOptions.getSourceLength =  () =>  {
       if (gridOptions.addFilter) {
-        return this.collectionFiltered.length
+        return this.collectionFiltered.length;
       } else {
-        return this.collection.length
+        return this.collection.length;
       }
 
     };
@@ -612,7 +612,7 @@ export class VGrid {
     /***************************************************************************************
      * create the grid with all options
      ***************************************************************************************/
-    this.gridContext.ctx = new this.vGridGenerator(gridOptions, this.vGridInterpolate, this.element, this.$parent, VGridSortable);
+    this.gridContext.ctx = new VGridGenerator(gridOptions, this.vGridInterpolate, this.element, this.$parent, VGridSortable);
 
     //helpers
     this.gridContext.ctx.getSelectionKeys = function () {
