@@ -66,7 +66,7 @@ export class VGrid {
 
       //reset fileter/and collection/selection. (should I have option to check is they want to set something?)
       this.vGridSort.reset();
-      this.gridContext.ctx.clearHeaderFilter();
+      this.gridContext.ctx.clearHeaderSortFilter();
       this.gridContext.ctx.selection.reset();
       this.gridContext.ctx.collectionChange();
 

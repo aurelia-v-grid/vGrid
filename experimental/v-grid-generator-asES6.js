@@ -2225,16 +2225,25 @@ export class VGridGenerator {
     this.fillDataIntoRow(no, clear)
   };
 
-  clearHeaderFilter () {
+  clearHeaderSortFilter = function () {
     this._private.sortOrder = [];
     this.rebuildGridHeaderHtml();
   };
 
-  setHeaderFilter (sortOrder) {
+  setHeaderSortFilter = function (sortOrder) {
     this._private.sortOrder = sortOrder;
     this.rebuildGridHeaderHtml();
   };
 
+  enableHeaderSort = function () {
+    this._private.sortOnHeaderClick = true;
+    this.rebuildGridHeaderHtml();
+  };
+
+  disableHeaderSort = function (sortOrder) {
+    this._private.sortOnHeaderClick = false;
+    this.rebuildGridHeaderHtml();
+  };
 
 
 } //end widget

@@ -2226,13 +2226,23 @@ var vGridGenerator = function (defaultConfig, Mustache, element, parentCtx, Simp
     fillDataIntoRow(no, clear)
   };
 
-  this.clearHeaderFilter = function () {
+  this.clearHeaderSortFilter = function () {
     _private.sortOrder = [];
     rebuildGridHeaderHtml();
   };
 
-  this.setHeaderFilter = function (sortOrder) {
+  this.setHeaderSortFilter = function (sortOrder) {
     _private.sortOrder = sortOrder;
+    rebuildGridHeaderHtml();
+  };
+
+  this.enableHeaderSort = function () {
+    _private.sortOnHeaderClick = true;
+    rebuildGridHeaderHtml();
+  };
+
+  this.disableHeaderSort = function (sortOrder) {
+    _private.sortOnHeaderClick = false;
     rebuildGridHeaderHtml();
   };
 

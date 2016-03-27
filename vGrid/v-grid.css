@@ -262,7 +262,7 @@ z-index: 900;
 
 @font-face{
   font-family:"Glyphicons Halflings";
-  src: url("/styles/glyphicons-halflings-regular.woff2");
+  src: url("/styles/glyphicons-halflings-regular-fromBootstrap.woff2");
 }
 
 .vGrid-glyphicon {
