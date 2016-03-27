@@ -1186,9 +1186,11 @@ export class VGridGenerator {
   /****************************************************************************************************************************
    * on large scroll, or you have modified scroltop or similar, this can be used to correct issues and for just updating data
    ****************************************************************************************************************************/
-  onScrollbarScrolling() {
+  onScrollbarScrolling(reset) {
     //set halt var to true, so small scroll will be stopped, will be laggy else
     this._private.scrollVars.halt = true;
+
+    var timeout = this._private.dataScrollDelay//nullTimeOut || this._private.dataScrollDelay
 
     //clear scroll timeout
     clearTimeout(this._private.scrollVars.timer);
@@ -1196,8 +1198,16 @@ export class VGridGenerator {
     //set timeout, incase user is still scrolling
     this._private.scrollVars.timer = setTimeout(() => {
 
+      if(reset){
+        this._private.scrollVars.lastScrollTop = 0
+      }
+
       //fix firefox messing up whn reseting scrolbar to 0, this is not issue in chrome and edge
       if (this._private.htmlCache.content.scrollTop === 0 && this._private.scrollVars.lastScrollTop !== this._private.htmlCache.content.scrollTop) {
+        this._private.scrollVars.lastScrollTop = 0;
+      }
+
+      if(this._private.configFunctions.getCollectionLength() < this._private.htmlCache.rowsArray.length){
         this._private.scrollVars.lastScrollTop = 0;
       }
 
@@ -1225,13 +1235,26 @@ export class VGridGenerator {
         }
 
         //need to adjust my array, so upward scroll do not get weird ofter hitting bottom
+        // todo: why Im I using -1 on collection?
         if (currentRow === this._private.configFunctions.getCollectionLength() - 1 && this.getRowCacheLength() < this._private.configFunctions.getCollectionLength() - 1) {
           bottomHitCount = i;
         }
 
+        //todo: why Im I using -1 on collection?
         if (currentRow > this._private.configFunctions.getCollectionLength() - 1) {
           setNewTopOnRow(i);
         }
+
+        if (currentRow >= this._private.configFunctions.getCollectionLength() && currentRowTop >= this._private.htmlCache.content.clientHeight) {
+          //fix for when scrolling and removing rows that is larger then actuall length
+          var row = this._private.htmlCache.rowsArray[i];
+          this.setRowTopValue([row], 0, currentRowTop-5000);
+          if (row.div.firstChild) {
+            row.div.removeChild(row.div.firstChild);
+          }
+        }
+
+
 
         currentRow++;
       }
@@ -1250,6 +1273,8 @@ export class VGridGenerator {
         }
       }
 
+
+
       //I now sort the array again.
       this._private.htmlCache.rowsArray.sort(
         function (a, b) {
@@ -1258,7 +1283,7 @@ export class VGridGenerator {
 
       this.fillDataInRows();
       this._private.scrollVars.halt = false;
-    }, this._private.dataScrollDelay);
+    }, timeout);
 
 
   };
@@ -1594,7 +1619,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   updateGridScrollbars() {
 
-    var collectionHeight = this._private.configFunctions.getCollectionLength() * this._private.rowHeight;
+    var collectionHeight = this._private.configFunctions.getCollectionLength() * this._private.rowHeight+(this._private.rowHeight/2);
     var bodyHeight = this._private.htmlCache.content.offsetHeight;
     //_private.largeScrollLimit = bodyHeight; why was this here... leave it here incase there is something Im missing atm
 
@@ -2028,20 +2053,28 @@ export class VGridGenerator {
     //adjust scroller before updating, so it created unwanted side effects
     this.setScrollBodyHeightToVar();
     this._private.htmlCache.scrollBody.style.height = this._private.scrollBodyHeight + "px";
-
+    var reset = false;
     if (resetScrollToTop === true) {
       this._private.htmlCache.content.scrollTop = 0;
     }
     if (this._private.scrollBodyHeight < this._private.htmlCache.content.scrollTop) {
-      this._private.htmlCache.content.scrollTop = this._private.scrollBodyHeight - 100;
+      //this._private.htmlCache.content.scrollTop = this._private.scrollBodyHeight// - 100;
+      var collectionLength = this._private.configFunctions.getCollectionLength();
+      this._private.htmlCache.content.scrollTop = collectionLength * this._private.rowHeight;
+      reset = true; //need to reset, so it re-renders all
+
     }
+
 
     this.updateGridScrollbars();
     this.correctRowAndScrollbodyWidth();
     this.updateSelectionOnAllRows();
     this.fixHeaderWithBody();
     this.fillDataInRows(true);//always need to clear first, since onscrolbarscrolling is delayed
-    this.onScrollbarScrolling();
+    this.onScrollbarScrolling(reset);
+
+
+
 
   };
 
