@@ -306,6 +306,7 @@ z-index: 900;
 
 .vGrid-glyphicon-3:after {
   margin-left:2px;
+  content: "3";
 }
 
 .vGrid-glyphicon-4{
@@ -314,6 +315,7 @@ z-index: 900;
 
 .vGrid-glyphicon-4:after {
   margin-left:2px;
+  content: "4";
 }
 
 .vGrid-glyphicon-5{
@@ -324,6 +326,25 @@ z-index: 900;
   margin-left:2px;
   content: "5";
 }
+
+.vGrid-glyphicon-6{
+  right:-7px;
+}
+
+.vGrid-glyphicon-6:after {
+  margin-left:2px;
+  content: "6";
+}
+
+.vGrid-glyphicon-7{
+  right:-7px;
+}
+
+.vGrid-glyphicon-7:after {
+  margin-left:2px;
+  content: "7";
+}
+
 .vGrid-glyphicon-sort:after {
   content: "\e150";
 }
