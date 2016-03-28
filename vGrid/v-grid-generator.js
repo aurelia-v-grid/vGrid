@@ -1096,12 +1096,12 @@ export class VGridGenerator {
       }
 
       //need to adjust my array, so upward scroll do not get weird ofter hitting bottom
-      if (currentRow === this._private.configFunctions.getCollectionLength() && this.getRowCacheLength() < this._private.configFunctions.getCollectionLength() - 1) {
+      if (currentRow === this._private.configFunctions.getCollectionLength()-1 && this.getRowCacheLength() < this._private.configFunctions.getCollectionLength() - 1) {
         bottomHitCount = i;
       }
 
       //this helps if all is cleared
-      if (currentRow > this._private.configFunctions.getCollectionLength()) {
+      if (currentRow > this._private.configFunctions.getCollectionLength()-1) {
         setNewTopOnRow(i);
       }
 
@@ -1245,7 +1245,7 @@ export class VGridGenerator {
 
     //set timeout, incase user is still scrolling
     this._private.scrollVars.timer = setTimeout(() => {
-       this.onNormalScrollingLarge();
+      this.onNormalScrollingLarge();
       this._private.scrollVars.halt = false;
     }, timeout);
 
