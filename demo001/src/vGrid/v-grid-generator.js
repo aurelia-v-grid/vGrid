@@ -18,6 +18,11 @@ export class VGridGenerator {
     this.init(false);
   }
 
+
+
+
+
+
   /*************************************************************************************
    * internal vars/setter
    *************************************************************************************/
@@ -257,15 +262,24 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getSortIcon(attribute) {
     var result;
+
+    //setting lineheight so it stays in the middle
+    if(!this._private.queryHelper.addFilter) {
+      var lineHeigth = 'style=line-height:'+this._private.headerHeight+'px;"';
+    } else {
+      var lineHeigth = 'style=line-height:'+this._private.headerHeight/2+'px;"';
+    }
+
+
     if (this._private.sortOnHeaderClick) {
-      var main = '<span class=""><span class="' + this._private.css.sortIcon + ' ' + this._private.css.sortIconSort + '"></span></span>';
+      var main = '<span class=""><span '+lineHeigth+' class="' + this._private.css.sortIcon + ' ' + this._private.css.sortIconSort + '"></span></span>';
       if (this._private.sortOrder.length === 0) {
         result = main
       } else {
         this._private.sortOrder.forEach((x) => {
           if (x.attribute === attribute) {
-            var asc = x.asc === true ? '<span class="' + this._private.css.sortIcon + ' ' + this._private.css.sortIconAsc + '"></span>' : '<span class="' + this._private.css.sortIcon + ' ' + this._private.css.sortIconDesc + '"></span>';
-            var main = '<span class="' + this._private.css.sortIcon + ' ' + this._private.css.sortIconNo + x.no + '">';
+            var asc = x.asc === true ? '<span '+lineHeigth+' class="' + this._private.css.sortIcon + ' ' + this._private.css.sortIconAsc + '"></span>' : '<span '+lineHeigth+' class="' + this._private.css.sortIcon + ' ' + this._private.css.sortIconDesc + '"></span>';
+            var main = '<span '+lineHeigth+' class="' + this._private.css.sortIcon + ' ' + this._private.css.sortIconNo + x.no + '">';
             var end = '</span>';
             result = main + end + asc;
           }
@@ -402,6 +416,13 @@ export class VGridGenerator {
     var i;
     for (i = 0; i < tempColumns.children.length; i++) {
       tempColumns.children[i].setAttribute("column-no", i);
+
+      //setting lineheight so it stays in the middle
+      //only set lineheight if not filter
+      if(!this._private.queryHelper.addFilter) {
+        tempColumns.children[i].style["line-height"] = this._private.headerHeight + "px";
+      }
+
       tempColumns.children[i].style.height = "100%";
       tempColumns.children[i].style.width = this._private.columnWidthArray[i] + "px";
       tempColumns.children[i].classList.add(this._private.css.rowHeaderCell);
@@ -440,6 +461,9 @@ export class VGridGenerator {
       var i;
       for (i = 0; i < tempColumns.children.length; i++) {
         tempColumns.children[i].style.height = "100%";
+        //setting lineheight so it stays in the middle
+        tempColumns.children[i].style["line-height"] = this._private.rowHeight +"px";
+
         tempColumns.children[i].style.width = this._private.columnWidthArray[i] + "px";
         tempColumns.children[i].classList.add(this._private.css.rowCell);
         tempColumns.children[i].classList.add(this._private.css.rowColumn + i);
@@ -985,9 +1009,12 @@ export class VGridGenerator {
       var filter = this._private.queryHelper.filterArray[this._private.attributeArray.indexOf(attribute)] || "filter";
       var filterName = this._private.configFunctions.getFilterName(filter);
 
+      //setting lineheight so it stays in the middle
+      var lineHeigth = 'style=line-height:'+this._private.headerHeight/2+'px;"';
+
       //markup--
-      var cellLabel = '<div class="' + cssLabel + '"  ' + this._private.atts.dataAttribute + '= "' + attribute + '">' + labelTopCell + sortIcon + '</div>';
-      var cellInput = '<input placeholder="' + filterName + '" class="' + cssInput + '"  ' + this._private.atts.dataAttribute + '= "' + attribute + '" value="' + valueInput + '"/>';
+      var cellLabel = '<div '+ lineHeigth +' class="' + cssLabel + '"  ' + this._private.atts.dataAttribute + '= "' + attribute + '">' + labelTopCell + sortIcon + '</div>';
+      var cellInput = '<input '+ lineHeigth +' placeholder="' + filterName + '" class="' + cssInput + '"  ' + this._private.atts.dataAttribute + '= "' + attribute + '" value="' + valueInput + '"/>';
 
       //if its in the the array then we want empty block, else it will look like shit if filters are at top
       if (this._private.queryHelper.doNotAddFilterTo.indexOf(attribute) !== -1) {
@@ -1985,7 +2012,7 @@ export class VGridGenerator {
   /****************************************************************************************************************************
    * trigger collection change in grid (rebuild rows), used by internal, but can also be called from outside
    ****************************************************************************************************************************/
-  collectionChange(resetScrollToTop) {
+  collectionChange(resetScrollToTop, scrollBottom) {
 
     //adjust scroller before updating, so it created unwanted side effects
     this.setScrollBodyHeightToVar();
@@ -1994,12 +2021,15 @@ export class VGridGenerator {
     if (resetScrollToTop === true) {
       this._private.htmlCache.content.scrollTop = 0;
     }
-    if (this._private.scrollBodyHeight < this._private.htmlCache.content.scrollTop) {
+    if (this._private.scrollBodyHeight < this._private.htmlCache.content.scrollTop || scrollBottom) {
       var collectionLength = this._private.configFunctions.getCollectionLength();
       var contentRows = parseInt(this._private.htmlCache.content.offsetHeight/this._private.rowHeight);
       var scrollOffsetHeight = contentRows*this._private.rowHeight
       this._private.htmlCache.content.scrollTop = ((collectionLength * this._private.rowHeight)-(scrollOffsetHeight))
+
     }
+
+
 
 
     this.updateGridScrollbars();
@@ -2008,6 +2038,9 @@ export class VGridGenerator {
     this.fixHeaderWithBody();
     this.onNormalScrollingLarge();//
     this.fillDataInRows(true);
+    if(scrollBottom){
+      this._private.htmlCache.content.scrollTop =this._private.htmlCache.content.scrollTop+this._private.rowHeight
+    }
 
 
   };

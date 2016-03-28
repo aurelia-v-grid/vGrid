@@ -33,6 +33,7 @@ export class VGrid {
     this.currentRow = -1;
     this.currentRowEntity = null;
     this.filterRow = -1;
+    this.scrollBottomNext = false;
     this.sgkey = "sgKey" + Math.random() * 100;
     this.gridContextMissing = false; //to know if they have binded the context or not
     this.subscriptionsAttributes = []; //here I keep subscriptions to observer on attributes
@@ -204,7 +205,8 @@ export class VGrid {
           this.resetKeys();
 
           //update grid
-          grid.collectionChange();
+          grid.collectionChange(false, this.scrollBottomNext);
+
 
         } catch (e) {
           console.error("error, should not happend anymore")
@@ -626,16 +628,21 @@ export class VGrid {
     this.gridContext.ctx = new VGridGenerator(gridOptions, this.vGridInterpolate, this.element, this.$parent, VGridSortable);
 
     //helpers
-    this.gridContext.ctx.getSelectionKeys = function () {
+    this.gridContext.ctx.getSelectionKeys = () => {
       //returns the row number in parent collection
       return this.getSelectionKeys();
-    }.bind(this.$parent);
+    };
 
 
-    this.gridContext.ctx.setSelectionFromKeys = function (x) {
+    this.gridContext.ctx.setSelectionFromKeys = (x) => {
       //hightlights the rows that is visable in filtered collection from the
       this.setSelectionFromKeys(x);
-    }.bind(this.$parent);
+    };
+
+
+    this.gridContext.ctx.scrollBottomNext =() => {
+      this.scrollBottomNext = true;
+    }
 
 
 

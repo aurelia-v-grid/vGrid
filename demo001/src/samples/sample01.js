@@ -52,12 +52,16 @@ export class sample01 {
     })
   }
 
-  addBtn(x) {
+  addBtn(x, scrollBottom) {
     //generate and add
     this.dummyDataGenerator.generateData(x, (data) => {
       data.forEach((x) => {
         this.myCollection.push(x)
       })
+      if(scrollBottom){
+        this.myGrid.ctx.scrollBottomNext();
+      }
+
       this.collectionLength = this.myCollection.length;
     })
   }

@@ -17,7 +17,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">Demo version 05-(2016-03-28)</h4>
+        <h4 style="margin-left:25px">Demo version 06-(2016-03-28)</h4>
         <h5 style="margin-left:25px"><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute </h5>
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -108,6 +108,17 @@
             <button type="button" class="btn btn-default btn-xs" click.trigger="removeLastxBtn(10)">remove last 10</button>
           </div>
         </div>
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="addBtn(1, 1)">add 1 (push) and scroll bottom</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="addBtn(10, 1)">add 10 (push) and scroll bottom</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="addBtn(1000, 1)">add 1000 (push) and scroll bottom</button>
+          </div>
+         </div>
 
 
 

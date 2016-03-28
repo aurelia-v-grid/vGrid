@@ -170,7 +170,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 5px;
+  padding-left: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -190,7 +190,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 5px;
+  padding-left: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -216,7 +216,7 @@
   border: 0px;
   border-left: 0 solid !important;
   position: relative;
-  padding: 1px 5px;
+  /*padding: 1px 5px;*/
   border-bottom: 1px solid rgb(230, 230, 230) !important;
   -webkit-touch-callout: text !important;
   -webkit-user-select: text !important;
@@ -230,7 +230,7 @@
   border: 1px solid rgb(204, 204, 204);
   border-left: 0 solid !important;
   position: relative;
-  padding: 1px 5px;
+  /*padding-: 1px 5px;*/
   border-bottom: 0 solid !important;
   -webkit-touch-callout: text !important;
   -webkit-user-select: text !important;
@@ -281,8 +281,7 @@ z-index: 900;
 
 .vGrid-glyphicon-1{
   right:-7px;
-  top:3px;
-}
+ }
 
 .vGrid div.vGrid-body div.vGrid-row-no-data {
   border-bottom: 0 !important;
@@ -294,7 +293,6 @@ z-index: 900;
 
 .vGrid-glyphicon-2{
   right:-7px;
-  top:3px;
 }
 
 .vGrid-glyphicon-2:after {
@@ -304,27 +302,22 @@ z-index: 900;
 
 .vGrid-glyphicon-3{
   right:-7px;
-  top:3px;
 }
 
 .vGrid-glyphicon-3:after {
   margin-left:2px;
-  content: "3";
 }
 
 .vGrid-glyphicon-4{
   right:-7px;
-  top:3px;
 }
 
 .vGrid-glyphicon-4:after {
   margin-left:2px;
-  content: "4";
 }
 
 .vGrid-glyphicon-5{
   right:-7px;
-  top:3px;
 }
 
 .vGrid-glyphicon-5:after {
