@@ -183,8 +183,8 @@ export class VGrid {
               toRemove.push(x[this.sgkey]);
             });
             //todo: check this more, to tired to be sure Im thinking right
-            let i = colFiltered.length-1;
-            while(i !== -1){
+            let i = colFiltered.length - 1;
+            while (i !== -1) {
               if (toRemove.indexOf(colFiltered[i][this.sgkey]) !== -1) {
                 var x = colFiltered.splice(i, 1);
                 var selKey = selKeys.indexOf(x[0][this.sgkey]);
@@ -338,6 +338,17 @@ export class VGrid {
     };
 
 
+    let setValue = (contextValue, htmlAttributeValue, defaultValue) => {
+      var value = defaultValue;
+      if (contextValue !== undefined && contextValue !== null) {
+        value = contextValue
+      } else {
+        if (htmlAttributeValue !== undefined && htmlAttributeValue !== null) {
+          value = htmlAttributeValue;
+        }
+      }
+      return value;
+    };
 
 
 
@@ -373,7 +384,7 @@ export class VGrid {
         gridOptions.filterArray.push(this.columns[i].getAttribute("default-filter") || "?");
         gridOptions.readOnlyArray.push(this.columns[i].getAttribute("read-only") === "true" ? this.columns[i].getAttribute("attribute") : false);
       }
-      
+
       //incase user are overriding it, or just dont wanto use markup
       gridOptions.attributeArray = this.gridContext.attributeArray || gridOptions.attributeArray;
       gridOptions.columnWidthArray = this.gridContext.columnWidthArray || gridOptions.columnWidthArray;
@@ -390,26 +401,30 @@ export class VGrid {
     /***************************************************************************************
      * Set attibutes
      ***************************************************************************************/
-    gridOptions.rowHeight = this.gridContext.rowHeight || parseInt(this.element.getAttribute("row-height")); //default = 50
-    gridOptions.headerHeight = this.gridContext.headerHeight || parseInt(this.element.getAttribute("header-height")); //default = 50
-    gridOptions.footerHeight = this.gridContext.footerHeight || parseInt(this.element.getAttribute("footer-height")); //default = 50
-    gridOptions.isResizableHeaders = this.gridContext.resizableHeaders || type[this.element.getAttribute("resizable-headers")]; //default = false
-    gridOptions.isMultiSelect = this.gridContext.multiSelect || type[this.element.getAttribute("multi-select")]; //default = undefined = none
-    gridOptions.isSortableHeader = this.gridContext.sortableHeader || type[this.element.getAttribute("sortable-headers")]; //default = false
-    gridOptions.requestAnimationFrame = this.gridContext.requestAnimationFrame || type[this.element.getAttribute("request-animation-frame")]; //default = true
-    gridOptions.resizableHeadersAndRows = this.gridContext.resizeAlsoRows || type[this.element.getAttribute("resize-also-rows")]; //default = false
-    gridOptions.renderOnScrollbarScroll = this.gridContext.renderOnScrollbarScroll || type[this.element.getAttribute("render-on-scrollbar-scroll")]; //default = true
-    gridOptions.lockedColumns = this.gridContext.lockedColumns || parseInt(this.element.getAttribute("locked-columns")); //default = 0
-    gridOptions.addFilter = this.gridContext.headerFilter || type[this.element.getAttribute("header-filter")]; //default = false
-    gridOptions.filterOnAtTop = this.gridContext.headerFilterTop || type[this.element.getAttribute("header-filter-top")]; //default = false
-    gridOptions.filterOnKey = this.gridContext.headerFilterOnkeydown || type[this.element.getAttribute("header-filter-onkeydown")]; //default = false dont want this yet
-    gridOptions.sortOnHeaderClick = this.gridContext.sortOnHeaderClick || type[this.element.getAttribute("sort-on-header-click")]; //default = false
+    gridOptions.rowHeight = setValue(this.gridContext.rowHeight, parseInt(this.element.getAttribute("row-height")), 50);
+    gridOptions.headerHeight = setValue(this.gridContext.headerHeight, parseInt(this.element.getAttribute("header-height")), 0);
+    gridOptions.footerHeight = setValue(this.gridContext.footerHeight, parseInt(this.element.getAttribute("footer-height")), 0);
+    gridOptions.isResizableHeaders = setValue(this.gridContext.resizableHeaders, type[this.element.getAttribute("resizable-headers")], false);
+    gridOptions.isMultiSelect = setValue(this.gridContext.multiSelect, type[this.element.getAttribute("multi-select")], undefined);
+    gridOptions.isSortableHeader = setValue(this.gridContext.sortableHeader, type[this.element.getAttribute("sortable-headers")], false);
+    gridOptions.requestAnimationFrame = setValue(this.gridContext.requestAnimationFrame, type[this.element.getAttribute("request-animation-frame")], true);
+    gridOptions.resizableHeadersAndRows = setValue(this.gridContext.resizeAlsoRows, type[this.element.getAttribute("resize-also-rows")], false);
+    gridOptions.renderOnScrollbarScroll = setValue(this.gridContext.renderOnScrollbarScroll, type[this.element.getAttribute("render-on-scrollbar-scroll")], true);
+    gridOptions.lockedColumns = setValue(this.gridContext.lockedColumns, parseInt(this.element.getAttribute("locked-columns")), 0);
+    gridOptions.addFilter = setValue(this.gridContext.headerFilter, type[this.element.getAttribute("header-filter")], false);
+    gridOptions.filterOnAtTop = setValue(this.gridContext.headerFilterTop, type[this.element.getAttribute("header-filter-top")], false);
+    gridOptions.filterOnKey = setValue(this.gridContext.headerFilterOnkeydown, type[this.element.getAttribute("header-filter-onkeydown")], false);
+    gridOptions.sortOnHeaderClick = setValue(this.gridContext.sortOnHeaderClick, type[this.element.getAttribute("sort-on-header-click")], false);
 
 
     if (this.element.getAttribute("header-filter-not-to")) {
-      gridOptions.doNotAddFilterTo = this.gridContext.headerFilterNotTo || this.element.getAttribute("header-filter-not-to").split(",")
+      gridOptions.doNotAddFilterTo = this.element.getAttribute("header-filter-not-to").split(",")
     } else {
-      gridOptions.doNotAddFilterTo = this.gridContext.headerFilterNotTo || [];
+      if (this.gridContext.headerFilterNotTo) {
+        gridOptions.doNotAddFilterTo = this.gridContext.headerFilterNotTo.split(",")
+      } else {
+        gridOptions.doNotAddFilterTo = [];
+      }
     }
 
 
@@ -463,17 +478,15 @@ export class VGrid {
      * This just sets data from array,
      * Use {} if you want markup of columns, or undefined for total blank rows
      ***************************************************************************************/
-    gridOptions.getDataElement =  (row, isDown, isLargeScroll, callback) => {
-      if(this.gridContext.onRowDraw){
+    gridOptions.getDataElement = (row, isDown, isLargeScroll, callback) => {
+      if (this.gridContext.onRowDraw) {
         //if user have added this then we call it so they can edit the row data before we display it
         this.gridContext.onRowDraw(this.collectionFiltered[row]);
         callback(this.collectionFiltered[row]);
-      }else {
+      } else {
         callback(this.collectionFiltered[row]);
       }
     };
-
-
 
 
 
@@ -487,8 +500,8 @@ export class VGrid {
 
       //get clicked
       var attribute = event.target.getAttribute("v-grid-data-attribute");
-      if(attribute === null){
-         attribute = event.target.offsetParent.getAttribute("v-grid-data-attribute");
+      if (attribute === null) {
+        attribute = event.target.offsetParent.getAttribute("v-grid-data-attribute");
       }
 
       if (this.collectionFiltered.length > 0 && attribute) {
@@ -526,12 +539,11 @@ export class VGrid {
 
 
 
-
     /***************************************************************************************
      * Listen for click on rows,
      * Snd set current entity, and also allow edit of cell
      ***************************************************************************************/
-    gridOptions.clickHandler =  (event, row, cellEditHelper) => {
+    gridOptions.clickHandler = (event, row, cellEditHelper) => {
 
       let isDoubleClick = (event.type === "dblclick");
       let attribute = event.target.getAttribute("v-grid-data-attribute");
@@ -586,7 +598,7 @@ export class VGrid {
      * Just for knowing length,
      * Its this you will need to add for server source/paging with endless scrolling
      ***************************************************************************************/
-    gridOptions.getSourceLength =  () =>  {
+    gridOptions.getSourceLength = () => {
       if (gridOptions.addFilter) {
         return this.collectionFiltered.length;
       } else {
@@ -594,7 +606,6 @@ export class VGrid {
       }
 
     };
-
 
 
 
@@ -621,7 +632,7 @@ export class VGrid {
     }.bind(this.$parent);
 
 
-    this.gridContext.ctx.setSelectionFromKeys = function(x){
+    this.gridContext.ctx.setSelectionFromKeys = function (x) {
       //hightlights the rows that is visable in filtered collection from the
       this.setSelectionFromKeys(x);
     }.bind(this.$parent);
