@@ -65,14 +65,14 @@ export class sample01 {
     this.myCollection.pop();
   }
 
-  removeFirst100Btn() {
-    this.myCollection.splice(0, 100);
+  removeFirstxBtn(x) {
+    this.myCollection.splice(0, x);
 
   }
 
 
-  removeLast100Btn() {
-    this.myCollection.splice(this.myCollection.length - 100, 100);
+  removeLastxBtn(x) {
+    this.myCollection.splice(this.myCollection.length - x, x);
 
   }
 
