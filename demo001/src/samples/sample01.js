@@ -19,6 +19,8 @@ export class sample01 {
   };
 
 
+  collectionLength= 0;
+
   /********************************************************************
    * Constructor
    ********************************************************************/
@@ -30,6 +32,7 @@ export class sample01 {
     this.dummyDataGenerator = dummyDataGenerator;
     this.dummyDataGenerator.generateData(100, (data) => {
       this.myCollection = data;
+      this.collectionLength = this.myCollection.length;
     });
 
   }
@@ -45,6 +48,7 @@ export class sample01 {
     this.dummyDataGenerator.reset();
     this.dummyDataGenerator.generateData(x, (data) => {
       this.myCollection = data;
+      this.collectionLength = this.myCollection.length;
     })
   }
 
@@ -54,25 +58,30 @@ export class sample01 {
       data.forEach((x) => {
         this.myCollection.push(x)
       })
+      this.collectionLength = this.myCollection.length;
     })
   }
 
   removeFirstBtn() {
     this.myCollection.splice(0, 1);
+    this.collectionLength = this.myCollection.length;
   }
 
   removeLastBtn() {
     this.myCollection.pop();
+    this.collectionLength = this.myCollection.length;
   }
 
   removeFirstxBtn(x) {
     this.myCollection.splice(0, x);
+    this.collectionLength = this.myCollection.length;
 
   }
 
 
   removeLastxBtn(x) {
     this.myCollection.splice(this.myCollection.length - x, x);
+    this.collectionLength = this.myCollection.length;
 
   }
 

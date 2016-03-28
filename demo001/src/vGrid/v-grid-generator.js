@@ -9,7 +9,7 @@ export class VGridGenerator {
 
 
   constructor(defaultConfig, Mustache, element, parentCtx, SimpleGridSortable) {
-    this.defaultConfig = defaultConfig
+    this.defaultConfig = defaultConfig;
     this.Mustache = Mustache;
     this.element = element;
     this.parentCtx = parentCtx;
@@ -33,17 +33,17 @@ export class VGridGenerator {
       headerArray: options.headerArray || [],                               // header labels
       attributeArray: options.attributeArray || [],                         // attributes for cell and headers
       columnWidthArray: options.columnWidthArray || [],                     // width of all columns
-      colStyleArray: options.colStyleArray || [],                          // text that will be put in column style tag
-      isSortableHeader: options.isSortableHeader || false,                  //adds sortable headers
-      sortOnHeaderClick: options.sortOnHeaderClick || false,                //enable sort event on header click
-      isResizableHeaders: options.isResizableHeaders || false,              //adds resizable headers
-      predefinedScrolltop: options.predefinedScrolltop,                      //needed to know state of scrolltop
-      requestAnimationFrame: options.requestAnimationFrame || true,         //if you want it to request animation frame
+      colStyleArray: options.colStyleArray || [],                           // text that will be put in column style tag
+      isSortableHeader: options.isSortableHeader,                           //adds sortable headers
+      sortOnHeaderClick: options.sortOnHeaderClick,                         //enable sort event on header click
+      isResizableHeaders: options.isResizableHeaders,                       //adds resizable headers
+      predefinedScrolltop: options.predefinedScrolltop,                     //needed to know state of scrolltop
+      requestAnimationFrame: options.requestAnimationFrame,                 //if you want it to request animation frame
       internalDragDropCount: 10,                                            //internal count for index of header column, this can maybe be deleted after rebuild
-      resizableHeadersAndRows: options.resizableHeadersAndRows || true,     //adds resizable columns to rows, if isResizableHeaders is enabled, this will not be that smooth
+      resizableHeadersAndRows: options.resizableHeadersAndRows,             //adds resizable columns to rows, if isResizableHeaders is enabled, this will not be that smooth
       isMultiSelect: options.isMultiSelect,                                 // if multiselect, undefined = none, false = 1, true = multi
-      renderOnScrollbarScroll: options.renderOnScrollbarScroll || true,     //will not wait on scrollbars scrolls
-      columnWidthArrayOverride: options.columnWidthArrayOverride || false,  //will set row to 100% and dont care about columns array
+      renderOnScrollbarScroll: options.renderOnScrollbarScroll,             //will not wait on scrollbars scrolls
+      columnWidthArrayOverride: options.columnWidthArrayOverride,           //will set row to 100% and dont care about columns array
       selection: {},                                                        //  internal, where I store the new selection I create, gets created later
       $selectedRows: [],                                                    //internal for selection
       lockedColumns: options.lockedColumns || 0,                            //will give huge performance issue in IE
@@ -65,10 +65,10 @@ export class VGridGenerator {
         rowTemplate: null //internal
       },
       queryHelper: {
-        addFilter: options.addFilter || false,            // will add filter if true
+        addFilter: options.addFilter,            // will add filter if true
         doNotAddFilterTo: options.doNotAddFilterTo || [], //array, attributes will not get filter
-        filterOnKey: options.filterOnKey || false,        //will send back filter on keyup or just blur if false
-        filterOnAtTop: options.filterOnAtTop || false,     //filter above headers labels or under
+        filterOnKey: options.filterOnKey,        //will send back filter on keyup or just blur if false
+        filterOnAtTop: options.filterOnAtTop,     //filter above headers labels or under
         filterArray: options.filterArray || []
       },
       configFunctions: {
@@ -330,7 +330,7 @@ export class VGridGenerator {
     var rowTemplate = "";
     var css = this._private.css.dragHandle + ' ' + this._private.css.cellContent + ' ' + this._private.css.orderHandle;
     for (var i = 0; i < headerNamesArray.length; i++) {
-      var sortIcon = this.getSortIcon(attributeNamesArray[i])
+      var sortIcon = this.getSortIcon(attributeNamesArray[i]);
       rowTemplate = rowTemplate + '<div><div class="' + css + '" ' + this._private.atts.dataAttribute + '="' + attributeNamesArray[i] + '">' + headerNamesArray[i] + sortIcon + '</div></div>';
     }
     return rowTemplate;
@@ -1029,10 +1029,11 @@ export class VGridGenerator {
   };
 
 
+
   /****************************************************************************************************************************
    * option to scrollbars scrolling where we dont update all the time and use timeout
    ****************************************************************************************************************************/
-  onNormalScrollingLarge(isDownScroll, currentScrollTop) {
+  onNormalScrollingLarge() {
     //check is user have preformed big scroll, but want it to keep rows inline
     this._private.scrollVars.lastScrollTop = this._private.htmlCache.content.scrollTop;
     //fix firefox messing up whn reseting scrolbar to 0, this is not issue in chrome and edge
@@ -1068,11 +1069,12 @@ export class VGridGenerator {
       }
 
       //need to adjust my array, so upward scroll do not get weird ofter hitting bottom
-      if (currentRow === this._private.configFunctions.getCollectionLength() - 1 && this.getRowCacheLength() < this._private.configFunctions.getCollectionLength() - 1) {
+      if (currentRow === this._private.configFunctions.getCollectionLength() && this.getRowCacheLength() < this._private.configFunctions.getCollectionLength() - 1) {
         bottomHitCount = i;
       }
 
-      if (currentRow > this._private.configFunctions.getCollectionLength() - 1) {
+      //this helps if all is cleared
+      if (currentRow > this._private.configFunctions.getCollectionLength()) {
         setNewTopOnRow(i);
       }
 
@@ -1204,103 +1206,19 @@ export class VGridGenerator {
   /****************************************************************************************************************************
    * on large scroll, or you have modified scroltop or similar, this can be used to correct issues and for just updating data
    ****************************************************************************************************************************/
-  onScrollbarScrolling(reset) {
+  onScrollbarScrolling() {
     //set halt var to true, so small scroll will be stopped, will be laggy else
     this._private.scrollVars.halt = true;
 
+    //delay before doing update
     var timeout = this._private.dataScrollDelay;
-
-    //todo: this and onNormalScrollingLarge is just the same, remove code there,a nd in settime call onNormalScrollingLarge
 
     //clear scroll timeout
     clearTimeout(this._private.scrollVars.timer);
 
     //set timeout, incase user is still scrolling
     this._private.scrollVars.timer = setTimeout(() => {
-
-      this._private.scrollVars.lastScrollTop = this._private.htmlCache.content.scrollTop;
-
-
-      //fix firefox messing up whn reseting scrolbar to 0, this is not issue in chrome and edge
-      if (this._private.htmlCache.content.scrollTop === 0 && this._private.scrollVars.lastScrollTop !== this._private.htmlCache.content.scrollTop) {
-        this._private.scrollVars.lastScrollTop = 0;
-      }
-
-      if(this._private.configFunctions.getCollectionLength() <= this._private.htmlCache.rowsArray.length){
-        this._private.scrollVars.lastScrollTop = 0;
-      }
-
-      var currentRow = parseInt(this._private.scrollVars.lastScrollTop / this._private.rowHeight, 10);
-      this._private.scrollVars.firstTop = currentRow * this._private.rowHeight; //need this for later
-      var currentRowTop = this._private.rowHeight * currentRow;
-      var bottomHitCount;
-      for (var i = 0; i < this.getRowCacheLength(); i++) {
-
-
-        /*------------------------------------------------*/
-        //move row
-        var setNewTopOnRow = (cacheRowNumber) => {
-          var row = this._private.htmlCache.rowsArray[cacheRowNumber];
-          this.setRowTopValue([row], 0, currentRowTop);
-          //remove content when we move/set new height
-          if (row.div.firstChild) {
-            row.div.removeChild(row.div.firstChild);
-          }
-
-          currentRowTop = currentRowTop + this._private.rowHeight;
-        };
-
-        if (currentRow >= 0 && currentRow <= this._private.configFunctions.getCollectionLength() - 1) {
-          setNewTopOnRow(i);
-        }
-
-        //need to adjust my array, so upward scroll do not get weird ofter hitting bottom
-        // todo: why Im I using -1 on collection?
-        if (currentRow === this._private.configFunctions.getCollectionLength() - 1 && this.getRowCacheLength() < this._private.configFunctions.getCollectionLength() - 1) {
-          bottomHitCount = i;
-        }
-
-        //todo: why Im I using -1 on collection?
-        if (currentRow > this._private.configFunctions.getCollectionLength() - 1) {
-          setNewTopOnRow(i);
-        }
-
-        //we want to remove rows that is larger than colletion and visible within normal content box
-        if (currentRow >= this._private.configFunctions.getCollectionLength() && currentRowTop >= this._private.htmlCache.content.clientHeight) {
-          //fix for when scrolling and removing rows that is larger then actuall length
-          var row = this._private.htmlCache.rowsArray[i];
-          this.setRowTopValue([row], 0, currentRowTop-5000);
-          if (row.div.firstChild) {
-            row.div.removeChild(row.div.firstChild);
-          }
-        }
-
-        currentRow++;
-      }
-
-      //if I hit bottom, then I need to adjust the rowsArray.... code under fixes this.
-      //what it does it take the rows that did not get moved and sets it before the other ones
-      if (bottomHitCount) {
-        var firstTop = parseInt(this._private.htmlCache.rowsArray[0].top, 10);
-        for (i = this.getRowCacheLength() - 1; i > bottomHitCount; i--) {
-          var row = this._private.htmlCache.rowsArray[i];
-          firstTop = firstTop - this._private.rowHeight;
-          this.setRowTopValue(this._private.htmlCache.rowsArray, i, firstTop);
-          if (row.div.firstChild) {
-            row.div.removeChild(row.div.firstChild);
-          }
-        }
-      }
-
-
-
-      //I now sort the array again.
-      this._private.htmlCache.rowsArray.sort(
-        function (a, b) {
-          return parseInt(a.top) - parseInt(b.top)
-        });
-
-      this.fillDataInRows();
+       this.onNormalScrollingLarge();
       this._private.scrollVars.halt = false;
     }, timeout);
 
@@ -2088,9 +2006,8 @@ export class VGridGenerator {
     this.correctRowAndScrollbodyWidth();
     this.updateSelectionOnAllRows();
     this.fixHeaderWithBody();
-    //this.fillDataInRows(true);//always need to clear first, since onscrolbarscrolling is delayed
-    //this.onScrollbarScrolling();//incase its really messed up/delay in browser
-    this.onNormalScrollingLarge();//this will give faster results now that Ive fixed it
+    this.onNormalScrollingLarge();//
+    this.fillDataInRows(true);
 
 
   };
