@@ -1034,10 +1034,16 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   onNormalScrollingLarge(isDownScroll, currentScrollTop) {
     //check is user have preformed big scroll, but want it to keep rows inline
+    this._private.scrollVars.lastScrollTop = this._private.htmlCache.content.scrollTop;
     //fix firefox messing up whn reseting scrolbar to 0, this is not issue in chrome and edge
     if (this._private.htmlCache.content.scrollTop === 0 && this._private.scrollVars.lastScrollTop !== this._private.htmlCache.content.scrollTop) {
       this._private.scrollVars.lastScrollTop = 0;
     }
+
+    if(this._private.configFunctions.getCollectionLength() <= this._private.htmlCache.rowsArray.length){
+      this._private.scrollVars.lastScrollTop = 0;
+    }
+
     var currentRow = parseInt(this._private.scrollVars.lastScrollTop / this._private.rowHeight, 10);
     this._private.scrollVars.firstTop = currentRow * this._private.rowHeight; //need this for later
     var currentRowTop = this._private.rowHeight * currentRow;
@@ -1050,7 +1056,10 @@ export class VGridGenerator {
       var setNewTopOnRow = (cacheRowNumber) => {
         var row = this._private.htmlCache.rowsArray[cacheRowNumber];
         this.setRowTopValue([row], 0, currentRowTop);
-        row.div.removeChild(row.div.firstChild);
+        //remove content when we move/set new height
+        if (row.div.firstChild) {
+          row.div.removeChild(row.div.firstChild);
+        }
         currentRowTop = currentRowTop + this._private.rowHeight;
       };
 
@@ -1065,6 +1074,16 @@ export class VGridGenerator {
 
       if (currentRow > this._private.configFunctions.getCollectionLength() - 1) {
         setNewTopOnRow(i);
+      }
+
+      //we want to remove rows that is larger than colletion and visible within normal content box
+      if (currentRow >= this._private.configFunctions.getCollectionLength() && currentRowTop >= this._private.htmlCache.content.clientHeight) {
+        //fix for when scrolling and removing rows that is larger then actuall length
+        var row = this._private.htmlCache.rowsArray[i];
+        this.setRowTopValue([row], 0, currentRowTop-5000);
+        if (row.div.firstChild) {
+          row.div.removeChild(row.div.firstChild);
+        }
       }
 
       currentRow++;
@@ -1149,7 +1168,6 @@ export class VGridGenerator {
         });
     } else {
       //just in case user scrolls big then small, do not want to update before he stops
-      //onScrollbarScrolling();
       this.onScrollbarScrolling()
     }
 
@@ -1190,7 +1208,9 @@ export class VGridGenerator {
     //set halt var to true, so small scroll will be stopped, will be laggy else
     this._private.scrollVars.halt = true;
 
-    var timeout = this._private.dataScrollDelay//nullTimeOut || this._private.dataScrollDelay
+    var timeout = this._private.dataScrollDelay;
+
+    //todo: this and onNormalScrollingLarge is just the same, remove code there,a nd in settime call onNormalScrollingLarge
 
     //clear scroll timeout
     clearTimeout(this._private.scrollVars.timer);
@@ -1198,16 +1218,15 @@ export class VGridGenerator {
     //set timeout, incase user is still scrolling
     this._private.scrollVars.timer = setTimeout(() => {
 
-      if(reset){
-        this._private.scrollVars.lastScrollTop = 0
-      }
+      this._private.scrollVars.lastScrollTop = this._private.htmlCache.content.scrollTop;
+
 
       //fix firefox messing up whn reseting scrolbar to 0, this is not issue in chrome and edge
       if (this._private.htmlCache.content.scrollTop === 0 && this._private.scrollVars.lastScrollTop !== this._private.htmlCache.content.scrollTop) {
         this._private.scrollVars.lastScrollTop = 0;
       }
 
-      if(this._private.configFunctions.getCollectionLength() < this._private.htmlCache.rowsArray.length){
+      if(this._private.configFunctions.getCollectionLength() <= this._private.htmlCache.rowsArray.length){
         this._private.scrollVars.lastScrollTop = 0;
       }
 
@@ -1223,6 +1242,7 @@ export class VGridGenerator {
         var setNewTopOnRow = (cacheRowNumber) => {
           var row = this._private.htmlCache.rowsArray[cacheRowNumber];
           this.setRowTopValue([row], 0, currentRowTop);
+          //remove content when we move/set new height
           if (row.div.firstChild) {
             row.div.removeChild(row.div.firstChild);
           }
@@ -1245,6 +1265,7 @@ export class VGridGenerator {
           setNewTopOnRow(i);
         }
 
+        //we want to remove rows that is larger than colletion and visible within normal content box
         if (currentRow >= this._private.configFunctions.getCollectionLength() && currentRowTop >= this._private.htmlCache.content.clientHeight) {
           //fix for when scrolling and removing rows that is larger then actuall length
           var row = this._private.htmlCache.rowsArray[i];
@@ -1253,8 +1274,6 @@ export class VGridGenerator {
             row.div.removeChild(row.div.firstChild);
           }
         }
-
-
 
         currentRow++;
       }
@@ -2058,11 +2077,10 @@ export class VGridGenerator {
       this._private.htmlCache.content.scrollTop = 0;
     }
     if (this._private.scrollBodyHeight < this._private.htmlCache.content.scrollTop) {
-      //this._private.htmlCache.content.scrollTop = this._private.scrollBodyHeight// - 100;
       var collectionLength = this._private.configFunctions.getCollectionLength();
-      this._private.htmlCache.content.scrollTop = collectionLength * this._private.rowHeight;
-      reset = true; //need to reset, so it re-renders all
-
+      var contentRows = parseInt(this._private.htmlCache.content.offsetHeight/this._private.rowHeight);
+      var scrollOffsetHeight = contentRows*this._private.rowHeight
+      this._private.htmlCache.content.scrollTop = ((collectionLength * this._private.rowHeight)-(scrollOffsetHeight))
     }
 
 
@@ -2070,10 +2088,9 @@ export class VGridGenerator {
     this.correctRowAndScrollbodyWidth();
     this.updateSelectionOnAllRows();
     this.fixHeaderWithBody();
-    this.fillDataInRows(true);//always need to clear first, since onscrolbarscrolling is delayed
-    this.onScrollbarScrolling(reset);
-
-
+    //this.fillDataInRows(true);//always need to clear first, since onscrolbarscrolling is delayed
+    //this.onScrollbarScrolling();//incase its really messed up/delay in browser
+    this.onNormalScrollingLarge();//this will give faster results now that Ive fixed it
 
 
   };
