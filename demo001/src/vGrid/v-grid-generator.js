@@ -264,22 +264,26 @@ export class VGridGenerator {
     var result;
 
     //setting lineheight so it stays in the middle
+    var lineHeigthStyleTag;
     if(!this._private.queryHelper.addFilter) {
-      var lineHeigth = 'style=line-height:'+this._private.headerHeight+'px;"';
+      lineHeigthStyleTag = `style=line-height:${this._private.headerHeight}px;"`;
     } else {
-      var lineHeigth = 'style=line-height:'+this._private.headerHeight/2+'px;"';
+      lineHeigthStyleTag = `style=line-height:${this._private.headerHeight/2}px;"`;
     }
 
 
     if (this._private.sortOnHeaderClick) {
-      var main = '<span class=""><span '+lineHeigth+' class="' + this._private.css.sortIcon + ' ' + this._private.css.sortIconSort + '"></span></span>';
+      var main = `<span class=""><span ${lineHeigthStyleTag} class="${this._private.css.sortIcon} ${this._private.css.sortIconSort}"></span></span>`;
       if (this._private.sortOrder.length === 0) {
         result = main
       } else {
         this._private.sortOrder.forEach((x) => {
           if (x.attribute === attribute) {
-            var asc = x.asc === true ? '<span '+lineHeigth+' class="' + this._private.css.sortIcon + ' ' + this._private.css.sortIconAsc + '"></span>' : '<span '+lineHeigth+' class="' + this._private.css.sortIcon + ' ' + this._private.css.sortIconDesc + '"></span>';
-            var main = '<span '+lineHeigth+' class="' + this._private.css.sortIcon + ' ' + this._private.css.sortIconNo + x.no + '">';
+            var isAsc = `<span ${lineHeigthStyleTag} class="${this._private.css.sortIcon} ${this._private.css.sortIconAsc}"></span>`;
+            var isDesc = `<span ${lineHeigthStyleTag} class="${this._private.css.sortIcon} ${this._private.css.sortIconDesc}"></span>`;
+
+            var asc = x.asc === true ?  isAsc:isDesc ;
+            var main = `<span ${lineHeigthStyleTag} class="${this._private.css.sortIcon} ${this._private.css.sortIconNo}${x.no}">`;
             var end = '</span>';
             result = main + end + asc;
           }
@@ -342,10 +346,11 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getHeaderTemplate(headerNamesArray, attributeNamesArray) {
     var rowTemplate = "";
-    var css = this._private.css.dragHandle + ' ' + this._private.css.cellContent + ' ' + this._private.css.orderHandle;
+    var css = `${this._private.css.dragHandle} ${this._private.css.cellContent} ${this._private.css.orderHandle}`;
     for (var i = 0; i < headerNamesArray.length; i++) {
       var sortIcon = this.getSortIcon(attributeNamesArray[i]);
-      rowTemplate = rowTemplate + '<div><div class="' + css + '" ' + this._private.atts.dataAttribute + '="' + attributeNamesArray[i] + '">' + headerNamesArray[i] + sortIcon + '</div></div>';
+      rowTemplate = rowTemplate +
+        `<div><div class="${css}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}">${headerNamesArray[i]}${sortIcon}</div></div>`;
     }
     return rowTemplate;
   };
@@ -359,7 +364,6 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getRowTemplate(attributeNamesArray) {
     var rowTemplate = "";
-    //var styletag = "background-color:{{custom.backgroundcolor}}"; //why is this here?
     if (this._private.htmlCache.rowTemplate !== null) {
       rowTemplate = this._private.htmlCache.rowTemplate;
     } else {
@@ -368,7 +372,8 @@ export class VGridGenerator {
         rowTemplate = this._private.configFunctions.onRowMarkupCreate(attributeNamesArray);
       } else {
         for (var i = 0; i < attributeNamesArray.length; i++) {
-          rowTemplate = rowTemplate + '<div><div class="' + this._private.css.cellContent + '" style="' + this._private.colStyleArray[i] + ' " ' + this._private.atts.dataAttribute + '="' + attributeNamesArray[i] + '">{{' + attributeNamesArray[i] + '}}</div></div>';
+          rowTemplate = rowTemplate +
+            `<div><div class="${this._private.css.cellContent}" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}">{{${attributeNamesArray[i]}}}</div></div>`;
         }
       }
     }
@@ -433,7 +438,7 @@ export class VGridGenerator {
     //rowCell
     var row = document.createElement("DIV");
     row.className = this._private.css.row + " " + this._private.css.rowHeader;
-    row.style.top = top + "px";
+    //row.style.top = top + "px";
     row.style.height = this._private.headerHeight + "px";
     row.style.width = this.getTotalColumnWidth() + "px";
     row.innerHTML = tempColumns.innerHTML;
@@ -508,7 +513,7 @@ export class VGridGenerator {
    * set top value, here I could have failback to TOP instead of translate 3d
    ****************************************************************************************************************************/
   setRowTopValue(rowArray, elementNo, topValue) {
-    rowArray[elementNo].div.style.transform = "translate3d(0px, " + topValue + "px, 0px)";
+    rowArray[elementNo].div.style.transform = `translate3d(0px,${topValue}px, 0px)`;
     rowArray[elementNo].top = topValue;
   };
 
@@ -995,11 +1000,12 @@ export class VGridGenerator {
     //this created new div, this could have been a callback function
     var getHeaderCellMarkup = (labelTopCell, valueInput, attribute) => {
 
-      var cssLabel = this._private.css.cellContent + " " + this._private.css.filterLabelBottom + " " + this._private.css.dragHandle + " " + this._private.css.orderHandle;
-      var cssInput = this._private.css.cellContent + " " + this._private.css.filterInputBottom + " " + this._private.css.filterHandle;
+      var cssLabel = `${this._private.css.cellContent} ${this._private.css.filterLabelBottom} ${this._private.css.dragHandle} ${this._private.css.orderHandle}`;
+      var cssInput = `${this._private.css.cellContent} ${this._private.css.filterInputBottom} ${this._private.css.filterHandle}`;
+
       if (this._private.queryHelper.filterOnAtTop) {
-        cssLabel = this._private.css.cellContent + " " + this._private.css.filterLabelTop + " " + this._private.css.dragHandle + " " + this._private.css.orderHandle
-        cssInput = this._private.css.cellContent + " " + this._private.css.filterInputTop + " " + this._private.css.filterHandle;
+        cssLabel = `${this._private.css.cellContent} ${this._private.css.filterLabelTop} ${this._private.css.dragHandle} ${this._private.css.orderHandle}`;
+        cssInput = `${this._private.css.cellContent} ${this._private.css.filterInputTop} ${this._private.css.filterHandle}`;
       }
 
       //get sort icon
@@ -1010,15 +1016,15 @@ export class VGridGenerator {
       var filterName = this._private.configFunctions.getFilterName(filter);
 
       //setting lineheight so it stays in the middle
-      var lineHeigth = 'style=line-height:'+this._private.headerHeight/2+'px;"';
+      var lineHeigth = `line-height:${this._private.headerHeight/2}px;`;
 
       //markup--
-      var cellLabel = '<div '+ lineHeigth +' class="' + cssLabel + '"  ' + this._private.atts.dataAttribute + '= "' + attribute + '">' + labelTopCell + sortIcon + '</div>';
-      var cellInput = '<input '+ lineHeigth +' placeholder="' + filterName + '" class="' + cssInput + '"  ' + this._private.atts.dataAttribute + '= "' + attribute + '" value="' + valueInput + '"/>';
+      var cellLabel = `<div style="${lineHeigth}" class="${cssLabel}" ${this._private.atts.dataAttribute}="${attribute}">${labelTopCell} ${sortIcon}</div>`;
+      var cellInput = `<input style="${lineHeigth}" placeholder="${filterName}" class="${cssInput}" ${this._private.atts.dataAttribute}="${attribute}" value="${valueInput}"/>`;
 
       //if its in the the array then we want empty block, else it will look like shit if filters are at top
       if (this._private.queryHelper.doNotAddFilterTo.indexOf(attribute) !== -1) {
-        cellInput = '<div class="' + cssLabel + '"  ' + this._private.atts.dataAttribute + '= "' + attribute + '"></div>';
+        cellInput = `<div class="${cssLabel}" ${this._private.atts.dataAttribute}="${attribute}"></div>`;
       }
 
       //check where to set the filter..
@@ -1157,11 +1163,15 @@ export class VGridGenerator {
       var newTopValue;
       var currentRow = parseInt((this._private.scrollVars.lastScrollTop / this._private.rowHeight), 10);
       this._private.scrollVars.firstTop = currentRow * this._private.rowHeight;
+
       for (var i = 0; i < this.getRowCacheLength(); i++) {
+
         var row = this._private.htmlCache.rowsArray[i];
         var rowTop = parseInt(row.top, 10);
         var update = false;
+
         if (isDownScroll) {
+
           //scrolling downwards
           //check row position
           if (rowTop < (currentScrollTop - this._private.rowHeight)) {
@@ -1172,7 +1182,9 @@ export class VGridGenerator {
           if (rowTop > ((this._private.configFunctions.getCollectionLength() - 1) * this._private.rowHeight) && rowTop > parseInt(this._private.htmlCache.content.style.height)) {
             this.setRowTopValue([row], 0, -5000 + i);
           }
+
         } else {
+
           //scrolling upwards
           //check row position
           if (rowTop > ((currentScrollTop + this._private.contentHeight))) {
@@ -1180,7 +1192,9 @@ export class VGridGenerator {
             newTopValue = rowTop - (this._private.rowHeight * this.getRowCacheLength());
             currentRow = (rowTop - (this._private.rowHeight * this.getRowCacheLength())) / this._private.rowHeight;
           }
+
         }
+
         //update data
         if (update === true && currentRow >= 0 && currentRow <= this._private.configFunctions.getCollectionLength() - 1) {
           //should I just get correct top value and draw it all after?
@@ -1190,6 +1204,7 @@ export class VGridGenerator {
           }
           this.insertRowMarkup(currentRow, row.div, isDownScroll, false);
         }
+
       }
       this._private.htmlCache.rowsArray.sort(
         function (a, b) {
@@ -1216,7 +1231,7 @@ export class VGridGenerator {
       var row = this._private.htmlCache.rowsArray[i];
       var rowTop = parseInt(row.top, 10);
       if (rowTop > ((this._private.configFunctions.getCollectionLength() - 1) * this._private.rowHeight) && rowTop > (parseInt(this._private.htmlCache.content.style.height) - this._private.rowHeight)) {
-        setRowTopValue([row], 0, -5000 + i);
+        this.setRowTopValue([row], 0, -5000 + i);
       }
     }
 
@@ -1836,7 +1851,7 @@ export class VGridGenerator {
 
       div.addEventListener("dblclick", handleDblClick.bind(this), false); //single and doubleclick... this will end bad.., maybe use other key wih click to edit?
       div.addEventListener("click", handleClick.bind(this), false);
-      div.addEventListener("contextmenu", onMouseDownRow, false);
+      div.addEventListener("contextmenu", onMouseDownRow.bind(this), false);
     }
 
     //this have to be after clcik since it will cancel if scroll event
@@ -2098,6 +2113,7 @@ export class VGridGenerator {
 
   //tested todo: this need to be changed now
   setColumns(paramObj) {
+    //todo: this needs a big update
     this._private.headerArray = paramObj.headerArray;
     this._private.attributeArray = paramObj.attributeArray;
     this._private.columnWidthArray = paramObj.columnWidthArray;
@@ -2105,6 +2121,7 @@ export class VGridGenerator {
 
 
   getColumns() {
+    //todo: this needs a big update
     return {
       "headerArray": this._private.headerArray,
       "attributeArray": this._private.attributeArray,
