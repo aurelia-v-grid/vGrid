@@ -141,7 +141,7 @@ export class VGridGenerator {
         filterInputTop: "vGrid-filterInputAtTop",
         filterInputBottom: "vGrid-filterInputAtBottom",
         cellContent: "vGrid-content",
-        dragHandle: "vGridDragHandle",
+        dragHandle: "vGrid-vGridDragHandle",
         filterHandle: "vGrid-queryField",
         orderHandle: "v-grid-header-orderBy",
         resizeHeaderDragHandle: "vGrid-draggable-handler",
@@ -247,7 +247,9 @@ export class VGridGenerator {
       var currentRow = this._private.htmlCache.rowsArray[i].top / this._private.rowHeight;
       var row = this._private.htmlCache.rowsArray[i];
       if (clearAllRows) {
-        row.div.removeChild(row.div.firstChild);
+        if(row.div.firstChild){
+          row.div.removeChild(row.div.firstChild);
+        }
       }
       this.insertRowMarkup(currentRow, row.div, true, true);
     }
@@ -311,7 +313,9 @@ export class VGridGenerator {
       if (rowno === currentRow) {
         var row = this._private.htmlCache.rowsArray[i];
         if (clearRow) {
-          row.div.removeChild(row.div.firstChild);
+          if(row.div.firstChild){
+            row.div.removeChild(row.div.firstChild);
+          }
         }
         this.insertRowMarkup(currentRow, row.div, true, true);
       }
@@ -346,7 +350,8 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getHeaderTemplate(headerNamesArray, attributeNamesArray) {
     var rowTemplate = "";
-    var css = `${this._private.css.dragHandle} ${this._private.css.cellContent} ${this._private.css.orderHandle}`;
+    var dragHandle = this._private.isSortableHeader ?   this._private.css.dragHandle : "";
+    var css = `${dragHandle} ${this._private.css.cellContent} ${this._private.css.orderHandle}`;
     for (var i = 0; i < headerNamesArray.length; i++) {
       var sortIcon = this.getSortIcon(attributeNamesArray[i]);
       rowTemplate = rowTemplate +
@@ -855,15 +860,20 @@ export class VGridGenerator {
         var attributeName = myElement.getAttribute(this._private.atts.dataAttribute);
         var oldValue = myElement.innerHTML;
 
-        myElement.setAttribute("contenteditable", "true");
-        myElement.classList.add(this._private.css.editCell);
+        var x= document.createElement("input");
+        x.classList.add(this._private.css.cellContent);
+        x.classList.add(this._private.css.editCell);
+        x.style.border = "0px";
+        x.style["line-height"]= "inherit";
+        x.value = oldValue;
+        myElement.offsetParent.replaceChild(x, myElement);
+        myElement = x;
+
 
         //setback value
         myElement.onblur = () => {
 
-          myElement.setAttribute("contenteditable", "false");
-          myElement.classList.remove(this._private.css.editCell);
-          var newValue = myElement.innerHTML;
+          var newValue = myElement.value;
           if (oldValue !== newValue) {
 
             if (!clicked) {
@@ -877,7 +887,12 @@ export class VGridGenerator {
             }
             this._private.disableRowClick = false;
           } else {
-            //myElement.innerHTML = oldValue;
+            callback({
+              attribute: attributeName,
+              value: newValue,
+              oldValue: oldValue,
+              element: myElement
+            });
             this._private.disableRowClick = false;
           }
         };
@@ -888,13 +903,13 @@ export class VGridGenerator {
           cKey = 67;
 
         myElement.onkeyup = (ex) => {
-          
+
           if (ex.keyCode == ctrlKey) {
             ctrlDown = false;
           } else {
             callbackKey({
               attribute: attributeName,
-              value: myElement.innerHTML,
+              value: myElement.value,
               oldValue: oldValue,
               element: myElement
             });
@@ -906,15 +921,8 @@ export class VGridGenerator {
             myElement.onblur();
             return false;
           }
-          if (e.keyCode == ctrlKey) {
-            ctrlDown = true;
-          }
           if (readOnly === true) {
-            if (ctrlDown && e.keyCode == cKey) {
-              return true;
-            } else {
-              return false;
-            }
+            return false;
           } else {
             return true;
           }
@@ -1008,11 +1016,13 @@ export class VGridGenerator {
     //this created new div, this could have been a callback function
     var getHeaderCellMarkup = (labelTopCell, valueInput, attribute) => {
 
-      var cssLabel = `${this._private.css.cellContent} ${this._private.css.filterLabelBottom} ${this._private.css.dragHandle} ${this._private.css.orderHandle}`;
+      var dragHandle = this._private.isSortableHeader ?   this._private.css.dragHandle : "";
+
+      var cssLabel = `${this._private.css.cellContent} ${this._private.css.filterLabelBottom} ${dragHandle} ${this._private.css.orderHandle}`;
       var cssInput = `${this._private.css.cellContent} ${this._private.css.filterInputBottom} ${this._private.css.filterHandle}`;
 
       if (this._private.queryHelper.filterOnAtTop) {
-        cssLabel = `${this._private.css.cellContent} ${this._private.css.filterLabelTop} ${this._private.css.dragHandle} ${this._private.css.orderHandle}`;
+        cssLabel = `${this._private.css.cellContent} ${this._private.css.filterLabelTop} ${dragHandle} ${this._private.css.orderHandle}`;
         cssInput = `${this._private.css.cellContent} ${this._private.css.filterInputTop} ${this._private.css.filterHandle}`;
       }
 
@@ -1757,6 +1767,22 @@ export class VGridGenerator {
     /*------------------------------------------------*/
     //adds sortable headers
 
+    
+    //we haveto control dragging only to headers with draghandle
+    var canMove = false;
+    var dragHandles = this._private.htmlCache.grid.querySelectorAll("." + this._private.css.dragHandle);
+    [].slice.call(dragHandles).forEach(function (itemEl) {
+      itemEl.onmouseenter = function(){
+        canMove = true
+      }
+      itemEl.onmouseleave = function(){
+        canMove = false
+      }
+
+    });
+
+
+
     if (this._private.isSortableHeader) {
       this._private.sortableCtx = new this.SimpleGridSortable(this._private.htmlCache.header.firstChild.firstChild, (oldIndex, newIndex) => {
         var children = this._private.htmlCache.header.firstChild.firstChild.children;
@@ -1794,6 +1820,8 @@ export class VGridGenerator {
       }, function (n) {
         //on cancel
         sortable = false;
+      }, function(){
+        return canMove;
       });
     }
   };

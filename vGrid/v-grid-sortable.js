@@ -9,7 +9,7 @@
 export class VGridSortable {
 
 
-  constructor(rootEl, onUpdate, onStart, onCancel) {
+  constructor(rootEl, onUpdate, onStart, onCancel, canMove) {
     this.internalTimeout;
     this.dragEl;
     this.nextEl;
@@ -19,6 +19,7 @@ export class VGridSortable {
     this.onUpdate = onUpdate;
     this.onStart = onStart;
     this.onCancel = onCancel;
+    this.canMove = canMove;
 
     //add draggable to elements
     this.setDraggable(true);
@@ -50,19 +51,23 @@ export class VGridSortable {
 
     this.dragEl = evt.target;
     this.oldIndex = evt.target.getAttribute("column-no");
-    this.onStart();
-    this.nextEl = this.dragEl.nextSibling;
+    
+    if(this.canMove()){
+      this.onStart();
+      this.nextEl = this.dragEl.nextSibling;
 
+      evt.dataTransfer.effectAllowed = 'move';
+      evt.dataTransfer.setData('Text', this.dragEl.textContent);
 
-    evt.dataTransfer.effectAllowed = 'move';
-    evt.dataTransfer.setData('Text', this.dragEl.textContent);
+      this.rootEl.addEventListener('dragover', this.onDragOver.bind(this), false);
+      this.rootEl.addEventListener('dragend', this.onDragEnd.bind(this), false);
 
-    this.rootEl.addEventListener('dragover', this.onDragOver.bind(this), false);
-    this.rootEl.addEventListener('dragend', this.onDragEnd.bind(this), false);
-
-    setTimeout(function () {
-      this.dragEl.classList.add('ghost');
-    }.bind(this), 0)
+      setTimeout(function () {
+        this.dragEl.classList.add('ghost');
+      }.bind(this), 0);
+    } else {
+      evt.preventDefault()
+    }
 
   }
 
