@@ -72,7 +72,7 @@ export class VGrid {
       this.gridContext.ctx.collectionChange();
 
       //reset
-      this.rowEditMode = true;
+
       for (var k in this.currentEntity) {
         if (this.currentEntity.hasOwnProperty(k)) {
           this.currentEntity[k] = undefined;
@@ -159,6 +159,14 @@ export class VGrid {
       var selKeys = this.getSelectionKeys();
 
 
+      var curKey= -1;
+      if(this.currentRowEntity){
+        curKey = this.currentRowEntity[this.sgkey];
+      }
+      var curEntityValid = true;
+
+
+
       //todo, improve so it loops the result set...
       //so atm there is a limit what you can do at once..
       if (result) {
@@ -183,6 +191,12 @@ export class VGrid {
             //todo: check this more, to tired to be sure Im thinking right
             let i = colFiltered.length - 1;
             while (i !== -1) {
+
+              //is current entity removed?
+              if(toRemove.indexOf(curKey) !== -1){
+                curEntityValid = false;
+              }
+
               if (toRemove.indexOf(colFiltered[i][this.sgkey]) !== -1) {
                 var x = colFiltered.splice(i, 1);
                 var selKey = selKeys.indexOf(x[0][this.sgkey]);
@@ -191,7 +205,27 @@ export class VGrid {
                   selKeys.splice(selKey, 1)
                 }
               }
+
               i--;
+            }
+          }
+
+          //check current entity, remove if removed, or get key/row
+          if(!curEntityValid){
+            for (var k in this.currentEntity) {
+              if (this.currentEntity.hasOwnProperty(k)) {
+                this.currentEntity[k] = undefined;
+                this.skipNextUpdateProperty.push(k);
+              }
+            }
+          }else{
+            var newRowNo = -1;
+            if(curKey){
+              this.collectionFiltered.forEach((x, index) => {
+                if (curKey === x[this.sgkey]) {
+                  newRowNo = index;
+                }
+              });
             }
           }
 
@@ -200,6 +234,13 @@ export class VGrid {
 
           //reset the keys
           this.resetKeys();
+
+          //update key on current and filterRow
+          if(newRowNo > -1){
+            this.currentRowEntity = this.collectionFiltered[newRowNo];
+            this.currentEntity[this.sgkey] = this.currentRowEntity[this.sgkey];
+            this.filterRow = newRowNo
+          }
 
           //update grid
           grid.collectionChange(false, this.scrollBottomNext);
@@ -439,19 +480,35 @@ export class VGrid {
 
         //get sel keys
         var selKeys = this.getSelectionKeys();
+        var curKey= -1;
+        if(this.currentRowEntity){
+          curKey = this.currentRowEntity[this.sgkey];
+        }
 
         this.collectionFiltered = this.vGridFilter.run(this.collection, filterObj);
         this.vGridSort.run(this.collectionFiltered);
         //set selection
         this.setSelectionFromKeys(selKeys);
+        
+        //set current row/entity in sync
+        var newRowNo =-1;
+        if(curKey){
+          this.collectionFiltered.forEach((x, index) => {
+            if (curKey === x[this.sgkey]) {
+              newRowNo = index;
+            }
+          });
+        }
+
+        if(newRowNo > -1){
+          this.currentRowEntity = this.collectionFiltered[newRowNo];
+          this.currentEntity[this.sgkey] = this.currentRowEntity[this.sgkey];
+          this.filterRow = newRowNo
+        }
+
+        //update grid
         this.gridContext.ctx.collectionChange(true);
 
-        for (var k in this.currentEntity) {
-          if (this.currentEntity.hasOwnProperty(k)) {
-            this.currentEntity[k] = undefined;
-            this.skipNextUpdateProperty.push(k);
-          }
-        }
       }
     }
 
@@ -518,12 +575,13 @@ export class VGrid {
         this.setSelectionFromKeys(selKeys);
         this.gridContext.ctx.collectionChange();
 
-        for (var k in this.currentEntity) {
-          if (this.currentEntity.hasOwnProperty(k)) {
-            this.currentEntity[k] = undefined;
-            this.skipNextUpdateProperty.push(k)
+        //set new row
+        this.collectionFiltered.forEach((x, index) => {
+          if (this.currentEntity[this.sgkey] === x[this.sgkey]) {
+            this.filterRow = index;
           }
-        }
+        });
+
       }
     };
 
@@ -562,9 +620,6 @@ export class VGrid {
         cellEditHelper(event, readonly, (obj) => {
 
           //called when cell looses focus, user presses enter
-
-          //open row for updates
-
           //set current entity and and update row data
           this.currentRowEntity[obj.attribute] = obj.value;
           this.currentEntity[obj.attribute] = obj.value;
