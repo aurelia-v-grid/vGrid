@@ -233,7 +233,7 @@ System.register(['aurelia-framework', './v-grid-generator', './v-grid-filter', '
               if (newValue !== oldValue) {
                 if (!_this6.rowEditMode) {
                   _this6.currentRowEntity[property] = newValue;
-                  _this6.gridContext.ctx.updateRow(_this6.filterRow);
+                  _this6.gridContext.ctx.updateRow(_this6.filterRow, true);
                 }
               }
             });
