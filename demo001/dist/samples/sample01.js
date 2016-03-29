@@ -341,7 +341,7 @@ System.register(['data/dummyDataGenerator', 'highlight.js', 'highlight.js/styles
           sortable1: "lightgrey",
           resize1: "lightgrey",
           multiSelect: "lightgrey",
-          locked1: "lightgrey",
+          locked0: "lightgrey",
           filter1: "lightgrey",
           filterAt0: "lightgrey",
           sort1: "lightgrey"

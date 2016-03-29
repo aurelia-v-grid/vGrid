@@ -24,6 +24,7 @@
           row-height="25"
           header-height="50"
           resizable-headers="true"
+          resize-also-rows="true"
           sortable-headers="true"
           sort-on-header-click="true"
           header-filter="true"
@@ -31,7 +32,6 @@
           header-filter-not-to="phone"
           header-filter-top="false"
           multi-select="true"
-          locked-columns="1"
           config="current-entity.bind:myCurrentEntity; collection.bind:myCollection;  grid-context.bind:myGrid">
           <v-grid-row>
             <v-grid-col col-width="160" attribute="index"   header="Index"    default-filter=">=" read-only="true"                                    ></v-grid-col>

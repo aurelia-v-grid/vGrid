@@ -125,7 +125,7 @@ export class sample01 {
     sortable1:"lightgrey",
     resize1 : "lightgrey",
     multiSelect: "lightgrey",
-    locked1: "lightgrey",
+    locked0: "lightgrey",
     filter1: "lightgrey",
     filterAt0: "lightgrey",
     sort1:"lightgrey"
