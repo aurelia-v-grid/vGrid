@@ -845,7 +845,7 @@ export class VGridGenerator {
    * helper for editing cells, user could define this them self one that is more advanced..
    * maybe add a callback here also so uer can be asked for formating for numbers and dates...
    ****************************************************************************************************************************/
-  editCellhelper(e, readOnly, callback) {
+  editCellhelper(e, readOnly, callback, callbackKey) {
 
     try {
       var clicked = false;
@@ -888,8 +888,16 @@ export class VGridGenerator {
           cKey = 67;
 
         myElement.onkeyup = (ex) => {
+          
           if (ex.keyCode == ctrlKey) {
             ctrlDown = false;
+          } else {
+            callbackKey({
+              attribute: attributeName,
+              value: myElement.innerHTML,
+              oldValue: oldValue,
+              element: myElement
+            });
           }
         };
 

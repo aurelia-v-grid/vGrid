@@ -27,20 +27,20 @@ export class VGrid {
 
     this.vGridFilter = vGridFilter; //helper for filtering the cloned collection
     this.vGridSort = vGridSort; //helper for sorting the columns
-    this.vGridInterpolate = vGridInterpolate;
+    this.vGridInterpolate = vGridInterpolate; //populates mustache tags
     this.observerLocator = observerLocator; //listen for event
-    this.element = element;
-    this.currentRow = -1;
-    this.currentRowEntity = null;
-    this.filterRow = -1;
-    this.scrollBottomNext = false;
-    this.sgkey = "sgKey" + Math.random() * 100;
+    this.element = element; //vgrid element
+    this.currentRowEntity = null; //keeps the current entity ref
+    this.filterRow = -1; //current selected row in grid, not always the same as collection when used filter/soring
+    this.scrollBottomNext = false; //var to know if user wants to scroll to bottom next time array abserver gets called
+    this.sgkey = "sgKey" + Math.floor((Math.random() * 1000) + 1); //keyname, need to set a random here so you can have multible grid linked to same collection
     this.gridContextMissing = false; //to know if they have binded the context or not
     this.subscriptionsAttributes = []; //here I keep subscriptions to observer on attributes
     this.collectionSubscription = null; //here I keep subscriptions to observer on collection
     this.collectionFiltered = []; //cloned collection
-    this.subscriptionsArray = [];
+    this.subscriptionsArray = []; //my property subscriptions
     this.rowEditMode = false; //helper for stopping endless enditing/callback on obervers, do not know how to pause them
+    this.skipNextUpdateProperty = []; //skip row update, used when setting internal values to current entity from row editing, or to undefined
     this.rowData = this.element.getElementsByTagName("V-GRID-ROW")[0];
     this.columns = this.rowData.getElementsByTagName("V-GRID-COL");
   }
@@ -62,7 +62,7 @@ export class VGrid {
       //clone array
       //key will be set in both collection and internal since with slice we get a refrence
       this.collectionFiltered = this.collection.slice(0);
-      this.resetKeys()
+      this.resetKeys();
 
 
       //reset fileter/and collection/selection. (should I have option to check is they want to set something?)
@@ -76,12 +76,9 @@ export class VGrid {
       for (var k in this.currentEntity) {
         if (this.currentEntity.hasOwnProperty(k)) {
           this.currentEntity[k] = undefined;
+          this.skipNextUpdateProperty.push(k)
         }
       }
-      setTimeout(() => {
-        this.rowEditMode = false
-      }, 2000);
-      this.currentRow = -1;
 
       //set array observer
       this.enableObservablesArray();
@@ -165,8 +162,8 @@ export class VGrid {
       //todo, improve so it loops the result set...
       //so atm there is a limit what you can do at once..
       if (result) {
-        try {
-          //if anyone is added, then lets add them
+
+           //if anyone is added, then lets add them
           if (result.addedCount > 0) {
             col.forEach((x) => {
               if (x[this.sgkey] === undefined) {
@@ -208,9 +205,6 @@ export class VGrid {
           grid.collectionChange(false, this.scrollBottomNext);
 
 
-        } catch (e) {
-          console.error("error, should not happend anymore")
-        }
       }
     });
     this.subscriptionsArray = arrayObserver
@@ -229,9 +223,13 @@ export class VGrid {
       let propertyObserver = this.observerLocator.getObserver(this.currentEntity, property);
       propertyObserver.subscribe((newValue, oldValue) => {
         if (newValue !== oldValue) {
-          if (!this.rowEditMode) {
+          //check if we should skip it
+          if (this.skipNextUpdateProperty.indexOf(property) === -1) {
             this.currentRowEntity[property] = newValue;
-            this.gridContext.ctx.updateRow(this.filterRow, true);
+            this.gridContext.ctx.updateRow(this.filterRow, this);
+          } else {
+            //if skipping we also need to remove it
+             this.skipNextUpdateProperty.splice(this.skipNextUpdateProperty.indexOf(property), 1);
           }
         }
       });
@@ -319,7 +317,7 @@ export class VGrid {
     // should I have had a lot of this in created?
     let gridOptions = {};
 
-    //mini error checking
+    //mini error checking //todo improve as I add the stuff I want
     if (!this.rowData) {
       throw "error, you need to add the row for the grid to work atm"
     }
@@ -447,16 +445,13 @@ export class VGrid {
         //set selection
         this.setSelectionFromKeys(selKeys);
         this.gridContext.ctx.collectionChange(true);
-        this.rowEditMode = true;
+
         for (var k in this.currentEntity) {
           if (this.currentEntity.hasOwnProperty(k)) {
             this.currentEntity[k] = undefined;
+            this.skipNextUpdateProperty.push(k);
           }
         }
-        setTimeout(() => {
-          this.rowEditMode = false
-        }, 500);
-
       }
     }
 
@@ -520,20 +515,15 @@ export class VGrid {
         //run filter
         this.vGridSort.run(this.collectionFiltered);
         //update grid
-        //this.gridContext.selection.reset();
         this.setSelectionFromKeys(selKeys);
         this.gridContext.ctx.collectionChange();
 
-
-        this.rowEditMode = true;
         for (var k in this.currentEntity) {
           if (this.currentEntity.hasOwnProperty(k)) {
             this.currentEntity[k] = undefined;
+            this.skipNextUpdateProperty.push(k)
           }
         }
-        setTimeout(() => {
-          this.rowEditMode = false
-        }, 500);
       }
     };
 
@@ -557,37 +547,38 @@ export class VGrid {
       //get data ref
       this.currentRowEntity = this.collectionFiltered[row];
 
-      //so row dont update... todo: find a way to pause the observer subscription
-      this.rowEditMode = true;
-
       ///loop properties and set them to current entity
       let data = this.currentRowEntity;
       for (var k in data) {
         if (data.hasOwnProperty(k)) {
           this.currentEntity[k] = data[k];
+          this.skipNextUpdateProperty.push(k)
         }
       }
 
       if (isDoubleClick) {
 
         //use helper function to edit cell
-        cellEditHelper(event, readonly, function (obj) {
+        cellEditHelper(event, readonly, (obj) => {
+
+          //called when cell looses focus, user presses enter
 
           //open row for updates
-          this.rowEditMode = false;
+          //set current entity and and update row data
+          this.currentRowEntity[obj.attribute] = obj.value;
+          this.currentEntity[obj.attribute] = obj.value;
+
+        },(obj) => {
+
+          //called on each key stroke
+          //lock row for update row for updates
+          this.skipNextUpdateProperty.push(obj.attribute);
 
           //set current entity and and update row data
           this.currentRowEntity[obj.attribute] = obj.value;
           this.currentEntity[obj.attribute] = obj.value;
 
-        }.bind(this));
-
-      } else {
-
-        //if not double click then we open for editing after a little while
-        setTimeout(function () {
-          this.rowEditMode = false
-        }.bind(this), 500);
+        });
 
       }
     };
@@ -606,13 +597,12 @@ export class VGrid {
       } else {
         return this.collection.length;
       }
-
     };
 
 
 
 
-
+    //so I have ref to it for later
     this.gridOptions = gridOptions;
 
     //set observables
@@ -627,13 +617,13 @@ export class VGrid {
      ***************************************************************************************/
     this.gridContext.ctx = new VGridGenerator(gridOptions, this.vGridInterpolate, this.element, this.$parent, VGridSortable);
 
-    //helpers
+    //not tested
     this.gridContext.ctx.getSelectionKeys = () => {
       //returns the row number in parent collection
       return this.getSelectionKeys();
     };
 
-
+    //not tested
     this.gridContext.ctx.setSelectionFromKeys = (x) => {
       //hightlights the rows that is visable in filtered collection from the
       this.setSelectionFromKeys(x);
