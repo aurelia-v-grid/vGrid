@@ -260,6 +260,10 @@ bottom: 0;
 z-index: 900;
 }
 
+.vGrid-vGridDragHandle {
+  cursor: move;
+}
+
 @font-face{
   font-family:"Glyphicons Halflings";
   src: url("/styles/glyphicons-halflings-regular-fromBootstrap.woff2");

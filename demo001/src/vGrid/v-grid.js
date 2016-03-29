@@ -226,7 +226,7 @@ export class VGrid {
           //check if we should skip it
           if (this.skipNextUpdateProperty.indexOf(property) === -1) {
             this.currentRowEntity[property] = newValue;
-            this.gridContext.ctx.updateRow(this.filterRow, this);
+            this.gridContext.ctx.updateRow(this.filterRow, true);
           } else {
             //if skipping we also need to remove it
              this.skipNextUpdateProperty.splice(this.skipNextUpdateProperty.indexOf(property), 1);
@@ -564,9 +564,12 @@ export class VGrid {
           //called when cell looses focus, user presses enter
 
           //open row for updates
+
           //set current entity and and update row data
           this.currentRowEntity[obj.attribute] = obj.value;
           this.currentEntity[obj.attribute] = obj.value;
+          this.gridContext.ctx.updateRow(this.filterRow, true);
+
 
         },(obj) => {
 
