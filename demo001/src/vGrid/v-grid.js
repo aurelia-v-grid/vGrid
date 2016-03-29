@@ -231,7 +231,7 @@ export class VGrid {
         if (newValue !== oldValue) {
           if (!this.rowEditMode) {
             this.currentRowEntity[property] = newValue;
-            this.gridContext.ctx.updateRow(this.filterRow);
+            this.gridContext.ctx.updateRow(this.filterRow, true);
           }
         }
       });
