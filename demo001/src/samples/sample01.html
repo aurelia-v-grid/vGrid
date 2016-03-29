@@ -17,7 +17,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">Demo version 12-(2016-03-29)</h4>
+        <h4 style="margin-left:25px">Demo version 13-(2016-03-29) Latest update: current entity in sync</h4>
         <h5 style="margin-left:25px"><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute </h5>
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -119,6 +119,18 @@
             <button type="button" class="btn btn-default btn-xs" click.trigger="addBtn(1000, 1)">add 1000 (push) and scroll bottom</button>
           </div>
          </div>
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="insertOneBtn(1)">insert one at row 2 (all new will always be added to bottom), this is to test current entity</button>
+          </div>
+
+        </div>
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="insertFiveBtn(1)">insert 5 at row 2 (all new will always be added to bottom), this is to test current entity</button>
+          </div>
+
+        </div>
 
 
 

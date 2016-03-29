@@ -66,6 +66,30 @@ export class sample01 {
     })
   }
 
+
+  insertOneBtn(){
+    try {
+      this.dummyDataGenerator.generateData(1, (data) => {
+        this.myCollection.splice(2, 0, data[0])
+      });
+    } catch (e){
+      console.log(e)
+    }
+  }
+
+  insertFiveBtn(){
+    try {
+      for(var i = 0; i < 5; i++){
+        this.dummyDataGenerator.generateData(1, (data) => {
+          this.myCollection.splice(2, 0, data[0])
+        });
+      }
+    } catch (e){
+      console.log(e)
+    }
+  }
+
+
   removeFirstBtn() {
     this.myCollection.splice(0, 1);
     this.collectionLength = this.myCollection.length;
