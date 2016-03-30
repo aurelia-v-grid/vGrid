@@ -922,7 +922,7 @@ export class VGridGenerator {
             //myElement.onblur();
             return false;
           }
-          if (readOnly === true) {
+          if (readOnly === true && e.keyCode!==9) {
             return false;
           } else {
             return true;
@@ -1903,7 +1903,7 @@ export class VGridGenerator {
         }
       }
       var currentRow = this.getRowNumberFromClickedOn(e);
-      this._private.configFunctions.clickHandler(e, currentRow, null)
+      this._private.configFunctions.clickHandler(e, currentRow, this.editCellhelper.bind(this))
 
 
     }

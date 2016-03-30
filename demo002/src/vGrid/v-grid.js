@@ -595,7 +595,7 @@ export class VGrid {
      ***************************************************************************************/
     gridOptions.clickHandler = (event, row, cellEditHelper) => {
 
-      let isDoubleClick = (event.type === "dblclick");
+      let isDoubleClick = true;//(event.type === "dblclick");
       let attribute = event.target.getAttribute("v-grid-data-attribute");
       let readonly = this.gridOptions.readOnlyArray.indexOf(attribute) ? false : true;
 
@@ -617,7 +617,7 @@ export class VGrid {
       }
 
       if (isDoubleClick) {
-
+        
         //use helper function to edit cell
         cellEditHelper(event, readonly, (obj) => {
 
@@ -625,7 +625,7 @@ export class VGrid {
           //set current entity and and update row data
           this.currentRowEntity[obj.attribute] = obj.value;
           this.currentEntity[obj.attribute] = obj.value;
-          this.gridContext.ctx.updateRow(this.filterRow, true);
+          //this.gridContext.ctx.updateRow(this.filterRow, true);
 
 
         },(obj) => {
