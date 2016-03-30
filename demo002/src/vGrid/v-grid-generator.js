@@ -1385,14 +1385,18 @@ export class VGridGenerator {
           this._private.htmlCache.content.scrollLeft = 0;
           this._private.scrollVars.lastScrollLeft = 0;
            var header = this._private.htmlCache.header.children[0].children[0];
+          console.log("hit")
            header.style.left = 0 + "px";
         } else {
           if (this._private.scrollVars.lastScrollLeft !== currentScrollLeft) {
+            console.log("hit2")
             currentScrollLeft = this._private.htmlCache.content.scrollLeft;
-             var header = this._private.htmlCache.header.children[0].children[0];
-             header.style.left = -currentScrollLeft + "px";
+             //var header = this._private.htmlCache.header.children[0].children[0];
+             //header.style.left = -currentScrollLeft + "px";
+            console.log(currentScrollLeft)
+           // header.scrollleft = currentScrollLeft
             this._private.scrollVars.lastScrollLeft = currentScrollLeft;
-            this._private.htmlCache.header.scrollleft = currentScrollLeft;
+            this._private.htmlCache.header.scrollLeft = currentScrollLeft;
           }
         }
 
@@ -1637,12 +1641,15 @@ export class VGridGenerator {
       this._private.htmlCache.content.style.overflow = "";
       this._private.htmlCache.content.style.overflowY = "hidden";
       this._private.htmlCache.content.style.overflowX = "hidden";
+      this._private.htmlCache.header.style.overflowY = "hidden";
 
     } else {
       // this._private.htmlCache.content.scrollLeft = 0;
       this._private.htmlCache.content.style.overflow = "";
       this._private.htmlCache.content.style.overflowY = "scroll";
       this._private.htmlCache.content.style.overflowX = "hidden";
+      this._private.htmlCache.header.style.overflowY = "scroll";
+
     }
 
     if (this._private.htmlCache.content.offsetWidth - 5 < this.getTotalColumnWidth()) {
@@ -1903,8 +1910,9 @@ export class VGridGenerator {
 
       if(x > this._private.htmlCache.content.clientWidth || x<this._private.htmlCache.content.scrollLeft){
         this._private.htmlCache.content.scrollLeft = x
-        this._private.htmlCache.header.scrollleft = x;
+        //this._private.htmlCache.header.scrollLeft = x;
       }
+      this._private.htmlCache.header.scrollLeft = this._private.htmlCache.content.scrollLeft;
 
       this._private.htmlCache.header.scrollleft = x;
       var height = parseInt((this._private.htmlCache.content.clientHeight/this._private.rowHeight)/2);
