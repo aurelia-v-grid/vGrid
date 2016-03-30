@@ -1849,6 +1849,7 @@ export class VGridGenerator {
     /*------------------------------------------------*/
     //normal click
     var handleClick = (e) => {
+      console.log("wee")
       //console.log("singleClick")
       //var xTimer = setTimeout(() => {
       //     if (!this._private.disableRowClick) {
@@ -1883,17 +1884,20 @@ export class VGridGenerator {
     /*------------------------------------------------*/
     //right click
     var onMouseDownRow = (e) => {
+
       //e.preventDefault();
       if (e.button === 2) {
+
         if (!this._private.disableRowClick) {
-          var currentRow = this.getRowNumberFromClickedOn(e);
-          this._private.configFunctions.clickHandler(e, currentRow, null)
+          //var currentRow = this.getRowNumberFromClickedOn(e);
+          //this._private.configFunctions.clickHandler(e, currentRow, null)
         }
       }
 
     };
 
     var onFocus= (e)=>{
+      console.log("focus")
       var x = e.target.offsetParent.offsetLeft;
       var currentRow = this.getRowNumberFromClickedOn(e);
 
@@ -1902,11 +1906,9 @@ export class VGridGenerator {
         this._private.htmlCache.header.scrollleft = x;
       }
 
+      this._private.htmlCache.header.scrollleft = x;
       var height = parseInt((this._private.htmlCache.content.clientHeight/this._private.rowHeight)/2);
       var scrolltop = parseInt(this._private.htmlCache.content.scrollTop/this._private.rowHeight)
-      console.log(height)
-      console.log(scrolltop)
-      console.log(currentRow)
       this._private.htmlCache.content.scrollTop = (currentRow * this._private.rowHeight) - (parseInt(this._private.htmlCache.content.clientHeight/2)-this._private.rowHeight)
 
       if (!this._private.disableRowClick) {
@@ -1920,14 +1922,17 @@ export class VGridGenerator {
 
     }
 
+
+
     //add all click events to rows
     for (var i = 0; i < this.getRowCacheLength(); i++) {
       var div = this._private.htmlCache.rowsArray[i].div;
 
       div.addEventListener("dblclick", handleDblClick.bind(this), false); //single and doubleclick... this will end bad.., maybe use other key wih click to edit?
-      div.addEventListener("click", handleClick.bind(this), false);
+      div.addEventListener("click", handleClick.bind(this), true);
       div.addEventListener("contextmenu", onMouseDownRow.bind(this), false);
       div.addEventListener("focus", onFocus.bind(this), true);
+
     }
 
     //this have to be after clcik since it will cancel if scroll event

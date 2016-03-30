@@ -162,10 +162,10 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
+  -moz-box-sizing: content-box;;
+  -webkit-box-sizing: content-box;;
+  -ms-box-sizing: content-box;
+  box-sizing: content-box;;
   position: relative;
   left: 0;
   width: 100%;
@@ -176,10 +176,13 @@
   text-overflow: ellipsis;
   background-color: inherit;
   border: 0px;
+  margin:1px
 }
 
-.vGrid-row-cell > .vGrid-content:focus {
+.vGrid-row-cell :focus {
   border: 1px dashed rgb(110, 107, 107);
+  outline: none;
+
 }
 
 .vGrid-row-cell-header > .vGrid-content {
