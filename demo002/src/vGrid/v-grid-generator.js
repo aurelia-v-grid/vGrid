@@ -1384,14 +1384,15 @@ export class VGridGenerator {
           //we do not want scrolls left if this is hidden..
           this._private.htmlCache.content.scrollLeft = 0;
           this._private.scrollVars.lastScrollLeft = 0;
-          var header = this._private.htmlCache.header.children[0].children[0];
-          header.style.left = 0 + "px";
+           var header = this._private.htmlCache.header.children[0].children[0];
+           header.style.left = 0 + "px";
         } else {
           if (this._private.scrollVars.lastScrollLeft !== currentScrollLeft) {
             currentScrollLeft = this._private.htmlCache.content.scrollLeft;
-            var header = this._private.htmlCache.header.children[0].children[0];
-            header.style.left = -currentScrollLeft + "px";
+             var header = this._private.htmlCache.header.children[0].children[0];
+             header.style.left = -currentScrollLeft + "px";
             this._private.scrollVars.lastScrollLeft = currentScrollLeft;
+            this._private.htmlCache.header.scrollleft = currentScrollLeft;
           }
         }
 
@@ -1894,9 +1895,20 @@ export class VGridGenerator {
 
     var onFocus= (e)=>{
       var x = e.target.offsetParent.offsetLeft;
+      var currentRow = this.getRowNumberFromClickedOn(e);
+
       if(x > this._private.htmlCache.content.clientWidth || x<this._private.htmlCache.content.scrollLeft){
         this._private.htmlCache.content.scrollLeft = x
+        this._private.htmlCache.header.scrollleft = x;
       }
+
+      var height = parseInt((this._private.htmlCache.content.clientHeight/this._private.rowHeight)/2);
+      var scrolltop = parseInt(this._private.htmlCache.content.scrollTop/this._private.rowHeight)
+      console.log(height)
+      console.log(scrolltop)
+      console.log(currentRow)
+      this._private.htmlCache.content.scrollTop = (currentRow * this._private.rowHeight) - (parseInt(this._private.htmlCache.content.clientHeight/2)-this._private.rowHeight)
+
       if (!this._private.disableRowClick) {
         if (this._private.isMultiSelect !== undefined) {
           this.onRowClickAndHighligtHandler(e);
