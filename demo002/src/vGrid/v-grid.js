@@ -159,8 +159,8 @@ export class VGrid {
       var selKeys = this.getSelectionKeys();
 
 
-      var curKey= -1;
-      if(this.currentRowEntity){
+      var curKey = -1;
+      if (this.currentRowEntity) {
         curKey = this.currentRowEntity[this.sgkey];
       }
       var curEntityValid = true;
@@ -171,79 +171,79 @@ export class VGrid {
       //so atm there is a limit what you can do at once..
       if (result) {
 
-           //if anyone is added, then lets add them
-          if (result.addedCount > 0) {
-            col.forEach((x) => {
-              if (x[this.sgkey] === undefined) {
-                colFiltered.push(x)
+        //if anyone is added, then lets add them
+        if (result.addedCount > 0) {
+          col.forEach((x) => {
+            if (x[this.sgkey] === undefined) {
+              colFiltered.push(x)
+            }
+          });
+        }
+
+        //get removed ones and get rid of them
+        if (result.removed.length > 0) {
+
+          //build array of new ones
+          var toRemove = [];
+          result.removed.forEach((x) => {
+            toRemove.push(x[this.sgkey]);
+          });
+          //todo: check this more, to tired to be sure Im thinking right
+          let i = colFiltered.length - 1;
+          while (i !== -1) {
+
+            //is current entity removed?
+            if (toRemove.indexOf(curKey) !== -1) {
+              curEntityValid = false;
+            }
+
+            if (toRemove.indexOf(colFiltered[i][this.sgkey]) !== -1) {
+              var x = colFiltered.splice(i, 1);
+              var selKey = selKeys.indexOf(x[0][this.sgkey]);
+              //also remove selection key
+              if (selKey !== -1) {
+                selKeys.splice(selKey, 1)
+              }
+            }
+
+            i--;
+          }
+        }
+
+        //check current entity, remove if removed, or get key/row
+        if (!curEntityValid) {
+          for (var k in this.currentEntity) {
+            if (this.currentEntity.hasOwnProperty(k)) {
+              this.currentEntity[k] = undefined;
+              this.skipNextUpdateProperty.push(k);
+            }
+          }
+        } else {
+          var newRowNo = -1;
+          if (curKey) {
+            this.collectionFiltered.forEach((x, index) => {
+              if (curKey === x[this.sgkey]) {
+                newRowNo = index;
               }
             });
           }
+        }
 
-          //get removed ones and get rid of them
-          if (result.removed.length > 0) {
+        //set the correct selection
+        this.setSelectionFromKeys(selKeys);
 
-            //build array of new ones
-            var toRemove = [];
-            result.removed.forEach((x) => {
-              toRemove.push(x[this.sgkey]);
-            });
-            //todo: check this more, to tired to be sure Im thinking right
-            let i = colFiltered.length - 1;
-            while (i !== -1) {
+        //reset the keys
+        this.resetKeys();
 
-              //is current entity removed?
-              if(toRemove.indexOf(curKey) !== -1){
-                curEntityValid = false;
-              }
+        //update key on current and filterRow
+        if (newRowNo > -1) {
+          this.currentRowEntity = this.collectionFiltered[newRowNo];
+          this.currentEntity[this.sgkey] = this.currentRowEntity[this.sgkey];
+          this.filterRow = newRowNo
+        }
 
-              if (toRemove.indexOf(colFiltered[i][this.sgkey]) !== -1) {
-                var x = colFiltered.splice(i, 1);
-                var selKey = selKeys.indexOf(x[0][this.sgkey]);
-                //also remove selection key
-                if (selKey !== -1) {
-                  selKeys.splice(selKey, 1)
-                }
-              }
-
-              i--;
-            }
-          }
-
-          //check current entity, remove if removed, or get key/row
-          if(!curEntityValid){
-            for (var k in this.currentEntity) {
-              if (this.currentEntity.hasOwnProperty(k)) {
-                this.currentEntity[k] = undefined;
-                this.skipNextUpdateProperty.push(k);
-              }
-            }
-          }else{
-            var newRowNo = -1;
-            if(curKey){
-              this.collectionFiltered.forEach((x, index) => {
-                if (curKey === x[this.sgkey]) {
-                  newRowNo = index;
-                }
-              });
-            }
-          }
-
-          //set the correct selection
-          this.setSelectionFromKeys(selKeys);
-
-          //reset the keys
-          this.resetKeys();
-
-          //update key on current and filterRow
-          if(newRowNo > -1){
-            this.currentRowEntity = this.collectionFiltered[newRowNo];
-            this.currentEntity[this.sgkey] = this.currentRowEntity[this.sgkey];
-            this.filterRow = newRowNo
-          }
-
-          //update grid
-          grid.collectionChange(false, this.scrollBottomNext);
+        //update grid
+        grid.collectionChange(false, this.scrollBottomNext);
 
 
       }
@@ -270,7 +270,7 @@ export class VGrid {
             this.gridContext.ctx.updateRow(this.filterRow, true);
           } else {
             //if skipping we also need to remove it
-             this.skipNextUpdateProperty.splice(this.skipNextUpdateProperty.indexOf(property), 1);
+            this.skipNextUpdateProperty.splice(this.skipNextUpdateProperty.indexOf(property), 1);
           }
         }
       });
@@ -478,37 +478,47 @@ export class VGrid {
     if (gridOptions.addFilter) {
       gridOptions.onFilterRun = (filterObj) => {
 
-        //get sel keys
-        var selKeys = this.getSelectionKeys();
-        var curKey= -1;
-        if(this.currentRowEntity){
-          curKey = this.currentRowEntity[this.sgkey];
-        }
+        if (filterObj.length !== 0 || this.collectionFiltered.length !== this.collection.length) {
 
-        this.collectionFiltered = this.vGridFilter.run(this.collection, filterObj);
-        this.vGridSort.run(this.collectionFiltered);
-        //set selection
-        this.setSelectionFromKeys(selKeys);
-        
-        //set current row/entity in sync
-        var newRowNo =-1;
-        if(curKey){
-          this.collectionFiltered.forEach((x, index) => {
-            if (curKey === x[this.sgkey]) {
-              newRowNo = index;
+          if (filterObj.length === 0 && this.collectionFiltered.length !== this.collection.length) {
+            this.collectionFiltered = this.collection.slice(0);
+          } else {
+
+            //get sel keys
+            var selKeys = this.getSelectionKeys();
+            var curKey = -1;
+            if (this.currentRowEntity) {
+              curKey = this.currentRowEntity[this.sgkey];
             }
-          });
+
+            this.collectionFiltered = this.vGridFilter.run(this.collection, filterObj);
+            this.vGridSort.run(this.collectionFiltered);
+            //set selection
+            this.setSelectionFromKeys(selKeys);
+
+            //set current row/entity in sync
+            var newRowNo = -1;
+            if (curKey) {
+              this.collectionFiltered.forEach((x, index) => {
+                if (curKey === x[this.sgkey]) {
+                  newRowNo = index;
+                }
+              });
+            }
+
+            if (newRowNo > -1) {
+              this.currentRowEntity = this.collectionFiltered[newRowNo];
+              this.currentEntity[this.sgkey] = this.currentRowEntity[this.sgkey];
+              this.filterRow = newRowNo
+            }
+
+
+
+
+          }
+          //update grid
+          this.gridContext.ctx.collectionChange(true);
         }
-
-        if(newRowNo > -1){
-          this.currentRowEntity = this.collectionFiltered[newRowNo];
-          this.currentEntity[this.sgkey] = this.currentRowEntity[this.sgkey];
-          this.filterRow = newRowNo
-        }
-
-        //update grid
-        this.gridContext.ctx.collectionChange(true);
-
       }
     }
 
@@ -609,7 +619,7 @@ export class VGrid {
       let data = this.currentRowEntity;
       for (var k in data) {
         if (data.hasOwnProperty(k)) {
-          if(this.currentEntity[k] !== data[k]){
+          if (this.currentEntity[k] !== data[k]) {
             this.currentEntity[k] = data[k];
             this.skipNextUpdateProperty.push(k)
           }
@@ -617,7 +627,7 @@ export class VGrid {
       }
 
       if (isDoubleClick) {
-        
+
         //use helper function to edit cell
         cellEditHelper(event, readonly, (obj) => {
 
@@ -628,7 +638,7 @@ export class VGrid {
           //this.gridContext.ctx.updateRow(this.filterRow, true);
 
 
-        },(obj) => {
+        }, (obj) => {
 
           //called on each key stroke
           //lock row for update row for updates
@@ -690,7 +700,7 @@ export class VGrid {
     };
 
 
-    this.gridContext.ctx.scrollBottomNext =() => {
+    this.gridContext.ctx.scrollBottomNext = () => {
       this.scrollBottomNext = true;
     }
 

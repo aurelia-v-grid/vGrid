@@ -376,14 +376,10 @@ export class VGridGenerator {
       if (this._private.configFunctions.onRowMarkupCreate) {
         rowTemplate = this._private.configFunctions.onRowMarkupCreate(attributeNamesArray);
       } else {
-        var test = ()=>{
-          console.log("test")
-        }
         for (var i = 0; i < attributeNamesArray.length; i++) {
           rowTemplate = rowTemplate +
             //`<div><div class="${this._private.css.cellContent}" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}">{{${attributeNamesArray[i]}}}</div></div>`;
-          `<div><input class="${this._private.css.cellContent}"  readonly="true" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
-//onkeydown="(){return false}"
+          `<div><input class="${this._private.css.cellContent}" tabindex="0" readonly="true" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
         }
       }
     }
@@ -865,11 +861,8 @@ export class VGridGenerator {
         var attributeName = myElement.getAttribute(this._private.atts.dataAttribute);
         var oldValue = myElement.value;
 
-        myElement.removeAttribute("readonly");
-        //myElement.setAttribute("entrable", "true");
-        myElement.classList.add("vGrid-editCell")
-
-
+        myElement.removeAttribute("readonly");//if I dont do this, then they cant enter
+        myElement.classList.add("vGrid-editCell");
 
         //setback value
         myElement.onblur = () => {
@@ -879,6 +872,7 @@ export class VGridGenerator {
 
             if (!clicked) {
               clicked = true;
+              console.log("call")
               callback({
                 attribute: attributeName,
                 value: newValue,
@@ -1372,7 +1366,6 @@ export class VGridGenerator {
           if (this._private.renderOnScrollbarScroll) {
             this.onNormalScrollingLarge(isDownScroll, currentScrollTop)
           } else {
-            console.log("scroll")
             this.onScrollbarScrolling();
           }
         } else {
@@ -1384,17 +1377,12 @@ export class VGridGenerator {
           //we do not want scrolls left if this is hidden..
           this._private.htmlCache.content.scrollLeft = 0;
           this._private.scrollVars.lastScrollLeft = 0;
-           var header = this._private.htmlCache.header.children[0].children[0];
-          console.log("hit")
-           header.style.left = 0 + "px";
+          //  var header = this._private.htmlCache.header.children[0].children[0];
+          // header.style.left = 0 + "px";
+          this._private.htmlCache.header.scrollLeft = 0;
         } else {
           if (this._private.scrollVars.lastScrollLeft !== currentScrollLeft) {
-            console.log("hit2")
             currentScrollLeft = this._private.htmlCache.content.scrollLeft;
-             //var header = this._private.htmlCache.header.children[0].children[0];
-             //header.style.left = -currentScrollLeft + "px";
-            console.log(currentScrollLeft)
-           // header.scrollleft = currentScrollLeft
             this._private.scrollVars.lastScrollLeft = currentScrollLeft;
             this._private.htmlCache.header.scrollLeft = currentScrollLeft;
           }
@@ -1856,34 +1844,18 @@ export class VGridGenerator {
     /*------------------------------------------------*/
     //normal click
     var handleClick = (e) => {
-      console.log("wee")
-      //console.log("singleClick")
-      //var xTimer = setTimeout(() => {
-      //     if (!this._private.disableRowClick) {
-      //       if (this._private.isMultiSelect !== undefined) {
-      //         this.onRowClickAndHighligtHandler(e);
-      //       }
-      //       var currentRow = this.getRowNumberFromClickedOn(e);
-      //       this._private.configFunctions.clickHandler(e, currentRow, null)
-      //     }
-       // },
-      //  0);
-       // this._private.scrollVars.clickTimersArray.push(xTimer);
+        if (this._private.isMultiSelect !== undefined) {
+          this.onRowClickAndHighligtHandler(e);
+        }
     };
 
 
     /*------------------------------------------------*/
     //doubleclick
     var handleDblClick = (e) => {
-      //console.log("doubleClick")
-      //this.onScrollClickCancel(); //clear singleclick so it does not fire twise,
-      if (!this._private.disableRowClick) {
-        if (this._private.isMultiSelect !== undefined) {
-          this.onRowClickAndHighligtHandler(e);
-        }
-        var currentRow = this.getRowNumberFromClickedOn(e);
-        this._private.configFunctions.clickHandler(e, currentRow, this.editCellhelper.bind(this))
-      }
+
+      var currentRow = this.getRowNumberFromClickedOn(e);
+      //nothing atm
 
     };
 
@@ -1891,44 +1863,35 @@ export class VGridGenerator {
     /*------------------------------------------------*/
     //right click
     var onMouseDownRow = (e) => {
-
       //e.preventDefault();
       if (e.button === 2) {
-
-        if (!this._private.disableRowClick) {
-          //var currentRow = this.getRowNumberFromClickedOn(e);
-          //this._private.configFunctions.clickHandler(e, currentRow, null)
-        }
+       //nothing atm
       }
 
     };
 
     var onFocus= (e)=>{
-      console.log("focus")
+
       var x = e.target.offsetParent.offsetLeft;
       var currentRow = this.getRowNumberFromClickedOn(e);
 
       if(x > this._private.htmlCache.content.clientWidth || x<this._private.htmlCache.content.scrollLeft){
-        this._private.htmlCache.content.scrollLeft = x
+        this._private.htmlCache.content.scrollLeft = x;
         //this._private.htmlCache.header.scrollLeft = x;
       }
       this._private.htmlCache.header.scrollLeft = this._private.htmlCache.content.scrollLeft;
 
-      this._private.htmlCache.header.scrollleft = x;
-      var height = parseInt((this._private.htmlCache.content.clientHeight/this._private.rowHeight)/2);
-      var scrolltop = parseInt(this._private.htmlCache.content.scrollTop/this._private.rowHeight)
-      this._private.htmlCache.content.scrollTop = (currentRow * this._private.rowHeight) - (parseInt(this._private.htmlCache.content.clientHeight/2)-this._private.rowHeight)
+      // this._private.htmlCache.header.scrollleft = x;
+      // var height = parseInt((this._private.htmlCache.content.clientHeight/this._private.rowHeight)/2);
+      // var scrolltop = parseInt(this._private.htmlCache.content.scrollTop/this._private.rowHeight)
+      // this._private.htmlCache.content.scrollTop = (currentRow * this._private.rowHeight) - (parseInt(this._private.htmlCache.content.clientHeight/2)-this._private.rowHeight)
 
-      if (!this._private.disableRowClick) {
-        if (this._private.isMultiSelect !== undefined) {
-          this.onRowClickAndHighligtHandler(e);
-        }
-      }
+
       var currentRow = this.getRowNumberFromClickedOn(e);
       this._private.configFunctions.clickHandler(e, currentRow, this.editCellhelper.bind(this))
 
 
-    }
+    };
 
 
 
