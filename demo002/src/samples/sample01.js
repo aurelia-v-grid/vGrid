@@ -37,6 +37,10 @@ export class sample01 {
   }
 
 
+  attached(){
+
+  }
+
 
   /********************************************************************
    *  COLLECTION MOD BUTTONS

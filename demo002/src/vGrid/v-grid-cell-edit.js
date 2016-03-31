@@ -1,25 +1,19 @@
-
 //this wil be really messy while I test whats possible
 
 export class VGridCellEdit {
 
 
-  constructor(parent){
-    this.parent =parent;
+  constructor(parent) {
+    this.parent = parent;
     this.element = parent.element;
-    this.mainKeyDown();
-    this.overrideClick = false;
-    this.count = 0;
+    this.addGridKeyListner();
     this.editMode = false;
 
   }
 
 
 
-  /****************************************************************************************************************************
-   * used with click event to get row number of the one click on
-   ****************************************************************************************************************************/
-  getRow(e, direction) {
+  setCellsFromElement(e, direction) {
     var thisTop;
     var element;
     var x = 10;
@@ -30,8 +24,8 @@ export class VGridCellEdit {
         if (node.classList.contains(this._private.css.row)) {
           for (var y = 0; y < this._private.htmlCache.rowsArray.length; y++) {
             if (node.style.transform === this._private.htmlCache.rowsArray[y].div.style.transform) {
-              thisTop = this._private.htmlCache.rowsArray[y+direction].top;
-              element = this._private.htmlCache.rowsArray[y+direction].div;
+              thisTop = this._private.htmlCache.rowsArray[y + direction].top;
+              element = this._private.htmlCache.rowsArray[y + direction].div;
             }
           }
         }
@@ -39,275 +33,188 @@ export class VGridCellEdit {
       } catch (x) {
       }
     }
-
-    var rowHeight = this._private.rowHeight;
-    var currentRow = Math.round(thisTop / rowHeight);
-    if(element){
-      this.cells = element.querySelectorAll("."+this._private.css.cellContent);
+    //var rowHeight = this._private.rowHeight;
+    //var currentRow = Math.round(thisTop / rowHeight);
+    if (element) {
+      this.cells = element.querySelectorAll("." + this._private.css.cellContent);
     }
-
     return thisTop;
   };
 
-  getElement (top){
-
+  setCellsFromTopValue(top) {
     var element = 0;
     for (var i = 0; i < this._private.htmlCache.rowsArray.length; i++) {
-      if(this._private.htmlCache.rowsArray[i].top === top){
+      if (this._private.htmlCache.rowsArray[i].top === top) {
         element = this._private.htmlCache.rowsArray[i].div;
       }
     }
-
-    if(element){
-      this.cells = element.querySelectorAll("."+this._private.css.cellContent);
+    if (element) {
+      this.cells = element.querySelectorAll("." + this._private.css.cellContent);
     }
 
   }
 
 
 
+  removeEditCssClasses(element) {
+    element.setAttribute("readonly", "false");
+    element.classList.remove("vGrid-editCell");
+    element.classList.remove("vGrid-editCell-write");
+    element.classList.remove("vGrid-editCell-focus");
+  }
+
+
+  dispatchCellClick(index){
+    var event = new MouseEvent('click', {
+      'view': window,
+      'bubbles': true,
+      'cancelable': true
+    });
+    this.setAsSingleClick = true;
+    this.cells[index].dispatchEvent(event);
+  }
 
 
 
+  addGridKeyListner() {
 
+    this.element.onkeydown = function (e) {
 
-
-
-  mainKeyDown(){
-
-    this.element.onkeydown = function(e) {
-
-      console.log(e.keyCode)
+      console.log(e.keyCode);
 
       //down
-      if(e.keyCode === 40){
+      if (e.keyCode === 40) {
         e.preventDefault();
-        if(!this.timer){
-          this.timer = setTimeout(()=>{
-            this.count = 0;
+        if (!this.timer) {
+          this.timer = setTimeout(()=> {
             this.timer = null;
-            //console.log("-tab")
-            if(this.curElement){
-              this.oldElement = this.curElement;
-              this.curElement.setAttribute("readonly","false")
-              this.curElement.classList.remove("vGrid-editCell");
-              this.curElement.classList.remove("vGrid-editCell-write");
-
-              this.top = this.getRow(this.curElement,+1)
-
-              var event = new MouseEvent('dblclick', {
-                'view': window,
-                'bubbles': true,
-                'cancelable': true
-              });
-              this.setAsSingleClick = true;
-              this.cells[this.index].dispatchEvent(event);
-              //  console.log(this.cells[this.index])
+            if (this.curElement) {
+              this.removeEditCssClasses(this.curElement);
+              this.top = this.setCellsFromElement(this.curElement, +1);
+              this.dispatchCellClick(this.index)
             }
-          },150)
+          }, 150)
         }
       }
 
       //right
-      if(e.keyCode === 39 && !this.editMode){
+      if (e.keyCode === 39 && !this.editMode) {
         e.preventDefault();
-        if(!this.timer){
-          this.timer = setTimeout(()=>{
-            this.count = 0;
+        if (!this.timer) {
+          this.timer = setTimeout(()=> {
             this.timer = null;
-            //console.log("-tab")
-            if(this.curElement){
-              this.oldElement = this.curElement;
-              this.curElement.setAttribute("readonly","false")
-              this.curElement.classList.remove("vGrid-editCell");
-              this.curElement.classList.remove("vGrid-editCell-write");
-
-              //this.top = this.getRow(this.curElement,+1)
-
-              var event = new MouseEvent('dblclick', {
-                'view': window,
-                'bubbles': true,
-                'cancelable': true
-              });
-              if(!this.last){
-                this.setAsSingleClick = true;
-              this.cells[this.index+1].dispatchEvent(event);
+            if (this.curElement) {
+              this.removeEditCssClasses(this.curElement);
+              if (!this.last) {
+                this.dispatchCellClick(this.index+1)
               }
-              //  console.log(this.cells[this.index])
             }
-          },150)
+          }, 150)
         }
       }
 
       //left
-      if(e.keyCode === 37 && !this.editMode){
+      if (e.keyCode === 37 && !this.editMode) {
         e.preventDefault();
-        if(!this.timer){
-          this.timer = setTimeout(()=>{
-            this.count = 0;
+        if (!this.timer) {
+          this.timer = setTimeout(()=> {
             this.timer = null;
-            //console.log("-tab")
-            if(this.curElement){
-              this.oldElement = this.curElement;
-              this.curElement.setAttribute("readonly","false")
-              this.curElement.classList.remove("vGrid-editCell");
-              this.curElement.classList.remove("vGrid-editCell-write");
-
-              //this.top = this.getRow(this.curElement,+1)
-
-              var event = new MouseEvent('dblclick', {
-                'view': window,
-                'bubbles': true,
-                'cancelable': true
-              });
-              if(!this.first){
-                this.setAsSingleClick = true;
-                this.cells[this.index-1].dispatchEvent(event);
+            if (this.curElement) {
+              this.removeEditCssClasses(this.curElement);
+              if (!this.first) {
+                this.dispatchCellClick(this.index-1)
               }
-              //  console.log(this.cells[this.index])
             }
-          },150)
+          }, 150)
         }
       }
 
       //up
-      if(e.keyCode === 38){
+      if (e.keyCode === 38) {
         e.preventDefault();
-        if(!this.timer){
-          this.timer = setTimeout(()=>{
-            this.count = 0;
+        if (!this.timer) {
+          this.timer = setTimeout(()=> {
             this.timer = null;
-            //console.log("-tab")
-            if(this.curElement){
-              this.oldElement = this.curElement;
-              this.curElement.setAttribute("readonly","false")
-              this.curElement.classList.remove("vGrid-editCell");
-              this.curElement.classList.remove("vGrid-editCell-write");
-
-              this.top = this.getRow(this.curElement,-1);
-
-              var event = new MouseEvent('dblclick', {
-                'view': window,
-                'bubbles': true,
-                'cancelable': true
-              });
-              this.setAsSingleClick = true;
-              this.cells[this.index].dispatchEvent(event);
-              //  console.log(this.cells[this.index])
+            if (this.curElement) {
+              this.removeEditCssClasses(this.curElement);
+              this.top = this.setCellsFromElement(this.curElement, -1);
+              this.dispatchCellClick(this.index)
             }
-          },150)
+          }, 150)
         }
       }
 
 
 
 
-
-
-
-
-      if(e.keyCode === 9 && e.shiftKey ===true){
+      //tab and shift key for tabing in other direction
+      if (e.keyCode === 9 && e.shiftKey === true) {
         e.preventDefault();
-        if(!this.timer){
-          this.timer = setTimeout(()=>{
-            this.count = 0;
+        if (!this.timer) {
+          this.timer = setTimeout(()=> {
             this.timer = null;
-            //console.log("-tab")
-            if(this.curElement){
-              this.oldElement = this.curElement;
-              this.curElement.setAttribute("readonly","false");
-              this.curElement.classList.remove("vGrid-editCell");
-              this.curElement.classList.remove("vGrid-editCell-write");
-              this.index = this.index-1;
-              if(this.first){
-                this.index = this.cells.length-1
-                this.top = this.getRow(this.curElement,-1)
+            if (this.curElement) {
+              this.removeEditCssClasses(this.curElement);
+              this.index = this.index - 1;
+              if (this.first) {
+                this.index = this.cells.length - 1;
+                this.top = this.setCellsFromElement(this.curElement, -1)
               }
-              var event = new MouseEvent('dblclick', {
-                'view': window,
-                'bubbles': true,
-                'cancelable': true
-              });
-              this.setAsSingleClick = true;
-              this.cells[this.index].dispatchEvent(event);
-              //  console.log(this.cells[this.index])
+              this.dispatchCellClick(this.index)
             }
-          },150)
+          }, 150)
         }
       }
 
-      if(e.keyCode === 9 && e.shiftKey ===false){
+      //notmal tabbing
+      if (e.keyCode === 9 && e.shiftKey === false) {
         e.preventDefault();
-
-        if(!this.timer){
-          this.timer = setTimeout(()=>{
-            this.count = 0;
+        if (!this.timer) {
+          this.timer = setTimeout(()=> {
             this.timer = null;
-            //console.log("tab")
-            if(this.curElement){
-              this.oldElement = this.curElement;
-              this.curElement.setAttribute("readonly","false")
-              this.curElement.classList.remove("vGrid-editCell");
-              this.curElement.classList.remove("vGrid-editCell-write");
-              this.curElement.classList.remove("vGrid-editCell-focus");
-              this.index = this.index+1;
-              if(this.last){
-                this.index = 0
-                this.top = this.getRow(this.curElement,1)
+            if (this.curElement) {
+              this.removeEditCssClasses(this.curElement);
+              this.index = this.index + 1;
+              if (this.last) {
+                this.index = 0;
+                this.top = this.setCellsFromElement(this.curElement, 1)
               }
-            var event = new MouseEvent('dblclick', {
-                'view': window,
-                'bubbles': true,
-                'cancelable': true
-              });
-              this.setAsSingleClick = true;
-              this.cells[this.index].dispatchEvent(event);
-              //  console.log(this.cells[this.index])
+              this.dispatchCellClick(this.index)
             }
-          },150)
+          }, 150)
         }
       }
     }.bind(this)
-
   }
 
 
 
-  elementBlur(){
-    this.curElement.setAttribute("readonly","false")
-    this.curElement.classList.remove("vGrid-editCell");
-    this.curElement.classList.remove("vGrid-editCell-write");
-    this.curElement.classList.remove("vGrid-editCell-focus");
-    this.top = this.getRow(this.curElement, 0)
+  elementBlur() {
+    this.removeEditCssClasses(this.curElement);
+    this.top = this.setCellsFromElement(this.curElement, 0);
     this.callbackDone(this.callbackObject());
     this.editMode = false;
-    this.getElement(this.top);
-    var event = new MouseEvent('click', {
-        'view': window,
-        'bubbles': true,
-        'cancelable': true
-      });
-    this.cells[this.index].dispatchEvent(event);
+    this.setCellsFromTopValue(this.top);
+    this.dispatchCellClick(this.index)
   }
 
 
-  elementKeyDown(){
 
+  elementKeyDown() {
     this.curElement.onkeydown = (e) => {
       if (e.keyCode == 13) {
         this.elementBlur();
         return false;
       }
-      if (this.readOnly === true && e.keyCode!==9) {
+      if (this.readOnly === true && e.keyCode !== 9) {
         return false;
       } else {
         return true;
       }
     };
-
   }
 
-  callbackObject (){
+  callbackObject() {
     return {
       attribute: this.attribute,
       value: this.curElement.value,
@@ -317,16 +224,20 @@ export class VGridCellEdit {
   }
 
 
-  elementKeyUp(){
+
+
+  elementKeyUp() {
     this.curElement.onkeyup = (ex) => {
       this.callbackKey(this.callbackObject());
     };
   }
 
 
+
+
   editCellhelper(e, readOnly, callbackDone, callbackKey) {
-    console.log("clickcell")
-    if(!this._private){
+
+    if (!this._private) {
       this._private = this.parent.gridContext.ctx._private;
     }
 
@@ -339,78 +250,57 @@ export class VGridCellEdit {
       this.oldValue = e.target.value;
       this.attribute = e.target.getAttribute(this._private.atts.dataAttribute);
       this.index = this._private.attributeArray.indexOf(this.attribute);
-      //console.log(this._private.attributeArray.indexOf(this.attribute))
       this.type = e.type;
-      this.cells = this.curElement.offsetParent.offsetParent.querySelectorAll("."+this._private.css.cellContent);
+      this.cells = this.curElement.offsetParent.offsetParent.querySelectorAll("." + this._private.css.cellContent);
       this.row = this.parent.filterRow;
 
-      console.log(e.type)
-      if(this.setAsSingleClick){
+      //override the double click, just to make it simple to focus on correct cell
+      if (this.setAsSingleClick) {
         this.setAsSingleClick = false;
         this.type = "click"
       }
 
-      //
-      setTimeout(()=>{
+
+      setTimeout(()=> {
         this._private.htmlCache.header.scrollLeft = this._private.htmlCache.content.scrollLeft
-      },10);
+      }, 10);
 
 
-
-      if(this.index === this.cells.length-1){
+      if (this.index === this.cells.length - 1) {
         this.last = true;
       } else {
         this.last = false;
       }
-      if(this.index === 0){
+      if (this.index === 0) {
         this.first = true;
       } else {
         this.first = false;
       }
 
-     // console.log(this.editMode)
 
-      if(this.type === "dblclick" || this.editMode){
-        this.editMode = true
-        if(e.target.classList.contains("vGrid-editCell-focus")){
+      e.target.classList.add("vGrid-editCell");
+      e.target.classList.add("vGrid-editCell-write");
+
+
+      if (this.type === "dblclick" || this.editMode) {
+        this.editMode = true;
+        if (e.target.classList.contains("vGrid-editCell-focus")) {
           e.target.classList.remove("vGrid-editCell-focus");
-       }
-
+        }
         e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
-        e.target.classList.add("vGrid-editCell");
-        e.target.classList.add("vGrid-editCell-write");
-
       } else {
-        e.target.classList.add("vGrid-editCell");
-        e.target.classList.add("vGrid-editCell-write");
-          e.target.classList.add("vGrid-editCell-focus");
+        e.target.classList.add("vGrid-editCell-focus");
       }
-
-
 
       this.elementKeyUp();
       this.elementKeyDown();
-      this.curElement.onblur=(e)=>{
-        e.target.setAttribute("readonly","false")
-        e.target.classList.remove("vGrid-editCell");
-        e.target.classList.remove("vGrid-editCell-write");
-        e.target.classList.remove("vGrid-editCell-focus");
+      this.curElement.onblur = (e)=> {
+        this.removeEditCssClasses(e.target);
+      };
 
-
-      }
       this.curElement.focus();
 
     }
-
-
-
-
-
-
   };
-
-
-
-
 
 }
