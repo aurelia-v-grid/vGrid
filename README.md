@@ -9,7 +9,7 @@ vGrid - Custom Element for Aurelia
 
 
 ##### How to use: (no plugin yet):
-1: Copy the files under vgrid folder to you src folder
+1: Copy the files under vgrid folder to you src folder, and move font and spinner image to styles folder
 
 2: Add require to the css and element:
 
