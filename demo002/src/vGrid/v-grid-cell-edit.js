@@ -10,6 +10,7 @@ export class VGridCellEdit {
     this.mainKeyDown();
     this.overrideClick = false;
     this.count = 0;
+    this.editMode = false;
 
   }
 
@@ -29,7 +30,7 @@ export class VGridCellEdit {
         if (node.classList.contains(this._private.css.row)) {
           for (var y = 0; y < this._private.htmlCache.rowsArray.length; y++) {
             if (node.style.transform === this._private.htmlCache.rowsArray[y].div.style.transform) {
-              thisTop = this._private.htmlCache.rowsArray[y].top;
+              thisTop = this._private.htmlCache.rowsArray[y+direction].top;
               element = this._private.htmlCache.rowsArray[y+direction].div;
             }
           }
@@ -45,8 +46,30 @@ export class VGridCellEdit {
       this.cells = element.querySelectorAll("."+this._private.css.cellContent);
     }
 
-    //return element.querySelectorAll("."+this._private.css.cellContent);
+    return thisTop;
   };
+
+  getElement (top){
+
+    var element = 0;
+    for (var i = 0; i < this._private.htmlCache.rowsArray.length; i++) {
+      if(this._private.htmlCache.rowsArray[i].top === top){
+        element = this._private.htmlCache.rowsArray[i].div;
+      }
+    }
+
+    if(element){
+      this.cells = element.querySelectorAll("."+this._private.css.cellContent);
+    }
+
+  }
+
+
+
+
+
+
+
 
 
 
@@ -54,6 +77,9 @@ export class VGridCellEdit {
 
     this.element.onkeydown = function(e) {
 
+      console.log(e.keyCode)
+
+      //down
       if(e.keyCode === 40){
         e.preventDefault();
         if(!this.timer){
@@ -66,19 +92,10 @@ export class VGridCellEdit {
               this.curElement.setAttribute("readonly","false")
               this.curElement.classList.remove("vGrid-editCell");
               this.curElement.classList.remove("vGrid-editCell-write");
-              // this.index = this.index-1;
-              // if(this.first){
-              //   this.index = this.cells.length-1
-                 this.getRow(this.curElement,+1)
-              // }
-              //console.log(this.index)
-              if(this.type === "dblclick"){
 
+              this.top = this.getRow(this.curElement,+1)
 
-              } else {
-                this.overrideClick = true;
-              }
-              var event = new MouseEvent('dblclick', {
+              var event = new MouseEvent('click', {
                 'view': window,
                 'bubbles': true,
                 'cancelable': true
@@ -90,6 +107,67 @@ export class VGridCellEdit {
         }
       }
 
+      //right
+      if(e.keyCode === 39 && !this.editMode){
+        e.preventDefault();
+        if(!this.timer){
+          this.timer = setTimeout(()=>{
+            this.count = 0;
+            this.timer = null;
+            //console.log("-tab")
+            if(this.curElement){
+              this.oldElement = this.curElement;
+              this.curElement.setAttribute("readonly","false")
+              this.curElement.classList.remove("vGrid-editCell");
+              this.curElement.classList.remove("vGrid-editCell-write");
+
+              //this.top = this.getRow(this.curElement,+1)
+
+              var event = new MouseEvent('click', {
+                'view': window,
+                'bubbles': true,
+                'cancelable': true
+              });
+              if(!this.last){
+              this.cells[this.index+1].dispatchEvent(event);
+              }
+              //  console.log(this.cells[this.index])
+            }
+          },150)
+        }
+      }
+
+      //left
+      if(e.keyCode === 37 && !this.editMode){
+        e.preventDefault();
+        if(!this.timer){
+          this.timer = setTimeout(()=>{
+            this.count = 0;
+            this.timer = null;
+            //console.log("-tab")
+            if(this.curElement){
+              this.oldElement = this.curElement;
+              this.curElement.setAttribute("readonly","false")
+              this.curElement.classList.remove("vGrid-editCell");
+              this.curElement.classList.remove("vGrid-editCell-write");
+
+              //this.top = this.getRow(this.curElement,+1)
+
+              var event = new MouseEvent('click', {
+                'view': window,
+                'bubbles': true,
+                'cancelable': true
+              });
+              if(!this.first){
+                this.cells[this.index-1].dispatchEvent(event);
+              }
+              //  console.log(this.cells[this.index])
+            }
+          },150)
+        }
+      }
+
+      //up
       if(e.keyCode === 38){
         e.preventDefault();
         if(!this.timer){
@@ -102,19 +180,10 @@ export class VGridCellEdit {
               this.curElement.setAttribute("readonly","false")
               this.curElement.classList.remove("vGrid-editCell");
               this.curElement.classList.remove("vGrid-editCell-write");
-              // this.index = this.index-1;
-              // if(this.first){
-              //   this.index = this.cells.length-1
-              this.getRow(this.curElement,-1)
-              // }
-              //console.log(this.index)
-              if(this.type === "dblclick"){
 
+              this.top = this.getRow(this.curElement,-1);
 
-              } else {
-                this.overrideClick = true;
-              }
-              var event = new MouseEvent('dblclick', {
+              var event = new MouseEvent('click', {
                 'view': window,
                 'bubbles': true,
                 'cancelable': true
@@ -148,16 +217,9 @@ export class VGridCellEdit {
               this.index = this.index-1;
               if(this.first){
                 this.index = this.cells.length-1
-                this.getRow(this.curElement,-1)
+                this.top = this.getRow(this.curElement,-1)
               }
-              //console.log(this.index)
-              if(this.type === "dblclick"){
-
-
-              } else {
-                this.overrideClick = true;
-              }
-              var event = new MouseEvent('dblclick', {
+              var event = new MouseEvent('click', {
                 'view': window,
                 'bubbles': true,
                 'cancelable': true
@@ -186,16 +248,9 @@ export class VGridCellEdit {
               this.index = this.index+1;
               if(this.last){
                 this.index = 0
-                this.getRow(this.curElement,1)
+                this.top = this.getRow(this.curElement,1)
               }
-              //console.log(this.index)
-              if(this.type === "dblclick"){
-
-
-              } else {
-                this.overrideClick = true;
-              }
-              var event = new MouseEvent('dblclick', {
+            var event = new MouseEvent('click', {
                 'view': window,
                 'bubbles': true,
                 'cancelable': true
@@ -213,10 +268,20 @@ export class VGridCellEdit {
 
 
   elementBlur(){
-
+    this.curElement.setAttribute("readonly","false")
     this.curElement.classList.remove("vGrid-editCell");
+    this.curElement.classList.remove("vGrid-editCell-write");
+    this.curElement.classList.remove("vGrid-editCell-focus");
+    this.top = this.getRow(this.curElement, 0)
     this.callbackDone(this.callbackObject());
-
+    this.editMode = false;
+    this.getElement(this.top);
+    var event = new MouseEvent('click', {
+        'view': window,
+        'bubbles': true,
+        'cancelable': true
+      });
+    this.cells[this.index].dispatchEvent(event);
   }
 
 
@@ -254,7 +319,7 @@ export class VGridCellEdit {
 
 
   editCellhelper(e, readOnly, callbackDone, callbackKey) {
-
+    console.log("clickcell")
     if(!this._private){
       this._private = this.parent.gridContext.ctx._private;
     }
@@ -292,8 +357,10 @@ export class VGridCellEdit {
         this.first = false;
       }
 
+     // console.log(this.editMode)
 
-      if(e.type === "dblclick" && !this.overrideClick){
+      if(e.type === "dblclick" || this.editMode){
+        this.editMode = true
         if(e.target.classList.contains("vGrid-editCell-focus")){
           e.target.classList.remove("vGrid-editCell-focus");
        }
@@ -303,22 +370,10 @@ export class VGridCellEdit {
         e.target.classList.add("vGrid-editCell-write");
 
       } else {
-        if(!this.overrideClick){
           e.target.classList.add("vGrid-editCell-focus");
-        }
-        if(this.overrideClick && e.type === "dblclick"){
-          e.target.classList.add("vGrid-editCell-focus");
-        }
       }
 
 
-
-
-      if(this.overrideClick){
-        this.overrideClick = false;
-        this.type = "click";
-        e.target.classList.add("vGrid-editCell");
-      }
 
       this.elementKeyUp();
       this.elementKeyDown();

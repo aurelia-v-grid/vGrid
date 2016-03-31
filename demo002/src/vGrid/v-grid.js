@@ -638,6 +638,7 @@ export class VGrid {
           this.currentRowEntity[obj.attribute] = obj.value;
           this.currentEntity[obj.attribute] = obj.value;
           this.gridContext.ctx.updateRow(this.filterRow, true);
+          console.log("filterRow")
 
 
         }, (obj) => {
