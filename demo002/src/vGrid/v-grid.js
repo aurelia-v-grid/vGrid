@@ -11,6 +11,7 @@ import {VGridFilter} from './v-grid-filter';
 import {VGridSort} from './v-grid-sort';
 import {VGridInterpolate} from './v-grid-interpolate';
 import {VGridSortable} from './v-grid-sortable';
+import {VGridCellEdit} from './v-grid-cell-edit';
 
 
 @noView
@@ -43,6 +44,7 @@ export class VGrid {
     this.skipNextUpdateProperty = []; //skip row update, used when setting internal values to current entity from row editing, or to undefined
     this.rowData = this.element.getElementsByTagName("V-GRID-ROW")[0];
     this.columns = this.rowData.getElementsByTagName("V-GRID-COL");
+    this.cellEdit = new VGridCellEdit(this);
   }
 
 
@@ -603,7 +605,7 @@ export class VGrid {
      * Listen for click on rows,
      * Snd set current entity, and also allow edit of cell
      ***************************************************************************************/
-    gridOptions.clickHandler = (event, row, cellEditHelper) => {
+    gridOptions.clickHandler = (event, row) => {
 
       let isDoubleClick = true;//(event.type === "dblclick");
       let attribute = event.target.getAttribute("v-grid-data-attribute");
@@ -629,13 +631,13 @@ export class VGrid {
       if (isDoubleClick) {
 
         //use helper function to edit cell
-        cellEditHelper(event, readonly, (obj) => {
+        this.cellEdit.editCellhelper(event, readonly, (obj) => {
 
           //called when cell looses focus, user presses enter
           //set current entity and and update row data
           this.currentRowEntity[obj.attribute] = obj.value;
           this.currentEntity[obj.attribute] = obj.value;
-          //this.gridContext.ctx.updateRow(this.filterRow, true);
+          this.gridContext.ctx.updateRow(this.filterRow, true);
 
 
         }, (obj) => {

@@ -32,6 +32,8 @@
   background-color: rgb(240, 240, 240);
 }
 
+
+
 .vGrid-row-container {
   background-color: inherit;
 }
@@ -179,9 +181,7 @@
   line-height:100%
 }
 
-.vGrid-row-cell > .vGrid-content:focus {
-  border: 1px dotted rgb(110, 107, 107);
-}
+
 
 .vGrid-row-cell-header > .vGrid-content {
   -webkit-touch-callout: none;
@@ -209,8 +209,24 @@
   -webkit-user-select: text !important;
   -moz-user-select: text !important;
   -ms-user-select: text !important;
-  border: 1px dashed rgb(110, 107, 107);
+
 }
+
+.vGrid-editCell-write {
+  -webkit-touch-callout: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  border: 1px dashed blue !important;
+}
+
+.vGrid-editCell-focus {
+  border: 1px dotted rgb(110, 107, 107) !important;
+}
+
+/*.vGrid-row-cell > .vGrid-content:focus {*/
+  /*border: 1px dotted rgb(110, 107, 107);*/
+/*}*/
 
 .vGrid *:focus {
   outline: 0 !important;
