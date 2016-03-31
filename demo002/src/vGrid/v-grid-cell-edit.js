@@ -95,11 +95,12 @@ export class VGridCellEdit {
 
               this.top = this.getRow(this.curElement,+1)
 
-              var event = new MouseEvent('click', {
+              var event = new MouseEvent('dblclick', {
                 'view': window,
                 'bubbles': true,
                 'cancelable': true
               });
+              this.setAsSingleClick = true;
               this.cells[this.index].dispatchEvent(event);
               //  console.log(this.cells[this.index])
             }
@@ -123,12 +124,13 @@ export class VGridCellEdit {
 
               //this.top = this.getRow(this.curElement,+1)
 
-              var event = new MouseEvent('click', {
+              var event = new MouseEvent('dblclick', {
                 'view': window,
                 'bubbles': true,
                 'cancelable': true
               });
               if(!this.last){
+                this.setAsSingleClick = true;
               this.cells[this.index+1].dispatchEvent(event);
               }
               //  console.log(this.cells[this.index])
@@ -153,12 +155,13 @@ export class VGridCellEdit {
 
               //this.top = this.getRow(this.curElement,+1)
 
-              var event = new MouseEvent('click', {
+              var event = new MouseEvent('dblclick', {
                 'view': window,
                 'bubbles': true,
                 'cancelable': true
               });
               if(!this.first){
+                this.setAsSingleClick = true;
                 this.cells[this.index-1].dispatchEvent(event);
               }
               //  console.log(this.cells[this.index])
@@ -183,11 +186,12 @@ export class VGridCellEdit {
 
               this.top = this.getRow(this.curElement,-1);
 
-              var event = new MouseEvent('click', {
+              var event = new MouseEvent('dblclick', {
                 'view': window,
                 'bubbles': true,
                 'cancelable': true
               });
+              this.setAsSingleClick = true;
               this.cells[this.index].dispatchEvent(event);
               //  console.log(this.cells[this.index])
             }
@@ -211,7 +215,7 @@ export class VGridCellEdit {
             //console.log("-tab")
             if(this.curElement){
               this.oldElement = this.curElement;
-              this.curElement.setAttribute("readonly","false")
+              this.curElement.setAttribute("readonly","false");
               this.curElement.classList.remove("vGrid-editCell");
               this.curElement.classList.remove("vGrid-editCell-write");
               this.index = this.index-1;
@@ -219,11 +223,12 @@ export class VGridCellEdit {
                 this.index = this.cells.length-1
                 this.top = this.getRow(this.curElement,-1)
               }
-              var event = new MouseEvent('click', {
+              var event = new MouseEvent('dblclick', {
                 'view': window,
                 'bubbles': true,
                 'cancelable': true
               });
+              this.setAsSingleClick = true;
               this.cells[this.index].dispatchEvent(event);
               //  console.log(this.cells[this.index])
             }
@@ -250,11 +255,12 @@ export class VGridCellEdit {
                 this.index = 0
                 this.top = this.getRow(this.curElement,1)
               }
-            var event = new MouseEvent('click', {
+            var event = new MouseEvent('dblclick', {
                 'view': window,
                 'bubbles': true,
                 'cancelable': true
               });
+              this.setAsSingleClick = true;
               this.cells[this.index].dispatchEvent(event);
               //  console.log(this.cells[this.index])
             }
@@ -338,6 +344,11 @@ export class VGridCellEdit {
       this.cells = this.curElement.offsetParent.offsetParent.querySelectorAll("."+this._private.css.cellContent);
       this.row = this.parent.filterRow;
 
+      console.log(e.type)
+      if(this.setAsSingleClick){
+        this.setAsSingleClick = false;
+        this.type = "click"
+      }
 
       //
       setTimeout(()=>{
@@ -359,7 +370,7 @@ export class VGridCellEdit {
 
      // console.log(this.editMode)
 
-      if(e.type === "dblclick" || this.editMode){
+      if(this.type === "dblclick" || this.editMode){
         this.editMode = true
         if(e.target.classList.contains("vGrid-editCell-focus")){
           e.target.classList.remove("vGrid-editCell-focus");
@@ -370,6 +381,8 @@ export class VGridCellEdit {
         e.target.classList.add("vGrid-editCell-write");
 
       } else {
+        e.target.classList.add("vGrid-editCell");
+        e.target.classList.add("vGrid-editCell-write");
           e.target.classList.add("vGrid-editCell-focus");
       }
 
