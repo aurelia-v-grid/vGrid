@@ -111,6 +111,8 @@ Default = true: if false it does not request animation frame
 Default = true: if false it does not try to render if there is to much scrolling up/down with scrollbar
 ###### "locked-columns"
 Default = 0, this can be very slow, but its x columns from left.
+* This is really slow / laggy in Edge
+
 ###### "header-filter"
 Default = false, adds filter to header, you need to set height if header higher now because the filter tried to use 50% of the column height
 ###### "header-filter-top"
