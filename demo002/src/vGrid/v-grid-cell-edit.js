@@ -64,7 +64,7 @@ export class VGridCellEdit {
   }
 
 
-  dispatchCellClick(index){
+  dispatchCellClick(index) {
     var event = new MouseEvent('click', {
       'view': window,
       'bubbles': true,
@@ -75,6 +75,16 @@ export class VGridCellEdit {
   }
 
 
+  keyDownDelay(callback) {
+    if (!this.timer) {
+      this.timer = setTimeout(()=> {
+        this.timer = null;
+        callback();
+      }, 150)
+    }
+  }
+
+
 
   addGridKeyListner() {
 
@@ -82,66 +92,126 @@ export class VGridCellEdit {
 
       console.log(e.keyCode);
 
-      //down
+
+
+      //page up
+      if (e.keyCode === 33) {
+        e.preventDefault();
+        this.keyDownDelay(() => {
+          if (this.curElement) {
+            //get scrolltop
+            var currentscrolltop = this.gridCtx.getScrollTop();
+
+            //get content height/rows
+            var rowHeight = this._private.rowHeight
+            var containerHeight = this._private.htmlCache.content.clientHeight;
+            var containerRows = parseInt(containerHeight / rowHeight, 10);
+            var buffer = parseInt(containerHeight / 2, 10)
+
+            //get cell with that top
+            this.removeEditCssClasses(this.curElement);
+            this.top = this.setCellsFromElement(this.curElement, 0);
+            this.gridCtx.setScrollTop(currentscrolltop - (containerHeight + buffer));
+            var newTop = this.top - (containerRows * rowHeight);
+            if ((newTop / rowHeight) <= 0) {
+              newTop = 0;
+            }
+            //this.editMode = false;
+            this.setCellsFromTopValue(newTop);
+            this.dispatchCellClick(this.index);
+
+
+          }
+        });
+      }
+
+
+      //page down
+      if (e.keyCode === 34) {
+        e.preventDefault();
+        this.keyDownDelay(() => {
+          if (this.curElement) {
+            //get scrolltop
+            var currentscrolltop = this.gridCtx.getScrollTop();
+
+            //get content height/rows
+
+            var rowHeight = this._private.rowHeight
+            var containerHeight = this._private.htmlCache.content.clientHeight;
+            var containerRows = parseInt(containerHeight / rowHeight, 10);
+            var buffer = parseInt(containerHeight / 2, 10)
+
+            //get cell with that top
+            this.removeEditCssClasses(this.curElement);
+            this.top = this.setCellsFromElement(this.curElement, 0);
+            this.gridCtx.setScrollTop(currentscrolltop + (containerHeight + buffer));
+            var newTop = this.top + (containerRows * rowHeight);
+            if ((newTop / rowHeight) >= this._private.configFunctions.getCollectionLength()) {
+              newTop = this._private.configFunctions.getCollectionLength() * rowHeight;
+              newTop = newTop - rowHeight
+            }
+
+            this.setCellsFromTopValue(newTop);
+            this.dispatchCellClick(this.index);
+          }
+        });
+      }
+
+      //arrow down
       if (e.keyCode === 40) {
         e.preventDefault();
-        if (!this.timer) {
-          this.timer = setTimeout(()=> {
-            this.timer = null;
-            if (this.curElement) {
-              this.removeEditCssClasses(this.curElement);
-              this.top = this.setCellsFromElement(this.curElement, +1);
-              this.dispatchCellClick(this.index)
-            }
-          }, 150)
-        }
+        this.keyDownDelay(() => {
+          if (this.curElement) {
+            this.removeEditCssClasses(this.curElement);
+            this.top = this.setCellsFromElement(this.curElement, +1);
+            this.dispatchCellClick(this.index)
+          }
+        });
       }
 
-      //right
+
+
+
+
+      //arrow right
       if (e.keyCode === 39 && !this.editMode) {
         e.preventDefault();
-        if (!this.timer) {
-          this.timer = setTimeout(()=> {
-            this.timer = null;
-            if (this.curElement) {
-              this.removeEditCssClasses(this.curElement);
-              if (!this.last) {
-                this.dispatchCellClick(this.index+1)
-              }
+        this.keyDownDelay(() => {
+          if (this.curElement) {
+            this.removeEditCssClasses(this.curElement);
+            if (!this.last) {
+              this.dispatchCellClick(this.index + 1)
             }
-          }, 150)
-        }
+          }
+        });
       }
 
-      //left
+
+      //arrow left
       if (e.keyCode === 37 && !this.editMode) {
         e.preventDefault();
-        if (!this.timer) {
-          this.timer = setTimeout(()=> {
-            this.timer = null;
-            if (this.curElement) {
-              this.removeEditCssClasses(this.curElement);
-              if (!this.first) {
-                this.dispatchCellClick(this.index-1)
-              }
+        this.keyDownDelay(() => {
+          if (this.curElement) {
+            this.removeEditCssClasses(this.curElement);
+            if (!this.first) {
+              this.dispatchCellClick(this.index - 1)
             }
-          }, 150)
-        }
+          }
+        });
       }
 
-      //up
+
+
+      //arrow up
       if (e.keyCode === 38) {
         e.preventDefault();
-        if (!this.timer) {
-          this.timer = setTimeout(()=> {
-            this.timer = null;
-            if (this.curElement) {
-              this.removeEditCssClasses(this.curElement);
-              this.top = this.setCellsFromElement(this.curElement, -1);
-              this.dispatchCellClick(this.index)
-            }
-          }, 150)
-        }
+        this.keyDownDelay(() => {
+          if (this.curElement) {
+            this.removeEditCssClasses(this.curElement);
+            this.top = this.setCellsFromElement(this.curElement, -1);
+            this.dispatchCellClick(this.index)
+          }
+        });
       }
 
 
@@ -150,40 +220,39 @@ export class VGridCellEdit {
       //tab and shift key for tabing in other direction
       if (e.keyCode === 9 && e.shiftKey === true) {
         e.preventDefault();
-        if (!this.timer) {
-          this.timer = setTimeout(()=> {
-            this.timer = null;
-            if (this.curElement) {
-              this.removeEditCssClasses(this.curElement);
-              this.index = this.index - 1;
-              if (this.first) {
-                this.index = this.cells.length - 1;
-                this.top = this.setCellsFromElement(this.curElement, -1)
-              }
-              this.dispatchCellClick(this.index)
+        this.keyDownDelay(() => {
+          if (this.curElement) {
+            this.removeEditCssClasses(this.curElement);
+            this.index = this.index - 1;
+            if (this.first) {
+              this.index = this.cells.length - 1;
+              this.top = this.setCellsFromElement(this.curElement, -1)
             }
-          }, 150)
-        }
+            this.dispatchCellClick(this.index)
+          }
+        });
       }
 
-      //notmal tabbing
+
+
+      //normal tabbing
       if (e.keyCode === 9 && e.shiftKey === false) {
         e.preventDefault();
-        if (!this.timer) {
-          this.timer = setTimeout(()=> {
-            this.timer = null;
-            if (this.curElement) {
-              this.removeEditCssClasses(this.curElement);
-              this.index = this.index + 1;
-              if (this.last) {
-                this.index = 0;
-                this.top = this.setCellsFromElement(this.curElement, 1)
-              }
-              this.dispatchCellClick(this.index)
+        this.keyDownDelay(() => {
+          if (this.curElement) {
+            this.removeEditCssClasses(this.curElement);
+            this.index = this.index + 1;
+            if (this.last) {
+              this.index = 0;
+              this.top = this.setCellsFromElement(this.curElement, 1)
             }
-          }, 150)
-        }
+            this.dispatchCellClick(this.index)
+          }
+        });
       }
+
+
+
     }.bind(this)
   }
 
@@ -214,6 +283,9 @@ export class VGridCellEdit {
     };
   }
 
+
+
+
   callbackObject() {
     return {
       attribute: this.attribute,
@@ -239,6 +311,7 @@ export class VGridCellEdit {
 
     if (!this._private) {
       this._private = this.parent.gridContext.ctx._private;
+      this.gridCtx = this.parent.gridContext.ctx;
     }
 
     if (e.target.classList.contains(this._private.css.cellContent)) {

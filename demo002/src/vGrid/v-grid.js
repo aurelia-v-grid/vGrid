@@ -645,11 +645,13 @@ export class VGrid {
 
           //called on each key stroke
           //lock row for update row for updates
-          this.skipNextUpdateProperty.push(obj.attribute);
+          if(this.currentRowEntity[obj.attribute] !== obj.value){
+            this.skipNextUpdateProperty.push(obj.attribute);
 
-          //set current entity and and update row data
-          this.currentRowEntity[obj.attribute] = obj.value;
-          this.currentEntity[obj.attribute] = obj.value;
+            //set current entity and and update row data
+            this.currentRowEntity[obj.attribute] = obj.value;
+            this.currentEntity[obj.attribute] = obj.value;
+          }
 
         });
 

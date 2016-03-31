@@ -217,11 +217,11 @@
   -webkit-user-select: text !important;
   -moz-user-select: text !important;
   -ms-user-select: text !important;
-  border: 1px dashed blue !important;
+  border: 1px dashed rgb(81,41,81) !important;
 }
 
 .vGrid-editCell-focus {
-  border: 1px dotted rgb(110, 107, 107) !important;
+  border: 1px dotted rgb(63,58,63) !important;
 }
 
 /*.vGrid-row-cell > .vGrid-content:focus {*/

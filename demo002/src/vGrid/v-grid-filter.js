@@ -23,7 +23,7 @@ export class VGridFilter {
     };
 
     this.filterOperatorTableString = {
-      "=": "equal",
+      "=": "equals",
       "<=": "less than or eq",
       ">=": "greater than or eq",
       "<": "less than",
@@ -31,8 +31,8 @@ export class VGridFilter {
       "*": "contains",
       "!=": "not equal to",
       "!*": "does not contain",
-      "*=": "begin with",
-      "=*": "end with"
+      "*=": "begins with",
+      "=*": "ends with"
     };
   }
 
