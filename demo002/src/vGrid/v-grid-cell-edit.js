@@ -107,18 +107,22 @@ export class VGridCellEdit {
             var containerHeight = this._private.htmlCache.content.clientHeight;
             var containerRows = parseInt(containerHeight / rowHeight, 10);
             var buffer = parseInt(containerHeight / 2, 10)
+            if(currentscrolltop !== this._private.configFunctions.getCollectionLength()*rowHeight){
+              buffer = buffer*2;
+            }
 
             //get cell with that top
             this.removeEditCssClasses(this.curElement);
             this.top = this.setCellsFromElement(this.curElement, 0);
-            this.gridCtx.setScrollTop(currentscrolltop - (containerHeight + buffer));
+            this.gridCtx.setScrollTop(currentscrolltop - (containerHeight - buffer));
             var newTop = this.top - (containerRows * rowHeight);
             if ((newTop / rowHeight) <= 0) {
               newTop = 0;
             }
-            //this.editMode = false;
-            this.setCellsFromTopValue(newTop);
-            this.dispatchCellClick(this.index);
+            setTimeout(()=>{
+                this.setCellsFromTopValue(newTop);
+                this.dispatchCellClick(this.index);
+            },100)
 
 
           }
@@ -140,19 +144,25 @@ export class VGridCellEdit {
             var containerHeight = this._private.htmlCache.content.clientHeight;
             var containerRows = parseInt(containerHeight / rowHeight, 10);
             var buffer = parseInt(containerHeight / 2, 10)
+            if(currentscrolltop !== 0){
+              buffer = buffer*2;
+            }
 
             //get cell with that top
             this.removeEditCssClasses(this.curElement);
             this.top = this.setCellsFromElement(this.curElement, 0);
-            this.gridCtx.setScrollTop(currentscrolltop + (containerHeight + buffer));
+            this.gridCtx.setScrollTop(currentscrolltop + (containerHeight - buffer));
             var newTop = this.top + (containerRows * rowHeight);
             if ((newTop / rowHeight) >= this._private.configFunctions.getCollectionLength()) {
               newTop = this._private.configFunctions.getCollectionLength() * rowHeight;
               newTop = newTop - rowHeight
             }
+            setTimeout(()=>{
 
-            this.setCellsFromTopValue(newTop);
-            this.dispatchCellClick(this.index);
+                this.setCellsFromTopValue(newTop);
+                this.dispatchCellClick(this.index);
+
+            },100)
           }
         });
       }
