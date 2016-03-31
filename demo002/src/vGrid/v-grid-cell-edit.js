@@ -107,7 +107,7 @@ export class VGridCellEdit {
             var containerHeight = this._private.htmlCache.content.clientHeight;
             var containerRows = parseInt(containerHeight / rowHeight, 10);
             var buffer = parseInt(containerHeight / 2, 10)
-            if(currentscrolltop !== this._private.configFunctions.getCollectionLength()*rowHeight){
+            if(currentscrolltop !== (this._private.configFunctions.getCollectionLength()*rowHeight)-containerHeight){
               buffer = buffer*2;
             }
 
