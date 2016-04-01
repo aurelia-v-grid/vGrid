@@ -12,6 +12,7 @@ import {VGridSort} from './v-grid-sort';
 import {VGridInterpolate} from './v-grid-interpolate';
 import {VGridSortable} from './v-grid-sortable';
 import {VGridCellEdit} from './v-grid-cell-edit';
+import {VGridSelection}from './v-grid-selection';
 
 
 @noView
@@ -24,9 +25,11 @@ export class VGrid {
   @bindable currentEntity;
 
 
+
   constructor(element, observerLocator, vGridFilter, vGridSort, vGridInterpolate) {
 
     this.vGridFilter = vGridFilter; //helper for filtering the cloned collection
+    this.vGridSelection =new VGridSelection();
     this.vGridSort = vGridSort; //helper for sorting the columns
     this.vGridInterpolate = vGridInterpolate; //populates mustache tags
     this.observerLocator = observerLocator; //listen for event
@@ -70,7 +73,7 @@ export class VGrid {
       //reset fileter/and collection/selection. (should I have option to check is they want to set something?)
       this.vGridSort.reset();
       this.gridContext.ctx.clearHeaderSortFilter();
-      this.gridContext.ctx.selection.reset();
+      this.vGridSelection.reset();
       this.gridContext.ctx.collectionChange();
 
       //reset
@@ -113,7 +116,7 @@ export class VGrid {
    * gets the keys from the selection
    ***************************************************************************************/
   getSelectionKeys() {
-    var curSel = this.gridContext.ctx.selection.getSelectedRows();
+    var curSel = this.vGridSelection.getSelectedRows();
     var selKeys = [];
     var collectionFiltered = this.collectionFiltered;
     curSel.forEach((x) => {
@@ -137,7 +140,7 @@ export class VGrid {
       }
       count++;
     });
-    this.gridContext.ctx.selection.setSelectedRows(newSelection);
+    this.vGridSelection.setSelectedRows(newSelection);
   }
 
 
@@ -713,7 +716,7 @@ export class VGrid {
     /***************************************************************************************
      * create the grid with all options
      ***************************************************************************************/
-    this.gridContext.ctx = new VGridGenerator(gridOptions, this.vGridInterpolate, this.element, VGridSortable);
+    this.gridContext.ctx = new VGridGenerator(gridOptions, this.vGridInterpolate, this.element, VGridSortable, this.vGridSelection);
 
     //not tested
     this.gridContext.ctx.getSelectionKeys = () => {

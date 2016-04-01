@@ -8,12 +8,13 @@
 export class VGridGenerator {
 
 
-  constructor(defaultConfig, vGridInterpolate, vGridElement, vGridSortable) {
-    this.defaultConfig = defaultConfig;
+  constructor(vGridConfig, vGridInterpolate, vGridElement, vGridSortable, vGridSelection) {
+    this.vGridSelection = vGridSelection;
+    this.vGridConfig = vGridConfig;
     this.vGridInterpolate = vGridInterpolate;
     this.vGridElement = vGridElement;
     this.vGridSortable = vGridSortable;
-    this.setConfig(defaultConfig);
+    this.setConfig(vGridConfig);
     this.init(false);
   }
 
@@ -47,8 +48,8 @@ export class VGridGenerator {
       isMultiSelect: options.isMultiSelect,                                 // if multiselect, undefined = none, false = 1, true = multi
       renderOnScrollbarScroll: options.renderOnScrollbarScroll,             //will not wait on scrollbars scrolls
       columnWidthArrayOverride: options.columnWidthArrayOverride,           //will set row to 100% and dont care about columns array
-      selection: {},                                                        //  internal, where I store the new selection I create, gets created later
-      $selectedRows: [],                                                    //internal for selection
+      //selection: {},                                                        //  internal, where I store the new selection I create, gets created later
+      //$selectedRows: [],                                                    //internal for selection
       lockedColumns: options.lockedColumns || 0,                            //will give huge performance issue in IE
       sortOrder: [],
       contentHeight: 0,                                                     //internal
@@ -98,11 +99,6 @@ export class VGridGenerator {
         onCellDraw: options.onCellDraw,
         //on creating row markup
         onRowMarkupCreate: options.onRowMarkupCreate
-      },
-      selectionVars: {
-        lastKeyKodeUsed: "none", //internal for selection control
-        lastRowSelected: 0,     //internal for selection control
-        onClicked: false        //internal for selection control
       },
       scrollVars: {           //internals
         lastScrollTop: 0,     //used in scroll event etc
@@ -155,85 +151,6 @@ export class VGridGenerator {
     };
   };
 
-
-
-
-
-  /****************************************************************************************************************************
-   * selection, helps control the selection in the grid
-   ****************************************************************************************************************************/
-  setSelectionType() {
-    this._private.$selectedRows = [];
-    this._private.selectionMode = "none";
-
-    //what type is it?
-    if (this._private.isMultiSelect === false) {
-      this._private.selectionMode = "single"
-    }
-    if (this._private.isMultiSelect === true) {
-      this._private.selectionMode = "multible"
-    }
-
-    this._private.selection.isSelected = (row) => {
-      var result = false;
-      if (this._private.$selectedRows.indexOf(row) !== -1) {
-        result = true;
-      }
-      return result;
-    };
-
-    this._private.selection.select = (rowSelect, addToSelection) => {
-      switch (this._private.selectionMode) {
-        case "none":
-        case null:
-        case undefined:
-          break;
-        case "single":
-          if (this._private.$selectedRows !== undefined) {
-            if (this._private.$selectedRows.length > 1) {
-              this._private.$selectedRows = [];
-            }
-          }
-          this._private.$selectedRows[0] = rowSelect;
-          break;
-        case "multible":
-          if (!addToSelection) {
-            this._private.$selectedRows = [];
-            this._private.$selectedRows[0] = rowSelect
-          } else {
-            if (!this._private.selection.isSelected(rowSelect)) {
-              this._private.$selectedRows.push(rowSelect)
-            }
-          }
-      }
-    };
-
-    this._private.selection.selectRange = (start, end) => {
-      if (this._private.selectionMode === "multible") {
-        this._private.$selectedRows = [];
-        for (var i = start; i < end + 1; i++) {
-          this._private.$selectedRows.push(i)
-        }
-      }
-
-
-    };
-
-    this._private.selection.reset = () => {
-      this._private.$selectedRows = [];
-    };
-
-    this._private.selection.getSelectedRows = () => {
-      return this._private.$selectedRows;
-    };
-
-    this._private.selection.setSelectedRows = (newRows) => {
-      this._private.$selectedRows = newRows;
-    };
-
-    this.selection = this._private.selection;
-
-  };
 
 
 
@@ -333,7 +250,7 @@ export class VGridGenerator {
     var i;
     for (i = 0; i < this.getRowCacheLength(); i++) {
       var currentRow = this._private.htmlCache.rowsArray[i].top / this._private.rowHeight;
-      if (this._private.selection.isSelected(currentRow)) {
+      if (this.vGridSelection.isSelected(currentRow)) {
         this._private.htmlCache.rowsArray[i].div.classList.add(this._private.css.rowSelected);
       } else {
         this._private.htmlCache.rowsArray[i].div.classList.remove(this._private.css.rowSelected);
@@ -809,7 +726,7 @@ export class VGridGenerator {
 
         //set highlight
         try {
-          if (this._private.selection.isSelected(rowNo)) {
+          if (this.vGridSelection.isSelected(rowNo)) {
             rowHtmlElement.classList.add(this._private.css.rowSelected)
           } else {
             rowHtmlElement.classList.remove(this._private.css.rowSelected)
@@ -1364,160 +1281,6 @@ export class VGridGenerator {
 
 
   /****************************************************************************************************************************
-   * fixes highlight and select...
-   ****************************************************************************************************************************/
-  onRowClickAndHighligtHandler(e) {
-    //_private.selectionVars.
-    var isSel;
-
-    var removeRowHighligt = (currentRow) => {
-      var selectedRows, i;
-
-      var removeFromArray = (array, row) => {
-        array.splice(row, 1);
-      };
-
-      selectedRows = this._private.selection.getSelectedRows();
-      for (i = 0; i < selectedRows.length; i++) { //what? why aint I using indexOf? TODO:rewrite
-        if (selectedRows[i] === currentRow) {
-          removeFromArray(selectedRows, i);
-          i--;
-        }
-      }
-      this._private.selection.setSelectedRows(selectedRows);
-    };
-
-    var currentRow = this.getRowNumberFromClickedOn(e);
-    var currentselectedRows = this._private.selection.getSelectedRows();
-
-    if (currentRow !== this._private.selectionVars.lastRowSelected || currentselectedRows[0] !== currentRow) {
-
-      //if not same row clicked again..
-      this._private.selectionVars.onClicked = true;
-
-      if (currentRow <= (this._private.configFunctions.getCollectionLength() - 1)) { //do I need to check this?
-
-        if (this._private.isMultiSelect === true) { //if multiselect duh!
-
-          var currentKeyKode = "";
-
-          if (e.shiftKey) {
-            currentKeyKode = "shift";
-            currentselectedRows = this._private.selection.getSelectedRows();
-            if (currentselectedRows.length > 0 && this._private.selectionVars.lastKeyKodeUsed === "none") {
-              this._private.selectionVars.lastRowSelected = currentselectedRows[0];
-              this._private.selectionVars.lastKeyKodeUsed = "shift";
-            }
-          }
-
-          if (e.ctrlKey) {
-            currentKeyKode = "ctrl";
-          }
-
-          if (!e.ctrlKey && !e.shiftKey) {
-            currentKeyKode = "none";
-          }
-
-          switch (true) {
-            case currentKeyKode === "none":
-              this._private.selection.select(currentRow);
-              break;
-            case this._private.selectionVars.lastKeyKodeUsed === "shift" && currentKeyKode === "ctrl":
-
-              isSel = this._private.selection.isSelected(currentRow);
-              if (isSel === true) {
-                removeRowHighligt(currentRow);
-              } else {
-                this._private.selection.select(currentRow, true);
-              }
-              break;
-
-            case this._private.selectionVars.lastKeyKodeUsed === "ctrl" && currentKeyKode === "shift":
-
-              this._private.selection.selectRange(this._private.selectionVars.lastRowSelected, currentRow);
-              break;
-
-            case this._private.selectionVars.lastKeyKodeUsed === "ctrl" && currentKeyKode === "ctrl":
-
-              isSel = this._private.selection.isSelected(currentRow);
-              if (isSel === true) {
-                removeRowHighligt(currentRow);
-              } else {
-                this._private.selection.select(currentRow, true);
-              }
-              break;
-
-            case this._private.selectionVars.lastKeyKodeUsed === "none" && currentKeyKode === "ctrl":
-
-              isSel = this._private.selection.isSelected(currentRow);
-              if (isSel === true) {
-                removeRowHighligt(currentRow);
-              } else {
-                this._private.selection.select(currentRow, true);
-              }
-              break;
-
-            case this._private.selectionVars.lastKeyKodeUsed === "shift" && currentKeyKode === "shift":
-
-              if (this._private.selectionVars.lastRowSelected > currentRow) {
-                this._private.selection.selectRange(currentRow, this._private.selectionVars.lastRowSelected);
-              } else {
-                this._private.selection.selectRange(this._private.selectionVars.lastRowSelected, currentRow);
-              }
-              break;
-
-            case this._private.selectionVars.lastKeyKodeUsed === "none" && currentKeyKode === "shift":
-
-              if (this._private.selectionVars.lastRowSelected !== null) {
-                if (this._private.selectionVars.lastRowSelected > currentRow) {
-                  this._private.selection.selectRange(currentRow, this._private.selectionVars.lastRowSelected);
-                } else {
-                  this._private.selection.selectRange(this._private.selectionVars.lastRowSelected, currentRow);
-                }
-              } else {
-                this._private.selection.select(currentRow);
-              }
-              break;
-            default:
-              console.log("error, this should not happend")
-          }
-        } else {
-          this._private.selection.select(currentRow);
-        }
-        this._private.selectionVars.lastKeyKodeUsed = currentKeyKode;
-
-        //update selection on rows
-        this.updateSelectionOnAllRows()
-      }
-    } else {
-      //same row clicked again
-      if (e.ctrlKey) {
-        currentKeyKode = "ctrl";
-      }
-
-      //if ctrl button we wanto remove selection
-      if (currentKeyKode === "ctrl") {
-        this._private.selectionVars.lastKeyKodeUsed = currentKeyKode;
-        isSel = this._private.selection.isSelected(currentRow);
-        if (isSel === true) {
-          removeRowHighligt(currentRow);
-        }
-        this._private.selectionVars.lastRowSelected = -1
-      } else {
-        //else we just wanto make it current..
-        isSel = this._private.selection.isSelected(currentRow);
-        this._private.selection.select(currentRow);
-      }
-      //update selection on rows
-      this.updateSelectionOnAllRows()
-    }
-  };
-
-
-
-
-
-  /****************************************************************************************************************************
    * hiding scroll bars when not needed
    ****************************************************************************************************************************/
   updateGridScrollbars() {
@@ -1750,7 +1513,7 @@ export class VGridGenerator {
       var currentRow = this.getRowNumberFromClickedOn(e);
       this._private.configFunctions.clickHandler(e, currentRow);
       if (this._private.isMultiSelect !== undefined) {
-        this.onRowClickAndHighligtHandler(e);
+        this.vGridSelection.setHightlight(e, this);
       }
     };
 
@@ -1761,7 +1524,7 @@ export class VGridGenerator {
       var currentRow = this.getRowNumberFromClickedOn(e);
       this._private.configFunctions.clickHandler(e, currentRow);
       if (this._private.isMultiSelect !== undefined) {
-        this.onRowClickAndHighligtHandler(e);
+        this.vGridSelection.setHightlight(e, this);
       }
     };
 
@@ -1858,7 +1621,7 @@ export class VGridGenerator {
     this.addEvents(); //add events
     if (!isRebuild) {
       //todo: remeber scroll height , devide on rowheight, and set to what ever new is?
-      this.setSelectionType();
+      this.vGridSelection.setMode(this._private.isMultiSelect);
     }
     //
     if (this._private.predefinedScrolltop) {
@@ -2098,42 +1861,39 @@ export class VGridGenerator {
 
 
   setMultiSelection(keepSelection) {
-    this._private.isMultiSelect = true;
-    this._private.selectionMode = "multible";
+    this.vGridSelection.setMode("multible");
     if (!keepSelection) {
-      this._private.$selectedRows = [];
+      this.vGridSelection.reset();
     }
     this.updateSelectionOnAllRows();
   };
 
 
   setSingleSelection(keepSelection) {
-    this._private.isMultiSelect = false;
-    this._private.selectionMode = "single";
+    this.vGridSelection.setMode("single");
     if (!keepSelection) {
-      this._private.$selectedRows = [];
+      this.vGridSelection.reset();
     }
     this.updateSelectionOnAllRows();
   };
 
 
   disableSelection(keepSelection) {
-    this._private.isMultiSelect = undefined;
-    this._private.selectionMode = "none";
+    this.vGridSelection.setMode(null);
     if (!keepSelection) {
-      this._private.$selectedRows = [];
+      this.vGridSelection.reset();
     }
     this.updateSelectionOnAllRows();
   };
 
 
   getSelectedRows() {
-    return this.selection.getSelectedRows();
+    return this.vGridSelection.getSelectedRows();
   };
 
 
   setSelectedRows(sel) {
-    this.selection.setSelectedRows(sel);
+    this.vGridSelection.setSelectedRows(sel);
     this.updateSelectionOnAllRows();
   };
 

@@ -288,7 +288,7 @@
 
 @font-face{
   font-family:"Glyphicons Halflings";
-  src: url("/styles/glyphicons-halflings-regular-fromBootstrap.woff2");
+  src: url("styles/glyphicons-halflings-regular-fromBootstrap.woff2");
 }
 
 .vGrid-glyphicon {
