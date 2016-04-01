@@ -735,6 +735,9 @@ export class VGrid {
       this.scrollBottomNext = true;
     }
 
+    this.gridContext.ctx.selection = this.vGridSelection;
+
+
 
 
   }
