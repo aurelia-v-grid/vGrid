@@ -71,6 +71,8 @@ vGrid - Custom Element for Aurelia
 * header-filter-onkeydown
 * sort-on-header-click
 * header-filter-not-to
+* row-on-dblclick
+* row-on-draw
 
 ----
 ### < v-grid-col > attributes:
@@ -122,10 +124,14 @@ Default = false, when false you need to press "enter" to activate filtering
 ###### "header-filter-not-to"
 Default = "", here you can add columns attibute names you dont want filter for, like  this "index,name"
 ###### "sort-on-header-click"
-Default = false, settingthis to true will activate multisort on header clicks
+Default = false, setting this to true will activate multisort on header clicks
+
+###### "row-on-draw"
+Default = undefined, string name of function callback when row gets drawn, here you can edit the row data before displaying
 
 
-
+###### "row-on-dblclick"
+Default = undefined, callback when user double click a row, returns row number of the collection you have set in config attribute, not the actual row in grid
 
 
 
@@ -164,22 +170,27 @@ These can be used:
 ##### Config-> Attributes in more details:
 
 ```
-config="current-entity.bind:myCurrentEntity; collection.bind:myCollection; grid-context.bind:myGrid">
+config="current-entity.bind:myCurrentEntity; collection.bind:myCollection">
+row-on-dblclick="onDblClick"
+row-on-draw="onRowDraw"
 
 ```
 
 ```
 myCollection = [];
 myCurrentEntity = {};
-myGrid={
-  onRowDraw : function (data){
-    if(data){
-      if(data.country === "Norway"){
-        data.cssCountryColor = "blue"
+
+onRowDraw (data) {
+    if (data) {
+      if (data.country === "Angola") {
+        data.myCustomColor = "rgba(150,72,230, 0.3)"
       }
     }
   }
-};
+
+onDblClick (row) {
+    console.log("dblclick row:"+row)
+  }
 
 ```
 __onRowDraw__ is the only function Ive added for now, you can have this to edit whats displayed in the row
