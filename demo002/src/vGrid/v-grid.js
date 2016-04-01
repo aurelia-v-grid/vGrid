@@ -481,43 +481,40 @@ export class VGrid {
       gridOptions.onFilterRun = (filterObj) => {
 
         if (filterObj.length !== 0 || this.collectionFiltered.length !== this.collection.length) {
-
+          //get sel keys
+          var selKeys = this.getSelectionKeys();
+          var curKey = -1;
+          if (this.currentRowEntity) {
+            curKey = this.currentRowEntity[this.sgkey];
+          }
           if (filterObj.length === 0 && this.collectionFiltered.length !== this.collection.length) {
             this.collectionFiltered = this.collection.slice(0);
           } else {
-
-            //get sel keys
-            var selKeys = this.getSelectionKeys();
-            var curKey = -1;
-            if (this.currentRowEntity) {
-              curKey = this.currentRowEntity[this.sgkey];
-            }
-
+            
             this.collectionFiltered = this.vGridFilter.run(this.collection, filterObj);
             this.vGridSort.run(this.collectionFiltered);
-            //set selection
-            this.setSelectionFromKeys(selKeys);
-
-            //set current row/entity in sync
-            var newRowNo = -1;
-            if (curKey) {
-              this.collectionFiltered.forEach((x, index) => {
-                if (curKey === x[this.sgkey]) {
-                  newRowNo = index;
-                }
-              });
-            }
-
-            if (newRowNo > -1) {
-              this.currentRowEntity = this.collectionFiltered[newRowNo];
-              this.currentEntity[this.sgkey] = this.currentRowEntity[this.sgkey];
-              this.filterRow = newRowNo
-            }
-
-
-
 
           }
+
+          //set selection
+          this.setSelectionFromKeys(selKeys);
+
+          //set current row/entity in sync
+          var newRowNo = -1;
+          if (curKey) {
+            this.collectionFiltered.forEach((x, index) => {
+              if (curKey === x[this.sgkey]) {
+                newRowNo = index;
+              }
+            });
+          }
+
+          if (newRowNo > -1) {
+            this.currentRowEntity = this.collectionFiltered[newRowNo];
+            this.currentEntity[this.sgkey] = this.currentRowEntity[this.sgkey];
+            this.filterRow = newRowNo
+          }
+
           //update grid
           this.gridContext.ctx.collectionChange(true);
         }
