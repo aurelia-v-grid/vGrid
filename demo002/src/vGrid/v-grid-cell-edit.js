@@ -374,10 +374,14 @@ export class VGridCellEdit {
 
       if (this.type === "dblclick" || this.editMode) {
         this.editMode = true;
-        if (e.target.classList.contains(this._private.css.editCellFocus)) {
-          e.target.classList.remove(this._private.css.editCellFocus);
+        if(this.readOnly === false){
+          if (e.target.classList.contains(this._private.css.editCellFocus)) {
+            e.target.classList.remove(this._private.css.editCellFocus);
+          }
+          e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
+        } else {
+          e.target.classList.add(this._private.css.editCellFocus);
         }
-        e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
       } else {
         e.target.classList.add(this._private.css.editCellFocus);
       }

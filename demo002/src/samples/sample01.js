@@ -8,14 +8,20 @@ export class sample01 {
   myCollection = [];
   myCurrentEntity = {};
   myGrid = {
-    onRowDraw: function (data) {
-      if (data) {
-        if (data.country === "Angola") {
-          data.myCustomColor = "rgba(150,72,230, 0.3)"
-        }
+    
+  };
+
+  onRowDraw (data) {
+    if (data) {
+      if (data.country === "Angola") {
+        data.myCustomColor = "rgba(150,72,230, 0.3)"
       }
     }
-  };
+  }
+
+  onDblClick (row) {
+    debugger
+  }
 
 
   collectionLength= 0;

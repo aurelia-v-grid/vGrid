@@ -299,11 +299,29 @@ export class VGrid {
       this.gridContextMissing = true;
     }
 
-    //clone collection and add key index, so we know it.
-    this.collectionFiltered = this.collection.slice(0);
 
-    //resets the keys
-    this.resetKeys();
+
+    //lets test that they have set the mandatory config settings
+    if (this.collection === undefined || this.currentEntity === undefined) {
+      if (this.collection === undefined && this.currentEntity === undefined) {
+        console.warn("currentEntity & collection not set/binded in config attribute")
+      } else {
+        if (this.currentEntity === undefined) {
+          console.warn("currentEntity not set/binded in config attribute")
+        }
+
+        if (this.collection === undefined) {
+          console.warn("collection not set/binded in config attribute")
+        }
+      }
+    } else {
+
+      //clone collection and add key index, so we know it.
+      this.collectionFiltered = this.collection.slice(0);
+
+      //resets the keys
+      this.resetKeys();
+    }
 
   }
 
@@ -458,6 +476,9 @@ export class VGrid {
     gridOptions.filterOnAtTop = setValue(this.gridContext.headerFilterTop, type[this.element.getAttribute("header-filter-top")], false);
     gridOptions.filterOnKey = setValue(this.gridContext.headerFilterOnkeydown, type[this.element.getAttribute("header-filter-onkeydown")], false);
     gridOptions.sortOnHeaderClick = setValue(this.gridContext.sortOnHeaderClick, type[this.element.getAttribute("sort-on-header-click")], false);
+    
+    this.eventOnDblClick = this.element.getAttribute("row-on-dblclick");
+    this.eventOnRowDraw = this.element.getAttribute("row-on-draw");
 
 
     if (this.element.getAttribute("header-filter-not-to")) {
@@ -542,12 +563,14 @@ export class VGrid {
      * Use {} if you want markup of columns, or undefined for total blank rows
      ***************************************************************************************/
     gridOptions.getDataElement = (row, isDown, isLargeScroll, callback) => {
-      if (this.gridContext.onRowDraw) {
-        //if user have added this then we call it so they can edit the row data before we display it
-        this.gridContext.onRowDraw(this.collectionFiltered[row]);
-        callback(this.collectionFiltered[row]);
-      } else {
-        callback(this.collectionFiltered[row]);
+      if(this.collectionFiltered !== undefined){
+        if (this.$parent[this.eventOnRowDraw]) {
+          //if user have added this then we call it so they can edit the row data before we display it
+          this.$parent[this.eventOnRowDraw](this.collectionFiltered[row]);
+          callback(this.collectionFiltered[row])
+        } else {
+          callback(this.collectionFiltered[row]);
+        }
       }
     };
 
@@ -604,7 +627,7 @@ export class VGrid {
      ***************************************************************************************/
     gridOptions.clickHandler = (event, row) => {
 
-      let isDoubleClick = true;//(event.type === "dblclick");
+
       let attribute = event.target.getAttribute(this.gridContext.ctx._private.atts.dataAttribute);
       let readonly = this.gridOptions.readOnlyArray.indexOf(attribute) ? false : true;
 
@@ -625,32 +648,37 @@ export class VGrid {
         }
       }
 
-      if (isDoubleClick) {
+      
+      if ( this.$parent[this.eventOnDblClick] && event.type === "dblclick") {
+        setTimeout(()=>{
+          this.$parent[this.eventOnDblClick](this.currentRowEntity[this.sgkey]);
+        },15)
+      }
 
-        //use helper function to edit cell
-        this.cellEdit.editCellhelper(event, readonly, (obj) => {
 
-          //called when cell looses focus, user presses enter
+      //use helper function to edit cell
+      this.cellEdit.editCellhelper(event, readonly, (obj) => {
+
+        //called when cell looses focus, user presses enter
+        //set current entity and and update row data
+        this.currentRowEntity[obj.attribute] = obj.value;
+        this.currentEntity[obj.attribute] = obj.value;
+        this.gridContext.ctx.updateRow(this.filterRow, true);
+
+      }, (obj) => {
+
+        //called on each key stroke
+        //lock row for update row for updates
+        if (this.currentRowEntity[obj.attribute] !== obj.value) {
+          this.skipNextUpdateProperty.push(obj.attribute);
+
           //set current entity and and update row data
           this.currentRowEntity[obj.attribute] = obj.value;
           this.currentEntity[obj.attribute] = obj.value;
-          this.gridContext.ctx.updateRow(this.filterRow, true);
+        }
 
-        }, (obj) => {
+      });
 
-          //called on each key stroke
-          //lock row for update row for updates
-          if(this.currentRowEntity[obj.attribute] !== obj.value){
-            this.skipNextUpdateProperty.push(obj.attribute);
-
-            //set current entity and and update row data
-            this.currentRowEntity[obj.attribute] = obj.value;
-            this.currentEntity[obj.attribute] = obj.value;
-          }
-
-        });
-
-      }
     };
 
 
