@@ -32,6 +32,8 @@
   background-color: rgb(240, 240, 240);
 }
 
+
+
 .vGrid-row-container {
   background-color: inherit;
 }
@@ -106,12 +108,12 @@
 
 .vGrid-row-selected {
   box-shadow: none;
-  background-color: LightSteelBlue !important;
+  background-color: rgba(203, 195, 203, 0.4) !important;
 }
 
 .vGrid-row-selected .vGrid-row-cell {
   box-shadow: none;
-  background-color: LightSteelBlue !important;
+  background-color: rgb(203, 195, 203) !important;
 }
 
 .vGrid-row-cell {
@@ -175,7 +177,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   background-color: inherit;
+  border: 0px;
+  line-height:100%
 }
+
+
 
 .vGrid-row-cell-header > .vGrid-content {
   -webkit-touch-callout: none;
@@ -203,8 +209,24 @@
   -webkit-user-select: text !important;
   -moz-user-select: text !important;
   -ms-user-select: text !important;
-  border: 1px solid #00ff00 !important;
+
 }
+
+.vGrid-editCell-write {
+  -webkit-touch-callout: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  border: 1px dashed rgb(81,41,81) !important;
+}
+
+.vGrid-editCell-focus {
+  border: 1px dotted rgb(63,58,63) !important;
+}
+
+/*.vGrid-row-cell > .vGrid-content:focus {*/
+  /*border: 1px dotted rgb(110, 107, 107);*/
+/*}*/
 
 .vGrid *:focus {
   outline: 0 !important;
@@ -251,13 +273,13 @@
 }
 
 .vGrid-draggable-handler {
-position: absolute;
-cursor: w-resize;
-width: 5px;
-right: 0;
-top: 0;
-bottom: 0;
-z-index: 900;
+  position: absolute;
+  cursor: w-resize;
+  width: 5px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 900;
 }
 
 .vGrid-vGridDragHandle {
@@ -266,7 +288,7 @@ z-index: 900;
 
 @font-face{
   font-family:"Glyphicons Halflings";
-  src: url("/styles/glyphicons-halflings-regular-fromBootstrap.woff2");
+  src: url("styles/glyphicons-halflings-regular-fromBootstrap.woff2");
 }
 
 .vGrid-glyphicon {
@@ -285,7 +307,7 @@ z-index: 900;
 
 .vGrid-glyphicon-1{
   right:-7px;
- }
+}
 
 .vGrid div.vGrid-body div.vGrid-row-no-data {
   border-bottom: 0 !important;

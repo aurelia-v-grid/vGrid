@@ -17,7 +17,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">Demo version 13-(2016-03-29) Latest update: current entity in sync</h4>
+        <h4 style="margin-left:25px">Demo version 14-(2016-04-02) Latest update: tabbing/key navigation/fixes</h4>
         <h5 style="margin-left:25px"><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute </h5>
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -31,6 +31,8 @@
           header-filter-onkeydown="true"
           header-filter-not-to="phone"
           header-filter-top="false"
+          row-on-dblclick="onDblClick"
+          row-on-draw="onRowDraw"
           multi-select="true"
           config="current-entity.bind:myCurrentEntity; collection.bind:myCollection;  grid-context.bind:myGrid">
           <v-grid-row>
@@ -160,28 +162,32 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">Name</label>
             <div class="col-sm-6">
-              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.name" value.bind="myCurrentEntity.name">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.name">
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">country</label>
             <div class="col-sm-6">
-              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.country" value.bind="myCurrentEntity.country">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.country">
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">phone</label>
             <div class="col-sm-6">
-              <input class="form-control input-sm"  disabled.bind="!myCurrentEntity.phone" value.bind="myCurrentEntity.phone">
+              <input class="form-control input-sm"  disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.phone">
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">color</label>
             <div class="col-sm-6">
-              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.color" value.bind="myCurrentEntity.color">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.color">
             </div>
           </div>
         </form>
+        <h4 style="margin-left:25px">Keyboard keys/mouse click <span class="label label-default"></span></h4>
+        <h5 style="margin-left:25px" ><span class="label label-info">Info</span>Doubleclick to enter edit mode, and "enter" to exit <span class="label label-default">cell editing</span></h5>
+        <h5 style="margin-left:25px" ><span class="label label-info">Info</span>Tab/page up/page down, arrow keys up/down can be used to navigate with focues cell <span class="label label-default">in edit mode</span></h5>
+        <h5 style="margin-left:25px" ><span class="label label-info">Info</span>Tab/page up/page down, arrow keys up/down/left/right can be used to navigate with focues cell <span class="label label-default">not edit mode</span></h5>
       </div>
 
       <!------------------------------------------------------------------------------------------------------------------------------------>

@@ -1,6 +1,5 @@
 import {dummyDataGenerator} from 'data/dummyDataGenerator'
-import hljs from 'highlight.js';
-import 'highlight.js/styles/ir-black.css!';
+
 
 export class sample01 {
   static inject = [Element, dummyDataGenerator];
@@ -9,14 +8,21 @@ export class sample01 {
   myCollection = [];
   myCurrentEntity = {};
   myGrid = {
-    onRowDraw: function (data) {
-      if (data) {
-        if (data.country === "Angola") {
-          data.myCustomColor = "rgba(150,72,230, 0.3)"
-        }
+    
+  };
+
+  onRowDraw (data) {
+    if (data) {
+      if (data.country === "Angola") {
+        data.myCustomColor = "rgba(150,72,230, 0.3)"
       }
     }
-  };
+  }
+
+  onDblClick (row) {
+    console.log("dblclick row:"+row)
+  }
+
 
 
   collectionLength= 0;
@@ -37,6 +43,10 @@ export class sample01 {
 
   }
 
+
+  attached(){
+
+  }
 
 
   /********************************************************************
