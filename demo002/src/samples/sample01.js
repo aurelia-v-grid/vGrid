@@ -20,7 +20,7 @@ export class sample01 {
   }
 
   onDblClick (row) {
-    debugger
+    console.log("dblclick row:"+row)
   }
 
 
