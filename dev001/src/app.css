@@ -37,3 +37,42 @@
   overflow-y: scroll;
   position: relative;
 }
+
+.colorHeader {
+  background-color: #BBDEFB;
+}
+html, body {
+  height: 100%;
+}
+
+.vGrid-content{
+  border: 0;
+  background-color: inherit;
+}
+
+.avatar {
+  width: 65px;
+  height: 65px;
+  float: left;
+  margin-right: 10px;
+  font-size: 25px;
+  color: #fff;
+  text-align: center;
+  line-height: 65px;
+}
+
+.contact-item {
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 85px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 1.42857143;
+}
+
+
+.contact-item .name {
+  font-size: 18px;
+  color: ThreeDDarkShadow;
+}
+

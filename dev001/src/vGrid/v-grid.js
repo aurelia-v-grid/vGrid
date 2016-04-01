@@ -429,6 +429,7 @@ export class VGrid {
       };
 
       gridOptions.attributeArray = this.element.getAttribute("attibutes-used").split(",")
+      gridOptions.readOnlyArray = []//this.element.getAttribute("attibutes-used-readOnly").split(",")
     } else {
       //if row contains columns, then we need to get the data
       //array options, get then from the elements and add them to options

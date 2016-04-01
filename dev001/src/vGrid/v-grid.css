@@ -108,7 +108,7 @@
 
 .vGrid-row-selected {
   box-shadow: none;
-  background-color: rgba(203, 195, 203, 0.4) !important;
+  background-color: rgb(203, 195, 203) !important;
 }
 
 .vGrid-row-selected .vGrid-row-cell {
