@@ -1,14 +1,23 @@
-//this wil be really messy while I test whats possible
+/*****************************************************************************************************************
+ *    VGridCellEdit
+ *    This just inserts the strings into html templates
+ *    Created by vegar ringdal
+ *
+ ****************************************************************************************************************/
 
 export class VGridCellEdit {
 
+  //vars;
+  first = -1;
+  last= -1;
+  editMode = false;
+  parent = null;
+  element = null;
 
   constructor(parent) {
     this.parent = parent;
     this.element = parent.element;
     this.addGridKeyListner();
-    this.editMode = false;
-
   }
 
 
@@ -58,9 +67,9 @@ export class VGridCellEdit {
 
   removeEditCssClasses(element) {
     element.setAttribute("readonly", "false");
-    element.classList.remove("vGrid-editCell");
-    element.classList.remove("vGrid-editCell-write");
-    element.classList.remove("vGrid-editCell-focus");
+    element.classList.remove(this._private.css.editCell);
+    element.classList.remove(this._private.css.editCellWrite);
+    element.classList.remove(this._private.css.editCellFocus);
   }
 
 
@@ -90,7 +99,7 @@ export class VGridCellEdit {
 
     this.element.onkeydown = function (e) {
 
-      console.log(e.keyCode);
+      //console.log(e.keyCode);
 
 
 
@@ -103,12 +112,12 @@ export class VGridCellEdit {
             var currentscrolltop = this.gridCtx.getScrollTop();
 
             //get content height/rows
-            var rowHeight = this._private.rowHeight
+            var rowHeight = this._private.rowHeight;
             var containerHeight = this._private.htmlCache.content.clientHeight;
             var containerRows = parseInt(containerHeight / rowHeight, 10);
-            var buffer = parseInt(containerHeight / 2, 10)
-            if(currentscrolltop !== (this._private.configFunctions.getCollectionLength()*rowHeight)-containerHeight){
-              buffer = buffer*2;
+            var buffer = parseInt(containerHeight / 2, 10);
+            if (currentscrolltop !== (this._private.configFunctions.getCollectionLength() * rowHeight) - containerHeight) {
+              buffer = buffer * 2;
             }
 
             //get cell with that top
@@ -119,10 +128,11 @@ export class VGridCellEdit {
             if ((newTop / rowHeight) <= 0) {
               newTop = 0;
             }
-            setTimeout(()=>{
-                this.setCellsFromTopValue(newTop);
-                this.dispatchCellClick(this.index);
-            },100)
+            setTimeout(()=> {
+              //need timeout atm here so I can do it after the grid have updated, Todo improve grid generator code
+              this.setCellsFromTopValue(newTop);
+              this.dispatchCellClick(this.index);
+            }, 100)
 
 
           }
@@ -140,12 +150,12 @@ export class VGridCellEdit {
 
             //get content height/rows
 
-            var rowHeight = this._private.rowHeight
+            var rowHeight = this._private.rowHeight;
             var containerHeight = this._private.htmlCache.content.clientHeight;
             var containerRows = parseInt(containerHeight / rowHeight, 10);
-            var buffer = parseInt(containerHeight / 2, 10)
-            if(currentscrolltop !== 0){
-              buffer = buffer*2;
+            var buffer = parseInt(containerHeight / 2, 10);
+            if (currentscrolltop !== 0) {
+              buffer = buffer * 2;
             }
 
             //get cell with that top
@@ -157,12 +167,12 @@ export class VGridCellEdit {
               newTop = this._private.configFunctions.getCollectionLength() * rowHeight;
               newTop = newTop - rowHeight
             }
-            setTimeout(()=>{
+            setTimeout(()=> {
+              //need timeout atm here so I can do it after the grid have updated, Todo improve grid generator code
+              this.setCellsFromTopValue(newTop);
+              this.dispatchCellClick(this.index);
 
-                this.setCellsFromTopValue(newTop);
-                this.dispatchCellClick(this.index);
-
-            },100)
+            }, 100)
           }
         });
       }
@@ -188,8 +198,8 @@ export class VGridCellEdit {
         e.preventDefault();
         this.keyDownDelay(() => {
           if (this.curElement) {
-            this.removeEditCssClasses(this.curElement);
             if (!this.last) {
+              this.removeEditCssClasses(this.curElement);
               this.dispatchCellClick(this.index + 1)
             }
           }
@@ -202,8 +212,8 @@ export class VGridCellEdit {
         e.preventDefault();
         this.keyDownDelay(() => {
           if (this.curElement) {
-            this.removeEditCssClasses(this.curElement);
             if (!this.first) {
+              this.removeEditCssClasses(this.curElement);
               this.dispatchCellClick(this.index - 1)
             }
           }
@@ -260,9 +270,6 @@ export class VGridCellEdit {
           }
         });
       }
-
-
-
     }.bind(this)
   }
 
@@ -309,7 +316,7 @@ export class VGridCellEdit {
 
 
   elementKeyUp() {
-    this.curElement.onkeyup = (ex) => {
+    this.curElement.onkeyup = () => {
       this.callbackKey(this.callbackObject());
     };
   }
@@ -361,18 +368,18 @@ export class VGridCellEdit {
       }
 
 
-      e.target.classList.add("vGrid-editCell");
-      e.target.classList.add("vGrid-editCell-write");
+      e.target.classList.add(this._private.css.editCell);
+      e.target.classList.add(this._private.css.editCellWrite);
 
 
       if (this.type === "dblclick" || this.editMode) {
         this.editMode = true;
-        if (e.target.classList.contains("vGrid-editCell-focus")) {
-          e.target.classList.remove("vGrid-editCell-focus");
+        if (e.target.classList.contains(this._private.css.editCellFocus)) {
+          e.target.classList.remove(this._private.css.editCellFocus);
         }
         e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
       } else {
-        e.target.classList.add("vGrid-editCell-focus");
+        e.target.classList.add(this._private.css.editCellFocus);
       }
 
       this.elementKeyUp();

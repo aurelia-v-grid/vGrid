@@ -8,12 +8,11 @@
 export class VGridGenerator {
 
 
-  constructor(defaultConfig, Mustache, element, parentCtx, SimpleGridSortable) {
+  constructor(defaultConfig, vGridInterpolate, vGridElement, vGridSortable) {
     this.defaultConfig = defaultConfig;
-    this.Mustache = Mustache;
-    this.element = element;
-    this.parentCtx = parentCtx;
-    this.SimpleGridSortable = SimpleGridSortable;
+    this.vGridInterpolate = vGridInterpolate;
+    this.vGridElement = vGridElement;
+    this.vGridSortable = vGridSortable;
     this.setConfig(defaultConfig);
     this.init(false);
   }
@@ -29,7 +28,7 @@ export class VGridGenerator {
 
   setConfig(options) {
     this._private = {
-      node: this.element, //internal
+      node: this.vGridElement, //internal
       headerHeight: options.headerHeight || 0,                              //sets height of header
       rowHeight: options.rowHeight || 50,                                   //sets height of row
       footerHeight: options.footerHeight || 0,                              //sets height of footer
@@ -135,6 +134,8 @@ export class VGridGenerator {
         rowAlt: "vGrid-row-alt",
         rowEven: "vGrid-row-even",
         editCell: "vGrid-editCell",
+        editCellWrite: "vGrid-editCell-write",
+        editCellFocus: "vGrid-editCell-focus",
         filterLabelTop: "vGrid-filterLabelAtTop",
         filterLabelBottom: "vGrid-filterLabelAtBottom",
         filterInputTop: "vGrid-filterInputAtTop",
@@ -390,11 +391,11 @@ export class VGridGenerator {
 
 
   /****************************************************************************************************************************
-   * mustache cache.... no idea if this helps really, but lets use it...
+   * vGridInterpolate cache.... no idea if this helps really, but lets use it...
    ****************************************************************************************************************************/
   cacheRowTemplate(template) {
     var stringTemplate = template || this.getRowTemplate(this._private.attributeArray);
-    this.Mustache.parse(stringTemplate);
+    this.vGridInterpolate.parse(stringTemplate);
     this._private.htmlCache.rowTemplate = stringTemplate;
   };
 
@@ -464,7 +465,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   createRowMarkup(entity, attributeNames) {
     var tempColumns = document.createElement("DIV");
-    tempColumns.innerHTML = this.Mustache.render(this.getRowTemplate(attributeNames), entity); //, attributeNames);
+    tempColumns.innerHTML = this.vGridInterpolate.render(this.getRowTemplate(attributeNames), entity); //, attributeNames);
 
     //check if user want to override this TODO: test what this will break
     if (!this._private.columnWidthArrayOverride) {
@@ -967,8 +968,8 @@ export class VGridGenerator {
 
     let onFocus = (e) => {
       var currentScrollLeft = e.target.offsetParent.offsetParent.offsetParent.scrollLeft;
-      this._private.htmlCache.content.scrollLeft = currentScrollLeft
-    }
+      this._private.htmlCache.content.scrollLeft = currentScrollLeft;
+    };
 
     //set new div
     event.div.innerHTML = getHeaderCellMarkup(headerName, value, attributeName);
@@ -1073,7 +1074,7 @@ export class VGridGenerator {
         return parseInt(a.top) - parseInt(b.top)
       });
 
-    this.fillDataInRows();
+    this.fillDataInRows(false);
   };
 
 
@@ -1389,7 +1390,7 @@ export class VGridGenerator {
     var currentRow = this.getRowNumberFromClickedOn(e);
     var currentselectedRows = this._private.selection.getSelectedRows();
 
-    if (currentRow !== this._private.selectionVars.lastRowSelected | currentselectedRows[0] !== currentRow) {
+    if (currentRow !== this._private.selectionVars.lastRowSelected || currentselectedRows[0] !== currentRow) {
 
       //if not same row clicked again..
       this._private.selectionVars.onClicked = true;
@@ -1634,7 +1635,7 @@ export class VGridGenerator {
               this._private.htmlCache.rowTemplate = null;
               this.correctRowAndScrollbodyWidth();
 
-              this.cacheRowTemplate();
+              this.cacheRowTemplate(null);
               this.updateGridScrollbars();
               this.fillDataInRows(true);
               //onScrollbarScrolling();
@@ -1682,7 +1683,7 @@ export class VGridGenerator {
     [].slice.call(dragHandles).forEach(function (itemEl) {
       itemEl.onmouseenter = function () {
         canMove = true
-      }
+      };
       itemEl.onmouseleave = function () {
         canMove = false
       }
@@ -1692,7 +1693,7 @@ export class VGridGenerator {
 
 
     if (this._private.isSortableHeader) {
-      this._private.sortableCtx = new this.SimpleGridSortable(this._private.htmlCache.header.firstChild.firstChild, (oldIndex, newIndex) => {
+      this._private.sortableCtx = new this.vGridSortable(this._private.htmlCache.header.firstChild.firstChild, (oldIndex, newIndex) => {
         var children = this._private.htmlCache.header.firstChild.firstChild.children;
 
         var x;
@@ -1718,7 +1719,7 @@ export class VGridGenerator {
 
 
         this._private.htmlCache.rowTemplate = null; //reset template and fill data
-        this.cacheRowTemplate();
+        this.cacheRowTemplate(null);
         this.rebuildColumns();
         sortable = false;
 
@@ -1832,7 +1833,7 @@ export class VGridGenerator {
   addHtml() {
 
     //cache row template..
-    this.cacheRowTemplate();
+    this.cacheRowTemplate(null);
 
     //add needed html
     this.createGridHtmlWrapper(); //entire main grid, pretty much just adds a class
@@ -1864,7 +1865,7 @@ export class VGridGenerator {
       this.setScrollTop(this._private.predefinedScrolltop);
     }
 
-    this.fillDataInRows(); //fillDataInRows
+    this.fillDataInRows(false); //fillDataInRows
 
     this.setLargeScrollLimit();
   };
@@ -1925,7 +1926,7 @@ export class VGridGenerator {
   rebuildColumns() {
     this.correctColumnsWidthArray();
     this._private.htmlCache.rowTemplate = null;
-    this.cacheRowTemplate();
+    this.cacheRowTemplate(null);
     this.rebuildGridHeaderHtml();
     this.fillDataInRows(true);
     this.correctRowAndScrollbodyWidth();
@@ -1944,7 +1945,7 @@ export class VGridGenerator {
   columnChangeAndCollection(resetScrollToTop) {
     this.correctColumnsWidthArray();
     this._private.htmlCache.rowTemplate = null;
-    this.cacheRowTemplate();
+    this.cacheRowTemplate(null);
     this.rebuildGridHeaderHtml();
     this.fillDataInRows(true);
     this.updateSelectionOnAllRows();
@@ -1970,7 +1971,7 @@ export class VGridGenerator {
     if (this._private.scrollBodyHeight < this._private.htmlCache.content.scrollTop || scrollBottom) {
       var collectionLength = this._private.configFunctions.getCollectionLength();
       var contentRows = parseInt(this._private.htmlCache.content.offsetHeight / this._private.rowHeight);
-      var scrollOffsetHeight = contentRows * this._private.rowHeight
+      var scrollOffsetHeight = contentRows * this._private.rowHeight;
       this._private.htmlCache.content.scrollTop = ((collectionLength * this._private.rowHeight) - (scrollOffsetHeight))
 
     }

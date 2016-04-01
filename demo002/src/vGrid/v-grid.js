@@ -490,7 +490,7 @@ export class VGrid {
           if (filterObj.length === 0 && this.collectionFiltered.length !== this.collection.length) {
             this.collectionFiltered = this.collection.slice(0);
           } else {
-            
+
             this.collectionFiltered = this.vGridFilter.run(this.collection, filterObj);
             this.vGridSort.run(this.collectionFiltered);
 
@@ -562,9 +562,9 @@ export class VGrid {
     gridOptions.onOrderBy = (event, setheaders) => {
 
       //get clicked
-      var attribute = event.target.getAttribute("v-grid-data-attribute");
+      var attribute = event.target.getAttribute(this.gridContext.ctx._private.atts.dataAttribute);
       if (attribute === null) {
-        attribute = event.target.offsetParent.getAttribute("v-grid-data-attribute");
+        attribute = event.target.offsetParent.getAttribute(this.gridContext.ctx._private.atts.dataAttribute);
       }
 
       if (this.collectionFiltered.length > 0 && attribute) {
@@ -605,7 +605,7 @@ export class VGrid {
     gridOptions.clickHandler = (event, row) => {
 
       let isDoubleClick = true;//(event.type === "dblclick");
-      let attribute = event.target.getAttribute("v-grid-data-attribute");
+      let attribute = event.target.getAttribute(this.gridContext.ctx._private.atts.dataAttribute);
       let readonly = this.gridOptions.readOnlyArray.indexOf(attribute) ? false : true;
 
       //set current row of out filtered row
@@ -635,8 +635,6 @@ export class VGrid {
           this.currentRowEntity[obj.attribute] = obj.value;
           this.currentEntity[obj.attribute] = obj.value;
           this.gridContext.ctx.updateRow(this.filterRow, true);
-          console.log("filterRow")
-
 
         }, (obj) => {
 
@@ -687,7 +685,7 @@ export class VGrid {
     /***************************************************************************************
      * create the grid with all options
      ***************************************************************************************/
-    this.gridContext.ctx = new VGridGenerator(gridOptions, this.vGridInterpolate, this.element, this.$parent, VGridSortable);
+    this.gridContext.ctx = new VGridGenerator(gridOptions, this.vGridInterpolate, this.element, VGridSortable);
 
     //not tested
     this.gridContext.ctx.getSelectionKeys = () => {
