@@ -22,6 +22,8 @@
   background-color: white;
 }
 
+
+
 .vGrid div.vGrid-header {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -108,7 +110,7 @@
 
 .vGrid-row-selected {
   box-shadow: none;
-  background-color: rgba(203, 195, 203, 0.4) !important;
+  background-color: rgb(203, 195, 203) !important;
 }
 
 .vGrid-row-selected .vGrid-row-cell {
@@ -235,10 +237,10 @@
 .vGrid-filterInputAtTop {
   height: 50% !important;
   width: 100% !important;
-  border: 0px;
+  border: 0;
   border-left: 0 solid !important;
   position: relative;
-  /*padding: 1px 5px;*/
+  background-color: white !important;
   border-bottom: 1px solid rgb(230, 230, 230) !important;
   -webkit-touch-callout: text !important;
   -webkit-user-select: text !important;
@@ -252,7 +254,7 @@
   border: 1px solid rgb(204, 204, 204);
   border-left: 0 solid !important;
   position: relative;
-  /*padding-: 1px 5px;*/
+  background-color: white !important;
   border-bottom: 0 solid !important;
   -webkit-touch-callout: text !important;
   -webkit-user-select: text !important;
@@ -414,4 +416,9 @@
 .vGrid-menu ul li:hover{
   background-color: lightgrey;
   color: black;
+}
+
+/*//materialize messed up inputs */
+.vGrid input {
+  margin: 0 0 0 0 !important;
 }
