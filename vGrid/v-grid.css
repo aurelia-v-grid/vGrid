@@ -385,6 +385,8 @@
   content: "\e155";
 }
 
+
+
 .vGrid-glyphicon-sort-desc{
   transform: rotateX(180deg);
 }
@@ -426,3 +428,4 @@
 .vGrid input {
   margin: 0 0 0 0 !important;
 }
+
