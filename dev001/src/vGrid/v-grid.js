@@ -114,45 +114,6 @@ export class VGrid {
 
 
 
-  /***************************************************************************************
-   * gets the keys from the selection
-   ***************************************************************************************/
-  // getSelectionKeys() {
-  //   console.log("getKeysStart")
-  //   var curSel = this.vGridSelection.getSelectedRows();
-  //   var selKeys = [];
-  //   var collectionFiltered = this.collectionFiltered;
-  //   curSel.forEach((x) => {
-  //     selKeys.push(collectionFiltered[x][this.sgkey])
-  //   });
-  //   console.log("getKeysEnd")
-  //   return selKeys;
-  // }
-
-
-
-
-  /***************************************************************************************
-   * sets selection from keys
-   ***************************************************************************************/
-  // setSelectionFromKeys(selKeys) {
-  //   console.log("setKeysStart")
-  //   var newSelection = [];
-  //
-  //   this.collectionFiltered.forEach((x, index) => {
-  //     if (selKeys.indexOf(x[this.sgkey]) > -1) {
-  //       newSelection.push(index);
-  //     }
-  //
-  //
-  //   });
-  //   console.log("setKeysEnd")
-  //   this.vGridSelection.setSelectedRows(newSelection);
-  // }
-
-
-
-
 
   /***************************************************************************************
    * enable attributes observables, like collection.push/pop/slice, etc etc
@@ -162,18 +123,10 @@ export class VGrid {
     let arrayObserver = this.observerLocator.getArrayObserver(this.collection);
     arrayObserver.subscribe((changes) => {
 
-      console.log(changes.length)
-
       var result = changes[0];
-      console.log("addedCount:"+result.addedCount)
-      console.log("index:"+result.index)
-      console.log("removed:"+result.removed.length)
       var colFiltered = this.collectionFiltered;
       var col = this.collection;
       var grid = this.gridContext.ctx;
-
-      //get selection and their keys
-
 
 
       var curKey = -1;
@@ -207,7 +160,6 @@ export class VGrid {
           });
           //todo: check this more, to tired to be sure Im thinking right
           let i = colFiltered.length - 1;
-          console.log("start")
           while (i !== -1) {
 
             //is current entity removed?
@@ -222,7 +174,6 @@ export class VGrid {
 
             i--;
           }
-          console.log("end")
         }
         var newRowNo = -1;
         //check current entity, remove if removed, or get key/row
@@ -612,6 +563,8 @@ export class VGrid {
      ***************************************************************************************/
     gridOptions.onOrderBy = (event, setheaders) => {
 
+
+
       //get clicked
       var attribute = event.target.getAttribute(this.gridContext.ctx._private.atts.dataAttribute);
       if (attribute === null) {
@@ -642,6 +595,8 @@ export class VGrid {
         });
         this.cellEdit.setBackFocus ()
       }
+
+
 
     };
 

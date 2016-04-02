@@ -205,6 +205,7 @@ export class VGridGenerator {
             var asc = x.asc === true ? isAsc : isDesc;
             var main = `<span ${lineHeigthStyleTag} class="${this._private.css.sortIcon} ${this._private.css.sortIconNo}${x.no}">`;
             var end = '</span>';
+
             result = main + end + asc;
           }
         });
@@ -296,7 +297,7 @@ export class VGridGenerator {
       } else {
         for (var i = 0; i < attributeNamesArray.length; i++) {
           rowTemplate = rowTemplate +
-             `<div><input class="${this._private.css.cellContent}" tabindex="0" readonly="true" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
+             `<div><input class="${this._private.css.cellContent}"  tabindex="0" readonly="true" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
         }
       }
     }
@@ -845,7 +846,7 @@ export class VGridGenerator {
         cssLabel = `${this._private.css.cellContent} ${this._private.css.filterLabelBottom} ${dragHandle} ${this._private.css.orderHandle}`;
         cssInput = `${this._private.css.cellContent} ${this._private.css.filterInputTop} ${this._private.css.filterHandle}`;
       }
-      
+
 
       //get sort icon
       var sortIcon = this.getSortIcon(attribute);
@@ -1254,37 +1255,6 @@ export class VGridGenerator {
 
 
   /****************************************************************************************************************************
-   * used with click event to get row number of the one click on
-   ****************************************************************************************************************************/
-  getRowNumberFromClickedOn(e) {
-    var thisTop;
-    var x = 10;
-    var node = e.target;
-    for (var i = 0; i < x; i++) {
-      try {
-        //21 march fix, will get bad result if I do it any other way
-        if (node.classList.contains(this._private.css.row)) {
-          for (var y = 0; y < this._private.htmlCache.rowsArray.length; y++) {
-            if (node.style.transform === this._private.htmlCache.rowsArray[y].div.style.transform) {
-              thisTop = this._private.htmlCache.rowsArray[y].top;
-            }
-          }
-        }
-        node = node.offsetParent;
-      } catch (x) {
-      }
-    }
-
-    var rowHeight = this._private.rowHeight;
-    var currentRow = Math.round(thisTop / rowHeight);
-    return currentRow;
-  };
-
-
-
-
-
-  /****************************************************************************************************************************
    * hiding scroll bars when not needed
    ****************************************************************************************************************************/
   updateGridScrollbars() {
@@ -1514,10 +1484,10 @@ export class VGridGenerator {
     /*------------------------------------------------*/
     //normal click
     var handleClick = (e) => {
-      var currentRow = this.getRowNumberFromClickedOn(e);
+      var currentRow = parseInt(e.layerY /this._private.rowHeight, 10);
       this._private.configFunctions.clickHandler(e, currentRow);
       if (this._private.isMultiSelect !== undefined) {
-        this.vGridSelection.setHightlight(e, this);
+        this.vGridSelection.setHightlight(e, currentRow, this);
       }
     };
 
@@ -1525,10 +1495,10 @@ export class VGridGenerator {
     /*------------------------------------------------*/
     //doubleclick
     var handleDblClick = (e) => {
-      var currentRow = this.getRowNumberFromClickedOn(e);
+      var currentRow = parseInt(e.layerY /this._private.rowHeight, 10);
       this._private.configFunctions.clickHandler(e, currentRow);
       if (this._private.isMultiSelect !== undefined) {
-        this.vGridSelection.setHightlight(e, this);
+        this.vGridSelection.setHightlight(e, currentRow, this);
       }
     };
 
