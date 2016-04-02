@@ -31,8 +31,9 @@ export class VGridCellEdit {
       try {
         //21 march fix, will get bad result if I do it any other way
         if (node.classList.contains(this._private.css.row)) {
+          var row = parseInt(node.getAttribute("row"));
           for (var y = 0; y < this._private.htmlCache.rowsArray.length; y++) {
-            if (node.style.transform === this._private.htmlCache.rowsArray[y].div.style.transform) {
+            if (row === (this._private.htmlCache.rowsArray[y].top/this._private.rowHeight)) {
               thisTop = this._private.htmlCache.rowsArray[y + direction].top;
               element = this._private.htmlCache.rowsArray[y + direction].div;
             }

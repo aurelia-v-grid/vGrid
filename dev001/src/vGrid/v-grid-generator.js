@@ -700,6 +700,8 @@ export class VGridGenerator {
           container.style.width = "100%"
         }
 
+        rowHtmlElement.setAttribute("row",rowNo)
+
         //create markup
         var innerHtml = "";
         if (entity) {
@@ -1474,8 +1476,6 @@ export class VGridGenerator {
 
 
 
-
-
   /****************************************************************************************************************************
    * add the events  (TODO: when cleaning up code I need to splitt the stuff in here into more functions..)
    ****************************************************************************************************************************/
@@ -1484,7 +1484,7 @@ export class VGridGenerator {
     /*------------------------------------------------*/
     //normal click
     var handleClick = (e) => {
-      var currentRow = parseInt(e.layerY /this._private.rowHeight, 10);
+      var currentRow = parseInt(e.currentTarget.getAttribute("row"));
       this._private.configFunctions.clickHandler(e, currentRow);
       if (this._private.isMultiSelect !== undefined) {
         this.vGridSelection.setHightlight(e, currentRow, this);
@@ -1495,10 +1495,10 @@ export class VGridGenerator {
     /*------------------------------------------------*/
     //doubleclick
     var handleDblClick = (e) => {
-      var currentRow = parseInt(e.layerY /this._private.rowHeight, 10);
+      var currentRow = parseInt(e.currentTarget.getAttribute("row"));
       this._private.configFunctions.clickHandler(e, currentRow);
       if (this._private.isMultiSelect !== undefined) {
-        this.vGridSelection.setHightlight(e, currentRow, this);
+        this.vGridSelection.setHightlight(e.target, currentRow, this);
       }
     };
 
