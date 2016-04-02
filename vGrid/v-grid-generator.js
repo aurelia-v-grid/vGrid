@@ -1636,8 +1636,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   fixHeaderWithBody() {
     var currentScrollLeft = this._private.htmlCache.content.scrollLeft;
-    var header = this._private.htmlCache.header.children[0].children[0];
-    header.style.left = -currentScrollLeft + "px";
+    this._private.htmlCache.header.scrollLeft = currentScrollLeft;
     if (this._private.lockedColumns > 0) { //todo in own function, its used a few places now
       //this have super bad performance in IE...
       currentScrollLeft = this._private.htmlCache.content.scrollLeft; //need the updated one...
