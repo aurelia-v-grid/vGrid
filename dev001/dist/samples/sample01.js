@@ -347,7 +347,7 @@ System.register(["data/dummyDataGenerator"], function (_export, _context) {
           multiSelect: "lightgrey",
           locked0: "lightgrey",
           filter1: "lightgrey",
-          filterAt0: "lightgrey",
+          filterAt1: "lightgrey",
           sort1: "lightgrey"
 
         };

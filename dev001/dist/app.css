@@ -48,6 +48,11 @@ html, body {
 .vGrid-content{
   border: 0;
   background-color: inherit;
+  -moz-box-sizing: border-box !important;
+  -webkit-box-sizing: border-box !important;;
+  -ms-box-sizing: border-box !important;;
+  box-sizing: border-box !important;;
+
 }
 
 .avatar {
@@ -58,7 +63,7 @@ html, body {
   font-size: 25px;
   color: #fff;
   text-align: center;
-  line-height: 65px;
+
 }
 
 .contact-item {
@@ -68,11 +73,20 @@ html, body {
   padding-top: 10px;
   padding-bottom: 10px;
   line-height: 1.42857143;
+
+
 }
+
+.contact-item input {
+  line-height: 100%;
+}
+
+
 
 
 .contact-item .name {
   font-size: 18px;
   color: ThreeDDarkShadow;
+
 }
 

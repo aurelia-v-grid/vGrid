@@ -7,7 +7,7 @@
 
   <div class="col-md-12" style="height:75vh">
     <div class="row">
-      <div style="position:relative; height:80vh">
+      <div style="position:relative; height:75vh">
 
         <!--create the grid you want and pass in a "object in you component with keys ctx and   myGrid = {ctx:{},data:[]};-->
         <v-grid class="center" style="position:absolute;top:0px;left:0;right:0;bottom:0"
@@ -20,7 +20,7 @@
           <!--create row to display on each row and set row height-->
           <v-grid-row name="row" row-height="105">
             <div class="contact-list-item" style="width:100%">
-              <div class="row contact-item">
+              <div class="row contact-item boxit">
                 <div class="row">
                   <div class="col-xs-3" style="max-width: 75px;">
                     <div class="avatar"
@@ -61,6 +61,7 @@
 
       <!--my test button-->
       <div class="row center">
+        <h4 style="margin-left:25px">Demo version 01-(2016-04-02)</h4>
         <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-default btn-xs" click.trigger="replaceBtn(0)">remove all</button>

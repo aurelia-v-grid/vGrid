@@ -7,14 +7,16 @@
 export class VGridSelection {
 
 
-  selectedRows = [];
+
   selectionMode = "none";
   lastRowSelected = 0;
   lastKeyKodeUsed = "none";
   onClicked = false;       
 
 
-  constructor(mode) {
+  constructor(mode, that) {
+
+    this.that = that;
 
     if (mode === false) {
       this.selectionMode = "single"
@@ -25,6 +27,7 @@ export class VGridSelection {
 
 
   }
+
 
   setMode(mode){
     this.selectionMode = "none";
@@ -39,8 +42,10 @@ export class VGridSelection {
 
   isSelected(row) {
     var result = false;
-    if (this.selectedRows.indexOf(row) !== -1) {
-      result = true;
+    if(this.that.collectionFiltered[row]){
+      if (this.that.collectionFiltered[row].__sgSelected === true) {
+        result = true;
+      }
     }
     return result;
   };
@@ -52,21 +57,28 @@ export class VGridSelection {
       case undefined:
         break;
       case "single":
-        if (this.selectedRows !== undefined) {
-          if (this.selectedRows.length > 1) {
-            this.selectedRows = [];
+        if (this.that.collectionFiltered !== undefined) {
+          if (this.that.collectionFiltered.length > 1) {
+            this.that.collectionFiltered.forEach((x) => {
+              if(x.__sgSelected === true){
+                x.__sgSelected = false;
+              }
+            });
+
           }
         }
-        this.selectedRows[0] = rowSelect;
+        this.that.collectionFiltered[0] = rowSelect;
         break;
       case "multible":
         if (!addToSelection) {
-          this.selectedRows = [];
-          this.selectedRows[0] = rowSelect
+          this.that.collectionFiltered.forEach((x) => {
+            if(x.__sgSelected === true){
+              x.__sgSelected = false;
+            }
+          });
+          this.that.collectionFiltered[rowSelect].__sgSelected = true
         } else {
-          if (!this.isSelected(rowSelect)) {
-            this.selectedRows.push(rowSelect)
-          }
+          this.that.collectionFiltered[rowSelect].__sgSelected = true
         }
     }
   };
@@ -74,24 +86,46 @@ export class VGridSelection {
 
   selectRange(start, end) {
     if (this.selectionMode === "multible") {
-      this.selectedRows = [];
+      this.that.collectionFiltered.forEach((x) => {
+        if(x.__sgSelected === true){
+          x.__sgSelected = false;
+        }
+      });
       for (var i = start; i < end + 1; i++) {
-        this.selectedRows.push(i)
+        this.that.collectionFiltered[i].__sgSelected = true
       }
     }
   };
 
 
   reset() {
-    this.selectedRows = [];
+    this.that.collectionFiltered.forEach((x) => {
+      if(x.__sgSelected === true){
+        x.__sgSelected = false;
+      }
+    });
   };
 
   getSelectedRows() {
-    return this.selectedRows;
+    var array = [];
+    this.that.collectionFiltered.forEach((x, index) => {
+      if(x.__sgSelected === true){
+        array.push(index)
+      }
+    });
+
+    return array
   };
 
   setSelectedRows(newRows) {
-    this.selectedRows = newRows;
+    this.that.collectionFiltered.forEach((x) => {
+      if(x.__sgSelected === true){
+        x.__sgSelected = false;
+      }
+    });
+    for(var i = 0; i < newRows.length; i++){
+      this.that.collectionFiltered[newRows[i]].__sgSelected = true;
+    }
   };
 
   /****************************************************************************************************************************

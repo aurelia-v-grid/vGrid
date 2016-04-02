@@ -18,9 +18,11 @@
   font-size: 12px;
   font-family: "RobotoDraft", Helvetica, Arial, sans-serif;
   font-weight: 300;
-  line-height: 12px;
+  line-height: 100%;
   background-color: white;
 }
+
+
 
 .vGrid div.vGrid-header {
   -moz-box-sizing: border-box;
@@ -45,7 +47,7 @@
   overflow: hidden;
   box-sizing: border-box;
   position: absolute;
-  border-bottom: 1px solid rgb(230, 230, 230);
+  border-bottom: 2px solid rgb(230, 230, 230);
   background-color: inherit;
 }
 
@@ -205,10 +207,14 @@
 }
 
 .vGrid-editCell {
-  -webkit-touch-callout: text !important;
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
+  -webkit-touch-callout: none !important;;
+  -webkit-user-select: none !important;;
+  -moz-user-select: none !important;;
+  -ms-user-select: none !important;
+  /*-webkit-touch-callout: text !important;*/
+  /*-webkit-user-select: text !important;*/
+  /*-moz-user-select: text !important;*/
+  /*-ms-user-select: text !important;*/
 
 }
 
@@ -235,10 +241,10 @@
 .vGrid-filterInputAtTop {
   height: 50% !important;
   width: 100% !important;
-  border: 0px;
+  border: 0;
   border-left: 0 solid !important;
   position: relative;
-  /*padding: 1px 5px;*/
+  background-color: white !important;
   border-bottom: 1px solid rgb(230, 230, 230) !important;
   -webkit-touch-callout: text !important;
   -webkit-user-select: text !important;
@@ -252,7 +258,7 @@
   border: 1px solid rgb(204, 204, 204);
   border-left: 0 solid !important;
   position: relative;
-  /*padding-: 1px 5px;*/
+  background-color: white !important;
   border-bottom: 0 solid !important;
   -webkit-touch-callout: text !important;
   -webkit-user-select: text !important;
@@ -269,7 +275,7 @@
 .vGrid-filterLabelAtBottom {
   height: 50% !important;
   position: relative;
-  border-bottom: 0 solid rgb(230, 230, 230) !important;
+  border-bottom: 1 solid rgb(230, 230, 230) !important;
 }
 
 .vGrid-draggable-handler {
@@ -414,4 +420,9 @@
 .vGrid-menu ul li:hover{
   background-color: lightgrey;
   color: black;
+}
+
+/*//materialize messed up inputs */
+.vGrid input {
+  margin: 0 0 0 0 !important;
 }
