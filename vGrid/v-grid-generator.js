@@ -47,9 +47,7 @@ export class VGridGenerator {
       resizableHeadersAndRows: options.resizableHeadersAndRows,             //adds resizable columns to rows, if isResizableHeaders is enabled, this will not be that smooth
       isMultiSelect: options.isMultiSelect,                                 // if multiselect, undefined = none, false = 1, true = multi
       renderOnScrollbarScroll: options.renderOnScrollbarScroll,             //will not wait on scrollbars scrolls
-      columnWidthArrayOverride: options.columnWidthArrayOverride,           //will set row to 100% and dont care about columns array
-      //selection: {},                                                        //  internal, where I store the new selection I create, gets created later
-      //$selectedRows: [],                                                    //internal for selection
+      columnWidthArrayOverride: options.columnWidthArrayOverride,           //will set row to 100% and dont care about columns array       //internal for selection
       lockedColumns: options.lockedColumns || 0,                            //will give huge performance issue in IE
       sortOrder: [],
       contentHeight: 0,                                                     //internal
@@ -93,6 +91,8 @@ export class VGridGenerator {
         //onquery from header filter
         onFilterRun: options.onFilterRun || function () {
         },
+        onScrolled: options.onScrolled || function () {
+        },
         getFilterName: options.getFilterName || function () {
           return "";
         },
@@ -106,7 +106,8 @@ export class VGridGenerator {
         lastScrollLeft: 0,    //used for stopping weird scrolling to left
         halt: false,          //used for knowing if we can update when doing scrolling, used with time var under
         timer: null,          //timer for stopping updating, "getDataScrollDelay" is the timeout for this
-        clickTimersArray: []  //this is the array of touch events, have it here so I can cancel during scroll
+        clickTimersArray: [],  //this is the array of touch events, have it here so I can cancel during scroll
+        scrollCallbackTimer : null
       },
       atts: { //different attributes used
         dataAttribute: "v-grid-data-attribute",
@@ -295,8 +296,7 @@ export class VGridGenerator {
       } else {
         for (var i = 0; i < attributeNamesArray.length; i++) {
           rowTemplate = rowTemplate +
-            //`<div><div class="${this._private.css.cellContent}" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}">{{${attributeNamesArray[i]}}}</div></div>`;
-            `<div><input class="${this._private.css.cellContent}" tabindex="0" readonly="true" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
+             `<div><input class="${this._private.css.cellContent}" tabindex="0" readonly="true" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
         }
       }
     }
@@ -838,13 +838,14 @@ export class VGridGenerator {
 
       var dragHandle = this._private.isSortableHeader ? this._private.css.dragHandle : "";
 
-      var cssLabel = `${this._private.css.cellContent} ${this._private.css.filterLabelBottom} ${dragHandle} ${this._private.css.orderHandle}`;
+      var cssLabel = `${this._private.css.cellContent} ${this._private.css.filterLabelTop} ${dragHandle} ${this._private.css.orderHandle}`;
       var cssInput = `${this._private.css.cellContent} ${this._private.css.filterInputBottom} ${this._private.css.filterHandle}`;
 
       if (this._private.queryHelper.filterOnAtTop) {
-        cssLabel = `${this._private.css.cellContent} ${this._private.css.filterLabelTop} ${dragHandle} ${this._private.css.orderHandle}`;
+        cssLabel = `${this._private.css.cellContent} ${this._private.css.filterLabelBottom} ${dragHandle} ${this._private.css.orderHandle}`;
         cssInput = `${this._private.css.cellContent} ${this._private.css.filterInputTop} ${this._private.css.filterHandle}`;
       }
+      
 
       //get sort icon
       var sortIcon = this.getSortIcon(attribute);
@@ -1234,7 +1235,7 @@ export class VGridGenerator {
 
       }
     };
-
+    clearTimeout(this._private.scrollVars.scrollCallbackTimer)
     if (this._private.requestAnimationFrame) {
       requestAnimationFrame(() => {
         doScroll();
@@ -1242,6 +1243,9 @@ export class VGridGenerator {
     } else {
       doScroll();
     }
+    this._private.scrollVars.scrollCallbackTimer = setTimeout(()=>{
+      this._private.configFunctions.onScrolled();
+    },250)
 
   }; //end scroll event
 
@@ -1746,7 +1750,7 @@ export class VGridGenerator {
     this.correctRowAndScrollbodyWidth();
     this.updateSelectionOnAllRows();
     this.fixHeaderWithBody();
-    this.onNormalScrollingLarge();//
+    this.onNormalScrollingLarge();
     this.fillDataInRows(true);
     if (scrollBottom) {
       this._private.htmlCache.content.scrollTop = this._private.htmlCache.content.scrollTop + this._private.rowHeight

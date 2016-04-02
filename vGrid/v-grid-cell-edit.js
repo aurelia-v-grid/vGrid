@@ -9,7 +9,7 @@ export class VGridCellEdit {
 
   //vars;
   first = -1;
-  last= -1;
+  last = -1;
   editMode = false;
   parent = null;
   element = null;
@@ -98,9 +98,6 @@ export class VGridCellEdit {
   addGridKeyListner() {
 
     this.element.onkeydown = function (e) {
-
-      //console.log(e.keyCode);
-
 
 
       //page up
@@ -321,7 +318,40 @@ export class VGridCellEdit {
     };
   }
 
+  setBackFocus() {
+    if (this.curElement) {
+      var rowNo = this.parent.filterRow;
+      var rowheight = this._private.rowHeight;
+      this.setCellsFromTopValue(rowNo * rowheight);
+      if(this.cells.length > 0){
+      this.curElement = this.cells[this.index];
 
+        //this.curElement.focus();
+        //this.dispatchCellClick(this.index);//better this way, if they scroll down to cell, its ready for beeing used with away
+        if (!this.cells[this.index].classList.contains(this._private.css.editCell)) {
+          this.cells[this.index].classList.add(this._private.css.editCell)
+        }
+
+        if (!this.cells[this.index].classList.contains(this._private.css.editCellWrite)) {
+          this.cells[this.index].classList.add(this._private.css.editCellWrite)
+        }
+
+        if(this.editMode){
+          if(this.readOnly === false){
+            if (this.cells[this.index].classList.contains(this._private.css.editCellFocus)) {
+              this.cells[this.index].classList.remove(this._private.css.editCellFocus);
+            }
+            this.cells[this.index].removeAttribute("readonly");//if I dont do this, then they cant enter
+          } else {
+            this.cells[this.index].classList.add(this._private.css.editCellFocus);
+          }
+        }else {
+          this.cells[this.index].classList.add(this._private.css.editCellFocus);
+        }
+      }
+
+    }
+  }
 
 
   editCellhelper(e, readOnly, callbackDone, callbackKey) {
@@ -332,6 +362,11 @@ export class VGridCellEdit {
     }
 
     if (e.target.classList.contains(this._private.css.cellContent)) {
+
+      if (this.curElement) {
+        this.removeEditCssClasses(this.curElement);
+      }
+
 
       this.curElement = e.target;
       this.readOnly = readOnly;
@@ -367,14 +402,19 @@ export class VGridCellEdit {
         this.first = false;
       }
 
+      if (!e.target.classList.contains(this._private.css.editCell)) {
+        e.target.classList.add(this._private.css.editCell)
+      }
 
-      e.target.classList.add(this._private.css.editCell);
-      e.target.classList.add(this._private.css.editCellWrite);
+      if (!e.target.classList.contains(this._private.css.editCellWrite)) {
+        e.target.classList.add(this._private.css.editCellWrite)
+      }
+
 
 
       if (this.type === "dblclick" || this.editMode) {
         this.editMode = true;
-        if(this.readOnly === false){
+        if (this.readOnly === false) {
           if (e.target.classList.contains(this._private.css.editCellFocus)) {
             e.target.classList.remove(this._private.css.editCellFocus);
           }
@@ -389,7 +429,7 @@ export class VGridCellEdit {
       this.elementKeyUp();
       this.elementKeyDown();
       this.curElement.onblur = (e)=> {
-        this.removeEditCssClasses(e.target);
+        //this.removeEditCssClasses(e.target);
       };
 
       this.curElement.focus();

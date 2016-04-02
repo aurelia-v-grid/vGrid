@@ -48,6 +48,8 @@ export class VGrid {
     this.rowData = this.element.getElementsByTagName("V-GRID-ROW")[0];
     this.columns = this.rowData.getElementsByTagName("V-GRID-COL");
     this.cellEdit = new VGridCellEdit(this);
+    this.filterRowDisplaying = true;
+
   }
 
 
@@ -214,7 +216,7 @@ export class VGrid {
             i--;
           }
         }
-
+        var newRowNo = -1;
         //check current entity, remove if removed, or get key/row
         if (!curEntityValid) {
           for (var k in this.currentEntity) {
@@ -224,7 +226,7 @@ export class VGrid {
             }
           }
         } else {
-          var newRowNo = -1;
+
           if (curKey) {
             this.collectionFiltered.forEach((x, index) => {
               if (curKey === x[this.sgkey]) {
@@ -241,15 +243,21 @@ export class VGrid {
         this.resetKeys();
 
         //update key on current and filterRow
+        this.filterRowDisplaying = false;
         if (newRowNo > -1) {
           this.currentRowEntity = this.collectionFiltered[newRowNo];
           this.currentEntity[this.sgkey] = this.currentRowEntity[this.sgkey];
-          this.filterRow = newRowNo
+          this.filterRow = newRowNo;
+          this.filterRowDisplaying = true;
         }
+
+
 
         //update grid
         grid.collectionChange(false, this.scrollBottomNext);
-
+        if(this.filterRowDisplaying){
+          this.cellEdit.setBackFocus ()
+        }
 
       }
     });
@@ -273,10 +281,15 @@ export class VGrid {
           if (this.skipNextUpdateProperty.indexOf(property) === -1) {
             this.currentRowEntity[property] = newValue;
             this.gridContext.ctx.updateRow(this.filterRow, true);
+
           } else {
             //if skipping we also need to remove it
             this.skipNextUpdateProperty.splice(this.skipNextUpdateProperty.indexOf(property), 1);
           }
+
+
+            this.cellEdit.setBackFocus ()
+      
         }
       });
       this.subscriptionsAttributes.push(propertyObserver)
@@ -429,6 +442,7 @@ export class VGrid {
       };
 
       gridOptions.attributeArray = this.element.getAttribute("attibutes-used").split(",")
+      gridOptions.readOnlyArray = []//this.element.getAttribute("attibutes-used-readOnly").split(",")
     } else {
       //if row contains columns, then we need to get the data
       //array options, get then from the elements and add them to options
@@ -533,14 +547,20 @@ export class VGrid {
             });
           }
 
+          this.filterRowDisplaying = false;
           if (newRowNo > -1) {
             this.currentRowEntity = this.collectionFiltered[newRowNo];
             this.currentEntity[this.sgkey] = this.currentRowEntity[this.sgkey];
-            this.filterRow = newRowNo
+            this.filterRow = newRowNo;
+            this.filterRowDisplaying = true;
           }
 
           //update grid
           this.gridContext.ctx.collectionChange(true);
+          if(this.filterRowDisplaying){
+            this.cellEdit.setBackFocus ()
+          }
+
         }
       }
     }
@@ -616,11 +636,25 @@ export class VGrid {
             this.filterRow = index;
           }
         });
-
+        this.cellEdit.setBackFocus ()
       }
+
     };
 
+    gridOptions.onScrolled =  () => {
 
+      var rowHeight = this.gridContext.ctx._private.rowHeight;
+      var array = this.gridContext.ctx._private.htmlCache.rowsArray;
+      var arraylength = array.length;
+      var firstRow = parseInt(array[0].top/rowHeight, 10);
+      var lastRow = parseInt(array[arraylength-1].top/rowHeight, 10);
+      var curRow = this.filterRow; //pain debugging in babel...
+      if(firstRow <= curRow && lastRow >= curRow){
+        this.cellEdit.setBackFocus ()
+      }
+
+
+    };
 
 
 
@@ -733,7 +767,7 @@ export class VGrid {
 
     this.gridContext.ctx.scrollBottomNext = () => {
       this.scrollBottomNext = true;
-    }
+    };
 
     this.gridContext.ctx.selection = this.vGridSelection;
 
