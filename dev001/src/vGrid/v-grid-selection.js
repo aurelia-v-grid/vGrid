@@ -11,13 +11,14 @@ export class VGridSelection {
   selectionMode = "none";
   lastRowSelected = 0;
   lastKeyKodeUsed = "none";
-  onClicked = false;       
+  onClicked = false;
+  selectedRows = 0;
 
 
   constructor(mode, that) {
 
     this.that = that;
-    this.sgSel = "sgSel" + Math.floor((Math.random() * 1000) + 1);
+    this.sgSel = "__vGridSel" + Math.floor((Math.random() * 1000) + 1);
 
     if (mode === false) {
       this.selectionMode = "single"
@@ -43,9 +44,11 @@ export class VGridSelection {
 
   isSelected(row) {
     var result = false;
-    if(this.that.collectionFiltered[row]){
-      if (this.that.collectionFiltered[row][this.sgSel] === true) {
-        result = true;
+    if(this.selectedRows > 0){
+      if(this.that.collectionFiltered[row]){
+        if (this.that.collectionFiltered[row][this.sgSel] === true) {
+          result = true;
+        }
       }
     }
     return result;
@@ -68,18 +71,22 @@ export class VGridSelection {
 
           }
         }
-        this.that.collectionFiltered[0] = rowSelect;
+        this.that.collectionFiltered[rowSelect][this.sgSel] = true;
+        this.selectedRows = 1;
         break;
       case "multible":
         if (!addToSelection) {
+          this.selectedRows = 0;
           this.that.collectionFiltered.forEach((x) => {
             if(x[this.sgSel] === true){
               x[this.sgSel] = false;
             }
           });
-          this.that.collectionFiltered[rowSelect][this.sgSel] = true
+          this.that.collectionFiltered[rowSelect][this.sgSel] = true;
+          this.selectedRows++;
         } else {
-          this.that.collectionFiltered[rowSelect][this.sgSel] = true
+          this.that.collectionFiltered[rowSelect][this.sgSel] = true;
+          this.selectedRows++;
         }
     }
   };
@@ -92,40 +99,50 @@ export class VGridSelection {
           x[this.sgSel] = false;
         }
       });
+      this.selectedRows = 0;
       for (var i = start; i < end + 1; i++) {
-        this.that.collectionFiltered[i][this.sgSel] = true
+        this.that.collectionFiltered[i][this.sgSel] = true;
+        this.selectedRows++;
       }
     }
   };
 
 
   reset() {
-    this.that.collectionFiltered.forEach((x) => {
-      if(x[this.sgSel] === true){
-        x[this.sgSel] = false;
-      }
-    });
+    if(this.selectedRows > 0){
+      this.that.collectionFiltered.forEach((x) => {
+        if(x[this.sgSel] === true){
+          x[this.sgSel] = false;
+        }
+      });
+    }
+    this.selectedRows = 0;
   };
 
   getSelectedRows() {
     var array = [];
-    this.that.collectionFiltered.forEach((x, index) => {
-      if(x[this.sgSel] === true){
-        array.push(index)
-      }
-    });
-
+    if(this.selectedRows > 0){
+      this.that.collectionFiltered.forEach((x, index) => {
+        if(x[this.sgSel] === true){
+          array.push(index)
+        }
+      });
+    }
     return array
   };
 
   setSelectedRows(newRows) {
-    this.that.collectionFiltered.forEach((x) => {
-      if(x[this.sgSel] === true){
-        x[this.sgSel] = false;
-      }
-    });
+    if(this.selectedRows > 0) {
+      this.that.collectionFiltered.forEach((x) => {
+        if (x[this.sgSel] === true) {
+          x[this.sgSel] = false;
+        }
+      });
+    }
+    this.selectedRows = 0;
     for(var i = 0; i < newRows.length; i++){
       this.that.collectionFiltered[newRows[i]][this.sgSel] = true;
+      this.selectedRows++;
     }
   };
 

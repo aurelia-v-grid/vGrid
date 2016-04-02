@@ -42,8 +42,6 @@ export class VGridCellEdit {
       } catch (x) {
       }
     }
-    //var rowHeight = this._private.rowHeight;
-    //var currentRow = Math.round(thisTop / rowHeight);
     if (element) {
       this.cells = element.querySelectorAll("." + this._private.css.cellContent);
     }
@@ -429,7 +427,7 @@ export class VGridCellEdit {
       this.elementKeyUp();
       this.elementKeyDown();
       this.curElement.onblur = (e)=> {
-        //this.removeEditCssClasses(e.target);
+        this.removeEditCssClasses(e.target);
       };
 
       this.curElement.focus();

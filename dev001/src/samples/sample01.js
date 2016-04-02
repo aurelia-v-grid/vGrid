@@ -123,6 +123,20 @@ export class sample01 {
 
   }
 
+  miscBtn(){
+    this.myCollection.pop();
+
+    this.myCollection.splice(2, 2);
+
+    this.myCollection.splice(4, 2);
+
+    this.dummyDataGenerator.generateData(2, (data) => {
+      this.myCollection.push(data[0]);
+      this.myCollection.push(data[1]);
+    });
+
+  }
+
 
   /********************************************************************
    * GRID-CONTEXT BUTTONS

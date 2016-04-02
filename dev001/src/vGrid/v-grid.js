@@ -36,7 +36,7 @@ export class VGrid {
     this.currentRowEntity = null; //keeps the current entity ref
     this.filterRow = -1; //current selected row in grid, not always the same as collection when used filter/soring
     this.scrollBottomNext = false; //var to know if user wants to scroll to bottom next time array abserver gets called
-    this.sgkey = "sgKey" + Math.floor((Math.random() * 1000) + 1); //keyname, need to set a random here so you can have multible grid linked to same collection
+    this.sgkey = "__vGrid" + Math.floor((Math.random() * 1000) + 1); //keyname, need to set a random here so you can have multible grid linked to same collection
     this.gridContextMissing = false; //to know if they have binded the context or not
     this.subscriptionsAttributes = []; //here I keep subscriptions to observer on attributes
     this.collectionSubscription = null; //here I keep subscriptions to observer on collection
@@ -48,7 +48,7 @@ export class VGrid {
     this.columns = this.rowData.getElementsByTagName("V-GRID-COL");
     this.cellEdit = new VGridCellEdit(this);
     this.filterRowDisplaying = true;
-    this.vGridSelection =new VGridSelection(this,this);
+    this.vGridSelection = new VGridSelection(this, this);
 
   }
 
@@ -123,7 +123,7 @@ export class VGrid {
     let arrayObserver = this.observerLocator.getArrayObserver(this.collection);
     arrayObserver.subscribe((changes) => {
 
-      var result = changes[0];
+
       var colFiltered = this.collectionFiltered;
       var col = this.collection;
       var grid = this.gridContext.ctx;
@@ -136,13 +136,29 @@ export class VGrid {
       var curEntityValid = true;
 
 
+      if (changes.length > 0) {
 
-      //todo, improve so it loops the result set...
-      //so atm there is a limit what you can do at once..
-      if (result) {
+        var added = false;
+        var toRemove = [];
 
-        //if anyone is added, then lets add them
-        if (result.addedCount > 0) {
+        //loop changes
+        changes.forEach((result)=> {
+
+          //if anyone is added, then lets save that information
+          if (result.addedCount > 0) {
+            added = true;
+          }
+
+          //get removed ones and save them for now
+          if (result.removed.length > 0) {
+            //push into removed array
+            result.removed.forEach((x) => {
+              toRemove.push(x[this.sgkey]);
+            });
+          }
+        });
+
+        if (added === true) {
           col.forEach((x) => {
             if (x[this.sgkey] === undefined) {
               colFiltered.push(x)
@@ -150,31 +166,20 @@ export class VGrid {
           });
         }
 
-        //get removed ones and get rid of them
-        if (result.removed.length > 0) {
 
-          //build array of new ones
-          var toRemove = [];
-          result.removed.forEach((x) => {
-            toRemove.push(x[this.sgkey]);
-          });
-          //todo: check this more, to tired to be sure Im thinking right
-          let i = colFiltered.length - 1;
-          while (i !== -1) {
-
-            //is current entity removed?
-            if (toRemove.indexOf(curKey) !== -1) {
-              curEntityValid = false;
-            }
-
-            if (toRemove.indexOf(colFiltered[i][this.sgkey]) !== -1) {
-              var x = colFiltered.splice(i, 1);
-
-            }
-
-            i--;
+        let i = colFiltered.length - 1;
+        while (i !== -1) {
+          //is current entity removed?
+          if (toRemove.indexOf(curKey) !== -1) {
+            curEntityValid = false;
           }
+          if (toRemove.indexOf(colFiltered[i][this.sgkey]) !== -1) {
+            var x = colFiltered.splice(i, 1);
+          }
+          i--;
         }
+
+
         var newRowNo = -1;
         //check current entity, remove if removed, or get key/row
         if (!curEntityValid) {
@@ -209,11 +214,10 @@ export class VGrid {
         }
 
 
-
         //update grid
         grid.collectionChange(false, this.scrollBottomNext);
-        if(this.filterRowDisplaying){
-          this.cellEdit.setBackFocus ()
+        if (this.filterRowDisplaying) {
+          this.cellEdit.setBackFocus();
         }
 
       }
@@ -245,7 +249,7 @@ export class VGrid {
           }
 
 
-            this.cellEdit.setBackFocus ()
+          this.cellEdit.setBackFocus()
 
         }
       });
@@ -450,7 +454,7 @@ export class VGrid {
     gridOptions.filterOnAtTop = setValue(this.gridContext.headerFilterTop, type[this.element.getAttribute("header-filter-top")], false);
     gridOptions.filterOnKey = setValue(this.gridContext.headerFilterOnkeydown, type[this.element.getAttribute("header-filter-onkeydown")], false);
     gridOptions.sortOnHeaderClick = setValue(this.gridContext.sortOnHeaderClick, type[this.element.getAttribute("sort-on-header-click")], false);
-    
+
     this.eventOnDblClick = this.element.getAttribute("row-on-dblclick");
     this.eventOnRowDraw = this.element.getAttribute("row-on-draw");
 
@@ -513,8 +517,8 @@ export class VGrid {
 
           //update grid
           this.gridContext.ctx.collectionChange(true);
-          if(this.filterRowDisplaying){
-            this.cellEdit.setBackFocus ()
+          if (this.filterRowDisplaying) {
+            this.cellEdit.setBackFocus()
           }
 
         }
@@ -542,7 +546,7 @@ export class VGrid {
      * Use {} if you want markup of columns, or undefined for total blank rows
      ***************************************************************************************/
     gridOptions.getDataElement = (row, isDown, isLargeScroll, callback) => {
-      if(this.collectionFiltered !== undefined){
+      if (this.collectionFiltered !== undefined) {
         if (this.$parent[this.eventOnRowDraw]) {
           //if user have added this then we call it so they can edit the row data before we display it
           this.$parent[this.eventOnRowDraw](this.collectionFiltered[row]);
@@ -593,23 +597,23 @@ export class VGrid {
             this.filterRow = index;
           }
         });
-        this.cellEdit.setBackFocus ()
+        this.cellEdit.setBackFocus()
       }
 
 
 
     };
 
-    gridOptions.onScrolled =  () => {
+    gridOptions.onScrolled = () => {
 
       var rowHeight = this.gridContext.ctx._private.rowHeight;
       var array = this.gridContext.ctx._private.htmlCache.rowsArray;
       var arraylength = array.length;
-      var firstRow = parseInt(array[0].top/rowHeight, 10);
-      var lastRow = parseInt(array[arraylength-1].top/rowHeight, 10);
+      var firstRow = parseInt(array[0].top / rowHeight, 10);
+      var lastRow = parseInt(array[arraylength - 1].top / rowHeight, 10);
       var curRow = this.filterRow; //pain debugging in babel...
-      if(firstRow <= curRow && lastRow >= curRow){
-        this.cellEdit.setBackFocus ()
+      if (firstRow <= curRow && lastRow >= curRow) {
+        this.cellEdit.setBackFocus()
       }
 
 
@@ -644,11 +648,11 @@ export class VGrid {
         }
       }
 
-      
-      if ( this.$parent[this.eventOnDblClick] && event.type === "dblclick") {
-        setTimeout(()=>{
+
+      if (this.$parent[this.eventOnDblClick] && event.type === "dblclick") {
+        setTimeout(()=> {
           this.$parent[this.eventOnDblClick](this.currentRowEntity[this.sgkey]);
-        },15)
+        }, 15)
       }
 
 
@@ -711,17 +715,15 @@ export class VGrid {
      ***************************************************************************************/
     this.gridContext.ctx = new VGridGenerator(gridOptions, this.vGridInterpolate, this.element, VGridSortable, this.vGridSelection);
 
-    //not tested
-    // this.gridContext.ctx.getSelectionKeys = () => {
-    //   //returns the row number in parent collection
-    //   return this.getSelectionKeys();
-    // };
-    //
-    // //not tested
-    // this.gridContext.ctx.setSelectionFromKeys = (x) => {
-    //   //hightlights the rows that is visable in filtered collection from the
-    //   this.setSelectionFromKeys(x);
-    // };
+    //returns the rows in main collection that is in the grid/filtered or not..
+    this.gridContext.ctx.getGridRows = () => {
+      var array = [];
+      this.collectionFiltered.forEach((x)=> {
+        array.push(x[sgkey]);
+      });
+      return array;
+
+    };
 
 
     this.gridContext.ctx.scrollBottomNext = () => {
