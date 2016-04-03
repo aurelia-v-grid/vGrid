@@ -6,6 +6,7 @@ export class App {
       { route: ['sample02'], name: 'sample012', moduleId: './samples/sample02',  nav: true, title:'demo2 repeat html (not ready/early stage)' }
 
 
+
     ]);
 
     this.router = router;

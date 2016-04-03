@@ -1,3 +1,35 @@
 <template>
+  <require from="vGrid/v-grid.css"></require>
+  <require from="app.css"></require>
+  <require from="vGrid/v-grid"></require>
+  <div class="myCol">
+    <h4 style="margin-left:25px">test</h4>
+    <button click.trigger="selectAll()">select all</button>
 
+    <v-grid
+      style="position:relative;margin-left:25px;height: 500px; width: 600px"
+      row-height="25"
+      header-height="50"
+      resizable-headers="true"
+      resize-also-rows="true"
+      sortable-headers="true"
+      sort-on-header-click="true"
+      header-filter="true"
+      header-filter-onkeydown="true"
+      header-filter-not-to="phone"
+      header-filter-top="true"
+      row-on-dblclick="onDblClick"
+      row-on-draw="onRowDraw"
+      multi-select="true"
+      config="current-entity.bind:myCurrentEntity; collection.bind:myCollection;  grid-context.bind:myGrid">
+      <v-grid-row>
+        <v-grid-col col-width="160" attribute="index" header="Index" default-filter=">=" read-only="true"></v-grid-col>
+        <v-grid-col col-width="150" attribute="name" header="Name" default-filter="*=" col-css="background-color: {{myCustomColor}}"></v-grid-col>
+        <v-grid-col col-width="160" attribute="country" header="Country" default-filter="="></v-grid-col>
+        <v-grid-col col-width="180" attribute="email" header="Email" default-filter="*"></v-grid-col>
+        <v-grid-col col-width="180" attribute="test" header="test" default-filter="=*"></v-grid-col>
+        <v-grid-col col-width="160" attribute="color" header="Color" default-filter="=*" col-css="color: {{color}}"></v-grid-col>
+      </v-grid-row>
+    </v-grid>
+  </div>
 </template>
