@@ -93,6 +93,7 @@ export class VGridGenerator {
         },
         onScrolled: options.onScrolled || function () {
         },
+        onBeforeDataFill: options.onBeforeDataFill || null,
         getFilterName: options.getFilterName || function () {
           return "";
         },
@@ -1601,8 +1602,11 @@ export class VGridGenerator {
     if (this._private.predefinedScrolltop) {
       this.setScrollTop(this._private.predefinedScrolltop);
     }
-
-    this.fillDataInRows(false); //fillDataInRows
+    if(this._private.configFunctions.onBeforeDataFill && !isRebuild){
+      this._private.configFunctions.onBeforeDataFill(this)
+    }else {
+      this.fillDataInRows(false); //fillDataInRows
+    }
 
     this.setLargeScrollLimit();
   };

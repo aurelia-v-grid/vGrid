@@ -18,8 +18,8 @@ export class sample01 {
   }
 
   selectAll (){
-    var allRows = this.myGrid.ctx.getGridRows();
-    this.myGrid.ctx.selection.selectRange(0, allRows.length -1)
+    var allRowsArray = this.myGrid.ctx.getGridRows();
+    this.myGrid.ctx.selection.selectRange(0, allRowsArray.length-1);
     this.myGrid.ctx.updateSelectionOnAllRows();
   }
 

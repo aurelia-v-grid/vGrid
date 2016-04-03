@@ -351,7 +351,7 @@ export class VGrid {
    * set all options
    ***************************************************************************************/
   attached() {
-    console.log("attached grid")
+
     // should I have had a lot of this in created?
     let gridOptions = {};
 
@@ -708,9 +708,10 @@ export class VGrid {
     this.enableObservablesArray();
     this.enableObservablesAttributes();
 
-    // gridOptions.created = (callback){
-    //
-    // }
+     //gridOptions.onBeforeDataFill = (gridCtx) => {
+        //testing need option to be able to scroll to x top if we want.
+       //gridCtx.collectionChange(false, true);
+     //};
 
     /***************************************************************************************
      * create the grid with all options
