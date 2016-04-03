@@ -351,7 +351,7 @@ export class VGrid {
    * set all options
    ***************************************************************************************/
   attached() {
-
+    
     // should I have had a lot of this in created?
     let gridOptions = {};
 
@@ -708,7 +708,9 @@ export class VGrid {
     this.enableObservablesArray();
     this.enableObservablesAttributes();
 
-
+    // gridOptions.created = (callback){
+    //
+    // }
 
     /***************************************************************************************
      * create the grid with all options
@@ -719,7 +721,7 @@ export class VGrid {
     this.gridContext.ctx.getGridRows = () => {
       var array = [];
       this.collectionFiltered.forEach((x)=> {
-        array.push(x[sgkey]);
+        array.push(x[this.sgkey]);
       });
       return array;
 

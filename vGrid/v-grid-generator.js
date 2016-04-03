@@ -297,7 +297,7 @@ export class VGridGenerator {
       } else {
         for (var i = 0; i < attributeNamesArray.length; i++) {
           rowTemplate = rowTemplate +
-             `<div><input class="${this._private.css.cellContent}"  tabindex="0" readonly="true" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
+             `<div><input class="${this._private.css.cellContent}"  readonly="true" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
         }
       }
     }
@@ -700,7 +700,7 @@ export class VGridGenerator {
           container.style.width = "100%"
         }
 
-        rowHtmlElement.setAttribute("row",rowNo)
+        rowHtmlElement.setAttribute("row",rowNo);
 
         //create markup
         var innerHtml = "";
