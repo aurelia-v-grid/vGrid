@@ -29,7 +29,6 @@ export class VGridCellEdit {
     var node = e;
     for (var i = 0; i < x; i++) {
       try {
-        //21 march fix, will get bad result if I do it any other way
         if (node.classList.contains(this._private.css.row)) {
           var row = parseInt(node.getAttribute("row"));
           for (var y = 0; y < this._private.htmlCache.rowsArray.length; y++) {
@@ -79,7 +78,10 @@ export class VGridCellEdit {
       'cancelable': true
     });
     this.setAsSingleClick = true;
-    this.cells[index].dispatchEvent(event);
+    if(this.cells[index]){
+      this.cells[index].dispatchEvent(event);
+    }
+
   }
 
 
@@ -129,8 +131,6 @@ export class VGridCellEdit {
               this.setCellsFromTopValue(newTop);
               this.dispatchCellClick(this.index);
             }, 100)
-
-
           }
         });
       }
@@ -145,7 +145,6 @@ export class VGridCellEdit {
             var currentscrolltop = this.gridCtx.getScrollTop();
 
             //get content height/rows
-
             var rowHeight = this._private.rowHeight;
             var containerHeight = this._private.htmlCache.content.clientHeight;
             var containerRows = parseInt(containerHeight / rowHeight, 10);

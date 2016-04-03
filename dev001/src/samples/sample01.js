@@ -16,6 +16,7 @@ export class sample01 {
       if (data.country === "Angola") {
         data.myCustomColor = "rgba(150,72,230, 0.3)"
       }
+      data.test = "1"
     }
   }
 
