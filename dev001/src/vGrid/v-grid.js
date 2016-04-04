@@ -351,7 +351,7 @@ export class VGrid {
    * set all options
    ***************************************************************************************/
   attached() {
-
+    
     // should I have had a lot of this in created?
     let gridOptions = {};
 
@@ -648,7 +648,8 @@ export class VGrid {
         }
       }
 
-
+      
+      //have user added on double click event?
       if (this.$parent[this.eventOnDblClick] && event.type === "dblclick") {
         setTimeout(()=> {
           this.$parent[this.eventOnDblClick](this.currentRowEntity[this.sgkey]);
@@ -657,7 +658,7 @@ export class VGrid {
 
 
       //use helper function to edit cell
-      this.cellEdit.editCellhelper(event, readonly, (obj) => {
+      this.cellEdit.editCellhelper(row, event, readonly, (obj) => {
 
         //called when cell looses focus, user presses enter
         //set current entity and and update row data
@@ -708,15 +709,14 @@ export class VGrid {
     this.enableObservablesArray();
     this.enableObservablesAttributes();
 
-     //gridOptions.onBeforeDataFill = (gridCtx) => {
-        //testing need option to be able to scroll to x top if we want.
-       //gridCtx.collectionChange(false, true);
-     //};
+    // gridOptions.created = (callback){
+    //
+    // }
 
     /***************************************************************************************
      * create the grid with all options
      ***************************************************************************************/
-    this.gridContext.ctx = new VGridGenerator(gridOptions, this.vGridInterpolate, this.element, VGridSortable, this.vGridSelection);
+    this.gridContext.ctx = new VGridGenerator(gridOptions, this.vGridInterpolate, this.element, VGridSortable, this.vGridSelection, this.cellEdit);
 
     //returns the rows in main collection that is in the grid/filtered or not..
     this.gridContext.ctx.getGridRows = () => {

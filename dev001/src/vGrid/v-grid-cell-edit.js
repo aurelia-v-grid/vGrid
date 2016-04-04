@@ -13,6 +13,7 @@ export class VGridCellEdit {
   editMode = false;
   parent = null;
   element = null;
+  update = true;
 
   constructor(parent) {
     this.parent = parent;
@@ -104,6 +105,7 @@ export class VGridCellEdit {
       //page up
       if (e.keyCode === 33) {
         e.preventDefault();
+        this.updateBeforeNext(this.callbackObject());
         this.keyDownDelay(() => {
           if (this.curElement) {
             //get scrolltop
@@ -139,6 +141,7 @@ export class VGridCellEdit {
       //page down
       if (e.keyCode === 34) {
         e.preventDefault();
+        this.updateBeforeNext(this.callbackObject());
         this.keyDownDelay(() => {
           if (this.curElement) {
             //get scrolltop
@@ -307,7 +310,12 @@ export class VGridCellEdit {
     };
   }
 
-
+  onScroll () {
+    if(this.updated === false){
+      console.log("wow")
+      this.updateBeforeNext(this.callbackObject());
+    }
+  }
 
 
   elementKeyUp() {
@@ -352,8 +360,38 @@ export class VGridCellEdit {
   }
 
 
-  editCellhelper(e, readOnly, callbackDone, callbackKey) {
+  updateCurrentDone(obj){
+    this.currentRowEntity[obj.attribute] = obj.value;
+    this.currentEntity[obj.attribute] = obj.value;
+    this.gridContext.ctx.updateRow(this.filterRow, true);
+  }
 
+  updateBeforeNext(obj){
+    this.parent.collectionFiltered[this.row][obj.attribute] = obj.value;
+  }
+
+
+  updateLastRow(row){
+    this.parent.gridContext.ctx.updateRow(row, true);
+  }
+
+
+
+  updateActual(obj){
+    if (this.parent.currentRowEntity[obj.attribute] !== obj.value) {
+      this.parent.skipNextUpdateProperty.push(obj.attribute);
+
+      //set current entity and and update row data
+      this.parent.currentRowEntity[obj.attribute] = obj.value;
+      this.parent.currentEntity[obj.attribute] = obj.value;
+    }
+  }
+
+
+
+
+  editCellhelper(row, e, readOnly, callbackDone, callbackKey) {
+    console.log("click");
     if (!this._private) {
       this._private = this.parent.gridContext.ctx._private;
       this.gridCtx = this.parent.gridContext.ctx;
@@ -361,11 +399,31 @@ export class VGridCellEdit {
 
     if (e.target.classList.contains(this._private.css.cellContent)) {
 
+
+      //have we had a curElement before?
       if (this.curElement) {
+
         this.removeEditCssClasses(this.curElement);
+
+        if(this.row !== row){
+
+          //row, lets update filtered collection row first
+          this.updateBeforeNext(this.callbackObject());
+
+          //then lets update last row for logics/colors etc
+          this.updateLastRow(this.row);
+
+        } else {
+          //not new row, we also need to update current entity
+          this.updateActual(this.callbackObject());
+        }
       }
 
 
+
+
+      this.updated = false;
+      this.row = row;
       this.curElement = e.target;
       this.readOnly = readOnly;
       this.callbackDone = callbackDone;
@@ -424,11 +482,10 @@ export class VGridCellEdit {
         e.target.classList.add(this._private.css.editCellFocus);
       }
 
-      this.elementKeyUp();
+      //this.elementKeyUp();
       this.elementKeyDown();
-      this.curElement.onblur = (e)=> {
-        this.removeEditCssClasses(e.target);
-      };
+
+
 
       this.curElement.focus();
 
