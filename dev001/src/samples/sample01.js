@@ -75,7 +75,6 @@ export class sample01 {
     };
 
     var dateObj = new Date(date);
-    console.log(dateObj.toString());
     var newDate =[];
     newDate[0] = lengthCheck(dateObj.getDate());
     newDate[1] = lengthCheck(dateObj.getMonth()+1);
