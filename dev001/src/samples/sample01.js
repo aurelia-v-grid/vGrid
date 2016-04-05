@@ -20,8 +20,8 @@ export class sample01 {
     }
   }
 
-  onDblClick (row) {
-    console.log("dblclick row:"+row)
+  onDblClick (row, attribute) {
+    console.log("dblclick row:"+row+", and this was on attribute:"+attribute)
   }
 
 

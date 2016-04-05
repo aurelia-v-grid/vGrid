@@ -351,7 +351,7 @@ export class VGrid {
    * set all options
    ***************************************************************************************/
   attached() {
-    
+
     // should I have had a lot of this in created?
     let gridOptions = {};
 
@@ -413,6 +413,7 @@ export class VGrid {
       gridOptions.filterArray = [];
       gridOptions.readOnlyArray = [];
       gridOptions.colStyleArray = [];
+      gridOptions.colTypeArray = [];
 
 
       for (var i = 0; i < this.columns.length; i++) {
@@ -420,6 +421,7 @@ export class VGrid {
         gridOptions.columnWidthArray.push(this.columns[i].getAttribute("col-width"));
         gridOptions.headerArray.push(this.columns[i].getAttribute("header") || "");
         gridOptions.colStyleArray.push(this.columns[i].getAttribute("col-css") || "");
+        gridOptions.colTypeArray.push(this.columns[i].getAttribute("col-type") || "");
         gridOptions.filterArray.push(this.columns[i].getAttribute("default-filter") || "?");
         gridOptions.readOnlyArray.push(this.columns[i].getAttribute("read-only") === "true" ? this.columns[i].getAttribute("attribute") : false);
       }
@@ -431,6 +433,7 @@ export class VGrid {
       gridOptions.filterArray = this.gridContext.filterArray || gridOptions.filterArray;
       gridOptions.readOnlyArray = this.gridContext.readOnlyArray || gridOptions.readOnlyArray;
       gridOptions.colStyleArray = this.gridContext.colStyleArray || gridOptions.colStyleArray;
+      gridOptions.colTypeArray = this.gridContext.colTypeArray || gridOptions.colTypeArray;
     }
 
 
@@ -466,6 +469,16 @@ export class VGrid {
         gridOptions.doNotAddFilterTo = this.gridContext.headerFilterNotTo.split(",")
       } else {
         gridOptions.doNotAddFilterTo = [];
+      }
+    }
+
+    if (this.element.getAttribute("sort-not-on-header")) {
+      gridOptions.sortNotOnHeader = this.element.getAttribute("sort-not-on-header").split(",")
+    } else {
+      if (this.gridContext.sortNotOnHeader) {
+        gridOptions.sortNotOnHeader = this.gridContext.sortNotOnHeader.split(",")
+      } else {
+        gridOptions.sortNotOnHeader = [];
       }
     }
 
@@ -574,8 +587,12 @@ export class VGrid {
       if (attribute === null) {
         attribute = event.target.offsetParent.getAttribute(this.gridContext.ctx._private.atts.dataAttribute);
       }
+      let checked = true
+      if(this.gridOptions.sortNotOnHeader.indexOf(attribute) !== -1){
+        checked = false;
+      }
 
-      if (this.collectionFiltered.length > 0 && attribute) {
+      if (this.collectionFiltered.length > 0 && attribute && checked) {
 
         //set filter
         this.vGridSort.setFilter({
@@ -648,37 +665,17 @@ export class VGrid {
         }
       }
 
-      
+
       //have user added on double click event?
       if (this.$parent[this.eventOnDblClick] && event.type === "dblclick") {
         setTimeout(()=> {
-          this.$parent[this.eventOnDblClick](this.currentRowEntity[this.sgkey]);
+          this.$parent[this.eventOnDblClick](this.currentRowEntity[this.sgkey], attribute, event);
         }, 15)
       }
 
 
       //use helper function to edit cell
-      this.cellEdit.editCellhelper(row, event, readonly, (obj) => {
-
-        //called when cell looses focus, user presses enter
-        //set current entity and and update row data
-        this.currentRowEntity[obj.attribute] = obj.value;
-        this.currentEntity[obj.attribute] = obj.value;
-        this.gridContext.ctx.updateRow(this.filterRow, true);
-
-      }, (obj) => {
-
-        //called on each key stroke
-        //lock row for update row for updates
-        if (this.currentRowEntity[obj.attribute] !== obj.value) {
-          this.skipNextUpdateProperty.push(obj.attribute);
-
-          //set current entity and and update row data
-          this.currentRowEntity[obj.attribute] = obj.value;
-          this.currentEntity[obj.attribute] = obj.value;
-        }
-
-      });
+      this.cellEdit.editCellhelper(row, event, readonly);
 
     };
 

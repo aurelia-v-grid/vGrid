@@ -28,9 +28,10 @@
           resize-also-rows="true"
           sortable-headers="true"
           sort-on-header-click="true"
+          sort-not-on-header="image"
           header-filter="true"
           header-filter-onkeydown="true"
-          header-filter-not-to="phone"
+          header-filter-not-to="image"
           header-filter-top="true"
           row-on-dblclick="onDblClick"
           row-on-draw="onRowDraw"
@@ -41,7 +42,7 @@
             <v-grid-col col-width="150" attribute="name" header="Name" default-filter="*=" col-css="background-color: {{myCustomColor}}"></v-grid-col>
             <v-grid-col col-width="160" attribute="country" header="Country" default-filter="="></v-grid-col>
             <v-grid-col col-width="180" attribute="email" header="Email" default-filter="*"></v-grid-col>
-            <v-grid-col col-width="180" attribute="test" header="test" default-filter="=*"></v-grid-col>
+            <v-grid-col col-width="100" attribute="image" header="image" default-filter="=*" col-type="image" col-css="border-radius: 50%;width:50%;margin-left:25%;"></v-grid-col>
             <v-grid-col col-width="160" attribute="color" header="Color" default-filter="=*" col-css="color: {{color}}"></v-grid-col>
           </v-grid-row>
         </v-grid>

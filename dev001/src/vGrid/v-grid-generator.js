@@ -39,8 +39,10 @@ export class VGridGenerator {
       attributeArray: options.attributeArray || [],                         // attributes for cell and headers
       columnWidthArray: options.columnWidthArray || [],                     // width of all columns
       colStyleArray: options.colStyleArray || [],                           // text that will be put in column style tag
+      colTypeArray : options.colTypeArray || [],
       isSortableHeader: options.isSortableHeader,                           //adds sortable headers
       sortOnHeaderClick: options.sortOnHeaderClick,                         //enable sort event on header click
+      sortNotOnHeader: options.sortNotOnHeader,
       isResizableHeaders: options.isResizableHeaders,                       //adds resizable headers
       predefinedScrolltop: options.predefinedScrolltop,                     //needed to know state of scrolltop
       requestAnimationFrame: options.requestAnimationFrame,                 //if you want it to request animation frame
@@ -192,6 +194,11 @@ export class VGridGenerator {
       lineHeigthStyleTag = `style=line-height:${this._private.headerHeight / 2}px;"`;
     }
 
+    if(this._private.sortNotOnHeader.indexOf(attribute) !== -1){
+      return "";
+    }
+
+
 
     if (this._private.sortOnHeaderClick) {
       var main = `<span class=""><span ${lineHeigthStyleTag} class="${this._private.css.sortIcon} ${this._private.css.sortIconSort}"></span></span>`;
@@ -297,8 +304,15 @@ export class VGridGenerator {
         rowTemplate = this._private.configFunctions.onRowMarkupCreate(attributeNamesArray);
       } else {
         for (var i = 0; i < attributeNamesArray.length; i++) {
-          rowTemplate = rowTemplate +
-             `<div><input class="${this._private.css.cellContent}"  readonly="true" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
+          if(this._private.colTypeArray[i] === "image"){
+            rowTemplate = rowTemplate +
+               `<div><img class="${this._private.css.cellContent}" tabindex="0" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}" src="{{${attributeNamesArray[i]}}}" ></div>`;
+
+          } else {
+            rowTemplate = rowTemplate +
+               `<div><input class="${this._private.css.cellContent}"  readonly="true" style="${this._private.colStyleArray[i]}" ${this._private.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
+
+          }
         }
       }
     }
@@ -1149,7 +1163,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   onScroll() {
     this.vGridCellEdit.onScroll();
-    
+
     var doScroll = () => {
       var currentScrollTop = this._private.htmlCache.content.scrollTop;
       var currentScrollLeft = this._private.htmlCache.content.scrollLeft;
@@ -1500,9 +1514,9 @@ export class VGridGenerator {
     var handleDblClick = (e) => {
       var currentRow = parseInt(e.currentTarget.getAttribute("row"));
       this._private.configFunctions.clickHandler(e, currentRow);
-      if (this._private.isMultiSelect !== undefined) {
-        this.vGridSelection.setHightlight(e.target, currentRow, this);
-      }
+      // if (this._private.isMultiSelect !== undefined) {
+      //   this.vGridSelection.setHightlight(e.target, currentRow, this);
+      // }
     };
 
 
@@ -1921,4 +1935,3 @@ export class VGridGenerator {
 
 
 } //end widget
-

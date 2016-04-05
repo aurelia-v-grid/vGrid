@@ -276,7 +276,7 @@ export class VGridCellEdit {
   elementBlur() {
     this.removeEditCssClasses(this.curElement);
     this.top = this.setCellsFromElement(this.curElement, 0);
-    this.callbackDone(this.callbackObject());
+    this.updateCurrentDone(this.callbackObject());
     this.editMode = false;
     this.setCellsFromTopValue(this.top);
     this.dispatchCellClick(this.index)
@@ -310,19 +310,17 @@ export class VGridCellEdit {
     };
   }
 
+
+
+  
   onScroll () {
     if(this.updated === false){
-      console.log("wow")
-      this.updateBeforeNext(this.callbackObject());
+      this.updateActual(this.callbackObject());
     }
   }
 
 
-  elementKeyUp() {
-    this.curElement.onkeyup = () => {
-      this.callbackKey(this.callbackObject());
-    };
-  }
+
 
   setBackFocus() {
     if (this.curElement) {
@@ -332,8 +330,6 @@ export class VGridCellEdit {
       if(this.cells.length > 0){
       this.curElement = this.cells[this.index];
 
-        //this.curElement.focus();
-        //this.dispatchCellClick(this.index);//better this way, if they scroll down to cell, its ready for beeing used with away
         if (!this.cells[this.index].classList.contains(this._private.css.editCell)) {
           this.cells[this.index].classList.add(this._private.css.editCell)
         }
@@ -361,13 +357,19 @@ export class VGridCellEdit {
 
 
   updateCurrentDone(obj){
-    this.currentRowEntity[obj.attribute] = obj.value;
-    this.currentEntity[obj.attribute] = obj.value;
-    this.gridContext.ctx.updateRow(this.filterRow, true);
+    if(this.attributeType !== "image"){
+      this.parent.currentRowEntity[obj.attribute] = obj.value;
+      this.parent.currentEntity[obj.attribute] = obj.value;
+      this.parent.gridContext.ctx.updateRow(this.filterRow, true);
+    }
+    this.updated = true;
   }
 
   updateBeforeNext(obj){
-    this.parent.collectionFiltered[this.row][obj.attribute] = obj.value;
+    if(this.attributeType !== "image"){
+      this.parent.collectionFiltered[this.row][obj.attribute] = obj.value;
+    }
+    this.updated = true;
   }
 
 
@@ -378,20 +380,21 @@ export class VGridCellEdit {
 
 
   updateActual(obj){
-    if (this.parent.currentRowEntity[obj.attribute] !== obj.value) {
+
+    if (this.parent.currentRowEntity[obj.attribute] !== obj.value && this.attributeType !== "image") {
       this.parent.skipNextUpdateProperty.push(obj.attribute);
 
       //set current entity and and update row data
       this.parent.currentRowEntity[obj.attribute] = obj.value;
       this.parent.currentEntity[obj.attribute] = obj.value;
     }
+    this.updated = true;
   }
 
 
 
 
-  editCellhelper(row, e, readOnly, callbackDone, callbackKey) {
-    console.log("click");
+  editCellhelper(row, e, readOnly) {
     if (!this._private) {
       this._private = this.parent.gridContext.ctx._private;
       this.gridCtx = this.parent.gridContext.ctx;
@@ -399,25 +402,25 @@ export class VGridCellEdit {
 
     if (e.target.classList.contains(this._private.css.cellContent)) {
 
-
       //have we had a curElement before?
       if (this.curElement) {
 
         this.removeEditCssClasses(this.curElement);
-
         if(this.row !== row){
 
           //row, lets update filtered collection row first
           this.updateBeforeNext(this.callbackObject());
 
           //then lets update last row for logics/colors etc
-          this.updateLastRow(this.row);
+         this.updateLastRow(this.row);
 
         } else {
           //not new row, we also need to update current entity
           this.updateActual(this.callbackObject());
+
         }
       }
+
 
 
 
@@ -426,14 +429,18 @@ export class VGridCellEdit {
       this.row = row;
       this.curElement = e.target;
       this.readOnly = readOnly;
-      this.callbackDone = callbackDone;
-      this.callbackKey = callbackKey;
       this.oldValue = e.target.value;
       this.attribute = e.target.getAttribute(this._private.atts.dataAttribute);
       this.index = this._private.attributeArray.indexOf(this.attribute);
       this.type = e.type;
+      this.attributeType = this._private.colTypeArray[this.index];
       this.cells = this.curElement.offsetParent.offsetParent.querySelectorAll("." + this._private.css.cellContent);
       this.row = this.parent.filterRow;
+
+      if(this.attributeType ==="image"){
+        this.curElement = e.target.offsetParent;
+        this.curElement.setAttribute("tabindex", 0)
+      }
 
       //override the double click, just to make it simple to focus on correct cell
       if (this.setAsSingleClick) {
@@ -458,12 +465,12 @@ export class VGridCellEdit {
         this.first = false;
       }
 
-      if (!e.target.classList.contains(this._private.css.editCell)) {
-        e.target.classList.add(this._private.css.editCell)
+      if (!this.curElement.classList.contains(this._private.css.editCell)) {
+        this.curElement.classList.add(this._private.css.editCell)
       }
 
-      if (!e.target.classList.contains(this._private.css.editCellWrite)) {
-        e.target.classList.add(this._private.css.editCellWrite)
+      if (!this.curElement.classList.contains(this._private.css.editCellWrite)) {
+        this.curElement.classList.add(this._private.css.editCellWrite)
       }
 
 
@@ -471,22 +478,18 @@ export class VGridCellEdit {
       if (this.type === "dblclick" || this.editMode) {
         this.editMode = true;
         if (this.readOnly === false) {
-          if (e.target.classList.contains(this._private.css.editCellFocus)) {
-            e.target.classList.remove(this._private.css.editCellFocus);
+          if (this.curElement.classList.contains(this._private.css.editCellFocus)) {
+            this.curElement.classList.remove(this._private.css.editCellFocus);
           }
-          e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
+          this.curElement.removeAttribute("readonly");//if I dont do this, then they cant enter
         } else {
-          e.target.classList.add(this._private.css.editCellFocus);
+          this.curElement.classList.add(this._private.css.editCellFocus);
         }
       } else {
-        e.target.classList.add(this._private.css.editCellFocus);
+        this.curElement.classList.add(this._private.css.editCellFocus);
       }
 
-      //this.elementKeyUp();
       this.elementKeyDown();
-
-
-
       this.curElement.focus();
 
     }
