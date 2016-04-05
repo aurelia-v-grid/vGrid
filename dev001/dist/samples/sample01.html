@@ -36,12 +36,13 @@
           row-on-dblclick="onDblClick"
           row-on-draw="onRowDraw"
           multi-select="true"
+          edit-handler="myEditHandler"
           config="current-entity.bind:myCurrentEntity; collection.bind:myCollection;  grid-context.bind:myGrid">
           <v-grid-row>
             <v-grid-col col-width="160" attribute="index" header="Index" default-filter=">=" read-only="true"></v-grid-col>
             <v-grid-col col-width="150" attribute="name" header="Name" default-filter="*=" col-css="background-color: {{myCustomColor}}"></v-grid-col>
             <v-grid-col col-width="160" attribute="country" header="Country" default-filter="="></v-grid-col>
-            <v-grid-col col-width="180" attribute="email" header="Email" default-filter="*"></v-grid-col>
+            <v-grid-col col-width="180" attribute="date" header="date" default-filter="*"></v-grid-col>
             <v-grid-col col-width="100" attribute="image" header="image" default-filter="=*" col-type="image" col-css="border-radius: 50%;width:50%;margin-left:25%;"></v-grid-col>
             <v-grid-col col-width="160" attribute="color" header="Color" default-filter="=*" col-css="color: {{color}}"></v-grid-col>
           </v-grid-row>
@@ -182,7 +183,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">color</label>
             <div class="col-sm-6">
-              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.test">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.color">
             </div>
           </div>
 

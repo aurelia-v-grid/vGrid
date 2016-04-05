@@ -11,20 +11,35 @@ export class sample01 {
 
   };
 
-  onRowDraw (data) {
+  onRowDraw (data, collectionData) {
+
     if (data) {
       if (data.country === "Angola") {
         data.myCustomColor = "rgba(150,72,230, 0.3)"
       }
-      data.test = "1"
+      data.date = this.formatDate(data.date)
     }
   }
+
 
   onDblClick (row, attribute) {
     console.log("dblclick row:"+row+", and this was on attribute:"+attribute)
   }
 
 
+  myEditHandler(type, obj){
+    //very silly, but more to show the callback
+    if(obj.attribute === "date"){
+      var date = new Date(obj.oldValue);
+      var newdate = obj.value.split(".");
+      date.setDate(newdate[0]);
+      date.setMonth(newdate[1]-1);
+      date.setYear(newdate[2]);
+      obj.value = date;
+    }
+    return obj;
+
+  }
 
   collectionLength= 0;
 
@@ -49,6 +64,24 @@ export class sample01 {
 
   }
 
+
+  formatDate (date){
+    var lengthCheck = (x) =>{
+      if(x.toString().length === 1){
+        return "0"+x;
+      } else {
+        return x;
+      }
+    };
+
+    var dateObj = new Date(date);
+    console.log(dateObj.toString());
+    var newDate =[];
+    newDate[0] = lengthCheck(dateObj.getDate());
+    newDate[1] = lengthCheck(dateObj.getMonth()+1);
+    newDate[2] = lengthCheck(dateObj.getFullYear());
+    return newDate.join(".")
+  };
 
   /********************************************************************
    *  COLLECTION MOD BUTTONS

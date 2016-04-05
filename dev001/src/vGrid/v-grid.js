@@ -42,11 +42,11 @@ export class VGrid {
     this.collectionSubscription = null; //here I keep subscriptions to observer on collection
     this.collectionFiltered = []; //cloned collection
     this.subscriptionsArray = []; //my property subscriptions
-    this.rowEditMode = false; //helper for stopping endless enditing/callback on obervers, do not know how to pause them
+    ///this.rowEditMode = false; //helper for stopping endless enditing/callback on obervers, do not know how to pause them
     this.skipNextUpdateProperty = []; //skip row update, used when setting internal values to current entity from row editing, or to undefined
     this.rowData = this.element.getElementsByTagName("V-GRID-ROW")[0];
     this.columns = this.rowData.getElementsByTagName("V-GRID-COL");
-    this.cellEdit = new VGridCellEdit(this);
+    this.vGridCellEdit = new VGridCellEdit(this);
     this.filterRowDisplaying = true;
     this.vGridSelection = new VGridSelection(this, this);
 
@@ -217,7 +217,7 @@ export class VGrid {
         //update grid
         grid.collectionChange(false, this.scrollBottomNext);
         if (this.filterRowDisplaying) {
-          this.cellEdit.setBackFocus();
+          this.vGridCellEdit.setBackFocus();
         }
 
       }
@@ -416,6 +416,7 @@ export class VGrid {
       gridOptions.colTypeArray = [];
 
 
+
       for (var i = 0; i < this.columns.length; i++) {
         gridOptions.attributeArray.push(this.columns[i].getAttribute("attribute"));
         gridOptions.columnWidthArray.push(this.columns[i].getAttribute("col-width"));
@@ -457,7 +458,8 @@ export class VGrid {
     gridOptions.filterOnAtTop = setValue(this.gridContext.headerFilterTop, type[this.element.getAttribute("header-filter-top")], false);
     gridOptions.filterOnKey = setValue(this.gridContext.headerFilterOnkeydown, type[this.element.getAttribute("header-filter-onkeydown")], false);
     gridOptions.sortOnHeaderClick = setValue(this.gridContext.sortOnHeaderClick, type[this.element.getAttribute("sort-on-header-click")], false);
-
+    
+    this.eventEditHandler = this.element.getAttribute("edit-handler");
     this.eventOnDblClick = this.element.getAttribute("row-on-dblclick");
     this.eventOnRowDraw = this.element.getAttribute("row-on-draw");
 
@@ -531,7 +533,7 @@ export class VGrid {
           //update grid
           this.gridContext.ctx.collectionChange(true);
           if (this.filterRowDisplaying) {
-            this.cellEdit.setBackFocus()
+            this.vGridCellEdit.setBackFocus()
           }
 
         }
@@ -562,8 +564,9 @@ export class VGrid {
       if (this.collectionFiltered !== undefined) {
         if (this.$parent[this.eventOnRowDraw]) {
           //if user have added this then we call it so they can edit the row data before we display it
-          this.$parent[this.eventOnRowDraw](this.collectionFiltered[row]);
-          callback(this.collectionFiltered[row])
+          var data = this.vGridInterpolate.getNewObject(this.collectionFiltered[row]);
+          this.$parent[this.eventOnRowDraw](data, this.collectionFiltered[row]);
+          callback(data)
         } else {
           callback(this.collectionFiltered[row]);
         }
@@ -587,7 +590,7 @@ export class VGrid {
       if (attribute === null) {
         attribute = event.target.offsetParent.getAttribute(this.gridContext.ctx._private.atts.dataAttribute);
       }
-      let checked = true
+      let checked = true;
       if(this.gridOptions.sortNotOnHeader.indexOf(attribute) !== -1){
         checked = false;
       }
@@ -614,7 +617,7 @@ export class VGrid {
             this.filterRow = index;
           }
         });
-        this.cellEdit.setBackFocus()
+        this.vGridCellEdit.setBackFocus()
       }
 
 
@@ -630,7 +633,7 @@ export class VGrid {
       var lastRow = parseInt(array[arraylength - 1].top / rowHeight, 10);
       var curRow = this.filterRow; //pain debugging in babel...
       if (firstRow <= curRow && lastRow >= curRow) {
-        this.cellEdit.setBackFocus()
+        this.vGridCellEdit.setBackFocus()
       }
 
 
@@ -675,7 +678,7 @@ export class VGrid {
 
 
       //use helper function to edit cell
-      this.cellEdit.editCellhelper(row, event, readonly);
+      this.vGridCellEdit.editCellhelper(row, event, readonly);
 
     };
 
@@ -706,14 +709,12 @@ export class VGrid {
     this.enableObservablesArray();
     this.enableObservablesAttributes();
 
-    // gridOptions.created = (callback){
-    //
-    // }
+
 
     /***************************************************************************************
      * create the grid with all options
      ***************************************************************************************/
-    this.gridContext.ctx = new VGridGenerator(gridOptions, this.vGridInterpolate, this.element, VGridSortable, this.vGridSelection, this.cellEdit);
+    this.gridContext.ctx = new VGridGenerator(gridOptions, this.vGridInterpolate, this.element, VGridSortable, this.vGridSelection, this.vGridCellEdit);
 
     //returns the rows in main collection that is in the grid/filtered or not..
     this.gridContext.ctx.getGridRows = () => {

@@ -299,20 +299,36 @@ export class VGridCellEdit {
   }
 
 
+  editHandler(obj) {
+
+    if (this.parent.eventEditHandler) {
+      return this.parent.$parent[this.parent.eventEditHandler]("afterEdit", {
+        attribute: this.attribute,
+        value: this.curElement.value,
+        oldValue: this.parent.collectionFiltered[this.row][this.attribute],
+        element: this.curElement
+      })
+    }else {
+      return obj
+    }
+
+  }
 
 
   callbackObject() {
-    return {
-      attribute: this.attribute,
-      value: this.curElement.value,
-      oldValue: this.oldValue,
-      element: this.curElement
-    };
+
+      return {
+        attribute: this.attribute,
+        value: this.curElement.value,
+        oldValue: this.oldValue,
+        element: this.curElement
+      };
+
   }
 
 
 
-  
+
   onScroll () {
     if(this.updated === false){
       this.updateActual(this.callbackObject());
@@ -357,7 +373,8 @@ export class VGridCellEdit {
 
 
   updateCurrentDone(obj){
-    if(this.attributeType !== "image"){
+    if(this.attributeType !== "image"  && this.editMode){
+      obj = this.editHandler(obj);
       this.parent.currentRowEntity[obj.attribute] = obj.value;
       this.parent.currentEntity[obj.attribute] = obj.value;
       this.parent.gridContext.ctx.updateRow(this.filterRow, true);
@@ -366,7 +383,8 @@ export class VGridCellEdit {
   }
 
   updateBeforeNext(obj){
-    if(this.attributeType !== "image"){
+    if(this.attributeType !== "image"  && this.editMode){
+      obj = this.editHandler(obj);
       this.parent.collectionFiltered[this.row][obj.attribute] = obj.value;
     }
     this.updated = true;
@@ -381,7 +399,8 @@ export class VGridCellEdit {
 
   updateActual(obj){
 
-    if (this.parent.currentRowEntity[obj.attribute] !== obj.value && this.attributeType !== "image") {
+    if (obj.oldValue !== obj.value && this.attributeType !== "image" && this.editMode) {
+      obj = this.editHandler(obj);
       this.parent.skipNextUpdateProperty.push(obj.attribute);
 
       //set current entity and and update row data
@@ -477,7 +496,7 @@ export class VGridCellEdit {
 
       if (this.type === "dblclick" || this.editMode) {
         this.editMode = true;
-        if (this.readOnly === false) {
+        if (this.readOnly === false && this.attributeType !=="image") {
           if (this.curElement.classList.contains(this._private.css.editCellFocus)) {
             this.curElement.classList.remove(this._private.css.editCellFocus);
           }

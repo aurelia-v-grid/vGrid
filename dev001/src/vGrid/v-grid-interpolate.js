@@ -7,7 +7,12 @@
 export class VGridInterpolate {
   constructor() {
   }
-  parse() {
+  attributes = [];
+  parse(string) {
+    this.attributes = [];
+    string.replace(/{{([^{}]*)}}/g, (a, b) => {
+      this.attributes.push(b);
+    });
   }
   interpolate(str) {
     return function interpolate(o) {
@@ -16,6 +21,14 @@ export class VGridInterpolate {
         return typeof r === 'string' || typeof r === 'number' ? r : a;
       });
     }
+  }
+  getNewObject(obj){
+    var x = {};
+    this.attributes.forEach((prop)=>{
+      x[prop] = obj[prop];
+    })
+    return x;
+    
   }
   render(string, object) {
     return this.interpolate(string)(object);

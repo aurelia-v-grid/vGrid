@@ -86,7 +86,7 @@ generateData(number, callback){
       "expanded": this.internalDataArray[random5].expanded,
       "guid": this.internalDataArray[random1].guid,
       "integer": this.internalDataArray[random2].integer,
-      "date": this.internalDataArray[random3].date,
+      "date": new Date(this.internalDataArray[random3].date),
       "shortText": this.internalDataArray[random4].shortText,
       "mediumText": this.internalDataArray[random5].mediumText,
       "longText": this.internalDataArray[random1].longText,
