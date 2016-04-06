@@ -459,6 +459,7 @@ export class VGrid {
     gridOptions.filterOnAtTop = setValue(this.gridContext.headerFilterTop, type[this.element.getAttribute("header-filter-top")], false);
     gridOptions.filterOnKey = setValue(this.gridContext.headerFilterOnkeydown, type[this.element.getAttribute("header-filter-onkeydown")], false);
     gridOptions.sortOnHeaderClick = setValue(this.gridContext.sortOnHeaderClick, type[this.element.getAttribute("sort-on-header-click")], false);
+    gridOptions.largeBuffer = setValue(this.gridContext.largeBuffer, type[this.element.getAttribute("large-buffer")], false);
 
     this.eventFormatHandler = this.element.getAttribute("format-handler");
     this.eventOnDblClick = this.element.getAttribute("row-on-dblclick");

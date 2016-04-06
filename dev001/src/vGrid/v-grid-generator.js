@@ -39,11 +39,12 @@ export class VGridGenerator {
       attributeArray: options.attributeArray || [],                         // attributes for cell and headers
       columnWidthArray: options.columnWidthArray || [],                     // width of all columns
       colStyleArray: options.colStyleArray || [],                           // text that will be put in column style tag
-      colTypeArray : options.colTypeArray || [],
+      colTypeArray : options.colTypeArray || [],                            //type of cell content, text and input only ones atm
       isSortableHeader: options.isSortableHeader,                           //adds sortable headers
       sortOnHeaderClick: options.sortOnHeaderClick,                         //enable sort event on header click
-      sortNotOnHeader: options.sortNotOnHeader,
+      sortNotOnHeader: options.sortNotOnHeader,                             //do not put a sorticon or do anything hwne clicking on header
       isResizableHeaders: options.isResizableHeaders,                       //adds resizable headers
+      largeBuffer : options.largeBuffer,                                    //improved preformance by limiting the numbers of row the buffer contains, for mobile you want high, buut low of many images on a row
       predefinedScrolltop: options.predefinedScrolltop,                     //needed to know state of scrolltop
       requestAnimationFrame: options.requestAnimationFrame,                 //if you want it to request animation frame
       internalDragDropCount: 10,                                            //internal count for index of header column, this can maybe be deleted after rebuild
@@ -643,13 +644,17 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   createGridHtmlRowWrapper() {
     //rows we need to fill up visible container
-    var minimumRowsNeeded = (parseInt(this._private.contentHeight / this._private.rowHeight, 10)) * 2;
+    var minimumRowsNeeded = (parseInt(this._private.contentHeight / this._private.rowHeight, 10));// * 2;
+
+    if(this._private.largeBuffer){
+      minimumRowsNeeded = minimumRowsNeeded*5;
+    }
 
     //set extra so we can buffer
     if (minimumRowsNeeded % 2 === 1) {
-      minimumRowsNeeded = minimumRowsNeeded + 9;
+      minimumRowsNeeded = minimumRowsNeeded + 1;
     } else {
-      minimumRowsNeeded = minimumRowsNeeded + 8;
+      minimumRowsNeeded = minimumRowsNeeded + 2;
     }
 
     var top = 0;
