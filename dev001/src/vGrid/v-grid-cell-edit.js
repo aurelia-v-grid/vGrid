@@ -22,7 +22,9 @@ export class VGridCellEdit {
   }
 
 
-
+  /***************************************************************************************
+   * sets "the cells" from  to direction asked for, so tabbing jumps to next row
+   ***************************************************************************************/
   setCellsFromElement(e, direction) {
     var thisTop;
     var element;
@@ -33,7 +35,7 @@ export class VGridCellEdit {
         if (node.classList.contains(this._private.css.row)) {
           var row = parseInt(node.getAttribute("row"));
           for (var y = 0; y < this._private.htmlCache.rowsArray.length; y++) {
-            if (row === (this._private.htmlCache.rowsArray[y].top/this._private.rowHeight)) {
+            if (row === parseInt((this._private.htmlCache.rowsArray[y].top/this._private.rowHeight))) {
               thisTop = this._private.htmlCache.rowsArray[y + direction].top;
               element = this._private.htmlCache.rowsArray[y + direction].div;
             }
@@ -49,6 +51,11 @@ export class VGridCellEdit {
     return thisTop;
   };
 
+
+
+  /***************************************************************************************
+   * sets "the cells" from a top value, used for page up/down
+   ***************************************************************************************/
   setCellsFromTopValue(top) {
     var element = 0;
     for (var i = 0; i < this._private.htmlCache.rowsArray.length; i++) {
@@ -63,7 +70,9 @@ export class VGridCellEdit {
   }
 
 
-
+  /***************************************************************************************
+   * removed forcus classes, sets back readonly to input
+   ***************************************************************************************/
   removeEditCssClasses(element) {
     element.setAttribute("readonly", "false");
     element.classList.remove(this._private.css.editCell);
@@ -72,6 +81,11 @@ export class VGridCellEdit {
   }
 
 
+
+
+  /***************************************************************************************
+   * for setting next cell ny similating a mouse click, used for tabbing etc
+   ***************************************************************************************/
   dispatchCellClick(index) {
     var event = new MouseEvent('click', {
       'view': window,
@@ -86,6 +100,10 @@ export class VGridCellEdit {
   }
 
 
+
+  /***************************************************************************************
+   * simple delay for the keydown events, like tabbing etc, so I cantrol the speed of it
+   ***************************************************************************************/
   keyDownDelay(callback) {
     if (!this.timer) {
       this.timer = setTimeout(()=> {
@@ -97,6 +115,9 @@ export class VGridCellEdit {
 
 
 
+  /***************************************************************************************
+   * adds main keys, like arrow keys, tab, and page up/down
+   ***************************************************************************************/
   addGridKeyListner() {
 
     this.element.onkeydown = function (e) {
@@ -272,7 +293,9 @@ export class VGridCellEdit {
   }
 
 
-
+  /***************************************************************************************
+   * blur event when user hits enter, sets values and focus after back to cell
+   ***************************************************************************************/
   elementBlur() {
     this.removeEditCssClasses(this.curElement);
     this.top = this.setCellsFromElement(this.curElement, 0);
@@ -284,6 +307,10 @@ export class VGridCellEdit {
 
 
 
+
+  /***************************************************************************************
+   * listen for "enter key"
+   ***************************************************************************************/
   elementKeyDown() {
     this.curElement.onkeydown = (e) => {
       if (e.keyCode == 13) {
@@ -299,10 +326,15 @@ export class VGridCellEdit {
   }
 
 
-  editHandler(obj) {
 
-    if (this.parent.eventEditHandler) {
-      return this.parent.$parent[this.parent.eventEditHandler]("afterEdit", {
+
+  /***************************************************************************************
+   * call back if format handler is set
+   ***************************************************************************************/
+  formatHandler(obj) {
+
+    if (this.parent.eventFormatHandler) {
+      return this.parent.$parent[this.parent.eventFormatHandler]("afterEdit", {
         attribute: this.attribute,
         value: this.curElement.value,
         oldValue: this.parent.collectionFiltered[this.row][this.attribute],
@@ -315,6 +347,10 @@ export class VGridCellEdit {
   }
 
 
+
+  /***************************************************************************************
+   * main callback obj
+   ***************************************************************************************/
   callbackObject() {
 
       return {
@@ -328,7 +364,9 @@ export class VGridCellEdit {
 
 
 
-
+  /***************************************************************************************
+   * called on scrollign, its just for updating cell if it havent been set
+   ***************************************************************************************/
   onScroll () {
     if(this.updated === false){
       this.updateActual(this.callbackObject());
@@ -337,7 +375,9 @@ export class VGridCellEdit {
 
 
 
-
+  /***************************************************************************************
+   * sets back focus afetr scroll
+   ***************************************************************************************/
   setBackFocus() {
     if (this.curElement) {
       var rowNo = this.parent.filterRow;
@@ -372,9 +412,14 @@ export class VGridCellEdit {
   }
 
 
+
+  /***************************************************************************************
+   * update to run when hitting enter
+   ***************************************************************************************/
   updateCurrentDone(obj){
     if(this.attributeType !== "image"  && this.editMode){
-      obj = this.editHandler(obj);
+      obj = this.formatHandler(obj);
+      this.parent.skipNextUpdateProperty.push(obj.attribute);
       this.parent.currentRowEntity[obj.attribute] = obj.value;
       this.parent.currentEntity[obj.attribute] = obj.value;
       this.parent.gridContext.ctx.updateRow(this.filterRow, true);
@@ -382,25 +427,38 @@ export class VGridCellEdit {
     this.updated = true;
   }
 
+
+
+
+  /***************************************************************************************
+   * update data before moring to next row
+   ***************************************************************************************/
   updateBeforeNext(obj){
     if(this.attributeType !== "image"  && this.editMode){
-      obj = this.editHandler(obj);
+      obj = this.formatHandler(obj);
       this.parent.collectionFiltered[this.row][obj.attribute] = obj.value;
     }
     this.updated = true;
   }
 
 
+
+  /***************************************************************************************
+   * update last row, so user have have other values/cells set
+   ***************************************************************************************/
   updateLastRow(row){
     this.parent.gridContext.ctx.updateRow(row, true);
   }
 
 
 
+  /***************************************************************************************
+   * cupdates current
+   ***************************************************************************************/
   updateActual(obj){
 
     if (obj.oldValue !== obj.value && this.attributeType !== "image" && this.editMode) {
-      obj = this.editHandler(obj);
+      obj = this.formatHandler(obj);
       this.parent.skipNextUpdateProperty.push(obj.attribute);
 
       //set current entity and and update row data
@@ -412,7 +470,9 @@ export class VGridCellEdit {
 
 
 
-
+  /***************************************************************************************
+   * main edit function,called from row clicks
+   ***************************************************************************************/
   editCellhelper(row, e, readOnly) {
     if (!this._private) {
       this._private = this.parent.gridContext.ctx._private;

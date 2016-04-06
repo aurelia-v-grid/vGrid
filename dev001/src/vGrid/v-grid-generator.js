@@ -406,7 +406,7 @@ export class VGridGenerator {
       for (i = 0; i < tempColumns.children.length; i++) {
         tempColumns.children[i].style.height = "100%";
         //setting lineheight so it stays in the middle
-        tempColumns.children[i].style["line-height"] = this._private.rowHeight + "px";
+        tempColumns.children[i].style["line-height"] = (this._private.rowHeight-2) + "px";
 
         tempColumns.children[i].style.width = this._private.columnWidthArray[i] + "px";
         tempColumns.children[i].classList.add(this._private.css.rowCell);
@@ -1472,6 +1472,10 @@ export class VGridGenerator {
         x = this._private.colStyleArray[oldIndex];
         this._private.colStyleArray.splice(oldIndex, 1);
         this._private.colStyleArray.splice(newIndex, 0, x);
+
+        x = this._private.colTypeArray[oldIndex];
+        this._private.colTypeArray.splice(oldIndex, 1);
+        this._private.colTypeArray.splice(newIndex, 0, x);
 
 
         this._private.htmlCache.rowTemplate = null; //reset template and fill data

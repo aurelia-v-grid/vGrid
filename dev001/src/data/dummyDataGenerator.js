@@ -43,7 +43,7 @@ constructor(){
     this.integer.push(this.internalDataArray[i].integer);
     this.shortText.push(this.internalDataArray[i].shortText);
     this.expanded.push(this.internalDataArray[i].expanded);
-    this.date.push(this.internalDataArray[i].date);
+    this.date.push(new Date(this.internalDataArray[i].date).toISOString());
     this.shortText.push(this.internalDataArray[i].shortText);
     this.mediumText.push(this.internalDataArray[i].mediumText);
     this.longText.push(this.internalDataArray[i].longText);
@@ -79,25 +79,25 @@ generateData(number, callback){
 
     dummyArray.push({
       "index": this.totalGenerated,
-      "name": this.internalDataArray[random2].first +" "+this.internalDataArray[random3].last,
-      "first": this.internalDataArray[random2].first,
-      "last": this.internalDataArray[random3].last,
-      "image": this.internalDataArray[random4].image,
-      "expanded": this.internalDataArray[random5].expanded,
-      "guid": this.internalDataArray[random1].guid,
-      "integer": this.internalDataArray[random2].integer,
-      "date": new Date(this.internalDataArray[random3].date),
-      "shortText": this.internalDataArray[random4].shortText,
-      "mediumText": this.internalDataArray[random5].mediumText,
-      "longText": this.internalDataArray[random1].longText,
-      "address": this.internalDataArray[random2].address,
-      "city": this.internalDataArray[random3].city,
-      "state": this.internalDataArray[random4].state,
-      "zip": this.internalDataArray[random5].zip,
-      "country": this.internalDataArray[random1].country,
-      "email": this.internalDataArray[random2].email,
-      "phone": this.internalDataArray[random3].phone,
-      "color": this.internalDataArray[random4].color
+      "name": this.first[random2] +" "+this.last[random3],
+      "first": this.first[random2],
+      "last": this.last[random3],
+      "image": this.image[random4],
+      "expanded": this.expanded[random5],
+      "guid": this.guid[random1],
+      "integer": this.integer[random2],
+      "date": this.date[random3],
+      "shortText": this.shortText[random4],
+      "mediumText": this.mediumText[random5],
+      "longText": this.longText[random1],
+      "address": this.address[random2],
+      "city": this.city[random3],
+      "state": this.state[random4],
+      "zip": this.zip[random5],
+      "country": this.country[random1],
+      "email": this.email[random2],
+      "phone": this.phone[random3],
+      "color": this.color[random4]
     });
   }
 

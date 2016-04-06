@@ -240,6 +240,7 @@ export class VGrid {
         if (newValue !== oldValue) {
           //check if we should skip it
           if (this.skipNextUpdateProperty.indexOf(property) === -1) {
+            console.log("wow")
             this.currentRowEntity[property] = newValue;
             this.gridContext.ctx.updateRow(this.filterRow, true);
 
@@ -249,7 +250,7 @@ export class VGrid {
           }
 
 
-         // this.cellEdit.setBackFocus()
+          //this..setBackFocus()
 
         }
       });
@@ -458,8 +459,8 @@ export class VGrid {
     gridOptions.filterOnAtTop = setValue(this.gridContext.headerFilterTop, type[this.element.getAttribute("header-filter-top")], false);
     gridOptions.filterOnKey = setValue(this.gridContext.headerFilterOnkeydown, type[this.element.getAttribute("header-filter-onkeydown")], false);
     gridOptions.sortOnHeaderClick = setValue(this.gridContext.sortOnHeaderClick, type[this.element.getAttribute("sort-on-header-click")], false);
-    
-    this.eventEditHandler = this.element.getAttribute("edit-handler");
+
+    this.eventFormatHandler = this.element.getAttribute("format-handler");
     this.eventOnDblClick = this.element.getAttribute("row-on-dblclick");
     this.eventOnRowDraw = this.element.getAttribute("row-on-draw");
 
@@ -504,6 +505,11 @@ export class VGrid {
           if (filterObj.length === 0 && this.collectionFiltered.length !== this.collection.length) {
             this.collectionFiltered = this.collection.slice(0);
           } else {
+            if(this.eventFormatHandler){
+              if(this.$parent[this.eventFormatHandler]){
+                filterObj = this.$parent[this.eventFormatHandler]("onFilter", filterObj)
+              }
+            }
 
             this.collectionFiltered = this.vGridFilter.run(this.collection, filterObj);
             this.vGridSort.run(this.collectionFiltered);

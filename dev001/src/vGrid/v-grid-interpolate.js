@@ -23,12 +23,16 @@ export class VGridInterpolate {
     }
   }
   getNewObject(obj){
+    if(obj){
     var x = {};
     this.attributes.forEach((prop)=>{
       x[prop] = obj[prop];
     })
     return x;
-    
+  } else {
+    return "";
+  }
+
   }
   render(string, object) {
     return this.interpolate(string)(object);

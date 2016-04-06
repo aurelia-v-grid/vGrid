@@ -11,8 +11,8 @@ export class sample01 {
 
   };
 
-  onRowDraw (data, collectionData) {
 
+  onRowDraw (data, collectionData) {
     if (data) {
       if (data.country === "Angola") {
         data.myCustomColor = "rgba(150,72,230, 0.3)"
@@ -27,17 +27,47 @@ export class sample01 {
   }
 
 
-  myEditHandler(type, obj){
+
+  myFormatHandler(type, obj){
     //very silly, but more to show the callback
-    if(obj.attribute === "date"){
-      var date = new Date(obj.oldValue);
-      var newdate = obj.value.split(".");
-      date.setDate(newdate[0]);
-      date.setMonth(newdate[1]-1);
-      date.setYear(newdate[2]);
-      obj.value = date;
+    if(type === "afterEdit"){
+      console.log("afterEdit")
+      if(obj.attribute === "date"){
+        var date = new Date(obj.oldValue);
+        var newdate = obj.value.split(".");
+        date.setDate(newdate[0]);
+        date.setMonth(newdate[1]-1);
+        date.setYear(newdate[2]);
+        obj.value = date.toISOString();
+      }
+      return obj;
     }
-    return obj;
+
+    if(type === "onFilter"){
+      obj.forEach((x) => {
+        if(x.attribute === "date"){
+          if(x.value.length === 10){
+            var tempdate = new Date()
+            var newdate = x.value.split(".");
+            tempdate.setDate(newdate[0]);
+            tempdate.setMonth(newdate[1]-1);
+            tempdate.setYear(newdate[2]);
+            tempdate.setHours(0)
+            tempdate.setMinutes(0)
+            tempdate.setSeconds(0)
+            tempdate.setMilliseconds(0)
+            x.value = tempdate.toISOString();
+          } else {
+            x.value ="";
+          }
+
+
+          //debugger;
+
+        }
+      })
+      return obj;
+    }
 
   }
 
