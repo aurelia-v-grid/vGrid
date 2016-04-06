@@ -47,15 +47,15 @@ export class sample01 {
       obj.forEach((x) => {
         if(x.attribute === "date"){
           if(x.value.length === 10){
-            var tempdate = new Date()
+            var tempdate = new Date();
             var newdate = x.value.split(".");
             tempdate.setDate(newdate[0]);
             tempdate.setMonth(newdate[1]-1);
             tempdate.setYear(newdate[2]);
-            tempdate.setHours(0)
-            tempdate.setMinutes(0)
-            tempdate.setSeconds(0)
-            tempdate.setMilliseconds(0)
+            tempdate.setHours(0);
+            tempdate.setMinutes(0);
+            tempdate.setSeconds(0);
+            tempdate.setMilliseconds(0);
             x.value = tempdate.toISOString();
           } else {
             x.value ="";
