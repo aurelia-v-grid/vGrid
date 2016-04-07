@@ -1,0 +1,430 @@
+
+.vGrid {
+  border: 1px solid rgb(230, 230, 230);
+  text-decoration: inherit;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: "RobotoDraft", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  line-height: 100%;
+  background-color: white;
+}
+
+
+
+.vGrid div.vGrid-header {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  background-color: rgb(240, 240, 240);
+}
+
+
+
+.vGrid-row-container {
+  background-color: inherit;
+}
+
+.vGrid div.vGrid-header div.vGrid-row {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: absolute;
+  border-bottom: 2px solid rgb(230, 230, 230);
+  background-color: inherit;
+}
+
+.vGrid div.vGrid-body {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+
+.vGrid div.vGrid-footer {
+  bottom: 0;
+  padding: 5px;
+  text-align: center;
+  background-color: rgb(240, 240, 240);
+}
+
+.vGrid div.vGrid-body {
+  position: relative;
+  white-space: nowrap;
+  background-image: url("styles/spinner.gif");
+  background-position: center;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vGrid .vGrid-body-scroll {
+  background-color: inherit;
+}
+
+.vGrid div.vGrid-body div.vGrid-row {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  border-bottom: 1px solid rgb(230, 230, 230);
+  overflow: hidden;
+  background-color: inherit;
+}
+
+.vGrid div.vGrid-body div.vGrid-row-container {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  background-color: inherit;
+}
+
+.vGrid-row-alt {
+  background-color: rgb(247, 247, 247) !important;
+}
+
+.vGrid-row-even {
+  background-color: rgb(255, 255, 255) !important;
+}
+
+.vGrid-row-selected {
+  box-shadow: none;
+  background-color: rgb(203, 195, 203) !important;
+}
+
+.vGrid-row-selected .vGrid-row-cell {
+  box-shadow: none;
+  background-color: rgb(203, 195, 203) !important;
+}
+
+.vGrid-row-cell {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  height: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-right: 1px solid rgb(230, 230, 230);
+  background-color: inherit;
+  float: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.vGrid-row-cell-header {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  height: 100%;
+  float: left;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: inherit;
+  color: inherit;
+  background-color: inherit;
+  position: relative;
+}
+
+.vGrid-row-cell > .vGrid-content {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding-left: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: inherit;
+  border: 0;
+  line-height:100%
+}
+
+
+
+.vGrid-row-cell-header > .vGrid-content {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding-left: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-right: 1px solid rgb(204, 204, 204);
+
+}
+
+.vGrid-editCell {
+  -webkit-touch-callout: none !important;;
+  -webkit-user-select: none !important;;
+  -moz-user-select: none !important;;
+  -ms-user-select: none !important;
+  /*-webkit-touch-callout: text !important;*/
+  /*-webkit-user-select: text !important;*/
+  /*-moz-user-select: text !important;*/
+  /*-ms-user-select: text !important;*/
+
+}
+
+.vGrid-editCell-write {
+  -webkit-touch-callout: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  border: 1px dashed rgb(81,41,81) !important;
+}
+
+.vGrid-editCell-focus {
+  border: 1px dotted rgb(63,58,63) !important;
+}
+
+/*.vGrid-row-cell > .vGrid-content:focus {*/
+  /*border: 1px dotted rgb(110, 107, 107);*/
+/*}*/
+
+.vGrid *:focus {
+  outline: 0 !important;
+}
+
+.vGrid-filterInputAtTop {
+  height: 50% !important;
+  width: 100% !important;
+  border: 0;
+  border-left: 0 solid !important;
+  position: relative;
+  background-color: white !important;
+  border-bottom: 1px solid rgb(230, 230, 230) !important;
+  -webkit-touch-callout: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+}
+
+.vGrid-filterInputAtBottom {
+  height: 50% !important;
+  width: 100% !important;
+  border: 1px solid rgb(204, 204, 204);
+  border-left: 0 solid !important;
+  position: relative;
+  background-color: white !important;
+  border-bottom: 0 solid !important;
+  -webkit-touch-callout: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+}
+
+.vGrid-filterLabelAtTop {
+  height: 50% !important;
+  position: relative;
+  border-bottom: 1px solid rgb(230, 230, 230) !important;
+}
+
+.vGrid-filterLabelAtBottom {
+  height: 50% !important;
+  position: relative;
+  border-bottom: 1 solid rgb(230, 230, 230) !important;
+}
+
+.vGrid-draggable-handler {
+  position: absolute;
+  cursor: w-resize;
+  width: 5px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 900;
+}
+
+.vGrid-vGridDragHandle {
+  cursor: move;
+}
+
+@font-face{
+  font-family:"Glyphicons Halflings";
+  src: url("styles/glyphicons-halflings-regular-fromBootstrap.woff2");
+}
+
+.vGrid-glyphicon {
+  position: absolute;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  margin-left:2px;
+  font-style: normal;
+  width: 15px;
+  right:5px;
+  font-size: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.vGrid-glyphicon-1{
+  right:-7px;
+}
+
+.vGrid div.vGrid-body div.vGrid-row-no-data {
+  border-bottom: 0 !important;
+}
+
+.vGrid-glyphicon-1:after {
+  content: "1";
+}
+
+.vGrid-glyphicon-2{
+  right:-7px;
+}
+
+.vGrid-glyphicon-2:after {
+  margin-left:2px;
+  content: "2";
+}
+
+.vGrid-glyphicon-3{
+  right:-7px;
+}
+
+.vGrid-glyphicon-3:after {
+  margin-left:2px;
+  content: "3";
+}
+
+.vGrid-glyphicon-4{
+  right:-7px;
+}
+
+.vGrid-glyphicon-4:after {
+  margin-left:2px;
+  content: "4";
+}
+
+.vGrid-glyphicon-5{
+  right:-7px;
+}
+
+.vGrid-glyphicon-5:after {
+  margin-left:2px;
+  content: "5";
+}
+
+.vGrid-glyphicon-6{
+  right:-7px;
+}
+
+.vGrid-glyphicon-6:after {
+  margin-left:2px;
+  content: "6";
+}
+
+.vGrid-glyphicon-7{
+  right:-7px;
+}
+
+.vGrid-glyphicon-7:after {
+  margin-left:2px;
+  content: "7";
+}
+
+.vGrid-glyphicon-sort:after {
+  content: "\e150";
+}
+
+.vGrid-glyphicon-sort-asc:after {
+  content: "\e155";
+}
+
+
+
+.vGrid-glyphicon-sort-desc{
+  transform: rotateX(180deg);
+}
+
+.vGrid-glyphicon-sort-desc:after {
+  content: "\e155";
+}
+
+
+.vGrid-menu{
+  width: 100px;
+  background: #000;
+  color: #fff;
+  position:absolute;
+  z-index: 999999;
+  display: none;
+  box-shadow: 0 0 10px #713C3C;
+}
+.vGrid-menu ul{
+  list-style: none;
+  padding: 0;
+  margin:0;
+}
+.vGrid-menu ul a{
+  text-decoration: none;
+}
+.vGrid-menu ul li{
+  width: 100%;
+  padding: 1px;
+  background-color: whitesmoke;
+  color: black;
+}
+.vGrid-menu ul li:hover{
+  background-color: lightgrey;
+  color: black;
+}
+
+/*//materialize messed up inputs */
+.vGrid input {
+  margin: 0 0 0 0 !important;
+}
