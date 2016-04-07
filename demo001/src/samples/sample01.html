@@ -18,11 +18,11 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">Demo 17-(2016-04-03)</h4>
+        <h4 style="margin-left:25px">Demo 18-(2016-04-07)</h4>
         <h5 style="margin-left:25px"><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute </h5>
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
-          row-height="25"
+          row-height="50"
           header-height="50"
           resizable-headers="true"
           resize-also-rows="true"
@@ -35,13 +35,14 @@
           row-on-dblclick="onDblClick"
           row-on-draw="onRowDraw"
           multi-select="true"
+          format-handler="myFormatHandler"
           config="current-entity.bind:myCurrentEntity; collection.bind:myCollection;  grid-context.bind:myGrid">
           <v-grid-row>
             <v-grid-col col-width="160" attribute="index" header="Index" default-filter=">=" read-only="true"></v-grid-col>
             <v-grid-col col-width="150" attribute="name" header="Name" default-filter="*=" col-css="background-color: {{myCustomColor}}"></v-grid-col>
-            <v-grid-col col-width="160" attribute="country" header="Country" default-filter="="></v-grid-col>
-            <v-grid-col col-width="180" attribute="email" header="Email" default-filter="*"></v-grid-col>
-            <v-grid-col col-width="180" attribute="test" header="test" default-filter="=*"></v-grid-col>
+            <v-grid-col col-width="160" attribute="number" header="Number" default-filter=">="></v-grid-col>
+            <v-grid-col col-width="180" attribute="date" header="date" default-filter=">="></v-grid-col>
+            <v-grid-col col-width="180" attribute="image" header="image" col-type="image" col-css="border-radius: 50%;width:50%;margin-left:25%; default-filter="=*"></v-grid-col>
             <v-grid-col col-width="160" attribute="color" header="Color" default-filter="=*" col-css="color: {{color}}"></v-grid-col>
           </v-grid-row>
         </v-grid>
@@ -169,7 +170,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">country</label>
             <div class="col-sm-6">
-              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.country">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.number">
             </div>
           </div>
           <div class="form-group">
@@ -181,7 +182,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">color</label>
             <div class="col-sm-6">
-              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.test">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.color">
             </div>
           </div>
 

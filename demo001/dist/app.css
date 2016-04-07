@@ -55,16 +55,6 @@ html, body {
 
 }
 
-.avatar {
-  width: 65px;
-  height: 65px;
-  float: left;
-  margin-right: 10px;
-  font-size: 25px;
-  color: #fff;
-  text-align: center;
-
-}
 
 .contact-item {
   padding-left: 20px;
@@ -74,6 +64,17 @@ html, body {
   padding-bottom: 10px;
   line-height: 1.42857143;
 
+
+}
+
+.avatar {
+  width: 65px;
+  height: 65px;
+  float: left;
+  margin-right: 10px;
+  font-size: 25px;
+  color: #fff;
+  text-align: center;
 
 }
 
