@@ -1,6 +1,6 @@
 /*****************************************************************************************************************
  *    VGridConfig
- *    This just inserts the strings into html templates
+ *    This generates the config used by vGridgenerator, other classes also calls this to get the information
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/

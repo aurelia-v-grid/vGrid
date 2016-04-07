@@ -18,6 +18,7 @@ export class sample01 {
         data.myCustomColor = "rgba(150,72,230, 0.3)"
       }
       data.date = this.formatDate(data.date)
+      data.number = Math.round(data.number)
     }
   }
 
@@ -29,24 +30,39 @@ export class sample01 {
 
 
   myFormatHandler(type, obj){
+
+
+
     //very silly, but more to show the callback
     if(type === "afterEdit"){
       console.log("afterEdit")
       if(obj.attribute === "date"){
         var date = new Date(obj.oldValue);
-        var newdate = obj.value.split(".");
-        date.setDate(newdate[0]);
-        date.setMonth(newdate[1]-1);
-        date.setYear(newdate[2]);
-        obj.value = date.toISOString();
+        if(obj.value.length === 10){
+          var newdate = obj.value.split(".");
+          date.setDate(newdate[0]);
+          date.setMonth(newdate[1]-1);
+          date.setYear(newdate[2]);
+          try{
+            obj.value = date.toISOString();
+          } catch(e){
+            obj.value = obj.oldValue
+          }
+        } else {
+          obj.value = obj.oldValue
+        }
       }
       return obj;
     }
 
+
+
     if(type === "onFilter"){
       obj.forEach((x) => {
         if(x.attribute === "date"){
+          //if date
           if(x.value.length === 10){
+            //if it have full length I know I need to be sure I can convert it into date
             var tempdate = new Date();
             var newdate = x.value.split(".");
             tempdate.setDate(newdate[0]);
@@ -60,14 +76,22 @@ export class sample01 {
           } else {
             x.value ="";
           }
-
-
-          //debugger;
-
         }
       })
       return obj;
     }
+
+
+    if(type === "beforeEdit"){
+      console.log("beforeEdit")
+      if(obj.attribute === "number"){
+          obj.newValue = obj.oldValue;
+      }
+      return obj;
+    }
+
+
+
 
   }
 

@@ -1,6 +1,6 @@
 /*****************************************************************************************************************
  *    VGridObservables
- *    This just does the filtering on collection from the values the grid gives it
+ *    Observers the collection/current entity for changes
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/

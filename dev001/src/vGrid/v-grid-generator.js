@@ -207,7 +207,7 @@ export class VGridGenerator {
 
           } else {
             rowTemplate = rowTemplate +
-              `<div><input class="${this.vGridConfig.css.cellContent}"  readonly="true" style="${this.vGridConfig.colStyleArray[i]}" ${this.vGridConfig.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
+              `<div><input class="${this.vGridConfig.css.cellContent}"  type="text" readonly="true" style="${this.vGridConfig.colStyleArray[i]}" ${this.vGridConfig.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
 
           }
         }
@@ -548,9 +548,9 @@ export class VGridGenerator {
 
     //set extra so we can buffer
     if (minimumRowsNeeded % 2 === 1) {
-      minimumRowsNeeded = minimumRowsNeeded + 1;
+      minimumRowsNeeded = minimumRowsNeeded + 11;
     } else {
-      minimumRowsNeeded = minimumRowsNeeded + 2;
+      minimumRowsNeeded = minimumRowsNeeded + 10;
     }
 
     var top = 0;

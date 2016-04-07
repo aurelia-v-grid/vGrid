@@ -31,6 +31,7 @@ constructor(){
   this.email = [];
   this.phone = [];
   this.color = [];
+  this.number = []
 
   for(let i = 0; i < this.internalDataArray.length;i++){
     this.index.push(this.internalDataArray[i].index);
@@ -56,6 +57,7 @@ constructor(){
     this.email.push(this.internalDataArray[i].email);
     this.phone.push(this.internalDataArray[i].phone);
     this.color.push(this.internalDataArray[i].color);
+    this.number.push(parseFloat((Math.floor(Math.random() * 500) + 0)) +"."+(Math.floor(Math.random() * 500) + 0));
   }
 }
 
@@ -97,7 +99,8 @@ generateData(number, callback){
       "country": this.country[random1],
       "email": this.email[random2],
       "phone": this.phone[random3],
-      "color": this.color[random4]
+      "color": this.color[random4],
+      "number": this.number[random4]
     });
   }
 

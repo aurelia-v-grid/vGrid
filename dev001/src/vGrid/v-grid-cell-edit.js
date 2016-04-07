@@ -328,18 +328,34 @@ export class VGridCellEdit {
   /***************************************************************************************
    * call back if format handler is set
    ***************************************************************************************/
-  formatHandler(obj) {
+  formatHandler(type, obj) {
 
-    if (this.vGrid.vGridConfig.eventFormatHandler) {
-      return this.vGrid.$parent[this.vGrid.vGridConfig.eventFormatHandler]("afterEdit", {
-        attribute: this.attribute,
-        value: this.curElement.value,
-        oldValue: this.vGrid.collectionFiltered[this.row][this.attribute],
-        element: this.curElement
-      })
-    } else {
-      return obj
+
+
+    switch(type){
+      case "beforeEdit":
+        if (this.vGrid.vGridConfig.eventFormatHandler) {
+          return this.vGrid.$parent[this.vGrid.vGridConfig.eventFormatHandler](type, obj)
+        } else {
+          return obj;
+        }
+      break;
+      case "beforeEdit":
+        if (this.vGrid.vGridConfig.eventFormatHandler) {
+          return this.vGrid.$parent[this.vGrid.vGridConfig.eventFormatHandler](type, {
+            attribute: this.attribute,
+            value: this.curElement.value,
+            oldValue: this.vGrid.collectionFiltered[this.row][this.attribute],
+            element: this.curElement
+          })
+        } else {
+          return obj;
+        }
+        break;
+      default:
+        return obj;
     }
+
 
   }
 
@@ -397,6 +413,14 @@ export class VGridCellEdit {
               this.cells[this.index].classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
             }
             this.cells[this.index].removeAttribute("readonly");//if I dont do this, then they cant enter
+            if(this.attributeType !== "image"){
+              this.beforeCellEdit({
+                attribute: this.attribute,
+                value: this.curElement.value,
+                oldValue: this.vGrid.collectionFiltered[this.row][this.attribute],
+                element: this.curElement
+              });
+            }
           } else {
             this.cells[this.index].classList.add(this.vGrid.vGridConfig.css.editCellFocus);
           }
@@ -415,7 +439,7 @@ export class VGridCellEdit {
    ***************************************************************************************/
   updateCurrentDone(obj) {
     if (this.attributeType !== "image" && this.editMode) {
-      obj = this.formatHandler(obj);
+      obj = this.formatHandler("afterEdit",obj);
       this.vGrid.skipNextUpdateProperty.push(obj.attribute);
       this.vGrid.currentRowEntity[obj.attribute] = obj.value;
       this.vGrid.currentEntity[obj.attribute] = obj.value;
@@ -432,7 +456,7 @@ export class VGridCellEdit {
    ***************************************************************************************/
   updateBeforeNext(obj) {
     if (this.attributeType !== "image" && this.editMode) {
-      obj = this.formatHandler(obj);
+      obj = this.formatHandler("afterEdit",obj);
       this.vGrid.collectionFiltered[this.row][obj.attribute] = obj.value;
     }
     this.updated = true;
@@ -454,7 +478,7 @@ export class VGridCellEdit {
    ***************************************************************************************/
   updateActual(obj) {
     if (obj.oldValue !== obj.value && this.attributeType !== "image" && this.editMode) {
-      obj = this.formatHandler(obj);
+      obj = this.formatHandler("afterEdit", obj);
       this.vGrid.skipNextUpdateProperty.push(obj.attribute);
 
       //set current entity and and update row data
@@ -464,7 +488,17 @@ export class VGridCellEdit {
     this.updated = true;
   }
 
+  /***************************************************************************************
+   * before cell edit
+   ***************************************************************************************/
+  beforeCellEdit(obj) {
+    obj = this.formatHandler("beforeEdit",obj);
+    if(obj.newValue){
+      obj.element.value = obj.newValue;
+    }
 
+
+  }
 
   /***************************************************************************************
    * main edit function,called from row clicks
@@ -499,26 +533,69 @@ export class VGridCellEdit {
         }
       }
 
+      //if image set focus to main cell/column
+      this.attribute = e.target.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
+      if (this.attribute === "image") {
+        this.curElement = e.target.offsetParent;
+        this.curElement.setAttribute("tabindex", 0)
+      }
 
+      //get som vars we need
+      this.readOnly = readOnly;
+      this.index = this.vGrid.vGridConfig.attributeArray.indexOf(this.attribute);
+      this.type = e.type;
+      this.attributeType = this.vGrid.vGridConfig.colTypeArray[this.index];
+
+
+      //set css
+      if (!e.target.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
+        e.target.classList.add(this.vGrid.vGridConfig.css.editCell)
+      }
+
+      //set css
+      if (!e.target.classList.contains(this.vGrid.vGridConfig.css.editCellWrite)) {
+        e.target.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
+      }
+
+
+      //if double click and edit or allready edit more
+      if (this.type === "dblclick" || this.editMode) {
+        if (this.readOnly === false && this.attributeType !== "image") {
+          if (this.curElement !== e.target || this.editMode === false) {
+            if(this.attributeType !== "image"){
+              this.beforeCellEdit({
+                attribute: this.attribute,
+                value: e.target.value,
+                oldValue: this.vGrid.collectionFiltered[row][this.attribute],
+                element: e.target
+              });
+            }
+          }
+
+          if (e.target.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
+            e.target.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
+          }
+          e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
+
+        } else {
+          e.target.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
+        }
+        //set edit mode
+        this.editMode = true;
+      } else {
+        e.target.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
+      }
 
 
 
       this.updated = false;
       this.row = row;
       this.curElement = e.target;
-      this.readOnly = readOnly;
       this.oldValue = e.target.value;
-      this.attribute = e.target.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
-      this.index = this.vGrid.vGridConfig.attributeArray.indexOf(this.attribute);
-      this.type = e.type;
-      this.attributeType = this.vGrid.vGridConfig.colTypeArray[this.index];
       this.cells = this.curElement.offsetParent.offsetParent.querySelectorAll("." + this.vGrid.vGridConfig.css.cellContent);
       //this.row = this.vGrid.filterRow;
 
-      if (this.attributeType === "image") {
-        this.curElement = e.target.offsetParent;
-        this.curElement.setAttribute("tabindex", 0)
-      }
+
 
       //override the double click, just to make it simple to focus on correct cell
       if (this.setAsSingleClick) {
@@ -543,35 +620,15 @@ export class VGridCellEdit {
         this.first = false;
       }
 
-      if (!this.curElement.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
-        this.curElement.classList.add(this.vGrid.vGridConfig.css.editCell)
-      }
 
-      if (!this.curElement.classList.contains(this.vGrid.vGridConfig.css.editCellWrite)) {
-        this.curElement.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
-      }
-
-
-
-      if (this.type === "dblclick" || this.editMode) {
-        this.editMode = true;
-        if (this.readOnly === false && this.attributeType !== "image") {
-          if (this.curElement.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
-            this.curElement.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
-          }
-          this.curElement.removeAttribute("readonly");//if I dont do this, then they cant enter
-        } else {
-          this.curElement.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
-        }
-      } else {
-        this.curElement.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
-      }
 
 
       if (this.editMode) {
         this.elementKeyDown();
       }
       this.curElement.focus();
+
+
 
     }
   };
