@@ -540,7 +540,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   createGridHtmlRowWrapper() {
     //rows we need to fill up visible container
-    var minimumRowsNeeded = (parseInt(this.contentHeight / this.vGridConfig.rowHeight, 10));// * 2;
+    var minimumRowsNeeded = (parseInt(this.contentHeight / this.vGridConfig.rowHeight, 10) *2);// * 2;
 
     if (this.vGridConfig.largeBuffer) {
       minimumRowsNeeded = minimumRowsNeeded * 5;
@@ -548,9 +548,9 @@ export class VGridGenerator {
 
     //set extra so we can buffer
     if (minimumRowsNeeded % 2 === 1) {
-      minimumRowsNeeded = minimumRowsNeeded + 11;
+      minimumRowsNeeded = minimumRowsNeeded + 9;
     } else {
-      minimumRowsNeeded = minimumRowsNeeded + 10;
+      minimumRowsNeeded = minimumRowsNeeded + 8;
     }
 
     var top = 0;
@@ -644,15 +644,13 @@ export class VGridGenerator {
         }
 
         //set highlight
-        try {
+
           if (this.vGridSelection.isSelected(rowNo)) {
             rowHtmlElement.classList.add(this.vGridConfig.css.rowSelected)
           } else {
             rowHtmlElement.classList.remove(this.vGridConfig.css.rowSelected)
           }
-        } catch (e) {
-          //nothing for now...
-        }
+
 
         //set innerhtml and add to row
         container.innerHTML = innerHtml;

@@ -623,7 +623,6 @@ export class VGridCellEdit {
 
 
 
-
     }
   };
 
