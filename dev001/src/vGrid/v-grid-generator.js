@@ -52,7 +52,7 @@ export class VGridGenerator {
     timer: null,          //timer for stopping updating, "getDataScrollDelay" is the timeout for this
     clickTimersArray: [],  //this is the array of touch events, have it here so I can cancel during scroll
     scrollCallbackTimer: null
-  }
+  };
 
 
 
@@ -1156,7 +1156,7 @@ export class VGridGenerator {
 
       }
     };
-    clearTimeout(this.scrollVars.scrollCallbackTimer)
+    clearTimeout(this.scrollVars.scrollCallbackTimer);
     if (this.vGridConfig.requestAnimationFrame) {
       requestAnimationFrame(() => {
         doScroll();

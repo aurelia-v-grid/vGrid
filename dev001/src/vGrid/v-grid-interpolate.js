@@ -27,7 +27,7 @@ export class VGridInterpolate {
     var x = {};
     this.attributes.forEach((prop)=>{
       x[prop] = obj[prop];
-    })
+    });
     return x;
   } else {
     return "";

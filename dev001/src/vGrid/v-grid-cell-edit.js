@@ -332,14 +332,14 @@ export class VGridCellEdit {
 
 
 
-    switch(type){
+    switch (type) {
       case "beforeEdit":
         if (this.vGrid.vGridConfig.eventFormatHandler) {
           return this.vGrid.$parent[this.vGrid.vGridConfig.eventFormatHandler](type, obj)
         } else {
           return obj;
         }
-      break;
+        break;
       case "afterEdit":
         if (this.vGrid.vGridConfig.eventFormatHandler) {
           return this.vGrid.$parent[this.vGrid.vGridConfig.eventFormatHandler](type, {
@@ -413,7 +413,7 @@ export class VGridCellEdit {
               this.cells[this.index].classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
             }
             this.cells[this.index].removeAttribute("readonly");//if I dont do this, then they cant enter
-            if(this.attributeType !== "image"){
+            if (this.attributeType !== "image") {
               this.beforeCellEdit({
                 attribute: this.attribute,
                 value: this.curElement.value,
@@ -439,7 +439,7 @@ export class VGridCellEdit {
    ***************************************************************************************/
   updateCurrentDone(obj) {
     if (this.attributeType !== "image" && this.editMode) {
-      obj = this.formatHandler("afterEdit",obj);
+      obj = this.formatHandler("afterEdit", obj);
       this.vGrid.skipNextUpdateProperty.push(obj.attribute);
       this.vGrid.currentRowEntity[obj.attribute] = obj.value;
       this.vGrid.currentEntity[obj.attribute] = obj.value;
@@ -457,7 +457,7 @@ export class VGridCellEdit {
   updateBeforeNext(obj) {
 
     if (this.attributeType !== "image" && this.editMode) {
-      obj = this.formatHandler("afterEdit",obj);
+      obj = this.formatHandler("afterEdit", obj);
       this.vGrid.collectionFiltered[this.row][obj.attribute] = obj.value;
     }
     this.updated = true;
@@ -493,8 +493,8 @@ export class VGridCellEdit {
    * before cell edit
    ***************************************************************************************/
   beforeCellEdit(obj) {
-    obj = this.formatHandler("beforeEdit",obj);
-    if(obj.newValue){
+    obj = this.formatHandler("beforeEdit", obj);
+    if (obj.newValue) {
       obj.element.value = obj.newValue;
     }
 
@@ -510,28 +510,18 @@ export class VGridCellEdit {
 
     if (this.newTarget.classList.contains(this.vGrid.vGridConfig.css.cellContent)) {
 
-
-
       //have we had a curElement before?
       if (this.curElement) {
-
         this.removeEditCssClasses(this.curElement);
         if (this.row !== row) {
-
           //row, lets update filtered collection row first
           this.updateBeforeNext(this.callbackObject());
-
           //then lets update last row for logics/colors etc
           this.updateLastRow(this.row);
-
         } else {
-
           if (this.curElement !== this.newTarget && this.updated !== false) {
             this.updateActual(this.callbackObject());
           }
-          //not new row, we also need to update current entity
-
-
         }
       }
 
@@ -564,7 +554,7 @@ export class VGridCellEdit {
       if (this.type === "dblclick" || this.editMode) {
         if (this.readOnly === false && this.attributeType !== "image") {
           if (this.curElement !== this.newTarget || this.editMode === false) {
-            if(this.attributeType !== "image"){
+            if (this.attributeType !== "image") {
               this.beforeCellEdit({
                 attribute: this.attribute,
                 value: this.newTarget.value,
@@ -582,6 +572,7 @@ export class VGridCellEdit {
         } else {
           this.newTarget.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
         }
+
         //set edit mode
         this.editMode = true;
       } else {
@@ -624,11 +615,12 @@ export class VGridCellEdit {
 
 
 
-
+      this.curElement.focus();
       if (this.editMode) {
         this.elementKeyDown();
+        this.curElement.select();
       }
-      this.curElement.focus();
+
 
 
 
