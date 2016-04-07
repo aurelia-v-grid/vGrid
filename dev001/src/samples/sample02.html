@@ -15,6 +15,7 @@
                 row-height="85"
                 multi-select="false"
                 row-on-draw="onRowDraw"
+                large-buffer="true"
                 config="current-entity.bind:myCurrentEntity; collection.bind:myCollection;  grid-context.bind:myGrid">
 
           <!--create row to display on each row and set row height-->
@@ -24,7 +25,7 @@
                 <div class="row">
                   <div class="col-xs-3" style="max-width: 75px;">
                     <div class="avatar"
-                         style="background-color:{{backgroundcolor}}">{{avatarLetter}}</div>
+                         style="background-color:{{color}}">{{avatarLetter}}</div>
                   </div>
                   <div class="col-xs-9">
                     <div class="row name">
