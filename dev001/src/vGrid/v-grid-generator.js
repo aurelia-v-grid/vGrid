@@ -540,7 +540,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   createGridHtmlRowWrapper() {
     //rows we need to fill up visible container
-    var minimumRowsNeeded = (parseInt(this.contentHeight / this.vGridConfig.rowHeight, 10) *2);// * 2;
+    var minimumRowsNeeded = (parseInt(this.contentHeight / this.vGridConfig.rowHeight, 10))// *2);// * 2;
 
     if (this.vGridConfig.largeBuffer) {
       minimumRowsNeeded = minimumRowsNeeded * 5;
@@ -548,9 +548,9 @@ export class VGridGenerator {
 
     //set extra so we can buffer
     if (minimumRowsNeeded % 2 === 1) {
-      minimumRowsNeeded = minimumRowsNeeded + 9;
+      minimumRowsNeeded = minimumRowsNeeded + 7;
     } else {
-      minimumRowsNeeded = minimumRowsNeeded + 8;
+      minimumRowsNeeded = minimumRowsNeeded + 6;
     }
 
     var top = 0;

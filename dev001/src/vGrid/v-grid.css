@@ -179,7 +179,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   background-color: inherit;
-  border: 0;
+  border: 0px;
   line-height:100%
 }
 
@@ -428,3 +428,4 @@
 .vGrid input {
   margin: 0 0 0 0 !important;
 }
+

@@ -45,26 +45,8 @@ html, body {
   height: 100%;
 }
 
-.vGrid-content{
-  border: 0;
-  background-color: inherit;
-  -moz-box-sizing: border-box !important;
-  -webkit-box-sizing: border-box !important;;
-  -ms-box-sizing: border-box !important;;
-  box-sizing: border-box !important;;
 
-}
 
-.avatar {
-  width: 65px;
-  height: 65px;
-  float: left;
-  margin-right: 10px;
-  font-size: 25px;
-  color: #fff;
-  text-align: center;
-
-}
 
 .contact-item {
   padding-left: 20px;

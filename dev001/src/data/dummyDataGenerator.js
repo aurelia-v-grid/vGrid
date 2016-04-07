@@ -79,6 +79,7 @@ generateData(number, callback){
     let random5 = Math.floor(Math.random() * 500) + 0;
 
 
+    
     dummyArray.push({
       "index": this.totalGenerated,
       "name": this.first[random2] +" "+this.last[random3],
