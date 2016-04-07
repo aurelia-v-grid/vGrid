@@ -17,9 +17,9 @@ export class VGridSelection {
 
 
 
-  constructor(mode, that) {
+  constructor(mode, vGrid) {
 
-    this.that = that;
+    this.vGrid = vGrid;
     this.sgSel = "__vGridSel" + Math.floor((Math.random() * 1000) + 1);
 
     if (mode === false) {
@@ -50,8 +50,8 @@ export class VGridSelection {
   isSelected(row) {
     var result = false;
     if(this.selectedRows > 0){
-      if(this.that.collectionFiltered[row]){
-        if (this.that.collectionFiltered[row][this.sgSel] === true) {
+      if(this.vGrid.collectionFiltered[row]){
+        if (this.vGrid.collectionFiltered[row][this.sgSel] === true) {
           result = true;
         }
       }
@@ -63,8 +63,8 @@ export class VGridSelection {
   isSelectedMainCollection(row) {
     var result = false;
     if(this.selectedRows > 0){
-      if(this.that.collection[row]){
-        if (this.that.collection[row][this.sgSel] === true) {
+      if(this.vGrid.collection[row]){
+        if (this.vGrid.collection[row][this.sgSel] === true) {
           result = true;
         }
       }
@@ -80,9 +80,9 @@ export class VGridSelection {
       case undefined:
         break;
       case "single":
-        if (this.that.collection !== undefined) {
-          if (this.that.collection.length > 1) {
-            this.that.collection.forEach((x) => {
+        if (this.vGrid.collection !== undefined) {
+          if (this.vGrid.collection.length > 1) {
+            this.vGrid.collection.forEach((x) => {
               if(x[this.sgSel] === true){
                 x[this.sgSel] = false;
               }
@@ -90,21 +90,21 @@ export class VGridSelection {
 
           }
         }
-        this.that.collectionFiltered[rowSelect][this.sgSel] = true;
+        this.vGrid.collectionFiltered[rowSelect][this.sgSel] = true;
         this.selectedRows = 1;
         break;
       case "multible":
         if (!addToSelection) {
           this.selectedRows = 0;
-          this.that.collection.forEach((x) => {
+          this.vGrid.collection.forEach((x) => {
             if(x[this.sgSel] === true){
               x[this.sgSel] = false;
             }
           });
-          this.that.collectionFiltered[rowSelect][this.sgSel] = true;
+          this.vGrid.collectionFiltered[rowSelect][this.sgSel] = true;
           this.selectedRows++;
         } else {
-          this.that.collectionFiltered[rowSelect][this.sgSel] = true;
+          this.vGrid.collectionFiltered[rowSelect][this.sgSel] = true;
           this.selectedRows++;
         }
     }
@@ -118,9 +118,9 @@ export class VGridSelection {
       case undefined:
         break;
       case "single":
-        if (this.that.collection !== undefined) {
-          if (this.that.collection.length > 1) {
-            this.that.collection.forEach((x) => {
+        if (this.vGrid.collection !== undefined) {
+          if (this.vGrid.collection.length > 1) {
+            this.vGrid.collection.forEach((x) => {
               if(x[this.sgSel] === true){
                 x[this.sgSel] = false;
               }
@@ -128,21 +128,21 @@ export class VGridSelection {
 
           }
         }
-        this.that.collection[rowSelect][this.sgSel] = true;
+        this.vGrid.collection[rowSelect][this.sgSel] = true;
         this.selectedRows = 1;
         break;
       case "multible":
         if (!addToSelection) {
           this.selectedRows = 0;
-          this.that.collection.forEach((x) => {
+          this.vGrid.collection.forEach((x) => {
             if(x[this.sgSel] === true){
               x[this.sgSel] = false;
             }
           });
-          this.that.collection[rowSelect][this.sgSel] = true;
+          this.vGrid.collection[rowSelect][this.sgSel] = true;
           this.selectedRows++;
         } else {
-          this.that.collection[rowSelect][this.sgSel] = true;
+          this.vGrid.collection[rowSelect][this.sgSel] = true;
           this.selectedRows++;
         }
     }
@@ -151,14 +151,14 @@ export class VGridSelection {
 
   selectRange(start, end) {
     if (this.selectionMode === "multible") {
-      this.that.collection.forEach((x) => {
+      this.vGrid.collection.forEach((x) => {
         if(x[this.sgSel] === true){
           x[this.sgSel] = false;
         }
       });
       this.selectedRows = 0;
       for (var i = start; i < end + 1; i++) {
-        this.that.collectionFiltered[i][this.sgSel] = true;
+        this.vGrid.collectionFiltered[i][this.sgSel] = true;
         this.selectedRows++;
       }
     }
@@ -167,14 +167,14 @@ export class VGridSelection {
 
   selectRangeMainCollection(start, end) {
     if (this.selectionMode === "multible") {
-      this.that.collection.forEach((x) => {
+      this.vGrid.collection.forEach((x) => {
         if(x[this.sgSel] === true){
           x[this.sgSel] = false;
         }
       });
       this.selectedRows = 0;
       for (var i = start; i < end + 1; i++) {
-        this.that.collection[i][this.sgSel] = true;
+        this.vGrid.collection[i][this.sgSel] = true;
         this.selectedRows++;
       }
     }
@@ -184,7 +184,7 @@ export class VGridSelection {
 
   reset() {
     if(this.selectedRows > 0){
-      this.that.collection.forEach((x) => {
+      this.vGrid.collection.forEach((x) => {
         if(x[this.sgSel] === true){
           x[this.sgSel] = false;
         }
@@ -198,7 +198,7 @@ export class VGridSelection {
 
   resetFilteredOnly() {
     if(this.selectedRows > 0){
-      this.that.collectionFiltered.forEach((x) => {
+      this.vGrid.collectionFiltered.forEach((x) => {
         if(x[this.sgSel] === true){
           x[this.sgSel] = false;
         }
@@ -211,7 +211,7 @@ export class VGridSelection {
   getSelectedRows() {
     var array = [];
     if(this.selectedRows > 0){
-      this.that.collectionFiltered.forEach((x, index) => {
+      this.vGrid.collectionFiltered.forEach((x, index) => {
         if(x[this.sgSel] === true){
           array.push(index)
         }
@@ -223,7 +223,7 @@ export class VGridSelection {
   getSelectedRowsMainCollection() {
     var array = [];
     if(this.selectedRows > 0){
-      this.that.collection.forEach((x, index) => {
+      this.vGrid.collection.forEach((x, index) => {
         if(x[this.sgSel] === true){
           array.push(index)
         }
@@ -235,7 +235,7 @@ export class VGridSelection {
 
   setSelectedRows(newRows) {
     if(this.selectedRows > 0) {
-      this.that.collection.forEach((x) => {
+      this.vGrid.collection.forEach((x) => {
         if (x[this.sgSel] === true) {
           x[this.sgSel] = false;
         }
@@ -243,7 +243,7 @@ export class VGridSelection {
     }
     this.selectedRows = 0;
     for(var i = 0; i < newRows.length; i++){
-      this.that.collectionFiltered[newRows[i]][this.sgSel] = true;
+      this.vGrid.collectionFiltered[newRows[i]][this.sgSel] = true;
       this.selectedRows++;
     }
   };
@@ -251,7 +251,7 @@ export class VGridSelection {
 
   setSelectedRowsMainCollection(newRows) {
     if(this.selectedRows > 0) {
-      this.that.collection.forEach((x) => {
+      this.vGrid.collection.forEach((x) => {
         if (x[this.sgSel] === true) {
           x[this.sgSel] = false;
         }
@@ -259,7 +259,7 @@ export class VGridSelection {
     }
     this.selectedRows = 0;
     for(var i = 0; i < newRows.length; i++){
-      this.that.collection[newRows[i]][this.sgSel] = true;
+      this.vGrid.collection[newRows[i]][this.sgSel] = true;
       this.selectedRows++;
     }
   };
@@ -267,7 +267,7 @@ export class VGridSelection {
   /****************************************************************************************************************************
    * fixes highlight and select...
    ****************************************************************************************************************************/
-  setHightlight(e, currentRow, that) {
+  setHightlight(e, currentRow, vGridGenerator) {
     //_private.selectionVars.
     var isSel;
 
@@ -293,7 +293,7 @@ export class VGridSelection {
     if (currentRow !== this.lastRowSelected || currentselectedRows[0] !== currentRow) {
 
 
-      if (currentRow <= (that._private.configFunctions.getCollectionLength() - 1)) { //do I need to check this?
+      if (currentRow <= (vGridGenerator.vGridConfig.getCollectionLength() - 1)) { //do I need to check this?
 
         if (this.selectionMode === "multible") { //if multiselect duh!
 
@@ -393,7 +393,7 @@ export class VGridSelection {
         this.lastKeyKodeUsed = currentKeyKode;
 
         //update selection on rows
-        that.updateSelectionOnAllRows()
+        vGridGenerator.updateSelectionOnAllRows()
       }
     } else {
       //same row clicked again
@@ -415,7 +415,7 @@ export class VGridSelection {
         this.select(currentRow);
       }
       //update selection on rows
-      that.updateSelectionOnAllRows()
+      vGridGenerator.updateSelectionOnAllRows()
     }
   };
   

@@ -73,6 +73,7 @@ vGrid - Custom Element for Aurelia
 * header-filter-not-to
 * row-on-dblclick
 * row-on-draw
+* format-handler
 
 ----
 ### < v-grid-col > attributes:
@@ -133,6 +134,8 @@ Default = undefined, string name of function callback when row gets drawn, here 
 ###### "row-on-dblclick"
 Default = undefined, callback when user double click a row, returns row number of the collection you have set in config attribute, not the actual row in grid
 
+###### "format-handler"
+Default = undefined, callback before edit, after edit and before filter, se bottom of readme for more info
 
 
 ---
@@ -147,6 +150,13 @@ This is the attibute you want it to display
 
 ###### "header"
 This is the header text
+
+###### "col-css"
+Style that will be added to input style attribute
+
+###### "col-type"
+use this id you want to use image  col-type="image"
+
 
 ###### "read-only"
 Default value is false/undefined, setting it to tru will stopp cell editing
@@ -173,6 +183,7 @@ These can be used:
 config="current-entity.bind:myCurrentEntity; collection.bind:myCollection">
 row-on-dblclick="onDblClick"
 row-on-draw="onRowDraw"
+format-handler="myFormatHandler"
 
 ```
 
@@ -191,8 +202,16 @@ onRowDraw (data) {
 onDblClick (row) {
     console.log("dblclick row:"+row)
   }
+  
+myFormatHandler(type, obj){
+
+//types are :afterEdit, onFilter, beforeEdit
+//to set in other value in the before edit, set the new value to obj.newValue
+//you need to return the obj else it break atm,will improve this later
+}
 
 ```
-__onRowDraw__ is the only function Ive added for now, you can have this to edit whats displayed in the row
+
 
 __ctx__ is also added to the gridContext if its used, from here you have access to grids internal function, like endable/disable filters/ resizable header, set row height etc etc, (these have not been tested after rebuild)
+
