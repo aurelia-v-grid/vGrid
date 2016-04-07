@@ -53,7 +53,7 @@ export class VGridObservables {
 
 
     });
-    this.vGrid.collectionSubscription = this.vGrid.__observers__.collection;
+    this.collectionSubscription = this.vGrid.__observers__.collection;
 
   }
 

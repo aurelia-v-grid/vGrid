@@ -97,7 +97,13 @@ export class VGridConfig {
       return value;
     };
 
-
+    this.attributeArray = [];
+    this.columnWidthArray = [];
+    this.headerArray = [];
+    this.filterArray = [];
+    this.readOnlyArray = [];
+    this.colStyleArray = [];
+    this.colTypeArray = [];
 
     if (this.columns.length === 0) {
       //not in use atm, this will be the mobile view part, where you can set
@@ -111,19 +117,10 @@ export class VGridConfig {
       };
 
       this.attributeArray = this.vGrid.element.getAttribute("attibutes-used").split(",");
-      this.readOnlyArray = [];//this.vGrid.element.getAttribute("attibutes-used-readOnly").split(",")
+
     } else {
       //if row contains columns, then we need to get the data
       //array options, get then from the elements and add them to options
-      this.attributeArray = [];
-      this.columnWidthArray = [];
-      this.headerArray = [];
-      this.filterArray = [];
-      this.readOnlyArray = [];
-      this.colStyleArray = [];
-      this.colTypeArray = [];
-
-
 
       for (var i = 0; i < this.columns.length; i++) {
         this.attributeArray.push(this.columns[i].getAttribute("attribute"));
