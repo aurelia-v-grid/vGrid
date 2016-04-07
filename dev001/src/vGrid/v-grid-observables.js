@@ -161,7 +161,7 @@ export class VGridObservables {
 
 
         //update grid
-        grid.collectionChange(false, this.scrollBottomNext);
+        grid.collectionChange(false, this.vGrid.scrollBottomNext);
         if (this.vGrid.filterRowDisplaying) {
           this.vGrid.vGridCellEdit.setBackFocus();
         }

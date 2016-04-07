@@ -340,7 +340,7 @@ export class VGridCellEdit {
           return obj;
         }
       break;
-      case "beforeEdit":
+      case "afterEdit":
         if (this.vGrid.vGridConfig.eventFormatHandler) {
           return this.vGrid.$parent[this.vGrid.vGridConfig.eventFormatHandler](type, {
             attribute: this.attribute,
@@ -455,6 +455,7 @@ export class VGridCellEdit {
    * update data before moring to next row
    ***************************************************************************************/
   updateBeforeNext(obj) {
+
     if (this.attributeType !== "image" && this.editMode) {
       obj = this.formatHandler("afterEdit",obj);
       this.vGrid.collectionFiltered[this.row][obj.attribute] = obj.value;
@@ -505,8 +506,9 @@ export class VGridCellEdit {
    ***************************************************************************************/
   editCellhelper(row, e, readOnly) {
 
+    this.newTarget = e.target;
 
-    if (e.target.classList.contains(this.vGrid.vGridConfig.css.cellContent)) {
+    if (this.newTarget.classList.contains(this.vGrid.vGridConfig.css.cellContent)) {
 
 
 
@@ -524,7 +526,7 @@ export class VGridCellEdit {
 
         } else {
 
-          if (this.curElement !== e.target && this.updated !== false) {
+          if (this.curElement !== this.newTarget && this.updated !== false) {
             this.updateActual(this.callbackObject());
           }
           //not new row, we also need to update current entity
@@ -534,10 +536,10 @@ export class VGridCellEdit {
       }
 
       //if image set focus to main cell/column
-      this.attribute = e.target.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
+      this.attribute = this.newTarget.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
       if (this.attribute === "image") {
-        this.curElement = e.target.offsetParent;
-        this.curElement.setAttribute("tabindex", 0)
+        this.newTarget = this.newTarget.offsetParent;
+        this.newTarget.setAttribute("tabindex", 0)
       }
 
       //get som vars we need
@@ -548,50 +550,50 @@ export class VGridCellEdit {
 
 
       //set css
-      if (!e.target.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
-        e.target.classList.add(this.vGrid.vGridConfig.css.editCell)
+      if (!this.newTarget.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
+        this.newTarget.classList.add(this.vGrid.vGridConfig.css.editCell)
       }
 
       //set css
-      if (!e.target.classList.contains(this.vGrid.vGridConfig.css.editCellWrite)) {
-        e.target.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
+      if (!this.newTarget.classList.contains(this.vGrid.vGridConfig.css.editCellWrite)) {
+        this.newTarget.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
       }
 
 
       //if double click and edit or allready edit more
       if (this.type === "dblclick" || this.editMode) {
         if (this.readOnly === false && this.attributeType !== "image") {
-          if (this.curElement !== e.target || this.editMode === false) {
+          if (this.curElement !== this.newTarget || this.editMode === false) {
             if(this.attributeType !== "image"){
               this.beforeCellEdit({
                 attribute: this.attribute,
-                value: e.target.value,
+                value: this.newTarget.value,
                 oldValue: this.vGrid.collectionFiltered[row][this.attribute],
-                element: e.target
+                element: this.newTarget
               });
             }
           }
 
-          if (e.target.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
-            e.target.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
+          if (this.newTarget.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
+            this.newTarget.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
           }
-          e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
+          this.newTarget.removeAttribute("readonly");//if I dont do this, then they cant enter
 
         } else {
-          e.target.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
+          this.newTarget.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
         }
         //set edit mode
         this.editMode = true;
       } else {
-        e.target.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
+        this.newTarget.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
       }
 
 
 
       this.updated = false;
       this.row = row;
-      this.curElement = e.target;
-      this.oldValue = e.target.value;
+      this.curElement = this.newTarget;
+      this.oldValue = this.newTarget.value;
       this.cells = this.curElement.offsetParent.offsetParent.querySelectorAll("." + this.vGrid.vGridConfig.css.cellContent);
       //this.row = this.vGrid.filterRow;
 
