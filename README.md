@@ -191,13 +191,15 @@ format-handler="myFormatHandler"
 myCollection = [];
 myCurrentEntity = {};
 
-onRowDraw (data) {
+onRowDraw (data, dataCollection) {
+    //edits to datacollection will stay in collection, while edits to data it just there and then...
     if (data) {
       if (data.country === "Angola") {
         data.myCustomColor = "rgba(150,72,230, 0.3)"
       }
     }
   }
+
 
 onDblClick (row) {
     console.log("dblclick row:"+row)
