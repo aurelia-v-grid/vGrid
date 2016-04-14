@@ -15,6 +15,7 @@
                 row-height="85"
                 multi-select="false"
                 row-on-draw="onRowDraw"
+                large-buffer="true"
                 config="current-entity.bind:myCurrentEntity; collection.bind:myCollection;  grid-context.bind:myGrid">
 
           <!--create row to display on each row and set row height-->
@@ -24,7 +25,7 @@
                 <div class="row">
                   <div class="col-xs-3" style="max-width: 75px;">
                     <div class="avatar"
-                         style="background-color:{{backgroundcolor}}">{{avatarLetter}}</div>
+                         style="background-color:{{color}}">{{avatarLetter}}</div>
                   </div>
                   <div class="col-xs-9">
                     <div class="row name">
@@ -61,7 +62,7 @@
 
       <!--my test button-->
       <div class="row center">
-        <h4 style="margin-left:25px">Demo version 01-(2016-04-02)</h4>
+        <h4 style="margin-left:25px">Demo version 02-(2016-04-07)</h4>
         <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-default btn-xs" click.trigger="replaceBtn(0)">remove all</button>

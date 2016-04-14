@@ -21,6 +21,22 @@ export class sample01 {
     }
   }
 
+
+  onCellDraw (data) {
+    if (data) {
+      if(data.attributeName === "image"){
+        data.div.lastChild.type ="button";
+        var myData = data;
+        data.div.lastChild.onmouseup = function(e){
+          //tabbing generates click event, so need to use something else..
+          //wrapping it in could also solve this issue
+          alert("you clicked me")
+        }.bind({that:this, data:data})
+      }
+
+    }
+  }
+
   onDblClick (row) {
     console.log("dblclick row:"+row)
   }
