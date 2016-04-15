@@ -184,6 +184,7 @@ config="current-entity.bind:myCurrentEntity; collection.bind:myCollection">
 row-on-dblclick="onDblClick"
 row-on-draw="onRowDraw"
 format-handler="myFormatHandler"
+cell-on-draw="onCellDraw"
 
 ```
 
@@ -200,7 +201,6 @@ onRowDraw (data, dataCollection) {
     }
   }
 
-
 onDblClick (row) {
     console.log("dblclick row:"+row)
   }
@@ -211,6 +211,30 @@ myFormatHandler(type, obj){
 //to set in other value in the before edit, set the new value to obj.newValue
 //you need to return the obj else it break atm,will improve this later
 }
+
+
+onCellDraw (data) {
+    if (data) {
+  
+      //single click on a image, or another cell..
+      if(data.attributeName === "images"){
+        data.div.lastChild.type ="button";
+        data.div.lastChild.onclick = function(e){
+          console.log("clicked")
+        }.bind({that:this, data:data})
+      }
+      
+      //if adding checkbox, if you have it disable, use before edit to set disable to false
+      if(data.attributeName === "bool"){
+        data.div.lastChild.type ="checkbox";
+        data.div.lastChild.style.height = "15px";
+        data.div.lastChild.style.width = "15px";
+        data.div.lastChild.style.left = "20%";
+        data.div.lastChild.checked = data.rowdata.bool
+        data.div.lastChild.disabled = "true"
+      }
+    }
+  }
 
 ```
 

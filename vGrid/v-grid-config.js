@@ -168,6 +168,7 @@ export class VGridConfig {
     this.eventFormatHandler = this.vGrid.element.getAttribute("format-handler");
     this.eventOnDblClick = this.vGrid.element.getAttribute("row-on-dblclick");
     this.eventOnRowDraw = this.vGrid.element.getAttribute("row-on-draw");
+    this.eventOnCellDraw = this.vGrid.element.getAttribute("cell-on-draw");
 
 
     if (this.vGrid.element.getAttribute("header-filter-not-to")) {
@@ -282,6 +283,25 @@ export class VGridConfig {
     }
   }
 
+
+  /***************************************************************************************
+   * This just sets data from array,
+   * Use {} if you want markup of columns, or undefined for total blank rows
+   ***************************************************************************************/
+  cellDrawEvent(data) {
+    if (this.vGrid.collectionFiltered !== undefined) {
+      if (this.vGrid.$parent[this.eventOnCellDraw]) {
+        //if user have added this then we call it so they can edit the row data before we display it
+        var rowdata = this.vGrid.vGridInterpolate.getNewObject(this.vGrid.collectionFiltered[data.row]);
+        this.vGrid.$parent[this.eventOnCellDraw]({
+          attributeName: data.attributeName,
+          div: data.div,
+          rowdata: rowdata,
+          colData: this.vGrid.collectionFiltered[data.row]
+        });
+      }
+    }
+  }
 
 
 

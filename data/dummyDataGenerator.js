@@ -12,7 +12,7 @@ constructor(){
   this.name = [];
   this.first = [];
   this.last = [];
-  this.image = [];
+  this.images = [];
   this.expanded = [];
   this.guid = [];
   this.integer = [];
@@ -31,14 +31,16 @@ constructor(){
   this.email = [];
   this.phone = [];
   this.color = [];
-  this.number = []
+  this.number = [];
+  this.bool = [];
+
 
   for(let i = 0; i < this.internalDataArray.length;i++){
     this.index.push(this.internalDataArray[i].index);
     this.name.push(this.internalDataArray[i].name);
     this.first.push(this.internalDataArray[i].first);
     this.last.push(this.internalDataArray[i].last);
-    this.image.push(this.internalDataArray[i].image);
+    this.images.push(this.internalDataArray[i].image);
     this.expanded.push(this.internalDataArray[i].expanded);
     this.guid.push(this.internalDataArray[i].guid);
     this.integer.push(this.internalDataArray[i].integer);
@@ -79,13 +81,13 @@ generateData(number, callback){
     let random5 = Math.floor(Math.random() * 500) + 0;
 
 
-    
+
     dummyArray.push({
       "index": this.totalGenerated,
       "name": this.first[random2] +" "+this.last[random3],
       "first": this.first[random2],
       "last": this.last[random3],
-      "image": this.image[random4],
+      "images": this.images[random4],
       "expanded": this.expanded[random5],
       "guid": this.guid[random1],
       "integer": this.integer[random2],
@@ -101,7 +103,8 @@ generateData(number, callback){
       "email": this.email[random2],
       "phone": this.phone[random3],
       "color": this.color[random4],
-      "number": this.number[random4]
+      "number": this.number[random4],
+      "bool":random1 % 2 === 0 ? true : false
     });
   }
 

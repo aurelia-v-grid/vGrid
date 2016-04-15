@@ -208,7 +208,6 @@ export class VGridGenerator {
           } else {
             rowTemplate = rowTemplate +
               `<div><input class="${this.vGridConfig.css.cellContent}"  type="text" readonly="true" style="${this.vGridConfig.colStyleArray[i]}" ${this.vGridConfig.atts.dataAttribute}="${attributeNamesArray[i]}" value="{{${attributeNamesArray[i]}}}" ></input></div>`;
-
           }
         }
       }
@@ -663,10 +662,10 @@ export class VGridGenerator {
         }
 
         //call celldraw option, if this is set 13/03-2016 removing, complete rowmarkup option will replace
-        if (this.vGridConfig.onCellDraw) {
+        if (this.vGridConfig.eventOnCellDraw) {
           var rowCells = rowHtmlElement.lastElementChild.children;
           for (var i = 0; i < rowCells.length; i++) {
-            this.vGridConfig.onCellDraw({
+            this.vGridConfig.cellDrawEvent({
               attributeName: this.vGridConfig.attributeArray[i],
               div: rowCells[i],
               row: rowNo
@@ -1411,6 +1410,14 @@ export class VGridGenerator {
       }
     };
 
+    var handleTabbing= (e) => {
+      var currentRow = parseInt(e.currentTarget.getAttribute("row"));
+      this.vGridConfig.clickHandler(e, currentRow);
+      if (this.vGridConfig.isMultiSelect !== undefined) {
+        this.vGridSelection.setHightlight(e, currentRow, this);
+      }
+    };
+
 
     /*------------------------------------------------*/
     //doubleclick
@@ -1437,6 +1444,7 @@ export class VGridGenerator {
 
       div.addEventListener("dblclick", handleDblClick.bind(this), false); //single and doubleclick... this will end bad.., maybe use other key wih click to edit?
       div.addEventListener("click", handleClick.bind(this), false);
+      div.addEventListener("tabbing", handleTabbing.bind(this), false);
       div.addEventListener("contextmenu", onMouseDownRow.bind(this), false);
     }
 
