@@ -21,6 +21,33 @@ export class sample01 {
     }
   }
 
+
+  // onCellDraw (data) {
+  //   if (data) {
+  //
+  //
+  //     if(data.attributeName === "images"){
+  //       data.div.lastChild.type ="button";
+  //       data.div.lastChild.onclick = function(e){
+  //         console.log("clicked")
+  //       }.bind({that:this, data:data})
+  //     }
+  //     //if adding checkbox
+  //     if(data.attributeName === "bool"){
+  //       data.div.lastChild.type ="checkbox";
+  //       data.div.lastChild.style.height = "15px";
+  //       data.div.lastChild.style.width = "15px";
+  //       data.div.lastChild.style.left = "20%";
+  //       data.div.lastChild.checked = data.rowdata.bool
+  //       data.div.lastChild.disabled = "true"
+  //       data.div.lastChild.onclick = function(e){
+  //         console.log("clicked")
+  //       }.bind({that:this, data:data})
+  //     }
+  //
+  //   }
+  // }
+
   onDblClick (row) {
     console.log("dblclick row:"+row)
   }
@@ -63,10 +90,13 @@ export class sample01 {
           obj.value = obj.oldValue
         }
       }
+
+
       return obj;
     }
 
     if(type === "onFilter"){
+
       obj.forEach((x) => {
         if(x.attribute === "date"){
           //if date
@@ -86,14 +116,22 @@ export class sample01 {
             x.value ="";
           }
         }
-      })
+      });
+
       return obj;
     }
+
+
+
     if(type === "beforeEdit"){
       console.log("beforeEdit")
       if(obj.attribute === "number"){
         obj.newValue = obj.oldValue;
       }
+      //if adding checkbox
+      // if(obj.attribute === "bool"){
+      //   obj.element.disabled = false;
+      // }
       return obj;
     }
   }
@@ -118,9 +156,7 @@ export class sample01 {
   }
 
 
-  attached(){
 
-  }
 
 
   /********************************************************************
@@ -453,20 +489,6 @@ export class sample01 {
   }
 
 
-
-  /********************************************************************
-   * attached
-   ********************************************************************/
-  attached() {
-
-    // var myCodeBlock = this.element.getElementsByTagName("TEXTAREA")[0]
-    // var x = document.createElement("code");
-    // x.classlist = myCodeBlock.classList;
-    // x.style = myCodeBlock.style;
-    // x.innerHTML = myCodeBlock.innerHTML;
-    // myCodeBlock.parentNode.replaceChild(x, myCodeBlock);
-    // hljs.highlightBlock(myCodeBlock);
-  }
 
 
 

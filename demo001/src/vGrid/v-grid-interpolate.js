@@ -18,7 +18,7 @@ export class VGridInterpolate {
     return function interpolate(o) {
       return str.replace(/{{([^{}]*)}}/g, function (a, b) {
         var r = o[b];
-        return typeof r === 'string' || typeof r === 'number' ? r : a;
+        return r;
       });
     }
   }
