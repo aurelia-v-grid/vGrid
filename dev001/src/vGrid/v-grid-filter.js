@@ -125,8 +125,8 @@ export class VGridFilter {
             break;
           case "boolean":
             rowValue = data[x.attribute];
-            filterValue = typeBool[x.value];
-            filterOperator = filterOperator || 1;
+            filterValue = typeBool[x.value]
+            filterOperator = 1;
             break;
           case "object":
             rowValue = data[x.attribute].toISOString();

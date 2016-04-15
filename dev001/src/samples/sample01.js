@@ -24,13 +24,24 @@ export class sample01 {
 
   onCellDraw (data) {
     if (data) {
-      if(data.attributeName === "image"){
+
+
+      if(data.attributeName === "images"){
         data.div.lastChild.type ="button";
-        var myData = data;
-        data.div.lastChild.onmouseup = function(e){
-          //tabbing generates click event, so need to use something else..
-          //wrapping it in could also solve this issue
-          alert("you clicked me")
+        data.div.lastChild.onclick = function(e){
+          console.log("clicked")
+        }.bind({that:this, data:data})
+      }
+
+      if(data.attributeName === "bool"){
+        data.div.lastChild.type ="checkbox";
+        data.div.lastChild.style.height = "20%"
+        data.div.lastChild.style.width = "20%"
+        data.div.lastChild.style.margin = "auto"
+        data.div.lastChild.checked = data.rowdata.bool
+        data.div.lastChild.disabled = "true"
+        data.div.lastChild.onclick = function(e){
+          console.log("clicked")
         }.bind({that:this, data:data})
       }
 
@@ -79,10 +90,13 @@ export class sample01 {
           obj.value = obj.oldValue
         }
       }
+
+
       return obj;
     }
 
     if(type === "onFilter"){
+
       obj.forEach((x) => {
         if(x.attribute === "date"){
           //if date
@@ -102,9 +116,13 @@ export class sample01 {
             x.value ="";
           }
         }
-      })
+      });
+
       return obj;
     }
+
+
+
     if(type === "beforeEdit"){
       console.log("beforeEdit")
       if(obj.attribute === "number"){
@@ -134,9 +152,7 @@ export class sample01 {
   }
 
 
-  attached(){
 
-  }
 
 
   /********************************************************************
@@ -469,20 +485,6 @@ export class sample01 {
   }
 
 
-
-  /********************************************************************
-   * attached
-   ********************************************************************/
-  attached() {
-
-    // var myCodeBlock = this.element.getElementsByTagName("TEXTAREA")[0]
-    // var x = document.createElement("code");
-    // x.classlist = myCodeBlock.classList;
-    // x.style = myCodeBlock.style;
-    // x.innerHTML = myCodeBlock.innerHTML;
-    // myCodeBlock.parentNode.replaceChild(x, myCodeBlock);
-    // hljs.highlightBlock(myCodeBlock);
-  }
 
 
 

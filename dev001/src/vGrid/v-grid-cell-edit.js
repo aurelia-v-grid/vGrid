@@ -72,9 +72,15 @@ export class VGridCellEdit {
    ***************************************************************************************/
   removeEditCssClasses(element) {
     element.setAttribute("readonly", "false");
-    element.classList.remove(this.vGrid.vGridConfig.css.editCell);
-    element.classList.remove(this.vGrid.vGridConfig.css.editCellWrite);
-    element.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
+    let elementX;
+    if (element.offsetParent) {
+      elementX = element.offsetParent
+    } else {
+      elementX = element.parentNode
+    }
+    elementX.classList.remove(this.vGrid.vGridConfig.css.editCell);
+    elementX.classList.remove(this.vGrid.vGridConfig.css.editCellWrite);
+    elementX.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
   }
 
 
@@ -84,14 +90,11 @@ export class VGridCellEdit {
    * for setting next cell ny similating a mouse click, used for tabbing etc
    ***************************************************************************************/
   dispatchCellClick(index) {
-    var event = new MouseEvent('click', {
-      'view': window,
-      'bubbles': true,
-      'cancelable': true
-    });
-    this.setAsSingleClick = true;
+    var e = document.createEvent('Event');
+    e.initEvent("tabbing", true, true);
+
     if (this.cells[index]) {
-      this.cells[index].dispatchEvent(event);
+      this.cells[index].dispatchEvent(e);
     }
 
   }
@@ -135,7 +138,7 @@ export class VGridCellEdit {
             var containerRows = parseInt(containerHeight / rowHeight, 10);
             var buffer = parseInt(containerHeight / 2, 10);
             if (currentscrolltop !== (this.vGrid.vGridConfig.getCollectionLength() * rowHeight) - containerHeight) {
-              //buffer = buffer * 2;
+              buffer = buffer// * 4;
             }
 
             //get cell with that top
@@ -170,8 +173,8 @@ export class VGridCellEdit {
             var containerHeight = this.vGrid.vGridGenerator.htmlCache.content.clientHeight;
             var containerRows = parseInt(containerHeight / rowHeight, 10);
             var buffer = parseInt(containerHeight / 2, 10);
-            if (currentscrolltop === 0) {
-              //buffer = buffer * 2;
+            if (currentscrolltop !== 0) {
+              buffer = buffer * 2;
             }
 
             //get cell with that top
@@ -399,18 +402,18 @@ export class VGridCellEdit {
       if (this.cells.length > 0) {
         this.curElement = this.cells[this.index];
 
-        if (!this.cells[this.index].classList.contains(this.vGrid.vGridConfig.css.editCell)) {
-          this.cells[this.index].classList.add(this.vGrid.vGridConfig.css.editCell)
+        if (!this.cells[this.index].offsetParent.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
+          this.cells[this.index].offsetParent.classList.add(this.vGrid.vGridConfig.css.editCell)
         }
 
-        if (!this.cells[this.index].classList.contains(this.vGrid.vGridConfig.css.editCellWrite)) {
-          this.cells[this.index].classList.add(this.vGrid.vGridConfig.css.editCellWrite)
+        if (!this.cells[this.index].offsetParent.classList.contains(this.vGrid.vGridConfig.css.editCellWrite)) {
+          this.cells[this.index].offsetParent.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
         }
 
         if (this.editMode) {
           if (this.readOnly === false) {
-            if (this.cells[this.index].classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
-              this.cells[this.index].classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
+            if (this.cells[this.index].offsetParent.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
+              this.cells[this.index].offsetParent.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
             }
             this.cells[this.index].removeAttribute("readonly");//if I dont do this, then they cant enter
             if (this.attributeType !== "image") {
@@ -422,10 +425,10 @@ export class VGridCellEdit {
               });
             }
           } else {
-            this.cells[this.index].classList.add(this.vGrid.vGridConfig.css.editCellFocus);
+            this.cells[this.index].offsetParent.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
           }
         } else {
-          this.cells[this.index].classList.add(this.vGrid.vGridConfig.css.editCellFocus);
+          this.cells[this.index].offsetParent.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
         }
       }
 
@@ -438,6 +441,7 @@ export class VGridCellEdit {
    * update to run when hitting enter
    ***************************************************************************************/
   updateCurrentDone(obj) {
+
     if (this.attributeType !== "image" && this.editMode) {
       obj = this.formatHandler("afterEdit", obj);
       this.vGrid.skipNextUpdateProperty.push(obj.attribute);
@@ -478,6 +482,7 @@ export class VGridCellEdit {
    * cupdates current
    ***************************************************************************************/
   updateActual(obj) {
+
     if (obj.oldValue !== obj.value && this.attributeType !== "image" && this.editMode) {
       obj = this.formatHandler("afterEdit", obj);
       this.vGrid.skipNextUpdateProperty.push(obj.attribute);
@@ -493,6 +498,8 @@ export class VGridCellEdit {
    * before cell edit
    ***************************************************************************************/
   beforeCellEdit(obj) {
+
+
     obj = this.formatHandler("beforeEdit", obj);
     if (obj.newValue) {
       obj.element.value = obj.newValue;
@@ -507,12 +514,22 @@ export class VGridCellEdit {
   editCellhelper(row, e, readOnly) {
 
     this.newTarget = e.target;
+    if (this.newTarget.classList.contains(this.vGrid.vGridConfig.css.rowCell)) {
+      if (e.target.children.length > 0) {
+        this.newTarget = e.target.firstChild
+      }
+    }
+
+
 
     if (this.newTarget.classList.contains(this.vGrid.vGridConfig.css.cellContent)) {
 
       //have we had a curElement before?
       if (this.curElement) {
-        this.removeEditCssClasses(this.curElement);
+        if (this.curElement) {
+          this.removeEditCssClasses(this.curElement);
+        }
+
         if (this.row !== row) {
           //row, lets update filtered collection row first
           this.updateBeforeNext(this.callbackObject());
@@ -520,33 +537,34 @@ export class VGridCellEdit {
           this.updateLastRow(this.row);
         } else {
           if (this.curElement !== this.newTarget && this.updated !== false) {
-            this.updateActual(this.callbackObject());
+            if (this.curElement) {
+              this.updateActual(this.callbackObject());
+            }
           }
         }
       }
 
       //if image set focus to main cell/column
       this.attribute = this.newTarget.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
-      if (this.attribute === "image") {
-        this.newTarget = this.newTarget.offsetParent;
-        this.newTarget.setAttribute("tabindex", 0)
-      }
+      this.attributeType = this.vGrid.vGridConfig.colTypeArray[this.index];
+      this.newTarget.setAttribute("tabindex", 0);
+
 
       //get som vars we need
       this.readOnly = readOnly;
       this.index = this.vGrid.vGridConfig.attributeArray.indexOf(this.attribute);
       this.type = e.type;
-      this.attributeType = this.vGrid.vGridConfig.colTypeArray[this.index];
+
 
 
       //set css
-      if (!this.newTarget.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
-        this.newTarget.classList.add(this.vGrid.vGridConfig.css.editCell)
+      if (!this.newTarget.offsetParent.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
+        this.newTarget.offsetParent.classList.add(this.vGrid.vGridConfig.css.editCell)
       }
 
       //set css
-      if (!this.newTarget.classList.contains(this.vGrid.vGridConfig.css.editCellWrite)) {
-        this.newTarget.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
+      if (!this.newTarget.offsetParent.classList.contains(this.vGrid.vGridConfig.css.editCellWrite)) {
+        this.newTarget.offsetParent.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
       }
 
 
@@ -564,19 +582,25 @@ export class VGridCellEdit {
             }
           }
 
-          if (this.newTarget.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
-            this.newTarget.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
+          if (this.newTarget.offsetParent.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
+            this.newTarget.offsetParent.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
           }
-          this.newTarget.removeAttribute("readonly");//if I dont do this, then they cant enter
+          e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
 
         } else {
-          this.newTarget.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
+          this.newTarget.offsetParent.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
         }
-
+        if (this.attributeType === "checkbox") {
+          this.newTarget.disabled = false
+        }
         //set edit mode
         this.editMode = true;
       } else {
-        this.newTarget.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
+        if (this.attributeType === "checkbox") {
+          this.newTarget.disabled = true
+        }
+
+        this.newTarget.offsetParent.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
       }
 
 
@@ -584,21 +608,24 @@ export class VGridCellEdit {
       this.updated = false;
       this.row = row;
       this.curElement = this.newTarget;
-      this.oldValue = this.newTarget.value;
+      this.oldValue = this.curElement.value;
       this.cells = this.curElement.offsetParent.offsetParent.querySelectorAll("." + this.vGrid.vGridConfig.css.cellContent);
-      //this.row = this.vGrid.filterRow;
 
 
-
-      //override the double click, just to make it simple to focus on correct cell
-      if (this.setAsSingleClick) {
-        this.setAsSingleClick = false;
-        this.type = "click"
+      //fix focus scroll
+      if (this.curElement.offsetParent.offsetLeft > this.vGrid.vGridGenerator.htmlCache.content.clientWidth) {
+        this.vGrid.vGridGenerator.htmlCache.content.scrollLeft = this.curElement.offsetParent.offsetLeft;
+      }
+      if (this.vGrid.vGridGenerator.htmlCache.content.scrollLeft > 0 && this.vGrid.vGridGenerator.htmlCache.content.clientWidth > this.curElement.offsetParent.offsetLeft) {
+        this.vGrid.vGridGenerator.htmlCache.content.scrollLeft = this.curElement.offsetParent.offsetLeft;
       }
 
 
+
+
+
       setTimeout(()=> {
-        this.vGrid.vGridGenerator.htmlCache.header.scrollLeft = this.vGrid.vGridGenerator.htmlCache.content.scrollLeft
+        this.vGrid.vGridGenerator.htmlCache.header.scrollLeft = this.vGrid.vGridGenerator.htmlCache.content.scrollLeft;
       }, 10);
 
 
@@ -615,10 +642,17 @@ export class VGridCellEdit {
 
 
 
+
+      // this.curElement.offsetParent.focus();
       this.curElement.focus();
       if (this.editMode) {
         this.elementKeyDown();
-        this.curElement.select();
+        if (this.curElement.select) {
+          if(this.type === "dblclick"){
+            this.curElement.select();
+          }
+
+        }
       }
 
 

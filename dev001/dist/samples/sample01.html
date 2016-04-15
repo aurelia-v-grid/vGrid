@@ -30,7 +30,7 @@
           sort-on-header-click="true"
           header-filter="true"
           header-filter-onkeydown="true"
-          header-filter-not-to="phone"
+          header-filter-not-to="images"
           header-filter-top="true"
           row-on-dblclick="onDblClick"
           row-on-draw="onRowDraw"
@@ -40,10 +40,11 @@
           config="current-entity.bind:myCurrentEntity; collection.bind:myCollection;  grid-context.bind:myGrid">
           <v-grid-row>
             <v-grid-col col-width="160" attribute="index" header="Index" default-filter=">=" read-only="true"></v-grid-col>
-            <v-grid-col col-width="150" attribute="name" header="Name" default-filter="*=" col-css="background-color: {{myCustomColor}}"></v-grid-col>
+            <v-grid-col col-width="150" attribute="bool" header="Bool" col-type="checkbox" default-filter="=" col-css="height:20%;width:20%;margin:auto"></v-grid-col>
             <v-grid-col col-width="160" attribute="number" header="Number" default-filter=">="></v-grid-col>
             <v-grid-col col-width="180" attribute="date" header="date" default-filter=">="></v-grid-col>
-            <v-grid-col col-width="180" attribute="image" header="image" col-type="image" col-css="border-radius: 50%;width:50%;margin-left:25%; default-filter="=*"></v-grid-col>
+            <v-grid-col col-width="160" attribute="country" header="Country" default-filter=">="></v-grid-col>
+            <v-grid-col col-width="180" attribute="images" header="image" col-type="image" col-css="border-radius: 50%;width:50%;margin-left:25%; default-filter="=*"></v-grid-col>
             <v-grid-col col-width="160" attribute="color" header="Color" default-filter="=*" col-css="color: {{color}}"></v-grid-col>
           </v-grid-row>
         </v-grid>
