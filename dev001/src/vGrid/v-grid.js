@@ -22,18 +22,18 @@ import {VGridSelection} from './v-grid-selection';
 @processContent(false)
 @customAttribute("config")
 export class VGrid {
-  static inject = [Element, ObserverLocator, VGridFilter, VGridSort, VGridInterpolate];
+  static inject = [Element, ObserverLocator, VGridFilter, VGridSort];
   @bindable gridContext;
   @bindable collection;
   @bindable currentEntity;
 
 
 
-  constructor(element, observerLocator, vGridFilter, vGridSort, vGridInterpolate) {
+  constructor(element, observerLocator, vGridFilter) {
 
     this.vGridFilter = vGridFilter; //helper for filtering the cloned collection
-    this.vGridSort = vGridSort; //helper for sorting the columns
-    this.vGridInterpolate = vGridInterpolate; //populates mustache tags
+    this.vGridSort = new VGridSort(); //helper for sorting the columns
+    this.vGridInterpolate = new VGridInterpolate(); //populates mustache tags
     this.observerLocator = observerLocator; //listen for event
     this.gridContext = null;
     this.element = element; //vgrid element
