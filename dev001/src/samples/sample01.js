@@ -1,8 +1,10 @@
 import {dummyDataGenerator} from 'data/dummyDataGenerator'
-
-
+import {inject, noView, ViewCompiler, ViewSlot, Container, ViewResources} from 'aurelia-framework';
+import 'jquery';
+import { datepicker } from 'jquery-ui';
+@inject(Element, dummyDataGenerator, ViewCompiler, Container, ViewResources)
 export class sample01 {
-  static inject = [Element, dummyDataGenerator];
+
 
 
   myCollection = [];
@@ -21,32 +23,26 @@ export class sample01 {
     }
   }
 
+  selectedDate = new Date();
 
-  // onCellDraw (data) {
-  //   if (data) {
-  //
-  //
-  //     if(data.attributeName === "images"){
-  //       data.div.lastChild.type ="button";
-  //       data.div.lastChild.onclick = function(e){
-  //         console.log("clicked")
-  //       }.bind({that:this, data:data})
-  //     }
-  //
-  //     if(data.attributeName === "bool"){
-  //       data.div.lastChild.type ="checkbox";
-  //       data.div.lastChild.style.height = "15px";
-  //       data.div.lastChild.style.width = "15px";
-  //       data.div.lastChild.style.left = "20%";
-  //       data.div.lastChild.checked = data.rowdata.bool
-  //       data.div.lastChild.disabled = "true"
-  //       data.div.lastChild.onclick = function(e){
-  //         console.log("clicked")
-  //       }.bind({that:this, data:data})
-  //     }
-  //
-  //   }
-  // }
+  onCellDraw (data) {
+    if (data) {
+
+      //single click on a image, or another cell..
+      if (data.attributeName === "date") {
+
+
+
+
+
+
+
+
+      }
+    }
+  }
+
+
 
   onDblClick (row) {
     console.log("dblclick row:"+row)
@@ -128,6 +124,15 @@ export class sample01 {
       if(obj.attribute === "number"){
         obj.newValue = obj.oldValue;
       }
+      //if adding checkbox
+       if(obj.attribute === "date"){
+         obj.element.disabled = false;
+         obj.element.style.position = "relative"
+         obj.element.style["z-index"] = "9000"
+         $(obj.element).datepicker()
+         $(obj.element).datepicker("show")
+
+       }
       return obj;
     }
   }
@@ -138,9 +143,13 @@ export class sample01 {
   /********************************************************************
    * Constructor
    ********************************************************************/
-  constructor(element, dummyDataGenerator) {
+  constructor(element, dummyDataGenerator, vc, vs, container, resources) {
     //get this element
     this.element = element;
+    this.viewCompiler = vc;
+    this.viewSlot = vs;
+    this.container = container;
+    this.resources = resources;
 
     //this if just for giving us some data
     this.dummyDataGenerator = dummyDataGenerator;

@@ -2,14 +2,9 @@
   <require from="vGrid/v-grid.css"></require>
   <require from="app.css"></require>
   <require from="vGrid/v-grid"></require>
-  <datalist id="browsers">
-    <option value="Internet Explorer">
-    <option value="Firefox">
-    <option value="Google Chrome">
-    <option value="Opera">
-    <option value="Safari">
-  </datalist>
+  <require from="https://code.jquery.com/ui/1.11.4/themes/black-tie/jquery-ui.css"></require>
 
+  <div id="div1" style="position:absolute;z-index:9000 " tabindex="100"> small div </div>
   <div class="myContainer">
 
     <!------------------------------------------------------------------------------------------------------------------------------------>
@@ -24,7 +19,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">Demo 19-(2016-04-14)</h4>
+        <h4 style="margin-left:25px">Demo 20-(2016-04-15)</h4>
         <h5 style="margin-left:25px"><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute </h5>
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -46,6 +41,7 @@
           config="current-entity.bind:myCurrentEntity; collection.bind:myCollection;  grid-context.bind:myGrid">
           <v-grid-row>
             <v-grid-col col-width="160" attribute="index" header="Index" default-filter=">=" read-only="true"></v-grid-col>
+            <v-grid-col col-width="160" attribute="name" header="name" default-filter="*"></v-grid-col>
             <v-grid-col col-width="160" attribute="country" header="Country" default-filter="*"></v-grid-col>
             <v-grid-col col-width="160" attribute="number" header="Number" default-filter=">="></v-grid-col>
             <v-grid-col col-width="180" attribute="date" header="date" default-filter=">="></v-grid-col>
@@ -171,7 +167,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">Name</label>
             <div class="col-sm-6">
-              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.name">
+              <input md-datepicker="container: body; value: selectedDate;" type="date" placeholder="pick a date" />
             </div>
           </div>
           <div class="form-group">

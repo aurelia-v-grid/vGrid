@@ -136,15 +136,12 @@ export class VGridCellEdit {
             var rowHeight = this.vGrid.vGridConfig.rowHeight;
             var containerHeight = this.vGrid.vGridGenerator.htmlCache.content.clientHeight;
             var containerRows = parseInt(containerHeight / rowHeight, 10);
-            var buffer = parseInt(containerHeight / 2, 10);
-            if (currentscrolltop !== (this.vGrid.vGridConfig.getCollectionLength() * rowHeight) - containerHeight) {
-              buffer = buffer// * 4;
-            }
+
 
             //get cell with that top
             this.removeEditCssClasses(this.curElement);
             this.top = this.setCellsFromElement(this.curElement, 0);
-            this.vGrid.vGridGenerator.setScrollTop(currentscrolltop - (containerHeight - buffer));
+            this.vGrid.vGridGenerator.setScrollTop(currentscrolltop - (containerHeight));
             var newTop = this.top - (containerRows * rowHeight);
             if ((newTop / rowHeight) <= 0) {
               newTop = 0;
@@ -172,15 +169,11 @@ export class VGridCellEdit {
             var rowHeight = this.vGrid.vGridConfig.rowHeight;
             var containerHeight = this.vGrid.vGridGenerator.htmlCache.content.clientHeight;
             var containerRows = parseInt(containerHeight / rowHeight, 10);
-            var buffer = parseInt(containerHeight / 2, 10);
-            if (currentscrolltop !== 0) {
-              buffer = buffer * 2;
-            }
 
             //get cell with that top
             this.removeEditCssClasses(this.curElement);
             this.top = this.setCellsFromElement(this.curElement, 0);
-            this.vGrid.vGridGenerator.setScrollTop(currentscrolltop + (containerHeight - buffer));
+            this.vGrid.vGridGenerator.setScrollTop(currentscrolltop + (containerHeight));
             var newTop = this.top + (containerRows * rowHeight);
             if ((newTop / rowHeight) >= this.vGrid.vGridConfig.getCollectionLength()) {
               newTop = this.vGrid.vGridConfig.getCollectionLength() * rowHeight;
