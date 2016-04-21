@@ -54,9 +54,6 @@ export class VGrid {
 
 
 
-
-
-
   /***************************************************************************************
    * resets internal key on collection/internal collection
    ***************************************************************************************/
@@ -67,10 +64,6 @@ export class VGrid {
       key++;
     });
   }
-
-
-
-
 
 
 
@@ -121,10 +114,6 @@ export class VGrid {
 
 
 
-
-
-
-
   /***************************************************************************************
    * set all options
    ***************************************************************************************/
@@ -141,7 +130,7 @@ export class VGrid {
 
     //create the grid html/add events etc
     this.vGridGenerator = new VGridGenerator(this.vGridConfig, this.vGridInterpolate, this.element, VGridSortable, this.vGridSelection, this.vGridCellEdit);
-    
+
 
     //some helper function;
     //returns the rows in main collection that is in the grid/filtered or not..
@@ -161,7 +150,51 @@ export class VGrid {
 
     this.vGridGenerator.selection = this.vGridSelection;
 
-    //set it to users 
+    this.vGridGenerator.createReport = (skipArray) => {
+
+      //dont thouch this;
+      if (skipArray === undefined) {
+        skipArray = [];
+      }
+      var content = '';
+      var rows = this.vGridGenerator.getGridRows();
+      var attributes = this.vGridConfig.attributeArray;
+
+      //sets data to our content
+      var setData = (arr) => {
+        content = content + arr.join(';') + '\n';
+      };
+
+      //set headers
+      setData(attributes);
+
+      //loop rows/columns
+      rows.forEach((row)=> {
+        let tempArr = [];
+        attributes.forEach((att)=> {
+          if (skipArray.indexOf(att) === -1) {
+            tempArr.push(this.collection[row][att]);
+          }
+        });
+        setData(tempArr);
+      });
+
+
+      //download
+      var dummyElement = document.createElement('a');
+      dummyElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+      dummyElement.setAttribute('download', 'contacts.csv');
+      dummyElement.style.display = 'none';
+      document.body.appendChild(dummyElement);
+      dummyElement.click();
+      document.body.removeChild(dummyElement);
+    }
+
+
+
+
+
+    //set it to users
     this.gridContext.ctx = this.vGridGenerator;
 
 

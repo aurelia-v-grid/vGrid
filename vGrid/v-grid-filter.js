@@ -79,7 +79,6 @@ export class VGridFilter {
         } catch (e) {
           type = "string";
         }
-
         
 
 
@@ -135,11 +134,8 @@ export class VGridFilter {
             filterOperator = filterOperator || 2;
             break;
           default :
-            if(data[x.attribute] === undefined || data[x.attribute] === null){
-              rowValue = ""; //treat them as blank
-            } else {
-              rowValue = data[x.attribute].toLowerCase();
-            }
+            //todo: take the stuff under equal to and put in a function and also call i from here.. or just make it fail?
+            rowValue = data[x.attribute].toLowerCase();
             filterValue = x.value.toLowerCase();
             filterOperator = filterOperator || 1;
             break;

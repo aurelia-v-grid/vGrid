@@ -69,10 +69,12 @@ vGrid - Custom Element for Aurelia
 * header-filter
 * header-filter-top
 * header-filter-onkeydown
-* sort-on-header-click
 * header-filter-not-to
+* sort-on-header-click
+* sort-not-on-header
 * row-on-dblclick
 * row-on-draw
+* cell-on-draw
 * format-handler
 
 ----
@@ -126,6 +128,8 @@ Default = false, when false you need to press "enter" to activate filtering
 Default = "", here you can add columns attibute names you dont want filter for, like  this "index,name"
 ###### "sort-on-header-click"
 Default = false, setting this to true will activate multisort on header clicks
+###### "sort-not-on-header"
+Default = "", here you can add columns attibute names you dont want have sorting/sort icon for, like  this "image1,documents"
 
 ###### "row-on-draw"
 Default = undefined, string name of function callback when row gets drawn, here you can edit the row data before displaying
@@ -241,3 +245,81 @@ onCellDraw (data) {
 
 __ctx__ is also added to the gridContext if its used, from here you have access to grids internal function, like endable/disable filters/ resizable header, set row height etc etc, (these have not been tested after rebuild)
 
+```
+//functions to edit after its created/utillity function
+
+//locked
+this.myGrid.ctx.setLockedColumns(0);
+
+
+//header filter
+this.myGrid.ctx.disableHeaderFilter();
+this.myGrid.ctx.enableHeaderFilter();
+this.myGrid.ctx.setHeaderFilterAtBottom();
+this.myGrid.ctx.setHeaderFilterAtTop();
+
+
+//sorting
+this.myGrid.ctx.disableHeaderSort();
+this.myGrid.ctx.enableHeaderSort();
+
+
+
+//get rows that is in the grid at the moment (if filtered etc)
+this.myGrid.ctx.getGridRows();
+
+
+//report, takes filtered rows and generates downloads with the column (csv file, delimiter = ";"
+this.myGrid.ctx.createReport()
+
+
+//resiable columns
+this.myGrid.ctx.enableResizableColumns();
+this.myGrid.ctx.enableResizableColumns(true);
+this.myGrid.ctx.disableResizableColumns();
+
+
+//sortable columns
+this.myGrid.ctx.disableSortableColumns();
+this.myGrid.ctx.enableSortableColumns();
+
+
+//selection
+this.myGrid.ctx.disableSelection();
+this.myGrid.ctx.setSingleSelection();
+this.myGrid.ctx.setMultiSelection();
+this.myGrid.ctx.selection -> a lot of functions here....
+
+
+//footer/row/header height
+this.myGrid.ctx.setFooterHeight(x)
+this.myGrid.ctx.setHeaderHeight(x)
+this.myGrid.ctx.setRowHeight(x);
+
+
+```
+
+
+
+To use the dummy data generator:
+```
+//import it
+import {dummyDataGenerator} from 'data/dummyDataGenerator'
+
+
+//inject it
+static inject = [dummyDataGenerator];
+
+
+constructor(element, dummyDataGenerator) {
+
+    //this if just for giving us some data
+    this.dummyDataGenerator = dummyDataGenerator;
+    this.dummyDataGenerator.generateData(100, (data) => {
+      this.myCollection = data;
+      this.collectionLength = this.myCollection.length;
+    });
+
+  }
+
+```

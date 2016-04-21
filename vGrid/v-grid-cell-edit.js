@@ -38,7 +38,7 @@ export class VGridCellEdit {
             }
           }
         }
-        node = node.offsetParent;
+        node = node.parentNode;
       } catch (x) {
       }
     }
@@ -73,8 +73,8 @@ export class VGridCellEdit {
   removeEditCssClasses(element) {
     element.setAttribute("readonly", "false");
     let elementX;
-    if (element.offsetParent) {
-      elementX = element.offsetParent
+    if (element.parentNode) {
+      elementX = element.parentNode
     } else {
       elementX = element.parentNode
     }
@@ -395,18 +395,18 @@ export class VGridCellEdit {
       if (this.cells.length > 0) {
         this.curElement = this.cells[this.index];
 
-        if (!this.cells[this.index].offsetParent.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
-          this.cells[this.index].offsetParent.classList.add(this.vGrid.vGridConfig.css.editCell)
+        if (!this.cells[this.index].parentNode.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
+          this.cells[this.index].parentNode.classList.add(this.vGrid.vGridConfig.css.editCell)
         }
 
-        if (!this.cells[this.index].offsetParent.classList.contains(this.vGrid.vGridConfig.css.editCellWrite)) {
-          this.cells[this.index].offsetParent.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
+        if (!this.cells[this.index].parentNode.classList.contains(this.vGrid.vGridConfig.css.editCellWrite)) {
+          this.cells[this.index].parentNode.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
         }
 
         if (this.editMode) {
           if (this.readOnly === false) {
-            if (this.cells[this.index].offsetParent.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
-              this.cells[this.index].offsetParent.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
+            if (this.cells[this.index].parentNode.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
+              this.cells[this.index].parentNode.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
             }
             this.cells[this.index].removeAttribute("readonly");//if I dont do this, then they cant enter
             if (this.attributeType !== "image") {
@@ -418,10 +418,10 @@ export class VGridCellEdit {
               });
             }
           } else {
-            this.cells[this.index].offsetParent.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
+            this.cells[this.index].parentNode.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
           }
         } else {
-          this.cells[this.index].offsetParent.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
+          this.cells[this.index].parentNode.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
         }
       }
 
@@ -551,13 +551,13 @@ export class VGridCellEdit {
 
 
       //set css
-      if (!this.newTarget.offsetParent.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
-        this.newTarget.offsetParent.classList.add(this.vGrid.vGridConfig.css.editCell)
+      if (!this.newTarget.parentNode.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
+        this.newTarget.parentNode.classList.add(this.vGrid.vGridConfig.css.editCell)
       }
 
       //set css
-      if (!this.newTarget.offsetParent.classList.contains(this.vGrid.vGridConfig.css.editCellWrite)) {
-        this.newTarget.offsetParent.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
+      if (!this.newTarget.parentNode.classList.contains(this.vGrid.vGridConfig.css.editCellWrite)) {
+        this.newTarget.parentNode.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
       }
 
 
@@ -575,25 +575,18 @@ export class VGridCellEdit {
             }
           }
 
-          if (this.newTarget.offsetParent.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
-            this.newTarget.offsetParent.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
+          if (this.newTarget.parentNode.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
+            this.newTarget.parentNode.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
           }
           e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
 
         } else {
-          this.newTarget.offsetParent.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
-        }
-        if (this.attributeType === "checkbox") {
-          this.newTarget.disabled = false
+          this.newTarget.parentNode.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
         }
         //set edit mode
         this.editMode = true;
       } else {
-        if (this.attributeType === "checkbox") {
-          this.newTarget.disabled = true
-        }
-
-        this.newTarget.offsetParent.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
+        this.newTarget.parentNode.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
       }
 
 
@@ -602,15 +595,15 @@ export class VGridCellEdit {
       this.row = row;
       this.curElement = this.newTarget;
       this.oldValue = this.curElement.value;
-      this.cells = this.curElement.offsetParent.offsetParent.querySelectorAll("." + this.vGrid.vGridConfig.css.cellContent);
+      this.cells = this.curElement.parentNode.parentNode.querySelectorAll("." + this.vGrid.vGridConfig.css.cellContent);
 
 
       //fix focus scroll
-      if (this.curElement.offsetParent.offsetLeft > this.vGrid.vGridGenerator.htmlCache.content.clientWidth) {
-        this.vGrid.vGridGenerator.htmlCache.content.scrollLeft = this.curElement.offsetParent.offsetLeft;
+      if (this.curElement.parentNode.offsetLeft > this.vGrid.vGridGenerator.htmlCache.content.clientWidth) {
+        this.vGrid.vGridGenerator.htmlCache.content.scrollLeft = this.curElement.parentNode.offsetLeft;
       }
-      if (this.vGrid.vGridGenerator.htmlCache.content.scrollLeft > 0 && this.vGrid.vGridGenerator.htmlCache.content.clientWidth > this.curElement.offsetParent.offsetLeft) {
-        this.vGrid.vGridGenerator.htmlCache.content.scrollLeft = this.curElement.offsetParent.offsetLeft;
+      if (this.vGrid.vGridGenerator.htmlCache.content.scrollLeft > 0 && this.vGrid.vGridGenerator.htmlCache.content.clientWidth > this.curElement.parentNode.offsetLeft) {
+        this.vGrid.vGridGenerator.htmlCache.content.scrollLeft = this.curElement.parentNode.offsetLeft;
       }
 
 
@@ -636,7 +629,7 @@ export class VGridCellEdit {
 
 
 
-      // this.curElement.offsetParent.focus();
+      // this.curElement.parentNode.focus();
       this.curElement.focus();
       if (this.editMode) {
         this.elementKeyDown();

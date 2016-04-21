@@ -165,6 +165,11 @@ export class VGridObservables {
         if (this.vGrid.filterRowDisplaying) {
           this.vGrid.vGridCellEdit.setBackFocus();
         }
+        
+        //reset scroll to bottom next.
+        if(this.vGrid.scrollBottomNext === true){
+          this.vGrid.scrollBottomNext = false;
+        }
 
       }
     });
