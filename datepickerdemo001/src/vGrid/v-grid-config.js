@@ -206,6 +206,11 @@ export class VGridConfig {
     if (filterObj.length !== 0 || this.vGrid.collectionFiltered.length !== this.vGrid.collection.length) {
       //get sel keys
 
+      //if they filter we want to make sure the after cell edit happends
+      if(this.vGrid.vGridCellEdit.curElement && this.vGrid.vGridCellEdit.updated === false) {
+          this.vGrid.vGridCellEdit.updateActual(this.vGrid.vGridCellEdit.callbackObject());
+        }
+
       var curKey = -1;
       if (this.vGrid.currentRowEntity) {
         curKey = this.vGrid.currentRowEntity[this.vGrid.sgkey];
@@ -312,6 +317,10 @@ export class VGridConfig {
    ***************************************************************************************/
   onOrderBy(event, setheaders) {
 
+    //if they sort we want to make sure the after cell edit happends
+    if(this.vGrid.vGridCellEdit.curElement && this.vGrid.vGridCellEdit.updated === false) {
+        this.vGrid.vGridCellEdit.updateActual(this.vGrid.vGridCellEdit.callbackObject());
+      }
 
 
     //get clicked
