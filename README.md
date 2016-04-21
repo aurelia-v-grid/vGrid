@@ -284,11 +284,23 @@ this.myGrid.ctx.disableSortableColumns();
 this.myGrid.ctx.enableSortableColumns();
 
 
-//selection
+//selection (todo: write more about each one)
 this.myGrid.ctx.disableSelection();
 this.myGrid.ctx.setSingleSelection();
 this.myGrid.ctx.setMultiSelection();
-this.myGrid.ctx.selection -> a lot of functions here....
+this.myGrid.ctx.selection.setMode(option) false = single, true = multi, undefined = none
+this.myGrid.ctx.selection.isSelected(row)
+this.myGrid.ctx.selection.isSelectedMainCollection(row)
+this.myGrid.ctx.selection.select(rowSelect, addToSelection)
+this.myGrid.ctx.selection.selectMainCollection(rowSelect, addToSelection)
+this.myGrid.ctx.selection.selectRange(start, end)
+this.myGrid.ctx.selection.selectRangeMainCollection(start, end)
+this.myGrid.ctx.selection.reset()
+this.myGrid.ctx.selection.resetFilteredOnly()
+this.myGrid.ctx.selection.getSelectedRows()
+this.myGrid.ctx.selection.getSelectedRowsMainCollection()
+this.myGrid.ctx.selection.setSelectedRows(newRowsArray)
+this.myGrid.ctx.selection.setSelectedRowsMainCollection(newRowsArray)
 
 
 //footer/row/header height
@@ -296,6 +308,21 @@ this.myGrid.ctx.setFooterHeight(x)
 this.myGrid.ctx.setHeaderHeight(x)
 this.myGrid.ctx.setRowHeight(x);
 
+
+//redraw grid, if you have it inside a dialog thats display "none" then you will need to call this to fix the grid
+this.myGrid.ctx.redrawGrid()
+
+
+//not tested after all chnages Ive done
+this.myGrid.ctx.getColumns()
+this.myGrid.ctx.setColumns(paramObj)
+//you need to call this after setting new ones:
+this.myGrid.ctx.rebuildColumns();
+
+
+//call this before adding if you want grid to scroll to bottom after 1 is added
+//new is always added to bottom (will afdd option for active sorting/filter later)
+this.myGrid.ctx..scrollBottomNext
 
 ```
 

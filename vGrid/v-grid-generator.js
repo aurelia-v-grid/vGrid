@@ -1710,6 +1710,10 @@ export class VGridGenerator {
     this.vGridConfig.headerArray = paramObj.headerArray;
     this.vGridConfig.attributeArray = paramObj.attributeArray;
     this.vGridConfig.columnWidthArray = paramObj.columnWidthArray;
+    this.vGridConfig.filterArray = paramObj.filterArray;
+    this.vGridConfig.readOnlyArray = paramObj.readOnlyArray;
+    this.vGridConfig.colStyleArray = paramObj.colStyleArray;
+    this.vGridConfig.colTypeArray = paramObj.colTypeArray;
   };
 
 
@@ -1718,7 +1722,11 @@ export class VGridGenerator {
     return {
       "headerArray": this.vGridConfig.headerArray,
       "attributeArray": this.vGridConfig.attributeArray,
-      "columnWidthArray": this.vGridConfig.columnWidthArray
+      "columnWidthArray": this.vGridConfig.columnWidthArray,
+      "filterArray": this.vGridConfig.filterArray,
+      "readOnlyArray": this.vGridConfig.readOnlyArray,
+      "colStyleArray": this.vGridConfig.colStyleArray,
+      "colTypeArray": this.vGridConfig.colTypeArray
     }
   };
 
