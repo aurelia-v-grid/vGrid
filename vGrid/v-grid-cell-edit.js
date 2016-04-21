@@ -409,7 +409,7 @@ export class VGridCellEdit {
               this.cells[this.index].parentNode.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
             }
             this.cells[this.index].removeAttribute("readonly");//if I dont do this, then they cant enter
-            if (this.attributeType !== "image") {
+            if (this.attributeType !== "image" && this.vGrid.collectionFiltered[this.row]) {
               this.beforeCellEdit({
                 attribute: this.attribute,
                 value: this.curElement.value,
