@@ -328,7 +328,7 @@ this.myGrid.ctx..scrollBottomNext
 
 
 
-To use the dummy data generator:
+#####To use the dummy data generator:
 ```
 //import it
 import {dummyDataGenerator} from 'data/dummyDataGenerator'
@@ -348,5 +348,99 @@ constructor(element, dummyDataGenerator) {
     });
 
   }
+
+```
+
+##### Using aurelia toolkit/datepicker with grid
+
+```
+//install materilize toolkit
+jspm install aurelia-materialize-bridge
+
+//add the datepicker plugin
+.plugin('aurelia-materialize-bridge', bridge => bridge.useAll() );
+
+//add format handler & row-on-draw to v-grid element
+format-handler="myFormatHandler"
+row-on-draw="onRowDraw"
+
+//add the row event and handler functions
+
+onRowDraw (data, collectionData) {
+    if (data) {
+      var MyDate = new Date(data.date);
+      data.date = ('0' + MyDate.getDate()).slice(-2) + '.' + ('0' + (MyDate.getMonth()+1)).slice(-2) + '.' + MyDate.getFullYear();
+
+    }
+  }
+
+
+myFormatHandler(type, obj){
+  //adding the datepicker popup
+  if(type === "beforeEdit" && obj.attribute === "date"){
+          $(obj.element).pickadate({
+            container:document.querySelector(".page-host"),
+            format:"dd.mm.yyyy",
+            labelMonthNext: 'Next month',
+            labelMonthPrev: 'Previous month',
+            labelMonthSelect: 'Select a month',
+            labelYearSelect: 'Select a year',
+            monthsFull: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
+            monthsShort: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
+            weekdaysFull: [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ],
+            weekdaysShort: [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ],
+            weekdaysLetter: [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ],
+            today: 'Today',
+            clear: 'Clear',
+            close: 'Close'
+          });
+      }
+
+   //setting correct date back, I use isostring in my collection
+   if(type === "afterEdit" && obj.attribute === "date"){
+      var date = new Date(obj.oldValue);
+       if(obj.value.length === 10){
+         var newdate = obj.value.split(".");
+         date.setDate(newdate[0]);
+         date.setMonth(newdate[1]-1);
+         date.setYear(newdate[2]);
+         try{
+           obj.value = date.toISOString();
+         } catch(e){
+           obj.value = obj.oldValue
+         }
+       } else {
+         obj.value = obj.oldValue
+       }
+     }
+
+   //on filter
+   if(type === "onFilter"){
+     obj.forEach((x) => {
+       if(x.attribute === "date"){
+         //if date
+         if(x.value.length === 10){
+           //if it have full length I know I need to be sure I can convert it into date
+           var tempdate = new Date();
+           var newdate = x.value.split(".");
+           tempdate.setDate(newdate[0]);
+           tempdate.setMonth(newdate[1]-1);
+           tempdate.setYear(newdate[2]);
+           tempdate.setHours(0);
+           tempdate.setMinutes(0);
+           tempdate.setSeconds(0);
+           tempdate.setMilliseconds(0);
+           x.value = tempdate.toISOString();
+         } else {
+           x.value ="";
+         }
+       }
+     });
+   }
+
+
+  return obj;
+}
+
 
 ```

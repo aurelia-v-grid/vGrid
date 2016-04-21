@@ -529,7 +529,7 @@ export class VGridCellEdit {
           //then lets update last row for logics/colors etc
           this.updateLastRow(this.row);
         } else {
-          if (this.curElement !== this.newTarget && this.updated !== false) {
+          if (this.curElement !== this.newTarget && this.updated === false) {
             if (this.curElement) {
               this.updateActual(this.callbackObject());
             }
