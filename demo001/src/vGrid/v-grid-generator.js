@@ -874,10 +874,10 @@ export class VGridGenerator {
       }
 
       //we want to remove rows that is larger than colletion and visible within normal content box
-      if (currentRow >= this.vGridConfig.getCollectionLength() && currentRowTop >= this.htmlCache.content.clientHeight) {
+      if (currentRow >= this.vGridConfig.getCollectionLength() && (currentRowTop - this.vGridConfig.rowHeight) >= this.htmlCache.content.clientHeight) {
         //fix for when scrolling and removing rows that is larger then actuall length
         var row = this.htmlCache.rowsArray[i];
-        this.setRowTopValue([row], 0, currentRowTop - 5000);
+        this.setRowTopValue([row], 0, - (currentRowTop + (this.vGridConfig.rowHeight*50)));
         if (row.div.firstChild) {
           row.div.removeChild(row.div.firstChild);
         }
@@ -942,7 +942,7 @@ export class VGridGenerator {
             currentRow = (rowTop + (this.vGridConfig.rowHeight * this.getRowCacheLength())) / this.vGridConfig.rowHeight;
           }
           if (rowTop > ((this.vGridConfig.getCollectionLength() - 1) * this.vGridConfig.rowHeight) && rowTop > parseInt(this.htmlCache.content.style.height)) {
-            this.setRowTopValue([row], 0, -5000 + i);
+            this.setRowTopValue([row], 0, - ((this.vGridConfig.rowHeight*i) + (this.vGridConfig.rowHeight*50)));
           }
 
         } else {

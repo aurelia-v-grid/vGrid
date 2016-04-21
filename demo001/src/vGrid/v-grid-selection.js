@@ -190,7 +190,6 @@ export class VGridSelection {
         }
       });
     }
-    this.selectionMode = "none";
     this.lastRowSelected = -1;
     this.lastKeyKodeUsed = "none";
     this.selectedRows = 0;
@@ -204,6 +203,8 @@ export class VGridSelection {
         }
       });
     }
+    this.lastRowSelected = -1;
+    this.lastKeyKodeUsed = "none";
     this.selectedRows = this.getSelectedRowsMainCollection().length;
   };
 

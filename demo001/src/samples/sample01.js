@@ -488,7 +488,9 @@ export class sample01 {
     }
   }
 
-
+  report(){
+    this.myGrid.ctx.createReport()
+  }
 
 
 
