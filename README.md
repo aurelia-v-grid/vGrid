@@ -139,7 +139,11 @@ Default = undefined, string name of function callback when row gets drawn, here 
 Default = undefined, callback when user double click a row, returns row number of the collection you have set in config attribute, not the actual row in grid
 
 ###### "format-handler"
-Default = undefined, callback before edit, after edit and before filter, se bottom of readme for more info
+Default = undefined, callback before edit, after edit and before filter, ses bottom of readme for more info
+
+###### "header-input-click"
+Default = undefined, callback when clicked, ses bottom of readme for more info
+
 
 
 ---
@@ -354,6 +358,10 @@ constructor(element, dummyDataGenerator) {
 ##### Using aurelia toolkit/datepicker with grid
 
 22.04.2016, changed sample code, using doubleclick to open it was a better way of doing it, starting to get kinda messy this now...
+
+
+
+[Demo datepicker code](http://vegarringdal.github.io/vGrid/datepickerdemo001/)
 
 ```
 //install materilize toolkit
