@@ -353,7 +353,7 @@ constructor(element, dummyDataGenerator) {
 
 ##### Using aurelia toolkit/datepicker with grid
 
-22.04.2016, changed sample code, using doubleclick to open it was a better way of doing it
+22.04.2016, changed sample code, using doubleclick to open it was a better way of doing it, starting to get kinda messy this now...
 
 ```
 //install materilize toolkit
@@ -366,8 +366,12 @@ jspm install aurelia-materialize-bridge
 format-handler="myFormatHandler"
 row-on-draw="onRowDraw"
 row-on-dblclick = "dblClick"
+header-input-click = "headerClick"
 
 //add the row event and handler functions
+```
+
+```
 
 onRowDraw (data, collectionData) {
     if (data) {
@@ -376,7 +380,40 @@ onRowDraw (data, collectionData) {
 
     }
   }
+```
 
+```
+  
+headerClick(row, attribute, evt){
+  if(row >= 0 && attribute==="date") {
+    if (!window.myDatePickerDate) {
+      window.myDatePickerDate = $(evt.target).pickadate({
+        container: document.querySelector(".page-host"),
+        format: "dd.mm.yyyy",
+        labelMonthNext: 'Next month',
+        labelMonthPrev: 'Previous month',
+        labelMonthSelect: 'Select a month',
+        labelYearSelect: 'Select a year',
+        monthsFull: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        weekdaysFull: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        weekdaysLetter: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+        today: 'Today',
+        clear: 'Clear',
+        close: 'Close'
+      });
+    }
+  }
+
+  evt.target.onchange= function(e){
+    this.onkeyup({keyKode:9});
+  }
+}
+```
+
+
+```
 
 dblClick(row, attribute, evt){
     if(row >= 0 && attribute==="date"){
@@ -403,6 +440,10 @@ dblClick(row, attribute, evt){
       });
     }
   }
+```
+
+
+```
 
 myFormatHandler(type, obj){
 
