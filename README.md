@@ -353,7 +353,7 @@ constructor(element, dummyDataGenerator) {
 
 ##### Using aurelia toolkit/datepicker with grid
 
-This is just something Im testing, how good it will be Im not sure..
+22.04.2016, changed sample code, using doubleclick to open it was a better way of doing it
 
 ```
 //install materilize toolkit
@@ -365,6 +365,7 @@ jspm install aurelia-materialize-bridge
 //add format handler & row-on-draw to v-grid element
 format-handler="myFormatHandler"
 row-on-draw="onRowDraw"
+row-on-dblclick = "dblClick"
 
 //add the row event and handler functions
 
@@ -377,32 +378,33 @@ onRowDraw (data, collectionData) {
   }
 
 
-myFormatHandler(type, obj){
-  //adding the datepicker popup
-  if(type === "beforeEdit" && obj.attribute === "date"){
+dblClick(row, attribute, evt){
+    if(row >= 0 && attribute==="date"){
       if(window.myDatePicker) {
-        //remove old
         var x = document.getElementById(window.myDatePicker.context.id+"_root")
         x.parentNode.removeChild(x);
         window.myDatePicker.context.parentNode.removeChild(window.myDatePicker.context);
       }
-      window.myDatePicker = $(obj.element).pickadate({
-            container:document.querySelector(".page-host"),
-            format:"dd.mm.yyyy",
-            labelMonthNext: 'Next month',
-            labelMonthPrev: 'Previous month',
-            labelMonthSelect: 'Select a month',
-            labelYearSelect: 'Select a year',
-            monthsFull: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
-            monthsShort: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
-            weekdaysFull: [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ],
-            weekdaysShort: [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ],
-            weekdaysLetter: [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ],
-            today: 'Today',
-            clear: 'Clear',
-            close: 'Close'
-          });
-      }
+      window.myDatePicker = $(evt.target).pickadate({
+        container:document.querySelector(".page-host"),
+        format:"dd.mm.yyyy",
+        labelMonthNext: 'Next month',
+        labelMonthPrev: 'Previous month',
+        labelMonthSelect: 'Select a month',
+        labelYearSelect: 'Select a year',
+        monthsFull: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
+        monthsShort: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
+        weekdaysFull: [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ],
+        weekdaysShort: [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ],
+        weekdaysLetter: [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ],
+        today: 'Today',
+        clear: 'Clear',
+        close: 'Close'
+      });
+    }
+  }
+
+myFormatHandler(type, obj){
 
    //setting correct date back, I use isostring in my collection
    if(type === "afterEdit" && obj.attribute === "date"){

@@ -412,7 +412,7 @@ export class VGridConfig {
 
 
     let attribute = event.target.getAttribute(this.atts.dataAttribute);
-    let readonly = this.readOnlyArray.indexOf(attribute) ? false : true;
+    let readonly = this.readOnlyArray.indexOf(attribute) === -1 ? false : true;
 
     //set current row of out filtered row
     this.vGrid.filterRow = row;
