@@ -169,6 +169,7 @@ export class VGridConfig {
     this.eventOnDblClick = this.vGrid.element.getAttribute("row-on-dblclick");
     this.eventOnRowDraw = this.vGrid.element.getAttribute("row-on-draw");
     this.eventOnCellDraw = this.vGrid.element.getAttribute("cell-on-draw");
+    this.eventOnHeaderInputClick = this.vGrid.element.getAttribute("header-input-click");
 
 
     if (this.vGrid.element.getAttribute("header-filter-not-to")) {
@@ -401,7 +402,15 @@ export class VGridConfig {
   }
 
 
+  filterCellClick(event){
+    let attribute = event.target.getAttribute(this.atts.dataAttribute);
+    if (this.vGrid.$parent[this.eventOnHeaderInputClick]) {
+      //if user have added this then we call it so they can edit the row data before we display it
 
+      this.vGrid.$parent[this.eventOnHeaderInputClick](null, attribute, event);
+    }
+
+  }
 
 
   /***************************************************************************************
@@ -412,7 +421,7 @@ export class VGridConfig {
 
 
     let attribute = event.target.getAttribute(this.atts.dataAttribute);
-    let readonly = this.readOnlyArray.indexOf(attribute) ? false : true;
+    let readonly = this.readOnlyArray.indexOf(attribute) === -1 ? false : true;
 
     //set current row of out filtered row
     this.vGrid.filterRow = row;

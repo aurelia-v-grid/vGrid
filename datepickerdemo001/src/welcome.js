@@ -7,8 +7,8 @@ export class Welcome {
   firstName = 'John';
   lastName = 'Doe';
   previousValue = this.fullName;
-  myCurrentEntity = {}
-  gridContext = {}
+  myCurrentEntity = {};
+  gridContext = {};
   myCollection = [];
 
 
@@ -20,27 +20,62 @@ onRowDraw (data, collectionData) {
     }
   }
 
+  headerClick(row, attribute, evt){
+    if(row >= 0 && attribute==="date") {
+      if (!window.myDatePickerDate) {
+        window.myDatePickerDate = $(evt.target).pickadate({
+          container: document.querySelector(".page-host"),
+          format: "dd.mm.yyyy",
+          labelMonthNext: 'Next month',
+          labelMonthPrev: 'Previous month',
+          labelMonthSelect: 'Select a month',
+          labelYearSelect: 'Select a year',
+          monthsFull: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          weekdaysFull: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+          weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+          weekdaysLetter: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+          today: 'Today',
+          clear: 'Clear',
+          close: 'Close'
+        });
+      }
+    }
+
+    evt.target.onchange= function(e){
+      this.onkeyup({keyKode:9});
+    }
+  }
+  
+
+  dblClick(row, attribute, evt){
+    if(row >= 0 && attribute==="date"){
+      if(window.myDatePicker) {
+        var x = document.getElementById(window.myDatePicker.context.id+"_root")
+        x.parentNode.removeChild(x);
+
+      }
+      window.myDatePicker = $(evt.target).pickadate({
+        container:document.querySelector(".page-host"),
+        format:"dd.mm.yyyy",
+        labelMonthNext: 'Next month',
+        labelMonthPrev: 'Previous month',
+        labelMonthSelect: 'Select a month',
+        labelYearSelect: 'Select a year',
+        monthsFull: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
+        monthsShort: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
+        weekdaysFull: [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ],
+        weekdaysShort: [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ],
+        weekdaysLetter: [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ],
+        today: 'Today',
+        clear: 'Clear',
+        close: 'Close'
+      });
+    }
+  }
 
 
 myFormatHandler(type, obj){
-  if(type === "beforeEdit" && obj.attribute === "date"){
-          $(obj.element).pickadate({
-            container:document.querySelector(".page-host"),
-            format:"dd.mm.yyyy",
-            labelMonthNext: 'Next month',
-            labelMonthPrev: 'Previous month',
-            labelMonthSelect: 'Select a month',
-            labelYearSelect: 'Select a year',
-            monthsFull: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
-            monthsShort: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
-            weekdaysFull: [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ],
-            weekdaysShort: [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ],
-            weekdaysLetter: [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ],
-            today: 'Today',
-            clear: 'Clear',
-            close: 'Close'
-          });
-      }
 
 
    if(type === "afterEdit" && obj.attribute === "date"){

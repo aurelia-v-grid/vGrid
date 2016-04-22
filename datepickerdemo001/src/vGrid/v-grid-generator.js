@@ -814,11 +814,13 @@ export class VGridGenerator {
         cellInputElement[i].onchange = onChangeEventOnFilter;
         cellInputElement[i].onkeyup = onKeyUpEventOnFilter;
         cellInputElement[i].onfocus = onFocus
+        cellInputElement[i].onclick = this.vGridConfig.filterCellClick.bind(this.vGridConfig);
       }
     } else {
       for (var i = 0; i < cellInputElement.length; i++) {
         cellInputElement[i].onkeyup = onChangeEventOnFilter;
-        cellInputElement[i].onfocus = onFocus
+        cellInputElement[i].onfocus = onFocus;
+        cellInputElement[i].onclick = this.vGridConfig.filterCellClick.bind(this.vGridConfig);
       }
     }
   };
