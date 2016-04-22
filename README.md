@@ -353,6 +353,8 @@ constructor(element, dummyDataGenerator) {
 
 ##### Using aurelia toolkit/datepicker with grid
 
+This is just something Im testing, how good it will be Im not sure..
+
 ```
 //install materilize toolkit
 jspm install aurelia-materialize-bridge
@@ -378,7 +380,13 @@ onRowDraw (data, collectionData) {
 myFormatHandler(type, obj){
   //adding the datepicker popup
   if(type === "beforeEdit" && obj.attribute === "date"){
-          $(obj.element).pickadate({
+      if(window.myDatePicker) {
+        //remove old
+        var x = document.getElementById(window.myDatePicker.context.id+"_root")
+        x.parentNode.removeChild(x);
+        window.myDatePicker.context.parentNode.removeChild(window.myDatePicker.context);
+      }
+      window.myDatePicker = $(obj.element).pickadate({
             container:document.querySelector(".page-host"),
             format:"dd.mm.yyyy",
             labelMonthNext: 'Next month',
