@@ -169,6 +169,7 @@ export class VGridConfig {
     this.eventOnDblClick = this.vGrid.element.getAttribute("row-on-dblclick");
     this.eventOnRowDraw = this.vGrid.element.getAttribute("row-on-draw");
     this.eventOnCellDraw = this.vGrid.element.getAttribute("cell-on-draw");
+    this.eventOnHeaderInputClick = this.vGrid.element.getAttribute("header-input-click");
 
 
     if (this.vGrid.element.getAttribute("header-filter-not-to")) {
@@ -205,6 +206,11 @@ export class VGridConfig {
 
     if (filterObj.length !== 0 || this.vGrid.collectionFiltered.length !== this.vGrid.collection.length) {
       //get sel keys
+
+      //if they filter we want to make sure the after cell edit happends
+      if(this.vGrid.vGridCellEdit.curElement && this.vGrid.vGridCellEdit.updated === false) {
+          this.vGrid.vGridCellEdit.updateActual(this.vGrid.vGridCellEdit.callbackObject());
+        }
 
       var curKey = -1;
       if (this.vGrid.currentRowEntity) {
@@ -247,7 +253,7 @@ export class VGridConfig {
       //update grid
       this.vGrid.vGridGenerator.collectionChange(true);
       if (this.vGrid.filterRowDisplaying) {
-        this.vGrid.vGridCellEdit.setBackFocus()
+        this.vGrid.vGridCellEdit.setBackFocus(true)
       }
 
     }
@@ -312,6 +318,10 @@ export class VGridConfig {
    ***************************************************************************************/
   onOrderBy(event, setheaders) {
 
+    //if they sort we want to make sure the after cell edit happends
+    if(this.vGrid.vGridCellEdit.curElement && this.vGrid.vGridCellEdit.updated === false) {
+        this.vGrid.vGridCellEdit.updateActual(this.vGrid.vGridCellEdit.callbackObject());
+      }
 
 
     //get clicked
@@ -392,7 +402,15 @@ export class VGridConfig {
   }
 
 
+  filterCellClick(event){
+    let attribute = event.target.getAttribute(this.atts.dataAttribute);
+    if (this.vGrid.$parent[this.eventOnHeaderInputClick]) {
+      //if user have added this then we call it so they can edit the row data before we display it
 
+      this.vGrid.$parent[this.eventOnHeaderInputClick](null, attribute, event);
+    }
+
+  }
 
 
   /***************************************************************************************
@@ -403,7 +421,7 @@ export class VGridConfig {
 
 
     let attribute = event.target.getAttribute(this.atts.dataAttribute);
-    let readonly = this.readOnlyArray.indexOf(attribute) ? false : true;
+    let readonly = this.readOnlyArray.indexOf(attribute) === -1 ? false : true;
 
     //set current row of out filtered row
     this.vGrid.filterRow = row;

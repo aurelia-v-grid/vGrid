@@ -814,11 +814,13 @@ export class VGridGenerator {
         cellInputElement[i].onchange = onChangeEventOnFilter;
         cellInputElement[i].onkeyup = onKeyUpEventOnFilter;
         cellInputElement[i].onfocus = onFocus
+        cellInputElement[i].onclick = this.vGridConfig.filterCellClick.bind(this.vGridConfig);
       }
     } else {
       for (var i = 0; i < cellInputElement.length; i++) {
         cellInputElement[i].onkeyup = onChangeEventOnFilter;
-        cellInputElement[i].onfocus = onFocus
+        cellInputElement[i].onfocus = onFocus;
+        cellInputElement[i].onclick = this.vGridConfig.filterCellClick.bind(this.vGridConfig);
       }
     }
   };
@@ -1480,7 +1482,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   setLargeScrollLimit() {
     if (!this.vGridConfig.largeScrollLimit) {
-      this.vGridConfig.largeScrollLimit = this.contentHeight * 3.3
+      this.vGridConfig.largeScrollLimit = this.contentHeight * 1,5
       ;
     }
   };
@@ -1710,6 +1712,10 @@ export class VGridGenerator {
     this.vGridConfig.headerArray = paramObj.headerArray;
     this.vGridConfig.attributeArray = paramObj.attributeArray;
     this.vGridConfig.columnWidthArray = paramObj.columnWidthArray;
+    this.vGridConfig.filterArray = paramObj.filterArray;
+    this.vGridConfig.readOnlyArray = paramObj.readOnlyArray;
+    this.vGridConfig.colStyleArray = paramObj.colStyleArray;
+    this.vGridConfig.colTypeArray = paramObj.colTypeArray;
   };
 
 
@@ -1718,7 +1724,11 @@ export class VGridGenerator {
     return {
       "headerArray": this.vGridConfig.headerArray,
       "attributeArray": this.vGridConfig.attributeArray,
-      "columnWidthArray": this.vGridConfig.columnWidthArray
+      "columnWidthArray": this.vGridConfig.columnWidthArray,
+      "filterArray": this.vGridConfig.filterArray,
+      "readOnlyArray": this.vGridConfig.readOnlyArray,
+      "colStyleArray": this.vGridConfig.colStyleArray,
+      "colTypeArray": this.vGridConfig.colTypeArray
     }
   };
 
