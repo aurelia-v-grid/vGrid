@@ -16,7 +16,7 @@ onRowDraw (data, collectionData) {
     if (data) {
       var MyDate = new Date(data.date);
       data.date = ('0' + MyDate.getDate()).slice(-2) + '.' + ('0' + (MyDate.getMonth()+1)).slice(-2) + '.' + MyDate.getFullYear();
-
+      data.number = Math.round(data.number).toFixed(2);
     }
   }
 
@@ -71,6 +71,11 @@ onRowDraw (data, collectionData) {
         clear: 'Clear',
         close: 'Close'
       });
+      //debugger;
+      // var x = document.getElementById(window.myDatePicker.context.id+"_root").querySelectorAll(".picker__frame")[0];
+      // x.style.margin = "0 0"
+      // x.style.left = evt.clientX +"px";
+      // x.style.top = evt.clientY +"px";
     }
   }
 
@@ -94,6 +99,10 @@ myFormatHandler(type, obj){
          obj.value = obj.oldValue
        }
      }
+
+  if(type === "beforeEdit" && obj.attribute === "number"){
+    obj.newValue = obj.oldValue;
+  }
 
 
    if(type === "onFilter"){
