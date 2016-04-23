@@ -1482,7 +1482,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   setLargeScrollLimit() {
     if (!this.vGridConfig.largeScrollLimit) {
-      this.vGridConfig.largeScrollLimit = this.contentHeight * 3.3
+      this.vGridConfig.largeScrollLimit = this.contentHeight * 1,5
       ;
     }
   };

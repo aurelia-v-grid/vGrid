@@ -253,7 +253,7 @@ export class VGridConfig {
       //update grid
       this.vGrid.vGridGenerator.collectionChange(true);
       if (this.vGrid.filterRowDisplaying) {
-        this.vGrid.vGridCellEdit.setBackFocus()
+        this.vGrid.vGridCellEdit.setBackFocus(true)
       }
 
     }

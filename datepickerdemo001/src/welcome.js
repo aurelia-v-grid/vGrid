@@ -144,7 +144,7 @@ myFormatHandler(type, obj){
 
     //this if just for giving us some data
     this.dummyDataGenerator = dummyDataGenerator;
-    this.dummyDataGenerator.generateData(1000, (data) => {
+    this.dummyDataGenerator.generateData(100000, (data) => {
       this.myCollection = data;
       this.collectionLength = this.myCollection.length;
     });

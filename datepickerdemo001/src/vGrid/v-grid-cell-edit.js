@@ -389,7 +389,7 @@ export class VGridCellEdit {
    * sets back focus afetr scroll
    ***************************************************************************************/
   setBackFocus(filter) {
-    this.filter = true;
+    this.filter = filter;
     if (this.curElement) {
       var rowNo = this.vGrid.filterRow;
       var rowheight = this.vGrid.vGridConfig.rowHeight;
