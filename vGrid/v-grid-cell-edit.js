@@ -12,6 +12,7 @@ export class VGridCellEdit {
   last = -1;
   editMode = false;
   update = true;
+  filter = false; //if filter run is might be same element, so wee need to run the before edit
 
   constructor(vGrid) {
     this.vGrid = vGrid;
@@ -387,7 +388,8 @@ export class VGridCellEdit {
   /***************************************************************************************
    * sets back focus afetr scroll
    ***************************************************************************************/
-  setBackFocus() {
+  setBackFocus(filter) {
+    this.filter = filter;
     if (this.curElement) {
       var rowNo = this.vGrid.filterRow;
       var rowheight = this.vGrid.vGridConfig.rowHeight;
@@ -417,6 +419,16 @@ export class VGridCellEdit {
                 element: this.curElement
               });
             }
+            if(this.filter){
+              this.filter = false;
+              this.beforeCellEdit({
+                attribute: this.attribute,
+                value: this.curElement.value,
+                oldValue: this.vGrid.collectionFiltered[rowNo][this.attribute],
+                element: this.curElement
+              });
+            }
+
           } else {
             this.cells[this.index].parentNode.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
           }
@@ -453,7 +465,7 @@ export class VGridCellEdit {
    ***************************************************************************************/
   updateBeforeNext(obj) {
 
-    if (this.attributeType !== "image" && this.editMode) {
+    if (this.attributeType !== "image" && this.editMode && !this.updated) {
       obj = this.formatHandler("afterEdit", obj);
       this.vGrid.collectionFiltered[this.row][obj.attribute] = obj.value;
     }
