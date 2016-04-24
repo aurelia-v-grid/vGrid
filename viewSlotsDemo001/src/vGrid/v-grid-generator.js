@@ -887,7 +887,7 @@ export class VGridGenerator {
         // if (row.div.firstChild) {
         //   row.div.removeChild(row.div.firstChild);
         // }
-        
+
         currentRowTop = currentRowTop + this.vGridConfig.rowHeight;
       };
 
@@ -1548,7 +1548,6 @@ export class VGridGenerator {
 
     var rows = this.htmlCache.rowsArray;
     for(var i = 0; i < rows.length; i++){
-
       var viewFactory =  this.vGrid.viewCompiler.compile('<template>'+this.getRowTemplate(this.vGridConfig.attributeArray)+'</template>', this.vGrid.resources);
       var view = viewFactory.create(this.vGrid.container);
       var bindingContext = {}
@@ -1567,6 +1566,8 @@ export class VGridGenerator {
     for(var i = 0; i < rows.length; i++){
       rows[i].viewSlot.unbind()
       rows[i].viewSlot.detached();
+      rows[i].viewSlot.removeAll()
+      rows[i].viewSlot = null;
       rows[i].div.innerHTML = ""
       var viewFactory =  this.vGrid.viewCompiler.compile('<template>'+this.getRowTemplate(this.vGridConfig.attributeArray)+'</template>', this.vGrid.resources);
       var view = viewFactory.create(this.vGrid.container);
@@ -1722,6 +1723,8 @@ export class VGridGenerator {
     if (scrollBottom) {
       this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.rowHeight
     }
+
+    this.htmlCache.scrollBody.style.height = this.scrollBodyHeight-1 + "px";
 
 
   };

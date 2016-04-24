@@ -1,3 +1,5 @@
+import {bindable} from 'aurelia-framework';
+
 /*****************************************************************************************************************
  *    VGridConfig
  *    This generates the config used by vGridgenerator, other classes also calls this to get the information
@@ -57,6 +59,9 @@ export class VGridConfig {
     dataAttributeFilter: "v-grid-data-attribute-filter"
   };
 
+  bind(){
+    debugger;
+  }
 
   constructor(vGrid) {
     this.vGrid = vGrid;
@@ -114,6 +119,7 @@ export class VGridConfig {
       //this gets called when its building row
       this.onRowMarkupCreate = () => {
         return this.rowData.innerHTML;
+        //return this.vGrid.gridContext.rowViewFactory;
       };
 
       this.attributeArray = this.vGrid.element.getAttribute("attibutes-used").split(",");

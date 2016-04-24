@@ -18,9 +18,10 @@ import {VGridSelection} from './v-grid-selection';
 
 
 
+
 @noView
-@processContent(true)
-@customAttribute("config")
+@processContent(false)
+//@customAttribute("config")
 export class VGrid {
   static inject = [Element, ObserverLocator, VGridFilter, ViewCompiler,ViewSlot,Container,ViewResources];
   @bindable gridContext;
@@ -29,7 +30,12 @@ export class VGrid {
 
 
 
+
+
   constructor(element, observerLocator, vGridFilter,viewCompiler,viewSlot,container,viewResources) {
+
+
+
 
     this.vGridFilter = vGridFilter; //helper for filtering the cloned collection
     this.vGridSort = new VGridSort(); //helper for sorting the columns
@@ -51,6 +57,7 @@ export class VGrid {
     this.viewSlot = viewSlot;
     this.container = container;
     this.viewResources = viewResources;
+
 
   }
 
@@ -77,6 +84,7 @@ export class VGrid {
    * when view is bounded
    ***************************************************************************************/
   bind(parent) {
+
 
     //parent
     this.$parent = parent;
@@ -107,7 +115,7 @@ export class VGrid {
 
       //clone collection and add key index, so we know it.
       this.collectionFiltered = this.collection.slice(0);
-
+      this.vGridConfig = new VGridConfig(this);
       //resets the keys
       this.resetKeys();
     }
@@ -123,7 +131,7 @@ export class VGrid {
    ***************************************************************************************/
   attached() {
 
-    this.vGridConfig = new VGridConfig(this);
+    //this.vGridConfig = new VGridConfig(this);
     this.vGridObservables = new VGridObservables(this);
 
     //set observables

@@ -13,8 +13,10 @@ export class sample {
   onRowDraw (data) {
     if (data) {
 
-        //data.backgroundcolor = data.color;
-        //data.avatarLetter = data.name.charAt(0);
+      data.backgroundcolor = data.color;
+       // data.avatarLetter = data.name.charAt(0);
+      data.avatarLetter = data.name.charAt(0);
+
     }
   }
 
