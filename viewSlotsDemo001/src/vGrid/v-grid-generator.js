@@ -1,4 +1,5 @@
 import {ViewSlot} from 'aurelia-framework';
+
 /*****************************************************************************************************************
  *    vGridGenerator
  *    This generates all html and handles the scrolling, row clicks etc
@@ -68,7 +69,7 @@ export class VGridGenerator {
       var row = this.htmlCache.rowsArray[i];
       if (clearAllRows) {
         if(row.viewSlot){
-          row.viewSlot.bind({});
+          row.viewSlot.bind({ctx:this})
         }
 
       }
@@ -141,7 +142,7 @@ export class VGridGenerator {
         var row = this.htmlCache.rowsArray[i];
         if (clearRow) {
           if(row.viewSlot){
-            row.viewSlot.bind({});
+            row.viewSlot.bind({ctx:this})
           }
         }
         this.insertRowMarkup(currentRow, row, true, true);
@@ -201,43 +202,27 @@ export class VGridGenerator {
     } else {
       //todo: check of option is set and callback instead of creating it.
       if (this.vGridConfig.onRowMarkupCreate) {
+        for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
+          if(this.vGridInterpolate.attributes.indexOf(this.vGridConfig.attributeArray[i]) === -1){
+            this.vGridInterpolate.attributes.push(this.vGridConfig.attributeArray[i]);
+          }
+        }
         rowTemplate = this.vGridConfig.onRowMarkupCreate(this.vGridConfig.attributeArray);
       } else {
         for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
-          if (this.vGridConfig.colTypeArray[i] === "image") {
-            rowTemplate = rowTemplate +
-              `<div><img class="${this.vGridConfig.css.cellContent}" tabindex="0" style="${this.vGridConfig.colStyleArray[i]}" ${this.vGridConfig.atts.dataAttribute}="${this.vGridConfig.attributeArray[i]}" src="{{${this.vGridConfig.attributeArray[i]}}}" ></div>`;
-
-          } else {
-            rowTemplate = rowTemplate +
-              `<div class="${this.vGridConfig.css.rowCell} ${this.vGridConfig.css.rowColumn + i} ${this.vGridConfig.css.gridColumn + i}" style="width:${this.vGridConfig.columnWidthArray[i]}px"><input class="${this.vGridConfig.css.cellContent}"  type="text" readonly="true" style="${this.vGridConfig.colStyleArray[i]}" ${this.vGridConfig.atts.dataAttribute}="${this.vGridConfig.attributeArray[i]}" value=`+'${'+this.vGridConfig.attributeArray[i]+'} ></input></div>';
-          }
+              var cellClasses = `${this.vGridConfig.css.rowCell} ${this.vGridConfig.css.rowColumn + i} ${this.vGridConfig.css.gridColumn + i}`
+              var cellStyle = `width:${this.vGridConfig.columnWidthArray[i]}px`
+              if(this.vGridInterpolate.attributes.indexOf(this.vGridConfig.attributeArray[i]) === -1){
+                this.vGridInterpolate.attributes.push(this.vGridConfig.attributeArray[i]);
+              }
+              rowTemplate = rowTemplate +
+              `<v-grid-cell class="${cellClasses}" style="${cellStyle}" col-no=${i}></v-grid-cell>`;
         }
       }
     }
     return rowTemplate;
   };
 
-
-//check if user want to override this TODO: test what this will break
-  // if (!this.vGridConfig.columnWidthArrayOverride) {
-  //   var i;
-  //   for (i = 0; i < tempColumns.children.length; i++) {
-  //     tempColumns.children[i].style.height = "100%";
-  //     //setting lineheight so it stays in the middle
-  //     tempColumns.children[i].style["line-height"] = (this.vGridConfig.rowHeight - 2) + "px";
-  //
-  //     tempColumns.children[i].style.width = this.vGridConfig.columnWidthArray[i] + "px";
-  //     tempColumns.children[i].classList.add(this.vGridConfig.css.rowCell);
-  //     tempColumns.children[i].classList.add(this.vGridConfig.css.rowColumn + i);
-  //     tempColumns.children[i].classList.add(this.vGridConfig.css.gridColumn + i);
-  //     if (this.vGridConfig.lockedColumns > i) {
-  //       tempColumns.children[i].style.left = this.scrollVars.lastScrollLeft + "px";
-  //       tempColumns.children[i].style.zIndex = this.internalDragDropCount;
-  //       tempColumns.children[i].style.position = "relative";
-  //     }
-  //   }
-  //}
 
 
   /****************************************************************************************************************************
@@ -246,7 +231,6 @@ export class VGridGenerator {
   cacheRowTemplate(template) {
     this.htmlCache.rowTemplate = null;
     var stringTemplate = template || this.getRowTemplate();
-    this.vGridInterpolate.parse(stringTemplate);
     this.htmlCache.rowTemplate = stringTemplate;
   };
 
@@ -316,27 +300,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   createRowMarkup(entity, attributeNames) {
     var tempColumns = document.createElement("DIV");
-    tempColumns.innerHTML = this.getRowTemplate(attributeNames)//this.vGridInterpolate.render(this.getRowTemplate(attributeNames), entity); //, attributeNames);
-//
-    //check if user want to override this TODO: test what this will break
-    // if (!this.vGridConfig.columnWidthArrayOverride) {
-    //   var i;
-    //   for (i = 0; i < tempColumns.children.length; i++) {
-    //     tempColumns.children[i].style.height = "100%";
-    //     //setting lineheight so it stays in the middle
-    //     tempColumns.children[i].style["line-height"] = (this.vGridConfig.rowHeight - 2) + "px";
-    //
-    //     tempColumns.children[i].style.width = this.vGridConfig.columnWidthArray[i] + "px";
-    //     tempColumns.children[i].classList.add(this.vGridConfig.css.rowCell);
-    //     tempColumns.children[i].classList.add(this.vGridConfig.css.rowColumn + i);
-    //     tempColumns.children[i].classList.add(this.vGridConfig.css.gridColumn + i);
-    //     if (this.vGridConfig.lockedColumns > i) {
-    //       tempColumns.children[i].style.left = this.scrollVars.lastScrollLeft + "px";
-    //       tempColumns.children[i].style.zIndex = this.internalDragDropCount;
-    //       tempColumns.children[i].style.position = "relative";
-    //     }
-    //   }
-    //}
+    tempColumns.innerHTML = this.getRowTemplate(attributeNames)
     return tempColumns.innerHTML;
   };
 
@@ -636,15 +600,17 @@ export class VGridGenerator {
           row.div.innerHTML = ""
         }
         if(entity !== "" && row.viewSlot === null) {
+          entity.ctx = this;
           var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.getRowTemplate(this.vGridConfig.attributeArray) + '</template>', this.vGrid.resources);
           var view = viewFactory.create(this.vGrid.container);
           row.viewSlot = new ViewSlot(row.div, true);
           row.viewSlot.add(view);
-          row.viewSlot.bind(entity);
+          row.viewSlot.bind(entity)
           row.viewSlot.attached();
         }
         if(entity !== "" && row.viewSlot !== null) {
-          row.viewSlot.bind(entity);
+          entity.ctx = this;
+          row.viewSlot.bind(entity)
         }
         //create markup
         // var innerHtml = "";
@@ -1550,10 +1516,10 @@ export class VGridGenerator {
     for(var i = 0; i < rows.length; i++){
       var viewFactory =  this.vGrid.viewCompiler.compile('<template>'+this.getRowTemplate(this.vGridConfig.attributeArray)+'</template>', this.vGrid.resources);
       var view = viewFactory.create(this.vGrid.container);
-      var bindingContext = {}
+      var bindingContext = {ctx:this};
       rows[i].viewSlot = new ViewSlot(rows[i].div, true);
       rows[i].viewSlot.add(view);
-      rows[i].viewSlot.bind(bindingContext);
+      rows[i].viewSlot.bind(bindingContext)
       rows[i].viewSlot.attached();
 
     }
@@ -1571,10 +1537,10 @@ export class VGridGenerator {
       rows[i].div.innerHTML = ""
       var viewFactory =  this.vGrid.viewCompiler.compile('<template>'+this.getRowTemplate(this.vGridConfig.attributeArray)+'</template>', this.vGrid.resources);
       var view = viewFactory.create(this.vGrid.container);
-      var bindingContext = {}
+      var bindingContext = {ctx:this};
       rows[i].viewSlot = new ViewSlot(rows[i].div, true);
       rows[i].viewSlot.add(view);
-      rows[i].viewSlot.bind(bindingContext);
+      rows[i].viewSlot.bind(bindingContext)
       rows[i].viewSlot.attached();
 
     }

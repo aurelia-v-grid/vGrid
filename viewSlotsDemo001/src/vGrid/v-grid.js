@@ -21,7 +21,6 @@ import {VGridSelection} from './v-grid-selection';
 
 @noView
 @processContent(false)
-//@customAttribute("config")
 export class VGrid {
   static inject = [Element, ObserverLocator, VGridFilter, ViewCompiler,ViewSlot,Container,ViewResources];
   @bindable gridContext;
@@ -106,7 +105,6 @@ export class VGrid {
         if (this.currentEntity === undefined) {
           console.warn("currentEntity not set/binded in config attribute")
         }
-
         if (this.collection === undefined) {
           console.warn("collection not set/binded in config attribute")
         }

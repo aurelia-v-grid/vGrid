@@ -1,7 +1,8 @@
 <template>
-  <require from="vGrid/v-grid.css"></require>
+
   <require from="app.css"></require>
-  <require from="vGrid/v-grid"></require>
+
+
 
   <div class="myContainer">
 
@@ -41,7 +42,7 @@
           grid-context.bind=myGrid>
           <v-grid-row>
             <v-grid-col col-width="160" attribute="index" header="Index" default-filter=">=" read-only="true"></v-grid-col>
-            <v-grid-col col-width="160" attribute="name" header="name" default-filter="*"></v-grid-col>
+            <v-grid-col col-width="100" attribute="name" header="name" default-filter="*"></v-grid-col>
             <v-grid-col col-width="160" attribute="country" header="Country" default-filter="*"></v-grid-col>
             <v-grid-col col-width="160" attribute="number" header="Number" default-filter=">="></v-grid-col>
             <v-grid-col col-width="180" attribute="date" header="date" default-filter=">="></v-grid-col>

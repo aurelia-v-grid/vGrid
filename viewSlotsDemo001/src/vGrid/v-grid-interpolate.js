@@ -8,21 +8,15 @@ export class VGridInterpolate {
   constructor() {
   }
   attributes = [];
-  parse(string) {
-    this.attributes = [];
-    string.replace(/{([^{}]*)}/g, (a, b) => {
 
-      this.attributes.push(b);
-    });
-  }
-  interpolate(str) {
-    return function interpolate(o) {
-      return str.replace(/{{([^{}]*)}}/g, function (a, b) {
-        var r = o[b];
-        return r;
-      });
-    }
-  }
+  // interpolate(str) {
+  //   return function interpolate(o) {
+  //     return str.replace(/{{([^{}]*)}}/g, function (a, b) {
+  //       var r = o[b];
+  //       return r;
+  //     });
+  //   }
+  // }
   getNewObject(obj){
     if(obj){
     var x = {};
