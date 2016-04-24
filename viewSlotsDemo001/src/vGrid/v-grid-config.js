@@ -187,6 +187,8 @@ export class VGridConfig {
         this.doNotAddFilterTo = [];
       }
     }
+    
+
 
     if (this.vGrid.element.getAttribute("sort-not-on-header")) {
       this.sortNotOnHeader = this.vGrid.element.getAttribute("sort-not-on-header").split(",")

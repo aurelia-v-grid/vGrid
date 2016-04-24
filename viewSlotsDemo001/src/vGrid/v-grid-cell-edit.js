@@ -13,6 +13,7 @@ export class VGridCellEdit {
   editMode = false;
   update = true;
   filter = false; //if filter run is might be same element, so wee need to run the before edit
+  scrollChecked = false;
 
   constructor(vGrid) {
     this.vGrid = vGrid;
@@ -381,6 +382,14 @@ export class VGridCellEdit {
     if (this.updated === false) {
       this.updateActual(this.callbackObject());
     }
+    if(this.scrollChecked === false) {
+      this.scrollChecked === true
+      if(this.curElement){
+        if (this.curElement.parentNode.classList.contains(this.vGrid.vGridConfig.css.editCellFocus) || this.curElement.parentNode.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
+          this.removeEditCssClasses(this.curElement);
+        }
+      }
+    }
   }
 
 
@@ -390,6 +399,7 @@ export class VGridCellEdit {
    ***************************************************************************************/
   setBackFocus(filter) {
     this.filter = filter;
+    this.scrollChecked = false;
     if (this.curElement) {
       var rowNo = this.vGrid.filterRow;
       var rowheight = this.vGrid.vGridConfig.rowHeight;
@@ -525,7 +535,7 @@ export class VGridCellEdit {
       }
     }
 
-
+    this.scrollChecked = false;
 
     if (this.newTarget.classList.contains(this.vGrid.vGridConfig.css.cellContent)) {
 

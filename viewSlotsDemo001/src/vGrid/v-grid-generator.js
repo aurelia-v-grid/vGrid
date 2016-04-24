@@ -612,6 +612,9 @@ export class VGridGenerator {
           entity.ctx = this;
           row.viewSlot.bind(entity)
         }
+    
+    
+        
         //create markup
         // var innerHtml = "";
         // if (entity) {

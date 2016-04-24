@@ -36,6 +36,11 @@ export class VGridCell {
 
 
   attached(){
+
+     //if(this.element.classlist.contains(this.ctx.vGridConfig)){
+
+    // }
+
      if(this.ctx.vGridConfig.colTypeArray[this.colNo] === "image"){
        this.cellContent = document.createElement("img");
      } else {
