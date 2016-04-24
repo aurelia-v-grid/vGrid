@@ -148,7 +148,7 @@ export class sample01 {
 
     //this if just for giving us some data
     this.dummyDataGenerator = dummyDataGenerator;
-    this.dummyDataGenerator.generateData(100, (data) => {
+    this.dummyDataGenerator.generateData(10000, (data) => {
       this.myCollection = data;
       this.collectionLength = this.myCollection.length;
     });
