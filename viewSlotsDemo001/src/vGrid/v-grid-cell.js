@@ -2,7 +2,7 @@ import {noView, customElement, processContent, bindable} from 'aurelia-framework
 
 @noView
 @customElement('v-grid-cell')
-//@processContent(false)
+@processContent(false)
 export class VGridCell {
    static inject = [Element];
   @bindable colNo;
@@ -46,12 +46,22 @@ export class VGridCell {
      }
      if(this.ctx.vGridConfig.colTypeArray[this.colNo] === "checkbox"){
        this.cellContent.type = "checkbox";
-       this.cellContent.disabled =true;
+       this.cellContent.onclick = function(e){
+         if(!this.ctx.vGrid.vGridCellEdit.editMode){
+           return false;
+         }
+
+       }.bind(this)
      }
 
      this.cellContent.classList.add(this.ctx.vGridConfig.css.cellContent);
      this.cellContent.setAttribute(this.ctx.vGridConfig.atts.dataAttribute, this.ctx.vGridConfig.attributeArray[this.colNo]);
      this.cellContent.setAttribute("style", this.ctx.vGridConfig.colStyleArray[this.colNo]);
+     this.cellContent.style.opacity = 1; //so materilize dont mess up
+    this.cellContent.style.border = 0;
+    this.cellContent.style.transition = "0ms";
+    this.cellContent.setAttribute("tabindex","0")
+ 
      if(this.bindingContext){
          this.setValue(this.bindingContext[this.ctx.vGridConfig.attributeArray[this.colNo]])
      }

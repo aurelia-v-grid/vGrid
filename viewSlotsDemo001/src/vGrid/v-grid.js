@@ -19,7 +19,7 @@ import {VGridSelection} from './v-grid-selection';
 
 
 
-@noView
+//@noView
 @processContent(false)
 export class VGrid {
   static inject = [Element, ObserverLocator, VGridFilter, ViewCompiler,ViewSlot,Container,ViewResources];

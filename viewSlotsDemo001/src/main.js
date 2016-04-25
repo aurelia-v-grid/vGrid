@@ -5,7 +5,8 @@ export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
-    .globalResources('vGrid/v-grid-cell', 'vGrid/v-grid.js')
+    .globalResources()
+    .plugin("vGrid/plugin");
 
 
   aurelia.start().then(a => a.setRoot());

@@ -76,7 +76,7 @@ export class VGridCellEdit {
     element.setAttribute("readonly", "false");
 
     if(this.attributeType="checkbox"){
-      element.disabled = true;
+     // element.disabled = true;
     }
 
     let elementX;
@@ -426,6 +426,8 @@ export class VGridCellEdit {
               this.cells[this.index].parentNode.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
             }
             this.cells[this.index].removeAttribute("readonly");//if I dont do this, then they cant enter
+            //this.cells[this.index].removeAttribute("disabled")
+
 
             if (this.attributeType !== "image" && this.vGrid.collectionFiltered[this.row]) {
               this.beforeCellEdit({
@@ -585,13 +587,14 @@ export class VGridCellEdit {
             }
           }
         }
+
       }
 
       //if image set focus to main cell/column
       this.attribute = this.newTarget.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
       this.index = this.vGrid.vGridConfig.attributeArray.indexOf(this.attribute);
       this.attributeType = this.vGrid.vGridConfig.colTypeArray[this.index];
-      this.newTarget.setAttribute("tabindex", 0);
+      this.newTarget.setAttribute("tabindex", "0");
 
 
       //get som vars we need
@@ -629,7 +632,7 @@ export class VGridCellEdit {
             this.newTarget.parentNode.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
           }
           e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
-          this.newTarget.disabled =false;
+         // this.newTarget.disabled =false;
 
         } else {
           this.newTarget.parentNode.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
@@ -682,6 +685,9 @@ export class VGridCellEdit {
 
       // this.curElement.parentNode.focus();
       this.curElement.focus();
+      // if(this.attributeType === "checkbox"){
+      //   this.curElement.parentNode.focus();
+      // }
       if (this.editMode) {
         this.elementKeyDown();
         if (this.curElement.select) {

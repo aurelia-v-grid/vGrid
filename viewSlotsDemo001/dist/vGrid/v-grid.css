@@ -70,8 +70,8 @@
 .vGrid div.vGrid-body {
   position: relative;
   white-space: nowrap;
-  /*//background-image: url("styles/spinner.gif");*/
-  /*//background-position: center;*/
+  /*background-image: url("styles/spinner.gif");*/
+  /*background-position: center;*/
   -webkit-overflow-scrolling: touch;
 }
 
@@ -430,4 +430,9 @@
 .vGrid * input {
   margin: 0 0 0 0 !important;
 
+
+}
+
+.vGrid input:not([type])[readonly]{
+  color:black !important;
 }
