@@ -74,11 +74,16 @@ export class VGridCellEdit {
    ***************************************************************************************/
   removeEditCssClasses(element) {
     element.setAttribute("readonly", "false");
+
+    if(this.attributeType="checkbox"){
+      element.disabled = true;
+    }
+
     let elementX;
     if (element.parentNode) {
-      elementX = element.parentNode
+      elementX = element.parentNode;
     } else {
-      elementX = element.parentNode
+      elementX = element.parentNode;
     }
     elementX.classList.remove(this.vGrid.vGridConfig.css.editCell);
     elementX.classList.remove(this.vGrid.vGridConfig.css.editCellWrite);
@@ -342,7 +347,7 @@ export class VGridCellEdit {
         if (this.vGrid.vGridConfig.eventFormatHandler) {
           return this.vGrid.$parent[this.vGrid.vGridConfig.eventFormatHandler](type, {
             attribute: this.attribute,
-            value: this.curElement.value,
+            value: this.getValue(this.curElement),
             oldValue: this.vGrid.collectionFiltered[this.row][this.attribute],
             element: this.curElement
           })
@@ -366,7 +371,7 @@ export class VGridCellEdit {
 
     return {
       attribute: this.attribute,
-      value: this.curElement.value,
+      value: this.getValue(this.curElement),
       oldValue: this.oldValue,
       element: this.curElement
     };
@@ -383,7 +388,7 @@ export class VGridCellEdit {
       this.updateActual(this.callbackObject());
     }
     if(this.scrollChecked === false) {
-      this.scrollChecked === true
+      this.scrollChecked === true;
       if(this.curElement){
         if (this.curElement.parentNode.classList.contains(this.vGrid.vGridConfig.css.editCellFocus) || this.curElement.parentNode.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
           this.removeEditCssClasses(this.curElement);
@@ -421,10 +426,11 @@ export class VGridCellEdit {
               this.cells[this.index].parentNode.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
             }
             this.cells[this.index].removeAttribute("readonly");//if I dont do this, then they cant enter
+
             if (this.attributeType !== "image" && this.vGrid.collectionFiltered[this.row]) {
               this.beforeCellEdit({
                 attribute: this.attribute,
-                value: this.curElement.value,
+                value: this.getValue(this.curElement),
                 oldValue: this.vGrid.collectionFiltered[this.row][this.attribute],
                 element: this.curElement
               });
@@ -433,7 +439,7 @@ export class VGridCellEdit {
               this.filter = false;
               this.beforeCellEdit({
                 attribute: this.attribute,
-                value: this.curElement.value,
+                value: this.getValue(this.curElement),
                 oldValue: this.vGrid.collectionFiltered[rowNo][this.attribute],
                 element: this.curElement
               });
@@ -517,9 +523,26 @@ export class VGridCellEdit {
 
     obj = this.formatHandler("beforeEdit", obj);
     if (obj.newValue) {
-      obj.element.value = obj.newValue;
+
+      if(this.attributeType === "checkbox"){
+        obj.element.checked = obj.newValue;
+      } else {
+        obj.element.value = obj.newValue;
+      }
     }
 
+
+  }
+
+
+  getValue(element){
+    if(this.attributeType !== "image"){
+      if(this.attributeType === "checkbox"){
+        return element.checked;
+      } else {
+        return element.value;
+      }
+    }
 
   }
 
@@ -590,7 +613,7 @@ export class VGridCellEdit {
             if (this.attributeType !== "image") {
               this.beforeCellEdit({
                 attribute: this.attribute,
-                value: this.newTarget.value,
+                value: this.getValue(this.newTarget),
                 oldValue: this.vGrid.collectionFiltered[row][this.attribute],
                 element: this.newTarget
               });
@@ -601,6 +624,7 @@ export class VGridCellEdit {
             this.newTarget.parentNode.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
           }
           e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
+          this.newTarget.disabled =false;
 
         } else {
           this.newTarget.parentNode.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
@@ -616,7 +640,7 @@ export class VGridCellEdit {
       this.updated = false;
       this.row = row;
       this.curElement = this.newTarget;
-      this.oldValue = this.curElement.value;
+      this.oldValue = this.getValue(this.curElement);
       this.cells = this.curElement.parentNode.parentNode.querySelectorAll("." + this.vGrid.vGridConfig.css.cellContent);
 
 

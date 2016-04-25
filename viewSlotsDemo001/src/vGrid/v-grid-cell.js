@@ -27,10 +27,15 @@ export class VGridCell {
   }
 
   setValue (value){
+
     if(this.ctx.vGridConfig.colTypeArray[this.colNo] === "image"){
       this.cellContent.src = value;
     } else {
-      this.cellContent.value = value;
+      if(this.ctx.vGridConfig.colTypeArray[this.colNo] ==="checkbox"){
+        this.cellContent.checked = value === "true" || value === true ? true:false;
+      } else {
+        this.cellContent.value = value || "";
+      }
     }
   }
 
@@ -46,11 +51,17 @@ export class VGridCell {
      } else {
        this.cellContent = document.createElement("input");
      }
+     if(this.ctx.vGridConfig.colTypeArray[this.colNo] ==="checkbox"){
+       this.cellContent.type = "checkbox"
+
+       this.cellContent.disabled =true;
+     }
+
      this.cellContent.classList.add(this.ctx.vGridConfig.css.cellContent);
      this.cellContent.setAttribute(this.ctx.vGridConfig.atts.dataAttribute, this.ctx.vGridConfig.attributeArray[this.colNo]);
      this.cellContent.setAttribute("style", this.ctx.vGridConfig.colStyleArray[this.colNo]);
      if(this.bindingContext){
-       this.setValue(this.bindingContext[this.ctx.vGridConfig.attributeArray[this.colNo]])
+         this.setValue(this.bindingContext[this.ctx.vGridConfig.attributeArray[this.colNo]])
      }
      this.element.appendChild(this.cellContent);
   }

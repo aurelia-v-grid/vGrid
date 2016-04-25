@@ -2,7 +2,7 @@
 
 
   <require from="app.css"></require>
-
+<require from="vGrid/v-grid.css"></require>
 
 
 
@@ -12,8 +12,8 @@
 
         <!--create the grid you want and pass in a "object in you component with keys ctx and   myGrid = {ctx:{},data:[]};-->
         <v-grid class="center" style="position:absolute;top:0px;left:0;right:0;bottom:0"
-                              attibutes-used="name,phone,country,color"
-                              row-height="85"
+                              attibutes-used="name,phone,country,color,images"
+                              row-height="300"
                               multi-select="false"
                               row-on-draw="onRowDraw"
                               large-buffer="true"
@@ -24,38 +24,26 @@
 
               <!--create row to display on each row and set row height-->
               <v-grid-row>
-            <div class="contact-list-item" style="width:100%">
-              <div class="row contact-item boxit">
                 <div class="row">
-                  <div class="col-xs-3" style="max-width: 75px;">
-                    <div class="avatar"
-                         css="background-color:${color}">${avatarLetter}</div>
-                  </div>
-                  <div class="col-xs-9">
-                    <div class="row name">
-                      <div class="col-xs-3" style="max-width: 75px;">
-                        <div class=>index</div>
-                      </div>
-                      <div class="col-xs-9">
-                        <div><input class="vGrid-content" value=${name} v-grid-data-attribute="name"></div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xs-3" style="max-width: 75px;">
-                        <strong>Phone:</strong><br>
-                        <strong>Country</strong>
-                      </div>
-                      <div class="col-xs-9">
-                        <div><input class="vGrid-content"
-                               value=${phone} v-grid-data-attribute="phone"></div>
-                        <div><input class="vGrid-content"
-                               value=${country} v-grid-data-attribute="country"></div>
-                      </div>
-                    </div>
-                  </div>
+                <div class="col s6">
+                <md-card css="width:300px" md-image="http://aurelia-ui-toolkits.github.io/demo-materialize/images/card-sample-1.jpg" md-title="Card title" md-size="small">
+                <div>
+                  ${name}
                 </div>
+              </md-card>
               </div>
-            </div>
+              <div class="col s6">
+              <div>
+                <input md-datepicker="container: body; value.two-way: selectedDate;" type="date" placeholder="pick a date" />
+              </div>
+              <div>
+                <button md-button click.delegate="setDate()">set date</button>
+              </div>
+              <div>
+                <span if.bind="selectedDate">You selected (UTC time): ${selectedDate | stringify}</span>
+              </div>
+              </div>
+              </div>
           </v-grid-row>
 
         </v-grid>

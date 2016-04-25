@@ -1,0 +1,34 @@
+<template>
+
+    <h2>${heading}</h2>
+    <require from="vGrid/v-grid.css"></require>
+    <require from="vGrid/v-grid.js"></require>
+    <v-grid
+        style="height:500px"
+        class="col-md-10 col-md-offset-1"
+        row-height="50"
+        header-height="50"
+        resizable-headers="true"
+        sortable-headers="true"
+        sort-on-header-click="true"
+        header-filter="true"
+        header-filter-onkeydown="true"
+        header-filter-not-to="phone"
+        header-filter-top="true"
+        multi-select="true"
+        row-on-draw="onRowDraw"
+        row-on-dblclick = "dblClick"
+        header-input-click = "headerClick"
+        format-handler="myFormatHandler"
+        config="current-entity.bind:myCurrentEntity; collection.bind:myCollection ">
+    <v-grid-row>
+
+        <v-grid-col col-width="150" attribute="index"   header="Index"    default-filter=">=" read-only="true"></v-grid-col>
+        <v-grid-col col-width="150" attribute="date"    header="date"     default-filter=">=" read-only="true"></v-grid-col>
+        <v-grid-col col-width="160" attribute="number" header="number"  default-filter=">="                  ></v-grid-col>
+        <v-grid-col col-width="150" attribute="email"   header="Email"    default-filter="*"                  ></v-grid-col>
+        <v-grid-col col-width="160" attribute="color"   header="Color"    default-filter="=*"                 ></v-grid-col>
+    </v-grid-row>
+</v-grid>
+
+</template>
