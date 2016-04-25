@@ -536,8 +536,13 @@ export class VGridCellEdit {
 
 
   getValue(element){
-    if(this.attributeType !== "image"){
-      if(this.attributeType === "checkbox"){
+
+    var attribute = this.newTarget.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
+    var index = this.vGrid.vGridConfig.attributeArray.indexOf(attribute);
+    var attributeType = this.vGrid.vGridConfig.colTypeArray[index];
+
+    if(attributeType !== "image"){
+      if(attributeType === "checkbox"){
         return element.checked;
       } else {
         return element.value;
@@ -584,13 +589,13 @@ export class VGridCellEdit {
 
       //if image set focus to main cell/column
       this.attribute = this.newTarget.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
+      this.index = this.vGrid.vGridConfig.attributeArray.indexOf(this.attribute);
       this.attributeType = this.vGrid.vGridConfig.colTypeArray[this.index];
       this.newTarget.setAttribute("tabindex", 0);
 
 
       //get som vars we need
       this.readOnly = readOnly;
-      this.index = this.vGrid.vGridConfig.attributeArray.indexOf(this.attribute);
       this.type = e.type;
 
 

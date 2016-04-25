@@ -4,13 +4,11 @@ import {noView, customElement, processContent, bindable} from 'aurelia-framework
 @customElement('v-grid-cell')
 //@processContent(false)
 export class VGridCell {
-   static inject = [Element]
+   static inject = [Element];
   @bindable colNo;
 
   constructor(element){
     this.element = element;
-
-
   }
 
   bind(bindingContext){
@@ -23,11 +21,11 @@ export class VGridCell {
 
 
   created(){
-    console.log("VGridCol, created")
+
   }
 
-  setValue (value){
 
+  setValue (value){
     if(this.ctx.vGridConfig.colTypeArray[this.colNo] === "image"){
       this.cellContent.src = value;
     } else {
@@ -41,19 +39,13 @@ export class VGridCell {
 
 
   attached(){
-
-     //if(this.element.classlist.contains(this.ctx.vGridConfig)){
-
-    // }
-
      if(this.ctx.vGridConfig.colTypeArray[this.colNo] === "image"){
        this.cellContent = document.createElement("img");
      } else {
        this.cellContent = document.createElement("input");
      }
-     if(this.ctx.vGridConfig.colTypeArray[this.colNo] ==="checkbox"){
-       this.cellContent.type = "checkbox"
-
+     if(this.ctx.vGridConfig.colTypeArray[this.colNo] === "checkbox"){
+       this.cellContent.type = "checkbox";
        this.cellContent.disabled =true;
      }
 

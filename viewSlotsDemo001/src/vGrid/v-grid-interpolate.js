@@ -4,6 +4,7 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
+  //TODO just remove this, afetr viewslots it isnt really needed that much, just move the attibute over to vGridConfig
 export class VGridInterpolate {
   constructor() {
   }
