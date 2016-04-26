@@ -338,14 +338,14 @@ export class VGridCellEdit {
     switch (type) {
       case "beforeEdit":
         if (this.vGrid.vGridConfig.eventFormatHandler) {
-          return this.vGrid.$parent[this.vGrid.vGridConfig.eventFormatHandler](type, obj)
+          return this.vGrid.vGridConfig.eventFormatHandler(type, obj)
         } else {
           return obj;
         }
         break;
       case "afterEdit":
         if (this.vGrid.vGridConfig.eventFormatHandler) {
-          return this.vGrid.$parent[this.vGrid.vGridConfig.eventFormatHandler](type, {
+          return this.vGrid.vGridConfig.eventFormatHandler(type, {
             attribute: this.attribute,
             value: this.getValue(this.curElement),
             oldValue: this.vGrid.collectionFiltered[this.row][this.attribute],

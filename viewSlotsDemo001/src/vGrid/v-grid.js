@@ -5,7 +5,7 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {noView, processContent, ObserverLocator, customAttribute, bindable,ViewCompiler, ViewSlot, Container, ViewResources} from 'aurelia-framework';
+import {children, processContent, ObserverLocator, customAttribute, bindable,ViewCompiler, ViewSlot, Container, ViewResources} from 'aurelia-framework';
 import {VGridGenerator} from './v-grid-generator';
 import {VGridFilter} from './v-grid-filter';
 import {VGridSort} from './v-grid-sort';
@@ -18,23 +18,17 @@ import {VGridSelection} from './v-grid-selection';
 
 
 
-
-//@noView
-@processContent(false)
+//@processContent(false)
 export class VGrid {
   static inject = [Element, ObserverLocator, VGridFilter, ViewCompiler,ViewSlot,Container,ViewResources];
   @bindable gridContext;
   @bindable collection;
   @bindable currentEntity;
-
-
+  @children('v-grid-col') columns;
 
 
 
   constructor(element, observerLocator, vGridFilter,viewCompiler,viewSlot,container,viewResources) {
-
-
-
 
     this.vGridFilter = vGridFilter; //helper for filtering the cloned collection
     this.vGridSort = new VGridSort(); //helper for sorting the columns
