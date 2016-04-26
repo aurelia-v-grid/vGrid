@@ -51,7 +51,6 @@ export class VGridCellEdit {
   };
 
 
-
   /***************************************************************************************
    * sets "the cells" from a top value, used for page up/down
    ***************************************************************************************/
@@ -75,8 +74,8 @@ export class VGridCellEdit {
   removeEditCssClasses(element) {
     element.setAttribute("readonly", "false");
 
-    if(this.attributeType="checkbox"){
-     // element.disabled = true;
+    if (this.attributeType = "checkbox") {
+      // element.disabled = true;
     }
 
     let elementX;
@@ -89,8 +88,6 @@ export class VGridCellEdit {
     elementX.classList.remove(this.vGrid.vGridConfig.css.editCellWrite);
     elementX.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
   }
-
-
 
 
   /***************************************************************************************
@@ -107,7 +104,6 @@ export class VGridCellEdit {
   }
 
 
-
   /***************************************************************************************
    * simple delay for the keydown events, like tabbing etc, so I cantrol the speed of it
    ***************************************************************************************/
@@ -119,7 +115,6 @@ export class VGridCellEdit {
       }, 150)
     }
   }
-
 
 
   /***************************************************************************************
@@ -209,9 +204,6 @@ export class VGridCellEdit {
       }
 
 
-
-
-
       //arrow right
       if (e.keyCode === 39 && !this.editMode) {
         e.preventDefault();
@@ -240,7 +232,6 @@ export class VGridCellEdit {
       }
 
 
-
       //arrow up
       if (e.keyCode === 38) {
         e.preventDefault();
@@ -252,8 +243,6 @@ export class VGridCellEdit {
           }
         });
       }
-
-
 
 
       //tab and shift key for tabing in other direction
@@ -271,7 +260,6 @@ export class VGridCellEdit {
           }
         });
       }
-
 
 
       //normal tabbing
@@ -306,8 +294,6 @@ export class VGridCellEdit {
   }
 
 
-
-
   /***************************************************************************************
    * listen for "enter key"
    ***************************************************************************************/
@@ -326,13 +312,10 @@ export class VGridCellEdit {
   }
 
 
-
-
   /***************************************************************************************
    * call back if format handler is set
    ***************************************************************************************/
   formatHandler(type, obj) {
-
 
 
     switch (type) {
@@ -363,7 +346,6 @@ export class VGridCellEdit {
   }
 
 
-
   /***************************************************************************************
    * main callback obj
    ***************************************************************************************/
@@ -379,7 +361,6 @@ export class VGridCellEdit {
   }
 
 
-
   /***************************************************************************************
    * called on scrollign, its just for updating cell if it havent been set
    ***************************************************************************************/
@@ -387,16 +368,15 @@ export class VGridCellEdit {
     if (this.updated === false) {
       this.updateActual(this.callbackObject());
     }
-    if(this.scrollChecked === false) {
+    if (this.scrollChecked === false) {
       this.scrollChecked === true;
-      if(this.curElement){
+      if (this.curElement) {
         if (this.curElement.parentNode.classList.contains(this.vGrid.vGridConfig.css.editCellFocus) || this.curElement.parentNode.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
           this.removeEditCssClasses(this.curElement);
         }
       }
     }
   }
-
 
 
   /***************************************************************************************
@@ -437,7 +417,7 @@ export class VGridCellEdit {
                 element: this.curElement
               });
             }
-            if(this.filter){
+            if (this.filter) {
               this.filter = false;
               this.beforeCellEdit({
                 attribute: this.attribute,
@@ -459,7 +439,6 @@ export class VGridCellEdit {
   }
 
 
-
   /***************************************************************************************
    * update to run when hitting enter
    ***************************************************************************************/
@@ -476,8 +455,6 @@ export class VGridCellEdit {
   }
 
 
-
-
   /***************************************************************************************
    * update data before moring to next row
    ***************************************************************************************/
@@ -491,14 +468,12 @@ export class VGridCellEdit {
   }
 
 
-
   /***************************************************************************************
    * update last row, so user have have other values/cells set
    ***************************************************************************************/
   updateLastRow(row) {
     this.vGrid.vGridGenerator.updateRow(row, true);
   }
-
 
 
   /***************************************************************************************
@@ -526,7 +501,7 @@ export class VGridCellEdit {
     obj = this.formatHandler("beforeEdit", obj);
     if (obj.newValue) {
 
-      if(this.attributeType === "checkbox"){
+      if (this.attributeType === "checkbox") {
         obj.element.checked = obj.newValue;
       } else {
         obj.element.value = obj.newValue;
@@ -537,14 +512,14 @@ export class VGridCellEdit {
   }
 
 
-  getValue(element){
+  getValue(element) {
 
     var attribute = this.newTarget.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
     var index = this.vGrid.vGridConfig.attributeArray.indexOf(attribute);
     var attributeType = this.vGrid.vGridConfig.colTypeArray[index];
 
-    if(attributeType !== "image"){
-      if(attributeType === "checkbox"){
+    if (attributeType !== "image") {
+      if (attributeType === "checkbox") {
         return element.checked;
       } else {
         return element.value;
@@ -602,7 +577,6 @@ export class VGridCellEdit {
       this.type = e.type;
 
 
-
       //set css
       if (!this.newTarget.parentNode.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
         this.newTarget.parentNode.classList.add(this.vGrid.vGridConfig.css.editCell)
@@ -632,7 +606,7 @@ export class VGridCellEdit {
             this.newTarget.parentNode.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
           }
           e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
-         // this.newTarget.disabled =false;
+          // this.newTarget.disabled =false;
 
         } else {
           this.newTarget.parentNode.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
@@ -642,7 +616,6 @@ export class VGridCellEdit {
       } else {
         this.newTarget.parentNode.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
       }
-
 
 
       this.updated = false;
@@ -659,9 +632,6 @@ export class VGridCellEdit {
       if (this.vGrid.vGridGenerator.htmlCache.content.scrollLeft > 0 && this.vGrid.vGridGenerator.htmlCache.content.clientWidth > this.curElement.parentNode.offsetLeft) {
         this.vGrid.vGridGenerator.htmlCache.content.scrollLeft = this.curElement.parentNode.offsetLeft;
       }
-
-
-
 
 
       setTimeout(()=> {
@@ -681,8 +651,6 @@ export class VGridCellEdit {
       }
 
 
-
-
       // this.curElement.parentNode.focus();
       this.curElement.focus();
       // if(this.attributeType === "checkbox"){
@@ -691,13 +659,12 @@ export class VGridCellEdit {
       if (this.editMode) {
         this.elementKeyDown();
         if (this.curElement.select) {
-          if(this.type === "dblclick"){
+          if (this.type === "dblclick") {
             this.curElement.select();
           }
 
         }
       }
-
 
 
     }

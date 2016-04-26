@@ -5,11 +5,10 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {children, processContent, ObserverLocator, customAttribute, bindable,ViewCompiler, ViewSlot, Container, ViewResources} from 'aurelia-framework';
+import {ObserverLocator, bindable,ViewCompiler, ViewSlot, Container, ViewResources} from 'aurelia-framework';
 import {VGridGenerator} from './v-grid-generator';
 import {VGridFilter} from './v-grid-filter';
 import {VGridSort} from './v-grid-sort';
-import {VGridInterpolate} from './v-grid-interpolate';
 import {VGridSortable} from './v-grid-sortable';
 import {VGridCellEdit} from './v-grid-cell-edit';
 import {VGridObservables} from './v-grid-observables';
@@ -18,34 +17,53 @@ import {VGridSelection} from './v-grid-selection';
 
 
 
-//@processContent(false)
+
 export class VGrid {
   static inject = [Element, ObserverLocator, VGridFilter, ViewCompiler,ViewSlot,Container,ViewResources];
-  @bindable gridContext;
-  @bindable collection;
-  @bindable currentEntity;
-  @children('v-grid-col') columns;
+  @bindable({attribute:"v-grid-context"}) gridContext;
+  @bindable({attribute:"v-collection"}) collection;
+  @bindable({attribute:"v-current-entity"}) currentEntity;
+
 
 
 
   constructor(element, observerLocator, vGridFilter,viewCompiler,viewSlot,container,viewResources) {
 
-    this.vGridFilter = vGridFilter; //helper for filtering the cloned collection
-    this.vGridSort = new VGridSort(); //helper for sorting the columns
-    this.vGridInterpolate = new VGridInterpolate(); //populates mustache tags
     this.observerLocator = observerLocator; //listen for event
     this.gridContext = null;
-    this.element = element; //vgrid element
-    this.currentRowEntity = null; //keeps the current entity ref
-    this.filterRow = -1; //current selected row in grid, not always the same as collection when used filter/soring
-    this.scrollBottomNext = false; //var to know if user wants to scroll to bottom next time array abserver gets called
-    this.sgkey = "__vGrid" + Math.floor((Math.random() * 1000) + 1); //keyname, need to set a random here so you can have multible grid linked to same collection
-    this.gridContextMissing = false; //to know if they have binded the context or not
-    this.collectionFiltered = []; //cloned collection
-    this.skipNextUpdateProperty = []; //skip row update, used when setting internal values to current entity from row editing, or to undefined
+    this.element = element;
+
+    //keeps the current entity ref
+    this.currentRowEntity = null;
+
+    //current selected row in grid, not always the same as collection when used filter/sorting
+    this.filterRow = -1;
+
+    //var to know if user wants to scroll to bottom next time array abserver gets called
+    this.scrollBottomNext = false;
+
+    //keyname, need to set a random here so you can have multible grid linked to same collection
+    this.sgkey = "__vGrid" + Math.floor((Math.random() * 1000) + 1);
+
+    //to know if they have binded the context or not
+    this.gridContextMissing = false;
+
+    //cloned collection
+    this.collectionFiltered = [];
+
+    //skip row update, used when setting internal values to current entity from row editing, or to undefined
+    this.skipNextUpdateProperty = [];
+
     this.filterRowDisplaying = true;
+
+
+    this.vGridFilter = vGridFilter; //helper for filtering the cloned collection
+    this.vGridSort = new VGridSort(); //helper for sorting the columns
+    this.vGridConfig = new VGridConfig(this);
     this.vGridSelection = new VGridSelection(null, this);
     this.vGridCellEdit = new VGridCellEdit(this);
+
+
     this.viewCompiler = viewCompiler;
     this.viewSlot = viewSlot;
     this.container = container;
@@ -107,7 +125,7 @@ export class VGrid {
 
       //clone collection and add key index, so we know it.
       this.collectionFiltered = this.collection.slice(0);
-      this.vGridConfig = new VGridConfig(this);
+
       //resets the keys
       this.resetKeys();
     }
@@ -133,7 +151,7 @@ export class VGrid {
 
 
     //create the grid html/add events etc
-    this.vGridGenerator = new VGridGenerator(this.vGridConfig, this.vGridInterpolate, this.element, VGridSortable, this.vGridSelection, this.vGridCellEdit, this);
+    this.vGridGenerator = new VGridGenerator(this.vGridConfig, this.element, VGridSortable, this.vGridSelection, this.vGridCellEdit, this);
 
 
     //some helper function;

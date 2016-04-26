@@ -7,7 +7,7 @@
 export class VGridFilter {
 
 
-  constructor(){
+  constructor() {
 
     this.filterOperatorTable = {
       "=": 1, //equal
@@ -37,11 +37,10 @@ export class VGridFilter {
   }
 
 
-
   /***************************************************************************************
    * run the name of filter
    ***************************************************************************************/
-  getNameOfFilter(name){
+  getNameOfFilter(name) {
     return this.filterOperatorTableString[name]
   }
 
@@ -79,7 +78,6 @@ export class VGridFilter {
         } catch (e) {
           type = "string";
         }
-        
 
 
         //lets set som defaults
@@ -110,16 +108,16 @@ export class VGridFilter {
               filterValue = filterValue.substr(1, filterValue.length);
             }
             //wildcard end and first = contains
-            if (x.value.charAt(x.value.length-1) === "*" && filterOperator === 1 && newFilterOperator === 10) {
+            if (x.value.charAt(x.value.length - 1) === "*" && filterOperator === 1 && newFilterOperator === 10) {
               newFilterOperator = 6;
-              filterValue = filterValue.substr(0, filterValue.length-1)
+              filterValue = filterValue.substr(0, filterValue.length - 1)
             }
             //begin with since wildcard is in the end
-            if (x.value.charAt(x.value.length-1) === "*" && filterOperator === 1 && newFilterOperator !== 10 && newFilterOperator !== 6) {
+            if (x.value.charAt(x.value.length - 1) === "*" && filterOperator === 1 && newFilterOperator !== 10 && newFilterOperator !== 6) {
               newFilterOperator = 9;
-              filterValue = filterValue.substr(0, filterValue.length-1);
+              filterValue = filterValue.substr(0, filterValue.length - 1);
             }
-            if(filterOperator !== newFilterOperator){
+            if (filterOperator !== newFilterOperator) {
               filterOperator = newFilterOperator;
             }
             break;
@@ -140,10 +138,6 @@ export class VGridFilter {
             filterOperator = filterOperator || 1;
             break;
         }
-
-
-
-
 
 
         //filter from what operator used
@@ -203,7 +197,7 @@ export class VGridFilter {
               result = false;
             }
         }
-        if(x.value.charAt(0) === "*" && x.value.length=== 1){
+        if (x.value.charAt(0) === "*" && x.value.length === 1) {
           result = true
         }
 

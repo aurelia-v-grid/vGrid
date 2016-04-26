@@ -2,8 +2,6 @@ import {inject, customAttribute, Optional} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 
 
-
-
 var VGridAttibutes = class {
 
   constructor(element, vGrid) {
@@ -74,8 +72,11 @@ var VGridAttibutes = class {
 
   }
 
-  setBindValue() {
 
+  /**************************************
+   * used for setting binding value, string to bool/numbers etc
+   */
+  setBindValue() {
     switch (this.type) {
       case "bool":
         this.setBindValueBool();
@@ -96,21 +97,34 @@ var VGridAttibutes = class {
   }
 
 
-
+  /**************************************
+   * Gets the default value from vGrigConfig
+   */
   getDefaultvalue() {
     this.attDefault = this.vGrid.vGridConfig[this.attribute]
   }
 
 
+  /**************************************
+   * Todo
+   */
   setNewvalue(newValue, oldValue) {
-    this.vGrid.vGridConfig[this.attribute] = this.setValue(parseInt(newValue), oldValue);
+    //just use them as config for now
+    //this.vGrid.vGridConfig[this.attribute] = this.setValue(parseInt(newValue), oldValue);
   }
 
+  /**************************************
+   * Called when attributes gets binded
+   */
   bind(bindingContext, overrideContext) {
     this.getDefaultvalue();
     this.setBindValue();
   }
 
+
+  /**************************************
+   * Called when value chnages
+   */
   valueChanged(newValue, oldValue) {
     this.setNewvalue(newValue, oldValue)
   }
@@ -118,17 +132,15 @@ var VGridAttibutes = class {
 };
 
 
-
-
-@customAttribute('row-height')
+@customAttribute('v-row-height')
 @inject(Element, Optional.of(VGrid))
-export class RowHeight extends VGridAttibutes {
+export class rowHeight extends VGridAttibutes {
   attribute = "rowHeight";
   type = "int";
 }
 
 
-@customAttribute('header-height')
+@customAttribute('v-header-height')
 @inject(Element, Optional.of(VGrid))
 export class headerHeight extends VGridAttibutes {
   attribute = "headerHeight";
@@ -136,7 +148,7 @@ export class headerHeight extends VGridAttibutes {
 }
 
 
-@customAttribute('footer-height')
+@customAttribute('v-footer-height')
 @inject(Element, Optional.of(VGrid))
 export class footerHeight extends VGridAttibutes {
   attribute = "footerHeight";
@@ -144,7 +156,7 @@ export class footerHeight extends VGridAttibutes {
 }
 
 
-@customAttribute('resizable-headers')
+@customAttribute('v-resizable-headers')
 @inject(Element, Optional.of(VGrid))
 export class isResizableHeaders extends VGridAttibutes {
   attribute = "isResizableHeaders";
@@ -152,7 +164,7 @@ export class isResizableHeaders extends VGridAttibutes {
 }
 
 
-@customAttribute('multi-select')
+@customAttribute('v-multi-select')
 @inject(Element, Optional.of(VGrid))
 export class isMultiSelect extends VGridAttibutes {
   attribute = "isMultiSelect";
@@ -160,7 +172,7 @@ export class isMultiSelect extends VGridAttibutes {
 }
 
 
-@customAttribute('sortable-headers')
+@customAttribute('v-sortable-headers')
 @inject(Element, Optional.of(VGrid))
 export class isSortableHeader extends VGridAttibutes {
   attribute = "isSortableHeader";
@@ -168,7 +180,7 @@ export class isSortableHeader extends VGridAttibutes {
 }
 
 
-@customAttribute('request-animation-frame')
+@customAttribute('v-request-animation-frame')
 @inject(Element, Optional.of(VGrid))
 export class requestAnimationFrame extends VGridAttibutes {
   attribute = "requestAnimationFrame";
@@ -176,14 +188,14 @@ export class requestAnimationFrame extends VGridAttibutes {
 }
 
 
-@customAttribute('resize-also-rows')
+@customAttribute('v-resize-also-rows')
 @inject(Element, Optional.of(VGrid))
 export class resizableHeadersAndRows extends VGridAttibutes {
   attribute = "resizableHeadersAndRows";
   type = "bool";
 }
 
-@customAttribute('render-on-scrollbar-scroll')
+@customAttribute('v-render-on-scrollbar-scroll')
 @inject(Element, Optional.of(VGrid))
 export class renderOnScrollbarScroll extends VGridAttibutes {
   attribute = "renderOnScrollbarScroll";
@@ -191,7 +203,7 @@ export class renderOnScrollbarScroll extends VGridAttibutes {
 }
 
 
-@customAttribute('locked-columns')
+@customAttribute('v-locked-columns')
 @inject(Element, Optional.of(VGrid))
 export class lockedColumns extends VGridAttibutes {
   attribute = "lockedColumns";
@@ -199,7 +211,7 @@ export class lockedColumns extends VGridAttibutes {
 }
 
 
-@customAttribute('header-filter')
+@customAttribute('v-header-filter')
 @inject(Element, Optional.of(VGrid))
 export class addFilter extends VGridAttibutes {
   attribute = "addFilter";
@@ -207,7 +219,7 @@ export class addFilter extends VGridAttibutes {
 }
 
 
-@customAttribute('header-filter-top')
+@customAttribute('v-header-filter-top')
 @inject(Element, Optional.of(VGrid))
 export class filterOnAtTop extends VGridAttibutes {
   attribute = "filterOnAtTop";
@@ -215,7 +227,7 @@ export class filterOnAtTop extends VGridAttibutes {
 }
 
 
-@customAttribute('header-filter-onkeydown')
+@customAttribute('v-header-filter-onkeydown')
 @inject(Element, Optional.of(VGrid))
 export class filterOnKey extends VGridAttibutes {
   attribute = "filterOnKey";
@@ -223,7 +235,7 @@ export class filterOnKey extends VGridAttibutes {
 }
 
 
-@customAttribute('sort-on-header-click')
+@customAttribute('v-sort-on-header-click')
 @inject(Element, Optional.of(VGrid))
 export class sortOnHeaderClick extends VGridAttibutes {
   attribute = "sortOnHeaderClick";
@@ -231,7 +243,7 @@ export class sortOnHeaderClick extends VGridAttibutes {
 }
 
 
-@customAttribute('large-buffer')
+@customAttribute('v-large-buffer')
 @inject(Element, Optional.of(VGrid))
 export class largeBuffer extends VGridAttibutes {
   attribute = "largeBuffer";
@@ -239,7 +251,7 @@ export class largeBuffer extends VGridAttibutes {
 }
 
 
-@customAttribute('format-handler')
+@customAttribute('v-format-handler')
 @inject(Element, Optional.of(VGrid))
 export class eventFormatHandler extends VGridAttibutes {
   attribute = "eventFormatHandler"
@@ -247,49 +259,49 @@ export class eventFormatHandler extends VGridAttibutes {
 }
 
 
-@customAttribute('row-on-dblclick')
+@customAttribute('v-row-on-dblclick')
 @inject(Element, Optional.of(VGrid))
 export class eventOnDblClick extends VGridAttibutes {
   attribute = "eventOnDblClick"
   type = "fn";
 }
 
-@customAttribute('row-on-draw')
+@customAttribute('v-row-on-draw')
 @inject(Element, Optional.of(VGrid))
 export class eventOnRowDraw extends VGridAttibutes {
   attribute = "eventOnRowDraw"
   type = "fn";
 }
 
-@customAttribute('cell-on-draw')
+@customAttribute('v-cell-on-draw')
 @inject(Element, Optional.of(VGrid))
 export class eventOnCellDraw extends VGridAttibutes {
   attribute = "eventOnCellDraw"
   type = "fn";
 }
 
-@customAttribute('header-input-click')
+@customAttribute('v-header-input-click')
 @inject(Element, Optional.of(VGrid))
 export class eventOnHeaderInputClick extends VGridAttibutes {
   attribute = "eventOnHeaderInputClick"
   type = "fn";
 }
 
-@customAttribute('attibutes-used')
+@customAttribute('v-attibutes-used')
 @inject(Element, Optional.of(VGrid))
 export class attributeArray extends VGridAttibutes {
   attribute = "attributeArray";
   type = "array";
 }
 
-@customAttribute('header-filter-not-to')
+@customAttribute('v-header-filter-not-to')
 @inject(Element, Optional.of(VGrid))
 export class doNotAddFilterTo extends VGridAttibutes {
   attribute = "doNotAddFilterTo";
   type = "array";
 }
 
-@customAttribute('sort-not-on-header')
+@customAttribute('v-sort-not-on-header')
 @inject(Element, Optional.of(VGrid))
 export class sortNotOnHeader extends VGridAttibutes {
   attribute = "sortNotOnHeader";

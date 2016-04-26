@@ -1,4 +1,3 @@
-
 /*****************************************************************************************************************
  *    VGridConfig
  *    This generates the config used by vGridgenerator, other classes also calls this to get the information
@@ -58,7 +57,7 @@ export class VGridConfig {
     dataAttributeFilter: "v-grid-data-attribute-filter"
   };
 
-  bind(){
+  bind() {
     debugger;
   }
 
@@ -66,7 +65,7 @@ export class VGridConfig {
     this.vGrid = vGrid;
 
 
-    this.columns = this.vGrid.element.getElementsByTagName("V-GRID-COL");
+    this.columns = [];
     this.attributeArray = [];
     this.columnWidthArray = [];
     this.headerArray = [];
@@ -104,7 +103,20 @@ export class VGridConfig {
   }
 
 
+  //from string interpolate
+  attributes = [];
 
+  getNewObject(obj) {
+    if (obj) {
+      var x = {};
+      this.attributes.forEach((prop)=> {
+        x[prop] = obj[prop];
+      });
+      return x;
+    } else {
+      return "";
+    }
+  }
 
 
   /***************************************************************************************
@@ -117,9 +129,9 @@ export class VGridConfig {
       //get sel keys
 
       //if they filter we want to make sure the after cell edit happends
-      if(this.vGrid.vGridCellEdit.curElement && this.vGrid.vGridCellEdit.updated === false) {
-          this.vGrid.vGridCellEdit.updateActual(this.vGrid.vGridCellEdit.callbackObject());
-        }
+      if (this.vGrid.vGridCellEdit.curElement && this.vGrid.vGridCellEdit.updated === false) {
+        this.vGrid.vGridCellEdit.updateActual(this.vGrid.vGridCellEdit.callbackObject());
+      }
 
       var curKey = -1;
       if (this.vGrid.currentRowEntity) {
@@ -129,14 +141,13 @@ export class VGridConfig {
         this.vGrid.collectionFiltered = this.vGrid.collection.slice(0);
       } else {
         if (this.eventFormatHandler) {
-            filterObj = this.eventFormatHandler("onFilter", filterObj)
+          filterObj = this.eventFormatHandler("onFilter", filterObj)
         }
 
         this.vGrid.collectionFiltered = this.vGrid.vGridFilter.run(this.vGrid.collection, filterObj);
         this.vGrid.vGridSort.run(this.vGrid.collectionFiltered);
 
       }
-
 
 
       //set current row/entity in sync
@@ -176,9 +187,6 @@ export class VGridConfig {
   }
 
 
-
-
-
   /***************************************************************************************
    * This just sets data from array,
    * Use {} if you want markup of columns, or undefined for total blank rows
@@ -187,7 +195,7 @@ export class VGridConfig {
     if (this.vGrid.collectionFiltered !== undefined) {
       if (this.eventOnRowDraw) {
         //if user have added this then we call it so they can edit the row data before we display it
-        var data = this.vGrid.vGridInterpolate.getNewObject(this.vGrid.collectionFiltered[row]);
+        var data = this.getNewObject(this.vGrid.collectionFiltered[row]);
         this.eventOnRowDraw(data, this.vGrid.collectionFiltered[row]);
         callback(data)
       } else {
@@ -205,7 +213,7 @@ export class VGridConfig {
     if (this.vGrid.collectionFiltered !== undefined) {
       if (this.eventOnCellDraw) {
         //if user have added this then we call it so they can edit the row data before we display it
-        var rowdata = this.vGrid.vGridInterpolate.getNewObject(this.vGrid.collectionFiltered[data.row]);
+        var rowdata = this.getNewObject(this.vGrid.collectionFiltered[data.row]);
         this.eventOnCellDraw({
           attributeName: data.attributeName,
           div: data.div,
@@ -217,8 +225,6 @@ export class VGridConfig {
   }
 
 
-
-
   /***************************************************************************************
    * This calls the order by function
    * Use {} if you want markup of columns, or undefined for total blank rows
@@ -226,9 +232,9 @@ export class VGridConfig {
   onOrderBy(event, setheaders) {
 
     //if they sort we want to make sure the after cell edit happends
-    if(this.vGrid.vGridCellEdit.curElement && this.vGrid.vGridCellEdit.updated === false) {
-        this.vGrid.vGridCellEdit.updateActual(this.vGrid.vGridCellEdit.callbackObject());
-      }
+    if (this.vGrid.vGridCellEdit.curElement && this.vGrid.vGridCellEdit.updated === false) {
+      this.vGrid.vGridCellEdit.updateActual(this.vGrid.vGridCellEdit.callbackObject());
+    }
 
 
     //get clicked
@@ -267,10 +273,7 @@ export class VGridConfig {
     }
 
 
-
   }
-
-
 
 
   /***************************************************************************************
@@ -293,9 +296,6 @@ export class VGridConfig {
   }
 
 
-
-
-
   /***************************************************************************************
    * Just for knowing length,
    * Its this you will need to add for server source/paging with endless scrolling
@@ -309,7 +309,7 @@ export class VGridConfig {
   }
 
 
-  filterCellClick(event){
+  filterCellClick(event) {
     let attribute = event.target.getAttribute(this.atts.dataAttribute);
     if (this.eventOnHeaderInputClick) {
       //if user have added this then we call it so they can edit the row data before we display it
@@ -360,7 +360,6 @@ export class VGridConfig {
     this.vGrid.vGridCellEdit.editCellhelper(row, event, readonly);
 
   }
-
 
 
 }

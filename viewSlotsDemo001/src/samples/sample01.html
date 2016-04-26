@@ -26,31 +26,31 @@
 
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
-          row-height="20"
-          header-height="50"
-          resizable-headers="true"
-          resize-also-rows="true"
-          sortable-headers="true"
-          sort-on-header-click="true"
-          header-filter="true"
-          header-filter-onkeydown="true"
-          header-filter-not-to="images"
-          header-filter-top="true"
-          row-on-dblclick="onDblClick"
-          row-on-draw="onRowDraw"
-          cell-on-draw="onCellDraw"
-          multi-select="true"
-          format-handler="myFormatHandler"
-          current-entity.bind=myCurrentEntity
-          collection.bind=myCollection
-          grid-context.bind=myGrid>
-            <v-grid-col col-width="160" attribute="index" header="Index" default-filter=">=" read-only="true"></v-grid-col>
-            <v-grid-col col-width="100" attribute="name" header="name" default-filter="*"></v-grid-col>
-            <v-grid-col col-width="160" attribute="bool" header="bool" col-type="checkbox" default-filter="=" col-css="left:45%;width:15px;heigth:15px"></v-grid-col>
-            <v-grid-col col-width="160" attribute="number" header="Number" default-filter=">="></v-grid-col>
-            <v-grid-col col-width="180" attribute="date" header="date" default-filter=">="></v-grid-col>
-            <v-grid-col col-width="180" attribute="images" header="image" col-type="image" col-css="border-radius: 50%;width:50%;margin-left:25%; default-filter="=*"></v-grid-col>
-            <v-grid-col col-width="160" attribute="color" header="Color" default-filter="=*" col-css="color: {{color}}"></v-grid-col>
+          v-row-height="40"
+          v-header-height="50"
+          v-resizable-headers="true"
+          v-resize-also-rows="true"
+          v-sortable-headers="true"
+          v-sort-on-header-click="true"
+          v-header-filter="true"
+          v-header-filter-onkeydown="true"
+          v-header-filter-not-to="images"
+          v-header-filter-top="true"
+          v-row-on-dblclick="onDblClick"
+          v-row-on-draw="onRowDraw"
+          v-cell-on-draw="onCellDraw"
+          v-multi-select="true"
+          v-format-handler="myFormatHandler"
+          v-current-entity.bind=myCurrentEntity
+          v-collection.bind=myCollection
+          v-grid-context.bind=myGrid>
+            <v-grid-col v-col-width="160" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=" v-col-read-only="true"></v-grid-col>
+            <v-grid-col v-col-width="100" v-col-attribute="name" v-col-header="name" v-col-default-filter="*"></v-grid-col>
+            <v-grid-col v-col-width="160" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox" v-col-default-filter="=" v-col-css="left:45%;width:15px;heigth:15px"></v-grid-col>
+            <v-grid-col v-col-width="160" v-col-attribute="number" v-col-header="Number" v-col-default-filter=">="></v-grid-col>
+            <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date" v-col-default-filter=">="></v-grid-col>
+            <v-grid-col v-col-width="180" v-col-attribute="images" v-col-header="image" v-col-type="image" v-col-css="border-radius: 50%;width:50%;margin-left:25%;" v-col-default-filter="=*"></v-grid-col>
+            <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" v-col-css="color: {{color}}"></v-grid-col>
         </v-grid>
       </div>
 
