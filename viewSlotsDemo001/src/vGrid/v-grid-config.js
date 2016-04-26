@@ -93,7 +93,6 @@ export class VGridConfig {
     this.eventFormatHandler = null;
     this.eventOnDblClick = null;
     this.eventOnRowDraw = null;
-    this.eventOnCellDraw = null;
     this.eventOnHeaderInputClick = null;
 
     this.doNotAddFilterTo = [];
@@ -205,24 +204,7 @@ export class VGridConfig {
   }
 
 
-  /***************************************************************************************
-   * This just sets data from array,
-   * Use {} if you want markup of columns, or undefined for total blank rows
-   ***************************************************************************************/
-  cellDrawEvent(data) {
-    if (this.vGrid.collectionFiltered !== undefined) {
-      if (this.eventOnCellDraw) {
-        //if user have added this then we call it so they can edit the row data before we display it
-        var rowdata = this.getNewObject(this.vGrid.collectionFiltered[data.row]);
-        this.eventOnCellDraw({
-          attributeName: data.attributeName,
-          div: data.div,
-          rowdata: rowdata,
-          colData: this.vGrid.collectionFiltered[data.row]
-        }).bind(this.vGrid.$parent);
-      }
-    }
-  }
+
 
 
   /***************************************************************************************
@@ -349,7 +331,7 @@ export class VGridConfig {
 
 
     //have user added on double click event?
-    if (this.eventOnDblClick && event.type === "dblclick") {
+    if (this.eventOnDblClick && event.type === "dblclick" && this.vGrid.currentRowEntity) {
       setTimeout(()=> {
         this.eventOnDblClick(this.vGrid.currentRowEntity[this.vGrid.sgkey], attribute, event);
       }, 15)
@@ -357,7 +339,9 @@ export class VGridConfig {
 
 
     //use helper function to edit cell
-    this.vGrid.vGridCellEdit.editCellhelper(row, event, readonly);
+    if(this.vGrid.currentRowEntity){
+      this.vGrid.vGridCellEdit.editCellhelper(row, event, readonly);
+    }
 
   }
 

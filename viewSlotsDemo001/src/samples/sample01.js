@@ -22,32 +22,6 @@ export class sample01 {
   }
 
 
-  // onCellDraw (data) {
-  //   if (data) {
-  //
-  //
-  //     if(data.attributeName === "images"){
-  //       data.div.lastChild.type ="button";
-  //       data.div.lastChild.onclick = function(e){
-  //         console.log("clicked")
-  //       }.bind({that:this, data:data})
-  //     }
-  //     //if adding checkbox
-  //     if(data.attributeName === "bool"){
-  //       data.div.lastChild.type ="checkbox";
-  //       data.div.lastChild.style.height = "15px";
-  //       data.div.lastChild.style.width = "15px";
-  //       data.div.lastChild.style.left = "20%";
-  //       data.div.lastChild.checked = data.rowdata.bool
-  //       data.div.lastChild.disabled = "true"
-  //       data.div.lastChild.onclick = function(e){
-  //         console.log("clicked")
-  //       }.bind({that:this, data:data})
-  //     }
-  //
-  //   }
-  // }
-
   onDblClick (row) {
     console.log("dblclick row:"+row)
   }
