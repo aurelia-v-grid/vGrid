@@ -16,6 +16,7 @@ export class VGridCell {
   constructor(element, vGrid) {
     this.element = element;
     this.vGrid = vGrid;
+    this.hidden = false;
   }
 
 
@@ -32,7 +33,7 @@ export class VGridCell {
   }
 
 
-  setValue(value) {
+  removeCssCell() {
     if (this.element.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
       this.element.classList.remove(this.vGrid.vGridConfig.css.editCell)
     }
@@ -44,46 +45,66 @@ export class VGridCell {
     if (this.element.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)) {
       this.element.classList.remove(this.vGrid.vGridConfig.css.editCellFocus)
     }
+  }
 
 
-
-
-    if (this.vGrid.vGridConfig.colTypeArray[this.colNo] === "image") {
-      if(value !== undefined && value !== null) {
-        this.cellContent.src = value;
-      }
+  hideIfUndefined(value) {
+    if (value === undefined) {
+      this.hidden = true;
+      this.cellContent.style.display = "none";
     } else {
-      if (this.vGrid.vGridConfig.colTypeArray[this.colNo] === "checkbox") {
-        if(value === undefined){
-          this.cellContent.style.display = "none";
-        } else {
-           if(this.cellContent.style.display === "none"){
-             this.cellContent.style.display = "block";
-           }
-           this.cellContent.checked = value === "true" || value === true ? true : false;
-        }
-      } else {
-        this.cellContent.value = value || "";
+      if (this.cellContent.style.display === "none") {
+        this.hidden = false;
+        this.cellContent.style.display = "block";
       }
+      this.cellContent.src = value;
     }
+  }
+
+  setValue(value) {
+    this.removeCssCell();
+
+    var type = this.vGrid.vGridConfig.colTypeArray[this.colNo];
+    switch (type) {
+      case "image":
+        this.hideIfUndefined(value);
+        if(value !== undefined && value !== null){
+          this.cellContent.src = value;
+        }
+        break;
+      case "checkbox":
+        this.hideIfUndefined(value);
+        this.cellContent.checked = value === "true" || value === true ? true : false;
+        break;
+      default:
+        this.cellContent.value = value || "";
+    }
+
+
   }
 
 
   attached() {
-    if (this.vGrid.vGridConfig.colTypeArray[this.colNo] === "image") {
-      this.cellContent = document.createElement("img");
-    } else {
-      this.cellContent = document.createElement("input");
-    }
-    if (this.vGrid.vGridConfig.colTypeArray[this.colNo] === "checkbox") {
-      this.cellContent.type = "checkbox";
-      this.cellContent.onclick = function (e) {
-        if (!this.vGrid.vGrid.vGridCellEdit.editMode) {
-          return false;
-        }
 
-      }.bind(this)
+
+    var type = this.vGrid.vGridConfig.colTypeArray[this.colNo];
+    switch (type) {
+      case "image":
+        this.cellContent = document.createElement("img");
+        break;
+      case "checkbox":
+        this.cellContent = document.createElement("input");
+        this.cellContent.type = "checkbox";
+        this.cellContent.onclick = function (e) {
+          if (!this.vGrid.vGridCellEdit.editMode) {
+            return false;
+          }
+        }.bind(this);
+        break;
+      default:
+        this.cellContent = document.createElement("input");
     }
+
 
     this.cellContent.classList.add(this.vGrid.vGridConfig.css.cellContent);
     this.cellContent.setAttribute(this.vGrid.vGridConfig.atts.dataAttribute, this.vGrid.vGridConfig.attributeArray[this.colNo]);
@@ -91,7 +112,7 @@ export class VGridCell {
     this.cellContent.style.opacity = 1; //so materilize dont mess up
     this.cellContent.style.border = 0;
     this.cellContent.style.transition = "0ms";
-    this.cellContent.setAttribute("tabindex", "0")
+    this.cellContent.setAttribute("tabindex", "0");
 
     if (this.bindingContext) {
       this.setValue(this.bindingContext[this.vGrid.vGridConfig.attributeArray[this.colNo]])

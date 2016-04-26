@@ -273,12 +273,7 @@ export class eventOnRowDraw extends VGridAttibutes {
   type = "fn";
 }
 
-@customAttribute('v-cell-on-draw')
-@inject(Element, Optional.of(VGrid))
-export class eventOnCellDraw extends VGridAttibutes {
-  attribute = "eventOnCellDraw"
-  type = "fn";
-}
+
 
 @customAttribute('v-header-input-click')
 @inject(Element, Optional.of(VGrid))

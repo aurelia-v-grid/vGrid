@@ -542,18 +542,6 @@ export class VGridGenerator {
 
 
 
-        //call celldraw option, if this is set 13/03-2016 removing, complete rowmarkup option will replace
-        // if (this.vGridConfig.eventOnCellDraw) {
-        //   var rowCells = rowHtmlElement.lastElementChild.children;
-        //   for (var i = 0; i < rowCells.length; i++) {
-        //     this.vGridConfig.cellDrawEvent({
-        //       attributeName: this.vGridConfig.attributeArray[i],
-        //       div: rowCells[i],
-        //       row: rowNo
-        //     })
-        //   }
-        // }
-
       });
   };
 

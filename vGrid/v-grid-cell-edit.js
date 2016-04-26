@@ -74,10 +74,6 @@ export class VGridCellEdit {
   removeEditCssClasses(element) {
     element.setAttribute("readonly", "false");
 
-    if (this.attributeType = "checkbox") {
-      // element.disabled = true;
-    }
-
     let elementX;
     if (element.parentNode) {
       elementX = element.parentNode;
@@ -514,7 +510,7 @@ export class VGridCellEdit {
 
   getValue(element) {
 
-    var attribute = this.newTarget.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
+    var attribute = element.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
     var index = this.vGrid.vGridConfig.attributeArray.indexOf(attribute);
     var attributeType = this.vGrid.vGridConfig.colTypeArray[index];
 
@@ -568,7 +564,7 @@ export class VGridCellEdit {
       //if image set focus to main cell/column
       this.attribute = this.newTarget.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
       this.index = this.vGrid.vGridConfig.attributeArray.indexOf(this.attribute);
-      this.attributeType = this.vGrid.vGridConfig.colTypeArray[this.index];
+      this.attributeType = this.vGrid.vGridConfig.colTypeArray[this.index] || "";
       this.newTarget.setAttribute("tabindex", "0");
 
 
@@ -592,7 +588,7 @@ export class VGridCellEdit {
       if (this.type === "dblclick" || this.editMode) {
         if (this.readOnly === false && this.attributeType !== "image") {
           if (this.curElement !== this.newTarget || this.editMode === false) {
-            if (this.attributeType !== "image") {
+            if (this.attributeType !== "image" && this.vGrid.collectionFiltered[row]) {
               this.beforeCellEdit({
                 attribute: this.attribute,
                 value: this.getValue(this.newTarget),
