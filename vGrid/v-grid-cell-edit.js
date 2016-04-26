@@ -13,6 +13,7 @@ export class VGridCellEdit {
   editMode = false;
   update = true;
   filter = false; //if filter run is might be same element, so wee need to run the before edit
+  scrollChecked = false;
 
   constructor(vGrid) {
     this.vGrid = vGrid;
@@ -50,7 +51,6 @@ export class VGridCellEdit {
   };
 
 
-
   /***************************************************************************************
    * sets "the cells" from a top value, used for page up/down
    ***************************************************************************************/
@@ -73,18 +73,21 @@ export class VGridCellEdit {
    ***************************************************************************************/
   removeEditCssClasses(element) {
     element.setAttribute("readonly", "false");
+
+    if (this.attributeType = "checkbox") {
+      // element.disabled = true;
+    }
+
     let elementX;
     if (element.parentNode) {
-      elementX = element.parentNode
+      elementX = element.parentNode;
     } else {
-      elementX = element.parentNode
+      elementX = element.parentNode;
     }
     elementX.classList.remove(this.vGrid.vGridConfig.css.editCell);
     elementX.classList.remove(this.vGrid.vGridConfig.css.editCellWrite);
     elementX.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
   }
-
-
 
 
   /***************************************************************************************
@@ -101,7 +104,6 @@ export class VGridCellEdit {
   }
 
 
-
   /***************************************************************************************
    * simple delay for the keydown events, like tabbing etc, so I cantrol the speed of it
    ***************************************************************************************/
@@ -113,7 +115,6 @@ export class VGridCellEdit {
       }, 150)
     }
   }
-
 
 
   /***************************************************************************************
@@ -203,9 +204,6 @@ export class VGridCellEdit {
       }
 
 
-
-
-
       //arrow right
       if (e.keyCode === 39 && !this.editMode) {
         e.preventDefault();
@@ -234,7 +232,6 @@ export class VGridCellEdit {
       }
 
 
-
       //arrow up
       if (e.keyCode === 38) {
         e.preventDefault();
@@ -246,8 +243,6 @@ export class VGridCellEdit {
           }
         });
       }
-
-
 
 
       //tab and shift key for tabing in other direction
@@ -265,7 +260,6 @@ export class VGridCellEdit {
           }
         });
       }
-
 
 
       //normal tabbing
@@ -300,8 +294,6 @@ export class VGridCellEdit {
   }
 
 
-
-
   /***************************************************************************************
    * listen for "enter key"
    ***************************************************************************************/
@@ -320,28 +312,25 @@ export class VGridCellEdit {
   }
 
 
-
-
   /***************************************************************************************
    * call back if format handler is set
    ***************************************************************************************/
   formatHandler(type, obj) {
 
 
-
     switch (type) {
       case "beforeEdit":
         if (this.vGrid.vGridConfig.eventFormatHandler) {
-          return this.vGrid.$parent[this.vGrid.vGridConfig.eventFormatHandler](type, obj)
+          return this.vGrid.vGridConfig.eventFormatHandler(type, obj)
         } else {
           return obj;
         }
         break;
       case "afterEdit":
         if (this.vGrid.vGridConfig.eventFormatHandler) {
-          return this.vGrid.$parent[this.vGrid.vGridConfig.eventFormatHandler](type, {
+          return this.vGrid.vGridConfig.eventFormatHandler(type, {
             attribute: this.attribute,
-            value: this.curElement.value,
+            value: this.getValue(this.curElement),
             oldValue: this.vGrid.collectionFiltered[this.row][this.attribute],
             element: this.curElement
           })
@@ -357,7 +346,6 @@ export class VGridCellEdit {
   }
 
 
-
   /***************************************************************************************
    * main callback obj
    ***************************************************************************************/
@@ -365,13 +353,12 @@ export class VGridCellEdit {
 
     return {
       attribute: this.attribute,
-      value: this.curElement.value,
+      value: this.getValue(this.curElement),
       oldValue: this.oldValue,
       element: this.curElement
     };
 
   }
-
 
 
   /***************************************************************************************
@@ -381,8 +368,15 @@ export class VGridCellEdit {
     if (this.updated === false) {
       this.updateActual(this.callbackObject());
     }
+    if (this.scrollChecked === false) {
+      this.scrollChecked === true;
+      if (this.curElement) {
+        if (this.curElement.parentNode.classList.contains(this.vGrid.vGridConfig.css.editCellFocus) || this.curElement.parentNode.classList.contains(this.vGrid.vGridConfig.css.editCell)) {
+          this.removeEditCssClasses(this.curElement);
+        }
+      }
+    }
   }
-
 
 
   /***************************************************************************************
@@ -390,6 +384,7 @@ export class VGridCellEdit {
    ***************************************************************************************/
   setBackFocus(filter) {
     this.filter = filter;
+    this.scrollChecked = false;
     if (this.curElement) {
       var rowNo = this.vGrid.filterRow;
       var rowheight = this.vGrid.vGridConfig.rowHeight;
@@ -411,19 +406,22 @@ export class VGridCellEdit {
               this.cells[this.index].parentNode.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
             }
             this.cells[this.index].removeAttribute("readonly");//if I dont do this, then they cant enter
+            //this.cells[this.index].removeAttribute("disabled")
+
+
             if (this.attributeType !== "image" && this.vGrid.collectionFiltered[this.row]) {
               this.beforeCellEdit({
                 attribute: this.attribute,
-                value: this.curElement.value,
+                value: this.getValue(this.curElement),
                 oldValue: this.vGrid.collectionFiltered[this.row][this.attribute],
                 element: this.curElement
               });
             }
-            if(this.filter){
+            if (this.filter) {
               this.filter = false;
               this.beforeCellEdit({
                 attribute: this.attribute,
-                value: this.curElement.value,
+                value: this.getValue(this.curElement),
                 oldValue: this.vGrid.collectionFiltered[rowNo][this.attribute],
                 element: this.curElement
               });
@@ -439,7 +437,6 @@ export class VGridCellEdit {
 
     }
   }
-
 
 
   /***************************************************************************************
@@ -458,8 +455,6 @@ export class VGridCellEdit {
   }
 
 
-
-
   /***************************************************************************************
    * update data before moring to next row
    ***************************************************************************************/
@@ -473,14 +468,12 @@ export class VGridCellEdit {
   }
 
 
-
   /***************************************************************************************
    * update last row, so user have have other values/cells set
    ***************************************************************************************/
   updateLastRow(row) {
     this.vGrid.vGridGenerator.updateRow(row, true);
   }
-
 
 
   /***************************************************************************************
@@ -507,9 +500,31 @@ export class VGridCellEdit {
 
     obj = this.formatHandler("beforeEdit", obj);
     if (obj.newValue) {
-      obj.element.value = obj.newValue;
+
+      if (this.attributeType === "checkbox") {
+        obj.element.checked = obj.newValue;
+      } else {
+        obj.element.value = obj.newValue;
+      }
     }
 
+
+  }
+
+
+  getValue(element) {
+
+    var attribute = this.newTarget.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
+    var index = this.vGrid.vGridConfig.attributeArray.indexOf(attribute);
+    var attributeType = this.vGrid.vGridConfig.colTypeArray[index];
+
+    if (attributeType !== "image") {
+      if (attributeType === "checkbox") {
+        return element.checked;
+      } else {
+        return element.value;
+      }
+    }
 
   }
 
@@ -525,7 +540,7 @@ export class VGridCellEdit {
       }
     }
 
-
+    this.scrollChecked = false;
 
     if (this.newTarget.classList.contains(this.vGrid.vGridConfig.css.cellContent)) {
 
@@ -547,19 +562,19 @@ export class VGridCellEdit {
             }
           }
         }
+
       }
 
       //if image set focus to main cell/column
       this.attribute = this.newTarget.getAttribute(this.vGrid.vGridConfig.atts.dataAttribute);
+      this.index = this.vGrid.vGridConfig.attributeArray.indexOf(this.attribute);
       this.attributeType = this.vGrid.vGridConfig.colTypeArray[this.index];
-      this.newTarget.setAttribute("tabindex", 0);
+      this.newTarget.setAttribute("tabindex", "0");
 
 
       //get som vars we need
       this.readOnly = readOnly;
-      this.index = this.vGrid.vGridConfig.attributeArray.indexOf(this.attribute);
       this.type = e.type;
-
 
 
       //set css
@@ -580,7 +595,7 @@ export class VGridCellEdit {
             if (this.attributeType !== "image") {
               this.beforeCellEdit({
                 attribute: this.attribute,
-                value: this.newTarget.value,
+                value: this.getValue(this.newTarget),
                 oldValue: this.vGrid.collectionFiltered[row][this.attribute],
                 element: this.newTarget
               });
@@ -591,6 +606,7 @@ export class VGridCellEdit {
             this.newTarget.parentNode.classList.remove(this.vGrid.vGridConfig.css.editCellFocus);
           }
           e.target.removeAttribute("readonly");//if I dont do this, then they cant enter
+          // this.newTarget.disabled =false;
 
         } else {
           this.newTarget.parentNode.classList.add(this.vGrid.vGridConfig.css.editCellFocus);
@@ -602,11 +618,10 @@ export class VGridCellEdit {
       }
 
 
-
       this.updated = false;
       this.row = row;
       this.curElement = this.newTarget;
-      this.oldValue = this.curElement.value;
+      this.oldValue = this.getValue(this.curElement);
       this.cells = this.curElement.parentNode.parentNode.querySelectorAll("." + this.vGrid.vGridConfig.css.cellContent);
 
 
@@ -617,9 +632,6 @@ export class VGridCellEdit {
       if (this.vGrid.vGridGenerator.htmlCache.content.scrollLeft > 0 && this.vGrid.vGridGenerator.htmlCache.content.clientWidth > this.curElement.parentNode.offsetLeft) {
         this.vGrid.vGridGenerator.htmlCache.content.scrollLeft = this.curElement.parentNode.offsetLeft;
       }
-
-
-
 
 
       setTimeout(()=> {
@@ -639,20 +651,20 @@ export class VGridCellEdit {
       }
 
 
-
-
       // this.curElement.parentNode.focus();
       this.curElement.focus();
+      // if(this.attributeType === "checkbox"){
+      //   this.curElement.parentNode.focus();
+      // }
       if (this.editMode) {
         this.elementKeyDown();
         if (this.curElement.select) {
-          if(this.type === "dblclick"){
+          if (this.type === "dblclick") {
             this.curElement.select();
           }
 
         }
       }
-
 
 
     }

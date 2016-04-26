@@ -70,8 +70,8 @@
 .vGrid div.vGrid-body {
   position: relative;
   white-space: nowrap;
-  background-image: url("styles/spinner.gif");
-  background-position: center;
+  /*background-image: url("styles/spinner.gif");*/
+  /*background-position: center;*/
   -webkit-overflow-scrolling: touch;
 }
 
@@ -405,6 +405,8 @@
   display: none;
   box-shadow: 0 0 10px #713C3C;
 }
+
+
 .vGrid-menu ul{
   list-style: none;
   padding: 0;
@@ -425,7 +427,12 @@
 }
 
 /*//materialize messed up inputs */
-.vGrid input {
+.vGrid * input {
   margin: 0 0 0 0 !important;
+
+
 }
 
+.vGrid input:not([type])[readonly]{
+  color:black !important;
+}

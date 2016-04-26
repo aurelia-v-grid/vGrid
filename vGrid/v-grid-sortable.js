@@ -30,9 +30,6 @@ export class VGridSortable {
   }
 
 
-
-
-
   //sets the elements draggable attribute
   setDraggable(newStatus) {
 
@@ -43,16 +40,13 @@ export class VGridSortable {
   }
 
 
-
-
-
   //triggered on drag start
   onDragStart(evt) {
 
     this.dragEl = evt.target;
     this.oldIndex = evt.target.getAttribute("column-no");
-    
-    if(this.canMove()){
+
+    if (this.canMove()) {
       this.onStart();
       this.nextEl = this.dragEl.nextSibling;
 
@@ -72,9 +66,6 @@ export class VGridSortable {
   }
 
 
-
-
-
   //sortable.js used this, so Ill just use it like this while I do testing
   option(type, disabled) {
     if (disabled) {
@@ -83,8 +74,6 @@ export class VGridSortable {
       this.setDraggable(true);
     }
   }
-
-
 
 
   //on drag over event(moving)
@@ -97,7 +86,7 @@ export class VGridSortable {
     evt.dataTransfer.dropEffect = 'move';
 
     var target = evt.target.offsetParent;
-    if (target && target !== this.dragEl && target.nodeName == 'DIV' && target.getAttribute("draggable")==="true") {
+    if (target && target !== this.dragEl && target.nodeName == 'DIV' && target.getAttribute("draggable") === "true") {
       this.newIndex = target.getAttribute("column-no");
       var rect = target.getBoundingClientRect();
       var width = rect.right - rect.left;
@@ -112,9 +101,6 @@ export class VGridSortable {
   }
 
 
-
-
-
   //on drag end
   onDragEnd(evt) {
 
@@ -126,7 +112,7 @@ export class VGridSortable {
 
     if (this.nextEl !== this.dragEl.nextSibling) {
       this.onUpdate(parseInt(this.oldIndex), parseInt(this.newIndex));
-    } else{
+    } else {
       this.onCancel();
     }
   }

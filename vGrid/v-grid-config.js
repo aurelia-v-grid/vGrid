@@ -57,46 +57,15 @@ export class VGridConfig {
     dataAttributeFilter: "v-grid-data-attribute-filter"
   };
 
+  bind() {
+    debugger;
+  }
 
   constructor(vGrid) {
     this.vGrid = vGrid;
 
 
-    this.rowData = this.vGrid.element.getElementsByTagName("V-GRID-ROW")[0];
-    this.columns = this.rowData.getElementsByTagName("V-GRID-COL");
-
-    //mini error checking //todo improve as I add the stuff I want
-    if (!this.rowData) {
-      throw "error, you need to add the row for the grid to work atm"
-    }
-    if (this.vGrid.gridContextMissing && !this.rowData) {
-      throw "grid needs context under config attributes, or row element"
-    }
-
-    //hide the element user adds
-    this.rowData.style.display = "none";
-
-    /***************************************************************************************
-     * Helper for setting values
-     ***************************************************************************************/
-    let type = {
-      "true": true,
-      "false": false
-    };
-
-
-    let setValue = (contextValue, htmlAttributeValue, defaultValue) => {
-      var value = defaultValue;
-      if (contextValue !== undefined && contextValue !== null) {
-        value = contextValue
-      } else {
-        if (htmlAttributeValue !== undefined && htmlAttributeValue !== null && !isNaN(htmlAttributeValue)) {
-          value = htmlAttributeValue;
-        }
-      }
-      return value;
-    };
-
+    this.columns = [];
     this.attributeArray = [];
     this.columnWidthArray = [];
     this.headerArray = [];
@@ -105,97 +74,49 @@ export class VGridConfig {
     this.colStyleArray = [];
     this.colTypeArray = [];
 
-    if (this.columns.length === 0) {
-      //not in use atm, this will be the mobile view part, where you can set
-      //if not columns, we want to set all inside row to repeat
-      //this sets row to 100%
-      this.columnWidthArrayOverride = true;
+    this.rowHeight = 50;
+    this.headerHeight = 0;
+    this.footerHeight = 0;
+    this.isResizableHeaders = false;
+    this.isMultiSelect = undefined;
+    this.isSortableHeader = false;
+    this.requestAnimationFrame = true;
+    this.resizableHeadersAndRows = false;
+    this.renderOnScrollbarScroll = true;
+    this.lockedColumns = 0;
+    this.addFilter = false;
+    this.filterOnAtTop = false;
+    this.filterOnKey = false;
+    this.sortOnHeaderClick = false;
+    this.largeBuffer = false;
 
-      //this gets called when its building row
-      this.onRowMarkupCreate = () => {
-        return this.rowData.innerHTML;
-      };
+    this.eventFormatHandler = null;
+    this.eventOnDblClick = null;
+    this.eventOnRowDraw = null;
+    this.eventOnCellDraw = null;
+    this.eventOnHeaderInputClick = null;
 
-      this.attributeArray = this.vGrid.element.getAttribute("attibutes-used").split(",");
+    this.doNotAddFilterTo = [];
+    this.sortNotOnHeader = [];
 
-    } else {
-      //if row contains columns, then we need to get the data
-      //array options, get then from the elements and add them to options
-
-      for (var i = 0; i < this.columns.length; i++) {
-        this.attributeArray.push(this.columns[i].getAttribute("attribute"));
-        this.columnWidthArray.push(this.columns[i].getAttribute("col-width"));
-        this.headerArray.push(this.columns[i].getAttribute("header") || "");
-        this.colStyleArray.push(this.columns[i].getAttribute("col-css") || "");
-        this.colTypeArray.push(this.columns[i].getAttribute("col-type") || "");
-        this.filterArray.push(this.columns[i].getAttribute("default-filter") || "?");
-        this.readOnlyArray.push(this.columns[i].getAttribute("read-only") === "true" ? this.columns[i].getAttribute("attribute") : false);
-      }
-
-      //incase user are overriding it, or just dont wanto use markup
-      this.attributeArray = this.vGrid.gridContext.attributeArray || this.attributeArray;
-      this.columnWidthArray = this.vGrid.gridContext.columnWidthArray || this.columnWidthArray;
-      this.headerArray = this.vGrid.gridContext.headerArray || this.headerArray;
-      this.filterArray = this.vGrid.gridContext.filterArray || this.filterArray;
-      this.readOnlyArray = this.vGrid.gridContext.readOnlyArray || this.readOnlyArray;
-      this.colStyleArray = this.vGrid.gridContext.colStyleArray || this.colStyleArray;
-      this.colTypeArray = this.vGrid.gridContext.colTypeArray || this.colTypeArray;
-    }
-
-
-
-
-
-    /***************************************************************************************
-     * Set attibutes
-     ***************************************************************************************/
-    this.rowHeight = setValue(this.vGrid.gridContext.rowHeight, parseInt(this.vGrid.element.getAttribute("row-height")), 50);
-    this.headerHeight = setValue(this.vGrid.gridContext.headerHeight, parseInt(this.vGrid.element.getAttribute("header-height")), 0);
-    this.footerHeight = setValue(this.vGrid.gridContext.footerHeight, parseInt(this.vGrid.element.getAttribute("footer-height")), 0);
-    this.isResizableHeaders = setValue(this.vGrid.gridContext.resizableHeaders, type[this.vGrid.element.getAttribute("resizable-headers")], false);
-    this.isMultiSelect = setValue(this.vGrid.gridContext.multiSelect, type[this.vGrid.element.getAttribute("multi-select")], undefined);
-    this.isSortableHeader = setValue(this.vGrid.gridContext.sortableHeader, type[this.vGrid.element.getAttribute("sortable-headers")], false);
-    this.requestAnimationFrame = setValue(this.vGrid.gridContext.requestAnimationFrame, type[this.vGrid.element.getAttribute("request-animation-frame")], true);
-    this.resizableHeadersAndRows = setValue(this.vGrid.gridContext.resizeAlsoRows, type[this.vGrid.element.getAttribute("resize-also-rows")], false);
-    this.renderOnScrollbarScroll = setValue(this.vGrid.gridContext.renderOnScrollbarScroll, type[this.vGrid.element.getAttribute("render-on-scrollbar-scroll")], true);
-    this.lockedColumns = setValue(this.vGrid.gridContext.lockedColumns, parseInt(this.vGrid.element.getAttribute("locked-columns")), 0);
-    this.addFilter = setValue(this.vGrid.gridContext.headerFilter, type[this.vGrid.element.getAttribute("header-filter")], false);
-    this.filterOnAtTop = setValue(this.vGrid.gridContext.headerFilterTop, type[this.vGrid.element.getAttribute("header-filter-top")], false);
-    this.filterOnKey = setValue(this.vGrid.gridContext.headerFilterOnkeydown, type[this.vGrid.element.getAttribute("header-filter-onkeydown")], false);
-    this.sortOnHeaderClick = setValue(this.vGrid.gridContext.sortOnHeaderClick, type[this.vGrid.element.getAttribute("sort-on-header-click")], false);
-    this.largeBuffer = setValue(this.vGrid.gridContext.largeBuffer, type[this.vGrid.element.getAttribute("large-buffer")], false);
-
-    this.eventFormatHandler = this.vGrid.element.getAttribute("format-handler");
-    this.eventOnDblClick = this.vGrid.element.getAttribute("row-on-dblclick");
-    this.eventOnRowDraw = this.vGrid.element.getAttribute("row-on-draw");
-    this.eventOnCellDraw = this.vGrid.element.getAttribute("cell-on-draw");
-    this.eventOnHeaderInputClick = this.vGrid.element.getAttribute("header-input-click");
-
-
-    if (this.vGrid.element.getAttribute("header-filter-not-to")) {
-      this.doNotAddFilterTo = this.vGrid.element.getAttribute("header-filter-not-to").split(",")
-    } else {
-      if (this.vGrid.gridContext.headerFilterNotTo) {
-        this.doNotAddFilterTo = this.vGrid.gridContext.headerFilterNotTo.split(",")
-      } else {
-        this.doNotAddFilterTo = [];
-      }
-    }
-
-    if (this.vGrid.element.getAttribute("sort-not-on-header")) {
-      this.sortNotOnHeader = this.vGrid.element.getAttribute("sort-not-on-header").split(",")
-    } else {
-      if (this.vGrid.gridContext.sortNotOnHeader) {
-        this.sortNotOnHeader = this.vGrid.gridContext.sortNotOnHeader.split(",")
-      } else {
-        this.sortNotOnHeader = [];
-      }
-    }
 
   }
 
 
+  //from string interpolate
+  attributes = [];
 
+  getNewObject(obj) {
+    if (obj) {
+      var x = {};
+      this.attributes.forEach((prop)=> {
+        x[prop] = obj[prop];
+      });
+      return x;
+    } else {
+      return "";
+    }
+  }
 
 
   /***************************************************************************************
@@ -208,9 +129,9 @@ export class VGridConfig {
       //get sel keys
 
       //if they filter we want to make sure the after cell edit happends
-      if(this.vGrid.vGridCellEdit.curElement && this.vGrid.vGridCellEdit.updated === false) {
-          this.vGrid.vGridCellEdit.updateActual(this.vGrid.vGridCellEdit.callbackObject());
-        }
+      if (this.vGrid.vGridCellEdit.curElement && this.vGrid.vGridCellEdit.updated === false) {
+        this.vGrid.vGridCellEdit.updateActual(this.vGrid.vGridCellEdit.callbackObject());
+      }
 
       var curKey = -1;
       if (this.vGrid.currentRowEntity) {
@@ -220,16 +141,13 @@ export class VGridConfig {
         this.vGrid.collectionFiltered = this.vGrid.collection.slice(0);
       } else {
         if (this.eventFormatHandler) {
-          if (this.vGrid.$parent[this.eventFormatHandler]) {
-            filterObj = this.vGrid.$parent[this.eventFormatHandler]("onFilter", filterObj)
-          }
+          filterObj = this.eventFormatHandler("onFilter", filterObj)
         }
 
         this.vGrid.collectionFiltered = this.vGrid.vGridFilter.run(this.vGrid.collection, filterObj);
         this.vGrid.vGridSort.run(this.vGrid.collectionFiltered);
 
       }
-
 
 
       //set current row/entity in sync
@@ -269,19 +187,16 @@ export class VGridConfig {
   }
 
 
-
-
-
   /***************************************************************************************
    * This just sets data from array,
    * Use {} if you want markup of columns, or undefined for total blank rows
    ***************************************************************************************/
   getDataElement(row, isDown, isLargeScroll, callback) {
     if (this.vGrid.collectionFiltered !== undefined) {
-      if (this.vGrid.$parent[this.eventOnRowDraw]) {
+      if (this.eventOnRowDraw) {
         //if user have added this then we call it so they can edit the row data before we display it
-        var data = this.vGrid.vGridInterpolate.getNewObject(this.vGrid.collectionFiltered[row]);
-        this.vGrid.$parent[this.eventOnRowDraw](data, this.vGrid.collectionFiltered[row]);
+        var data = this.getNewObject(this.vGrid.collectionFiltered[row]);
+        this.eventOnRowDraw(data, this.vGrid.collectionFiltered[row]);
         callback(data)
       } else {
         callback(this.vGrid.collectionFiltered[row]);
@@ -296,20 +211,18 @@ export class VGridConfig {
    ***************************************************************************************/
   cellDrawEvent(data) {
     if (this.vGrid.collectionFiltered !== undefined) {
-      if (this.vGrid.$parent[this.eventOnCellDraw]) {
+      if (this.eventOnCellDraw) {
         //if user have added this then we call it so they can edit the row data before we display it
-        var rowdata = this.vGrid.vGridInterpolate.getNewObject(this.vGrid.collectionFiltered[data.row]);
-        this.vGrid.$parent[this.eventOnCellDraw]({
+        var rowdata = this.getNewObject(this.vGrid.collectionFiltered[data.row]);
+        this.eventOnCellDraw({
           attributeName: data.attributeName,
           div: data.div,
           rowdata: rowdata,
           colData: this.vGrid.collectionFiltered[data.row]
-        });
+        }).bind(this.vGrid.$parent);
       }
     }
   }
-
-
 
 
   /***************************************************************************************
@@ -319,9 +232,9 @@ export class VGridConfig {
   onOrderBy(event, setheaders) {
 
     //if they sort we want to make sure the after cell edit happends
-    if(this.vGrid.vGridCellEdit.curElement && this.vGrid.vGridCellEdit.updated === false) {
-        this.vGrid.vGridCellEdit.updateActual(this.vGrid.vGridCellEdit.callbackObject());
-      }
+    if (this.vGrid.vGridCellEdit.curElement && this.vGrid.vGridCellEdit.updated === false) {
+      this.vGrid.vGridCellEdit.updateActual(this.vGrid.vGridCellEdit.callbackObject());
+    }
 
 
     //get clicked
@@ -360,10 +273,7 @@ export class VGridConfig {
     }
 
 
-
   }
-
-
 
 
   /***************************************************************************************
@@ -386,9 +296,6 @@ export class VGridConfig {
   }
 
 
-
-
-
   /***************************************************************************************
    * Just for knowing length,
    * Its this you will need to add for server source/paging with endless scrolling
@@ -402,12 +309,12 @@ export class VGridConfig {
   }
 
 
-  filterCellClick(event){
+  filterCellClick(event) {
     let attribute = event.target.getAttribute(this.atts.dataAttribute);
-    if (this.vGrid.$parent[this.eventOnHeaderInputClick]) {
+    if (this.eventOnHeaderInputClick) {
       //if user have added this then we call it so they can edit the row data before we display it
 
-      this.vGrid.$parent[this.eventOnHeaderInputClick](null, attribute, event);
+      this.eventOnHeaderInputClick(null, attribute, event);
     }
 
   }
@@ -442,9 +349,9 @@ export class VGridConfig {
 
 
     //have user added on double click event?
-    if (this.vGrid.$parent[this.eventOnDblClick] && event.type === "dblclick") {
+    if (this.eventOnDblClick && event.type === "dblclick") {
       setTimeout(()=> {
-        this.vGrid.$parent[this.eventOnDblClick](this.vGrid.currentRowEntity[this.vGrid.sgkey], attribute, event);
+        this.eventOnDblClick(this.vGrid.currentRowEntity[this.vGrid.sgkey], attribute, event);
       }, 15)
     }
 
@@ -453,7 +360,6 @@ export class VGridConfig {
     this.vGrid.vGridCellEdit.editCellhelper(row, event, readonly);
 
   }
-
 
 
 }

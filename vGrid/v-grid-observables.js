@@ -58,9 +58,6 @@ export class VGridObservables {
   }
 
 
-
-
-
   /***************************************************************************************
    * enable attributes observables, like collection.push/pop/slice, etc etc
    ***************************************************************************************/
@@ -165,9 +162,9 @@ export class VGridObservables {
         if (this.vGrid.filterRowDisplaying) {
           this.vGrid.vGridCellEdit.setBackFocus();
         }
-        
+
         //reset scroll to bottom next.
-        if(this.vGrid.scrollBottomNext === true){
+        if (this.vGrid.scrollBottomNext === true) {
           this.vGrid.scrollBottomNext = false;
         }
 
@@ -175,9 +172,6 @@ export class VGridObservables {
     });
     this.subscriptionsArray = arrayObserver
   }
-
-
-
 
 
   /***************************************************************************************
@@ -203,9 +197,6 @@ export class VGridObservables {
   }
 
 
-
-
-
   /***************************************************************************************
    *  disable collection observables
    ***************************************************************************************/
@@ -215,9 +206,6 @@ export class VGridObservables {
   }
 
 
-
-
-
   /***************************************************************************************
    * disable the array observables
    ***************************************************************************************/
@@ -225,9 +213,6 @@ export class VGridObservables {
     this.subscriptionsArray.unsubscribe();
     this.subscriptionsArray = null;
   }
-
-
-
 
 
   /***************************************************************************************
@@ -242,9 +227,6 @@ export class VGridObservables {
     }
     this.subscriptionsAttributes = [];
   }
-
-
-
 
 
 }
