@@ -27,13 +27,9 @@ How to use: (no plugin yet):
 .plugin("vGrid/plugin");
 ```
 
-todo, show more when Ive renamed a few tings
+* todo, show more when Ive renamed a few tings/ and cleaned up more
 
-< v-grid > attributes:
 
-v-collection
-grid-context
-current-entity
 ### < v-grid > attributes:
 * v-current-entity
 * v-grid-context
