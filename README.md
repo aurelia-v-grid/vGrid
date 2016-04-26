@@ -1,10 +1,12 @@
-vGrid - Custom Element for Aurelia
+Rebuilding branch
 ----------------------------------
 
 
 [Demo with grid using viewslots](http://vegarringdal.github.io/vGrid/viewSlotsDemo001/)
 
-This branch Im rebuild a lot, will keep it as a own project since I will do breaking changes, suggestions are welcome
+---
+
+This branch Im rebuilding a lot, will keep it as a own project since I will do breaking changes, suggestions are welcome
 
 
 
