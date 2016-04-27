@@ -11,104 +11,104 @@ export class sample01 {
 
   };
 
-  onRowDraw (data, collectionData) {
-    if (data) {
-      if (data.country === "Angola") {
-        data.myCustomColor = "rgba(150,72,230, 0.3)"
-      }
-      data.date = this.formatDate(data.date)
-      data.number = Math.round(data.number)
-    }
-  }
-
-
-  onDblClick (row) {
-    console.log("dblclick row:"+row)
-  }
-
-  formatDate (date){
-    var lengthCheck = (x) =>{
-      if(x.toString().length === 1){
-        return "0"+x;
-      } else {
-        return x;
-      }
-    };
-
-    var dateObj = new Date(date);
-    var newDate =[];
-    newDate[0] = lengthCheck(dateObj.getDate());
-    newDate[1] = lengthCheck(dateObj.getMonth()+1);
-    newDate[2] = lengthCheck(dateObj.getFullYear());
-    return newDate.join(".")
-  };
-
-  myFormatHandler(type, obj){
-
-    //very silly, but more to show the callback
-    if(type === "afterEdit"){
-      console.log("afterEdit")
-      if(obj.attribute === "date"){
-        var date = new Date(obj.oldValue);
-        if(obj.value.length === 10){
-          var newdate = obj.value.split(".");
-          date.setDate(newdate[0]);
-          date.setMonth(newdate[1]-1);
-          date.setYear(newdate[2]);
-          try{
-            obj.value = date.toISOString();
-          } catch(e){
-            obj.value = obj.oldValue
-          }
-        } else {
-          obj.value = obj.oldValue
-        }
-      }
-
-
-      return obj;
-    }
-
-    if(type === "onFilter"){
-
-      obj.forEach((x) => {
-        if(x.attribute === "date"){
-          //if date
-          if(x.value.length === 10){
-            //if it have full length I know I need to be sure I can convert it into date
-            var tempdate = new Date();
-            var newdate = x.value.split(".");
-            tempdate.setDate(newdate[0]);
-            tempdate.setMonth(newdate[1]-1);
-            tempdate.setYear(newdate[2]);
-            tempdate.setHours(0);
-            tempdate.setMinutes(0);
-            tempdate.setSeconds(0);
-            tempdate.setMilliseconds(0);
-            x.value = tempdate.toISOString();
-          } else {
-            x.value ="";
-          }
-        }
-      });
-
-      return obj;
-    }
-
-
-
-    if(type === "beforeEdit"){
-      console.log("beforeEdit")
-      if(obj.attribute === "number"){
-        obj.newValue = obj.oldValue;
-      }
-      //if adding checkbox
-      // if(obj.attribute === "bool"){
-      //   obj.element.disabled = false;
-      // }
-      return obj;
-    }
-  }
+  // onRowDraw (data, collectionData) {
+  //   if (data) {
+  //     if (data.country === "Angola") {
+  //       data.myCustomColor = "rgba(150,72,230, 0.3)"
+  //     }
+  //     data.date = this.formatDate(data.date)
+  //     data.number = Math.round(data.number)
+  //   }
+  // }
+  //
+  //
+  // onDblClick (row) {
+  //   console.log("dblclick row:"+row)
+  // }
+  //
+  // formatDate (date){
+  //   var lengthCheck = (x) =>{
+  //     if(x.toString().length === 1){
+  //       return "0"+x;
+  //     } else {
+  //       return x;
+  //     }
+  //   };
+  //
+  //   var dateObj = new Date(date);
+  //   var newDate =[];
+  //   newDate[0] = lengthCheck(dateObj.getDate());
+  //   newDate[1] = lengthCheck(dateObj.getMonth()+1);
+  //   newDate[2] = lengthCheck(dateObj.getFullYear());
+  //   return newDate.join(".")
+  // };
+  //
+  // myFormatHandler(type, obj){
+  //
+  //   //very silly, but more to show the callback
+  //   if(type === "afterEdit"){
+  //     console.log("afterEdit")
+  //     if(obj.attribute === "date"){
+  //       var date = new Date(obj.oldValue);
+  //       if(obj.value.length === 10){
+  //         var newdate = obj.value.split(".");
+  //         date.setDate(newdate[0]);
+  //         date.setMonth(newdate[1]-1);
+  //         date.setYear(newdate[2]);
+  //         try{
+  //           obj.value = date.toISOString();
+  //         } catch(e){
+  //           obj.value = obj.oldValue
+  //         }
+  //       } else {
+  //         obj.value = obj.oldValue
+  //       }
+  //     }
+  //
+  //
+  //     return obj;
+  //   }
+  //
+  //   if(type === "onFilter"){
+  //
+  //     obj.forEach((x) => {
+  //       if(x.attribute === "date"){
+  //         //if date
+  //         if(x.value.length === 10){
+  //           //if it have full length I know I need to be sure I can convert it into date
+  //           var tempdate = new Date();
+  //           var newdate = x.value.split(".");
+  //           tempdate.setDate(newdate[0]);
+  //           tempdate.setMonth(newdate[1]-1);
+  //           tempdate.setYear(newdate[2]);
+  //           tempdate.setHours(0);
+  //           tempdate.setMinutes(0);
+  //           tempdate.setSeconds(0);
+  //           tempdate.setMilliseconds(0);
+  //           x.value = tempdate.toISOString();
+  //         } else {
+  //           x.value ="";
+  //         }
+  //       }
+  //     });
+  //
+  //     return obj;
+  //   }
+  //
+  //
+  //
+  //   if(type === "beforeEdit"){
+  //     console.log("beforeEdit")
+  //     if(obj.attribute === "number"){
+  //       obj.newValue = obj.oldValue;
+  //     }
+  //     //if adding checkbox
+  //     // if(obj.attribute === "bool"){
+  //     //   obj.element.disabled = false;
+  //     // }
+  //     return obj;
+  //   }
+  // }
 
 
   collectionLength= 0;

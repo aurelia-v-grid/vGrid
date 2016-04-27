@@ -502,19 +502,27 @@ export class VGridGenerator {
         row.div.setAttribute("row", rowNo);
 
 
-        if (entity==="") {
-          row.viewSlot.bind({});
+        if (entity === "") {
+          let bindingContext = {};
+          row.viewSlot.bind(bindingContext);
           row.div.classList.add(this.vGridConfig.css.noData)
         } else {
-          if(row.div.classList.contains(this.vGridConfig.css.noData)){
+          if (row.div.classList.contains(this.vGridConfig.css.noData)) {
             row.div.classList.remove(this.vGridConfig.css.noData)
           }
         }
 
 
         if (entity !== "" && row.viewSlot !== null) {
-          entity.ctx = this;
-          row.viewSlot.bind(entity)
+          let bindingContext = {};
+          for (var k in entity) {
+            if (entity.hasOwnProperty(k)) {
+              if (bindingContext[k] !== entity[k]) {
+                bindingContext[k] = entity[k];
+              }
+            }
+          }
+          row.viewSlot.bind(bindingContext);
         }
 
 
@@ -539,7 +547,6 @@ export class VGridGenerator {
         } else {
           row.div.classList.remove(this.vGridConfig.css.rowSelected)
         }
-
 
 
       });
@@ -679,13 +686,11 @@ export class VGridGenerator {
         cellInputElement[i].onchange = onChangeEventOnFilter;
         cellInputElement[i].onkeyup = onKeyUpEventOnFilter;
         cellInputElement[i].onfocus = onFocus;
-        cellInputElement[i].onclick = this.vGridConfig.filterCellClick.bind(this.vGridConfig);
       }
     } else {
       for (var i = 0; i < cellInputElement.length; i++) {
         cellInputElement[i].onkeyup = onChangeEventOnFilter;
         cellInputElement[i].onfocus = onFocus;
-        cellInputElement[i].onclick = this.vGridConfig.filterCellClick.bind(this.vGridConfig);
       }
     }
   };
@@ -896,7 +901,7 @@ export class VGridGenerator {
    * fixes scrolling / top of divs
    ****************************************************************************************************************************/
   onScroll() {
-    this.vGridCellEdit.onScroll();
+
 
     var doScroll = () => {
       var currentScrollTop = this.htmlCache.content.scrollTop;
@@ -997,9 +1002,7 @@ export class VGridGenerator {
     } else {
       doScroll();
     }
-    this.scrollVars.scrollCallbackTimer = setTimeout(()=> {
-      this.vGridConfig.onScrolled();
-    }, 250)
+
 
   }; //end scroll event
 
@@ -1338,11 +1341,11 @@ export class VGridGenerator {
       var view = viewFactory.create(this.vGrid.container);
       rows[i].viewSlot = new ViewSlot(rows[i].div, true);
       rows[i].viewSlot.add(view);
-      rows[i].viewSlot.bind({});
+      let bindingContext = {};
+      rows[i].viewSlot.bind(bindingContext);
       rows[i].viewSlot.attached();
 
     }
-
   }
 
   recreateViewSlots() {
@@ -1356,8 +1359,8 @@ export class VGridGenerator {
       var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.getRowTemplate(this.vGridConfig.attributeArray) + '</template>', this.vGrid.resources);
       var view = viewFactory.create(this.vGrid.container);
       rows[i].viewSlot = new ViewSlot(rows[i].div, true);
-      rows[i].viewSlot.add(view);
-      rows[i].viewSlot.bind({});
+      let bindingContext = {};
+      rows[i].viewSlot.bind(bindingContext);
       rows[i].viewSlot.attached();
     }
   }

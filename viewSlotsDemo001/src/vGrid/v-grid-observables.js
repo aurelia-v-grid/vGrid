@@ -12,8 +12,6 @@ export class VGridObservables {
     this.subscriptionsAttributes = []; //here I keep subscriptions to observer on attributes
     this.collectionSubscription = null; //here I keep subscriptions to observer on collection
     this.subscriptionsArray = []; //my property subscriptions
-
-
   }
 
 
