@@ -26,8 +26,8 @@ export class VGridCell {
 
       this.setValue(this.bindingContext[this.attribute()]);
 
-      if (this.vGrid.filterRow === parseInt(this.element.parentNode.getAttribute("row"))) {
-        if (parseInt(this.colNo) === this.vGrid.vGridCellEdit.index) {
+      if(this.vGrid.filterRow === parseInt(this.element.parentNode.getAttribute("row"))){
+        if(parseInt(this.colNo) === this.vGrid.vGridCellEdit.index){
           if (!this.containsFocusClass(this.element)) {
             this.setLastFocusElement(null);
             this.setCss();
@@ -43,7 +43,15 @@ export class VGridCell {
   }
 
 
+
+
+
+
+
+
+
   attached() {
+
 
 
     switch (this.colType()) {
@@ -75,23 +83,23 @@ export class VGridCell {
         this.cellContent = document.createElement("input");
         this.cellContent.onkeydown = function (e) {
 
-          if (e.keyCode == 13) {
-            this.setEditMode(false);
-            if (this.containsWriteClass(this.element)) {
-              this.removeWriteClass(this.element)
+            if (e.keyCode == 13) {
+              this.setEditMode(false);
+              if (this.containsWriteClass(this.element)) {
+                this.removeWriteClass(this.element)
+              }
+              this.cellContent.onblur();
+              return false;
             }
-            this.cellContent.onblur();
-            return false;
-          }
-          if (this.readOnly() === true && e.keyCode !== 9) {
-            return false;
-          } else {
-            if (!this.editMode()) {
+            if (this.readOnly() === true && e.keyCode !== 9) {
               return false;
             } else {
-              return true;
+              if (!this.editMode()) {
+                return false;
+              } else {
+                return true;
+              }
             }
-          }
 
         }.bind(this);
     }
@@ -99,31 +107,29 @@ export class VGridCell {
 
     this.cellContent.ondblclick = function (e) {
 
-      this.setEditMode(true);
-      this.cellContent.select()
+        this.setEditMode(true);
+        this.cellContent.select()
 
 
     }.bind(this);
 
 
-    this.cellContent.addEventListener("cellFocus", function (e) {
-      console.log("focus");
+    this.cellContent.addEventListener("cellFocus", function(e) {
       this.setCss();
       this.cellContent.focus();
     }.bind(this));
 
 
     this.cellContent.onblur = function (e) {
-      console.log("blur");
       this.vGrid.vGridCellEdit.updateActual({
         attribute: this.attribute(),
-        value: this.getValue()
+        value : this.getValue()
       })
     }.bind(this);
 
 
     this.cellContent.onchange = function (e) {
-      console.log("change");
+      //todo
     }.bind(this);
 
 
@@ -142,6 +148,11 @@ export class VGridCell {
   }
 
 
+
+
+
+
+
   /**************************************************
    set value and hide cell if not defined value
    */
@@ -151,7 +162,7 @@ export class VGridCell {
     switch (this.colType()) {
       case "image":
         this.hideIfUndefined(value);
-        if (value !== undefined && value !== null) {
+        if(value !== undefined && value !== null){
           this.cellContent.src = value;
         }
         break;
@@ -193,30 +204,31 @@ export class VGridCell {
   }
 
 
+
   /**************************************************
    basic types/atts
    */
 
 
-  editMode() {
+  editMode(){
     return this.vGrid.vGridCellEdit.editMode;
   }
 
 
-  setEditMode(value) {
+  setEditMode(value){
     this.vGrid.vGridCellEdit.editMode = value;
   }
 
 
-  attribute() {
+  attribute(){
     return this.vGrid.vGridConfig.attributeArray[this.colNo];
   }
 
-  readOnly() {
+  readOnly(){
     return this.vGrid.vGridConfig.readOnlyArray[this.colNo];
   }
 
-  colType() {
+  colType(){
     return this.vGrid.vGridConfig.colTypeArray[this.colNo];
   }
 
@@ -225,12 +237,12 @@ export class VGridCell {
    this and last element
    */
 
-  getLastFocusElement() {
+  getLastFocusElement(){
     return this.vGrid.vGridCellEdit.lastElement;
   }
 
 
-  setLastFocusElement(element) {
+  setLastFocusElement(element){
     this.vGrid.vGridCellEdit.lastElement = element;
   }
 
@@ -241,8 +253,8 @@ export class VGridCell {
 
 
 
-  containsFocusClass(element) {
-    if (element) {
+  containsFocusClass(element){
+    if(element){
       return element.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)
     } else {
       return false;
@@ -250,8 +262,8 @@ export class VGridCell {
   }
 
 
-  addFocusClass(element) {
-    if (element) {
+  addFocusClass(element){
+    if(element){
       element.classList.add(this.vGrid.vGridConfig.css.editCellFocus)
     } else {
       return false;
@@ -259,8 +271,8 @@ export class VGridCell {
   }
 
 
-  removeFocusClass(element) {
-    if (element) {
+  removeFocusClass(element){
+    if(element){
       return element.classList.remove(this.vGrid.vGridConfig.css.editCellFocus)
     } else {
       return false;
@@ -268,8 +280,8 @@ export class VGridCell {
   }
 
 
-  containsWriteClass(element) {
-    if (element) {
+  containsWriteClass(element){
+    if(element){
       return element.classList.contains(this.vGrid.vGridConfig.css.editCellWrite)
     } else {
       return false;
@@ -277,8 +289,8 @@ export class VGridCell {
   }
 
 
-  addWriteClass(element) {
-    if (element) {
+  addWriteClass(element){
+    if(element){
       element.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
     } else {
       return false;
@@ -286,8 +298,8 @@ export class VGridCell {
   }
 
 
-  removeWriteClass(element) {
-    if (element) {
+  removeWriteClass(element){
+    if(element){
       return element.classList.remove(this.vGrid.vGridConfig.css.editCellWrite)
     } else {
       return false;
@@ -304,6 +316,9 @@ export class VGridCell {
   }
 
 
+
+
+
   removeCssOldCell() {
     if (this.containsWriteClass(this.getLastFocusElement())) {
       this.removeWriteClass(this.getLastFocusElement());
@@ -314,7 +329,7 @@ export class VGridCell {
   }
 
 
-  setCss() {
+  setCss(){
     if (!this.containsFocusClass(this.element)) {
       this.addFocusClass(this.element);
       this.removeCssOldCell();

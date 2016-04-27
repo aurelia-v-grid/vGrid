@@ -115,11 +115,13 @@ export class VGridCellEdit {
 
     this.vGrid.element.onkeydown = function (e) {
 
+
+
       //console.log(e.target.classList.contains(this.vGrid.vGridConfig.css.cellContent))
       //page up
       if (e.keyCode === 33) {
         e.preventDefault();
-        //this.updateBeforeNext(this.callbackObject());
+        this.blurBeforeNext();
         this.keyDownDelay(() => {
           if (this.curElement) {
             //get scrolltop
@@ -152,7 +154,7 @@ export class VGridCellEdit {
       //page down
       if (e.keyCode === 34) {
         e.preventDefault();
-        //this.updateBeforeNext(this.callbackObject());
+        this.blurBeforeNext();
         this.keyDownDelay(() => {
           if (this.curElement) {
             //get scrolltop
@@ -186,6 +188,7 @@ export class VGridCellEdit {
       //arrow down
       if (e.keyCode === 40) {
         e.preventDefault();
+        this.blurBeforeNext();
         this.keyDownDelay(() => {
           if (this.curElement) {
             //this.removeEditCssClasses(this.curElement);
@@ -227,6 +230,7 @@ export class VGridCellEdit {
       //arrow up
       if (e.keyCode === 38) {
         e.preventDefault();
+        this.blurBeforeNext();
         this.keyDownDelay(() => {
           if (this.curElement) {
             //this.removeEditCssClasses(this.curElement);
@@ -240,6 +244,7 @@ export class VGridCellEdit {
       //tab and shift key for tabing in other direction
       if (e.keyCode === 9 && e.shiftKey === true) {
         e.preventDefault();
+        this.blurBeforeNext();
         this.keyDownDelay(() => {
           if (this.curElement) {
             //this.removeEditCssClasses(this.curElement);
@@ -257,6 +262,7 @@ export class VGridCellEdit {
       //normal tabbing
       if (e.keyCode === 9 && e.shiftKey === false) {
         e.preventDefault();
+        this.blurBeforeNext();
         this.keyDownDelay(() => {
           if (this.curElement) {
             //this.removeEditCssClasses(this.curElement);
@@ -278,6 +284,13 @@ export class VGridCellEdit {
    ***************************************************************************************/
   setBackFocus(filter) {
     console.log("delete me")
+  }
+
+
+  blurBeforeNext(){
+    if (this.curElement) {
+      this.curElement.blur()
+    }
   }
 
 
