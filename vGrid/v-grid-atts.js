@@ -251,20 +251,6 @@ export class largeBuffer extends VGridAttibutes {
 }
 
 
-@customAttribute('v-format-handler')
-@inject(Element, Optional.of(VGrid))
-export class eventFormatHandler extends VGridAttibutes {
-  attribute = "eventFormatHandler"
-  type = "fn";
-}
-
-
-@customAttribute('v-row-on-dblclick')
-@inject(Element, Optional.of(VGrid))
-export class eventOnDblClick extends VGridAttibutes {
-  attribute = "eventOnDblClick"
-  type = "fn";
-}
 
 @customAttribute('v-row-on-draw')
 @inject(Element, Optional.of(VGrid))
@@ -274,13 +260,6 @@ export class eventOnRowDraw extends VGridAttibutes {
 }
 
 
-
-@customAttribute('v-header-input-click')
-@inject(Element, Optional.of(VGrid))
-export class eventOnHeaderInputClick extends VGridAttibutes {
-  attribute = "eventOnHeaderInputClick"
-  type = "fn";
-}
 
 @customAttribute('v-attibutes-used')
 @inject(Element, Optional.of(VGrid))

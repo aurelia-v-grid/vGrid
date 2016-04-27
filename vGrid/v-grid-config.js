@@ -90,10 +90,8 @@ export class VGridConfig {
     this.sortOnHeaderClick = false;
     this.largeBuffer = false;
 
-    this.eventFormatHandler = null;
-    this.eventOnDblClick = null;
     this.eventOnRowDraw = null;
-    this.eventOnHeaderInputClick = null;
+
 
     this.doNotAddFilterTo = [];
     this.sortNotOnHeader = [];
@@ -139,9 +137,6 @@ export class VGridConfig {
       if (filterObj.length === 0 && this.vGrid.collectionFiltered.length !== this.vGrid.collection.length) {
         this.vGrid.collectionFiltered = this.vGrid.collection.slice(0);
       } else {
-        if (this.eventFormatHandler) {
-          filterObj = this.eventFormatHandler("onFilter", filterObj)
-        }
 
         this.vGrid.collectionFiltered = this.vGrid.vGridFilter.run(this.vGrid.collection, filterObj);
         this.vGrid.vGridSort.run(this.vGrid.collectionFiltered);
@@ -159,19 +154,16 @@ export class VGridConfig {
         });
       }
 
-      this.vGrid.filterRowDisplaying = false;
+
       if (newRowNo > -1) {
         this.vGrid.currentRowEntity = this.vGrid.collectionFiltered[newRowNo];
         this.vGrid.currentEntity[this.vGrid.sgkey] = this.vGrid.currentRowEntity[this.vGrid.sgkey];
         this.vGrid.filterRow = newRowNo;
-        this.vGrid.filterRowDisplaying = true;
       }
 
       //update grid
       this.vGrid.vGridGenerator.collectionChange(true);
-      if (this.vGrid.filterRowDisplaying) {
-        this.vGrid.vGridCellEdit.setBackFocus(true)
-      }
+
 
     }
 
@@ -242,40 +234,25 @@ export class VGridConfig {
 
       //run filter
       this.vGrid.vGridSort.run(this.vGrid.collectionFiltered);
-      //update grid
-      this.vGrid.vGridGenerator.collectionChange();
+
 
       //set new row
       this.vGrid.collectionFiltered.forEach((x, index) => {
         if (this.vGrid.currentEntity[this.vGrid.sgkey] === x[this.vGrid.sgkey]) {
-          this.filterRow = index;
+          this.vGrid.filterRow = index;
         }
       });
-      this.vGrid.vGridCellEdit.setBackFocus()
+
+      //update grid
+      this.vGrid.vGridGenerator.collectionChange();
+
     }
 
 
   }
 
 
-  /***************************************************************************************
-   * on scroll to set back focus
-   ***************************************************************************************/
 
-  onScrolled() {
-
-    var rowHeight = this.rowHeight;
-    var array = this.vGrid.vGridGenerator.htmlCache.rowsArray;
-    var arraylength = array.length;
-    var firstRow = parseInt(array[0].top / rowHeight, 10);
-    var lastRow = parseInt(array[arraylength - 1].top / rowHeight, 10);
-    var curRow = this.vGrid.filterRow; //pain debugging in babel...
-    if (firstRow <= curRow && lastRow >= curRow) {
-      this.vGrid.vGridCellEdit.setBackFocus()
-    }
-
-
-  }
 
 
   /***************************************************************************************
@@ -291,15 +268,6 @@ export class VGridConfig {
   }
 
 
-  filterCellClick(event) {
-    let attribute = event.target.getAttribute(this.atts.dataAttribute);
-    if (this.eventOnHeaderInputClick) {
-      //if user have added this then we call it so they can edit the row data before we display it
-
-      this.eventOnHeaderInputClick(null, attribute, event);
-    }
-
-  }
 
 
   /***************************************************************************************
@@ -308,9 +276,6 @@ export class VGridConfig {
    ***************************************************************************************/
   clickHandler(event, row) {
 
-
-    let attribute = event.target.getAttribute(this.atts.dataAttribute);
-    let readonly = this.readOnlyArray.indexOf(attribute) === -1 ? false : true;
 
     //set current row of out filtered row
     this.vGrid.filterRow = row;
@@ -330,18 +295,10 @@ export class VGridConfig {
     }
 
 
-    //have user added on double click event?
-    if (this.eventOnDblClick && event.type === "dblclick" && this.vGrid.currentRowEntity) {
-      setTimeout(()=> {
-        this.eventOnDblClick(this.vGrid.currentRowEntity[this.vGrid.sgkey], attribute, event);
-      }, 15)
-    }
-
-
-    //use helper function to edit cell
-    if(this.vGrid.currentRowEntity){
-      this.vGrid.vGridCellEdit.editCellhelper(row, event, readonly);
-    }
+     //use helper function to edit cell
+   if(this.vGrid.currentRowEntity){
+     this.vGrid.vGridCellEdit.editCellhelper(row, event);
+   }
 
   }
 
