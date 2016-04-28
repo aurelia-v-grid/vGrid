@@ -136,7 +136,9 @@ export class VGridCellEdit {
             //get cell with that top
             //this.removeEditCssClasses(this.curElement);
             this.top = this.setCellsFromElement(this.curElement, 0);
-            this.vGrid.vGridGenerator.onNormalScrolling(false)
+            if (this.vGrid.vGridGenerator.lastScrollType === "down") {
+              this.vGrid.vGridGenerator.onNormalScrolling(false)
+            }
             var newTop = this.top - (containerRows * rowHeight);
             if ((newTop / rowHeight) <= 0) {
               newTop = 0;
@@ -168,7 +170,9 @@ export class VGridCellEdit {
             //get cell with that top
             //this.removeEditCssClasses(this.curElement);
             this.top = this.setCellsFromElement(this.curElement, 0);
-            this.vGrid.vGridGenerator.onNormalScrolling(true)
+            if (this.vGrid.vGridGenerator.lastScrollType === "up") {
+              this.vGrid.vGridGenerator.onNormalScrolling(true)
+            }
             //this.vGrid.vGridGenerator.setScrollTop(currentscrolltop + (containerHeight));
             var newTop = this.top + (containerRows * rowHeight);
             if ((newTop / rowHeight) >= this.vGrid.vGridConfig.getCollectionLength()) {

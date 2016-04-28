@@ -96,6 +96,9 @@ export class VGridConfig {
     this.doNotAddFilterTo = [];
     this.sortNotOnHeader = [];
 
+    //todo create attribute
+    this.dataScrollDelay = 200;
+
 
   }
 

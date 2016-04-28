@@ -3,6 +3,7 @@ import {VGrid} from './v-grid'
 
 
 //this can prb get a lot better....
+//maybe this should be a cell/cells container instead?
 
 
 @noView
@@ -23,8 +24,8 @@ export class VGridCell {
   bind(bindingContext) {
     this.bindingContext = bindingContext;
     if (this.bindingContext && this.cellContent) {
-
-      this.setValue(this.bindingContext[this.attribute()]);
+      this.rawValue = this.bindingContext[this.attribute()];
+      this.setValue(this.rawValue);
 
       if(this.vGrid.filterRow === parseInt(this.element.parentNode.getAttribute("row"))){
         if(parseInt(this.colNo) === this.vGrid.vGridCellEdit.index){
@@ -171,7 +172,8 @@ export class VGridCell {
         this.cellContent.checked = value === "true" || value === true ? true : false;
         break;
       default:
-        this.cellContent.value = value || "";
+        this.hideIfUndefined(value);
+        this.cellContent.value = value;
     }
   }
 
