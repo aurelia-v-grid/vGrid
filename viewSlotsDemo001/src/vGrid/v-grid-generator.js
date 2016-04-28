@@ -437,7 +437,7 @@ export class VGridGenerator {
     var minimumRowsNeeded = (parseInt(this.contentHeight / this.vGridConfig.rowHeight, 10));
 
     if (this.vGridConfig.largeBuffer) {
-      minimumRowsNeeded = minimumRowsNeeded * 5;
+      minimumRowsNeeded = minimumRowsNeeded * 3;
     }
 
     //set extra so we can buffer
@@ -487,7 +487,7 @@ export class VGridGenerator {
       //set new top for next row
       top = top + this.vGridConfig.rowHeight;
     }
-  };;
+  };
 
 
   /****************************************************************************************************************************
@@ -625,14 +625,17 @@ export class VGridGenerator {
     //this created new div, this could have been a callback function
     var getHeaderCellMarkup = (labelTopCell, valueInput, attribute) => {
 
+      //todo make custom element?
+
       var dragHandle = this.vGridConfig.isSortableHeader ? this.vGridConfig.css.dragHandle : "";
 
-      var cssLabel = `${this.vGridConfig.css.cellContent} ${this.vGridConfig.css.filterLabelTop} ${dragHandle} ${this.vGridConfig.css.orderHandle}`;
-      var cssInput = `${this.vGridConfig.css.cellContent} ${this.vGridConfig.css.filterInputBottom} ${this.vGridConfig.css.filterHandle}`;
-
+      var cssLabel, cssInput;
       if (this.vGridConfig.filterOnAtTop) {
         cssLabel = `${this.vGridConfig.css.cellContent} ${this.vGridConfig.css.filterLabelBottom} ${dragHandle} ${this.vGridConfig.css.orderHandle}`;
         cssInput = `${this.vGridConfig.css.cellContent} ${this.vGridConfig.css.filterInputTop} ${this.vGridConfig.css.filterHandle}`;
+      } else {
+        cssLabel = `${this.vGridConfig.css.cellContent} ${this.vGridConfig.css.filterLabelTop} ${dragHandle} ${this.vGridConfig.css.orderHandle}`;
+        cssInput = `${this.vGridConfig.css.cellContent} ${this.vGridConfig.css.filterInputBottom} ${this.vGridConfig.css.filterHandle}`;
       }
 
 
@@ -702,7 +705,7 @@ export class VGridGenerator {
   onNormalScrollingLarge() {
     //check is user have preformed big scroll, but want it to keep rows inline
     this.scrollVars.lastScrollTop = this.htmlCache.content.scrollTop;
-    //fix firefox messing up whn reseting scrolbar to 0, this is not issue in chrome and edge
+    //fix firefox messing up whn re-setting scroll bar to 0, this is not issue in chrome and edge
     if (this.htmlCache.content.scrollTop === 0 && this.scrollVars.lastScrollTop !== this.htmlCache.content.scrollTop) {
       this.scrollVars.lastScrollTop = 0;
     }
@@ -789,6 +792,7 @@ export class VGridGenerator {
         var update = false;
 
         if (isDownScroll) {
+          this.lastScrollType = "down";
 
           //scrolling downwards
           //check row position
@@ -802,7 +806,7 @@ export class VGridGenerator {
           }
 
         } else {
-
+          this.lastScrollType = "up";
           //scrolling upwards
           //check row position
           if (rowTop > ((currentScrollTop + this.contentHeight))) {
@@ -882,18 +886,18 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
 
   onScrollClickCancel() {
-    //clear all touch events
-    this.scrollVars.clickTimersArray.forEach((xTimer)=> {
-      clearTimeout(xTimer);
-    });
-    //timeout so we get touch end/move also after scroll event
-    if (this.scrollVars.clickTimersArray.length > 0) {
-      setTimeout(() => {
-        this.scrollVars.clickTimersArray.forEach((xTimer) => {
-          clearTimeout(xTimer);
-        });
-      }, 0);
-    }
+    // clear all touch events
+    // this.scrollVars.clickTimersArray.forEach((xTimer)=> {
+    //   clearTimeout(xTimer);
+    // });
+    // //timeout so we get touch end/move also after scroll event
+    // if (this.scrollVars.clickTimersArray.length > 0) {
+    //   setTimeout(() => {
+    //     this.scrollVars.clickTimersArray.forEach((xTimer) => {
+    //       clearTimeout(xTimer);
+    //     });
+    //   }, 0);
+    // }
   };
 
 
@@ -918,7 +922,7 @@ export class VGridGenerator {
         }
 
         //cancel touch event, do not want that triggering while scrolling  only use click in this grid, remove?
-        this.onScrollClickCancel();
+       // this.onScrollClickCancel();
 
         //check if down scroll.
         var isDownScroll = true;
@@ -928,13 +932,11 @@ export class VGridGenerator {
 
         //check if big scroll (split m into 2.. simple to read)
         var isLargeScroll;
-
         switch (true) {
           case currentScrollTop > this.scrollVars.lastScrollTop + this.vGridConfig.largeScrollLimit:
           case currentScrollTop < this.scrollVars.lastScrollTop - this.vGridConfig.largeScrollLimit:
             isLargeScroll = true;
             break;
-
           default:
             isLargeScroll = false;
         }
@@ -1064,7 +1066,6 @@ export class VGridGenerator {
         }
       };
 
-
       //get inputs
       var orderBy = this.vGridElement.querySelectorAll("." + this.vGridConfig.css.orderHandle);
       for (var i = 0; i < orderBy.length; i++) {
@@ -1121,7 +1122,7 @@ export class VGridGenerator {
               this.htmlCache.rowTemplate = null;
               this.correctRowAndScrollbodyWidth();
 
-              this.cacheRowTemplate(null);
+              //this.cacheRowTemplate(null);
               this.recreateViewSlots();
               this.updateGridScrollbars();
               this.fillDataInRows(true);
@@ -1317,7 +1318,7 @@ export class VGridGenerator {
   addHtml() {
 
     //cache row template..
-    this.cacheRowTemplate(null);
+    //this.cacheRowTemplate(null);
 
     //add needed html
     this.createGridHtmlWrapper(); //entire main grid, pretty much just adds a class
@@ -1356,9 +1357,11 @@ export class VGridGenerator {
       rows[i].viewSlot.removeAll();
       rows[i].viewSlot = null;
       rows[i].div.innerHTML = "";
+      this.htmlCache.rowTemplate = null;
       var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.getRowTemplate(this.vGridConfig.attributeArray) + '</template>', this.vGrid.resources);
       var view = viewFactory.create(this.vGrid.container);
       rows[i].viewSlot = new ViewSlot(rows[i].div, true);
+      rows[i].viewSlot.add(view);
       let bindingContext = {};
       rows[i].viewSlot.bind(bindingContext);
       rows[i].viewSlot.attached();
@@ -1377,15 +1380,8 @@ export class VGridGenerator {
       //todo: remeber scroll height , devide on rowheight, and set to what ever new is?
       this.vGridSelection.setMode(this.vGridConfig.isMultiSelect);
     }
-    //
-    if (this.vGridConfig.predefinedScrolltop) {
-      this.setScrollTop(this.vGridConfig.predefinedScrolltop);
-    }
-
     this.createViewSlots();
-
     this.fillDataInRows(false); //fillDataInRows
-
     this.setLargeScrollLimit();
   };
 
@@ -1434,8 +1430,8 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   rebuildColumns() {
     this.correctColumnsWidthArray();
-    this.htmlCache.rowTemplate = null;
-    this.cacheRowTemplate(null);
+    //this.htmlCache.rowTemplate = null;
+    //this.cacheRowTemplate(null);
     this.rebuildGridHeaderHtml();
     this.recreateViewSlots();
     this.fillDataInRows(true);
@@ -1451,9 +1447,10 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   columnChangeAndCollection(resetScrollToTop) {
     this.correctColumnsWidthArray();
-    this.htmlCache.rowTemplate = null;
-    this.cacheRowTemplate(null);
+    //this.htmlCache.rowTemplate = null;
+    //this.cacheRowTemplate(null);
     this.rebuildGridHeaderHtml();
+    this.recreateViewSlots();
     this.fillDataInRows(true);
     this.updateSelectionOnAllRows();
     this.collectionChange(resetScrollToTop);
