@@ -10,14 +10,14 @@ import {ViewSlot} from 'aurelia-framework';
 export class VGridGenerator {
 
 
-  constructor(vGridConfig, vGridElement, vGridSortable, vGridSelection, vGridCellEdit, vGrid) {
+  constructor(vGridConfig, vGridElement, vGridSortable, vGridSelection, vGridCellHelper, vGrid) {
     this.vGridSelection = vGridSelection;
     this.vGridConfig = vGridConfig;
-    this.vGridCellEdit = vGridCellEdit;
+    this.vGridCellHelper = vGridCellHelper;
     this.vGridElement = vGridElement;
     this.vGridSortable = vGridSortable;
     this.vGrid = vGrid;
-    this.init(false);
+    //this.init(false);
   }
 
 
@@ -32,6 +32,9 @@ export class VGridGenerator {
   gridWidth = 0;              //internal
   queryStringCheck = {};     //internal //just to remeber old input, helper for ondrag/drop columns
   scrollBodyHeight = 0;
+
+
+  scrollBottomOnNext = false;   // internal var to know if user wants to scroll to bottom next time array abserver gets called
 
   htmlCache = {
     grid: null,       //internal
@@ -183,7 +186,7 @@ export class VGridGenerator {
             this.vGridConfig.attributes.push(this.vGridConfig.attributeArray[i]);
           }
           rowTemplate = rowTemplate +
-            `<v-grid-cell class="${cellClasses}" style="${cellStyle}" col-no=${i}></v-grid-cell>`;
+            `<v-grid-cell-row class="${cellClasses}" style="${cellStyle}" col-no=${i}></v-grid-cell-row>`;
         }
       }
     }
@@ -922,7 +925,7 @@ export class VGridGenerator {
         }
 
         //cancel touch event, do not want that triggering while scrolling  only use click in this grid, remove?
-       // this.onScrollClickCancel();
+        // this.onScrollClickCancel();
 
         //check if down scroll.
         var isDownScroll = true;
@@ -1462,6 +1465,13 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   collectionChange(resetScrollToTop, scrollBottom) {
 
+
+    if (this.scrollBottomOnNext) {
+      //if overriden
+      scrollBottom = true;
+      this.scrollBottomOnNext = false;
+    }
+
     //adjust scroller before updating, so it created unwanted side effects
     this.setScrollBodyHeightToVar();
     this.htmlCache.scrollBody.style.height = this.scrollBodyHeight + "px";
@@ -1477,6 +1487,8 @@ export class VGridGenerator {
 
     }
 
+    //reset scroll to bottom next.
+
 
     this.updateGridScrollbars();
     this.correctRowAndScrollbodyWidth();
@@ -1485,7 +1497,7 @@ export class VGridGenerator {
     this.onNormalScrollingLarge();
     this.fillDataInRows(true);
     if (scrollBottom) {
-      this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.rowHeight
+      this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.rowHeight;
     }
 
     this.htmlCache.scrollBody.style.height = this.scrollBodyHeight - 1 + "px";
@@ -1656,6 +1668,11 @@ export class VGridGenerator {
   };
 
 
+  scrollBottomNext() {
+    this.scrollBottomOnNext = true;
+  };
+
+
   getScrollTop() {
     return this.htmlCache.content.scrollTop;
   };
@@ -1684,6 +1701,63 @@ export class VGridGenerator {
     this.vGridConfig.sortOnHeaderClick = false;
     this.rebuildGridHeaderHtml();
   };
+
+
+
+  //returns the rows in main collection that is in the grid/filtered
+  getGridRows() {
+    var array = [];
+    this.vGrid.collectionFiltered.forEach((x)=> {
+      array.push(x[this.vGrid.sgkey]);
+    });
+    return array;
+
+  };
+
+  //access to gridSelection
+  selection = this.vGridSelection;
+
+
+  //simple csv report from whats shown in the grid/filtered
+  createReport(skipArray) {
+
+    //dont thouch this;
+    if (skipArray === undefined) {
+      skipArray = [];
+    }
+    var content = '';
+    var rows = this.getGridRows();
+    var attributes = this.vGridConfig.attributeArray;
+
+    //sets data to our content
+    var setData = (arr) => {
+      content = content + arr.join(';') + '\n';
+    };
+
+    //set headers
+    setData(attributes);
+
+    //loop rows/columns
+    rows.forEach((row)=> {
+      let tempArr = [];
+      attributes.forEach((att)=> {
+        if (skipArray.indexOf(att) === -1) {
+          tempArr.push(this.vGrid.collection[row][att]);
+        }
+      });
+      setData(tempArr);
+    });
+
+
+    //download
+    var dummyElement = document.createElement('a');
+    dummyElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+    dummyElement.setAttribute('download', 'contacts.csv');
+    dummyElement.style.display = 'none';
+    document.body.appendChild(dummyElement);
+    dummyElement.click();
+    document.body.removeChild(dummyElement);
+  }
 
 
 } //end widget
