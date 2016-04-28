@@ -1,3 +1,10 @@
+/*****************************************************************************************************************
+ *    VGridAttibutes
+ *    This is where I create all the <v-grid> attibutes, and set then to vGridConfig
+ *    Prb doing al kinds of wrong in here, will improve as I learn more
+ *    Created by vegar ringdal
+ *
+ ****************************************************************************************************************/
 import {inject, customAttribute, Optional} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 

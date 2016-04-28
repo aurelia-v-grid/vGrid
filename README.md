@@ -50,10 +50,8 @@ How to use: (no plugin yet):
 * v-header-filter-not-to
 * v-sort-on-header-click
 * v-sort-not-on-header
-* v-row-on-dblclick
 * v-row-on-draw
-* v-cell-on-draw
-* v-format-handler
+
 
 ----
 ### < v-grid-col > attributes:

@@ -1,11 +1,11 @@
 /*****************************************************************************************************************
- *    VGridCellEdit
- *    This just inserts the strings into html templates
+ *    VGridCellHelper
+ *    This just helper for cell-row helper, tabbing etc
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
 
-export class VGridCellEdit {
+export class VGridCellHelper {
 
   //vars;
   first = -1;
@@ -19,6 +19,7 @@ export class VGridCellEdit {
     this.vGrid = vGrid;
     this.addGridKeyListner();
   }
+
 
 
   /***************************************************************************************
@@ -283,14 +284,6 @@ export class VGridCellEdit {
   }
 
 
-  /***************************************************************************************
-   * sets back focus afetr scroll
-   ***************************************************************************************/
-  setBackFocus(filter) {
-    console.log("delete me")
-  }
-
-
   blurBeforeNext(){
     if (this.curElement) {
       this.curElement.blur()
@@ -302,12 +295,15 @@ export class VGridCellEdit {
    * cupdates current
    ***************************************************************************************/
   updateActual(obj) {
-    //so we dont create loop
-    this.vGrid.skipNextUpdateProperty.push(obj.attribute);
 
-    //set current entity and and update row data
-    this.vGrid.currentRowEntity[obj.attribute] = obj.value;
-    this.vGrid.currentEntity[obj.attribute] = obj.value;
+    if(obj.attribute){
+      //so we dont create loop
+      this.vGrid.skipNextUpdateProperty.push(obj.attribute);
+
+      //set current entity and and update row data
+      this.vGrid.currentRowEntity[obj.attribute] = obj.value;
+      this.vGrid.currentEntity[obj.attribute] = obj.value;
+    }
 
   }
 
@@ -318,7 +314,7 @@ export class VGridCellEdit {
   editCellhelper(row, e) {
     //editCellhelper(row, e, readOnly) {
 
-    if (e.target.tagName === "V-GRID-CELL") {
+    if (e.target.tagName === "V-GRID-CELL-ROW") {
       //if this is clicked then its a image or something smaller then the cell, lets send it to the first child
       var eventChild = document.createEvent('Event');
       eventChild.initEvent(e.type, true, true);

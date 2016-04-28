@@ -1,16 +1,20 @@
+/*****************************************************************************************************************
+ *    VGridCellRow
+ *    Custom element controlling the cell logic
+ *    Created by vegar ringdal
+ *
+ ****************************************************************************************************************/
 import {inject, noView, customElement, processContent, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 
-
-//this can prb get a lot better....
-//maybe this should be a cell/cells container instead?
+//should I make this into a container and have cells under it?
 
 
 @noView
-@customElement('v-grid-cell')
+@customElement('v-grid-cell-row')
 @processContent(false)
 @inject(Element, VGrid)
-export class VGridCell {
+export class VGridCellRow {
   @bindable colNo;
 
 
@@ -28,7 +32,7 @@ export class VGridCell {
       this.setValue(this.rawValue);
 
       if(this.vGrid.filterRow === parseInt(this.element.parentNode.getAttribute("row"))){
-        if(parseInt(this.colNo) === this.vGrid.vGridCellEdit.index){
+        if(parseInt(this.colNo) === this.vGrid.vGridCellHelper.index){
           if (!this.containsFocusClass(this.element)) {
             this.setLastFocusElement(null);
             this.setCss();
@@ -122,7 +126,7 @@ export class VGridCell {
 
 
     this.cellContent.onblur = function (e) {
-      this.vGrid.vGridCellEdit.updateActual({
+      this.vGrid.vGridCellHelper.updateActual({
         attribute: this.attribute(),
         value : this.getValue()
       })
@@ -213,12 +217,12 @@ export class VGridCell {
 
 
   editMode(){
-    return this.vGrid.vGridCellEdit.editMode;
+    return this.vGrid.vGridCellHelper.editMode;
   }
 
 
   setEditMode(value){
-    this.vGrid.vGridCellEdit.editMode = value;
+    this.vGrid.vGridCellHelper.editMode = value;
   }
 
 
@@ -240,12 +244,12 @@ export class VGridCell {
    */
 
   getLastFocusElement(){
-    return this.vGrid.vGridCellEdit.lastElement;
+    return this.vGrid.vGridCellHelper.lastElement;
   }
 
 
   setLastFocusElement(element){
-    this.vGrid.vGridCellEdit.lastElement = element;
+    this.vGrid.vGridCellHelper.lastElement = element;
   }
 
 

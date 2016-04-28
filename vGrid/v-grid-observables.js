@@ -7,7 +7,8 @@
 export class VGridObservables {
 
 
-  constructor(vGrid) {
+  constructor(vGrid, observerLocator) {
+    this.observerLocator = observerLocator;
     this.vGrid = vGrid;
     this.subscriptionsAttributes = []; //here I keep subscriptions to observer on attributes
     this.collectionSubscription = null; //here I keep subscriptions to observer on collection
@@ -61,7 +62,7 @@ export class VGridObservables {
    ***************************************************************************************/
   enableObservablesArray() {
 
-    let arrayObserver = this.vGrid.observerLocator.getArrayObserver(this.vGrid.collection);
+    let arrayObserver = this.observerLocator.getArrayObserver(this.vGrid.collection);
     arrayObserver.subscribe((changes) => {
 
 
@@ -146,25 +147,16 @@ export class VGridObservables {
         this.vGrid.resetKeys();
 
         //update key on current and filterRow
-        this.filterRowDisplaying = false;
         if (newRowNo > -1) {
           this.vGrid.currentRowEntity = this.vGrid.collectionFiltered[newRowNo];
           this.vGrid.currentEntity[this.sgkey] = this.vGrid.currentRowEntity[this.vGrid.sgkey];
           this.vGrid.filterRow = newRowNo;
-          this.vGrid.filterRowDisplaying = true;
         }
-
 
         //update grid
-        grid.collectionChange(false, this.vGrid.scrollBottomNext);
-        if (this.vGrid.filterRowDisplaying) {
-          this.vGrid.vGridCellEdit.setBackFocus();
-        }
+        grid.collectionChange(false);
 
-        //reset scroll to bottom next.
-        if (this.vGrid.scrollBottomNext === true) {
-          this.vGrid.scrollBottomNext = false;
-        }
+
 
       }
     });
@@ -177,7 +169,7 @@ export class VGridObservables {
    ***************************************************************************************/
   enableObservablesAttributes() {
     this.vGrid.vGridConfig.attributeArray.forEach((property) => {
-      let propertyObserver = this.vGrid.observerLocator.getObserver(this.vGrid.currentEntity, property);
+      let propertyObserver = this.observerLocator.getObserver(this.vGrid.currentEntity, property);
       propertyObserver.subscribe((newValue, oldValue) => {
         if (newValue !== oldValue) {
           //check if we should skip it

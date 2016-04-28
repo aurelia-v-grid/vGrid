@@ -5,33 +5,34 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {ObserverLocator, bindable,ViewCompiler, ViewSlot, Container, ViewResources} from 'aurelia-framework';
+import {ObserverLocator, bindable, ViewCompiler, ViewSlot, Container, ViewResources} from 'aurelia-framework';
 import {VGridGenerator} from './v-grid-generator';
 import {VGridFilter} from './v-grid-filter';
 import {VGridSort} from './v-grid-sort';
 import {VGridSortable} from './v-grid-sortable';
-import {VGridCellEdit} from './v-grid-cell-edit';
+import {VGridCellHelper} from './v-grid-cell-helper';
 import {VGridObservables} from './v-grid-observables';
 import {VGridConfig} from './v-grid-config';
 import {VGridSelection} from './v-grid-selection';
 
 
-
-
 export class VGrid {
-  static inject = [Element, ObserverLocator, VGridFilter, ViewCompiler,ViewSlot,Container,ViewResources];
-  @bindable({attribute:"v-grid-context"}) gridContext;
-  @bindable({attribute:"v-collection"}) collection;
-  @bindable({attribute:"v-current-entity"}) currentEntity;
+  static inject = [Element, ObserverLocator, ViewCompiler, ViewSlot, Container, ViewResources];
+  @bindable({attribute: "v-grid-context"}) gridContext;
+  @bindable({attribute: "v-collection"}) collection;
+  @bindable({attribute: "v-current-entity"}) currentEntity;
 
 
+  constructor(element, observerLocator, viewCompiler, viewSlot, container, viewResources) {
 
-
-  constructor(element, observerLocator, vGridFilter,viewCompiler,viewSlot,container,viewResources) {
-
-    this.observerLocator = observerLocator; //listen for event
-    this.gridContext = null;
+    //<v-grid> element
     this.element = element;
+
+    //aurelia stuff I need for creating my cells etc
+    this.viewCompiler = viewCompiler;
+    this.viewSlot = viewSlot;
+    this.container = container;
+    this.viewResources = viewResources;
 
     //keeps the current entity ref
     this.currentRowEntity = null;
@@ -39,41 +40,26 @@ export class VGrid {
     //current selected row in grid, not always the same as collection when used filter/sorting
     this.filterRow = -1;
 
-    //var to know if user wants to scroll to bottom next time array abserver gets called
-    this.scrollBottomNext = false;
-
-    //keyname, need to set a random here so you can have multible grid linked to same collection
+    //key name, need to set a random here so you can have multible grid linked to same collection
     this.sgkey = "__vGrid" + Math.floor((Math.random() * 1000) + 1);
 
-    //to know if they have binded the context or not
-    this.gridContextMissing = false;
-
-    //cloned collection
+    //cloned collection used internaly for everything, I never sort the original collection
     this.collectionFiltered = [];
 
     //skip row update, used when setting internal values to current entity from row editing, or to undefined
     this.skipNextUpdateProperty = [];
 
-    this.filterRowDisplaying = true;
-
-
-    this.vGridFilter = vGridFilter; //helper for filtering the cloned collection
-    this.vGridSort = new VGridSort(); //helper for sorting the columns
+    //my classes the grid uses
+    this.vGridFilter = new VGridFilter();
+    this.vGridSort = new VGridSort();
     this.vGridConfig = new VGridConfig(this);
     this.vGridSelection = new VGridSelection(null, this);
-    this.vGridCellEdit = new VGridCellEdit(this);
-
-
-    this.viewCompiler = viewCompiler;
-    this.viewSlot = viewSlot;
-    this.container = container;
-    this.viewResources = viewResources;
+    this.vGridCellHelper = new VGridCellHelper(this);
+    this.vGridObservables = new VGridObservables(this, observerLocator);
+    this.vGridGenerator = new VGridGenerator(this.vGridConfig, this.element, VGridSortable, this.vGridSelection, this.vGridCellHelper, this);
 
 
   }
-
-
-
 
 
   /***************************************************************************************
@@ -86,9 +72,6 @@ export class VGrid {
       key++;
     });
   }
-
-
-
 
 
   /***************************************************************************************
@@ -104,9 +87,10 @@ export class VGrid {
     //that context they will be able to trigger event on the grid
     if (!this.gridContext) {
       this.gridContext = {};
-      this.gridContextMissing = true;
     }
 
+    //set it to users
+    this.gridContext.ctx = this.vGridGenerator;
 
 
     //lets test that they have set the mandatory config settings
@@ -122,18 +106,12 @@ export class VGrid {
         }
       }
     } else {
-
       //clone collection and add key index, so we know it.
       this.collectionFiltered = this.collection.slice(0);
-
       //resets the keys
       this.resetKeys();
     }
-
   }
-
-
-
 
 
   /***************************************************************************************
@@ -141,85 +119,14 @@ export class VGrid {
    ***************************************************************************************/
   attached() {
 
-    //this.vGridConfig = new VGridConfig(this);
-    this.vGridObservables = new VGridObservables(this);
-
     //set observables
     this.vGridObservables.enableObservablesCollection();
     this.vGridObservables.enableObservablesArray();
     this.vGridObservables.enableObservablesAttributes();
 
-
     //create the grid html/add events etc
-    this.vGridGenerator = new VGridGenerator(this.vGridConfig, this.element, VGridSortable, this.vGridSelection, this.vGridCellEdit, this);
-
-
-    //some helper function;
-    //returns the rows in main collection that is in the grid/filtered or not..
-    this.vGridGenerator.getGridRows = () => {
-      var array = [];
-      this.collectionFiltered.forEach((x)=> {
-        array.push(x[this.sgkey]);
-      });
-      return array;
-
-    };
-
-
-    this.vGridGenerator.scrollBottomNext = () => {
-      this.scrollBottomNext = true;
-    };
-
-    this.vGridGenerator.selection = this.vGridSelection;
-
-    this.vGridGenerator.createReport = (skipArray) => {
-
-      //dont thouch this;
-      if (skipArray === undefined) {
-        skipArray = [];
-      }
-      var content = '';
-      var rows = this.vGridGenerator.getGridRows();
-      var attributes = this.vGridConfig.attributeArray;
-
-      //sets data to our content
-      var setData = (arr) => {
-        content = content + arr.join(';') + '\n';
-      };
-
-      //set headers
-      setData(attributes);
-
-      //loop rows/columns
-      rows.forEach((row)=> {
-        let tempArr = [];
-        attributes.forEach((att)=> {
-          if (skipArray.indexOf(att) === -1) {
-            tempArr.push(this.collection[row][att]);
-          }
-        });
-        setData(tempArr);
-      });
-
-
-      //download
-      var dummyElement = document.createElement('a');
-      dummyElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-      dummyElement.setAttribute('download', 'contacts.csv');
-      dummyElement.style.display = 'none';
-      document.body.appendChild(dummyElement);
-      dummyElement.click();
-      document.body.removeChild(dummyElement);
-    }
-
-
-
-
-
-    //set it to users
-    this.gridContext.ctx = this.vGridGenerator;
-
-
+    //this.vGridGenerator = new VGridGenerator(this.vGridConfig, this.element, VGridSortable, this.vGridSelection, this.vGridCellHelper, this);
+    this.vGridGenerator.init(false);
 
   }
 
