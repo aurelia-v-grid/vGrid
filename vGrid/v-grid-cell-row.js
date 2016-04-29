@@ -117,6 +117,7 @@ export class VGridCellRow {
     this.cellContent.ondblclick = function (e) {
         this.setEditMode(true);
         this.cellContent.select()
+
     }.bind(this);
 
 
@@ -360,7 +361,7 @@ export class VGridCellRow {
     this.element.classList.add(css.rowCell)
     this.element.classList.add(css.rowColumn + this.colNo)
     this.element.classList.add(css.gridColumn + this.colNo)
-    this.element.style = cellStyle;
+    this.element.setAttribute("style", cellStyle);
   }
 
 
