@@ -10,14 +10,14 @@ import {ViewSlot} from 'aurelia-framework';
 export class VGridGenerator {
 
 
-  constructor(vGridConfig, vGridElement, vGridSortable, vGridSelection, vGridCellHelper, vGrid) {
-    this.vGridSelection = vGridSelection;
-    this.vGridConfig = vGridConfig;
-    this.vGridCellHelper = vGridCellHelper;
-    this.vGridElement = vGridElement;
-    this.vGridSortable = vGridSortable;
+  constructor(vGrid) {
     this.vGrid = vGrid;
-    //this.init(false);
+    this.vGridSelection = vGrid.vGridSelection;
+    this.vGridConfig = vGrid.vGridConfig;
+    this.vGridCellHelper = vGrid.vGridCellHelper;
+    this.vGridElement = vGrid.element;
+    this.vGridSortable = vGrid.vGridSortable;
+    this.vGridResizable = vGrid.vGridResizable;
   }
 
 
@@ -170,23 +170,11 @@ export class VGridGenerator {
     if (this.htmlCache.rowTemplate !== null) {
       rowTemplate = this.htmlCache.rowTemplate;
     } else {
-      //todo: check of option is set and callback instead of creating it.
       if (this.vGridConfig.onRowMarkupCreate) {
-        for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
-          if (this.vGridConfig.attributes.indexOf(this.vGridConfig.attributeArray[i]) === -1) {
-            this.vGridConfig.attributes.push(this.vGridConfig.attributeArray[i]);
-          }
-        }
         rowTemplate = this.vGridConfig.onRowMarkupCreate(this.vGridConfig.attributeArray);
       } else {
-        for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
-          var cellClasses = `${this.vGridConfig.css.rowCell} ${this.vGridConfig.css.rowColumn + i} ${this.vGridConfig.css.gridColumn + i}`;
-          var cellStyle = `width:${this.vGridConfig.columnWidthArray[i]}px`;
-          if (this.vGridConfig.attributes.indexOf(this.vGridConfig.attributeArray[i]) === -1) {
-            this.vGridConfig.attributes.push(this.vGridConfig.attributeArray[i]);
-          }
-          rowTemplate = rowTemplate +
-            `<v-grid-cell-row class="${cellClasses}" style="${cellStyle}" col-no=${i}></v-grid-cell-row>`;
+        for (var i = 0; i < this.vGridConfig.columns.length; i++) {
+          rowTemplate = rowTemplate + `<v-grid-cell-row col-no=${i}></v-grid-cell-row>`;
         }
       }
     }
@@ -208,7 +196,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getTotalColumnWidth() {
     var total = 0;
-    for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
+    for (var i = 0; i < this.vGridConfig.columns.length; i++) {
       total = total + parseInt(this.vGridConfig.columnWidthArray[i], 10);
     }
     return total;
@@ -884,25 +872,6 @@ export class VGridGenerator {
   };
 
 
-  /****************************************************************************************************************************
-   * clear touch inputs callback on scroll TODO: do I need this, grid was just a scroller at first... and was just for displaying data on mobile so had to do this..
-   ****************************************************************************************************************************/
-
-  onScrollClickCancel() {
-    // clear all touch events
-    // this.scrollVars.clickTimersArray.forEach((xTimer)=> {
-    //   clearTimeout(xTimer);
-    // });
-    // //timeout so we get touch end/move also after scroll event
-    // if (this.scrollVars.clickTimersArray.length > 0) {
-    //   setTimeout(() => {
-    //     this.scrollVars.clickTimersArray.forEach((xTimer) => {
-    //       clearTimeout(xTimer);
-    //     });
-    //   }, 0);
-    // }
-  };
-
 
   /****************************************************************************************************************************
    * fixes scrolling / top of divs
@@ -923,9 +892,6 @@ export class VGridGenerator {
           this.htmlCache.content.scrollLeft = this.scrollVars.lastScrollLeft;
           this.htmlCache.header.scrollLeft = this.scrollVars.lastScrollLeft
         }
-
-        //cancel touch event, do not want that triggering while scrolling  only use click in this grid, remove?
-        // this.onScrollClickCancel();
 
         //check if down scroll.
         var isDownScroll = true;
@@ -1046,27 +1012,17 @@ export class VGridGenerator {
 
 
   /****************************************************************************************************************************
-   * add the events  (TODO: when cleaning up code I need to splitt the stuff in here into more functions..)
+   * add the events  , info his is called everytime I rebuild headers, easier to rebuild then to have any logic
    ****************************************************************************************************************************/
   addResizableAndSortableEvent() {
 
-
-    /*------------------------------------------------*/
-    // adds resizable headers
-    var resizable = false;
-    var screenX;
-    var xElement;
-    var sortable = false;
-
-    //todo, need to tell if we want sort on header click, and if we want multisort
+    //header click
     if (this.vGridConfig.sortOnHeaderClick) {
       var orderByClick = (event) => {
-        if (!sortable && !resizable) {
           this.vGridConfig.onOrderBy(event, (sortorder) => {
             this.sortOrder = sortorder;
             this.rebuildGridHeaderHtml();
-          })
-        }
+          });
       };
 
       //get inputs
@@ -1076,157 +1032,18 @@ export class VGridGenerator {
       }
     }
 
-
+    //resize headers
     if (this.vGridConfig.isResizableHeaders) {
-      var x = this.htmlCache.header.querySelectorAll("." + this.vGridConfig.css.rowHeaderCell);
-      for (var i = 0; i < x.length; i++) {
-
-        var temp = document.createElement("DIV");
-        temp.classList.add(this.vGridConfig.css.resizeHeaderDragHandle);
-
-
-        temp.onmousedown = (e) => {
-          resizable = true;
-
-          //disable sortable when resizing
-          if (this.vGridConfig.isSortableHeader) {
-            this.sortableCtx.option("disabled", resizable);
-          }
-          screenX = e.screenX;
-          xElement = e.target;
-          var originalWidth = xElement.offsetParent.style.width;
-          var originalWidthx = xElement.offsetParent.style.width;
-          var index = xElement.offsetParent.getAttribute("column-no");
-          //var index =this.vGridConfig.attributeArray.indexOf(attribute);
-
-
-          this.htmlCache.header.onmousemove = (e) => {
-
-
-            //get when user let go of mouse button
-            this.htmlCache.header.onmouseup = () => {
-              //small timeout to stop header click
-              setTimeout(() => {
-                resizable = false;
-                if (this.vGridConfig.isSortableHeader) {
-                  this.sortableCtx.option("disabled", resizable);
-                }
-              }, 30);
-
-              this.htmlCache.header.onmouseleave = "";
-              this.htmlCache.header.onmousemove = "";
-              this.htmlCache.header.onmouseup = "";
-              //enable sortable again if its enabled
-
-
-              this.vGridConfig.columnWidthArray[index] = parseInt(xElement.offsetParent.style.width);
-
-              //reset template and fill data
-              this.htmlCache.rowTemplate = null;
-              this.correctRowAndScrollbodyWidth();
-
-              //this.cacheRowTemplate(null);
-              this.recreateViewSlots();
-              this.updateGridScrollbars();
-              this.fillDataInRows(true);
-              //onScrollbarScrolling();
-            };
-
-            this.htmlCache.header.onmouseleave = (e) => {
-              this.htmlCache.header.onmouseup(e);
-
-            };
-
-            if (resizable) {
-              var newWidth = parseInt(originalWidth) - ((screenX - e.screenX)) + "px";
-              this.vGridConfig.columnWidthArray[index] = parseInt(newWidth);
-              xElement.offsetParent.style.width = parseInt(originalWidth) - ((screenX - e.screenX)) + "px";
-              xElement.offsetParent.style.width = parseInt(originalWidthx) - ((screenX - e.screenX)) + "px";
-              if (this.vGridConfig.resizableHeadersAndRows) {
-                var columnsToFix = this.htmlCache.content.firstChild.querySelectorAll("." + this.vGridConfig.css.rowColumn + index);
-
-                for (var col = 0; col < columnsToFix.length; col++) {
-                  columnsToFix[col].style.width = newWidth
-                }
-
-                this.correctRowAndScrollbodyWidth();
-                this.updateGridScrollbars();
-
-              }
-            } else {
-              this.correctHeaderAndScrollbodyWidth();
-            }
-          }
-        };
-
-        x[i].appendChild(temp)
-      }
+        this.vGridResizable.init();
     }
 
-
-    /*------------------------------------------------*/
-    //adds sortable headers
-
-
-    //we haveto control dragging only to headers with draghandle
-    var canMove = false;
-    var dragHandles = this.htmlCache.grid.querySelectorAll("." + this.vGridConfig.css.dragHandle);
-    [].slice.call(dragHandles).forEach(function (itemEl) {
-      itemEl.onmouseenter = function () {
-        canMove = true
-      };
-      itemEl.onmouseleave = function () {
-        canMove = false
-      }
-
-    });
-
-
+    //sortable columns
     if (this.vGridConfig.isSortableHeader) {
-      this.sortableCtx = new this.vGridSortable(this.htmlCache.header.firstChild.firstChild, (oldIndex, newIndex) => {
-        var children = this.htmlCache.header.firstChild.firstChild.children;
-
-        var x;
-        x = this.vGridConfig.attributeArray[oldIndex];
-        this.vGridConfig.attributeArray.splice(oldIndex, 1);
-        this.vGridConfig.attributeArray.splice(newIndex, 0, x);
-
-        x = this.vGridConfig.filterArray[oldIndex];
-        this.vGridConfig.filterArray.splice(oldIndex, 1);
-        this.vGridConfig.filterArray.splice(newIndex, 0, x);
-
-        x = this.vGridConfig.headerArray[oldIndex];
-        this.vGridConfig.headerArray.splice(oldIndex, 1);
-        this.vGridConfig.headerArray.splice(newIndex, 0, x);
-
-        x = this.vGridConfig.columnWidthArray[oldIndex];
-        this.vGridConfig.columnWidthArray.splice(oldIndex, 1);
-        this.vGridConfig.columnWidthArray.splice(newIndex, 0, x);
-
-        x = this.vGridConfig.colStyleArray[oldIndex];
-        this.vGridConfig.colStyleArray.splice(oldIndex, 1);
-        this.vGridConfig.colStyleArray.splice(newIndex, 0, x);
-
-        x = this.vGridConfig.colTypeArray[oldIndex];
-        this.vGridConfig.colTypeArray.splice(oldIndex, 1);
-        this.vGridConfig.colTypeArray.splice(newIndex, 0, x);
-
-
-        this.htmlCache.rowTemplate = null; //reset template and fill data
-        this.cacheRowTemplate(null);
-        this.rebuildColumns();
-        sortable = false;
-
-      }, function (n) {
-        //on end
-        sortable = true;
-      }, function (n) {
-        //on cancel
-        sortable = false;
-      }, function () {
-        return canMove;
-      });
+      this.vGridSortable.init()
     }
+
+
+
   };
 
 
@@ -1287,6 +1104,8 @@ export class VGridGenerator {
     this.htmlCache.content.addEventListener("scroll", this.onScroll.bind(this));
 
     this.addResizableAndSortableEvent(); //this also includes the orderby click on header event
+
+
 
   };
 
@@ -1403,6 +1222,7 @@ export class VGridGenerator {
 
     this.init(true);
     this.fixHeaderWithBody();
+
   };
 
 

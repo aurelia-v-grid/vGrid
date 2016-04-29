@@ -25,6 +25,7 @@ export class VGridCol {
 
   bind(bindingContext, overrideContext) {
     this.vGrid.vGridConfig.attributeArray.push(this.vColAttribute);
+    this.vGrid.vGridConfig.attributes.push(this.vColAttribute);
     this.vGrid.vGridConfig.columnWidthArray.push(this.vColWidth);
     this.vGrid.vGridConfig.headerArray.push(this.vColHeader || "");
     this.vGrid.vGridConfig.filterArray.push(this.vColDefaultFilter || "?");

@@ -3,29 +3,93 @@
  *    replacement code for sortable.js just made for the headers, if you need sortable use sortable.js, see link below
  *    Created by vegar ringdal witt the help of sortablejs and https://github.com/RubaXa/Sortable/wiki/Sorting-with-the-help-of-HTML5-Drag'n'Drop-API
  *    Big thanks to Lebedev Konstantin RubaXa and his awsome sortable.js
+ *    TODO clean up
  *
  ****************************************************************************************************************/
 
 export class VGridSortable {
 
+  dragEl;
+  nextEl;
+  oldIndex;
+  newIndex;
 
-  constructor(rootEl, onUpdate, onStart, onCancel, canMove) {
-    this.internalTimeout;
-    this.dragEl;
-    this.nextEl;
-    this.oldIndex;
-    this.newIndex;
-    this.rootEl = rootEl;
-    this.onUpdate = onUpdate;
-    this.onStart = onStart;
-    this.onCancel = onCancel;
-    this.canMove = canMove;
+  constructor(vGrid) {
+    this.vGrid = vGrid;
+    this.canMove = false;
+    this.sortable = false;
+
+  }
+
+  setDragHandles() {
+    //we haveto control dragging only to headers with draghandle
+    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
+    [].slice.call(dragHandles).forEach((itemEl) => {
+      itemEl.onmouseenter = () => {
+        this.canMove = true
+      };
+      itemEl.onmouseleave = () => {
+        this.canMove = false
+      }
+
+    });
+  }
+
+
+  init(rootEl, onUpdate, onStart, onCancel, canMove) {
+    this.setDragHandles();
+
+    //need to be better, will change when I rebuild header into custom element
+    this.rootEl = this.vGrid.vGridGenerator.htmlCache.header.firstChild.firstChild; //this is BAD!
 
     //add draggable to elements
     this.setDraggable(true);
 
     //add eventlistnes for dragable
     this.rootEl.addEventListener('dragstart', this.onDragStart.bind(this), false);
+
+  }
+
+  onStart() {this.sortable = true};
+
+  onCancel() {this.sortable = false};
+
+  isDragHandle() {return this.canMove};
+
+
+  onUpdate(oldIndex, newIndex) {
+    var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.firstChild.children;
+
+    var x;
+    x = this.vGrid.vGridConfig.attributeArray[oldIndex];
+    this.vGrid.vGridConfig.attributeArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.attributeArray.splice(newIndex, 0, x);
+
+    x = this.vGrid.vGridConfig.filterArray[oldIndex];
+    this.vGrid.vGridConfig.filterArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.filterArray.splice(newIndex, 0, x);
+
+    x = this.vGrid.vGridConfig.headerArray[oldIndex];
+    this.vGrid.vGridConfig.headerArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.headerArray.splice(newIndex, 0, x);
+
+    x = this.vGrid.vGridConfig.columnWidthArray[oldIndex];
+    this.vGrid.vGridConfig.columnWidthArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.columnWidthArray.splice(newIndex, 0, x);
+
+    x = this.vGrid.vGridConfig.colStyleArray[oldIndex];
+    this.vGrid.vGridConfig.colStyleArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.colStyleArray.splice(newIndex, 0, x);
+
+    x = this.vGrid.vGridConfig.colTypeArray[oldIndex];
+    this.vGrid.vGridConfig.colTypeArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.colTypeArray.splice(newIndex, 0, x);
+
+
+    this.vGrid.vGridGenerator.htmlCache.rowTemplate = null; //reset template and fill data
+
+    this.vGrid.vGridGenerator.rebuildColumns();
+    this.sortable = false;
 
   }
 
@@ -46,7 +110,7 @@ export class VGridSortable {
     this.dragEl = evt.target;
     this.oldIndex = evt.target.getAttribute("column-no");
 
-    if (this.canMove()) {
+    if (this.isDragHandle()) {
       this.onStart();
       this.nextEl = this.dragEl.nextSibling;
 

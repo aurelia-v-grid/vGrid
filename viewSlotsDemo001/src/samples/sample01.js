@@ -11,15 +11,11 @@ export class sample01 {
 
   };
 
-  // onRowDraw (data, collectionData) {
-  //   if (data) {
-  //     if (data.country === "Angola") {
-  //       data.myCustomColor = "rgba(150,72,230, 0.3)"
-  //     }
-  //     data.date = this.formatDate(data.date)
-  //     data.number = Math.round(data.number)
-  //   }
-  // }
+  onRowDraw (data, collectionData) {
+    if (data) {
+
+    }
+  }
   //
   //
   // onDblClick (row) {

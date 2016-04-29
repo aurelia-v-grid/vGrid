@@ -103,7 +103,7 @@ export class VGridConfig {
   }
 
 
-  //from string interpolate
+  //from string interpolate, this is whats passes into the onrowdraw event, so we dont end up with people enditing their collection
   attributes = [];
 
   getNewObject(obj) {

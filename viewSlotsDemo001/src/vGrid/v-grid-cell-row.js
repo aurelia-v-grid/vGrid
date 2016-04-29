@@ -16,6 +16,8 @@ import {VGrid} from './v-grid'
 @inject(Element, VGrid)
 export class VGridCellRow {
   @bindable colNo;
+  @bindable configAttribute;
+
 
 
   constructor(element, vGrid) {
@@ -44,7 +46,7 @@ export class VGridCellRow {
 
 
   created() {
-    //nothing atm
+
   }
 
 
@@ -56,6 +58,8 @@ export class VGridCellRow {
 
 
   attached() {
+
+    this.setStandardClassesAndStyles();
 
 
 
@@ -111,26 +115,20 @@ export class VGridCellRow {
 
 
     this.cellContent.ondblclick = function (e) {
-
         this.setEditMode(true);
         this.cellContent.select()
-
-
     }.bind(this);
 
 
 
 
     this.cellContent.addEventListener("cellFocus", function(e) {
-      console.log("focus2")
       this.setCss();
       this.cellContent.focus();
     }.bind(this));
 
 
-    this.cellContent.onmousedown =function(e){
-     
-    }
+
 
     this.cellContent.onblur = function (e) {
       this.vGrid.vGridCellHelper.updateActual({
@@ -354,6 +352,15 @@ export class VGridCellRow {
         this.addWriteClass(this.element);
       }
     }
+  }
+
+  setStandardClassesAndStyles(){
+    var css = this.vGrid.vGridConfig.css;
+    var cellStyle = `width:${this.vGrid.vGridConfig.columnWidthArray[this.colNo]}px`;
+    this.element.classList.add(css.rowCell)
+    this.element.classList.add(css.rowColumn + this.colNo)
+    this.element.classList.add(css.gridColumn + this.colNo)
+    this.element.style = cellStyle;
   }
 
 
