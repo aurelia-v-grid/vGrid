@@ -13,6 +13,7 @@ import {VGridSortable} from './v-grid-sortable';
 import {VGridCellHelper} from './v-grid-cell-helper';
 import {VGridObservables} from './v-grid-observables';
 import {VGridConfig} from './v-grid-config';
+import {VGridResizable} from './v-grid-resizable';
 import {VGridSelection} from './v-grid-selection';
 
 
@@ -55,8 +56,10 @@ export class VGrid {
     this.vGridConfig = new VGridConfig(this);
     this.vGridSelection = new VGridSelection(null, this);
     this.vGridCellHelper = new VGridCellHelper(this);
+    this.vGridSortable = new VGridSortable(this);
+    this.vGridResizable = new VGridResizable(this);
     this.vGridObservables = new VGridObservables(this, observerLocator);
-    this.vGridGenerator = new VGridGenerator(this.vGridConfig, this.element, VGridSortable, this.vGridSelection, this.vGridCellHelper, this);
+    this.vGridGenerator = new VGridGenerator(this);
 
 
   }
@@ -127,6 +130,8 @@ export class VGrid {
     //create the grid html/add events etc
     //this.vGridGenerator = new VGridGenerator(this.vGridConfig, this.element, VGridSortable, this.vGridSelection, this.vGridCellHelper, this);
     this.vGridGenerator.init(false);
+
+ 
 
   }
 
