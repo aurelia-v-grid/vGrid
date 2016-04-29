@@ -14,10 +14,12 @@ export class VGridSortable {
   oldIndex;
   newIndex;
 
+
   constructor(vGrid) {
     this.vGrid = vGrid;
     this.canMove = false;
     this.sortable = false;
+    this.timer = 0
 
   }
 
@@ -40,7 +42,7 @@ export class VGridSortable {
     this.setDragHandles();
 
     //need to be better, will change when I rebuild header into custom element
-    this.rootEl = this.vGrid.vGridGenerator.htmlCache.header.firstChild.firstChild; //this is BAD!
+    this.rootEl = this.vGrid.vGridGenerator.htmlCache.header.firstChild; //this is BAD!
 
     //add draggable to elements
     this.setDraggable(true);
@@ -58,7 +60,15 @@ export class VGridSortable {
 
 
   onUpdate(oldIndex, newIndex) {
-    var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.firstChild.children;
+    var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.children;
+
+    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
+    [].slice.call(dragHandles).forEach((itemEl, index) => {
+      if (parseInt(itemEl.parentNode.getAttribute("column-no")) === oldIndex) {
+        newIndex = index;
+      }
+    });
+
 
     var x;
     x = this.vGrid.vGridConfig.attributeArray[oldIndex];
@@ -93,6 +103,54 @@ export class VGridSortable {
 
   }
 
+  onUpdateAlt(oldIndex, newIndex) {
+    var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.children;
+
+    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
+    [].slice.call(dragHandles).forEach((itemEl, index) => {
+      if (parseInt(itemEl.parentNode.getAttribute("column-no")) === oldIndex) {
+        newIndex = index;
+      }
+    });
+
+
+    var x;
+    x = this.vGrid.vGridConfig.attributeArray[oldIndex];
+    this.vGrid.vGridConfig.attributeArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.attributeArray.splice(newIndex, 0, x);
+
+    x = this.vGrid.vGridConfig.filterArray[oldIndex];
+    this.vGrid.vGridConfig.filterArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.filterArray.splice(newIndex, 0, x);
+
+    x = this.vGrid.vGridConfig.headerArray[oldIndex];
+    this.vGrid.vGridConfig.headerArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.headerArray.splice(newIndex, 0, x);
+
+    x = this.vGrid.vGridConfig.columnWidthArray[oldIndex];
+    this.vGrid.vGridConfig.columnWidthArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.columnWidthArray.splice(newIndex, 0, x);
+
+    x = this.vGrid.vGridConfig.colStyleArray[oldIndex];
+    this.vGrid.vGridConfig.colStyleArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.colStyleArray.splice(newIndex, 0, x);
+
+    x = this.vGrid.vGridConfig.colTypeArray[oldIndex];
+    this.vGrid.vGridConfig.colTypeArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.colTypeArray.splice(newIndex, 0, x);
+
+
+    this.vGrid.vGridGenerator.htmlCache.rowTemplate = null; //reset template and fill data
+    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
+    [].slice.call(dragHandles).forEach((itemEl, index) => {
+      itemEl.parentNode.setAttribute("column-no", index)
+
+    });
+    this.vGrid.vGridGenerator.rebuildColumnsAlt();
+
+
+  }
+
 
   //sets the elements draggable attribute
   setDraggable(newStatus) {
@@ -109,6 +167,7 @@ export class VGridSortable {
 
     this.dragEl = evt.target;
     this.oldIndex = evt.target.getAttribute("column-no");
+    this.oldIndexTemp = this.oldIndex * 1;
 
     if (this.isDragHandle()) {
       this.onStart();
@@ -119,10 +178,10 @@ export class VGridSortable {
 
       this.rootEl.addEventListener('dragover', this.onDragOver.bind(this), false);
       this.rootEl.addEventListener('dragend', this.onDragEnd.bind(this), false);
-
-      setTimeout(function () {
-        this.dragEl.classList.add('ghost');
-      }.bind(this), 0);
+      var x = this.dragEl
+      setTimeout(()=> {
+        x.classList.add('ghost');
+      }, 0);
     } else {
       evt.preventDefault()
     }
@@ -140,28 +199,45 @@ export class VGridSortable {
   }
 
 
+
   //on drag over event(moving)
   onDragOver(evt) {
+    if (!this.timer) {
+      this.timer = setTimeout(()=> {
+        if (evt.preventDefault !== void 0) {
+          evt.preventDefault();
+          evt.stopPropagation();
+        }
+        evt.dataTransfer.dropEffect = 'move';
 
-    if (evt.preventDefault !== void 0) {
-      evt.preventDefault();
-      evt.stopPropagation();
-    }
-    evt.dataTransfer.dropEffect = 'move';
+        var target = evt.target.offsetParent;
+        try {
+          var targetNode = target.nodeName === 'DIV' || target.nodeName === 'V-GRID-CELL-HEADER';
+        }catch(e) {
+        }
 
-    var target = evt.target.offsetParent;
-    if (target && target !== this.dragEl && target.nodeName == 'DIV' && target.getAttribute("draggable") === "true") {
-      this.newIndex = target.getAttribute("column-no");
-      var rect = target.getBoundingClientRect();
-      var width = rect.right - rect.left;
-      var height = rect.bottom - rect.top;
-      var isWide = (target.offsetWidth > this.dragEl.offsetWidth);
-      var isLong = (target.offsetHeight > this.dragEl.offsetHeight);
-      var halfway = ((evt.clientX - rect.left) / width) > 0.5;
-      var nextSibling = target.nextElementSibling;
-      var after = (nextSibling !== this.dragEl) && !isLong || halfway && isLong;
-      this.rootEl.insertBefore(this.dragEl, after ? target.nextSibling : target);
+        if (target && target !== this.dragEl && targetNode && target.getAttribute("draggable") === "true") {
+          this.newIndex = target.getAttribute("column-no");
+          var rect = target.getBoundingClientRect();
+          var width = rect.right - rect.left;
+          var height = rect.bottom - rect.top;
+          var isWide = (target.offsetWidth > this.dragEl.offsetWidth);
+          var isLong = (target.offsetHeight > this.dragEl.offsetHeight);
+          var halfway = ((evt.clientX - rect.left) / width) > 0.5;
+          var nextSibling = target.nextElementSibling;
+          var after = (nextSibling !== this.dragEl) && !isLong || halfway && isLong;
+          this.rootEl.insertBefore(this.dragEl, after ? target.nextSibling : target);
+          if (this.oldIndexTemp !== this.newIndex) {
+            this.onUpdateAlt(parseInt(this.oldIndexTemp), parseInt(this.newIndex));
+            this.oldIndexTemp = this.newIndex * 1
+          }
+
+        }
+        this.timer = null;
+      }, 150)
     }
+
+
   }
 
 

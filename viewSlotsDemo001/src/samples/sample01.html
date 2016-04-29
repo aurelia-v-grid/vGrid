@@ -12,8 +12,24 @@
     <!------------------------------------------------------------------------------------------------------------------------------------>
     <!--ROW1------------------------------------------------------------------------------------------------------------------------------>
     <!------------------------------------------------------------------------------------------------------------------------------------>
+    <!--v-resizable-headers="true"-->
+    <!--v-resize-also-rows="true"-->
+    <!--v-sortable-headers="true"-->
+    <!--v-sort-on-header-click="true"-->
+    <!--v-header-filter="true"-->
+    <!--v-header-filter-onkeydown="true"-->
+    <!--v-header-filter-not-to="images"-->
+    <!--v-header-filter-top="true"-->
+    <!--v-row-on-dblclick="onDblClick"-->
+    <!--v-row-on-draw="onRowDraw"-->
+    <!--v-cell-on-draw="onCellDraw"-->
 
 
+
+    <!--v-header-filter="true"-->
+    <!--v-header-filter-onkeydown="true"-->
+    <!--v-header-filter-not-to="images"-->
+    <!--v-header-filter-top="true"-->
     <div my-attribute.bind="value=22" class="myRow1">
 
       <!------------------------------------------------------------------------------------------------------------------------------------>
@@ -21,24 +37,21 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">early version- using viewslots 29.04.2016 v5,</h4>
+        <h4 style="margin-left:25px">early version- using viewslots 29.04.2016 v6, (main rebuild not updated with this)</h4>
         <h5 style="margin-left:25px"><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute </h5>
 
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
           v-row-height="40"
           v-header-height="50"
-          v-resizable-headers="true"
           v-resize-also-rows="true"
+          v-resizable-headers="true"
+        v-header-filter="true"
+        v-header-filter-onkeydown="true"
+        v-header-filter-not-to="images"
+        v-header-filter-top="true"
           v-sortable-headers="true"
           v-sort-on-header-click="true"
-          v-header-filter="true"
-          v-header-filter-onkeydown="true"
-          v-header-filter-not-to="images"
-          v-header-filter-top="true"
-          v-row-on-dblclick="onDblClick"
-          v-row-on-draw="onRowDraw"
-          v-cell-on-draw="onCellDraw"
           v-multi-select="true"
           v-format-handler="myFormatHandler"
           v-current-entity.bind=myCurrentEntity
