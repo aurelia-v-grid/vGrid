@@ -119,11 +119,18 @@ export class VGridCellRow {
     }.bind(this);
 
 
+
+
     this.cellContent.addEventListener("cellFocus", function(e) {
+      console.log("focus2")
       this.setCss();
       this.cellContent.focus();
     }.bind(this));
 
+
+    this.cellContent.onmousedown =function(e){
+     
+    }
 
     this.cellContent.onblur = function (e) {
       this.vGrid.vGridCellHelper.updateActual({

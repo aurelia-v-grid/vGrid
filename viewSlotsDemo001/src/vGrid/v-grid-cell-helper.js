@@ -117,38 +117,39 @@ export class VGridCellHelper {
     this.vGrid.element.onkeydown = function (e) {
 
 
-
-      //console.log(e.target.classList.contains(this.vGrid.vGridConfig.css.cellContent))
       //page up
       if (e.keyCode === 33) {
         e.preventDefault();
         this.blurBeforeNext();
         this.keyDownDelay(() => {
           if (this.curElement) {
+
             //get scrolltop
             var currentscrolltop = this.vGrid.vGridGenerator.getScrollTop();
 
             //get content height/rows
             var rowHeight = this.vGrid.vGridConfig.rowHeight;
             var containerHeight = this.vGrid.vGridGenerator.htmlCache.content.clientHeight;
-            var containerRows = parseInt(containerHeight / rowHeight, 10) + 1;
-
-
-            //get cell with that top
-            //this.removeEditCssClasses(this.curElement);
+            var containerRows = parseInt(containerHeight / rowHeight, 10);
             this.top = this.setCellsFromElement(this.curElement, 0);
-            if (this.vGrid.vGridGenerator.lastScrollType === "down") {
-              this.vGrid.vGridGenerator.onNormalScrolling(false)
-            }
+
             var newTop = this.top - (containerRows * rowHeight);
             if ((newTop / rowHeight) <= 0) {
               newTop = 0;
             }
-            setTimeout(()=> {
-              //need timeout atm here so I can do it after the grid have updated, Todo improve grid generator code
-              this.setCellsFromTopValue(newTop);
-              this.dispatchCellClick(this.index);
-            }, 100)
+
+
+            //if last scroll was up then we need to reverse the buffer
+            if(this.vGrid.vGridGenerator.lastScrollType === "down"){
+              this.vGrid.vGridGenerator.onNormalScrolling(false)
+            }
+
+            this.setCellsFromTopValue(newTop);
+            this.dispatchCellClick(this.index);
+
+            var setTop = newTop-parseInt((containerRows*rowHeight)/2)
+            this.vGrid.vGridGenerator.setScrollTop(setTop);
+
           }
         });
       }
@@ -160,32 +161,33 @@ export class VGridCellHelper {
         this.blurBeforeNext();
         this.keyDownDelay(() => {
           if (this.curElement) {
+
             //get scrolltop
             var currentscrolltop = this.vGrid.vGridGenerator.getScrollTop();
 
             //get content height/rows
             var rowHeight = this.vGrid.vGridConfig.rowHeight;
             var containerHeight = this.vGrid.vGridGenerator.htmlCache.content.clientHeight;
-            var containerRows = parseInt(containerHeight / rowHeight, 10) + 1;
-
-            //get cell with that top
-            //this.removeEditCssClasses(this.curElement);
+            var containerRows = parseInt(containerHeight / rowHeight, 10);
             this.top = this.setCellsFromElement(this.curElement, 0);
-            if (this.vGrid.vGridGenerator.lastScrollType === "up") {
-              this.vGrid.vGridGenerator.onNormalScrolling(true)
-            }
-            //this.vGrid.vGridGenerator.setScrollTop(currentscrolltop + (containerHeight));
+
             var newTop = this.top + (containerRows * rowHeight);
             if ((newTop / rowHeight) >= this.vGrid.vGridConfig.getCollectionLength()) {
               newTop = this.vGrid.vGridConfig.getCollectionLength() * rowHeight;
               newTop = newTop - rowHeight
             }
-            setTimeout(()=> {
-              //need timeout atm here so I can do it after the grid have updated, Todo improve grid generator code
-              this.setCellsFromTopValue(newTop);
-              this.dispatchCellClick(this.index);
 
-            }, 100)
+            //if last scroll was up then we need to reverse the buffer
+            if(this.vGrid.vGridGenerator.lastScrollType === "up"){
+              this.vGrid.vGridGenerator.onNormalScrolling(true);
+            }
+
+            this.setCellsFromTopValue(newTop);
+            this.dispatchCellClick(this.index);
+
+            var setTop = newTop-parseInt((containerRows*rowHeight)/2)
+            this.vGrid.vGridGenerator.setScrollTop(setTop);
+
           }
         });
       }
@@ -296,7 +298,7 @@ export class VGridCellHelper {
    ***************************************************************************************/
   updateActual(obj) {
 
-    if(obj.attribute && this.vGrid.currentEntity){
+    if(obj.attribute && this.vGrid.currentRowEntity){
       //so we dont create loop
       this.vGrid.skipNextUpdateProperty.push(obj.attribute);
 
