@@ -43,7 +43,6 @@ How to use: (no plugin yet):
 * v-sortable-headers
 * v-request-animation-frame
 * v-render-on-scrollbar-scroll
-* v-locked-columns
 * v-header-filter
 * v-header-filter-top
 * v-header-filter-onkeydown

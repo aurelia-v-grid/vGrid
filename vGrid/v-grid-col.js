@@ -29,7 +29,7 @@ export class VGridCol {
     this.vGrid.vGridConfig.columnWidthArray.push(this.vColWidth);
     this.vGrid.vGridConfig.headerArray.push(this.vColHeader || "");
     this.vGrid.vGridConfig.filterArray.push(this.vColDefaultFilter || "?");
-    this.vGrid.vGridConfig.readOnlyArray.push(this.vColReadOnly === "true" ? this.vColAttribute : false);
+    this.vGrid.vGridConfig.readOnlyArray.push(this.vColReadOnly === "true" ? true : false);
     this.vGrid.vGridConfig.colStyleArray.push(this.vColCss);
     this.vGrid.vGridConfig.colTypeArray.push(this.vColType);
     this.vGrid.vGridConfig.columns.push(this);
