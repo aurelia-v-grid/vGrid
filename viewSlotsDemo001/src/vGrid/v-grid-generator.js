@@ -1078,17 +1078,10 @@ export class VGridGenerator {
     this.fixHeaderWithBody();
   };
 
-  rebuildColumnsAlt() {
-    //this.correctColumnsWidthArray();
-    //this.htmlCache.rowTemplate = null;
-    //this.cacheRowTemplate(null);
-    //this.rebuildGridHeaderHtml();
+  rebuildColumnsRows() {
     this.recreateViewSlots();
     this.fillDataInRows(true);
-    //this.correctRowAndScrollbodyWidth();
     this.updateSelectionOnAllRows();
-    //this.updateGridScrollbars();
-    //this.fixHeaderWithBody();
   };
 
 

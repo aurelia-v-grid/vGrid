@@ -97,8 +97,8 @@
 }
 
 .ghost {
-  background-color: #00acc1 !important;
-  z-index: 9999;
+  background-color: darkcyan !important;
+  z-index: 9999 !important;
 }
 
 .vGrid-row-alt {

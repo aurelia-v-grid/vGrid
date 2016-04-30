@@ -13,13 +13,17 @@ export class VGridSortable {
   nextEl;
   oldIndex;
   newIndex;
+  timer = null;
+  canMove = false;
+  sortable = false;
+
 
 
   constructor(vGrid) {
     this.vGrid = vGrid;
-    this.canMove = false;
-    this.sortable = false;
-    this.timer = 0
+    //this.canMove = false;
+    //this.sortable = false;
+    //this.timer = 0
 
   }
 
@@ -60,46 +64,46 @@ export class VGridSortable {
 
 
   onUpdate(oldIndex, newIndex) {
-    var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.children;
-
-    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
-    [].slice.call(dragHandles).forEach((itemEl, index) => {
-      if (parseInt(itemEl.parentNode.getAttribute("column-no")) === oldIndex) {
-        newIndex = index;
-      }
-    });
-
-
-    var x;
-    x = this.vGrid.vGridConfig.attributeArray[oldIndex];
-    this.vGrid.vGridConfig.attributeArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.attributeArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.filterArray[oldIndex];
-    this.vGrid.vGridConfig.filterArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.filterArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.headerArray[oldIndex];
-    this.vGrid.vGridConfig.headerArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.headerArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.columnWidthArray[oldIndex];
-    this.vGrid.vGridConfig.columnWidthArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.columnWidthArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.colStyleArray[oldIndex];
-    this.vGrid.vGridConfig.colStyleArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colStyleArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.colTypeArray[oldIndex];
-    this.vGrid.vGridConfig.colTypeArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colTypeArray.splice(newIndex, 0, x);
-
-
-    this.vGrid.vGridGenerator.htmlCache.rowTemplate = null; //reset template and fill data
-
-    this.vGrid.vGridGenerator.rebuildColumns();
-    this.sortable = false;
+    // var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.children;
+    //
+    // var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
+    // [].slice.call(dragHandles).forEach((itemEl, index) => {
+    //   if (parseInt(itemEl.parentNode.getAttribute("column-no")) === oldIndex) {
+    //     newIndex = index;
+    //   }
+    // });
+    //
+    //
+    // var x;
+    // x = this.vGrid.vGridConfig.attributeArray[oldIndex];
+    // this.vGrid.vGridConfig.attributeArray.splice(oldIndex, 1);
+    // this.vGrid.vGridConfig.attributeArray.splice(newIndex, 0, x);
+    //
+    // x = this.vGrid.vGridConfig.filterArray[oldIndex];
+    // this.vGrid.vGridConfig.filterArray.splice(oldIndex, 1);
+    // this.vGrid.vGridConfig.filterArray.splice(newIndex, 0, x);
+    //
+    // x = this.vGrid.vGridConfig.headerArray[oldIndex];
+    // this.vGrid.vGridConfig.headerArray.splice(oldIndex, 1);
+    // this.vGrid.vGridConfig.headerArray.splice(newIndex, 0, x);
+    //
+    // x = this.vGrid.vGridConfig.columnWidthArray[oldIndex];
+    // this.vGrid.vGridConfig.columnWidthArray.splice(oldIndex, 1);
+    // this.vGrid.vGridConfig.columnWidthArray.splice(newIndex, 0, x);
+    //
+    // x = this.vGrid.vGridConfig.colStyleArray[oldIndex];
+    // this.vGrid.vGridConfig.colStyleArray.splice(oldIndex, 1);
+    // this.vGrid.vGridConfig.colStyleArray.splice(newIndex, 0, x);
+    //
+    // x = this.vGrid.vGridConfig.colTypeArray[oldIndex];
+    // this.vGrid.vGridConfig.colTypeArray.splice(oldIndex, 1);
+    // this.vGrid.vGridConfig.colTypeArray.splice(newIndex, 0, x);
+    //
+    //
+    // this.vGrid.vGridGenerator.htmlCache.rowTemplate = null; //reset template and fill data
+    //
+    // this.vGrid.vGridGenerator.rebuildColumns();
+    // this.sortable = false;
 
   }
 
@@ -146,7 +150,7 @@ export class VGridSortable {
       itemEl.parentNode.setAttribute("column-no", index)
 
     });
-    this.vGrid.vGridGenerator.rebuildColumnsAlt();
+    this.vGrid.vGridGenerator.rebuildColumnsRows();
 
 
   }
@@ -167,20 +171,20 @@ export class VGridSortable {
 
     this.dragEl = evt.target;
     this.oldIndex = evt.target.getAttribute("column-no");
-    this.oldIndexTemp = this.oldIndex * 1;
+    //this.oldIndexTemp = this.oldIndex * 1;
 
     if (this.isDragHandle()) {
       this.onStart();
       this.nextEl = this.dragEl.nextSibling;
 
       evt.dataTransfer.effectAllowed = 'move';
-      evt.dataTransfer.setData('Text', this.dragEl.textContent);
+      evt.dataTransfer.setData('Text', this.vGrid.vGridConfig.attributeArray[this.oldIndex]);
 
       this.rootEl.addEventListener('dragover', this.onDragOver.bind(this), false);
       this.rootEl.addEventListener('dragend', this.onDragEnd.bind(this), false);
-      var x = this.dragEl
+
       setTimeout(()=> {
-        x.classList.add('ghost');
+        this.dragEl.classList.add('ghost');
       }, 0);
     } else {
       evt.preventDefault()
@@ -199,7 +203,7 @@ export class VGridSortable {
   }
 
 
-
+  ready = true
   //on drag over event(moving)
   onDragOver(evt) {
     if (!this.timer) {
@@ -208,7 +212,7 @@ export class VGridSortable {
           evt.preventDefault();
           evt.stopPropagation();
         }
-        evt.dataTransfer.dropEffect = 'move';
+        //evt.dataTransfer.dropEffect = 'move'; //this faile in IE
 
         var target = evt.target.offsetParent;
         try {
@@ -216,7 +220,9 @@ export class VGridSortable {
         }catch(e) {
         }
 
-        if (target && target !== this.dragEl && targetNode && target.getAttribute("draggable") === "true") {
+
+
+        if (this.ready && target && target !== this.dragEl && targetNode && target.getAttribute("draggable") === "true") {
           this.newIndex = target.getAttribute("column-no");
           var rect = target.getBoundingClientRect();
           var width = rect.right - rect.left;
@@ -224,17 +230,16 @@ export class VGridSortable {
           var isWide = (target.offsetWidth > this.dragEl.offsetWidth);
           var isLong = (target.offsetHeight > this.dragEl.offsetHeight);
           var halfway = ((evt.clientX - rect.left) / width) > 0.5;
-          var nextSibling = target.nextElementSibling;
-          var after = (nextSibling !== this.dragEl) && !isLong || halfway && isLong;
+          this.nextSibling = target.nextElementSibling;
+          var after = (this.nextSibling !== this.dragEl) && !isLong || halfway && isLong;
           this.rootEl.insertBefore(this.dragEl, after ? target.nextSibling : target);
-          if (this.oldIndexTemp !== this.newIndex) {
-            this.onUpdateAlt(parseInt(this.oldIndexTemp), parseInt(this.newIndex));
-            this.oldIndexTemp = this.newIndex * 1
+          if (this.oldIndex !== this.newIndex) {
+            this.onUpdateAlt(parseInt(this.oldIndex), parseInt(this.newIndex));
+            this.oldIndex = this.newIndex * 1
           }
-
-        }
+         }
         this.timer = null;
-      }, 150)
+      }, 100)
     }
 
 
@@ -249,9 +254,12 @@ export class VGridSortable {
     this.dragEl.classList.remove('ghost');
     this.rootEl.removeEventListener('dragover)', this.onDragOver, false);
     this.rootEl.removeEventListener('dragend', this.onDragEnd, false);
+    console.log("dragened")
 
     if (this.nextEl !== this.dragEl.nextSibling) {
-      this.onUpdate(parseInt(this.oldIndex), parseInt(this.newIndex));
+      //this.vGrid.vGridGenerator.rebuildColumns();
+      //this.onUpdate(parseInt(this.oldIndex), parseInt(this.newIndex));
+      this.nextSibling = null;
     } else {
       this.onCancel();
     }

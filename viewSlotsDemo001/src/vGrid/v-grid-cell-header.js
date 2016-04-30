@@ -244,7 +244,7 @@ export class VGridCellRow {
             operator: operator
           });
           //This is something I need for later if I add sortable columns.. and callback on each column on build
-          this.queryStringCheck[dataSourceAttribute] = queryHtmlInput[i].value;
+          this.vGrid.vGridGenerator.queryStringCheck[this.attribute] = queryHtmlInput[i].value;
         } else {
 
           if (queryHtmlInput[i].value === "") {
