@@ -30,12 +30,12 @@ export class VGridCellRow {
   created() {
     ///nothing atm
   }
-
+  columnNoChanged(oldValue,newValue) {console.log('prop1 change fired');}
 
   attached() {
     this.setStandardClassesAndStyles();
-    this.haveFilter = this.vGrid.vGridConfig.addFilter;
-    this.attribute = this.vGrid.vGridConfig.attributeArray[this.columnNo];
+    this.haveFilter = this.vGridConfig.addFilter;
+    this.attribute = this.vGridConfig.attributeArray[this.columnNo];
     this.header = this.vGridConfig.headerArray[this.columnNo];
     this.filter = this.vGridConfig.filterArray[this.columnNo];
 
@@ -46,6 +46,16 @@ export class VGridCellRow {
     }//end else
 
   }
+
+
+  get colType (){
+    return this.vGridConfig.colTypeArray[this.columnNo];
+  }
+
+  get isCheckBox (){
+    return this.vGridConfig.colTypeArray[this.columnNo] === "checkbox";
+  }
+
 
 
   createSingleRowLabel() {
@@ -98,14 +108,19 @@ export class VGridCellRow {
     if (this.vGridConfig.filterOnKey !== true) {
 
       for (var i = 0; i < cellInputElement.length; i++) {
-        cellInputElement[i].onchange = this.onChangeEventOnFilter.bind(this);
         cellInputElement[i].onkeyup = this.onKeyUpEventOnFilter.bind(this);
+        cellInputElement[i].onchange = this.onChangeEventOnFilter.bind(this);
+
+
       }
 
     } else {
 
       for (var i = 0; i < cellInputElement.length; i++) {
-        cellInputElement[i].onkeyup = this.onChangeEventOnFilter.bind(this);
+
+          cellInputElement[i].onkeyup = this.onChangeEventOnFilter.bind(this);
+
+
       }
 
     }
@@ -150,6 +165,13 @@ export class VGridCellRow {
     //markup--
     var cellLabel = `<div style="${lineHeigth}" class="${cssLabel}" ${this.vGridConfig.atts.dataAttribute}="${attribute}">${labelTopCell} ${sortIcon}</div>`;
     var cellInput = `<input style="${lineHeigth}" placeholder="${filterName}" class="${cssInput}" ${this.vGridConfig.atts.dataAttribute}="${attribute}" value="${valueInput}"/>`;
+
+    // if(this.colType === "checkbox"){
+    //   cellInput = `<div style="text-align:center; vertical-align:middle; line-height:${lineHeigth}" placeholder="${filterName}" class="${cssInput}" ${this.vGridConfig.atts.dataAttribute}="${attribute}" value="${valueInput}"/>
+    //               <input type="checkbox" style="" ${this.vGridConfig.atts.dataAttribute}="${attribute}" checked="${valueInput}"/>
+    //              </div>`;
+    // }
+
 
     //if its in the the array then we want empty block, else it will look like shit if filters are at top
     if (this.vGridConfig.doNotAddFilterTo.indexOf(attribute) !== -1) {
@@ -230,14 +252,22 @@ export class VGridCellRow {
       var queryParams = [];
       for (var i = 0; i < queryHtmlInput.length; i++) {
 
+        var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
+        var operator = this.vGridConfig.filterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
+        if(dataSourceAttribute === this.attribute){
+          var value  =  queryHtmlInput[i].value;
+        } else {
+          var value  = queryHtmlInput[i].value;
+        }
+
+
+
         //do value exist and is not blank?
-        if (queryHtmlInput[i].value !== "" && queryHtmlInput[i].value !== undefined) {
+        if (value !== "" && value !== undefined) {
 
-          var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
-          var operator = this.vGridConfig.filterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
 
-          //set in & if we are not of first row
-          var value = queryHtmlInput[i].value;
+
+
 
           //push into array that we send back after
           queryParams.push({
@@ -247,13 +277,13 @@ export class VGridCellRow {
           });
 
           //This is something I need for later if I add sortable columns.. and callback on each column on build
-          this.vGrid.vGridGenerator.queryStringCheck[this.attribute] = queryHtmlInput[i].value;
+          this.vGrid.vGridGenerator.queryStringCheck[this.attribute] = value;
 
         } else {
 
-          if (queryHtmlInput[i].value === "") {
+          if (value === "") {
             var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
-            this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = queryHtmlInput[i].value = "";
+            this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = value;
           }
 
         }

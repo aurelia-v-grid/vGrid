@@ -21,11 +21,8 @@ export class VGridSortable {
 
   constructor(vGrid) {
     this.vGrid = vGrid;
-    //this.canMove = false;
-    //this.sortable = false;
-    //this.timer = 0
-
   }
+
 
   setDragHandles() {
     //we haveto control dragging only to headers with draghandle
@@ -62,50 +59,6 @@ export class VGridSortable {
 
   isDragHandle() {return this.canMove};
 
-
-  onUpdate(oldIndex, newIndex) {
-    // var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.children;
-    //
-    // var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
-    // [].slice.call(dragHandles).forEach((itemEl, index) => {
-    //   if (parseInt(itemEl.parentNode.getAttribute("column-no")) === oldIndex) {
-    //     newIndex = index;
-    //   }
-    // });
-    //
-    //
-    // var x;
-    // x = this.vGrid.vGridConfig.attributeArray[oldIndex];
-    // this.vGrid.vGridConfig.attributeArray.splice(oldIndex, 1);
-    // this.vGrid.vGridConfig.attributeArray.splice(newIndex, 0, x);
-    //
-    // x = this.vGrid.vGridConfig.filterArray[oldIndex];
-    // this.vGrid.vGridConfig.filterArray.splice(oldIndex, 1);
-    // this.vGrid.vGridConfig.filterArray.splice(newIndex, 0, x);
-    //
-    // x = this.vGrid.vGridConfig.headerArray[oldIndex];
-    // this.vGrid.vGridConfig.headerArray.splice(oldIndex, 1);
-    // this.vGrid.vGridConfig.headerArray.splice(newIndex, 0, x);
-    //
-    // x = this.vGrid.vGridConfig.columnWidthArray[oldIndex];
-    // this.vGrid.vGridConfig.columnWidthArray.splice(oldIndex, 1);
-    // this.vGrid.vGridConfig.columnWidthArray.splice(newIndex, 0, x);
-    //
-    // x = this.vGrid.vGridConfig.colStyleArray[oldIndex];
-    // this.vGrid.vGridConfig.colStyleArray.splice(oldIndex, 1);
-    // this.vGrid.vGridConfig.colStyleArray.splice(newIndex, 0, x);
-    //
-    // x = this.vGrid.vGridConfig.colTypeArray[oldIndex];
-    // this.vGrid.vGridConfig.colTypeArray.splice(oldIndex, 1);
-    // this.vGrid.vGridConfig.colTypeArray.splice(newIndex, 0, x);
-    //
-    //
-    // this.vGrid.vGridGenerator.htmlCache.rowTemplate = null; //reset template and fill data
-    //
-    // this.vGrid.vGridGenerator.rebuildColumns();
-    // this.sortable = false;
-
-  }
 
   onUpdateAlt(oldIndex, newIndex) {
     var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.children;
@@ -203,7 +156,7 @@ export class VGridSortable {
   }
 
 
-  ready = true
+
   //on drag over event(moving)
   onDragOver(evt) {
     if (!this.timer) {
@@ -222,7 +175,7 @@ export class VGridSortable {
 
 
 
-        if (this.ready && target && target !== this.dragEl && targetNode && target.getAttribute("draggable") === "true") {
+        if (target && target !== this.dragEl && targetNode && target.getAttribute("draggable") === "true") {
           this.newIndex = target.getAttribute("column-no");
           var rect = target.getBoundingClientRect();
           var width = rect.right - rect.left;
@@ -254,7 +207,6 @@ export class VGridSortable {
     this.dragEl.classList.remove('ghost');
     this.rootEl.removeEventListener('dragover)', this.onDragOver, false);
     this.rootEl.removeEventListener('dragend', this.onDragEnd, false);
-    console.log("dragened")
 
     if (this.nextEl !== this.dragEl.nextSibling) {
       //this.vGrid.vGridGenerator.rebuildColumns();

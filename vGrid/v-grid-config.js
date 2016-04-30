@@ -102,6 +102,103 @@ export class VGridConfig {
 
   }
 
+  /***************************************************************************************
+   * getters/setters to make it easier
+   ***************************************************************************************/
+
+  get vGridCellHelper() {
+    if (this.vGrid) {
+      return this.vGrid.vGridCellHelper;
+    } else {
+      return null;
+    }
+  }
+
+  get vGridFilter() {
+    if (this.vGrid) {
+      return this.vGrid.vGridFilter;
+    } else {
+      return null;
+    }
+  }
+
+  get vGridSort() {
+    if (this.vGrid) {
+      return this.vGrid.vGridSort;
+    } else {
+      return null;
+    }
+  }
+
+  get vGridGenerator() {
+    if (this.vGrid) {
+      return this.vGrid.vGridGenerator;
+    } else {
+      return null;
+    }
+  }
+
+  get vGridCollectionFiltered() {
+    if (this.vGrid) {
+      return this.vGrid.vGridCollectionFiltered;
+    } else {
+      return null;
+    }
+  }
+
+  set vGridCollectionFiltered(x) {
+    return this.vGrid.vGridCollectionFiltered = x;
+  }
+
+  get vGridCollection() {
+    if (this.vGrid) {
+      return this.vGrid.vGridCollection;
+    } else {
+      return null;
+    }
+  }
+
+  set vGridCollection(x) {
+    return this.vGrid.vGridCollection = x;
+  }
+
+  get vGridCurrentEntityRef() {
+    if (this.vGrid) {
+      return this.vGrid.vGridCurrentEntityRef;
+    } else {
+      return null;
+    }
+  }
+
+  set vGridCurrentEntityRef(x) {
+    return this.vGrid.vGridCurrentEntityRef = x;
+  }
+
+
+  get vGridCurrentRow() {
+    if (this.vGrid) {
+      return this.vGrid.vGridCurrentRow;
+    } else {
+      return null;
+    }
+  }
+
+  set vGridCurrentRow(x) {
+    return this.vGrid.vGridCurrentRow = x;
+  }
+
+
+  get vGridRowKey() {
+    if (this.vGrid) {
+      return this.vGrid.vGridRowKey;
+    } else {
+      return null;
+    }
+  }
+
+  set vGridRowKey(x) {
+    return this.vGrid.vGridRowKey = x;
+  }
 
   //from string interpolate, this is whats passes into the onrowdraw event, so we dont end up with people enditing their collection
   attributes = [];
@@ -125,24 +222,24 @@ export class VGridConfig {
 
   onFilterRun = (filterObj) => {
 
-    if (filterObj.length !== 0 || this.vGrid.collectionFiltered.length !== this.vGrid.collection.length) {
+    if (filterObj.length !== 0 || this.vGridCollectionFiltered.length !== this.vGridCollection.length) {
       //get sel keys
 
       //if they filter we want to make sure the after cell edit happends
-      if (this.vGrid.vGridCellHelper.curElement && this.vGrid.vGridCellHelper.updated === false) {
-        this.vGrid.vGridCellHelper.updateActual(this.vGrid.vGridCellHelper.callbackObject());
+      if (this.vGridCellHelper.curElement && this.vGridCellHelper.updated === false) {
+        this.vGridCellHelper.updateActual(this.vGridCellHelper.callbackObject());
       }
 
       var curKey = -1;
-      if (this.vGrid.currentRowEntity) {
-        curKey = this.vGrid.currentRowEntity[this.vGrid.sgkey];
+      if (this.vGridCurrentEntityRef) {
+        curKey = this.vGridCurrentEntityRef[this.vGridRowKey];
       }
-      if (filterObj.length === 0 && this.vGrid.collectionFiltered.length !== this.vGrid.collection.length) {
-        this.vGrid.collectionFiltered = this.vGrid.collection.slice(0);
+      if (filterObj.length === 0 && this.vGridCollectionFiltered.length !== this.vGridCollection.length) {
+        this.vGridCollectionFiltered = this.vGridCollection.slice(0);
       } else {
 
-        this.vGrid.collectionFiltered = this.vGrid.vGridFilter.run(this.vGrid.collection, filterObj);
-        this.vGrid.vGridSort.run(this.vGrid.collectionFiltered);
+        this.vGridCollectionFiltered = this.vGridFilter.run(this.vGridCollection, filterObj);
+        this.vGridSort.run(this.vGridCollectionFiltered);
 
       }
 
@@ -150,22 +247,21 @@ export class VGridConfig {
       //set current row/entity in sync
       var newRowNo = -1;
       if (curKey) {
-        this.vGrid.collectionFiltered.forEach((x, index) => {
-          if (curKey === x[this.vGrid.sgkey]) {
+        this.vGridCollectionFiltered.forEach((x, index) => {
+          if (curKey === x[this.vGridRowKey]) {
             newRowNo = index;
           }
         });
       }
 
-
       if (newRowNo > -1) {
-        this.vGrid.currentRowEntity = this.vGrid.collectionFiltered[newRowNo];
-        this.vGrid.currentEntity[this.vGrid.sgkey] = this.vGrid.currentRowEntity[this.vGrid.sgkey];
-        this.vGrid.filterRow = newRowNo;
+        this.vGridCurrentEntityRef = this.vGridCollectionFiltered[newRowNo];
+        this.vGridCurrentEntity[this.vGridRowKey] = this.vGridCurrentEntityRef[this.vGridRowKey];
+        this.vGridCurrentRow = newRowNo;
       }
 
       //update grid
-      this.vGrid.vGridGenerator.collectionChange(true);
+      this.vGridGenerator.collectionChange(true);
 
 
     }
@@ -177,7 +273,7 @@ export class VGridConfig {
    * grid asks for the filter name from attibute
    ***************************************************************************************/
   getFilterName(name) {
-    return this.vGrid.vGridFilter.getNameOfFilter(name)
+    return this.vGridFilter.getNameOfFilter(name)
   }
 
 
@@ -186,20 +282,17 @@ export class VGridConfig {
    * Use {} if you want markup of columns, or undefined for total blank rows
    ***************************************************************************************/
   getDataElement(row, isDown, isLargeScroll, callback) {
-    if (this.vGrid.collectionFiltered !== undefined) {
+    if (this.vGridCollectionFiltered !== undefined) {
       if (this.eventOnRowDraw) {
         //if user have added this then we call it so they can edit the row data before we display it
-        var data = this.getNewObject(this.vGrid.collectionFiltered[row]);
-        this.eventOnRowDraw(data, this.vGrid.collectionFiltered[row]);
+        var data = this.getNewObject(this.vGridCollectionFiltered[row]);
+        this.eventOnRowDraw(data, this.vGridCollectionFiltered[row]);
         callback(data)
       } else {
-        callback(this.vGrid.collectionFiltered[row]);
+        callback(this.vGridCollectionFiltered[row]);
       }
     }
   }
-
-
-
 
 
   /***************************************************************************************
@@ -209,8 +302,8 @@ export class VGridConfig {
   onOrderBy(event, setheaders) {
 
     //if they sort we want to make sure the after cell edit happends
-    if (this.vGrid.vGridCellHelper.curElement && this.vGrid.vGridCellHelper.updated === false) {
-      this.vGrid.vGridCellHelper.updateActual(this.vGrid.vGridCellHelper.callbackObject());
+    if (this.vGridCellHelper.curElement && this.vGridCellHelper.updated === false) {
+      this.vGridCellHelper.updateActual(this.vGridCellHelper.callbackObject());
     }
 
 
@@ -224,38 +317,35 @@ export class VGridConfig {
       checked = false;
     }
 
-    if (this.vGrid.collectionFiltered.length > 0 && attribute && checked) {
+    if (this.vGridCollectionFiltered.length > 0 && attribute && checked) {
 
       //set filter
-      this.vGrid.vGridSort.setFilter({
+      this.vGridSort.setFilter({
         attribute: attribute,
         asc: true
       }, event.shiftKey);
       //set headers
-      setheaders(this.vGrid.vGridSort.getFilter());
+      setheaders(this.vGridSort.getFilter());
       //get sel keys
 
       //run filter
-      this.vGrid.vGridSort.run(this.vGrid.collectionFiltered);
+      this.vGridSort.run(this.vGridCollectionFiltered);
 
 
       //set new row
-      this.vGrid.collectionFiltered.forEach((x, index) => {
-        if (this.vGrid.currentEntity[this.vGrid.sgkey] === x[this.vGrid.sgkey]) {
-          this.vGrid.filterRow = index;
+      this.vGridCollectionFiltered.forEach((x, index) => {
+        if (this.vGridCurrentEntity[this.vGridRowKey] === x[this.vGridRowKey]) {
+          this.vGridCurrentRow = index;
         }
       });
 
       //update grid
-      this.vGrid.vGridGenerator.collectionChange();
+      this.vGridGenerator.collectionChange();
 
     }
 
 
   }
-
-
-
 
 
   /***************************************************************************************
@@ -264,13 +354,11 @@ export class VGridConfig {
    ***************************************************************************************/
   getCollectionLength() {
     if (this.addFilter) {
-      return this.vGrid.collectionFiltered.length;
+      return this.vGridCollectionFiltered.length;
     } else {
-      return this.vGrid.collection.length;
+      return this.vGridCollection.length;
     }
   }
-
-
 
 
   /***************************************************************************************
@@ -281,27 +369,27 @@ export class VGridConfig {
 
 
     //set current row of out filtered row
-    this.vGrid.filterRow = row;
+    this.vGridCurrentRow = row;
 
     //get data ref
-    this.vGrid.currentRowEntity = this.vGrid.collectionFiltered[row];
+    this.vGridCurrentEntityRef = this.vGridCollectionFiltered[row];
 
     ///loop properties and set them to current entity
-    let data = this.vGrid.currentRowEntity;
+    let data = this.vGridCurrentEntityRef;
     for (var k in data) {
       if (data.hasOwnProperty(k)) {
-        if (this.vGrid.currentEntity[k] !== data[k]) {
-          this.vGrid.currentEntity[k] = data[k];
-          this.vGrid.skipNextUpdateProperty.push(k)
+        if (this.vGridCurrentEntity[k] !== data[k]) {
+          this.vGridCurrentEntity[k] = data[k];
+          this.vGridSkipNextUpdateProperty.push(k)
         }
       }
     }
 
 
-     //use helper function to edit cell
-   if(this.vGrid.currentRowEntity){
-     this.vGrid.vGridCellHelper.editCellhelper(row, event);
-   }
+    //use helper function to edit cell
+    if (this.vGridCurrentEntityRef) {
+      this.vGridCellHelper.editCellhelper(row, event);
+    }
 
   }
 

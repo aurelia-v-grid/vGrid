@@ -35,9 +35,9 @@ var VGridAttibutes = class {
 
 
   setBindValueInt() {
-    let ctxValue = this.vGrid.gridContext[this.attribute]
-    if (this.vGrid.gridContext[this.attribute]) {
-      this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.gridContext[this.attribute], this.attDefault);
+    let ctxValue = this.vGrid.vGridContextObj[this.attribute]
+    if (this.vGrid.vGridContextObj[this.attribute]) {
+      this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.attribute], this.attDefault);
     } else {
       this.vGrid.vGridConfig[this.attribute] = this.setValue(parseInt(this.value), this.attDefault);
     }
@@ -50,8 +50,8 @@ var VGridAttibutes = class {
       "false": false
     };
 
-    if (this.vGrid.gridContext[this.attribute]) {
-      this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.gridContext[this.attribute], this.attDefault);
+    if (this.vGrid.vGridContextObj[this.attribute]) {
+      this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.attribute], this.attDefault);
     } else {
       this.vGrid.vGridConfig[this.attribute] = this.setValue(type[this.value], this.attDefault);
     }
@@ -59,7 +59,7 @@ var VGridAttibutes = class {
 
 
   setBindValueFn() {
-    if (this.vGrid.gridContext[this.attribute]) {
+    if (this.vGrid.vGridContextObj[this.attribute]) {
       if (typeof(this.vGrid.$parent[this.value]) === "function") {
         this.vGrid.vGridConfig[this.attribute] = this.vGrid.$parent[this.value].bind(this.vGrid.$parent);
       }

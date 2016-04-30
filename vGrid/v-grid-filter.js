@@ -1,6 +1,6 @@
 /*****************************************************************************************************************
  *    vGridFilter
- *    This just does the filtering on collection from the values the grid gives it
+ *    This just does the filtering on vGridCollection from the values the grid gives it
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
@@ -202,9 +202,12 @@ export class VGridFilter {
               result = false;
             }
         }
-        if (x.value.charAt(0) === "*" && x.value.length === 1) {
-          result = true
+        if(type === "string"){
+          if (x.value.charAt(0) === "*" && x.value.length === 1) {
+            result = true
+          }
         }
+
 
 
       });//end foreach obj

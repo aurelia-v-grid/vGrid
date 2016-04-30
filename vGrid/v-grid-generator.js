@@ -1,5 +1,6 @@
 import {ViewSlot} from 'aurelia-framework';
 
+
 /*****************************************************************************************************************
  *    vGridGenerator
  *    This generates all html and handles the scrolling, row clicks etc
@@ -7,17 +8,63 @@ import {ViewSlot} from 'aurelia-framework';
  *    26-03-2016- started to test if I could just write it as a pure es6 class - this is not in use
  *
  ****************************************************************************************************************/
-export class VGridGenerator {
 
+export class VGridGenerator {
 
   constructor(vGrid) {
     this.vGrid = vGrid;
-    this.vGridSelection = vGrid.vGridSelection;
-    this.vGridConfig = vGrid.vGridConfig;
-    this.vGridCellHelper = vGrid.vGridCellHelper;
-    this.vGridElement = vGrid.element;
-    this.vGridSortable = vGrid.vGridSortable;
-    this.vGridResizable = vGrid.vGridResizable;
+  }
+
+  /***************************************************************************************
+   * getters/setters to make it easier
+   ***************************************************************************************/
+
+  get vGridSelection(){
+    if(this.vGrid){
+      return this.vGrid.vGridSelection;
+    } else {
+      return null;
+    }
+  }
+  
+  get vGridConfig(){
+    if(this.vGrid){
+      return this.vGrid.vGridConfig;
+    } else {
+      return null;
+    }
+  }
+  
+  get vGridCellHelper(){
+    if(this.vGrid){
+      return this.vGrid.vGridCellHelper;
+    } else {
+      return null;
+    }
+  }
+  
+  get vGridElement(){
+    if(this.vGrid){
+      return this.vGrid.element;
+    } else {
+      return null;
+    }
+  }
+  
+  get vGridSortable(){
+    if(this.vGrid){
+      return this.vGrid.vGridSortable;
+    } else {
+      return null;
+    }
+  }
+  
+  get vGridResizable(){
+    if(this.vGrid){
+      return this.vGrid.vGridResizable;
+    } else {
+      return null;
+    }
   }
 
 
@@ -68,52 +115,6 @@ export class VGridGenerator {
     }
   };
 
-
-  /****************************************************************************************************************************
-   * builds correct sort icon markup
-   ****************************************************************************************************************************/
-  // getSortIcon(attribute) {
-  //   var result;
-  //
-  //   //setting lineheight so it stays in the middle
-  //   var lineHeigthStyleTag;
-  //   if (!this.vGridConfig.addFilter) {
-  //     lineHeigthStyleTag = `style=line-height:${this.vGridConfig.headerHeight}px;"`;
-  //   } else {
-  //     lineHeigthStyleTag = `style=line-height:${this.vGridConfig.headerHeight / 2}px;"`;
-  //   }
-  //
-  //   if (this.vGridConfig.sortNotOnHeader.indexOf(attribute) !== -1) {
-  //     return "";
-  //   }
-  //
-  //
-  //   if (this.vGridConfig.sortOnHeaderClick) {
-  //     var main = `<span class=""><span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconSort}"></span></span>`;
-  //     if (this.sortOrder.length === 0) {
-  //       result = main
-  //     } else {
-  //       this.sortOrder.forEach((x) => {
-  //         if (x.attribute === attribute) {
-  //           var isAsc = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconAsc}"></span>`;
-  //           var isDesc = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconDesc}"></span>`;
-  //
-  //           var asc = x.asc === true ? isAsc : isDesc;
-  //           var main = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconNo}${x.no}">`;
-  //           var end = '</span>';
-  //
-  //           result = main + end + asc;
-  //         }
-  //       });
-  //     }
-  //     if (!result) {
-  //       result = main;
-  //     }
-  //   } else {
-  //     result = "";
-  //   }
-  //   return result
-  // };
 
 
   /****************************************************************************************************************************
@@ -1198,8 +1199,8 @@ export class VGridGenerator {
   //returns the rows in main collection that is in the grid/filtered
   getGridRows() {
     var array = [];
-    this.vGrid.collectionFiltered.forEach((x)=> {
-      array.push(x[this.vGrid.sgkey]);
+    this.vGrid.vGridCollectionFiltered.forEach((x)=> {
+      array.push(x[this.vGrid.vGridRowKey]);
     });
     return array;
 
@@ -1233,7 +1234,7 @@ export class VGridGenerator {
       let tempArr = [];
       attributes.forEach((att)=> {
         if (skipArray.indexOf(att) === -1) {
-          tempArr.push(this.vGrid.collection[row][att]);
+          tempArr.push(this.vGrid.vGridCollection[row][att]);
         }
       });
       setData(tempArr);

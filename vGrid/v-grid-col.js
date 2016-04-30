@@ -21,6 +21,10 @@ export class VGridCol {
     this.element = element;
 
   }
+  
+  get vGridConfig(){
+    
+  }
 
 
   bind(bindingContext, overrideContext) {

@@ -18,7 +18,7 @@ export class VGridCellRow {
   @bindable colNo;
   @bindable configAttribute;
 
-
+  
 
   constructor(element, vGrid) {
     this.element = element;
@@ -33,7 +33,7 @@ export class VGridCellRow {
       this.rawValue = this.bindingContext[this.attribute()];
       this.setValue(this.rawValue);
 
-      if(this.vGrid.filterRow === parseInt(this.element.parentNode.getAttribute("row"))){
+      if(this.vGrid.vGridCurrentRow === parseInt(this.element.parentNode.getAttribute("row"))){
         if(parseInt(this.colNo) === this.vGrid.vGridCellHelper.index){
           if (!this.containsFocusClass(this.element)) {
             this.setLastFocusElement(null);
@@ -150,6 +150,13 @@ export class VGridCellRow {
     this.cellContent.style.opacity = 1; //so materilize dont mess up
     this.cellContent.style.border = 0;
     this.cellContent.style.transition = "0ms";
+
+    if(this.colType()==="checkbox"){
+      this.cellContent.style.heigth = "initial"
+      this.cellContent.style.width = "initial"
+      this.cellContent.style.margin = "auto"
+    }
+
     this.cellContent.setAttribute("tabindex", "0");
 
     if (this.bindingContext) {
@@ -358,9 +365,9 @@ export class VGridCellRow {
   setStandardClassesAndStyles(){
     var css = this.vGrid.vGridConfig.css;
     var cellStyle = `width:${this.vGrid.vGridConfig.columnWidthArray[this.colNo]}px`;
-    this.element.classList.add(css.rowCell)
-    this.element.classList.add(css.rowColumn + this.colNo)
-    this.element.classList.add(css.gridColumn + this.colNo)
+    this.element.classList.add(css.rowCell);
+    this.element.classList.add(css.rowColumn + this.colNo);
+    this.element.classList.add(css.gridColumn + this.colNo);
     this.element.setAttribute("style", cellStyle);
   }
 
