@@ -7,6 +7,7 @@
 import {inject, noView, customElement, processContent, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 
+
 //should I make this into a container and have cells under it?
 
 
@@ -52,7 +53,16 @@ export class VGridCellRow {
 
 
 
+  createEvent(name) {
+  var event = document.createEvent('Event');
+  event.initEvent(name, true, true);
+  return event;
+}
 
+  fireEvent(element, name) {
+  var event = createEvent(name);
+  element.dispatchEvent(event);
+}
 
 
 
@@ -61,12 +71,15 @@ export class VGridCellRow {
 
     this.setStandardClassesAndStyles();
 
-
+    var that = this;
 
     switch (this.colType()) {
       case "image":
         this.cellContent = document.createElement("img");
         break;
+      // case "date":
+
+      //     break;
       case "checkbox":
         this.cellContent = document.createElement("input");
         this.cellContent.type = "checkbox";
@@ -152,8 +165,8 @@ export class VGridCellRow {
     this.cellContent.style.transition = "0ms";
 
     if(this.colType()==="checkbox"){
-      this.cellContent.style.heigth = "initial"
-      this.cellContent.style.width = "initial"
+      this.cellContent.style.heigth = "initial";
+      this.cellContent.style.width = "initial";
       this.cellContent.style.margin = "auto"
     }
 
@@ -184,6 +197,9 @@ export class VGridCellRow {
           this.cellContent.src = value;
         }
         break;
+      // case "date":
+
+      //   break;
       case "checkbox":
         this.hideIfUndefined(value);
         this.cellContent.checked = value === "true" || value === true ? true : false;
@@ -199,6 +215,9 @@ export class VGridCellRow {
     switch (this.colType()) {
       case "image":
         return this.cellContent.src;
+        break;
+      case "date":
+          return moment(this.cellContent.value, "DD.MM.YYYY")._d.toISOString();
         break;
       case "checkbox":
         return this.cellContent.checked;

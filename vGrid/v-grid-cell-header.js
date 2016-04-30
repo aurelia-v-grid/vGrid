@@ -6,7 +6,6 @@
  ****************************************************************************************************************/
 import {inject, noView, customElement, processContent, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
-
 //should I make this into a container and have cells under it?
 
 
@@ -103,28 +102,16 @@ export class VGridCellRow {
     this.element.innerHTML = this.getHeaderCellMarkup(this.header, value, this.attribute);
 
     //set event type to use, onchange is the best one to use...
-    var cellInputElement = this.element.querySelectorAll("." + this.vGridConfig.css.filterHandle);
+    var cellInputElement = this.element.querySelectorAll("." + this.vGridConfig.css.filterHandle)[0];
 
-    if (this.vGridConfig.filterOnKey !== true) {
-
-      for (var i = 0; i < cellInputElement.length; i++) {
-        cellInputElement[i].onkeyup = this.onKeyUpEventOnFilter.bind(this);
-        cellInputElement[i].onchange = this.onChangeEventOnFilter.bind(this);
-
-
+    if(cellInputElement){
+      if (this.vGridConfig.filterOnKey !== true) {
+          cellInputElement.onkeyup = this.onKeyUpEventOnFilter.bind(this);
+          cellInputElement.onchange = this.onChangeEventOnFilter.bind(this);
+      } else {
+        cellInputElement.onkeyup = this.onChangeEventOnFilter.bind(this);
       }
-
-    } else {
-
-      for (var i = 0; i < cellInputElement.length; i++) {
-
-          cellInputElement[i].onkeyup = this.onChangeEventOnFilter.bind(this);
-
-
-      }
-
     }
-
   }
 
 
@@ -165,13 +152,6 @@ export class VGridCellRow {
     //markup--
     var cellLabel = `<div style="${lineHeigth}" class="${cssLabel}" ${this.vGridConfig.atts.dataAttribute}="${attribute}">${labelTopCell} ${sortIcon}</div>`;
     var cellInput = `<input style="${lineHeigth}" placeholder="${filterName}" class="${cssInput}" ${this.vGridConfig.atts.dataAttribute}="${attribute}" value="${valueInput}"/>`;
-
-    // if(this.colType === "checkbox"){
-    //   cellInput = `<div style="text-align:center; vertical-align:middle; line-height:${lineHeigth}" placeholder="${filterName}" class="${cssInput}" ${this.vGridConfig.atts.dataAttribute}="${attribute}" value="${valueInput}"/>
-    //               <input type="checkbox" style="" ${this.vGridConfig.atts.dataAttribute}="${attribute}" checked="${valueInput}"/>
-    //              </div>`;
-    // }
-
 
     //if its in the the array then we want empty block, else it will look like shit if filters are at top
     if (this.vGridConfig.doNotAddFilterTo.indexOf(attribute) !== -1) {
