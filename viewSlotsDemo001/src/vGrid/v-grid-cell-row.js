@@ -348,7 +348,7 @@ export class VGridCellRow {
       this.setLastFocusElement(this.element)
     }
 
-    if (this.editMode()) {
+    if (this.editMode() && !this.readOnly()) {
       if (!this.containsWriteClass(this.element)) {
         this.addWriteClass(this.element);
       }

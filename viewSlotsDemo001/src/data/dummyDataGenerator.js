@@ -59,7 +59,7 @@ constructor(){
     this.email.push(this.internalDataArray[i].email);
     this.phone.push(this.internalDataArray[i].phone);
     this.color.push(this.internalDataArray[i].color);
-    this.number.push(parseFloat((Math.floor(Math.random() * 500) + 0)) +"."+(Math.floor(Math.random() * 500) + 0));
+    this.number.push(1*((Math.floor(Math.random() * 500) + 0) +"."+(Math.floor(Math.random() * 500) + 0)));
   }
 }
 

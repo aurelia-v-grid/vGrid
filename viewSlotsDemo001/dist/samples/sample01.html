@@ -3,33 +3,12 @@
   <require from="app.css"></require>
 
 
-
-
-
-
   <div class="myContainer">
 
     <!------------------------------------------------------------------------------------------------------------------------------------>
     <!--ROW1------------------------------------------------------------------------------------------------------------------------------>
     <!------------------------------------------------------------------------------------------------------------------------------------>
-    <!--v-resizable-headers="true"-->
-    <!--v-resize-also-rows="true"-->
-    <!--v-sortable-headers="true"-->
-    <!--v-sort-on-header-click="true"-->
-    <!--v-header-filter="true"-->
-    <!--v-header-filter-onkeydown="true"-->
-    <!--v-header-filter-not-to="images"-->
-    <!--v-header-filter-top="true"-->
-    <!--v-row-on-dblclick="onDblClick"-->
-    <!--v-row-on-draw="onRowDraw"-->
-    <!--v-cell-on-draw="onCellDraw"-->
 
-
-
-    <!--v-header-filter="true"-->
-    <!--v-header-filter-onkeydown="true"-->
-    <!--v-header-filter-not-to="images"-->
-    <!--v-header-filter-top="true"-->
     <div my-attribute.bind="value=22" class="myRow1">
 
       <!------------------------------------------------------------------------------------------------------------------------------------>
@@ -37,7 +16,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">early version- using viewslots 30.04.2016 v7, (main rebuild not updated with this)</h4>
+        <h4 style="margin-left:25px">early version- using viewslots 30.04.2016 v8, (main rebuild not updated with this)</h4>
         <h5 style="margin-left:25px"><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute </h5>
 
         <v-grid
@@ -46,10 +25,10 @@
           v-header-height="50"
           v-resize-also-rows="true"
           v-resizable-headers="true"
-        v-header-filter="true"
-        v-header-filter-onkeydown="true"
-        v-header-filter-not-to="images"
-        v-header-filter-top="true"
+          v-header-filter="true"
+          v-header-filter-onkeydown="true"
+          v-header-filter-not-to="images"
+          v-header-filter-top="true"
           v-sortable-headers="true"
           v-sort-on-header-click="true"
           v-multi-select="true"
@@ -57,13 +36,13 @@
           v-current-entity.bind=myCurrentEntity
           v-collection.bind=myCollection
           v-grid-context.bind=myGrid>
-            <v-grid-col v-col-width="160" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=" v-col-read-only="true"></v-grid-col>
-            <v-grid-col v-col-width="100" v-col-attribute="name" v-col-header="name" v-col-default-filter="*"></v-grid-col>
-            <v-grid-col v-col-width="160" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox" v-col-default-filter="=" v-col-css="left:45%;width:15px;heigth:15px"></v-grid-col>
-            <v-grid-col v-col-width="160" v-col-attribute="number" v-col-header="Number" v-col-default-filter=">="></v-grid-col>
-            <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date" v-col-default-filter=">="></v-grid-col>
-            <v-grid-col v-col-width="180" v-col-attribute="images" v-col-header="image" v-col-type="image" v-col-css="border-radius: 50%;width:50%;margin-left:25%;" v-col-default-filter="=*"></v-grid-col>
-            <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" v-col-css="color: {{color}}"></v-grid-col>
+          <v-grid-col v-col-width="160" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=" v-col-read-only="true"></v-grid-col>
+          <v-grid-col v-col-width="100" v-col-attribute="name" v-col-header="name" v-col-default-filter="*"></v-grid-col>
+          <v-grid-col v-col-width="160" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox" v-col-default-filter="=" v-col-css="left:45%;width:15px;heigth:15px"></v-grid-col>
+          <v-grid-col v-col-width="160" v-col-attribute="number" v-col-header="Number" v-col-default-filter=">="></v-grid-col>
+          <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date" v-col-default-filter=">="></v-grid-col>
+          <v-grid-col v-col-width="180" v-col-attribute="images" v-col-header="image" v-col-type="image" v-col-css="border-radius: 50%;width:50%;margin-left:25%;" v-col-default-filter="=*"></v-grid-col>
+          <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" ></v-grid-col>
         </v-grid>
       </div>
 
@@ -210,151 +189,10 @@
               <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.color">
             </div>
           </div>
-
-        </form>
-        <h4 style="margin-left:25px">Keyboard keys/mouse click <span class="label label-default"></span></h4>
-        <h5 style="margin-left:25px"><span class="label label-info">Info</span>Doubleclick to enter edit mode, and "enter" to exit <span class="label label-default">cell editing</span></h5>
-        <h5 style="margin-left:25px"><span class="label label-info">Info</span>Tab/page up/page down, arrow keys up/down can be used to navigate with focues cell <span class="label label-default">in edit mode</span></h5>
-        <h5 style="margin-left:25px"><span class="label label-info">Info</span>Tab/page up/page down, arrow keys up/down/left/right can be used to navigate with focues cell <span class="label label-default">not edit mode</span></h5>
       </div>
 
-      <!------------------------------------------------------------------------------------------------------------------------------------>
-      <!--Context buttons------------------------------------------------------------------------------------------------------------------->
-      <!------------------------------------------------------------------------------------------------------------------------------------>
 
-      <div class="myCol">
-        <h4>Context functions(editing after its created) <span class="label label-default">config="grid-context.bind:myGrid"</span></h4>
-        <h5><span class="label label-info">Info</span>To call one of there you would then do this, sample on row height: <span class="label label-default">myGrid.ctx.setRowHeight(25)</span></h5>
-        <h5><span class="label label-info">Info</span></span>Some of these also call this, because you header higher than 0 to test <span class="label label-default">myGrid.ctx.setHeaderHeight(50)</span></h5>
-
-
-        <div class="btn-group btn-group-justified" role="group">
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.header0}" class="btn btn-default btn-xs" click.trigger="headerHeightBtn(0)">setHeaderHeight(0)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.header25}" class="btn btn-default btn-xs" click.trigger="headerHeightBtn(25)">setHeaderHeight(25)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.header50}" class="btn btn-default btn-xs" click.trigger="headerHeightBtn(50)">setHeaderHeight(50)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.header75}" class="btn btn-default btn-xs" click.trigger="headerHeightBtn(75)">setHeaderHeight(75)</button>
-          </div>
-        </div>
-
-
-        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.row25}" class="btn btn-default btn-xs" click.trigger="rowHeightBtn(25)">setRowHeight(25)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.row50}" class="btn btn-default btn-xs" click.trigger="rowHeightBtn(50)">setRowHeight(50)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.row75}" class="btn btn-default btn-xs" click.trigger="rowHeightBtn(75)">setRowHeight(75)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.row100}" class="btn btn-default btn-xs" click.trigger="rowHeightBtn(100)">setRowHeight(100)</button>
-          </div>
-        </div>
-
-        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.footer0}" class="btn btn-default btn-xs" click.trigger="footerHeightBtn(0)">setFooterHeight(0)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.footer25}" class="btn btn-default btn-xs" click.trigger="footerHeightBtn(25)">setFooterHeight(25)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.footer50}" class="btn btn-default btn-xs" click.trigger="footerHeightBtn(50)">setFooterHeight(50)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.footer75}" class="btn btn-default btn-xs" click.trigger="footerHeightBtn(75)">setFooterHeight(75)</button>
-          </div>
-        </div>
-
-        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.noSelect}" class="btn btn-default btn-xs" click.trigger="selectionBtn(0)">selection.reset() & disableSelection()</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.singleSelect}" class="btn btn-default btn-xs" click.trigger="selectionBtn(1)">selection.reset() & setSingleSelection()</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.multiSelect}" class="btn btn-default btn-xs" click.trigger="selectionBtn(2)">selection.reset() & setMultiSelection()</button>
-          </div>
-        </div>
-
-
-        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.sortable0}" class="btn btn-default btn-xs" click.trigger="sortableBtn(0)">disableSortableColumns() "drag/drop"</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.sortable1}" class="btn btn-default btn-xs" click.trigger="sortableBtn(1)">enableSortableColumns() "drag/drop"</button>
-          </div>
-        </div>
-
-
-        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.resize0}" class="btn btn-default btn-xs" click.trigger="resizeBtn(0)">enableResizableColumns()</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.resize1}" class="btn btn-default btn-xs" click.trigger="resizeBtn(1)">enableResizableColumns(true)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.resize2}" class="btn btn-default btn-xs" click.trigger="resizeBtn(2)">disableResizableColumns()</button>
-          </div>
-        </div>
-
-
-        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.locked0}" class="btn btn-default btn-xs" click.trigger="lockedBtn(0)">setLockedColumns(0)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.locked1}" class="btn btn-default btn-xs" click.trigger="lockedBtn(1)">setLockedColumns(1)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.locked2}" class="btn btn-default btn-xs" click.trigger="lockedBtn(2)">setLockedColumns(2)</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.locked3}" class="btn btn-default btn-xs" click.trigger="lockedBtn(3)">setLockedColumns(3)</button>
-          </div>
-        </div>
-
-
-        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.filter1}" class="btn btn-default btn-xs" click.trigger="setFilterBtn(1)">enableHeaderFilter()</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.filter0}" class="btn btn-default btn-xs" click.trigger="setFilterBtn(0)">disableHeaderFilter()</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.filterAt0}" class="btn btn-default btn-xs" click.trigger="setFilterAtBtn(0)">setHeaderFilterAtBottom()</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.filterAt1}" class="btn btn-default btn-xs" click.trigger="setFilterAtBtn(1)">setHeaderFilterAtTop()</button>
-          </div>
-        </div>
-
-
-        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.sort1}" class="btn btn-default btn-xs" click.trigger="setSortBtn(1)">enableHeaderSort()</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" css="background-color:${status.sort0}" class="btn btn-default btn-xs" click.trigger="setSortBtn(0)">disableHeaderSort()</button>
-          </div>
-
-        </div>
-
-
-      </div>
-
+    </div>
 
     </div>
   </div>

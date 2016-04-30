@@ -210,14 +210,6 @@ export class renderOnScrollbarScroll extends VGridAttibutes {
 }
 
 
-@customAttribute('v-locked-columns')
-@inject(Element, Optional.of(VGrid))
-export class lockedColumns extends VGridAttibutes {
-  attribute = "lockedColumns";
-  type = "int";
-}
-
-
 @customAttribute('v-header-filter')
 @inject(Element, Optional.of(VGrid))
 export class addFilter extends VGridAttibutes {
@@ -257,6 +249,12 @@ export class largeBuffer extends VGridAttibutes {
   type = "bool";
 }
 
+@customAttribute('v-active-sorting')
+@inject(Element, Optional.of(VGrid))
+export class activeSorting extends VGridAttibutes {
+  attribute = "activeSorting";
+  type = "bool";
+}
 
 
 @customAttribute('v-row-on-draw')

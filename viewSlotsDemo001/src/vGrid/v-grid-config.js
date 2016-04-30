@@ -83,12 +83,12 @@ export class VGridConfig {
     this.requestAnimationFrame = true;
     this.resizableHeadersAndRows = false;
     this.renderOnScrollbarScroll = true;
-    this.lockedColumns = 0;
     this.addFilter = false;
     this.filterOnAtTop = false;
     this.filterOnKey = false;
     this.sortOnHeaderClick = false;
     this.largeBuffer = false;
+    this.activeSorting = false;
 
     this.eventOnRowDraw = null;
 
