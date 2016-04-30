@@ -187,6 +187,32 @@ export class VGridConfig {
     return this.vGrid.vGridCurrentRow = x;
   }
 
+  get vGridCurrentEntity() {
+    if (this.vGrid) {
+      return this.vGrid.vGridCurrentEntity;
+    } else {
+      return null;
+    }
+  }
+
+  set vGridCurrentEntity(x) {
+    return this.vGrid.vGridCurrentEntity = x;
+  }
+
+
+  get vGridSkipNextUpdateProperty() {
+    if (this.vGrid) {
+      return this.vGrid.vGridSkipNextUpdateProperty;
+    } else {
+      return null;
+    }
+  }
+
+  set vGridSkipNextUpdateProperty(x) {
+    return this.vGrid.vGridSkipNextUpdateProperty = x;
+  }
+
+  vGridSkipNextUpdateProperty
 
   get vGridRowKey() {
     if (this.vGrid) {
