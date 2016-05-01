@@ -109,6 +109,10 @@ export class VGridSortable {
     this.vGrid.vGridConfig.colEditRawArray.splice(oldIndex, 1);
     this.vGrid.vGridConfig.colEditRawArray.splice(newIndex, 0, x);
 
+    x = this.vGrid.vGridConfig.colDatePickerArray[oldIndex];
+    this.vGrid.vGridConfig.colDatePickerArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.colDatePickerArray.splice(newIndex, 0, x);
+
 
 
 
@@ -202,13 +206,13 @@ export class VGridSortable {
           var after = (this.nextSibling !== this.dragEl) && !isLong || halfway && isLong;
           this.rootEl.insertBefore(this.dragEl, after ? target.nextSibling : target);
           if (this.oldIndex !== this.newIndex) {
-            console.log("move, old:"+this.oldIndex+"new"+this.newIndex)
+            //console.log("move, old:"+this.oldIndex+"new"+this.newIndex)
             this.onUpdateAlt(parseInt(this.oldIndex), parseInt(this.newIndex));
             this.oldIndex = this.newIndex * 1
           }
          }
         this.timer = null;
-      }, 300)
+      }, 150)
     }
 
 

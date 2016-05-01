@@ -105,13 +105,43 @@ export class VGridCellRow {
     var cellInputElement = this.element.querySelectorAll("." + this.vGridConfig.css.filterHandle)[0];
 
     if(cellInputElement){
-      if (this.vGridConfig.filterOnKey !== true) {
+      if(this.datePicker()){
+        this.datePicker()(cellInputElement, this);
+        this.cellInput = cellInputElement;
+        cellInputElement.onkeyup = function(){
+          this.onChangeEventOnFilter({keyCode:"nothing"});
+        }.bind(this)
+      } else {
+        if (this.vGridConfig.filterOnKey !== true) {
           cellInputElement.onkeyup = this.onKeyUpEventOnFilter.bind(this);
           cellInputElement.onchange = this.onChangeEventOnFilter.bind(this);
-      } else {
-        cellInputElement.onkeyup = this.onChangeEventOnFilter.bind(this);
+        } else {
+          cellInputElement.onkeyup = this.onChangeEventOnFilter.bind(this);
+        }
       }
     }
+  }
+
+
+  setCss(){
+
+  }
+
+  setValue(value){
+    this.cellInput.value = this.valueFormater ? this.valueFormater.toView(value) : value;
+    this.onChangeEventOnFilter({keyCode:"nothing"});
+  }
+
+  getValue(value){
+    return this.valueFormater ? this.valueFormater.fromView(value) : value;
+  }
+
+  editMode(){
+    return true;
+  }
+
+  get valueFormater() {
+    return this.vGrid.vGridConfig.colFormaterArray[this.columnNo];
   }
 
 
@@ -220,6 +250,10 @@ export class VGridCellRow {
     return result
   };
 
+  datePicker(){
+    return this.vGrid.vGridConfig.colDatePickerArray[this.columnNo];
+  }
+
   /*------------------------------------------------*/
   //called when chang event fires in filter input
   onChangeEventOnFilter(e) {
@@ -237,9 +271,13 @@ export class VGridCellRow {
         var operator = this.vGridConfig.filterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
         if(dataSourceAttribute === this.attribute){
           var value  =  queryHtmlInput[i].value;
+          if(this.datePicker()){
+            value = this.getValue(value);
+          }
         } else {
           var value  = queryHtmlInput[i].value;
         }
+
 
 
 

@@ -119,6 +119,8 @@ export class VGridCellHelper {
     this.vGrid.element.onkeydown = function (e) {
 
 
+
+
       //page up
       if (e.keyCode === 33) {
         e.preventDefault();

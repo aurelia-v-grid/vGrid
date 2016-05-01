@@ -19,7 +19,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">early version- using viewslots 01.05.2016 v10, (main rebuild not updated with this)</h4>
+        <h4 style="margin-left:25px">early version- using viewslots 01.05.2016 v11 (datepicker test), (main rebuild not updated with this)</h4>
         <h5 style="margin-left:25px"><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute, at that collection it only adds 2 unique properties to for selection and current row </h5>
 
         <v-grid
@@ -45,7 +45,7 @@
 
           <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox" v-col-default-filter="=" ></v-grid-col>
           <v-grid-col v-col-width="80" v-col-attribute="number" v-col-header="Number" v-col-formater="numberFormat" v-col-edit-raw="true" v-col-css="text-align:right; padding-right:5px" v-col-default-filter=">="></v-grid-col>
-          <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date" v-col-formater="dateFormat" v-col-default-filter=">="></v-grid-col>
+          <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date" v-col-date-picker.bind=onDatePickerCreate v-col-formater="dateFormat" v-col-default-filter=">="></v-grid-col>
             <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" ></v-grid-col>
         </v-grid>
       </div>

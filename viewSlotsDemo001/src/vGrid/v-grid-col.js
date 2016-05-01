@@ -16,6 +16,7 @@ export class VGridCol {
   @bindable vColType;
   @bindable vColFormater;
   @bindable vColEditRaw;
+  @bindable vColDatePicker;
 
 
   constructor(element, vGrid, valueConverter) {
@@ -41,6 +42,7 @@ export class VGridCol {
     this.vGrid.vGridConfig.readOnlyArray.push(this.vColReadOnly === "true" ? true : false);
     this.vGrid.vGridConfig.colStyleArray.push(this.vColCss);
     this.vGrid.vGridConfig.colTypeArray.push(this.vColType);
+    this.vGrid.vGridConfig.colDatePickerArray.push(this.vColDatePicker);
     this.vGrid.vGridConfig.colEditRawArray.push(this.vColEditRaw === "true" ? true : false);
     this.vGrid.vGridConfig.colFormaterArray.push(this.valueConverters(this.vColFormater));
     this.vGrid.vGridConfig.columns.push(this);

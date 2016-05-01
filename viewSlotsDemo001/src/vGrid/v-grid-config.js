@@ -75,6 +75,7 @@ export class VGridConfig {
     this.colTypeArray = [];
     this.colFormaterArray =[];
     this.colEditRawArray = [];
+    this.colDatePickerArray = [];
 
     this.rowHeight = 50;
     this.headerHeight = 0;
