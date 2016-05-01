@@ -33,7 +33,7 @@ export class VGridCellRow {
     if (this.bindingContext && this.cellContent) {
       this.rawValue = this.bindingContext[this.attribute()];
       this.setValue(this.rawValue);
-      console.log("setvalue bind"+this.rawValue)
+      //console.log("setvalue bind"+this.rawValue)
 
       if (this.vGrid.vGridCurrentRow === parseInt(this.element.parentNode.getAttribute("row"))) {
         if (parseInt(this.colNo) === this.vGrid.vGridCellHelper.index) {
@@ -75,10 +75,10 @@ export class VGridCellRow {
             return false;
           } else {
             if (!this.editMode()) {
-              console.log("checkbox normal")
+              //console.log("checkbox normal")
               return false;
             } else {
-              console.log("checkbox edit")
+              //console.log("checkbox edit")
               return true;
             }
           }
@@ -96,7 +96,7 @@ export class VGridCellRow {
             this.cellContent.onblur();
             this.setEditMode(false);
             this.setCss();
-            console.log("enter")
+            //console.log("enter")
             return false;
           }
           if (this.readOnly() === true && e.keyCode !== 9) {
@@ -110,6 +110,8 @@ export class VGridCellRow {
           }
 
         }.bind(this);
+
+
     }
 
 
@@ -123,12 +125,12 @@ export class VGridCellRow {
     this.cellContent.addEventListener("cellFocus", function (e) {
 
       if (this.editMode()) {
-        console.log("focus edit")
+        //console.log("focus edit")
         if(this.editRaw()){
           this.setValue(null, true);
         }
       } else {
-        console.log("focus normal")
+        //console.log("focus normal")
       }
       this.setCss();
       this.cellContent.focus();
@@ -151,9 +153,9 @@ export class VGridCellRow {
             value: this.getValue()
           });
         }
-        console.log("bluredit")
+        //console.log("bluredit")
         } else{
-        console.log("blurnormal")
+        //console.log("blurnormal")
       }
 
     }.bind(this);
@@ -190,6 +192,11 @@ export class VGridCellRow {
       this.setValue(this.bindingContext[this.attribute()])
     }
     this.element.appendChild(this.cellContent);
+
+    if(this.datePicker()){
+      this.datePicker()(this.cellContent, this);
+    }
+
   }
 
 
@@ -209,16 +216,16 @@ export class VGridCellRow {
       case "checkbox":
         this.hideIfUndefined(value);
         this.cellContent.checked = value === "true" || value === true ? true : false;
-        console.log("setValue checkbox")
+        //console.log("setValue checkbox")
         break;
       default:
         this.hideIfUndefined(value);
         if(setRawValue){
           this.cellContent.value = this.rawValue;
-          console.log("setValue raw")
+          //console.log("setValue raw")
         }else{
           this.cellContent.value = this.valueFormater ? this.valueFormater.toView(value) : value;
-          console.log("setValue normal")
+          //console.log("setValue normal")
         }
 
 
@@ -271,6 +278,11 @@ export class VGridCellRow {
 
   editRaw(){
     return this.vGrid.vGridConfig.colEditRawArray[this.colNo];
+  }
+
+
+  datePicker(){
+    return this.vGrid.vGridConfig.colDatePickerArray[this.colNo];
   }
 
 
@@ -386,6 +398,7 @@ export class VGridCellRow {
 
   setCss() {
     if (!this.containsFocusClass(this.element)) {
+      //console.log("setting normal focus & cur element")
       this.addFocusClass(this.element);
       this.removeCssOldCell();
       this.setLastFocusElement(this.element)
@@ -396,8 +409,13 @@ export class VGridCellRow {
         this.addWriteClass(this.element);
       }
     } else {
+      //console.log("not edit mode but have been and clicked enter")
       if(this.containsWriteClass(this.element)){
         this.removeCssOldCell();
+        this.addFocusClass(this.element);
+      }
+      if (!this.containsFocusClass(this.element)) {
+        //console.log("I should not haveto do this... only run when edit raw is run")
         this.addFocusClass(this.element);
       }
     }
