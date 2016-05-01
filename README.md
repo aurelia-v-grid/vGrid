@@ -61,6 +61,7 @@ How to use: (no plugin yet):
 * **v-col-read-only** - optional, default false
 * **v-col-css** - optional
 * **v-col-default-filter** - optional
+* **v-col-formater** -optional name of the valueformater (must have toView and fromView)
 
 ----
 

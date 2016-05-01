@@ -104,7 +104,9 @@ export class VGridCellHelper {
 
     this.vGrid.element.onmousedown = function (e) {
       if (this.curElement) {
-        this.curElement.blur()
+        if(e.target !== this.curElement){
+          this.curElement.blur()
+        }
       }
     }.bind(this);
     this.vGrid.element.onmousewheel = function (e) {

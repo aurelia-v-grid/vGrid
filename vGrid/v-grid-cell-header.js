@@ -29,7 +29,7 @@ export class VGridCellRow {
   created() {
     ///nothing atm
   }
-  columnNoChanged(oldValue,newValue) {console.log('prop1 change fired');}
+
 
   attached() {
     this.setStandardClassesAndStyles();

@@ -73,6 +73,8 @@ export class VGridConfig {
     this.readOnlyArray = [];
     this.colStyleArray = [];
     this.colTypeArray = [];
+    this.colFormaterArray =[];
+
 
     this.rowHeight = 50;
     this.headerHeight = 0;
@@ -101,6 +103,202 @@ export class VGridConfig {
 
 
   }
+
+
+
+  //from string interpolate, this is whats passes into the onrowdraw event, so we dont end up with people enditing their collection
+  attributes = [];
+
+  getNewObject(obj) {
+    if (obj) {
+      var x = {};
+      this.attributes.forEach((prop)=> {
+        x[prop] = obj[prop];
+      });
+      return x;
+    } else {
+      return "";
+    }
+  }
+
+
+  /***************************************************************************************
+   * This is called when grid runs filter
+   ***************************************************************************************/
+
+  onFilterRun = (filterObj) => {
+
+    if (filterObj.length !== 0 || this.vGridCollectionFiltered.length !== this.vGridCollection.length) {
+      //get sel keys
+
+      //if they filter we want to make sure the after cell edit happends
+      if (this.vGridCellHelper.curElement && this.vGridCellHelper.updated === false) {
+        this.vGridCellHelper.updateActual(this.vGridCellHelper.callbackObject());
+      }
+
+      var curKey = -1;
+      if (this.vGridCurrentEntityRef) {
+        curKey = this.vGridCurrentEntityRef[this.vGridRowKey];
+      }
+      if (filterObj.length === 0 && this.vGridCollectionFiltered.length !== this.vGridCollection.length) {
+        this.vGridCollectionFiltered = this.vGridCollection.slice(0);
+      } else {
+
+        this.vGridCollectionFiltered = this.vGridFilter.run(this.vGridCollection, filterObj);
+        this.vGridSort.run(this.vGridCollectionFiltered);
+
+      }
+
+
+      //set current row/entity in sync
+      var newRowNo = -1;
+      if (curKey) {
+        this.vGridCollectionFiltered.forEach((x, index) => {
+          if (curKey === x[this.vGridRowKey]) {
+            newRowNo = index;
+          }
+        });
+      }
+
+      if (newRowNo > -1) {
+        this.vGridCurrentEntityRef = this.vGridCollectionFiltered[newRowNo];
+        this.vGridCurrentEntity[this.vGridRowKey] = this.vGridCurrentEntityRef[this.vGridRowKey];
+        this.vGridCurrentRow = newRowNo;
+      }
+
+      //update grid
+      this.vGridGenerator.collectionChange(true);
+
+
+    }
+
+  };
+
+
+  /***************************************************************************************
+   * grid asks for the filter name from attibute
+   ***************************************************************************************/
+  getFilterName(name) {
+    return this.vGridFilter.getNameOfFilter(name)
+  }
+
+
+  /***************************************************************************************
+   * This just sets data from array,
+   * Use {} if you want markup of columns, or undefined for total blank rows
+   ***************************************************************************************/
+  getDataElement(row, isDown, isLargeScroll, callback) {
+    if (this.vGridCollectionFiltered !== undefined) {
+      if (this.eventOnRowDraw) {
+        //if user have added this then we call it so they can edit the row data before we display it
+        var data = this.getNewObject(this.vGridCollectionFiltered[row]);
+        this.eventOnRowDraw(data, this.vGridCollectionFiltered[row], row);
+        callback(data)
+      } else {
+        callback(this.vGridCollectionFiltered[row]);
+      }
+    }
+  }
+
+
+  /***************************************************************************************
+   * This calls the order by function
+   * Use {} if you want markup of columns, or undefined for total blank rows
+   ***************************************************************************************/
+  onOrderBy(event, setheaders) {
+
+    //if they sort we want to make sure the after cell edit happends
+    if (this.vGridCellHelper.curElement && this.vGridCellHelper.updated === false) {
+      this.vGridCellHelper.updateActual(this.vGridCellHelper.callbackObject());
+    }
+
+
+    //get clicked
+    var attribute = event.target.getAttribute(this.atts.dataAttribute);
+    if (attribute === null) {
+      attribute = event.target.offsetParent.getAttribute(this.atts.dataAttribute);
+    }
+    let checked = true;
+    if (this.sortNotOnHeader.indexOf(attribute) !== -1) {
+      checked = false;
+    }
+
+    if (this.vGridCollectionFiltered.length > 0 && attribute && checked) {
+
+      //set filter
+      this.vGridSort.setFilter({
+        attribute: attribute,
+        asc: true
+      }, event.shiftKey);
+      //set headers
+      setheaders(this.vGridSort.getFilter());
+      //get sel keys
+
+      //run filter
+      this.vGridSort.run(this.vGridCollectionFiltered);
+
+
+      //set new row
+      this.vGridCollectionFiltered.forEach((x, index) => {
+        if (this.vGridCurrentEntity[this.vGridRowKey] === x[this.vGridRowKey]) {
+          this.vGridCurrentRow = index;
+        }
+      });
+
+      //update grid
+      this.vGridGenerator.collectionChange();
+
+    }
+
+
+  }
+
+
+  /***************************************************************************************
+   * Just for knowing length,
+   * Its this you will need to add for server source/paging with endless scrolling
+   ***************************************************************************************/
+  getCollectionLength() {
+    if (this.addFilter) {
+      return this.vGridCollectionFiltered.length;
+    } else {
+      return this.vGridCollection.length;
+    }
+  }
+
+
+  /***************************************************************************************
+   * Listen for click on rows,
+   * Snd set current entity, and also allow edit of cell
+   ***************************************************************************************/
+  clickHandler(event, row) {
+
+
+    //set current row of out filtered row
+    this.vGridCurrentRow = row;
+
+    //get data ref
+    this.vGridCurrentEntityRef = this.vGridCollectionFiltered[row];
+
+    ///loop properties and set them to current entity
+    let data = this.vGridCurrentEntityRef;
+    for (var k in data) {
+      if (data.hasOwnProperty(k)) {
+        if (this.vGridCurrentEntity[k] !== data[k]) {
+          this.vGridCurrentEntity[k] = data[k];
+          this.vGridSkipNextUpdateProperty.push(k)
+        }
+      }
+    }
+
+
+    //use helper function to edit cell
+    if (this.vGridCurrentEntityRef) {
+      this.vGridCellHelper.editCellhelper(row, event);
+    }
+
+  }
+
 
   /***************************************************************************************
    * getters/setters to make it easier
@@ -224,199 +422,6 @@ export class VGridConfig {
 
   set vGridRowKey(x) {
     return this.vGrid.vGridRowKey = x;
-  }
-
-  //from string interpolate, this is whats passes into the onrowdraw event, so we dont end up with people enditing their collection
-  attributes = [];
-
-  getNewObject(obj) {
-    if (obj) {
-      var x = {};
-      this.attributes.forEach((prop)=> {
-        x[prop] = obj[prop];
-      });
-      return x;
-    } else {
-      return "";
-    }
-  }
-
-
-  /***************************************************************************************
-   * This is called when grid runs filter
-   ***************************************************************************************/
-
-  onFilterRun = (filterObj) => {
-
-    if (filterObj.length !== 0 || this.vGridCollectionFiltered.length !== this.vGridCollection.length) {
-      //get sel keys
-
-      //if they filter we want to make sure the after cell edit happends
-      if (this.vGridCellHelper.curElement && this.vGridCellHelper.updated === false) {
-        this.vGridCellHelper.updateActual(this.vGridCellHelper.callbackObject());
-      }
-
-      var curKey = -1;
-      if (this.vGridCurrentEntityRef) {
-        curKey = this.vGridCurrentEntityRef[this.vGridRowKey];
-      }
-      if (filterObj.length === 0 && this.vGridCollectionFiltered.length !== this.vGridCollection.length) {
-        this.vGridCollectionFiltered = this.vGridCollection.slice(0);
-      } else {
-
-        this.vGridCollectionFiltered = this.vGridFilter.run(this.vGridCollection, filterObj);
-        this.vGridSort.run(this.vGridCollectionFiltered);
-
-      }
-
-
-      //set current row/entity in sync
-      var newRowNo = -1;
-      if (curKey) {
-        this.vGridCollectionFiltered.forEach((x, index) => {
-          if (curKey === x[this.vGridRowKey]) {
-            newRowNo = index;
-          }
-        });
-      }
-
-      if (newRowNo > -1) {
-        this.vGridCurrentEntityRef = this.vGridCollectionFiltered[newRowNo];
-        this.vGridCurrentEntity[this.vGridRowKey] = this.vGridCurrentEntityRef[this.vGridRowKey];
-        this.vGridCurrentRow = newRowNo;
-      }
-
-      //update grid
-      this.vGridGenerator.collectionChange(true);
-
-
-    }
-
-  };
-
-
-  /***************************************************************************************
-   * grid asks for the filter name from attibute
-   ***************************************************************************************/
-  getFilterName(name) {
-    return this.vGridFilter.getNameOfFilter(name)
-  }
-
-
-  /***************************************************************************************
-   * This just sets data from array,
-   * Use {} if you want markup of columns, or undefined for total blank rows
-   ***************************************************************************************/
-  getDataElement(row, isDown, isLargeScroll, callback) {
-    if (this.vGridCollectionFiltered !== undefined) {
-      if (this.eventOnRowDraw) {
-        //if user have added this then we call it so they can edit the row data before we display it
-        var data = this.getNewObject(this.vGridCollectionFiltered[row]);
-        this.eventOnRowDraw(data, this.vGridCollectionFiltered[row]);
-        callback(data)
-      } else {
-        callback(this.vGridCollectionFiltered[row]);
-      }
-    }
-  }
-
-
-  /***************************************************************************************
-   * This calls the order by function
-   * Use {} if you want markup of columns, or undefined for total blank rows
-   ***************************************************************************************/
-  onOrderBy(event, setheaders) {
-
-    //if they sort we want to make sure the after cell edit happends
-    if (this.vGridCellHelper.curElement && this.vGridCellHelper.updated === false) {
-      this.vGridCellHelper.updateActual(this.vGridCellHelper.callbackObject());
-    }
-
-
-    //get clicked
-    var attribute = event.target.getAttribute(this.atts.dataAttribute);
-    if (attribute === null) {
-      attribute = event.target.offsetParent.getAttribute(this.atts.dataAttribute);
-    }
-    let checked = true;
-    if (this.sortNotOnHeader.indexOf(attribute) !== -1) {
-      checked = false;
-    }
-
-    if (this.vGridCollectionFiltered.length > 0 && attribute && checked) {
-
-      //set filter
-      this.vGridSort.setFilter({
-        attribute: attribute,
-        asc: true
-      }, event.shiftKey);
-      //set headers
-      setheaders(this.vGridSort.getFilter());
-      //get sel keys
-
-      //run filter
-      this.vGridSort.run(this.vGridCollectionFiltered);
-
-
-      //set new row
-      this.vGridCollectionFiltered.forEach((x, index) => {
-        if (this.vGridCurrentEntity[this.vGridRowKey] === x[this.vGridRowKey]) {
-          this.vGridCurrentRow = index;
-        }
-      });
-
-      //update grid
-      this.vGridGenerator.collectionChange();
-
-    }
-
-
-  }
-
-
-  /***************************************************************************************
-   * Just for knowing length,
-   * Its this you will need to add for server source/paging with endless scrolling
-   ***************************************************************************************/
-  getCollectionLength() {
-    if (this.addFilter) {
-      return this.vGridCollectionFiltered.length;
-    } else {
-      return this.vGridCollection.length;
-    }
-  }
-
-
-  /***************************************************************************************
-   * Listen for click on rows,
-   * Snd set current entity, and also allow edit of cell
-   ***************************************************************************************/
-  clickHandler(event, row) {
-
-
-    //set current row of out filtered row
-    this.vGridCurrentRow = row;
-
-    //get data ref
-    this.vGridCurrentEntityRef = this.vGridCollectionFiltered[row];
-
-    ///loop properties and set them to current entity
-    let data = this.vGridCurrentEntityRef;
-    for (var k in data) {
-      if (data.hasOwnProperty(k)) {
-        if (this.vGridCurrentEntity[k] !== data[k]) {
-          this.vGridCurrentEntity[k] = data[k];
-          this.vGridSkipNextUpdateProperty.push(k)
-        }
-      }
-    }
-
-
-    //use helper function to edit cell
-    if (this.vGridCurrentEntityRef) {
-      this.vGridCellHelper.editCellhelper(row, event);
-    }
-
   }
 
 
