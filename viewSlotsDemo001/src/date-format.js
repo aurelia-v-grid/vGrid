@@ -5,10 +5,19 @@ import moment from 'moment';
 
 export class DateFormatValueConverter {
   toView(value) {
-    return moment(value).format('DD.MM.YYYY');
+    if(value){
+      return moment(value).format('DD.MM.YYYY');
+    } else {
+      return value;
+    }
+
   }
   fromView(value) {
-    return moment(value,'DD.MM.YYYY');
+    if(value){
+      return new Date(moment(value,'DD.MM.YYYY')._d);
+    } else {
+      return value;
+    }
   }
 }
 

@@ -33,6 +33,7 @@ export class VGridCellRow {
     if (this.bindingContext && this.cellContent) {
       this.rawValue = this.bindingContext[this.attribute()];
       this.setValue(this.rawValue);
+      console.log("setvalue bind"+this.rawValue)
 
       if (this.vGrid.vGridCurrentRow === parseInt(this.element.parentNode.getAttribute("row"))) {
         if (parseInt(this.colNo) === this.vGrid.vGridCellHelper.index) {
@@ -74,8 +75,10 @@ export class VGridCellRow {
             return false;
           } else {
             if (!this.editMode()) {
+              console.log("checkbox normal")
               return false;
             } else {
+              console.log("checkbox edit")
               return true;
             }
           }
@@ -92,6 +95,8 @@ export class VGridCellRow {
             }
             this.cellContent.onblur();
             this.setEditMode(false);
+            this.setCss();
+            console.log("enter")
             return false;
           }
           if (this.readOnly() === true && e.keyCode !== 9) {
@@ -116,18 +121,41 @@ export class VGridCellRow {
 
 
     this.cellContent.addEventListener("cellFocus", function (e) {
-        this.setCss();
-        this.cellContent.focus();
+
+      if (this.editMode()) {
+        console.log("focus edit")
+        if(this.editRaw()){
+          this.setValue(null, true);
+        }
+      } else {
+        console.log("focus normal")
+      }
+      this.setCss();
+      this.cellContent.focus();
     }.bind(this));
 
 
     this.cellContent.onblur = function (e) {
       if (this.editMode()) {
-         this.vGrid.vGridCellHelper.updateActual({
+        if(this.editRaw()){
+          this.vGrid.vGridCellHelper.updateActual({
+            attribute: this.attribute(),
+            value: this.cellContent.value
+          });
+          this.rawValue = this.cellContent.value;
+          this.setValue(this.cellContent.value);
+          this.setCss();
+        } else {
+          this.vGrid.vGridCellHelper.updateActual({
             attribute: this.attribute(),
             value: this.getValue()
-          })
+          });
         }
+        console.log("bluredit")
+        } else{
+        console.log("blurnormal")
+      }
+
     }.bind(this);
 
 
@@ -139,13 +167,16 @@ export class VGridCellRow {
       //todo
     }.bind(this);
 
+    //so materilize dont mess up
+    this.cellContent.style.opacity = "initial";
+    this.cellContent.style.border = "initial";
+    this.cellContent.style.transition = "initial";
 
+    //set class/style
     this.cellContent.classList.add(this.vGrid.vGridConfig.css.cellContent);
     this.cellContent.setAttribute(this.vGrid.vGridConfig.atts.dataAttribute, this.attribute());
     this.cellContent.setAttribute("style", this.vGrid.vGridConfig.colStyleArray[this.colNo]);
-    this.cellContent.style.opacity = 1; //so materilize dont mess up
-    this.cellContent.style.border = 0;
-    this.cellContent.style.transition = "0ms";
+
 
     if (this.colType() === "checkbox") {
       this.cellContent.style.heigth = "initial";
@@ -178,10 +209,19 @@ export class VGridCellRow {
       case "checkbox":
         this.hideIfUndefined(value);
         this.cellContent.checked = value === "true" || value === true ? true : false;
+        console.log("setValue checkbox")
         break;
       default:
         this.hideIfUndefined(value);
-        this.cellContent.value = this.valueFormater ? this.valueFormater.toView(value) : value;
+        if(setRawValue){
+          this.cellContent.value = this.rawValue;
+          console.log("setValue raw")
+        }else{
+          this.cellContent.value = this.valueFormater ? this.valueFormater.toView(value) : value;
+          console.log("setValue normal")
+        }
+
+
 
     }
   }
@@ -227,6 +267,10 @@ export class VGridCellRow {
 
   setEditMode(value) {
     this.vGrid.vGridCellHelper.editMode = value;
+  }
+
+  editRaw(){
+    return this.vGrid.vGridConfig.colEditRawArray[this.colNo];
   }
 
 
@@ -350,6 +394,11 @@ export class VGridCellRow {
     if (this.editMode() && !this.readOnly()) {
       if (!this.containsWriteClass(this.element)) {
         this.addWriteClass(this.element);
+      }
+    } else {
+      if(this.containsWriteClass(this.element)){
+        this.removeCssOldCell();
+        this.addFocusClass(this.element);
       }
     }
   }

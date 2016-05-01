@@ -63,13 +63,13 @@ export class VGridSortable {
   onUpdateAlt(oldIndex, newIndex) {
     var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.children;
 
-    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
-    [].slice.call(dragHandles).forEach((itemEl, index) => {
-      if (parseInt(itemEl.parentNode.getAttribute("column-no")) === oldIndex) {
-       // newIndex = index;
-        console.log(index)
-      }
-    });
+    // var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
+    // [].slice.call(dragHandles).forEach((itemEl, index) => {
+    //   if (parseInt(itemEl.parentNode.getAttribute("column-no")) === oldIndex) {
+    //    // newIndex = index;
+    //     console.log(index)
+    //   }
+    // });
 
 
     var x;
@@ -105,6 +105,9 @@ export class VGridSortable {
     this.vGrid.vGridConfig.colFormaterArray.splice(oldIndex, 1);
     this.vGrid.vGridConfig.colFormaterArray.splice(newIndex, 0, x);
 
+    x = this.vGrid.vGridConfig.vColEditRaw[oldIndex];
+    this.vGrid.vGridConfig.vColEditRaw.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.vColEditRaw.splice(newIndex, 0, x);
 
 
 

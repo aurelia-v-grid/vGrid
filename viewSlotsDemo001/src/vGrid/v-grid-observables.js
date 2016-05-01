@@ -173,7 +173,12 @@ export class VGridObservables {
     this.vGrid.vGridConfig.attributeArray.forEach((property) => {
       let propertyObserver = this.observerLocator.getObserver(this.vGrid.vGridCurrentEntity, property);
       propertyObserver.subscribe((newValue, oldValue) => {
-        if (newValue !== oldValue) {
+
+        //should I do the value formatting on the currentEntity also?
+        var newValueCheck = newValue ? newValue.toString():newValue;
+        var oldValueCheck = oldValue ? oldValue.toString():oldValue;
+
+        if (newValueCheck !== oldValueCheck) {
           //check if we should skip it
           if (this.vGrid.vGridSkipNextUpdateProperty.indexOf(property) === -1 && this.vGrid.vGridCurrentEntityRef) {
             this.vGrid.vGridCurrentEntityRef[property] = newValue;

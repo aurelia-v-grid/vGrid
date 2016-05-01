@@ -20,11 +20,19 @@ System.register(['moment'], function (_export, _context) {
         }
 
         DateFormatValueConverter.prototype.toView = function toView(value) {
-          return moment(value).format('DD.MM.YYYY');
+          if (value) {
+            return moment(value).format('DD.MM.YYYY');
+          } else {
+            return value;
+          }
         };
 
         DateFormatValueConverter.prototype.fromView = function fromView(value) {
-          return moment(value, 'DD.MM.YYYY');
+          if (value) {
+            return new Date(moment(value, 'DD.MM.YYYY')._d);
+          } else {
+            return value;
+          }
         };
 
         return DateFormatValueConverter;
@@ -34,4 +42,4 @@ System.register(['moment'], function (_export, _context) {
     }
   };
 });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRhdGUtZm9ybWF0LmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7QUFHTzs7OzBDQUVNOzs7OzsyQ0FDWCx5QkFBTyxPQUFPO0FBQ1osaUJBQU8sT0FBTyxLQUFQLEVBQWMsTUFBZCxDQUFxQixZQUFyQixDQUFQLENBRFk7OztBQURILDJDQUlYLDZCQUFTLE9BQU87QUFDZCxpQkFBTyxPQUFPLEtBQVAsRUFBYSxZQUFiLENBQVAsQ0FEYzs7O2VBSkwiLCJmaWxlIjoiZGF0ZS1mb3JtYXQuanMiLCJzb3VyY2VSb290IjoiL3NyYyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRhdGUtZm9ybWF0LmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7QUFHTzs7OzBDQUVNOzs7OzsyQ0FDWCx5QkFBTyxPQUFPO0FBQ1osY0FBRyxLQUFILEVBQVM7QUFDUCxtQkFBTyxPQUFPLEtBQVAsRUFBYyxNQUFkLENBQXFCLFlBQXJCLENBQVAsQ0FETztXQUFULE1BRU87QUFDTCxtQkFBTyxLQUFQLENBREs7V0FGUDs7O0FBRlMsMkNBU1gsNkJBQVMsT0FBTztBQUNkLGNBQUcsS0FBSCxFQUFTO0FBQ1AsbUJBQU8sSUFBSSxJQUFKLENBQVMsT0FBTyxLQUFQLEVBQWEsWUFBYixFQUEyQixFQUEzQixDQUFoQixDQURPO1dBQVQsTUFFTztBQUNMLG1CQUFPLEtBQVAsQ0FESztXQUZQOzs7ZUFWUyIsImZpbGUiOiJkYXRlLWZvcm1hdC5qcyIsInNvdXJjZVJvb3QiOiIvc3JjIn0=

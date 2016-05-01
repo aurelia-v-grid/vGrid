@@ -15,6 +15,7 @@ export class VGridCol {
   @bindable vColCss;
   @bindable vColType;
   @bindable vColFormater;
+  @bindable vColEditRaw;
 
 
   constructor(element, vGrid, valueConverter) {
@@ -36,10 +37,11 @@ export class VGridCol {
     this.vGrid.vGridConfig.attributes.push(this.vColAttribute);
     this.vGrid.vGridConfig.columnWidthArray.push(this.vColWidth);
     this.vGrid.vGridConfig.headerArray.push(this.vColHeader || "");
-    this.vGrid.vGridConfig.filterArray.push(this.vColDefaultFilter || "?");
+    this.vGrid.vGridConfig.filterArray.push(this.vColDefaultFilter || "=");
     this.vGrid.vGridConfig.readOnlyArray.push(this.vColReadOnly === "true" ? true : false);
     this.vGrid.vGridConfig.colStyleArray.push(this.vColCss);
     this.vGrid.vGridConfig.colTypeArray.push(this.vColType);
+    this.vGrid.vGridConfig.colEditRawArray.push(this.vColEditRaw === "true" ? true : false);
     this.vGrid.vGridConfig.colFormaterArray.push(this.valueConverters(this.vColFormater));
     this.vGrid.vGridConfig.columns.push(this);
   }
