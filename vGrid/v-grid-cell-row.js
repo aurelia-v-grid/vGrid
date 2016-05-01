@@ -32,6 +32,7 @@ export class VGridCellRow {
     this.bindingContext = bindingContext;
     if (this.bindingContext && this.cellContent) {
       this.rawValue = this.bindingContext[this.attribute()];
+      this.setValue("");
       this.setValue(this.rawValue);
       //console.log("setvalue bind"+this.rawValue)
 

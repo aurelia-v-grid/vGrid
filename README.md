@@ -63,7 +63,7 @@ How to use: (no plugin yet):
 * **v-col-default-filter** - optional
 * **v-col-formater** -optional name of the valueformater (must have toView and fromView)
 * **v-col-edit-raw** -optional, defaul = false, used when editing numbers where you want to edit the raw value
-
+* **v-col-date-picker.bind** - optional -function to datepicker.. (under testing)
 ----
 
 #### How to use in html:
@@ -86,13 +86,12 @@ How to use: (no plugin yet):
           v-current-entity.bind=myCurrentEntity
           v-collection.bind=myCollection
           v-grid-context.bind=myGrid>
-          <v-grid-col v-col-width="160" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=" v-col-read-only="true"></v-grid-col>
+          <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=" v-col-read-only="true"></v-grid-col>
           <v-grid-col v-col-width="100" v-col-attribute="name" v-col-header="name" v-col-default-filter="*"></v-grid-col>
-          <v-grid-col v-col-width="160" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox" v-col-default-filter="=" ></v-grid-col>
-          <v-grid-col v-col-width="160" v-col-attribute="number" v-col-header="Number" v-col-default-filter=">="></v-grid-col>
-          <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date" v-col-default-filter=">="></v-grid-col>
           <v-grid-col v-col-width="180" v-col-attribute="images" v-col-header="image" v-col-type="image" v-col-css="border-radius: 50%;width:50%;margin-left:25%;" v-col-default-filter="=*"></v-grid-col>
+          <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox" v-col-default-filter="=" ></v-grid-col>
+          <v-grid-col v-col-width="80" v-col-attribute="number" v-col-header="Number" v-col-formater="numberFormat" v-col-edit-raw="true" v-col-css="text-align:right; padding-right:5px" v-col-default-filter=">="></v-grid-col>
+          <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date" v-col-date-picker.bind=onDatePickerCreate v-col-formater="dateFormat" v-col-default-filter=">="></v-grid-col>
           <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" ></v-grid-col>
         </v-grid>
-      </div>
 ```

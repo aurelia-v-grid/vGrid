@@ -128,20 +128,24 @@ export class VGridCellRow {
   }
 
   setValue(value){
-    this.cellInput.value = this.valueFormater ? this.valueFormater.toView(value) : value;
+    this.cellInput.value = this.valueFormater() ? this.valueFormater().toView(value) : value;
     this.onChangeEventOnFilter({keyCode:"nothing"});
   }
 
   getValue(value){
-    return this.valueFormater ? this.valueFormater.fromView(value) : value;
+    return this.valueFormater ? this.valueFormater().fromView(value) : value;
   }
 
   editMode(){
     return true;
   }
 
-  get valueFormater() {
+  valueFormater() {
     return this.vGrid.vGridConfig.colFormaterArray[this.columnNo];
+  }
+
+  datePicker(){
+    return this.vGrid.vGridConfig.colDatePickerArray[this.columnNo];
   }
 
 
@@ -250,9 +254,7 @@ export class VGridCellRow {
     return result
   };
 
-  datePicker(){
-    return this.vGrid.vGridConfig.colDatePickerArray[this.columnNo];
-  }
+
 
   /*------------------------------------------------*/
   //called when chang event fires in filter input
