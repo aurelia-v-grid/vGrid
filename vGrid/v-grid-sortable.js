@@ -63,12 +63,13 @@ export class VGridSortable {
   onUpdateAlt(oldIndex, newIndex) {
     var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.children;
 
-    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
-    [].slice.call(dragHandles).forEach((itemEl, index) => {
-      if (parseInt(itemEl.parentNode.getAttribute("column-no")) === oldIndex) {
-        newIndex = index;
-      }
-    });
+    // var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
+    // [].slice.call(dragHandles).forEach((itemEl, index) => {
+    //   if (parseInt(itemEl.parentNode.getAttribute("column-no")) === oldIndex) {
+    //    // newIndex = index;
+    //     console.log(index)
+    //   }
+    // });
 
 
     var x;
@@ -95,6 +96,17 @@ export class VGridSortable {
     x = this.vGrid.vGridConfig.colTypeArray[oldIndex];
     this.vGrid.vGridConfig.colTypeArray.splice(oldIndex, 1);
     this.vGrid.vGridConfig.colTypeArray.splice(newIndex, 0, x);
+
+    x = this.vGrid.vGridConfig.readOnlyArray[oldIndex];
+    this.vGrid.vGridConfig.readOnlyArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.readOnlyArray.splice(newIndex, 0, x);
+
+    x = this.vGrid.vGridConfig.colFormaterArray[oldIndex];
+    this.vGrid.vGridConfig.colFormaterArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.colFormaterArray.splice(newIndex, 0, x);
+
+
+
 
 
     this.vGrid.vGridGenerator.htmlCache.rowTemplate = null; //reset template and fill data
@@ -187,12 +199,13 @@ export class VGridSortable {
           var after = (this.nextSibling !== this.dragEl) && !isLong || halfway && isLong;
           this.rootEl.insertBefore(this.dragEl, after ? target.nextSibling : target);
           if (this.oldIndex !== this.newIndex) {
+            console.log("move, old:"+this.oldIndex+"new"+this.newIndex)
             this.onUpdateAlt(parseInt(this.oldIndex), parseInt(this.newIndex));
             this.oldIndex = this.newIndex * 1
           }
          }
         this.timer = null;
-      }, 100)
+      }, 300)
     }
 
 

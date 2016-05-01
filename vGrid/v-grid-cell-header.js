@@ -155,7 +155,8 @@ export class VGridCellRow {
 
     //if its in the the array then we want empty block, else it will look like shit if filters are at top
     if (this.vGridConfig.doNotAddFilterTo.indexOf(attribute) !== -1) {
-      cellInput = `<div class="${cssLabel}" ${this.vGridConfig.atts.dataAttribute}="${attribute}"></div>`;
+      var cssLabeltemp = cssLabel.replace(dragHandle, ""); //the cause huge issues in my sorting logic
+      cellInput = `<div class="${cssLabeltemp}" ${this.vGridConfig.atts.dataAttribute}="${attribute}"></div>`;
     }
 
     //check where to set the filter..
