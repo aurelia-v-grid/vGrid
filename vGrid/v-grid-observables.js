@@ -187,6 +187,8 @@ export class VGridObservables {
             //if skipping we also need to remove it
             this.vGrid.vGridSkipNextUpdateProperty.splice(this.vGrid.vGridSkipNextUpdateProperty.indexOf(property), 1);
           }
+        } else {
+          this.vGrid.vGridSkipNextUpdateProperty.splice(this.vGrid.vGridSkipNextUpdateProperty.indexOf(property), 1);
         }
       });
       this.subscriptionsAttributes.push(propertyObserver)

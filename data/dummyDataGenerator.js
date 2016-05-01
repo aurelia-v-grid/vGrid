@@ -46,7 +46,7 @@ constructor(){
     this.integer.push(this.internalDataArray[i].integer);
     this.shortText.push(this.internalDataArray[i].shortText);
     this.expanded.push(this.internalDataArray[i].expanded);
-    this.date.push(new Date(this.internalDataArray[i].date).toISOString());
+    this.date.push(new Date(this.internalDataArray[i].date));
     this.shortText.push(this.internalDataArray[i].shortText);
     this.mediumText.push(this.internalDataArray[i].mediumText);
     this.longText.push(this.internalDataArray[i].longText);
