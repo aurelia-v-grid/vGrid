@@ -105,9 +105,9 @@ export class VGridSortable {
     this.vGrid.vGridConfig.colFormaterArray.splice(oldIndex, 1);
     this.vGrid.vGridConfig.colFormaterArray.splice(newIndex, 0, x);
 
-    x = this.vGrid.vGridConfig.vColEditRaw[oldIndex];
-    this.vGrid.vGridConfig.vColEditRaw.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.vColEditRaw.splice(newIndex, 0, x);
+    x = this.vGrid.vGridConfig.colEditRawArray[oldIndex];
+    this.vGrid.vGridConfig.colEditRawArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.colEditRawArray.splice(newIndex, 0, x);
 
 
 
