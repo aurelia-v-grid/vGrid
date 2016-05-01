@@ -6,7 +6,6 @@
  ****************************************************************************************************************/
 import {inject, noView, customElement, processContent, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
-
 //should I make this into a container and have cells under it?
 
 
@@ -34,8 +33,8 @@ export class VGridCellRow {
 
   attached() {
     this.setStandardClassesAndStyles();
-    this.haveFilter = this.vGrid.vGridConfig.addFilter;
-    this.attribute = this.vGrid.vGridConfig.attributeArray[this.columnNo];
+    this.haveFilter = this.vGridConfig.addFilter;
+    this.attribute = this.vGridConfig.attributeArray[this.columnNo];
     this.header = this.vGridConfig.headerArray[this.columnNo];
     this.filter = this.vGridConfig.filterArray[this.columnNo];
 
@@ -46,6 +45,16 @@ export class VGridCellRow {
     }//end else
 
   }
+
+
+  get colType (){
+    return this.vGridConfig.colTypeArray[this.columnNo];
+  }
+
+  get isCheckBox (){
+    return this.vGridConfig.colTypeArray[this.columnNo] === "checkbox";
+  }
+
 
 
   createSingleRowLabel() {
@@ -93,23 +102,16 @@ export class VGridCellRow {
     this.element.innerHTML = this.getHeaderCellMarkup(this.header, value, this.attribute);
 
     //set event type to use, onchange is the best one to use...
-    var cellInputElement = this.element.querySelectorAll("." + this.vGridConfig.css.filterHandle);
+    var cellInputElement = this.element.querySelectorAll("." + this.vGridConfig.css.filterHandle)[0];
 
-    if (this.vGridConfig.filterOnKey !== true) {
-
-      for (var i = 0; i < cellInputElement.length; i++) {
-        cellInputElement[i].onchange = this.onChangeEventOnFilter.bind(this);
-        cellInputElement[i].onkeyup = this.onKeyUpEventOnFilter.bind(this);
+    if(cellInputElement){
+      if (this.vGridConfig.filterOnKey !== true) {
+          cellInputElement.onkeyup = this.onKeyUpEventOnFilter.bind(this);
+          cellInputElement.onchange = this.onChangeEventOnFilter.bind(this);
+      } else {
+        cellInputElement.onkeyup = this.onChangeEventOnFilter.bind(this);
       }
-
-    } else {
-
-      for (var i = 0; i < cellInputElement.length; i++) {
-        cellInputElement[i].onkeyup = this.onChangeEventOnFilter.bind(this);
-      }
-
     }
-
   }
 
 
@@ -230,14 +232,22 @@ export class VGridCellRow {
       var queryParams = [];
       for (var i = 0; i < queryHtmlInput.length; i++) {
 
+        var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
+        var operator = this.vGridConfig.filterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
+        if(dataSourceAttribute === this.attribute){
+          var value  =  queryHtmlInput[i].value;
+        } else {
+          var value  = queryHtmlInput[i].value;
+        }
+
+
+
         //do value exist and is not blank?
-        if (queryHtmlInput[i].value !== "" && queryHtmlInput[i].value !== undefined) {
+        if (value !== "" && value !== undefined) {
 
-          var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
-          var operator = this.vGridConfig.filterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
 
-          //set in & if we are not of first row
-          var value = queryHtmlInput[i].value;
+
+
 
           //push into array that we send back after
           queryParams.push({
@@ -247,13 +257,13 @@ export class VGridCellRow {
           });
 
           //This is something I need for later if I add sortable columns.. and callback on each column on build
-          this.vGrid.vGridGenerator.queryStringCheck[this.attribute] = queryHtmlInput[i].value;
+          this.vGrid.vGridGenerator.queryStringCheck[this.attribute] = value;
 
         } else {
 
-          if (queryHtmlInput[i].value === "") {
+          if (value === "") {
             var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
-            this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = queryHtmlInput[i].value = "";
+            this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = value;
           }
 
         }

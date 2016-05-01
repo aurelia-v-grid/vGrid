@@ -19,9 +19,9 @@ import {VGridSelection} from './v-grid-selection';
 
 export class VGrid {
   static inject = [Element, ObserverLocator, ViewCompiler, ViewSlot, Container, ViewResources];
-  @bindable({attribute: "v-grid-context"}) gridContext;
-  @bindable({attribute: "v-collection"}) collection;
-  @bindable({attribute: "v-current-entity"}) currentEntity;
+  @bindable({attribute: "v-grid-context"}) vGridContextObj;
+  @bindable({attribute: "v-collection"}) vGridCollection;
+  @bindable({attribute: "v-current-entity"}) vGridCurrentEntity;
 
 
   constructor(element, observerLocator, viewCompiler, viewSlot, container, viewResources) {
@@ -36,19 +36,19 @@ export class VGrid {
     this.viewResources = viewResources;
 
     //keeps the current entity ref
-    this.currentRowEntity = null;
+    this.vGridCurrentEntityRef = null;
 
     //current selected row in grid, not always the same as collection when used filter/sorting
-    this.filterRow = -1;
+    this.vGridCurrentRow = -1;
 
     //key name, need to set a random here so you can have multible grid linked to same collection
-    this.sgkey = "__vGrid" + Math.floor((Math.random() * 1000) + 1);
+    this.vGridRowKey = "__vGrid" + Math.floor((Math.random() * 1000) + 1);
 
     //cloned collection used internaly for everything, I never sort the original collection
-    this.collectionFiltered = [];
+    this.vGridCollectionFiltered = [];
 
     //skip row update, used when setting internal values to current entity from row editing, or to undefined
-    this.skipNextUpdateProperty = [];
+    this.vGridSkipNextUpdateProperty = [];
 
     //my classes the grid uses
     this.vGridFilter = new VGridFilter();
@@ -66,12 +66,12 @@ export class VGrid {
 
 
   /***************************************************************************************
-   * resets internal key on collection/internal collection
+   * resets internal key on vGridCollection/internal vGridCollectionFiltered
    ***************************************************************************************/
   resetKeys() {
     let key = 0; //reset it
-    this.collection.forEach((row) => {
-      row[this.sgkey] = key;
+    this.vGridCollection.forEach((row) => {
+      row[this.vGridRowKey] = key;
       key++;
     });
   }
@@ -88,29 +88,29 @@ export class VGrid {
 
     //if they havent binded a context, then lets make one.
     //that context they will be able to trigger event on the grid
-    if (!this.gridContext) {
-      this.gridContext = {};
+    if (!this.vGridContextObj) {
+      this.vGridContextObj = {};
     }
 
     //set it to users
-    this.gridContext.ctx = this.vGridGenerator;
+    this.vGridContextObj.ctx = this.vGridGenerator;
 
 
     //lets test that they have set the mandatory config settings
-    if (this.collection === undefined || this.currentEntity === undefined) {
-      if (this.collection === undefined && this.currentEntity === undefined) {
+    if (this.vGridCollection === undefined || this.vGridCurrentEntity === undefined) {
+      if (this.vGridCollection === undefined && this.vGridCurrentEntity === undefined) {
         console.warn("currentEntity & collection not set/binded in config attribute")
       } else {
-        if (this.currentEntity === undefined) {
+        if (this.vGridCurrentEntity === undefined) {
           console.warn("currentEntity not set/binded in config attribute")
         }
-        if (this.collection === undefined) {
+        if (this.vGridCollection === undefined) {
           console.warn("collection not set/binded in config attribute")
         }
       }
     } else {
       //clone collection and add key index, so we know it.
-      this.collectionFiltered = this.collection.slice(0);
+      this.vGridCollectionFiltered = this.vGridCollection.slice(0);
       //resets the keys
       this.resetKeys();
     }

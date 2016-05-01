@@ -13,7 +13,7 @@ export class sample01 {
 
   onRowDraw (data, collectionData) {
     if (data) {
-
+        debugger;
     }
   }
   //

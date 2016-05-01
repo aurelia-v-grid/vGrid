@@ -1,6 +1,6 @@
 /*****************************************************************************************************************
  *    VGridObservables
- *    Observers the collection/current entity for changes
+ *    Observers the vGridCollection/current entity for changes
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
@@ -17,18 +17,18 @@ export class VGridObservables {
 
 
   /***************************************************************************************
-   * obsertver collection, when entire collection gets replaced
+   * obsertver vGridCollection, when entire vGridCollection gets replaced
    ***************************************************************************************/
   enableObservablesCollection() {
 
-    let collectionSubscription = this.vGrid.__observers__.collection.subscribe(this.vGrid, (x, y) => {
+    let collectionSubscription = this.vGrid.__observers__.vGridCollection.subscribe(this.vGrid, (x, y) => {
 
       //disable array observer
       this.disableObservablesArray();
 
       //clone array
       //key will be set in both collection and internal since with slice we get a refrence
-      this.vGrid.collectionFiltered = this.vGrid.collection.slice(0);
+      this.vGrid.vGridCollectionFiltered = this.vGrid.vGridCollection.slice(0);
       this.vGrid.resetKeys();
 
 
@@ -40,10 +40,10 @@ export class VGridObservables {
 
       //reset
 
-      for (var k in this.vGrid.currentEntity) {
-        if (this.vGrid.currentEntity.hasOwnProperty(k)) {
-          this.vGrid.currentEntity[k] = undefined;
-          this.vGrid.skipNextUpdateProperty.push(k)
+      for (var k in this.vGrid.vGridCurrentEntity) {
+        if (this.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
+          this.vGrid.vGridCurrentEntity[k] = undefined;
+          this.vGrid.vGridSkipNextUpdateProperty.push(k)
         }
       }
 
@@ -52,28 +52,28 @@ export class VGridObservables {
 
 
     });
-    this.collectionSubscription = this.vGrid.__observers__.collection;
+    this.collectionSubscription = this.vGrid.__observers__.vGridCollection;
 
   }
 
 
   /***************************************************************************************
-   * enable attributes observables, like collection.push/pop/slice, etc etc
+   * enable attributes observables, like vGridCollection.push/pop/slice, etc etc
    ***************************************************************************************/
   enableObservablesArray() {
 
-    let arrayObserver = this.observerLocator.getArrayObserver(this.vGrid.collection);
+    let arrayObserver = this.observerLocator.getArrayObserver(this.vGrid.vGridCollection);
     arrayObserver.subscribe((changes) => {
 
 
-      var colFiltered = this.vGrid.collectionFiltered;
-      var col = this.vGrid.collection;
+      var colFiltered = this.vGrid.vGridCollectionFiltered;
+      var col = this.vGrid.vGridCollection;
       var grid = this.vGrid.vGridGenerator;
 
 
       var curKey = -1;
-      if (this.vGrid.currentRowEntity) {
-        curKey = this.vGrid.currentRowEntity[this.sgkey];
+      if (this.vGrid.vGridCurrentEntityRef) {
+        curKey = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
       }
       var curEntityValid = true;
 
@@ -95,14 +95,14 @@ export class VGridObservables {
           if (result.removed.length > 0) {
             //push into removed array
             result.removed.forEach((x) => {
-              toRemove.push(x[this.vGrid.sgkey]);
+              toRemove.push(x[this.vGrid.vGridRowKey]);
             });
           }
         });
 
         if (added === true) {
           col.forEach((x) => {
-            if (x[this.vGrid.sgkey] === undefined) {
+            if (x[this.vGrid.vGridRowKey] === undefined) {
               colFiltered.push(x)
             }
           });
@@ -115,7 +115,7 @@ export class VGridObservables {
           if (toRemove.indexOf(curKey) !== -1) {
             curEntityValid = false;
           }
-          if (toRemove.indexOf(colFiltered[i][this.vGrid.sgkey]) !== -1) {
+          if (toRemove.indexOf(colFiltered[i][this.vGrid.vGridRowKey]) !== -1) {
             var x = colFiltered.splice(i, 1);
           }
           i--;
@@ -125,17 +125,20 @@ export class VGridObservables {
         var newRowNo = -1;
         //check current entity, remove if removed, or get key/row
         if (!curEntityValid) {
-          for (var k in this.vGrid.currentEntity) {
-            if (this.vGrid.currentEntity.hasOwnProperty(k)) {
-              this.vGrid.currentEntity[k] = undefined;
-              this.vGrid.skipNextUpdateProperty.push(k);
+          for (var k in this.vGrid.vGridCurrentEntity) {
+            if (this.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
+              this.vGrid.vGridCurrentEntity[k] = undefined;
+              this.vGrid.vGridSkipNextUpdateProperty.push(k);
             }
           }
+          this.vGrid.vGridCurrentEntityRef = null;
+          this.vGrid.vGridCurrentRow = -1;
+
         } else {
 
           if (curKey) {
-            this.vGrid.collectionFiltered.forEach((x, index) => {
-              if (curKey === x[this.vGrid.sgkey]) {
+            this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
+              if (curKey === x[this.vGrid.vGridRowKey]) {
                 newRowNo = index;
               }
             });
@@ -148,14 +151,13 @@ export class VGridObservables {
 
         //update key on current and filterRow
         if (newRowNo > -1) {
-          this.vGrid.currentRowEntity = this.vGrid.collectionFiltered[newRowNo];
-          this.vGrid.currentEntity[this.sgkey] = this.vGrid.currentRowEntity[this.vGrid.sgkey];
-          this.vGrid.filterRow = newRowNo;
+          this.vGrid.vGridCurrentEntityRef = this.vGrid.vGridCollectionFiltered[newRowNo];
+          this.vGrid.vGridCurrentEntity[this.vGrid.vGridRowKey] = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
+          this.vGrid.vGridCurrentRow = newRowNo;
         }
 
         //update grid
         grid.collectionChange(false);
-
 
 
       }
@@ -165,20 +167,20 @@ export class VGridObservables {
 
 
   /***************************************************************************************
-   * enable attributes abservables, ->collection.name etc
+   * enable attributes abservables, ->vGridCollection.name etc
    ***************************************************************************************/
   enableObservablesAttributes() {
     this.vGrid.vGridConfig.attributeArray.forEach((property) => {
-      let propertyObserver = this.observerLocator.getObserver(this.vGrid.currentEntity, property);
+      let propertyObserver = this.observerLocator.getObserver(this.vGrid.vGridCurrentEntity, property);
       propertyObserver.subscribe((newValue, oldValue) => {
         if (newValue !== oldValue) {
           //check if we should skip it
-          if (this.vGrid.skipNextUpdateProperty.indexOf(property) === -1) {
-            this.vGrid.currentRowEntity[property] = newValue;
-            this.vGrid.vGridGenerator.updateRow(this.vGrid.filterRow, true);
+          if (this.vGrid.vGridSkipNextUpdateProperty.indexOf(property) === -1 && this.vGrid.vGridCurrentEntityRef) {
+            this.vGrid.vGridCurrentEntityRef[property] = newValue;
+            this.vGrid.vGridGenerator.updateRow(this.vGrid.vGridCurrentRow, true);
           } else {
             //if skipping we also need to remove it
-            this.vGrid.skipNextUpdateProperty.splice(this.vGrid.skipNextUpdateProperty.indexOf(property), 1);
+            this.vGrid.vGridSkipNextUpdateProperty.splice(this.vGrid.vGridSkipNextUpdateProperty.indexOf(property), 1);
           }
         }
       });
@@ -188,7 +190,7 @@ export class VGridObservables {
 
 
   /***************************************************************************************
-   *  disable collection observables
+   *  disable vGridCollection observables
    ***************************************************************************************/
   disableObservablesCollection() {
     this.collectionSubscription.unsubscribe();

@@ -408,11 +408,7 @@
   color: black;
 }
 
-/*//materialize messed up inputs */
-.vGrid * input {
-  margin: 0 0 0 0 !important;
 
-}
 
 .vGrid input:not([type])[readonly] {
   color: black !important;

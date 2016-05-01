@@ -1,6 +1,8 @@
 <template>
 
   <require from="app.css"></require>
+  <require from="date-format.js"></require>
+  <require from="number-format.js"></require>
 
 
   <div class="myContainer">
@@ -11,13 +13,14 @@
 
     <div my-attribute.bind="value=22" class="myRow1">
 
+
       <!------------------------------------------------------------------------------------------------------------------------------------>
       <!--GRID------------------------------------------------------------------------------------------------------------------------------>
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
         <h4 style="margin-left:25px">early version- using viewslots 30.04.2016 v8, (main rebuild not updated with this)</h4>
-        <h5 style="margin-left:25px"><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute </h5>
+        <h5 style="margin-left:25px"><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute, at that collection it only adds 2 unique properties to for selection and current row </h5>
 
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -36,11 +39,11 @@
           v-current-entity.bind=myCurrentEntity
           v-collection.bind=myCollection
           v-grid-context.bind=myGrid>
-          <v-grid-col v-col-width="160" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=" v-col-read-only="true"></v-grid-col>
+          <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=" v-col-read-only="true"></v-grid-col>
           <v-grid-col v-col-width="100" v-col-attribute="name" v-col-header="name" v-col-default-filter="*"></v-grid-col>
-          <v-grid-col v-col-width="160" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox" v-col-default-filter="=" v-col-css="left:45%;width:15px;heigth:15px"></v-grid-col>
-          <v-grid-col v-col-width="160" v-col-attribute="number" v-col-header="Number" v-col-default-filter=">="></v-grid-col>
-          <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date" v-col-default-filter=">="></v-grid-col>
+          <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox" v-col-default-filter="=" ></v-grid-col>
+          <v-grid-col v-col-width="80" v-col-attribute="number" v-col-header="Number" v-col-formater="numberFormat" v-col-css="text-align:right; padding-right:5px" v-col-default-filter=">="></v-grid-col>
+          <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date" v-col-formater="dateFormat" v-col-default-filter=">="></v-grid-col>
           <v-grid-col v-col-width="180" v-col-attribute="images" v-col-header="image" v-col-type="image" v-col-css="border-radius: 50%;width:50%;margin-left:25%;" v-col-default-filter="=*"></v-grid-col>
           <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" ></v-grid-col>
         </v-grid>
@@ -51,7 +54,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4>Collection <span class="label label-default">config="collection.bind:myCollection"</span></h4>
+        <h4>Collection <span class="label label-default">v-collection.bind=myCollection</span></h4>
         <h5><span class="label label-info">Info</span>Buttons only modify the comp collection, grids uses observables and react to changes <span class="label label-default">myCollection</span></h5>
         <h5><span class="label label-info">Info</span>So when removing first its removed from you collection, not necessarily first row in grid if you have used filters/sorting </h5>
         <h5><span class="label label-info">Info</span>Collection length:<span class="label label-default">${collectionLength}</span></h5>
@@ -139,7 +142,7 @@
           </div>
 
         </div>
-        <h4>Other <span class="label label-default">config="grid-context.bind:myGrid"</span></h4>
+        <h4>Other <span class="label label-default">v-grid-context.bind=myGrid</span></h4>
         <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-default btn-xs" click.trigger="report()">download csv report from filtered</button>
@@ -162,7 +165,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">Entity <span class="label label-default">config="currentEntity.bind:myCurrentEntity</span></h4>
+        <h4 style="margin-left:25px">Entity <span class="label label-default">v-current-entity.bind=myCurrentEntity</span></h4>
         <h5 style="margin-left:25px"><span class="label label-info">Info</span>Inputs only modify the comp current entity, grids uses observables to react <span class="label label-default">myCurrentEntity</span></h5>
         <form class="form-horizontal">
           <div class="form-group">

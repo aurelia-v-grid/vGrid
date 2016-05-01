@@ -14,12 +14,20 @@ export class VGridCol {
   @bindable vColReadOnly;
   @bindable vColCss;
   @bindable vColType;
+  @bindable vColFormater;
 
 
-  constructor(element, vGrid) {
+  constructor(element, vGrid, valueConverter) {
     this.vGrid = vGrid;
     this.element = element;
 
+
+  }
+  
+  get valueConverters(){
+    if(this.vGrid){
+      return this.vGrid.viewResources.lookupFunctions.valueConverters
+    }
   }
 
 
@@ -32,6 +40,7 @@ export class VGridCol {
     this.vGrid.vGridConfig.readOnlyArray.push(this.vColReadOnly === "true" ? true : false);
     this.vGrid.vGridConfig.colStyleArray.push(this.vColCss);
     this.vGrid.vGridConfig.colTypeArray.push(this.vColType);
+    this.vGrid.vGridConfig.colFormaterArray.push(this.valueConverters(this.vColFormater));
     this.vGrid.vGridConfig.columns.push(this);
   }
 

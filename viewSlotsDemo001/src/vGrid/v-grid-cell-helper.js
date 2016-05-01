@@ -104,7 +104,9 @@ export class VGridCellHelper {
 
     this.vGrid.element.onmousedown = function (e) {
       if (this.curElement) {
-        this.curElement.blur()
+        if(e.target !== this.curElement){
+          this.curElement.blur()
+        }
       }
     }.bind(this);
     this.vGrid.element.onmousewheel = function (e) {
@@ -298,13 +300,13 @@ export class VGridCellHelper {
    ***************************************************************************************/
   updateActual(obj) {
 
-    if(obj.attribute && this.vGrid.currentRowEntity){
+    if(obj.attribute && this.vGrid.vGridCurrentEntityRef){
       //so we dont create loop
-      this.vGrid.skipNextUpdateProperty.push(obj.attribute);
+      this.vGrid.vGridSkipNextUpdateProperty.push(obj.attribute);
 
       //set current entity and and update row data
-      this.vGrid.currentRowEntity[obj.attribute] = obj.value;
-      this.vGrid.currentEntity[obj.attribute] = obj.value;
+      this.vGrid.vGridCurrentEntityRef[obj.attribute] = obj.value;
+      this.vGrid.vGridCurrentEntity[obj.attribute] = obj.value;
     }
 
   }
