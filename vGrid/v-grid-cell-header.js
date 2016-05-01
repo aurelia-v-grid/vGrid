@@ -118,8 +118,8 @@ export class VGridCellRow {
   setStandardClassesAndStyles() {
 
     this.element.classList.add(this.vGridConfig.css.rowHeaderCell);
-    this.element.classList.add(this.vGridConfig.css.rowHeaderColumn + this.columnNo)
-    this.element.classList.add(this.vGridConfig.css.gridColumn + this.columnNo)
+    this.element.classList.add(this.vGridConfig.css.rowHeaderColumn + this.columnNo);
+    this.element.classList.add(this.vGridConfig.css.gridColumn + this.columnNo);
     this.element.style.height = '100%';
     this.element.style.width = this.vGridConfig.columnWidthArray[this.columnNo] + 'px';
 

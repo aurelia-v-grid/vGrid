@@ -74,7 +74,7 @@ export class VGridConfig {
     this.colStyleArray = [];
     this.colTypeArray = [];
     this.colFormaterArray =[];
-
+    this.colEditRawArray = [];
 
     this.rowHeight = 50;
     this.headerHeight = 0;
@@ -192,7 +192,7 @@ export class VGridConfig {
       if (this.eventOnRowDraw) {
         //if user have added this then we call it so they can edit the row data before we display it
         var data = this.getNewObject(this.vGridCollectionFiltered[row]);
-        this.eventOnRowDraw(data, this.vGridCollectionFiltered[row], row);
+        this.eventOnRowDraw(data, this.vGridCollectionFiltered[row]);
         callback(data)
       } else {
         callback(this.vGridCollectionFiltered[row]);

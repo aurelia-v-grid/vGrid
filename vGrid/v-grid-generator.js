@@ -1116,32 +1116,32 @@ export class VGridGenerator {
   };
 
 
-
-  //tested todo: this need to be changed now
-  setColumns(paramObj) {
-    //todo: this needs a big update
-    this.vGridConfig.headerArray = paramObj.headerArray;
-    this.vGridConfig.attributeArray = paramObj.attributeArray;
-    this.vGridConfig.columnWidthArray = paramObj.columnWidthArray;
-    this.vGridConfig.filterArray = paramObj.filterArray;
-    this.vGridConfig.readOnlyArray = paramObj.readOnlyArray;
-    this.vGridConfig.colStyleArray = paramObj.colStyleArray;
-    this.vGridConfig.colTypeArray = paramObj.colTypeArray;
-  };
-
-
-  getColumns() {
-    //todo: this needs a big update
-    return {
-      "headerArray": this.vGridConfig.headerArray,
-      "attributeArray": this.vGridConfig.attributeArray,
-      "columnWidthArray": this.vGridConfig.columnWidthArray,
-      "filterArray": this.vGridConfig.filterArray,
-      "readOnlyArray": this.vGridConfig.readOnlyArray,
-      "colStyleArray": this.vGridConfig.colStyleArray,
-      "colTypeArray": this.vGridConfig.colTypeArray
-    }
-  };
+//todo fix later, get the basics first with date handling
+  // //tested todo: this need to be changed now
+  // setColumns(paramObj) {
+  //   //todo: this needs a big update
+  //   this.vGridConfig.headerArray = paramObj.headerArray;
+  //   this.vGridConfig.attributeArray = paramObj.attributeArray;
+  //   this.vGridConfig.columnWidthArray = paramObj.columnWidthArray;
+  //   this.vGridConfig.filterArray = paramObj.filterArray;
+  //   this.vGridConfig.readOnlyArray = paramObj.readOnlyArray;
+  //   this.vGridConfig.colStyleArray = paramObj.colStyleArray;
+  //   this.vGridConfig.colTypeArray = paramObj.colTypeArray;
+  // };
+  //
+  //
+  // getColumns() {
+  //   //todo: this needs a big update
+  //   return {
+  //     "headerArray": this.vGridConfig.headerArray,
+  //     "attributeArray": this.vGridConfig.attributeArray,
+  //     "columnWidthArray": this.vGridConfig.columnWidthArray,
+  //     "filterArray": this.vGridConfig.filterArray,
+  //     "readOnlyArray": this.vGridConfig.readOnlyArray,
+  //     "colStyleArray": this.vGridConfig.colStyleArray,
+  //     "colTypeArray": this.vGridConfig.colTypeArray
+  //   }
+  // };
 
 
   getSelectedRows() {
