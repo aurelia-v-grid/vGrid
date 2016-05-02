@@ -4,12 +4,11 @@ import {dummyDataGenerator} from 'data/dummyDataGenerator'
 export class sample01 {
   static inject = [Element, dummyDataGenerator];
 
-  dateValue
+
   myCollection = [];
   myCurrentEntity = {};
-  myGrid = {
+  myCurrentEntity2 = {};
 
-  };
 
   onRowDraw (data, collectionData, datePicker) {
     if (data) {

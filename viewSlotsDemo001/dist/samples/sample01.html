@@ -20,8 +20,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">early version- using viewslots 2016.05.02 v12 </h4>
-        <h5 style="margin-left:25px"><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute, at that collection it only adds 2 unique properties to for selection and current row </h5>
+        <h4 style="margin-left:25px">early version- using viewslots 2016.05.02 v13 </h4>
 
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -55,9 +54,7 @@
 
       <div class="myCol">
         <h4>Collection <span class="label label-default">v-collection.bind=myCollection</span></h4>
-        <h5><span class="label label-info">Info</span>Buttons only modify the comp collection, grids uses observables and react to changes <span class="label label-default">myCollection</span></h5>
-        <h5><span class="label label-info">Info</span>So when removing first its removed from you collection, not necessarily first row in grid if you have used filters/sorting </h5>
-        <h5><span class="label label-info">Info</span>Collection length:<span class="label label-default">${collectionLength}</span></h5>
+
 
         <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
           <div class="btn-group" role="group">
@@ -166,7 +163,6 @@
 
       <div class="myCol">
         <h4 style="margin-left:25px">Entity <span class="label label-default">v-current-entity.bind=myCurrentEntity</span></h4>
-        <h5 style="margin-left:25px"><span class="label label-info">Info</span>Inputs only modify the comp current entity, grids uses observables to react <span class="label label-default">myCurrentEntity</span></h5>
         <form class="form-horizontal">
           <div class="form-group">
             <label class="col-sm-2 control-label">Name</label>
@@ -199,11 +195,19 @@
             </div>
           </div>
       </div>
+      <div class="myCol">
+        <h5><span class="label label-info">Info</span>Collection length:<span class="label label-default">${collectionLength}</span></h5>
+        <h5><span class="label label-info">Info</span>Inputs only modify the comp current entity, grids uses observables to react <span class="label label-default">myCurrentEntity</span></h5>
+        <h5><span class="label label-info">Info</span>Hold down shift while sorting do do multisorting<span class="label label-default">multisorting</span></h5>
+        <h5><span class="label label-info">Info</span>Double click to enter edit mode, enter to exit<span class="label label-default">editing</span></h5>
+        <h5><span class="label label-info">Info</span>Buttons only modify the comp collection, grids uses observables and react to changes <span class="label label-default">myCollection</span></h5>
+        <h5><span class="label label-info">Info</span>So when removing first its removed from you collection, not necessarily first row in grid if you have used filters/sorting </h5>
+        <h5><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute, at that collection it only adds 2 unique properties to for selection and current row </h5>
 
+      </div>
 
     </div>
 
-    </div>
   </div>
 
 </template>
