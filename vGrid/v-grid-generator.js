@@ -508,6 +508,8 @@ export class VGridGenerator {
    * option to scrollbars scrolling where we dont update all the time and use timeout
    ****************************************************************************************************************************/
   onNormalScrollingLarge() {
+
+    var fixme = false;
     //check is user have preformed big scroll, but want it to keep rows inline
     this.scrollVars.lastScrollTop = this.htmlCache.content.scrollTop;
     //fix firefox messing up whn re-setting scroll bar to 0, this is not issue in chrome and edge
@@ -548,6 +550,11 @@ export class VGridGenerator {
         setNewTopOnRow(i);
       }
 
+      //chrome fix
+      if((currentRowTop+this.vGridConfig.rowHeight)===this.vGridConfig.getCollectionLength()*this.vGridConfig.rowHeight){
+        fixme = true;
+      }
+
       //we want to remove rows that is larger than colletion and visible within normal content box
       if (currentRow >= this.vGridConfig.getCollectionLength() && (currentRowTop - this.vGridConfig.rowHeight) >= this.htmlCache.content.clientHeight) {
         //fix for when scrolling and removing rows that is larger then actuall length
@@ -567,6 +574,7 @@ export class VGridGenerator {
         firstTop = firstTop - this.vGridConfig.rowHeight;
         this.setRowTopValue(this.htmlCache.rowsArray, i, firstTop);
       }
+
     }
 
     //I now sort the array again.
@@ -574,6 +582,14 @@ export class VGridGenerator {
       function (a, b) {
         return parseInt(a.top) - parseInt(b.top)
       });
+
+    //chrome fix
+    if(fixme){
+      this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.rowHeight;
+      this.htmlCache.scrollBody.style.height = this.scrollBodyHeight - 1 + "px";
+      this.htmlCache.scrollBody.style.height = this.scrollBodyHeight + 1 + "px";
+    }
+
 
     this.fillDataInRows(false);
   };
@@ -1104,7 +1120,9 @@ export class VGridGenerator {
       this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.rowHeight;
     }
 
+    //if I dont do this, chrome fails...
     this.htmlCache.scrollBody.style.height = this.scrollBodyHeight - 1 + "px";
+    this.htmlCache.scrollBody.style.height = this.scrollBodyHeight + 1 + "px";
 
 
   };

@@ -84,7 +84,6 @@ from whats used in the sample
           v-sortable-headers="true"
           v-sort-on-header-click="true"
           v-multi-select="true"
-          v-format-handler="myFormatHandler"
           v-current-entity.bind=myCurrentEntity
           v-collection.bind=myCollection
           v-grid-context.bind=myGrid>
