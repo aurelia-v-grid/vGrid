@@ -32,7 +32,8 @@ How to use: (no plugin yet):
 ----
 
 #### < v-grid > attributes:
-* **v-current-entity**: - optional, link you inputs etc to this
+* **v-current-entity.bind**: - mandatory, link you inputs etc to this
+* **v-collection.bind**: - mandatory, link you inputs etc to this
 * **v-grid-context** - optional, default 50
 * **v-row-height** - optional, default 50
 * **v-header-height** - optional, default 50
