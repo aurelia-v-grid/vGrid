@@ -67,7 +67,7 @@ export class VGridSortable {
     // [].slice.call(dragHandles).forEach((itemEl, index) => {
     //   if (parseInt(itemEl.parentNode.getAttribute("column-no")) === oldIndex) {
     //    // newIndex = index;
-    //     console.log(index)
+    //    // console.log(index)
     //   }
     // });
 
@@ -109,6 +109,9 @@ export class VGridSortable {
     this.vGrid.vGridConfig.colEditRawArray.splice(oldIndex, 1);
     this.vGrid.vGridConfig.colEditRawArray.splice(newIndex, 0, x);
 
+    x = this.vGrid.vGridConfig.filterOnKeyArray[oldIndex];
+    this.vGrid.vGridConfig.filterOnKeyArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.filterOnKeyArray.splice(newIndex, 0, x);
 
 
     var that = this;
@@ -117,7 +120,7 @@ export class VGridSortable {
     [].slice.call(dragHandles).forEach((itemEl, index) => {
       itemEl.parentNode.setAttribute("column-no", index);
       //update viewmodel, is needed since I dont redraw headers anymore
-      itemEl.parentNode.au["v-grid-cell-header"].viewModel.columnNo = index+""
+     itemEl.parentNode.au["v-grid-cell-header"].viewModel.columnNo = index+""
     });
     this.vGrid.vGridGenerator.rebuildColumnsRows();
 
@@ -140,7 +143,6 @@ export class VGridSortable {
 
     this.dragEl = evt.target;
     this.oldIndex = evt.target.getAttribute("column-no");
-    //this.oldIndexTemp = this.oldIndex * 1;
 
     if (this.isDragHandle()) {
       this.onStart();
@@ -226,8 +228,6 @@ export class VGridSortable {
     this.rootEl.removeEventListener('dragend', this.onDragEnd, false);
 
     if (this.nextEl !== this.dragEl.nextSibling) {
-      //this.vGrid.vGridGenerator.rebuildColumns();
-      //this.onUpdate(parseInt(this.oldIndex), parseInt(this.newIndex));
       this.nextSibling = null;
     } else {
       this.onCancel();

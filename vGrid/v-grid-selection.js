@@ -16,7 +16,7 @@ export class VGridSelection {
   constructor(mode, vGrid) {
 
     this.vGrid = vGrid;
-    this.sgSel = "__vGridSel" + Math.floor((Math.random() * 1000) + 1);
+    this.vGridSel = "__vGridSel" + Math.floor((Math.random() * 1000) + 1);
 
     if (mode === false) {
       this.selectionMode = "single"
@@ -45,7 +45,7 @@ export class VGridSelection {
     var result = false;
     if (this.selectedRows > 0) {
       if (this.vGrid.vGridCollectionFiltered[row]) {
-        if (this.vGrid.vGridCollectionFiltered[row][this.sgSel] === true) {
+        if (this.vGrid.vGridCollectionFiltered[row][this.vGridSel] === true) {
           result = true;
         }
       }
@@ -58,7 +58,7 @@ export class VGridSelection {
     var result = false;
     if (this.selectedRows > 0) {
       if (this.vGrid.vGridCollection[row]) {
-        if (this.vGrid.vGridCollection[row][this.sgSel] === true) {
+        if (this.vGrid.vGridCollection[row][this.vGridSel] === true) {
           result = true;
         }
       }
@@ -77,28 +77,28 @@ export class VGridSelection {
         if (this.vGrid.vGridCollection !== undefined) {
           if (this.vGrid.vGridCollection.length > 1) {
             this.vGrid.vGridCollection.forEach((x) => {
-              if (x[this.sgSel] === true) {
-                x[this.sgSel] = false;
+              if (x[this.vGridSel] === true) {
+                x[this.vGridSel] = false;
               }
             });
 
           }
         }
-        this.vGrid.vGridCollectionFiltered[rowSelect][this.sgSel] = true;
+        this.vGrid.vGridCollectionFiltered[rowSelect][this.vGridSel] = true;
         this.selectedRows = 1;
         break;
       case "multible":
         if (!addToSelection) {
           this.selectedRows = 0;
           this.vGrid.vGridCollection.forEach((x) => {
-            if (x[this.sgSel] === true) {
-              x[this.sgSel] = false;
+            if (x[this.vGridSel] === true) {
+              x[this.vGridSel] = false;
             }
           });
-          this.vGrid.vGridCollectionFiltered[rowSelect][this.sgSel] = true;
+          this.vGrid.vGridCollectionFiltered[rowSelect][this.vGridSel] = true;
           this.selectedRows++;
         } else {
-          this.vGrid.vGridCollectionFiltered[rowSelect][this.sgSel] = true;
+          this.vGrid.vGridCollectionFiltered[rowSelect][this.vGridSel] = true;
           this.selectedRows++;
         }
     }
@@ -115,28 +115,28 @@ export class VGridSelection {
         if (this.vGrid.vGridCollection !== undefined) {
           if (this.vGrid.vGridCollection.length > 1) {
             this.vGrid.vGridCollection.forEach((x) => {
-              if (x[this.sgSel] === true) {
-                x[this.sgSel] = false;
+              if (x[this.vGridSel] === true) {
+                x[this.vGridSel] = false;
               }
             });
 
           }
         }
-        this.vGrid.vGridCollection[rowSelect][this.sgSel] = true;
+        this.vGrid.vGridCollection[rowSelect][this.vGridSel] = true;
         this.selectedRows = 1;
         break;
       case "multible":
         if (!addToSelection) {
           this.selectedRows = 0;
           this.vGrid.vGridCollection.forEach((x) => {
-            if (x[this.sgSel] === true) {
-              x[this.sgSel] = false;
+            if (x[this.vGridSel] === true) {
+              x[this.vGridSel] = false;
             }
           });
-          this.vGrid.vGridCollection[rowSelect][this.sgSel] = true;
+          this.vGrid.vGridCollection[rowSelect][this.vGridSel] = true;
           this.selectedRows++;
         } else {
-          this.vGrid.vGridCollection[rowSelect][this.sgSel] = true;
+          this.vGrid.vGridCollection[rowSelect][this.vGridSel] = true;
           this.selectedRows++;
         }
     }
@@ -146,13 +146,13 @@ export class VGridSelection {
   selectRange(start, end) {
     if (this.selectionMode === "multible") {
       this.vGrid.vGridCollection.forEach((x) => {
-        if (x[this.sgSel] === true) {
-          x[this.sgSel] = false;
+        if (x[this.vGridSel] === true) {
+          x[this.vGridSel] = false;
         }
       });
       this.selectedRows = 0;
       for (var i = start; i < end + 1; i++) {
-        this.vGrid.vGridCollectionFiltered[i][this.sgSel] = true;
+        this.vGrid.vGridCollectionFiltered[i][this.vGridSel] = true;
         this.selectedRows++;
       }
     }
@@ -162,13 +162,13 @@ export class VGridSelection {
   selectRangeMainCollection(start, end) {
     if (this.selectionMode === "multible") {
       this.vGrid.vGridCollection.forEach((x) => {
-        if (x[this.sgSel] === true) {
-          x[this.sgSel] = false;
+        if (x[this.vGridSel] === true) {
+          x[this.vGridSel] = false;
         }
       });
       this.selectedRows = 0;
       for (var i = start; i < end + 1; i++) {
-        this.vGrid.vGridCollection[i][this.sgSel] = true;
+        this.vGrid.vGridCollection[i][this.vGridSel] = true;
         this.selectedRows++;
       }
     }
@@ -178,8 +178,8 @@ export class VGridSelection {
   reset() {
     if (this.selectedRows > 0) {
       this.vGrid.vGridCollection.forEach((x) => {
-        if (x[this.sgSel] === true) {
-          x[this.sgSel] = false;
+        if (x[this.vGridSel] === true) {
+          x[this.vGridSel] = false;
         }
       });
     }
@@ -191,8 +191,8 @@ export class VGridSelection {
   resetFilteredOnly() {
     if (this.selectedRows > 0) {
       this.vGrid.vGridCollectionFiltered.forEach((x) => {
-        if (x[this.sgSel] === true) {
-          x[this.sgSel] = false;
+        if (x[this.vGridSel] === true) {
+          x[this.vGridSel] = false;
         }
       });
     }
@@ -206,7 +206,7 @@ export class VGridSelection {
     var array = [];
     if (this.selectedRows > 0) {
       this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
-        if (x[this.sgSel] === true) {
+        if (x[this.vGridSel] === true) {
           array.push(index)
         }
       });
@@ -218,7 +218,7 @@ export class VGridSelection {
     var array = [];
     if (this.selectedRows > 0) {
       this.vGrid.vGridCollection.forEach((x, index) => {
-        if (x[this.sgSel] === true) {
+        if (x[this.vGridSel] === true) {
           array.push(index)
         }
       });
@@ -230,14 +230,14 @@ export class VGridSelection {
   setSelectedRows(newRows) {
     if (this.selectedRows > 0) {
       this.vGrid.vGridCollection.forEach((x) => {
-        if (x[this.sgSel] === true) {
-          x[this.sgSel] = false;
+        if (x[this.vGridSel] === true) {
+          x[this.vGridSel] = false;
         }
       });
     }
     this.selectedRows = 0;
     for (var i = 0; i < newRows.length; i++) {
-      this.vGrid.vGridCollectionFiltered[newRows[i]][this.sgSel] = true;
+      this.vGrid.vGridCollectionFiltered[newRows[i]][this.vGridSel] = true;
       this.selectedRows++;
     }
   };
@@ -246,14 +246,14 @@ export class VGridSelection {
   setSelectedRowsMainCollection(newRows) {
     if (this.selectedRows > 0) {
       this.vGrid.vGridCollection.forEach((x) => {
-        if (x[this.sgSel] === true) {
-          x[this.sgSel] = false;
+        if (x[this.vGridSel] === true) {
+          x[this.vGridSel] = false;
         }
       });
     }
     this.selectedRows = 0;
     for (var i = 0; i < newRows.length; i++) {
-      this.vGrid.vGridCollection[newRows[i]][this.sgSel] = true;
+      this.vGrid.vGridCollection[newRows[i]][this.vGridSel] = true;
       this.selectedRows++;
     }
   };

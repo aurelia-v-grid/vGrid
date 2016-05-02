@@ -19,48 +19,48 @@ export class VGridGenerator {
    * getters/setters to make it easier
    ***************************************************************************************/
 
-  get vGridSelection(){
-    if(this.vGrid){
+  get vGridSelection() {
+    if (this.vGrid) {
       return this.vGrid.vGridSelection;
     } else {
       return null;
     }
   }
-  
-  get vGridConfig(){
-    if(this.vGrid){
+
+  get vGridConfig() {
+    if (this.vGrid) {
       return this.vGrid.vGridConfig;
     } else {
       return null;
     }
   }
-  
-  get vGridCellHelper(){
-    if(this.vGrid){
+
+  get vGridCellHelper() {
+    if (this.vGrid) {
       return this.vGrid.vGridCellHelper;
     } else {
       return null;
     }
   }
-  
-  get vGridElement(){
-    if(this.vGrid){
+
+  get vGridElement() {
+    if (this.vGrid) {
       return this.vGrid.element;
     } else {
       return null;
     }
   }
-  
-  get vGridSortable(){
-    if(this.vGrid){
+
+  get vGridSortable() {
+    if (this.vGrid) {
       return this.vGrid.vGridSortable;
     } else {
       return null;
     }
   }
-  
-  get vGridResizable(){
-    if(this.vGrid){
+
+  get vGridResizable() {
+    if (this.vGrid) {
       return this.vGrid.vGridResizable;
     } else {
       return null;
@@ -116,7 +116,6 @@ export class VGridGenerator {
   };
 
 
-
   /****************************************************************************************************************************
    * fills data into row, 1 row!
    ****************************************************************************************************************************/
@@ -153,7 +152,7 @@ export class VGridGenerator {
   getHeaderTemplate() {
     var rowTemplate = "";
     for (var i = 0; i < this.vGridConfig.columns.length; i++) {
-      rowTemplate = rowTemplate + `<v-grid-cell-header column-no=${i}></v-grid-cell-header>`;
+      rowTemplate = rowTemplate + `<v-grid-cell-header column-no="${i}"></v-grid-cell-header>`;
     }
     return rowTemplate;
   };
@@ -167,12 +166,8 @@ export class VGridGenerator {
     if (this.htmlCache.rowTemplate !== null) {
       rowTemplate = this.htmlCache.rowTemplate;
     } else {
-      if (this.vGridConfig.onRowMarkupCreate) {
-        rowTemplate = this.vGridConfig.onRowMarkupCreate(this.vGridConfig.attributeArray);
-      } else {
-        for (var i = 0; i < this.vGridConfig.columns.length; i++) {
-          rowTemplate = rowTemplate + `<v-grid-cell-row col-no=${i}></v-grid-cell-row>`;
-        }
+      for (var i = 0; i < this.vGridConfig.columns.length; i++) {
+        rowTemplate = rowTemplate + `<v-grid-cell-row column-no=${i}></v-grid-cell-row>`;
       }
     }
     return rowTemplate;
@@ -757,7 +752,7 @@ export class VGridGenerator {
           }
         }
 
-    
+
       }
     };
     clearTimeout(this.scrollVars.scrollCallbackTimer);
@@ -1055,7 +1050,6 @@ export class VGridGenerator {
     this.updateSelectionOnAllRows();
     this.fixHeaderWithBody()
   };
-
 
 
   /****************************************************************************************************************************

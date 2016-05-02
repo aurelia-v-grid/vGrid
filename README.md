@@ -32,7 +32,7 @@ How to use: (no plugin yet):
 ----
 
 #### < v-grid > attributes:
-* **v-current-entity**: - - optional, link you inputs etc to this
+* **v-current-entity**: - optional, link you inputs etc to this
 * **v-grid-context** - optional, default 50
 * **v-row-height** - optional, default 50
 * **v-header-height** - optional, default 50
@@ -45,10 +45,9 @@ How to use: (no plugin yet):
 * **v-render-on-scrollbar-scroll** - optional, default true
 * **v-header-filter** - optional, default false
 * **v-header-filter-top** - optional, default true
-* **v-header-filter-onkeydown** - optional, default false
-* **v-header-filter-not-to** - optional, default []
+* **v-header-filter-not-to** - optional, default ""  sample:"att1,att2" 
 * **v-sort-on-header-click** - optional, default false
-* **v-sort-not-on-header** - optional, default []
+* **v-sort-not-on-header** - optional, default ""  sample:"att1,att2" 
 * **v-row-on-draw** - optional, default ""
 
 
@@ -61,6 +60,7 @@ How to use: (no plugin yet):
 * **v-col-read-only** - optional, default false
 * **v-col-css** - optional
 * **v-col-default-filter** - optional
+* **v-col-filter-on-key** - optional, default false
 * **v-col-formater** -optional name of the valueformater (must have toView and fromView)
 * **v-col-edit-raw** -optional, defaul = false, used when editing numbers where you want to edit the raw value
 * **v-col-date-picker.bind** - optional -function to datepicker.. (under testing)
@@ -68,6 +68,7 @@ How to use: (no plugin yet):
 
 #### How to use in html:
 
+from whats used in the sample
 ```
 <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -76,7 +77,6 @@ How to use: (no plugin yet):
           v-resize-also-rows="true"
           v-resizable-headers="true"
           v-header-filter="true"
-          v-header-filter-onkeydown="true"
           v-header-filter-not-to="images"
           v-header-filter-top="true"
           v-sortable-headers="true"
@@ -87,11 +87,12 @@ How to use: (no plugin yet):
           v-collection.bind=myCollection
           v-grid-context.bind=myGrid>
           <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=" v-col-read-only="true"></v-grid-col>
-          <v-grid-col v-col-width="100" v-col-attribute="name" v-col-header="name" v-col-default-filter="*"></v-grid-col>
+          <v-grid-col v-col-width="100" v-col-attribute="name" v-col-filter-on-key="true" v-col-header="name" v-col-default-filter="*"></v-grid-col>
           <v-grid-col v-col-width="180" v-col-attribute="images" v-col-header="image" v-col-type="image" v-col-css="border-radius: 50%;width:50%;margin-left:25%;" v-col-default-filter="=*"></v-grid-col>
           <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox" v-col-default-filter="=" ></v-grid-col>
           <v-grid-col v-col-width="80" v-col-attribute="number" v-col-header="Number" v-col-formater="numberFormat" v-col-edit-raw="true" v-col-css="text-align:right; padding-right:5px" v-col-default-filter=">="></v-grid-col>
           <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date" v-col-date-picker.bind=onDatePickerCreate v-col-formater="dateFormat" v-col-default-filter=">="></v-grid-col>
           <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" ></v-grid-col>
         </v-grid>
+      </div>
 ```
