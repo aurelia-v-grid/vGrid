@@ -109,18 +109,15 @@ export class VGridSortable {
     this.vGrid.vGridConfig.colEditRawArray.splice(oldIndex, 1);
     this.vGrid.vGridConfig.colEditRawArray.splice(newIndex, 0, x);
 
-    x = this.vGrid.vGridConfig.colDatePickerArray[oldIndex];
-    this.vGrid.vGridConfig.colDatePickerArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colDatePickerArray.splice(newIndex, 0, x);
 
 
-
-
+    var that = this;
     this.vGrid.vGridGenerator.htmlCache.rowTemplate = null; //reset template and fill data
     var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
     [].slice.call(dragHandles).forEach((itemEl, index) => {
-      itemEl.parentNode.setAttribute("column-no", index)
-
+      itemEl.parentNode.setAttribute("column-no", index);
+      //update viewmodel, is needed since I dont redraw headers anymore
+      itemEl.parentNode.au["v-grid-cell-header"].viewModel.columnNo = index+""
     });
     this.vGrid.vGridGenerator.rebuildColumnsRows();
 
