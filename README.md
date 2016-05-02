@@ -59,11 +59,11 @@ How to use: (no plugin yet):
 * **v-col-header** -mandatory
 * **v-col-read-only** - optional, default false
 * **v-col-css** - optional
+* **v-col-type** - optional (image, checkbox), default normal input
 * **v-col-default-filter** - optional
 * **v-col-filter-on-key** - optional, default false
 * **v-col-formater** -optional name of the valueformater (must have toView and fromView)
 * **v-col-edit-raw** -optional, defaul = false, used when editing numbers where you want to edit the raw value
-* **v-col-date-picker.bind** - optional -function to datepicker.. (under testing)
 ----
 
 #### How to use in html:
