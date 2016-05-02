@@ -342,7 +342,7 @@ export class VGridCellHelper {
         //set internal cells & index (used for tabbing)
         this.cells = this.curElement.parentNode.parentNode.querySelectorAll("." + this.vGrid.vGridConfig.css.cellContent);
 
-        this.index = parseInt(this.curElement.parentNode.getAttribute("col-no"));
+        this.index = parseInt(this.curElement.parentNode.getAttribute("column-no"));
         if (this.index === this.cells.length - 1) {
           this.last = true;
         } else {

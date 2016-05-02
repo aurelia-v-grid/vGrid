@@ -158,7 +158,7 @@ export class VGridCellRow {
       //todo
     }.bind(this);
 
-    
+
     //so materilize dont mess up
     this.cellContent.style.opacity = "initial";
     this.cellContent.style.border = "initial";
