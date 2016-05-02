@@ -64,6 +64,7 @@ How to use: (no plugin yet):
 * **v-col-filter-on-key** - optional, default false
 * **v-col-formater** -optional name of the valueformater (must have toView and fromView)
 * **v-col-edit-raw** -optional, defaul = false, used when editing numbers where you want to edit the raw value
+
 ----
 
 #### How to use in html:
