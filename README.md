@@ -36,7 +36,7 @@ How to use: (no plugin yet):
 * **v-collection.bind**: - mandatory, link you inputs etc to this
 * **v-grid-context** - optional, default 50
 * **v-row-height** - optional, default 50
-* **v-header-height** - optional, default 50
+* **v-header-height** - optional, default 0
 * **v-footer-height** - optional, default 0
 * **v-resizable-headers** - optional, default false
 * **v-resize-also-rows** - optional, default false
