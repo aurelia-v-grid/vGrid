@@ -4,7 +4,7 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {inject, noView, customElement, processContent, bindable} from 'aurelia-framework';
+import {inject, noView, customElement, processContent, bindable, bindingMode} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 //should I make this into a container and have cells under it?
 
@@ -26,6 +26,7 @@ export class VGridCellRow {
     this.bindingContext = bindingContext;
   }
 
+ 
   created() {
     ///nothing atm
   }
@@ -34,7 +35,6 @@ export class VGridCellRow {
   attached() {
     this.setStandardClassesAndStyles();
     this.haveFilter = this.vGridConfig.addFilter;
-    this.attribute = this.vGridConfig.attributeArray[this.columnNo];
     this.header = this.vGridConfig.headerArray[this.columnNo];
     this.filter = this.vGridConfig.filterArray[this.columnNo];
 
@@ -47,13 +47,22 @@ export class VGridCellRow {
   }
 
 
-  get colType (){
-    return this.vGridConfig.colTypeArray[this.columnNo];
+  attribute(){
+    return this.vGridConfig.attributeArray[this.columnNo];
   }
 
-  get isCheckBox (){
-    return this.vGridConfig.colTypeArray[this.columnNo] === "checkbox";
+  getValue(value){
+    //just for testing not in use
+    return this.valueFormater ? this.valueFormater().fromView(value) : value;
   }
+
+  valueFormater() {
+    //just for testing not in use
+    return this.vGrid.vGridConfig.colFormaterArray[this.columnNo];
+  }
+
+
+
 
 
 
@@ -75,10 +84,10 @@ export class VGridCellRow {
     label.classList.add(this.vGridConfig.css.orderHandle);
 
     //set inner text/sort icon
-    label.innerHTML = this.header + this.getSortIcon(this.attribute);
+    label.innerHTML = this.header + this.getSortIcon(this.attribute());
 
     //set data attribute
-    label.setAttribute(this.vGridConfig.atts.dataAttribute, this.attribute);
+    label.setAttribute(this.vGridConfig.atts.dataAttribute, this.attribute());
 
     //add resizable handle
     var dragHandle = this.vGridConfig.isSortableHeader ? this.vGridConfig.css.dragHandle : "";
@@ -94,41 +103,32 @@ export class VGridCellRow {
     var value = "";
 
     //get old
-    if (this.vGrid.vGridGenerator.queryStringCheck[this.attribute] !== undefined) {
-      value = this.vGrid.vGridGenerator.queryStringCheck[this.attribute];
+    if (this.vGrid.vGridGenerator.queryStringCheck[this.attribute()] !== undefined) {
+      value = this.vGrid.vGridGenerator.queryStringCheck[this.attribute()];
     }
 
     //get html markup
-    this.element.innerHTML = this.getHeaderCellMarkup(this.header, value, this.attribute);
+    this.element.innerHTML = this.getHeaderCellMarkup(this.header, value, this.attribute());
 
     //set event type to use, onchange is the best one to use...
     var cellInputElement = this.element.querySelectorAll("." + this.vGridConfig.css.filterHandle)[0];
 
     if(cellInputElement){
-        if (this.vGridConfig.filterOnKey !== true) {
+        if (this.vGridConfig.filterOnKeyArray[this.columnNo] !== true) {
           cellInputElement.onkeyup = this.onKeyUpEventOnFilter.bind(this);
           cellInputElement.onchange = this.onChangeEventOnFilter.bind(this);
         } else {
           cellInputElement.onkeyup = this.onChangeEventOnFilter.bind(this);
         }
     }
+
+    this.cellInputElement = cellInputElement;
   }
 
 
 
 
-  setValue(value){
-    this.cellInput.value = this.valueFormater() ? this.valueFormater().toView(value) : value;
-    this.onChangeEventOnFilter({keyCode:"nothing"});
-  }
-
-  getValue(value){
-    return this.valueFormater ? this.valueFormater().fromView(value) : value;
-  }
-
-  valueFormater() {
-    return this.vGrid.vGridConfig.colFormaterArray[this.columnNo];
-  }
+  
 
 
   setStandardClassesAndStyles() {
@@ -192,7 +192,6 @@ export class VGridCellRow {
 
     //setting lineheight so it stays in the middle
     var lineHeigthStyleTag;
-
     if (!this.vGridConfig.addFilter) {
       lineHeigthStyleTag = `style=line-height:${this.vGridConfig.headerHeight}px;"`;
     } else {
@@ -253,7 +252,7 @@ export class VGridCellRow {
 
         var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
         var operator = this.vGridConfig.filterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
-        if(dataSourceAttribute === this.attribute){
+        if(dataSourceAttribute === this.attribute()){
           var value  =  queryHtmlInput[i].value;
         } else {
           var value  = queryHtmlInput[i].value;
@@ -270,7 +269,7 @@ export class VGridCellRow {
           });
 
           //This is something I need for later if I add sortable columns.. and callback on each column on build
-          this.vGrid.vGridGenerator.queryStringCheck[this.attribute] = value;
+          this.vGrid.vGridGenerator.queryStringCheck[this.attribute()] = value;
 
         } else {
 
@@ -280,7 +279,6 @@ export class VGridCellRow {
           }
 
         }
-
       }
       this.vGridConfig.onFilterRun(queryParams)
     }
@@ -290,7 +288,7 @@ export class VGridCellRow {
   /*------------------------------------------------*/
   //called when users hits key down... just to know if user hits enter, so we know we can run filter
   onKeyUpEventOnFilter(e) {
-    if (e.keyCode === 13 && triggerRan === false) {
+    if (e.keyCode === 13) {
       e.target.onchange(e);
     }
   };

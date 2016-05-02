@@ -226,13 +226,6 @@ export class filterOnAtTop extends VGridAttibutes {
 }
 
 
-@customAttribute('v-header-filter-onkeydown')
-@inject(Element, Optional.of(VGrid))
-export class filterOnKey extends VGridAttibutes {
-  attribute = "filterOnKey";
-  type = "bool";
-}
-
 
 @customAttribute('v-sort-on-header-click')
 @inject(Element, Optional.of(VGrid))

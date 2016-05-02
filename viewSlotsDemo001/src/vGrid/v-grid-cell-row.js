@@ -16,7 +16,7 @@ import {VGrid} from './v-grid'
 @processContent(false)
 @inject(Element, VGrid)
 export class VGridCellRow {
-  @bindable colNo;
+  @bindable columnNo;
   @bindable configAttribute;
 
 
@@ -35,7 +35,7 @@ export class VGridCellRow {
       this.setValue("");
       this.setValue(this.rawValue);
       if (this.vGrid.vGridCurrentRow === parseInt(this.element.parentNode.getAttribute("row"))) {
-        if (parseInt(this.colNo) === this.vGrid.vGridCellHelper.index) {
+        if (parseInt(this.columnNo) === this.vGrid.vGridCellHelper.index) {
           if (!this.containsFocusClass(this.element)) {
             this.setLastFocusElement(null);
             this.setCss();
@@ -65,11 +65,6 @@ export class VGridCellRow {
         this.cellContent = document.createElement("input");
         this.cellContent.type = "checkbox";
         this.cellContent.onclick = function (e) {
-
-          if (e.keyCode == 13) {
-            this.cellContent.onblur();
-            return false;
-          }
           if (this.readOnly() === true && e.keyCode !== 9) {
             return false;
           } else {
@@ -79,50 +74,50 @@ export class VGridCellRow {
               return true;
             }
           }
-
         }.bind(this);
         break;
       default:
         this.cellContent = document.createElement("input");
-        this.cellContent.onkeydown = function (e) {
 
-          if (e.keyCode == 13) {
-            if (this.containsWriteClass(this.element)) {
-              this.removeWriteClass(this.element)
-            }
-            this.cellContent.onblur();
-            this.setEditMode(false);
-            this.removeWriteClass(this.element);
-            this.addFocusClass(this.element);
-            return false;
-          }
-
-          if (this.readOnly() === true && e.keyCode !== 9) {
-            return false;
-          } else {
-            if (!this.editMode()) {
-              return false;
-            } else {
-              return true;
-            }
-          }
-
-        }.bind(this);
     }
+
+
+    this.cellContent.onkeydown = function (e) {
+      if (e.keyCode == 13) {
+        if (this.containsWriteClass(this.element)) {
+          this.removeWriteClass(this.element)
+        }
+        this.cellContent.onblur();
+        this.setEditMode(false);
+        this.removeWriteClass(this.element);
+        this.addFocusClass(this.element);
+        return false;
+      }
+      if (this.readOnly() === true && e.keyCode !== 9) {
+        return false;
+      } else {
+        if (!this.editMode()) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    }.bind(this);
+
 
 
     this.cellContent.ondblclick = function (e) {
       this.setEditMode(true);
-      this.cellContent.select()
-
+      if (this.cellContent.select) {
+        this.cellContent.select()
+      }
     }.bind(this);
 
 
     this.cellContent.addEventListener("cellFocus", function (e) {
-
       if (this.editMode()) {
-        if(this.editRaw()){
-          if(!this.displayRawValue){
+        if (this.editRaw()) {
+          if (!this.displayRawValue) {
             this.setValue(null, true);
           }
         }
@@ -134,7 +129,7 @@ export class VGridCellRow {
 
     this.cellContent.onblur = function (e) {
       if (this.editMode()) {
-        if(this.editRaw()){
+        if (this.editRaw()) {
           this.vGrid.vGridCellHelper.updateActual({
             attribute: this.attribute(),
             value: this.cellContent.value
@@ -149,20 +144,21 @@ export class VGridCellRow {
           });
           this.rawValue = this.getValue();
         }
-      } else{
+      } else {
       }
     }.bind(this);
-
 
 
     this.cellContent.onchange = function (e) {
       //console.log("changed")
     }.bind(this);
 
+
     this.cellContent.onClick = function (e) {
       //todo
     }.bind(this);
 
+    
     //so materilize dont mess up
     this.cellContent.style.opacity = "initial";
     this.cellContent.style.border = "initial";
@@ -171,9 +167,8 @@ export class VGridCellRow {
     //set class/style
     this.cellContent.classList.add(this.vGrid.vGridConfig.css.cellContent);
     this.cellContent.setAttribute(this.vGrid.vGridConfig.atts.dataAttribute, this.attribute());
-    this.cellContent.setAttribute("style", this.vGrid.vGridConfig.colStyleArray[this.colNo]);
+    this.cellContent.setAttribute("style", this.vGrid.vGridConfig.colStyleArray[this.columnNo]);
     this.cellContent.setAttribute("readonly", "true");
-
 
 
     if (this.colType() === "checkbox") {
@@ -194,9 +189,8 @@ export class VGridCellRow {
 
 
   /**************************************************
-   set value and hide cell if not defined value
+   set/get value and hide cell if not defined value
    */
-
   setValue(value, setRawValue) {
     this.removeCssCell();
     switch (this.colType()) {
@@ -212,21 +206,18 @@ export class VGridCellRow {
         break;
       default:
         this.hideIfUndefined(value);
-        if(setRawValue){
+        if (setRawValue) {
           this.cellContent.value = this.rawValue;
           this.displayRawValue = true;
-        }else{
+        } else {
           this.cellContent.value = this.valueFormater ? this.valueFormater.toView(value) : value;
           this.displayRawValue = false;
         }
-
-
-
     }
   }
-  
-  getValue() {
 
+
+  getValue() {
     switch (this.colType()) {
       case "image":
         return this.cellContent.src;
@@ -238,6 +229,7 @@ export class VGridCellRow {
         return this.valueFormater ? this.valueFormater.fromView(this.cellContent.value) : this.cellContent.value;
     }
   }
+
 
   hideIfUndefined(value) {
     if (value === undefined) {
@@ -268,27 +260,25 @@ export class VGridCellRow {
     this.vGrid.vGridCellHelper.editMode = value;
   }
 
-  editRaw(){
-    return this.vGrid.vGridConfig.colEditRawArray[this.colNo];
+  editRaw() {
+    return this.vGrid.vGridConfig.colEditRawArray[this.columnNo];
   }
-
-
 
 
   attribute() {
-    return this.vGrid.vGridConfig.attributeArray[this.colNo];
+    return this.vGrid.vGridConfig.attributeArray[this.columnNo];
   }
 
   get valueFormater() {
-    return this.vGrid.vGridConfig.colFormaterArray[this.colNo];
+    return this.vGrid.vGridConfig.colFormaterArray[this.columnNo];
   }
 
   readOnly() {
-    return this.vGrid.vGridConfig.readOnlyArray[this.colNo];
+    return this.vGrid.vGridConfig.readOnlyArray[this.columnNo];
   }
 
   colType() {
-    return this.vGrid.vGridConfig.colTypeArray[this.colNo];
+    return this.vGrid.vGridConfig.colTypeArray[this.columnNo];
   }
 
 
@@ -303,7 +293,7 @@ export class VGridCellRow {
 
   setLastFocusElement(element) {
     this.vGrid.vGridCellHelper.lastElement = element;
-    if(this.editMode()){
+    if (this.editMode()) {
       this.lastEdit = true;
     } else {
       this.lastEdit = false;
@@ -412,10 +402,10 @@ export class VGridCellRow {
 
   setStandardClassesAndStyles() {
     var css = this.vGrid.vGridConfig.css;
-    var cellStyle = `width:${this.vGrid.vGridConfig.columnWidthArray[this.colNo]}px`;
+    var cellStyle = `width:${this.vGrid.vGridConfig.columnWidthArray[this.columnNo]}px`;
     this.element.classList.add(css.rowCell);
-    this.element.classList.add(css.rowColumn + this.colNo);
-    this.element.classList.add(css.gridColumn + this.colNo);
+    this.element.classList.add(css.rowColumn + this.columnNo);
+    this.element.classList.add(css.gridColumn + this.columnNo);
     this.element.setAttribute("style", cellStyle);
   }
 

@@ -75,6 +75,7 @@ export class VGridConfig {
     this.colTypeArray = [];
     this.colFormaterArray =[];
     this.colEditRawArray = [];
+    this.filterOnKeyArray = [];
 
 
     this.rowHeight = 50;
@@ -88,7 +89,6 @@ export class VGridConfig {
     this.renderOnScrollbarScroll = true;
     this.addFilter = false;
     this.filterOnAtTop = false;
-    this.filterOnKey = false;
     this.sortOnHeaderClick = false;
     this.largeBuffer = false;
     this.activeSorting = false;

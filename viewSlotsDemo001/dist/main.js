@@ -10,7 +10,7 @@ System.register(['bootstrap', 'moment'], function (_export, _context) {
       window.moment = moment;
 
       function configure(aurelia) {
-        aurelia.use.standardConfiguration().developmentLogging().plugin("vGrid/plugin");
+        aurelia.use.standardConfiguration().developmentLogging().globalResources("datepicker").plugin("vGrid/plugin");
 
         aurelia.start().then(function (a) {
           return a.setRoot();
@@ -21,4 +21,4 @@ System.register(['bootstrap', 'moment'], function (_export, _context) {
     }
   };
 });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1haW4uanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQ087OztBQUNQLGFBQU8sTUFBUCxHQUFnQixNQUFoQjs7QUFHTyxlQUFTLFNBQVQsQ0FBbUIsT0FBbkIsRUFBNEI7QUFDakMsZ0JBQVEsR0FBUixDQUNHLHFCQURILEdBRUcsa0JBRkgsR0FHRyxNQUhILENBR1UsY0FIVixFQURpQzs7QUFPakMsZ0JBQVEsS0FBUixHQUFnQixJQUFoQixDQUFxQjtpQkFBSyxFQUFFLE9BQUY7U0FBTCxDQUFyQixDQVBpQztPQUE1QiIsImZpbGUiOiJtYWluLmpzIiwic291cmNlUm9vdCI6Ii9zcmMifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1haW4uanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQ087OztBQUNQLGFBQU8sTUFBUCxHQUFnQixNQUFoQjs7QUFHTyxlQUFTLFNBQVQsQ0FBbUIsT0FBbkIsRUFBNEI7QUFDakMsZ0JBQVEsR0FBUixDQUNHLHFCQURILEdBRUcsa0JBRkgsR0FHRyxlQUhILENBR21CLFlBSG5CLEVBSUcsTUFKSCxDQUlVLGNBSlYsRUFEaUM7O0FBUWpDLGdCQUFRLEtBQVIsR0FBZ0IsSUFBaEIsQ0FBcUI7aUJBQUssRUFBRSxPQUFGO1NBQUwsQ0FBckIsQ0FSaUM7T0FBNUIiLCJmaWxlIjoibWFpbi5qcyIsInNvdXJjZVJvb3QiOiIvc3JjIn0=

@@ -7,6 +7,7 @@ export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
+    .globalResources("datepicker")
     .plugin("vGrid/plugin");
 
 

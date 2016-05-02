@@ -21,7 +21,7 @@ System.register(['moment'], function (_export, _context) {
 
         DateFormatValueConverter.prototype.toView = function toView(value) {
           if (value) {
-            return moment(value).format('DD.MM.YYYY');
+            return moment(value).format('YYYY-MM-DD');
           } else {
             return value;
           }
@@ -29,7 +29,7 @@ System.register(['moment'], function (_export, _context) {
 
         DateFormatValueConverter.prototype.fromView = function fromView(value) {
           if (value) {
-            return new Date(moment(value, 'DD.MM.YYYY')._d);
+            return new Date(moment(value, 'YYYY-MM-DD')._d);
           } else {
             return value;
           }

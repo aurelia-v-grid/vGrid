@@ -1,17 +1,17 @@
 import {dummyDataGenerator} from 'data/dummyDataGenerator'
-import pikaday from 'pikaday';
+
 
 export class sample01 {
   static inject = [Element, dummyDataGenerator];
 
-
+  dateValue
   myCollection = [];
   myCurrentEntity = {};
   myGrid = {
 
   };
 
-  onRowDraw (data, collectionData) {
+  onRowDraw (data, collectionData, datePicker) {
     if (data) {
         debugger;
     }
