@@ -8,7 +8,9 @@ export class sample01 {
   myCollection = [];
   myCurrentEntity = {};
   myCurrentEntity2 = {};
-
+  myGrid = {
+    
+  }
 
   onRowDraw (data, collectionData, datePicker) {
     if (data) {
