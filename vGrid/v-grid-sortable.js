@@ -109,9 +109,6 @@ export class VGridSortable {
     this.vGrid.vGridConfig.colEditRawArray.splice(oldIndex, 1);
     this.vGrid.vGridConfig.colEditRawArray.splice(newIndex, 0, x);
 
-    x = this.vGrid.vGridConfig.colDatePickerArray[oldIndex];
-    this.vGrid.vGridConfig.colDatePickerArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colDatePickerArray.splice(newIndex, 0, x);
 
 
     var that = this;

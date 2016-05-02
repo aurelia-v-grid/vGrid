@@ -24,7 +24,7 @@ export class VGridCellRow {
     this.element = element;
     this.vGrid = vGrid;
     this.hidden = false;
-    this.editLock = false
+    this.displayRawValue = false;
   }
 
 
@@ -34,8 +34,6 @@ export class VGridCellRow {
       this.rawValue = this.bindingContext[this.attribute()];
       this.setValue("");
       this.setValue(this.rawValue);
-      //console.log("setvalue bind"+this.rawValue)
-
       if (this.vGrid.vGridCurrentRow === parseInt(this.element.parentNode.getAttribute("row"))) {
         if (parseInt(this.colNo) === this.vGrid.vGridCellHelper.index) {
           if (!this.containsFocusClass(this.element)) {
@@ -76,10 +74,8 @@ export class VGridCellRow {
             return false;
           } else {
             if (!this.editMode()) {
-              //console.log("checkbox normal")
               return false;
             } else {
-              //console.log("checkbox edit")
               return true;
             }
           }
@@ -96,10 +92,11 @@ export class VGridCellRow {
             }
             this.cellContent.onblur();
             this.setEditMode(false);
-            this.setCss();
-            //console.log("enter")
+            this.removeWriteClass(this.element);
+            this.addFocusClass(this.element);
             return false;
           }
+
           if (this.readOnly() === true && e.keyCode !== 9) {
             return false;
           } else {
@@ -111,8 +108,6 @@ export class VGridCellRow {
           }
 
         }.bind(this);
-
-
     }
 
 
@@ -126,12 +121,11 @@ export class VGridCellRow {
     this.cellContent.addEventListener("cellFocus", function (e) {
 
       if (this.editMode()) {
-        //console.log("focus edit")
         if(this.editRaw()){
-          this.setValue(null, true);
+          if(!this.displayRawValue){
+            this.setValue(null, true);
+          }
         }
-      } else {
-        //console.log("focus normal")
       }
       this.setCss();
       this.cellContent.focus();
@@ -153,17 +147,16 @@ export class VGridCellRow {
             attribute: this.attribute(),
             value: this.getValue()
           });
+          this.rawValue = this.getValue();
         }
-        //console.log("bluredit")
-        } else{
-        //console.log("blurnormal")
+      } else{
       }
-
     }.bind(this);
 
 
+
     this.cellContent.onchange = function (e) {
-      //todo
+      //console.log("changed")
     }.bind(this);
 
     this.cellContent.onClick = function (e) {
@@ -179,6 +172,8 @@ export class VGridCellRow {
     this.cellContent.classList.add(this.vGrid.vGridConfig.css.cellContent);
     this.cellContent.setAttribute(this.vGrid.vGridConfig.atts.dataAttribute, this.attribute());
     this.cellContent.setAttribute("style", this.vGrid.vGridConfig.colStyleArray[this.colNo]);
+    this.cellContent.setAttribute("readonly", "true");
+
 
 
     if (this.colType() === "checkbox") {
@@ -194,9 +189,6 @@ export class VGridCellRow {
     }
     this.element.appendChild(this.cellContent);
 
-    if(this.datePicker()){
-      this.datePicker()(this.cellContent, this);
-    }
 
   }
 
@@ -217,16 +209,15 @@ export class VGridCellRow {
       case "checkbox":
         this.hideIfUndefined(value);
         this.cellContent.checked = value === "true" || value === true ? true : false;
-        //console.log("setValue checkbox")
         break;
       default:
         this.hideIfUndefined(value);
         if(setRawValue){
           this.cellContent.value = this.rawValue;
-          //console.log("setValue raw")
+          this.displayRawValue = true;
         }else{
           this.cellContent.value = this.valueFormater ? this.valueFormater.toView(value) : value;
-          //console.log("setValue normal")
+          this.displayRawValue = false;
         }
 
 
@@ -282,9 +273,6 @@ export class VGridCellRow {
   }
 
 
-  datePicker(){
-    return this.vGrid.vGridConfig.colDatePickerArray[this.colNo];
-  }
 
 
   attribute() {
@@ -315,6 +303,12 @@ export class VGridCellRow {
 
   setLastFocusElement(element) {
     this.vGrid.vGridCellHelper.lastElement = element;
+    if(this.editMode()){
+      this.lastEdit = true;
+    } else {
+      this.lastEdit = false;
+    }
+
   }
 
 
@@ -335,6 +329,7 @@ export class VGridCellRow {
 
   addFocusClass(element) {
     if (element) {
+      this.cellContent.setAttribute("readonly", "true");
       element.classList.add(this.vGrid.vGridConfig.css.editCellFocus)
     } else {
       return false;
@@ -344,7 +339,7 @@ export class VGridCellRow {
 
   removeFocusClass(element) {
     if (element) {
-      return element.classList.remove(this.vGrid.vGridConfig.css.editCellFocus)
+      element.classList.remove(this.vGrid.vGridConfig.css.editCellFocus)
     } else {
       return false;
     }
@@ -362,6 +357,7 @@ export class VGridCellRow {
 
   addWriteClass(element) {
     if (element) {
+      this.cellContent.removeAttribute("readonly");
       element.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
     } else {
       return false;
@@ -371,7 +367,9 @@ export class VGridCellRow {
 
   removeWriteClass(element) {
     if (element) {
-      return element.classList.remove(this.vGrid.vGridConfig.css.editCellWrite)
+
+
+      element.classList.remove(this.vGrid.vGridConfig.css.editCellWrite)
     } else {
       return false;
     }
@@ -399,7 +397,6 @@ export class VGridCellRow {
 
   setCss() {
     if (!this.containsFocusClass(this.element)) {
-      //console.log("setting normal focus & cur element")
       this.addFocusClass(this.element);
       this.removeCssOldCell();
       this.setLastFocusElement(this.element)
@@ -407,17 +404,8 @@ export class VGridCellRow {
 
     if (this.editMode() && !this.readOnly()) {
       if (!this.containsWriteClass(this.element)) {
+        this.removeFocusClass(this.element);
         this.addWriteClass(this.element);
-      }
-    } else {
-      //console.log("not edit mode but have been and clicked enter")
-      if(this.containsWriteClass(this.element)){
-        this.removeCssOldCell();
-        this.addFocusClass(this.element);
-      }
-      if (!this.containsFocusClass(this.element)) {
-        //console.log("I should not haveto do this... only run when edit raw is run")
-        this.addFocusClass(this.element);
       }
     }
   }
