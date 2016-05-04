@@ -5,12 +5,13 @@ export class sample01 {
   static inject = [Element, dummyDataGenerator];
 
 
+
   myCollection = [];
   myCurrentEntity = {};
   myCurrentEntity2 = {};
   myGrid = {
-    
-  }
+  
+  };
 
   onRowDraw (data, collectionData, datePicker) {
     if (data) {

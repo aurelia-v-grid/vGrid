@@ -17,7 +17,7 @@ export class VGridObservables {
 
 
   /***************************************************************************************
-   * obsertver vGridCollection, when entire vGridCollection gets replaced
+   * observer vGridCollection, when entire vGridCollection gets replaced
    ***************************************************************************************/
   enableObservablesCollection() {
 
@@ -32,14 +32,13 @@ export class VGridObservables {
       this.vGrid.resetKeys();
 
 
-      //reset fileter/and collection/selection. (should I have option to check is they want to set something?)
+      //reset filter/and collection/selection. (should I have option to check is they want to set something?)
       this.vGrid.vGridSort.reset();
       this.vGrid.vGridGenerator.clearHeaderSortFilter();
       this.vGrid.vGridSelection.reset();
       this.vGrid.vGridGenerator.collectionChange();
 
       //reset
-
       for (var k in this.vGrid.vGridCurrentEntity) {
         if (this.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
           this.vGrid.vGridCurrentEntity[k] = undefined;
@@ -86,40 +85,33 @@ export class VGridObservables {
         //loop changes
         changes.forEach((result)=> {
 
-          //if anyone is added, then lets save that information
+          //if anyone is added, then lets add them
           if (result.addedCount > 0) {
-            added = true;
+            for(var i = 0; i < result.addedCount;i++){
+              colFiltered.push(col[result.index+i]);
+            }
           }
 
-          //get removed ones and save them for now
+          //if anyone is removed, then lets remove them from our filtered collection
           if (result.removed.length > 0) {
             //push into removed array
             result.removed.forEach((x) => {
-              toRemove.push(x[this.vGrid.vGridRowKey]);
+              if(x[this.vGrid.vGridRowKey] ===curKey){
+                curEntityValid = false;
+              }
+
+              var rowToRemove = -1;
+              colFiltered.forEach((row, index) => {
+                if(row[this.vGrid.vGridRowKey] === x[this.vGrid.vGridRowKey]){
+                  rowToRemove = index;
+                }
+              });
+              if(rowToRemove !== -1){
+                colFiltered.splice(rowToRemove, 1);
+              }
             });
           }
         });
-
-        if (added === true) {
-          col.forEach((x) => {
-            if (x[this.vGrid.vGridRowKey] === undefined) {
-              colFiltered.push(x)
-            }
-          });
-        }
-
-
-        let i = colFiltered.length - 1;
-        while (i !== -1) {
-          //is current entity removed?
-          if (toRemove.indexOf(curKey) !== -1) {
-            curEntityValid = false;
-          }
-          if (toRemove.indexOf(colFiltered[i][this.vGrid.vGridRowKey]) !== -1) {
-            var x = colFiltered.splice(i, 1);
-          }
-          i--;
-        }
 
 
         var newRowNo = -1;
@@ -133,10 +125,8 @@ export class VGridObservables {
           }
           this.vGrid.vGridCurrentEntityRef = null;
           this.vGrid.vGridCurrentRow = -1;
-
         } else {
-
-          if (curKey) {
+          if (curKey !== -1) {
             this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
               if (curKey === x[this.vGrid.vGridRowKey]) {
                 newRowNo = index;

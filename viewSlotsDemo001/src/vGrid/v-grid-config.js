@@ -240,6 +240,7 @@ export class VGridConfig {
 
 
       //set new row
+      //this.vGridCurrentRow = this.vGrid.vGridGetRowKey(this.vGridCurrentEntity[this.vGridRowKey])
       this.vGridCollectionFiltered.forEach((x, index) => {
         if (this.vGridCurrentEntity[this.vGridRowKey] === x[this.vGridRowKey]) {
           this.vGridCurrentRow = index;

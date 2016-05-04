@@ -1215,16 +1215,6 @@ export class VGridGenerator {
   };
 
 
-  //returns the rows in main collection that is in the grid/filtered
-  getGridRows() {
-    var array = [];
-    this.vGrid.vGridCollectionFiltered.forEach((x)=> {
-      array.push(x[this.vGrid.vGridRowKey]);
-    });
-    return array;
-
-  };
-
   //access to gridSelection
   selection = this.vGridSelection;
 
@@ -1237,7 +1227,7 @@ export class VGridGenerator {
       skipArray = [];
     }
     var content = '';
-    var rows = this.getGridRows();
+    var rows = this.vGrid.vGridCollectionFiltered;
     var attributes = this.vGridConfig.attributeArray;
 
     //sets data to our content
@@ -1253,7 +1243,7 @@ export class VGridGenerator {
       let tempArr = [];
       attributes.forEach((att)=> {
         if (skipArray.indexOf(att) === -1) {
-          tempArr.push(this.vGrid.vGridCollection[row][att]);
+          tempArr.push(row[att]);
         }
       });
       setData(tempArr);
