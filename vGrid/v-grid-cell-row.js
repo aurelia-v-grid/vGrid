@@ -39,6 +39,7 @@ export class VGridCellRow {
           if (!this.containsFocusClass(this.element)) {
             this.setLastFocusElement(null);
             this.setCss();
+            this.cellContent.focus();
           }
         }
       }

@@ -61,20 +61,35 @@ export class VGrid {
     this.vGridObservables = new VGridObservables(this, observerLocator);
     this.vGridGenerator = new VGridGenerator(this);
 
-
+    this.key = 0;
   }
 
 
   /***************************************************************************************
    * resets internal key on vGridCollection/internal vGridCollectionFiltered
    ***************************************************************************************/
+
   resetKeys() {
-    let key = 0; //reset it
+   // let key = 0; //reset it
     this.vGridCollection.forEach((row) => {
-      row[this.vGridRowKey] = key;
-      key++;
+      if(!row[this.vGridRowKey] && row !== undefined && row !== null){
+        row[this.vGridRowKey]= this.key;
+        this.key++;
+      }
     });
   }
+
+  vGridGetRowKey(key){
+    var rowFound = null;
+    this.vGridCollection.forEach((row, index) => {
+      if(!row[this.vGridRowKey] === key){
+        rowFound = index;
+      }
+    });
+    return rowFound
+  }
+
+  
 
 
   /***************************************************************************************
