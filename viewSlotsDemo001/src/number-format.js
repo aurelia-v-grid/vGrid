@@ -7,9 +7,18 @@ import numeral from 'numeral';
 
 export class NumberFormatValueConverter {
   toView(value) {
-    return numeral(value).format('($0,0.00)');
+    if (value) {
+      return numeral(value).format('($0,0.00)');
+    } else {
+      return value;
+    }
   }
+
   fromView(value) {
-    return numeral().unformat(value);
+    if (value) {
+      return numeral().unformat(value);
+    } else {
+      return value;
+    }
   }
 }

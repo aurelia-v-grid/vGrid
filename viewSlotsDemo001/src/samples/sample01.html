@@ -20,7 +20,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">early version- using viewslots 2016.05.02 v14 </h4>
+        <h4 style="margin-left:25px">early version- using viewslots 2016.05.04 v15 </h4>
 
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -143,6 +143,18 @@
         <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-default btn-xs" click.trigger="report()">download csv report from filtered</button>
+          </div>
+
+        </div>
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="saveStateBtn()">save state</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="loadStateBtn()">load state</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="switchNameBtn()">switch name and color</button>
           </div>
 
         </div>

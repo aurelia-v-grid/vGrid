@@ -6,7 +6,7 @@ import moment from 'moment';
 export class DateFormatValueConverter {
   toView(value) {
     if(value){
-      return moment(value).format('YYYY-MM-DD');
+      return moment(value).format('MM.DD.YYYY');
     } else {
       return value;
     }
@@ -14,7 +14,7 @@ export class DateFormatValueConverter {
   }
   fromView(value) {
     if(value){
-      return new Date(moment(value,'YYYY-MM-DD')._d);
+      return new Date(moment(value,'MM.DD.YYYY')._d);
     } else {
       return value;
     }

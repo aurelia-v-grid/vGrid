@@ -1,6 +1,6 @@
 /*****************************************************************************************************************
- *    VGridCellRow
- *    Custom element controlling the cell logic
+ *    VGridCellRowHeader
+ *    Custom element controlling the cell logic of header
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
@@ -13,7 +13,7 @@ import {VGrid} from './v-grid'
 @customElement('v-grid-cell-header')
 @processContent(false)
 @inject(Element, VGrid)
-export class VGridCellRow {
+export class VGridCellRowHeader {
   @bindable columnNo;
 
   constructor(element, vGrid) {
@@ -54,6 +54,11 @@ export class VGridCellRow {
   getValue(value){
     //just for testing not in use
     return this.valueFormater ? this.valueFormater().fromView(value) : value;
+  }
+
+  setValue(value){
+    //just for testing not in use
+    return this.valueFormater ? this.valueFormater().toView(value) : value;
   }
 
   valueFormater() {
@@ -241,7 +246,7 @@ export class VGridCellRow {
   //called when chang event fires in filter input
   onChangeEventOnFilter(e) {
 
-    if (e.keyCode !== 9) {
+    if (e.keyCode !== 9 && e.keyCode !== 39 && e.keyCode !== 37) {
 
       //get inputs
       var queryHtmlInput = this.vGrid.element.querySelectorAll("." + this.vGridConfig.css.filterHandle);
@@ -249,14 +254,10 @@ export class VGridCellRow {
       //loop all the headers
       var queryParams = [];
       for (var i = 0; i < queryHtmlInput.length; i++) {
-
         var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
+        var valueFormater = this.vGridConfig.colFormaterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
         var operator = this.vGridConfig.filterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
-        if(dataSourceAttribute === this.attribute()){
-          var value  =  queryHtmlInput[i].value;
-        } else {
-          var value  = queryHtmlInput[i].value;
-        }
+        var value  =  valueFormater ? valueFormater.fromView(queryHtmlInput[i].value):queryHtmlInput[i].value;
 
         //do value exist and is not blank?
         if (value !== "" && value !== undefined) {
@@ -269,13 +270,13 @@ export class VGridCellRow {
           });
 
           //This is something I need for later if I add sortable columns.. and callback on each column on build
-          this.vGrid.vGridGenerator.queryStringCheck[this.attribute()] = value;
+          this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = valueFormater ? valueFormater.toView(queryHtmlInput[i].value):queryHtmlInput[i].value;
 
         } else {
 
           if (value === "") {
             var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
-            this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = value;
+            this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = valueFormater ? valueFormater.toView(queryHtmlInput[i].value):queryHtmlInput[i].value;
           }
 
         }

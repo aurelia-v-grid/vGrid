@@ -65,7 +65,7 @@ export class VGridConfig {
     this.vGrid = vGrid;
 
 
-    this.columns = [];
+    //this.columns = [];
     this.attributeArray = [];
     this.columnWidthArray = [];
     this.headerArray = [];

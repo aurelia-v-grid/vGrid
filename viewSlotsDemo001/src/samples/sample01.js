@@ -240,7 +240,37 @@ export class sample01 {
     }
   }
 
+  oldState= null;
 
+  saveStateBtn(){
+    this.oldState = this.myGrid.ctx.getColumns(this.oldState);
+  }
+
+  loadStateBtn(){
+    if(this.oldState){
+      this.myGrid.ctx.setColumns(this.oldState);
+      this.myGrid.ctx.rebuildColumns();
+    }
+
+  }
+
+  switchNameBtn(){
+    let oldState = this.myGrid.ctx.getColumns(this.oldState);
+    let oldIndex= oldState.attributeArray.indexOf("name");
+    let newIndex= oldState.attributeArray.indexOf("color");
+
+
+    oldState.attributeArray[oldIndex] = "color";
+    oldState.attributeArray[newIndex] = "name";
+
+    oldState.headerArray[oldIndex] = "Color";
+    oldState.headerArray[newIndex] = "Name";
+
+
+    this.myGrid.ctx.setColumns(oldState);
+    this.myGrid.ctx.rebuildColumns();
+
+  }
 
 
   selectionBtn(x){

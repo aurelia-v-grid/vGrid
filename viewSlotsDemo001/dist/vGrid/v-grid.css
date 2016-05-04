@@ -205,6 +205,10 @@
 
 }
 
+.vGrid.queryField{
+
+}
+
 .vGrid-editCell-focus {
   border: 1px dotted rgb(63, 58, 63) !important;
 
@@ -377,40 +381,102 @@
   content: "\e155";
 }
 
-.vGrid-menu {
-  width: 100px;
-  background: #000;
-  color: #fff;
+/*.vGrid-menu {*/
+  /*width: 160px;*/
+  /*background: #000;*/
+  /*color: #fff;*/
+  /*position: absolute;*/
+  /*z-index: 999999;*/
+  /*display: none;*/
+  /*box-shadow: 0 0 10px #713C3C;*/
+/*}*/
+
+/*.vGrid-menu ul {*/
+  /*list-style: none;*/
+  /*padding: 0;*/
+  /*margin: 0;*/
+/*}*/
+
+/*.vGrid-menu ul a {*/
+  /*text-decoration: none;*/
+/*}*/
+
+/*.vGrid-menu ul li {*/
+  /*width: 100%;*/
+  /*padding: 1px;*/
+  /*background-color: whitesmoke;*/
+  /*color: black;*/
+/*}*/
+
+/*.vGrid-menu ul li:hover {*/
+  /*background-color: lightgrey;*/
+  /*color: black;*/
+/*}*/
+
+
+
+/*.vGrid input:not([type])[readonly] {*/
+  /*color: black !important;*/
+/*}*/
+
+
+
+
+/* context menu */
+
+.v-grid-context-menu {
+  display: block;
   position: absolute;
-  z-index: 999999;
-  display: none;
-  box-shadow: 0 0 10px #713C3C;
+  z-index: 10;
+  width: 150px;
+  font-size:11px;
+  background-color: #fff;
+  border: solid 1px #dfdfdf;
+  box-shadow: 1px 1px 2px #cfcfcf;
+}
+.v-grid-context-menu a {
+  color:black;
 }
 
-.vGrid-menu ul {
+
+.v-grid-context-menu ul {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
-.vGrid-menu ul a {
+
+.v-grid-context-menu__split {
+  display: block;
+  padding: 4px 12px;
+  text-decoration: none;
+  background-color: lightgrey;
+}
+
+
+.v-grid-context-menu__item {
+  display: block;
+  margin-bottom: 0;
+}
+
+
+.v-grid-context-menu__link {
+  display: block;
+  padding: 4px 12px;
   text-decoration: none;
 }
 
-.vGrid-menu ul li {
-  width: 100%;
-  padding: 1px;
-  background-color: whitesmoke;
-  color: black;
+.v-grid-context-menu__link:hover {
+  color: #fff;
+  background-color: darkgrey;
+  text-decoration: none;
 }
 
-.vGrid-menu ul li:hover {
-  background-color: lightgrey;
-  color: black;
+.v-grid-context-menu__item:last-child {
+  margin-bottom: 0;
 }
 
-
-
-.vGrid input:not([type])[readonly] {
-  color: black !important;
+.v-grid-context-menu__item:first-child {
+  margin-top: 4px;
 }
+
