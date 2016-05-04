@@ -118,7 +118,7 @@ export class VGridCellHelper {
 
     this.vGrid.element.onkeydown = function (e) {
 
-      
+      var queryField = e.target.classList.contains(this.vGrid.vGridConfig.css.filterHandle)
 
 
       //page up
@@ -211,7 +211,7 @@ export class VGridCellHelper {
 
 
       //arrow right
-      if (e.keyCode === 39 && !this.editMode) {
+      if (e.keyCode === 39 && !this.editMode  && !queryField) {
         e.preventDefault();
         this.keyDownDelay(() => {
           if (this.curElement) {
@@ -225,7 +225,7 @@ export class VGridCellHelper {
 
 
       //arrow left
-      if (e.keyCode === 37 && !this.editMode) {
+      if (e.keyCode === 37 && !this.editMode  && !queryField) {
         e.preventDefault();
         this.keyDownDelay(() => {
           if (this.curElement) {

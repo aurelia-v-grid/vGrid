@@ -7,8 +7,6 @@
 export class VGridFilter {
 
 
-
-
   constructor() {
 
   }
@@ -41,6 +39,9 @@ export class VGridFilter {
     "*=": "begins with",
     "=*": "ends with"
   };
+
+  
+
 
   /***************************************************************************************
    * run the name of filter
@@ -202,12 +203,11 @@ export class VGridFilter {
               result = false;
             }
         }
-        if(type === "string"){
+        if (type === "string") {
           if (x.value.charAt(0) === "*" && x.value.length === 1) {
             result = true
           }
         }
-
 
 
       });//end foreach obj

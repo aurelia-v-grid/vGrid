@@ -151,8 +151,8 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getHeaderTemplate() {
     var rowTemplate = "";
-    for (var i = 0; i < this.vGridConfig.columns.length; i++) {
-      rowTemplate = rowTemplate + `<v-grid-cell-header column-no="${i}"></v-grid-cell-header>`;
+    for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
+      rowTemplate = rowTemplate + `<v-grid-cell-header v-grid-context-menu-header column-no="${i}"></v-grid-cell-header>`;
     }
     return rowTemplate;
   };
@@ -166,7 +166,7 @@ export class VGridGenerator {
     if (this.htmlCache.rowTemplate !== null) {
       rowTemplate = this.htmlCache.rowTemplate;
     } else {
-      for (var i = 0; i < this.vGridConfig.columns.length; i++) {
+      for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
         rowTemplate = rowTemplate + `<v-grid-cell-row column-no=${i}></v-grid-cell-row>`;
       }
     }
@@ -188,7 +188,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getTotalColumnWidth() {
     var total = 0;
-    for (var i = 0; i < this.vGridConfig.columns.length; i++) {
+    for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
       total = total + parseInt(this.vGridConfig.columnWidthArray[i], 10);
     }
     return total;
@@ -527,7 +527,7 @@ export class VGridGenerator {
     var bottomHitCount;
     for (var i = 0; i < this.getRowCacheLength(); i++) {
 
-
+      
       /*------------------------------------------------*/
       //move row
       var setNewTopOnRow = (cacheRowNumber) => {
@@ -586,8 +586,7 @@ export class VGridGenerator {
     //chrome fix
     if(fixme){
       this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.rowHeight;
-      this.htmlCache.scrollBody.style.height = this.scrollBodyHeight - 1 + "px";
-      this.htmlCache.scrollBody.style.height = this.scrollBodyHeight + 1 + "px";
+      this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop - this.vGridConfig.rowHeight;
     }
 
 
@@ -1129,31 +1128,39 @@ export class VGridGenerator {
 
 
 //todo fix later, get the basics first with date handling
-  // //tested todo: this need to be changed now
-  // setColumns(paramObj) {
-  //   //todo: this needs a big update
-  //   this.vGridConfig.headerArray = paramObj.headerArray;
-  //   this.vGridConfig.attributeArray = paramObj.attributeArray;
-  //   this.vGridConfig.columnWidthArray = paramObj.columnWidthArray;
-  //   this.vGridConfig.filterArray = paramObj.filterArray;
-  //   this.vGridConfig.readOnlyArray = paramObj.readOnlyArray;
-  //   this.vGridConfig.colStyleArray = paramObj.colStyleArray;
-  //   this.vGridConfig.colTypeArray = paramObj.colTypeArray;
-  // };
-  //
-  //
-  // getColumns() {
-  //   //todo: this needs a big update
-  //   return {
-  //     "headerArray": this.vGridConfig.headerArray,
-  //     "attributeArray": this.vGridConfig.attributeArray,
-  //     "columnWidthArray": this.vGridConfig.columnWidthArray,
-  //     "filterArray": this.vGridConfig.filterArray,
-  //     "readOnlyArray": this.vGridConfig.readOnlyArray,
-  //     "colStyleArray": this.vGridConfig.colStyleArray,
-  //     "colTypeArray": this.vGridConfig.colTypeArray
-  //   }
-  // };
+  //tested todo: this need to be changed now
+  setColumns(paramObj) {
+    //todo: this needs a big update
+    this.vGridConfig.attributeArray = paramObj.attributeArray;
+    this.vGridConfig.columnWidthArray = paramObj.columnWidthArray;
+    this.vGridConfig.headerArray = paramObj.headerArray;
+    this.vGridConfig.filterArray = paramObj.filterArray;
+    this.vGridConfig.readOnlyArray = paramObj.readOnlyArray;
+    this.vGridConfig.colStyleArray = paramObj.colStyleArray;
+    this.vGridConfig.colTypeArray = paramObj.colTypeArray;
+    this.vGridConfig.colFormaterArray = paramObj.colFormaterArray;
+    this.vGridConfig.colEditRawArray = paramObj.colEditRawArray;
+    this.vGridConfig.filterOnKeyArray = paramObj.filterOnKeyArray;
+  };
+
+
+  
+
+  getColumns() {
+    //todo: this needs a big update
+    return {
+      "attributeArray": this.vGridConfig.attributeArray.slice(),
+      "columnWidthArray": this.vGridConfig.columnWidthArray.slice(),
+      "headerArray": this.vGridConfig.headerArray.slice(),
+      "filterArray": this.vGridConfig.filterArray.slice(),
+      "readOnlyArray": this.vGridConfig.readOnlyArray.slice(),
+      "colStyleArray": this.vGridConfig.colStyleArray.slice(),
+      "colTypeArray": this.vGridConfig.colTypeArray.slice(),
+      "colFormaterArray": this.vGridConfig.colFormaterArray.slice(),
+      "colEditRawArray": this.vGridConfig.colEditRawArray.slice(),
+      "filterOnKeyArray": this.vGridConfig.filterOnKeyArray.slice()
+    }
+  };
 
 
   getSelectedRows() {

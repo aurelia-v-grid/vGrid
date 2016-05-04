@@ -46,7 +46,7 @@ export class VGridCol {
     this.vGrid.vGridConfig.filterOnKeyArray.push(this.vColFilterOnKey === "true" ? true : false);
     this.vGrid.vGridConfig.colEditRawArray.push(this.vColEditRaw === "true" ? true : false);
     this.vGrid.vGridConfig.colFormaterArray.push(this.valueConverters(this.vColFormater));
-    this.vGrid.vGridConfig.columns.push(this);
+   // this.vGrid.vGridConfig.columns.push(this);
   }
 
 }
