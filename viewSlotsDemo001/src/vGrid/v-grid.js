@@ -69,7 +69,7 @@ export class VGrid {
    * resets internal key on vGridCollection/internal vGridCollectionFiltered
    ***************************************************************************************/
 
-  resetKeys() {
+  checkKeys() {
    // let key = 0; //reset it
     this.vGridCollection.forEach((row) => {
       if(!row[this.vGridRowKey] && row !== undefined && row !== null){
@@ -77,6 +77,14 @@ export class VGrid {
         this.key++;
       }
     });
+  }
+
+  checkKey(row) {
+      if(!row[this.vGridRowKey] && row !== undefined && row !== null){
+        row[this.vGridRowKey]= this.key;
+        this.key++;
+      }
+
   }
 
   vGridGetRowKey(key){
@@ -127,7 +135,7 @@ export class VGrid {
       //clone collection and add key index, so we know it.
       this.vGridCollectionFiltered = this.vGridCollection.slice(0);
       //resets the keys
-      this.resetKeys();
+      this.checkKeys();
     }
   }
 

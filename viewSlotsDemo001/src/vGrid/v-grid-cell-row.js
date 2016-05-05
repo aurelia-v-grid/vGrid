@@ -42,10 +42,6 @@ export class VGridCellRow {
             //this.cellContent.focus();//this will only steal focus, disable for now
           }
         }
-      } else {
-        if (this.containsFocusClass(this.element)) {
-          console.log("no")
-        }
       }
     }
   }
