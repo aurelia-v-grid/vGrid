@@ -41,8 +41,8 @@ export class VGrid {
     //current selected row in grid, not always the same as collection when used filter/sorting
     this.vGridCurrentRow = -1;
 
-    //key name, need to set a random here so you can have multible grid linked to same collection
-    this.vGridRowKey = "__vGrid" + Math.floor((Math.random() * 1000) + 1);
+    //key name, used for knowing what record in filtered collection belongs to main collection
+    this.vGridRowKey = "__vGridKey";
 
     //cloned collection used internaly for everything, I never sort the original collection
     this.vGridCollectionFiltered = [];

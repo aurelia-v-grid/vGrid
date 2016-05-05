@@ -20,7 +20,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">early version- using viewslots 2016.05.04 v16 </h4>
+        <h4 style="margin-left:25px">early version- using viewslots 2016.05.05 v17 </h4>
 
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -38,7 +38,7 @@
           v-current-entity.bind=myCurrentEntity
           v-collection.bind=myCollection
           v-grid-context.bind=myGrid>
-          <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=" v-col-read-only="true"></v-grid-col>
+          <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=" v-col-css="color:${blue}" v-col-read-only="true"></v-grid-col>
           <v-grid-col v-col-width="100" v-col-attribute="name" v-col-filter-on-key="true" v-col-header="name" v-col-default-filter="*"></v-grid-col>
           <v-grid-col v-col-width="180" v-col-attribute="images" v-col-header="image" v-col-type="image" v-col-css="border-radius: 50%;width:50%;margin-left:25%;" v-col-default-filter="=*"></v-grid-col>
           <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox" v-col-default-filter="=" ></v-grid-col>
@@ -204,6 +204,12 @@
             <label class="col-sm-2 control-label">color</label>
             <div class="col-sm-6">
               <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.color">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">_vGridKey</label>
+            <div class="col-sm-6">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.__vGridKey">
             </div>
           </div>
       </div>
