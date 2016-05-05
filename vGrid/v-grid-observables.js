@@ -29,7 +29,7 @@ export class VGridObservables {
       //clone array
       //key will be set in both collection and internal since with slice we get a refrence
       this.vGrid.vGridCollectionFiltered = this.vGrid.vGridCollection.slice(0);
-      this.vGrid.resetKeys();
+      this.vGrid.checkKeys();
 
 
       //reset filter/and collection/selection. (should I have option to check is they want to set something?)
@@ -62,7 +62,7 @@ export class VGridObservables {
   enableObservablesArray() {
 
     let arrayObserver = this.observerLocator.getArrayObserver(this.vGrid.vGridCollection);
-    arrayObserver.subscribe((changes) => {
+    arrayObserver.subscribe((arrayObserverChanges) => {
 
 
       var colFiltered = this.vGrid.vGridCollectionFiltered;
@@ -77,25 +77,26 @@ export class VGridObservables {
       var curEntityValid = true;
 
 
-      if (changes.length > 0) {
+      if (arrayObserverChanges.length > 0) {
 
         var added = false;
         var toRemove = [];
 
-        //loop changes
-        changes.forEach((result)=> {
+        //loop arrayObserverChanges
+        arrayObserverChanges.forEach((observerChange)=> {
 
           //if anyone is added, then lets add them
-          if (result.addedCount > 0) {
-            for(var i = 0; i < result.addedCount;i++){
-              colFiltered.push(col[result.index+i]);
+          if (observerChange.addedCount > 0) {
+            for(var i = 0; i < observerChange.addedCount;i++){
+              colFiltered.push(col[observerChange.index+i]);
+              this.vGrid.checkKey(col[observerChange.index+i]);
             }
           }
 
           //if anyone is removed, then lets remove them from our filtered collection
-          if (result.removed.length > 0) {
+          if (observerChange.removed.length > 0) {
             //push into removed array
-            result.removed.forEach((x) => {
+            observerChange.removed.forEach((x) => {
               if(x[this.vGrid.vGridRowKey] ===curKey){
                 curEntityValid = false;
               }
@@ -115,8 +116,11 @@ export class VGridObservables {
 
 
         var newRowNo = -1;
+
         //check current entity, remove if removed, or get key/row
         if (!curEntityValid) {
+
+          //no current entity, lets remove the result and null out ref/row
           for (var k in this.vGrid.vGridCurrentEntity) {
             if (this.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
               this.vGrid.vGridCurrentEntity[k] = undefined;
@@ -125,26 +129,20 @@ export class VGridObservables {
           }
           this.vGrid.vGridCurrentEntityRef = null;
           this.vGrid.vGridCurrentRow = -1;
+
         } else {
+
+          //if there is a current entity, then we need to find the row of the key
           if (curKey !== -1) {
             this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
               if (curKey === x[this.vGrid.vGridRowKey]) {
-                newRowNo = index;
+                this.vGrid.vGridCurrentRow = index;
               }
             });
           }
-        }
 
+        }//end if (!curEntityValid)
 
-        //reset the keys
-        this.vGrid.resetKeys();
-
-        //update key on current and filterRow
-        if (newRowNo > -1) {
-          this.vGrid.vGridCurrentEntityRef = this.vGrid.vGridCollectionFiltered[newRowNo];
-          this.vGrid.vGridCurrentEntity[this.vGrid.vGridRowKey] = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
-          this.vGrid.vGridCurrentRow = newRowNo;
-        }
 
         //update grid
         grid.collectionChange(false);

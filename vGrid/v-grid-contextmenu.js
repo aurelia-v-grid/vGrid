@@ -118,7 +118,7 @@ var ContextMenu = class {
   createMenu() {
     this.menu = document.createElement("nav");
     this.menu.classList.add("v-grid-context-menu");
-    this.menu.innerHTML = this.menuHtml();
+    this.menu.innerHTML = this.menuHtmlMain();
     document.body.appendChild(this.menu);
     this.menuItems = this.menu.querySelectorAll(".v-grid-context-menu__item");
   }
@@ -206,73 +206,129 @@ var ContextMenu = class {
     }
   }
 
+
+  createMenuHTML(menuArray){
+
+    var tempHtml = document.createElement("ul");
+
+    menuArray.forEach((row)=>{
+      let li = document.createElement("li");
+      li.classList.add("v-grid-context-menu__item");
+      let a = document.createElement("a");
+      if(row.isHeader){
+        a.classList.add("v-grid-context-menu__split")
+      } else {
+        a.classList.add("v-grid-context-menu__link")
+      }
+      a.setAttribute("data-action",row.action);
+      a.innerHTML = row.value;
+      tempHtml.appendChild(a);
+    });
+
+    return tempHtml.innerHTML;
+
+  }
+
+
+
 };
 
 @customAttribute('v-grid-context-menu-header')
 @inject(Element, Optional.of(VGridCellRowHeader))
 export class ContextMenuHeader extends ContextMenu {
+  classToOpenOn = "vGrid-queryField"; //class it opens menu on
+  altMenuLogic = null; //alt menu to open
 
-  menuHtml() {
-    return `
-    <ul>
-        <li class="v-grid-context-menu__item">
-          <a  class="v-grid-context-menu__link" data-action="clear-cell">Clear cell</a>
-        </li>   
-        <li class="v-grid-context-menu__item">
-          <a  class="v-grid-context-menu__link" data-action="show-all">Show all (keep filter text)</a>
-        </li> 
-        <li class="v-grid-context-menu__item">
-          <a class="v-grid-context-menu__link" data-action="set-filter">Set Filter</a>
-        </li>     
-    </ul>
-    `
-  };
-
-  menuHtml2() {
-    return `
-    <ul>
-        <li class="v-grid-context-menu__item">
-          <a  class="v-grid-context-menu__split" data-action="">Set filter</a>
-        </li>   
-        <li class="v-grid-context-menu__item">
-          <a  class="v-grid-context-menu__link" data-action="set-filter-equals">equals</a>
-        </li> 
-        <li class="v-grid-context-menu__item">
-          <a class="v-grid-context-menu__link" data-action="set-filter-less than or eq">less than or eq</a>
-        </li>
-         <li class="v-grid-context-menu__item">
-          <a  class="v-grid-context-menu__link" data-action="set-filter-greater than or eq">greater than or eq</a>
-        </li>   
-        <li class="v-grid-context-menu__item">
-          <a  class="v-grid-context-menu__link" data-action="set-filter-less than">less than</a>
-        </li> 
-        <li class="v-grid-context-menu__item">
-          <a class="v-grid-context-menu__link" data-action="set-filter-greater than">greater than</a>
-        </li>
-        <li class="v-grid-context-menu__item">
-          <a  class="v-grid-context-menu__link" data-action="set-filter-contains">contains</a>
-        </li> 
-        <li class="v-grid-context-menu__item">
-          <a class="v-grid-context-menu__link" data-action="set-filter-not equal to">not equal to</a>
-        </li>
-         <li class="v-grid-context-menu__item">
-          <a  class="v-grid-context-menu__link" data-action="set-filter-does not contain">does not contain</a>
-        </li>   
-        <li class="v-grid-context-menu__item">
-          <a  class="v-grid-context-menu__link" data-action="set-filter-begins with">begins with</a>
-        </li> 
-        <li class="v-grid-context-menu__item">
-          <a class="v-grid-context-menu__link" data-action="set-filter-ends with">ends with</a>
-        </li>
-    </ul>
-    `
-  };
-
-  classToOpenOn = "vGrid-queryField";
-
+  //main menu lisntner
   menuItemListener(link) {
     var value = link.getAttribute("data-action")
 
+    if(this.altMenuLogic){
+      this.filterMenuLogic(value);
+    } else {
+      this.defaultMenu(value)
+    }
+
+  };
+
+
+  //main menu to open
+  menuHtmlMain() {
+    return this.createMenuHTML([
+      {
+      action:"",
+      value:"Options",
+      isHeader:true
+      },{
+        action:"clear-cell",
+        value:"Clear cell",
+        isHeader:false
+      },{
+        action:"show-all",
+        value:"Show all (keep filter text)",
+        isHeader:false
+      },{
+        action:"set-filter",
+        value:"Set Filter",
+        isHeader:false
+      }
+    ]);
+  };
+
+  //alt menu I manually set
+  menuHtmlSetFilter() {
+    return this.createMenuHTML([
+      {
+        action:"",
+        value:"Set filter",
+        isHeader:true
+      },{
+        action:"set-filter-1",
+        value:"equals",
+        isHeader:false
+      },{
+        action:"set-filter-2",
+        value:"less than or eq",
+        isHeader:false
+      },{
+        action:"set-filter-3",
+        value:"greater than or eq",
+        isHeader:false
+      },{
+        action:"set-filter-4",
+        value:"less than",
+        isHeader:false
+      },{
+        action:"set-filter-5",
+        value:"greater than",
+        isHeader:false
+      },{
+        action:"set-filter-6",
+        value:"contains",
+        isHeader:false
+      },{
+        action:"set-filter-7",
+        value:"not equal to",
+        isHeader:false
+      },{
+        action:"set-filter-8",
+        value:"does not contain",
+        isHeader:false
+      },{
+        action:"set-filter-9",
+        value:"begins with",
+        isHeader:false
+      },{
+        action:"set-filter-10",
+        value:"ends with",
+        isHeader:false
+      }
+    ]);
+
+
+  };
+
+  defaultMenu (value){
     switch (value) {
       case "clear-cell" :
         this.parent.cellInputElement.value = "";
@@ -289,54 +345,66 @@ export class ContextMenuHeader extends ContextMenu {
         this.toggleMenuOff();
         break;
       case "set-filter":
-        this.replaceMenu(this.menuHtml2());
+        this.replaceMenu(this.menuHtmlSetFilter());
+        this.altMenuLogic = this.filterMenuLogic;
         break;
-      case "set-filter-equals":
+      default:
+        console.log(value);
+        this.toggleMenuOff();
+
+    }
+  }
+
+
+
+  filterMenuLogic(value){
+    switch (value) {
+      case "set-filter-1":
         this.parent.vGridConfig.filterArray[this.parent.columnNo] = "=";
         this.toggleMenuOff();
         this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
-      case "set-filter-less than or eq":
+      case "set-filter-2":
         this.parent.vGridConfig.filterArray[this.parent.columnNo] = "<=";
         this.toggleMenuOff();
         this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
-      case "set-filter-greater than or eq":
+      case "set-filter-3":
         this.parent.vGridConfig.filterArray[this.parent.columnNo] = ">=";
         this.toggleMenuOff();
         this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
-      case "set-filter-less than":
+      case "set-filter-4":
         this.parent.vGridConfig.filterArray[this.parent.columnNo] = "<"
         this.toggleMenuOff();
         this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
-      case "set-filter-greater than":
+      case "set-filter-5":
         this.parent.vGridConfig.filterArray[this.parent.columnNo] = ">";
         this.toggleMenuOff();
         this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
-      case "set-filter-contains":
+      case "set-filter-6":
         this.parent.vGridConfig.filterArray[this.parent.columnNo] = "*";
         this.toggleMenuOff();
         this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
-      case "set-filter-not equal to":
+      case "set-filter-7":
         this.parent.vGridConfig.filterArray[this.parent.columnNo] = "!=";
         this.toggleMenuOff();
         this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
-      case "set-filter-does not contain":
+      case "set-filter-8":
         this.parent.vGridConfig.filterArray[this.parent.columnNo] = "!*";
         this.toggleMenuOff();
         this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
-      case "set-filter-begins with":
+      case "set-filter-9":
         this.parent.vGridConfig.filterArray[this.parent.columnNo] = "*=";
         this.toggleMenuOff();
         this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
-      case "ends with":
+      case "set-filter-10":
         this.parent.vGridConfig.filterArray[this.parent.columnNo] = "=*";
         this.toggleMenuOff();
         this.parent.vGrid.vGridGenerator.rebuildColumns();
@@ -347,8 +415,14 @@ export class ContextMenuHeader extends ContextMenu {
 
     }
 
+    this.altMenuLogic = null; //reset to main menu again
+  }
 
-  };
+
+
+
+
+
 
 }
 
