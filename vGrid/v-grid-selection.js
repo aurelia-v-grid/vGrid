@@ -16,7 +16,6 @@ export class VGridSelection {
   constructor(mode, vGrid) {
 
     this.vGrid = vGrid;
-    this.vGridSel = "__vGridSel" + Math.floor((Math.random() * 1000) + 1);
 
     if (mode === false) {
       this.selectionMode = "single"
@@ -134,17 +133,12 @@ export class VGridSelection {
 
   setSelectedRows(newRows) {
     if (this.selectedRows > 0) {
-      this.vGrid.vGridCollection.forEach((x) => {
-        if (x[this.vGridSel] === true) {
-          x[this.vGridSel] = false;
-        }
-      });
+      this.selection.clear();
     }
-    this.selectedRows = 0;
     for (var i = 0; i < newRows.length; i++) {
-      this.vGrid.vGridCollectionFiltered[newRows[i]][this.vGridSel] = true;
-      this.selectedRows++;
+      this.selection.add(this.vGrid.vGridCollectionFiltered[newRows[i]][this.vGrid.vGridRowKey]);
     }
+    this.selectedRows = this.selection.size;
   };
 
 

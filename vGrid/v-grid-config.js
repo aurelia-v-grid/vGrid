@@ -165,6 +165,8 @@ export class VGridConfig {
         this.vGridCurrentEntityRef = this.vGridCollectionFiltered[newRowNo];
         this.vGridCurrentEntity[this.vGridRowKey] = this.vGridCurrentEntityRef[this.vGridRowKey];
         this.vGridCurrentRow = newRowNo;
+      } else {
+        this.vGridCurrentRow = newRowNo;
       }
 
       //update grid
@@ -242,7 +244,7 @@ export class VGridConfig {
       //set new row
       //this.vGridCurrentRow = this.vGrid.vGridGetRowKey(this.vGridCurrentEntity[this.vGridRowKey])
       this.vGridCollectionFiltered.forEach((x, index) => {
-        if (this.vGridCurrentEntity[this.vGridRowKey] === x[this.vGridRowKey]) {
+        if (this.vGridCurrentEntityRef[this.vGridRowKey] === x[this.vGridRowKey]) {
           this.vGridCurrentRow = index;
         }
       });
