@@ -244,8 +244,10 @@ export class VGridConfig {
       //set new row
       //this.vGridCurrentRow = this.vGrid.vGridGetRowKey(this.vGridCurrentEntity[this.vGridRowKey])
       this.vGridCollectionFiltered.forEach((x, index) => {
-        if (this.vGridCurrentEntityRef[this.vGridRowKey] === x[this.vGridRowKey]) {
-          this.vGridCurrentRow = index;
+        if(this.vGridCurrentEntityRef){
+          if (this.vGridCurrentEntityRef[this.vGridRowKey] === x[this.vGridRowKey]) {
+            this.vGridCurrentRow = index;
+          }
         }
       });
 

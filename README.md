@@ -35,6 +35,7 @@ How to use: (no plugin yet):
 * **v-current-entity.bind**: - mandatory, link you inputs etc to this
 * **v-collection.bind**: - mandatory, link you inputs etc to this
 * **v-grid-context** - optional, default 50
+* **v-row-index** - (not added yet) optional, supply index to use instead of grid adding one to keep control what ist displaying and not. and for selection
 * **v-row-height** - optional, default 50
 * **v-header-height** - optional, default 0
 * **v-footer-height** - optional, default 0
