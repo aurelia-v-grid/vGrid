@@ -152,7 +152,7 @@ export class VGridGenerator {
   getHeaderTemplate() {
     var rowTemplate = "";
     for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
-      rowTemplate = rowTemplate + `<v-grid-cell-header v-grid-context-menu-header column-no="${i}"></v-grid-cell-header>`;
+      rowTemplate = rowTemplate + `<v-grid-header-col v-grid-context-menu-header column-no="${i}"></v-grid-header-col>`;
     }
     return rowTemplate;
   };
@@ -167,7 +167,7 @@ export class VGridGenerator {
       rowTemplate = this.htmlCache.rowTemplate;
     } else {
       for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
-        rowTemplate = rowTemplate + `<v-grid-cell-row v-grid-context-menu-cell column-no=${i}></v-grid-cell-row>`;
+        rowTemplate = rowTemplate + `<v-grid-row-col v-grid-context-menu-cell column-no=${i}></v-grid-row-col>`;
       }
     }
     return rowTemplate;
@@ -527,7 +527,7 @@ export class VGridGenerator {
     var bottomHitCount;
     for (var i = 0; i < this.getRowCacheLength(); i++) {
 
-      
+
       /*------------------------------------------------*/
       //move row
       var setNewTopOnRow = (cacheRowNumber) => {
@@ -551,7 +551,7 @@ export class VGridGenerator {
       }
 
       //chrome fix
-      if((currentRowTop+this.vGridConfig.rowHeight)===this.vGridConfig.getCollectionLength()*this.vGridConfig.rowHeight){
+      if ((currentRowTop + this.vGridConfig.rowHeight) === this.vGridConfig.getCollectionLength() * this.vGridConfig.rowHeight) {
         fixme = true;
       }
 
@@ -584,7 +584,7 @@ export class VGridGenerator {
       });
 
     //chrome fix
-    if(fixme){
+    if (fixme) {
       this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.rowHeight;
       this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop - this.vGridConfig.rowHeight;
     }
@@ -1144,8 +1144,6 @@ export class VGridGenerator {
   };
 
 
-  
-
   getColumns() {
     //todo: this needs a big update
     return {
@@ -1202,6 +1200,11 @@ export class VGridGenerator {
 
   updateRow(no, clear) {
     this.fillDataIntoRow(no, clear)
+  };
+
+  setEditMode(value) {
+    this.vGridConfig.editMode = value ? true : false;
+    this.fillDataInRows(true);
   };
 
   clearHeaderSortFilter() {

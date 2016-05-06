@@ -1,6 +1,10 @@
-/**
- * Created by vegar on 4/26/2016.
- */
+/*****************************************************************************************************************
+ *    VGridCol
+ *    This is just for getting the params for v-grid-col to create the grid
+ *    Created by vegar ringdal
+ *
+ ****************************************************************************************************************/
+
 import {inject, Optional, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 
@@ -18,7 +22,6 @@ export class VGridCol {
   @bindable vColEditRaw;
   @bindable vColFilterOnKey;
 
-  
 
   constructor(element, vGrid, valueConverter) {
     this.vGrid = vGrid;
@@ -26,9 +29,9 @@ export class VGridCol {
 
 
   }
-  
-  get valueConverters(){
-    if(this.vGrid){
+
+  get valueConverters() {
+    if (this.vGrid) {
       return this.vGrid.viewResources.lookupFunctions.valueConverters
     }
   }
@@ -46,7 +49,7 @@ export class VGridCol {
     this.vGrid.vGridConfig.filterOnKeyArray.push(this.vColFilterOnKey === "true" ? true : false);
     this.vGrid.vGridConfig.colEditRawArray.push(this.vColEditRaw === "true" ? true : false);
     this.vGrid.vGridConfig.colFormaterArray.push(this.valueConverters(this.vColFormater));
-   // this.vGrid.vGridConfig.columns.push(this);
+    // this.vGrid.vGridConfig.columns.push(this);
   }
 
 }

@@ -73,7 +73,7 @@ export class VGridConfig {
     this.readOnlyArray = [];
     this.colStyleArray = [];
     this.colTypeArray = [];
-    this.colFormaterArray =[];
+    this.colFormaterArray = [];
     this.colEditRawArray = [];
     this.filterOnKeyArray = [];
 
@@ -104,7 +104,6 @@ export class VGridConfig {
 
 
   }
-
 
 
   //from string interpolate, this is whats passes into the onrowdraw event, so we dont end up with people enditing their collection
@@ -244,7 +243,7 @@ export class VGridConfig {
       //set new row
       //this.vGridCurrentRow = this.vGrid.vGridGetRowKey(this.vGridCurrentEntity[this.vGridRowKey])
       this.vGridCollectionFiltered.forEach((x, index) => {
-        if(this.vGridCurrentEntityRef){
+        if (this.vGridCurrentEntityRef) {
           if (this.vGridCurrentEntityRef[this.vGridRowKey] === x[this.vGridRowKey]) {
             this.vGridCurrentRow = index;
           }

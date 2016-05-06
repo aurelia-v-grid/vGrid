@@ -10,7 +10,7 @@ import {VGrid} from './v-grid'
 
 
 @noView
-@customElement('v-grid-cell-header')
+@customElement('v-grid-header-col')
 @processContent(false)
 @inject(Element, VGrid)
 export class VGridCellRowHeader {
@@ -26,7 +26,7 @@ export class VGridCellRowHeader {
     this.bindingContext = bindingContext;
   }
 
- 
+
   created() {
     ///nothing atm
   }
@@ -47,16 +47,16 @@ export class VGridCellRowHeader {
   }
 
 
-  attribute(){
+  attribute() {
     return this.vGridConfig.attributeArray[this.columnNo];
   }
 
-  getValue(value){
+  getValue(value) {
     //just for testing not in use
     return this.valueFormater ? this.valueFormater().fromView(value) : value;
   }
 
-  setValue(value){
+  setValue(value) {
     //just for testing not in use
     return this.valueFormater ? this.valueFormater().toView(value) : value;
   }
@@ -65,10 +65,6 @@ export class VGridCellRowHeader {
     //just for testing not in use
     return this.vGrid.vGridConfig.colFormaterArray[this.columnNo];
   }
-
-
-
-
 
 
   createSingleRowLabel() {
@@ -118,22 +114,17 @@ export class VGridCellRowHeader {
     //set event type to use, onchange is the best one to use...
     var cellInputElement = this.element.querySelectorAll("." + this.vGridConfig.css.filterHandle)[0];
 
-    if(cellInputElement){
-        if (this.vGridConfig.filterOnKeyArray[this.columnNo] !== true) {
-          cellInputElement.onkeyup = this.onKeyUpEventOnFilter.bind(this);
-          cellInputElement.onchange = this.onChangeEventOnFilter.bind(this);
-        } else {
-          cellInputElement.onkeyup = this.onChangeEventOnFilter.bind(this);
-        }
+    if (cellInputElement) {
+      if (this.vGridConfig.filterOnKeyArray[this.columnNo] !== true) {
+        cellInputElement.onkeyup = this.onKeyUpEventOnFilter.bind(this);
+        cellInputElement.onchange = this.onChangeEventOnFilter.bind(this);
+      } else {
+        cellInputElement.onkeyup = this.onChangeEventOnFilter.bind(this);
+      }
     }
 
     this.cellInputElement = cellInputElement;
   }
-
-
-
-
-  
 
 
   setStandardClassesAndStyles() {
@@ -241,7 +232,6 @@ export class VGridCellRowHeader {
   };
 
 
-
   /*------------------------------------------------*/
   //called when chang event fires in filter input
   onChangeEventOnFilter(e) {
@@ -257,7 +247,7 @@ export class VGridCellRowHeader {
         var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
         var valueFormater = this.vGridConfig.colFormaterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
         var operator = this.vGridConfig.filterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
-        var value  =  valueFormater ? valueFormater.fromView(queryHtmlInput[i].value):queryHtmlInput[i].value;
+        var value = valueFormater ? valueFormater.fromView(queryHtmlInput[i].value) : queryHtmlInput[i].value;
 
         //do value exist and is not blank?
         if (value !== "" && value !== undefined) {
@@ -270,13 +260,13 @@ export class VGridCellRowHeader {
           });
 
           //This is something I need for later if I add sortable columns.. and callback on each column on build
-          this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = valueFormater ? valueFormater.toView(queryHtmlInput[i].value):queryHtmlInput[i].value;
+          this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = valueFormater ? valueFormater.toView(queryHtmlInput[i].value) : queryHtmlInput[i].value;
 
         } else {
 
           if (value === "") {
             var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
-            this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = valueFormater ? valueFormater.toView(queryHtmlInput[i].value):queryHtmlInput[i].value;
+            this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = valueFormater ? valueFormater.toView(queryHtmlInput[i].value) : queryHtmlInput[i].value;
           }
 
         }

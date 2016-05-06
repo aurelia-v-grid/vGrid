@@ -45,18 +45,16 @@ export class VGridSelection {
   isSelected(row) {
     var result = false;
     if (this.selectedRows > 0) {
-      if(this.vGrid.vGridCollectionFiltered[row]){
-        result =  this.selection.has(this.vGrid.vGridCollectionFiltered[row][this.vGrid.vGridRowKey]);
+      if (this.vGrid.vGridCollectionFiltered[row]) {
+        result = this.selection.has(this.vGrid.vGridCollectionFiltered[row][this.vGrid.vGridRowKey]);
       }
     }
     return result;
   };
 
 
-
-
-  deSelect(row){
-    if(this.vGrid.vGridCollectionFiltered[row]) {
+  deSelect(row) {
+    if (this.vGrid.vGridCollectionFiltered[row]) {
       this.selection.delete(this.vGrid.vGridCollectionFiltered[row][this.vGrid.vGridRowKey]);
     }
   }
@@ -70,7 +68,7 @@ export class VGridSelection {
         break;
       case "single":
         this.selection.clear();
-        if(this.vGrid.vGridCollectionFiltered[row]) {
+        if (this.vGrid.vGridCollectionFiltered[row]) {
           this.selection.add(this.vGrid.vGridCollectionFiltered[row][this.vGrid.vGridRowKey]);
         }
         this.selectedRows = this.selection.size;
@@ -78,12 +76,12 @@ export class VGridSelection {
       case "multible":
         if (!addToSelection) {
           this.selection.clear();
-          if(this.vGrid.vGridCollectionFiltered[row]) {
+          if (this.vGrid.vGridCollectionFiltered[row]) {
             this.selection.add(this.vGrid.vGridCollectionFiltered[row][this.vGrid.vGridRowKey]);
           }
           this.selectedRows = this.selection.size;
         } else {
-          if(this.vGrid.vGridCollectionFiltered[row]) {
+          if (this.vGrid.vGridCollectionFiltered[row]) {
             this.selection.add(this.vGrid.vGridCollectionFiltered[row][this.vGrid.vGridRowKey]);
           }
           this.selectedRows = this.selection.size;
@@ -103,8 +101,6 @@ export class VGridSelection {
   };
 
 
-
-
   reset() {
     if (this.selectedRows > 0) {
       this.selection.clear()
@@ -113,8 +109,6 @@ export class VGridSelection {
     this.lastKeyKodeUsed = "none";
     this.selectedRows = 0;
   };
-
- 
 
 
   getSelectedRows() {
@@ -130,7 +124,6 @@ export class VGridSelection {
   };
 
 
-
   setSelectedRows(newRows) {
     if (this.selectedRows > 0) {
       this.selection.clear();
@@ -140,7 +133,6 @@ export class VGridSelection {
     }
     this.selectedRows = this.selection.size;
   };
-
 
 
   /****************************************************************************************************************************
