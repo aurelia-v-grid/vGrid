@@ -15,7 +15,13 @@ export class sample01 {
 
   onRowDraw (data, collectionData, datePicker) {
     if (data) {
-        debugger;
+      if(data.number>100){
+        data.customColor = "green";
+      } else {
+        data.customColor = "red";
+        data.customFont = "bold";
+
+      }
     }
   }
 

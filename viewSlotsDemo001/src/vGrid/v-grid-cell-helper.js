@@ -309,6 +309,10 @@ export class VGridCellHelper {
       //set current entity and and update row data
       this.vGrid.vGridCurrentEntityRef[obj.attribute] = obj.value;
       this.vGrid.vGridCurrentEntity[obj.attribute] = obj.value;
+      var row = this.vGrid.vGridCurrentRow;
+      setTimeout(()=>{
+        this.vGrid.vGridGenerator.fillDataIntoRow(row);
+      },150)
     }
 
   }
@@ -322,15 +326,12 @@ export class VGridCellHelper {
 
     if (e.target.tagName === "V-GRID-CELL-ROW") {
       //if this is clicked then its a image or something smaller then the cell, lets send it to the first child
-      var eventChild = document.createEvent('Event');
-      eventChild.initEvent(e.type, true, true);
-
-      if (e.target.firstChild) {
-        e.target.firstChild.dispatchEvent(eventChild)
-      } else {
-        console.log("debug this")
+      if(e.target.firstChild){
+        this.editCellhelper(row, {
+          target:e.target.firstChild,
+          type: e.type}
+        );
       }
-
 
     } else {
 
@@ -375,5 +376,12 @@ export class VGridCellHelper {
       }
     }
   };
+  
+  
+  refocus(){
+    var newEvent = document.createEvent('Event');
+    newEvent.initEvent("cellFocus", true, true);
+    this.curElement.dispatchEvent(newEvent)
+  }
 
 }
