@@ -1,6 +1,6 @@
 /*****************************************************************************************************************
  *    VGridCellContainer
- *    Custom element controlling the cell logic
+ *    Custom element controlling the cell logic, this creates new elements depending on type
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
@@ -24,7 +24,6 @@ export class VGridCellContainer {
     this.container = container;
     this.vGrid = vGrid;
     this.hidden = false;
-    //this.displayRawValue = false;//keeping code incase I change my mind
     this.value;
     this.customStyle;
   }
@@ -78,19 +77,16 @@ export class VGridCellContainer {
 
     //focus event for setting
     this.element.addEventListener("cellFocus", function (e) {
-      // if (this.editMode()) { //keeping code incase I change my mind
-      //   if (this.editRaw()) {
-      //     if (!this.displayRawValue) {
-      //       this.setValue(null, true);
-      //     }
-      //   }
-      // }
       this.setCss();
     }.bind(this));
 
 
     this.element.ondblclick = function (e) {
-      //this.setEditMode(true);//keeping code incase I change my mind
+      //todo: do I want do the callback here, if user have added a click event?
+    }.bind(this);
+
+    this.element.onclick = function (e) {
+      //todo: do I want do the callback here, if user have added a click event?
     }.bind(this);
 
   }
@@ -109,16 +105,14 @@ export class VGridCellContainer {
     this.removeCssCell();
     if (setRawValue || (this.editMode() && this.editRaw())) {
       this.value = this.rawValue;
-      //this.displayRawValue = true;//keeping code incase I change my mind
     } else {
       this.value = this.valueFormater ? this.valueFormater.toView(value) : value;
-      //this.displayRawValue = false;//keeping code incase I change my mind
     }
 
   }
 
 
-  getValue() {
+  getValue(value) {
     return this.valueFormater ? this.valueFormater.fromView(value) : value;
   }
 
