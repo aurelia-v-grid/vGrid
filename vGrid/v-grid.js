@@ -24,10 +24,11 @@ export class VGrid {
   @bindable({attribute: "v-current-entity"}) vGridCurrentEntity;
 
 
-  constructor(element, observerLocator, viewCompiler, viewSlot, container, viewResources) {
+  constructor(element, observerLocator, viewCompiler, viewSlot, container, viewResources, dom) {
 
     //<v-grid> element
     this.element = element;
+
 
     //aurelia stuff I need for creating my cells etc
     this.viewCompiler = viewCompiler;

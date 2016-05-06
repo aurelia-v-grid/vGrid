@@ -25,12 +25,14 @@ export class VGridCellRow {
     this.vGrid = vGrid;
     this.hidden = false;
     this.displayRawValue = false;
+    this.isRealFocus = false;
   }
 
 
   bind(bindingContext) {
     this.bindingContext = bindingContext;
     if (this.bindingContext && this.cellContent) {
+      this.setStyle(); //need to reset this incase they have binded attributes
       this.rawValue = this.bindingContext[this.attribute()];
       this.setValue("");
       this.setValue(this.rawValue);
@@ -44,6 +46,23 @@ export class VGridCellRow {
         }
       }
     }
+  }
+
+
+  interpolate(str) {
+    if(str){
+      return function interpolate(o) {
+        return str.replace(/{{([^{}]*)}}/g, function (a, b) {
+          var r = o[b];
+          return r;
+        });
+      }
+    } else {
+      return function(){
+        return ""
+      }
+    }
+
   }
 
 
@@ -92,6 +111,7 @@ export class VGridCellRow {
         this.setEditMode(false);
         this.removeWriteClass(this.element);
         this.addFocusClass(this.element);
+        this.vGrid.vGridCurrentEntity[this.attribute()] = this.rawValue; //just for triggering update
         return false;
       }
       if (this.readOnly() === true && e.keyCode !== 9) {
@@ -120,6 +140,7 @@ export class VGridCellRow {
         if (this.editRaw()) {
           if (!this.displayRawValue) {
             this.setValue(null, true);
+            this.isRealFocus = true;
           }
         }
       }
@@ -127,17 +148,21 @@ export class VGridCellRow {
       this.cellContent.focus();
     }.bind(this));
 
-
+    //todo: clean this up more
     this.cellContent.onblur = function (e) {
       if (this.editMode()) {
         if (this.editRaw()) {
-          this.vGrid.vGridCellHelper.updateActual({
-            attribute: this.attribute(),
-            value: this.cellContent.value
-          });
-          this.rawValue = this.cellContent.value;
-          this.setValue(this.cellContent.value);
-          this.setCss();
+         var canUpdate = true;
+          if(this.isRealFocus) {
+            this.vGrid.vGridCellHelper.updateActual({
+              attribute: this.attribute(),
+              value: this.valueFormater ? this.valueFormater.fromView(this.cellContent.value) : this.cellContent.value
+            });
+            this.rawValue = this.cellContent.value;
+           
+            this.setValue(null, true)//this.cellContent.value);
+            this.setCss();
+          }
         } else {
           this.vGrid.vGridCellHelper.updateActual({
             attribute: this.attribute(),
@@ -146,12 +171,20 @@ export class VGridCellRow {
           this.rawValue = this.getValue();
         }
       } else {
+
       }
+
+      if(this.isRealFocus === false){
+        this.vGrid.vGridCurrentEntity[this.attribute()] = this.rawValue;
+      }
+
+
+      this.isRealFocus = false;
     }.bind(this);
 
 
     this.cellContent.onchange = function (e) {
-      //console.log("changed")
+      console.log("changed")
     }.bind(this);
 
 
@@ -159,26 +192,10 @@ export class VGridCellRow {
       //todo
     }.bind(this);
 
-
-    //so materilize dont mess up
-    this.cellContent.style.opacity = "initial";
-    this.cellContent.style.border = "initial";
-    this.cellContent.style.transition = "initial";
-
-    //set class/style
-    this.cellContent.classList.add(this.vGrid.vGridConfig.css.cellContent);
-    this.cellContent.setAttribute(this.vGrid.vGridConfig.atts.dataAttribute, this.attribute());
-    this.cellContent.setAttribute("style", this.vGrid.vGridConfig.colStyleArray[this.columnNo]);
-    this.cellContent.setAttribute("readonly", "true");
+    this.setStyle()
 
 
-    if (this.colType() === "checkbox") {
-      this.cellContent.style.heigth = "initial";
-      this.cellContent.style.width = "initial";
-      this.cellContent.style.margin = "auto"
-    }
 
-    this.cellContent.setAttribute("tabindex", "0");
 
     if (this.bindingContext) {
       this.setValue(this.bindingContext[this.attribute()])
@@ -188,6 +205,29 @@ export class VGridCellRow {
 
   }
 
+
+  setStyle(){
+    //so materilize dont mess up
+    this.cellContent.style.opacity = "initial";
+    this.cellContent.style.border = "initial";
+    this.cellContent.style.transition = "initial";
+
+    //set class/style
+    this.cellContent.classList.add(this.vGrid.vGridConfig.css.cellContent);
+    this.cellContent.setAttribute(this.vGrid.vGridConfig.atts.dataAttribute, this.attribute());
+    this.cellContent.setAttribute("style",this.interpolate(this.vGrid.vGridConfig.colStyleArray[this.columnNo])(this.bindingContext));
+    this.cellContent.setAttribute("readonly", "true");
+
+
+    if (this.colType() === "checkbox") {
+      this.cellContent.style.heigth = "initial";
+      this.cellContent.style.width = "initial";
+      this.cellContent.style.margin = "auto"
+      this.cellContent.style.display = "block"
+    }
+
+    this.cellContent.setAttribute("tabindex", "0");
+  }
 
   /**************************************************
    set/get value and hide cell if not defined value

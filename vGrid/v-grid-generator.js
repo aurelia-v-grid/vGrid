@@ -167,7 +167,7 @@ export class VGridGenerator {
       rowTemplate = this.htmlCache.rowTemplate;
     } else {
       for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
-        rowTemplate = rowTemplate + `<v-grid-cell-row column-no=${i}></v-grid-cell-row>`;
+        rowTemplate = rowTemplate + `<v-grid-cell-row v-grid-context-menu-cell column-no=${i}></v-grid-cell-row>`;
       }
     }
     return rowTemplate;

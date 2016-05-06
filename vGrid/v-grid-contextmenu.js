@@ -3,13 +3,14 @@
 
 import {inject, customAttribute, Optional} from 'aurelia-framework';
 import {VGridCellRowHeader} from './v-grid-cell-header'
+import {VGridCellRow} from './v-grid-cell-row'
 
 
 var ContextMenu = class {
 
-  constructor(element, vGridCellRowHeader) {
+  constructor(element, parent) {
     this.element = element;
-    this.parent = vGridCellRowHeader;
+    this.parent = parent;
     this.contextMenuClassName = "v-grid-context-menu";
     this.contextMenuItemClassName = "v-grid-context-menu__item";
     this.contextMenuLinkClassName = "v-grid-context-menu__link";
@@ -47,6 +48,9 @@ var ContextMenu = class {
     this.removeListener();
   }
 
+  canOpen() {
+    return true;
+  }
 
   addListener() {
     this.contextListenerBinded = this.contextListener.bind(this);
@@ -60,14 +64,20 @@ var ContextMenu = class {
 
 
   contextListener(e) {
-    this.taskItemInContext = this.clickInsideElement(e, this.classToOpenOn);
+    if (this.canOpen(e)) {
 
-    if (this.taskItemInContext) {
-      e.preventDefault();
-      this.toggleMenuOn();
-      this.positionMenu(e);
+      this.taskItemInContext = this.clickInsideElement(e, this.classToOpenOn);
+
+      if (this.taskItemInContext) {
+        e.preventDefault();
+        this.toggleMenuOn();
+        this.positionMenu(e);
+      } else {
+        this.taskItemInContext = null;
+        this.toggleMenuOff();
+      }
+
     } else {
-      this.taskItemInContext = null;
       this.toggleMenuOff();
     }
   }
@@ -207,20 +217,20 @@ var ContextMenu = class {
   }
 
 
-  createMenuHTML(menuArray){
+  createMenuHTML(menuArray) {
 
     var tempHtml = document.createElement("ul");
 
-    menuArray.forEach((row)=>{
+    menuArray.forEach((row)=> {
       let li = document.createElement("li");
       li.classList.add("v-grid-context-menu__item");
       let a = document.createElement("a");
-      if(row.isHeader){
+      if (row.isHeader) {
         a.classList.add("v-grid-context-menu__split")
       } else {
         a.classList.add("v-grid-context-menu__link")
       }
-      a.setAttribute("data-action",row.action);
+      a.setAttribute("data-action", row.action);
       a.innerHTML = row.value;
       tempHtml.appendChild(a);
     });
@@ -228,7 +238,6 @@ var ContextMenu = class {
     return tempHtml.innerHTML;
 
   }
-
 
 
 };
@@ -243,7 +252,7 @@ export class ContextMenuHeader extends ContextMenu {
   menuItemListener(link) {
     var value = link.getAttribute("data-action")
 
-    if(this.altMenuLogic){
+    if (this.altMenuLogic) {
       this.filterMenuLogic(value);
     } else {
       this.defaultMenu(value)
@@ -256,21 +265,21 @@ export class ContextMenuHeader extends ContextMenu {
   menuHtmlMain() {
     return this.createMenuHTML([
       {
-      action:"",
-      value:"Options",
-      isHeader:true
-      },{
-        action:"clear-cell",
-        value:"Clear cell",
-        isHeader:false
-      },{
-        action:"show-all",
-        value:"Show all (keep filter text)",
-        isHeader:false
-      },{
-        action:"set-filter",
-        value:"Set Filter",
-        isHeader:false
+        action: "",
+        value: "Options",
+        isHeader: true
+      }, {
+        action: "clear-cell",
+        value: "Clear cell",
+        isHeader: false
+      }, {
+        action: "show-all",
+        value: "Show all (keep filter text)",
+        isHeader: false
+      }, {
+        action: "set-filter",
+        value: "Set Filter",
+        isHeader: false
       }
     ]);
   };
@@ -279,56 +288,56 @@ export class ContextMenuHeader extends ContextMenu {
   menuHtmlSetFilter() {
     return this.createMenuHTML([
       {
-        action:"",
-        value:"Set filter",
-        isHeader:true
-      },{
-        action:"set-filter-1",
-        value:"equals",
-        isHeader:false
-      },{
-        action:"set-filter-2",
-        value:"less than or eq",
-        isHeader:false
-      },{
-        action:"set-filter-3",
-        value:"greater than or eq",
-        isHeader:false
-      },{
-        action:"set-filter-4",
-        value:"less than",
-        isHeader:false
-      },{
-        action:"set-filter-5",
-        value:"greater than",
-        isHeader:false
-      },{
-        action:"set-filter-6",
-        value:"contains",
-        isHeader:false
-      },{
-        action:"set-filter-7",
-        value:"not equal to",
-        isHeader:false
-      },{
-        action:"set-filter-8",
-        value:"does not contain",
-        isHeader:false
-      },{
-        action:"set-filter-9",
-        value:"begins with",
-        isHeader:false
-      },{
-        action:"set-filter-10",
-        value:"ends with",
-        isHeader:false
+        action: "",
+        value: "Set filter",
+        isHeader: true
+      }, {
+        action: "set-filter-1",
+        value: "equals",
+        isHeader: false
+      }, {
+        action: "set-filter-2",
+        value: "less than or eq",
+        isHeader: false
+      }, {
+        action: "set-filter-3",
+        value: "greater than or eq",
+        isHeader: false
+      }, {
+        action: "set-filter-4",
+        value: "less than",
+        isHeader: false
+      }, {
+        action: "set-filter-5",
+        value: "greater than",
+        isHeader: false
+      }, {
+        action: "set-filter-6",
+        value: "contains",
+        isHeader: false
+      }, {
+        action: "set-filter-7",
+        value: "not equal to",
+        isHeader: false
+      }, {
+        action: "set-filter-8",
+        value: "does not contain",
+        isHeader: false
+      }, {
+        action: "set-filter-9",
+        value: "begins with",
+        isHeader: false
+      }, {
+        action: "set-filter-10",
+        value: "ends with",
+        isHeader: false
       }
     ]);
 
 
   };
 
-  defaultMenu (value){
+  defaultMenu(value) {
     switch (value) {
       case "clear-cell" :
         this.parent.cellInputElement.value = "";
@@ -356,8 +365,7 @@ export class ContextMenuHeader extends ContextMenu {
   }
 
 
-
-  filterMenuLogic(value){
+  filterMenuLogic(value) {
     switch (value) {
       case "set-filter-1":
         this.parent.vGridConfig.filterArray[this.parent.columnNo] = "=";
@@ -419,10 +427,92 @@ export class ContextMenuHeader extends ContextMenu {
   }
 
 
-
-
-
-
-
 }
 
+
+@customAttribute('v-grid-context-menu-cell')
+@inject(Element, Optional.of(VGridCellRow))
+export class ContextMenuCell extends ContextMenu {
+  classToOpenOn = "vGrid-row-cell"; //class it opens menu on
+  altMenuLogic = null; //alt menu to open
+  //main menu lisntner
+  menuItemListener(link) {
+    var value = link.getAttribute("data-action");
+    if (this.altMenuLogic) {
+      this.filterMenuLogic(value);
+    } else {
+      this.defaultMenu(value)
+    }
+  };
+
+  canOpen(e) {
+
+    if (e.target === this.parent.vGrid.vGridCellHelper.curElement || e.target.firstChild === this.parent.vGrid.vGridCellHelper.curElement) {
+      if (this.parent.editMode()) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+
+  }
+
+
+  //main menu to open
+  menuHtmlMain() {
+    return this.createMenuHTML([
+      {
+        action: "",
+        value: "Options",
+        isHeader: true
+      }, {
+        action: "copy-cell",
+        value: "Copy cell value",
+        isHeader: false
+      }, {
+        action: "paste-cell",
+        value: "Paste into cell/selected rows",
+        isHeader: false
+      }
+    ]);
+  };
+
+  defaultMenu(value) {
+    switch (value) {
+      case "clear-cell" :
+        this.parent.cellInputElement.value = "";
+        if (this.parent.cellInputElement.onkeydown) {
+          this.parent.cellInputElement.onkeydown({keyKode: 13});
+        } else {
+          this.parent.cellInputElement.onchange({keyKode: 13});
+        }
+        this.toggleMenuOff();
+        break;
+      case "copy-cell":
+        this.parent.vGrid.vGridCellHelper.cellValue = this.parent.vGrid.vGridCurrentEntityRef[this.parent.attribute()];
+        this.toggleMenuOff();
+        this.parent.cellContent.focus();
+        break;
+      case "paste-cell":
+        if (this.parent.vGrid.vGridCellHelper.cellValue !== null) {
+          var rows = this.parent.vGrid.vGridSelection.getSelectedRows()
+          rows.forEach((x)=> {
+            this.parent.vGrid.vGridCollectionFiltered[x][this.parent.attribute()] = this.parent.vGrid.vGridCellHelper.cellValue;
+          });
+          this.parent.vGrid.vGridGenerator.fillDataInRows();
+          this.parent.cellContent.focus();
+        } else {
+          console.log("no value")
+        }
+        this.toggleMenuOff();
+        break;
+      default:
+        console.log(value);
+        this.toggleMenuOff();
+
+    }
+  }
+
+}
