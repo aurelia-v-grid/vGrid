@@ -162,26 +162,26 @@
   position: relative;
 }
 
-.vGrid-row-cell > .vGrid-content {
+.vGrid-row-cell * .vGrid-content {
   /*-webkit-touch-callout: none;*/
   /*-webkit-user-select: none;*/
   /*-moz-user-select: none;*/
   /*-ms-user-select: none;*/
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-  position: relative;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  /*-moz-box-sizing: border-box;*/
+  /*-webkit-box-sizing: border-box;*/
+  /*-ms-box-sizing: border-box;*/
+  /*box-sizing: border-box;*/
+  /*position: relative;*/
+  /*left: 0;*/
+  /*width: 100%;*/
+  /*height: 100%;*/
   padding-left: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  background-color: inherit;
-  border: 0px;
-  line-height: 100%
+  /*white-space: nowrap;*/
+  /*overflow: hidden;*/
+  /*text-overflow: ellipsis;*/
+  /*background-color: inherit;*/
+  /*border: 0px;*/
+  /*line-height: 100%*/
 }
 
 .vGrid-row-cell-header > .vGrid-content {
@@ -381,41 +381,6 @@
   content: "\e155";
 }
 
-/*.vGrid-menu {*/
-/*width: 160px;*/
-/*background: #000;*/
-/*color: #fff;*/
-/*position: absolute;*/
-/*z-index: 999999;*/
-/*display: none;*/
-/*box-shadow: 0 0 10px #713C3C;*/
-/*}*/
-
-/*.vGrid-menu ul {*/
-/*list-style: none;*/
-/*padding: 0;*/
-/*margin: 0;*/
-/*}*/
-
-/*.vGrid-menu ul a {*/
-/*text-decoration: none;*/
-/*}*/
-
-/*.vGrid-menu ul li {*/
-/*width: 100%;*/
-/*padding: 1px;*/
-/*background-color: whitesmoke;*/
-/*color: black;*/
-/*}*/
-
-/*.vGrid-menu ul li:hover {*/
-/*background-color: lightgrey;*/
-/*color: black;*/
-/*}*/
-
-/*.vGrid input:not([type])[readonly] {*/
-/*color: black !important;*/
-/*}*/
 
 /* context menu */
 
@@ -423,7 +388,7 @@
   display: block;
   position: absolute;
   z-index: 10;
-  width: 150px;
+  /*width: 150px;*/
   font-size: 11px;
   background-color: #fff;
   border: solid 1px #dfdfdf;

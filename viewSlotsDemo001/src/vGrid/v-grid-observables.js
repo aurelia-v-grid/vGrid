@@ -33,6 +33,7 @@ export class VGridObservables {
 
 
       //reset filter/and collection/selection. (should I have option to check is they want to set something?)
+      this.vGrid.vGridCurrentRow = -1;
       this.vGrid.vGridSort.reset();
       this.vGrid.vGridGenerator.clearHeaderSortFilter();
       this.vGrid.vGridSelection.reset();
@@ -45,6 +46,7 @@ export class VGridObservables {
           this.vGrid.vGridSkipNextUpdateProperty.push(k)
         }
       }
+
 
       //set array observer
       this.enableObservablesArray();
@@ -87,9 +89,9 @@ export class VGridObservables {
 
           //if anyone is added, then lets add them
           if (observerChange.addedCount > 0) {
-            for(var i = 0; i < observerChange.addedCount;i++){
-              colFiltered.push(col[observerChange.index+i]);
-              this.vGrid.checkKey(col[observerChange.index+i]);
+            for (var i = 0; i < observerChange.addedCount; i++) {
+              colFiltered.push(col[observerChange.index + i]);
+              this.vGrid.checkKey(col[observerChange.index + i]);
             }
           }
 
@@ -97,17 +99,17 @@ export class VGridObservables {
           if (observerChange.removed.length > 0) {
             //push into removed array
             observerChange.removed.forEach((x) => {
-              if(x[this.vGrid.vGridRowKey] ===curKey){
+              if (x[this.vGrid.vGridRowKey] === curKey) {
                 curEntityValid = false;
               }
 
               var rowToRemove = -1;
               colFiltered.forEach((row, index) => {
-                if(row[this.vGrid.vGridRowKey] === x[this.vGrid.vGridRowKey]){
+                if (row[this.vGrid.vGridRowKey] === x[this.vGrid.vGridRowKey]) {
                   rowToRemove = index;
                 }
               });
-              if(rowToRemove !== -1){
+              if (rowToRemove !== -1) {
                 colFiltered.splice(rowToRemove, 1);
               }
             });
@@ -163,8 +165,8 @@ export class VGridObservables {
       propertyObserver.subscribe((newValue, oldValue) => {
 
         //should I do the value formatting on the currentEntity also?
-        var newValueCheck = newValue ? newValue.toString():newValue;
-        var oldValueCheck = oldValue ? oldValue.toString():oldValue;
+        var newValueCheck = newValue ? newValue.toString() : newValue;
+        var oldValueCheck = oldValue ? oldValue.toString() : oldValue;
 
         if (newValueCheck !== oldValueCheck) {
           //check if we should skip it

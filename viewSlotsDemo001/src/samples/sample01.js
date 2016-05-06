@@ -17,6 +17,7 @@ export class sample01 {
     if (data) {
       if(data.number>100){
         data.customColor = "green";
+        data.customFont = "normal";
       } else {
         data.customColor = "red";
         data.customFont = "bold";
@@ -60,7 +61,22 @@ export class sample01 {
 
   }
 
+  lockStatus = "locked";
+  lockColor = "red"
 
+  editMode(){
+
+    if(this.lockStatus ==="locked" ){
+      this.lockStatus = "unlocked"
+      this.lockColor = "green"
+      this.myGrid.ctx.setEditMode(true)
+    }else {
+      this.lockStatus = "locked"
+      this.lockColor = "red"
+      this.myGrid.ctx.setEditMode(false)
+    }
+
+  }
 
 
 

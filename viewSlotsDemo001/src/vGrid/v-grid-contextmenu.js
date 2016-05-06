@@ -2,8 +2,8 @@
 //just testing atm, not done in any way, will need to do a few chamges, just added some to test more
 
 import {inject, customAttribute, Optional} from 'aurelia-framework';
-import {VGridCellRowHeader} from './v-grid-cell-header'
-import {VGridCellRow} from './v-grid-cell-row'
+import {VGridCellRowHeader} from './v-grid-header-col'
+import {VGridCellContainer} from './v-grid-row-col'
 
 
 var ContextMenu = class {
@@ -383,7 +383,7 @@ export class ContextMenuHeader extends ContextMenu {
         this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
       case "set-filter-4":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "<"
+        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "<";
         this.toggleMenuOff();
         this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
@@ -431,7 +431,7 @@ export class ContextMenuHeader extends ContextMenu {
 
 
 @customAttribute('v-grid-context-menu-cell')
-@inject(Element, Optional.of(VGridCellRow))
+@inject(Element, Optional.of(VGridCellContainer))
 export class ContextMenuCell extends ContextMenu {
   classToOpenOn = "vGrid-row-cell"; //class it opens menu on
   altMenuLogic = null; //alt menu to open
@@ -493,16 +493,16 @@ export class ContextMenuCell extends ContextMenu {
       case "copy-cell":
         this.parent.vGrid.vGridCellHelper.cellValue = this.parent.vGrid.vGridCurrentEntityRef[this.parent.attribute()];
         this.toggleMenuOff();
-        this.parent.cellContent.focus();
+        this.parent.vGrid.vGridCellHelper.refocus();
         break;
       case "paste-cell":
         if (this.parent.vGrid.vGridCellHelper.cellValue !== null) {
-          var rows = this.parent.vGrid.vGridSelection.getSelectedRows()
+          var rows = this.parent.vGrid.vGridSelection.getSelectedRows();
           rows.forEach((x)=> {
             this.parent.vGrid.vGridCollectionFiltered[x][this.parent.attribute()] = this.parent.vGrid.vGridCellHelper.cellValue;
           });
           this.parent.vGrid.vGridGenerator.fillDataInRows();
-          this.parent.cellContent.focus();
+          this.parent.vGrid.vGridCellHelper.refocus();
         } else {
           console.log("no value")
         }

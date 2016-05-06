@@ -18,7 +18,6 @@ export class VGridSortable {
   sortable = false;
 
 
-
   constructor(vGrid) {
     this.vGrid = vGrid;
   }
@@ -120,7 +119,7 @@ export class VGridSortable {
     [].slice.call(dragHandles).forEach((itemEl, index) => {
       itemEl.parentNode.setAttribute("column-no", index);
       //update viewmodel, is needed since I dont redraw headers anymore
-     itemEl.parentNode.au["v-grid-cell-header"].viewModel.columnNo = index+""
+      itemEl.parentNode.au["v-grid-header-col"].viewModel.columnNo = index + ""
     });
     this.vGrid.vGridGenerator.rebuildColumnsRows();
 
@@ -174,7 +173,6 @@ export class VGridSortable {
   }
 
 
-
   //on drag over event(moving)
   onDragOver(evt) {
     if (!this.timer) {
@@ -187,10 +185,9 @@ export class VGridSortable {
 
         var target = evt.target.offsetParent;
         try {
-          var targetNode = target.nodeName === 'DIV' || target.nodeName === 'V-GRID-CELL-HEADER';
-        }catch(e) {
+          var targetNode = target.nodeName === 'DIV' || target.nodeName === 'V-GRID-HEADER-COL';
+        } catch (e) {
         }
-
 
 
         if (target && target !== this.dragEl && targetNode && target.getAttribute("draggable") === "true") {
@@ -209,7 +206,7 @@ export class VGridSortable {
             this.onUpdateAlt(parseInt(this.oldIndex), parseInt(this.newIndex));
             this.oldIndex = this.newIndex * 1
           }
-         }
+        }
         this.timer = null;
       }, 150)
     }

@@ -21,7 +21,6 @@ export class VGridCellHelper {
   }
 
 
-
   /***************************************************************************************
    * sets "the cells" from  to direction asked for, so tabbing jumps to next row
    ***************************************************************************************/
@@ -104,7 +103,7 @@ export class VGridCellHelper {
 
     this.vGrid.element.onmousedown = function (e) {
       if (this.curElement) {
-        if(e.target !== this.curElement){
+        if (e.target !== this.curElement) {
           this.curElement.blur()
         }
       }
@@ -144,14 +143,14 @@ export class VGridCellHelper {
 
 
             //if last scroll was up then we need to reverse the buffer
-            if(this.vGrid.vGridGenerator.lastScrollType === "down"){
+            if (this.vGrid.vGridGenerator.lastScrollType === "down") {
               this.vGrid.vGridGenerator.onNormalScrolling(false)
             }
 
             this.setCellsFromTopValue(newTop);
             this.dispatchCellClick(this.index);
 
-            var setTop = newTop-parseInt((containerRows*rowHeight)/2)
+            var setTop = newTop - parseInt((containerRows * rowHeight) / 2)
             this.vGrid.vGridGenerator.setScrollTop(setTop);
 
           }
@@ -182,14 +181,14 @@ export class VGridCellHelper {
             }
 
             //if last scroll was up then we need to reverse the buffer
-            if(this.vGrid.vGridGenerator.lastScrollType === "up"){
+            if (this.vGrid.vGridGenerator.lastScrollType === "up") {
               this.vGrid.vGridGenerator.onNormalScrolling(true);
             }
 
             this.setCellsFromTopValue(newTop);
             this.dispatchCellClick(this.index);
 
-            var setTop = newTop-parseInt((containerRows*rowHeight)/2)
+            var setTop = newTop - parseInt((containerRows * rowHeight) / 2)
             this.vGrid.vGridGenerator.setScrollTop(setTop);
 
           }
@@ -211,7 +210,7 @@ export class VGridCellHelper {
 
 
       //arrow right
-      if (e.keyCode === 39 && !this.editMode  && !queryField) {
+      if (e.keyCode === 39 && !this.editMode && !queryField) {
         e.preventDefault();
         this.keyDownDelay(() => {
           if (this.curElement) {
@@ -225,7 +224,7 @@ export class VGridCellHelper {
 
 
       //arrow left
-      if (e.keyCode === 37 && !this.editMode  && !queryField) {
+      if (e.keyCode === 37 && !this.editMode && !queryField) {
         e.preventDefault();
         this.keyDownDelay(() => {
           if (this.curElement) {
@@ -290,7 +289,7 @@ export class VGridCellHelper {
   }
 
 
-  blurBeforeNext(){
+  blurBeforeNext() {
     if (this.curElement) {
       this.curElement.blur()
     }
@@ -302,7 +301,7 @@ export class VGridCellHelper {
    ***************************************************************************************/
   updateActual(obj) {
 
-    if(obj.attribute && this.vGrid.vGridCurrentEntityRef){
+    if (obj.attribute && this.vGrid.vGridCurrentEntityRef) {
       //so we dont create loop
       this.vGrid.vGridSkipNextUpdateProperty.push(obj.attribute);
 
@@ -310,9 +309,9 @@ export class VGridCellHelper {
       this.vGrid.vGridCurrentEntityRef[obj.attribute] = obj.value;
       this.vGrid.vGridCurrentEntity[obj.attribute] = obj.value;
       var row = this.vGrid.vGridCurrentRow;
-      setTimeout(()=>{
+      setTimeout(()=> {
         this.vGrid.vGridGenerator.fillDataIntoRow(row);
-      },150)
+      }, 150)
     }
 
   }
@@ -324,12 +323,13 @@ export class VGridCellHelper {
   editCellhelper(row, e) {
     //editCellhelper(row, e, readOnly) {
 
-    if (e.target.tagName === "V-GRID-CELL-ROW") {
+    if (e.target.tagName === "V-GRID-ROW-COL" || e.target.tagName === "V-GRID-CHECKBOX" || e.target.tagName === "V-GRID-IMAGE") {
       //if this is clicked then its a image or something smaller then the cell, lets send it to the first child
-      if(e.target.firstChild){
+      if (e.target.children) {
         this.editCellhelper(row, {
-          target:e.target.firstChild,
-          type: e.type}
+            target: e.target.children[0],
+            type: e.type
+          }
         );
       }
 
@@ -341,9 +341,9 @@ export class VGridCellHelper {
 
 
         //set internal cells & index (used for tabbing)
-        this.cells = this.curElement.parentNode.parentNode.querySelectorAll("." + this.vGrid.vGridConfig.css.cellContent);
+        this.cells = this.curElement.parentNode.parentNode.parentNode.querySelectorAll("." + this.vGrid.vGridConfig.css.cellContent);
 
-        this.index = parseInt(this.curElement.parentNode.getAttribute("column-no"));
+        this.index = parseInt(this.curElement.columnNo);
         if (this.index === this.cells.length - 1) {
           this.last = true;
         } else {
@@ -376,9 +376,9 @@ export class VGridCellHelper {
       }
     }
   };
-  
-  
-  refocus(){
+
+
+  refocus() {
     var newEvent = document.createEvent('Event');
     newEvent.initEvent("cellFocus", true, true);
     this.curElement.dispatchEvent(newEvent)

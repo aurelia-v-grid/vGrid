@@ -6,7 +6,10 @@ import moment from 'moment';
 export class DateFormatValueConverter {
   toView(value) {
     if(value){
-      return moment(value).format('MM.DD.YYYY');
+      console.log("inn:"+value)
+      var x = moment(value).format('DD.MM.YYYY');
+      console.log("out:"+x)
+      return x;
     } else {
       return value;
     }
@@ -14,7 +17,7 @@ export class DateFormatValueConverter {
   }
   fromView(value) {
     if(value){
-      return new Date(moment(value,'MM.DD.YYYY')._d);
+      return new Date(moment(value,'DD.MM.YYYY')._d);
     } else {
       return value;
     }
