@@ -1,6 +1,6 @@
 /*****************************************************************************************************************
  *    VGridCellHelper
- *    This just helper for cell-row helper, tabbing etc
+ *    This just helper for (v-grid-row-col.js), tabbing/focus etc
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
