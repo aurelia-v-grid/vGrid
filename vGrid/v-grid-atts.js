@@ -35,9 +35,8 @@ var VGridAttibutes = class {
 
 
   setBindValueInt() {
-    let ctxValue = this.vGrid.vGridContextObj[this.attribute]
-    if (this.vGrid.vGridContextObj[this.attribute]) {
-      this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.attribute], this.attDefault);
+    if (this.vGrid.vGridContextObj[this.alias]) {
+      this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.alias], this.attDefault);
     } else {
       this.vGrid.vGridConfig[this.attribute] = this.setValue(parseInt(this.value), this.attDefault);
     }
@@ -50,8 +49,8 @@ var VGridAttibutes = class {
       "false": false
     };
 
-    if (this.vGrid.vGridContextObj[this.attribute]) {
-      this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.attribute], this.attDefault);
+    if (this.vGrid.vGridContextObj[this.alias]) {
+      this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.alias], this.attDefault);
     } else {
       this.vGrid.vGridConfig[this.attribute] = this.setValue(type[this.value], this.attDefault);
     }
@@ -59,9 +58,9 @@ var VGridAttibutes = class {
 
 
   setBindValueFn() {
-    if (this.vGrid.vGridContextObj[this.attribute]) {
-      if (typeof(this.vGrid.$parent[this.value]) === "function") {
-        this.vGrid.vGridConfig[this.attribute] = this.vGrid.$parent[this.value].bind(this.vGrid.$parent);
+    if (this.vGrid.vGridContextObj[this.alias]) {
+      if (typeof(this.vGrid.vGridContextObj[this.alias]) === "function") {
+        this.vGrid.vGridConfig[this.attribute] = this.vGrid.vGridContextObj[this.alias].bind(this.vGrid.$parent);
       }
     } else {
       if (typeof(this.vGrid.$parent[this.value]) === "function") {
@@ -143,6 +142,7 @@ var VGridAttibutes = class {
 @inject(Element, Optional.of(VGrid))
 export class rowHeight extends VGridAttibutes {
   attribute = "rowHeight";
+  alias = "configRowHeight";
   type = "int";
 }
 
@@ -151,6 +151,7 @@ export class rowHeight extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class headerHeight extends VGridAttibutes {
   attribute = "headerHeight";
+  alias = "configHeaderHeight";
   type = "int";
 }
 
@@ -159,6 +160,7 @@ export class headerHeight extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class footerHeight extends VGridAttibutes {
   attribute = "footerHeight";
+  alias = "configFooterHeight";
   type = "int";
 }
 
@@ -167,6 +169,7 @@ export class footerHeight extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class isResizableHeaders extends VGridAttibutes {
   attribute = "isResizableHeaders";
+  alias = "configResizableHeaders";
   type = "bool";
 }
 
@@ -175,6 +178,7 @@ export class isResizableHeaders extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class isMultiSelect extends VGridAttibutes {
   attribute = "isMultiSelect";
+  alias = "configMultiSelect";
   type = "bool";
 }
 
@@ -183,6 +187,7 @@ export class isMultiSelect extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class isSortableHeader extends VGridAttibutes {
   attribute = "isSortableHeader";
+  alias = "configSortableHeader";
   type = "bool";
 }
 
@@ -191,6 +196,7 @@ export class isSortableHeader extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class requestAnimationFrame extends VGridAttibutes {
   attribute = "requestAnimationFrame";
+  alias = "configRequestAnimationFrame";
   type = "bool";
 }
 
@@ -199,6 +205,7 @@ export class requestAnimationFrame extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class resizableHeadersAndRows extends VGridAttibutes {
   attribute = "resizableHeadersAndRows";
+  alias = "configResizableHeadersAndRows";
   type = "bool";
 }
 
@@ -206,6 +213,7 @@ export class resizableHeadersAndRows extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class renderOnScrollbarScroll extends VGridAttibutes {
   attribute = "renderOnScrollbarScroll";
+  alias = "configRenderOnScrollbarScroll";
   type = "bool";
 }
 
@@ -214,6 +222,7 @@ export class renderOnScrollbarScroll extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class addFilter extends VGridAttibutes {
   attribute = "addFilter";
+  alias = "configAddFilter";
   type = "bool";
 }
 
@@ -222,38 +231,43 @@ export class addFilter extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class filterOnAtTop extends VGridAttibutes {
   attribute = "filterOnAtTop";
+  alias = "configFilterOnAtTop";
   type = "bool";
 }
 
 
 
-@customAttribute('v-sort-on-header-click')
-@inject(Element, Optional.of(VGrid))
-export class sortOnHeaderClick extends VGridAttibutes {
-  attribute = "sortOnHeaderClick";
-  type = "bool";
-}
+// @customAttribute('v-sort-on-header-click')
+// @inject(Element, Optional.of(VGrid))
+// export class sortOnHeaderClick extends VGridAttibutes {
+//   attribute = "sortOnHeaderClick";
+//   alias = "sortOnHeaderClick";
+//   type = "bool";
+// }
 
 
 @customAttribute('v-large-buffer')
 @inject(Element, Optional.of(VGrid))
 export class largeBuffer extends VGridAttibutes {
   attribute = "largeBuffer";
+  alias = "configLargeBuffer";
   type = "bool";
 }
 
-@customAttribute('v-active-sorting')
-@inject(Element, Optional.of(VGrid))
-export class activeSorting extends VGridAttibutes {
-  attribute = "activeSorting";
-  type = "bool";
-}
+// @customAttribute('v-active-sorting')
+// @inject(Element, Optional.of(VGrid))
+// export class activeSorting extends VGridAttibutes {
+//   attribute = "activeSorting";
+//   alias = "activeSorting";
+//   type = "bool";
+// }
 
 
 @customAttribute('v-row-on-draw')
 @inject(Element, Optional.of(VGrid))
 export class eventOnRowDraw extends VGridAttibutes {
   attribute = "eventOnRowDraw";
+  alias = "configEventOnRowDraw";
   type = "fn";
 }
 
@@ -263,6 +277,7 @@ export class eventOnRowDraw extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class attributeArray extends VGridAttibutes {
   attribute = "attributeArray";
+  alias = "configAttributeArray";
   type = "array";
 }
 
@@ -270,6 +285,7 @@ export class attributeArray extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class doNotAddFilterTo extends VGridAttibutes {
   attribute = "doNotAddFilterTo";
+  alias = "configDoNotAddFilterTo";
   type = "array";
 }
 
@@ -277,6 +293,7 @@ export class doNotAddFilterTo extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class sortNotOnHeader extends VGridAttibutes {
   attribute = "sortNotOnHeader";
+  alias = "configSortNotOnHeader";
   type = "array";
 }
 
@@ -285,6 +302,7 @@ export class sortNotOnHeader extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class eventOnRowClick extends VGridAttibutes {
   attribute = "eventOnRowClick";
+  alias = "configEventOnRowClick";
   type = "fn";
 }
 
@@ -292,5 +310,6 @@ export class eventOnRowClick extends VGridAttibutes {
 @inject(Element, Optional.of(VGrid))
 export class eventOnRowDblClick extends VGridAttibutes {
   attribute = "eventOnRowDblClick";
+  alias = "configEventOnRowDblClick";
   type = "fn";
 }

@@ -151,8 +151,10 @@ export class VGrid {
     this.vGridObservables.enableObservablesArray();
     this.vGridObservables.enableObservablesAttributes();
 
+    
+    this.vGridConfig.init();
+    
     //create the grid html/add events etc
-    //this.vGridGenerator = new VGridGenerator(this.vGridConfig, this.element, VGridSortable, this.vGridSelection, this.vGridCellHelper, this);
     this.vGridGenerator.init(false);
 
  
