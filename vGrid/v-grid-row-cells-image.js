@@ -7,9 +7,9 @@
 
 //keeping one for each, so its easier to maintain if I do something special later
 
-import {inject, noView, customElement, processContent, bindable} from 'aurelia-framework';
+import {inject, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
-import {VGridCellContainer} from './v-grid-row-col'
+
 
 
 
@@ -18,16 +18,15 @@ import {VGridCellContainer} from './v-grid-row-col'
  *******************************************/
 
 @customElement('v-grid-image')
-@inject(Element, VGrid, VGridCellContainer)
+@inject(Element, VGrid)
 export class VGridRowCellImage {
   @bindable value;
   @bindable customStyle;
 
 
-  constructor(element, vGrid, VGridCellContainer) {
+  constructor(element, vGrid) {
     this.element = element;
     this.vGrid = vGrid;
-    this.vGridCol = VGridCellContainer;
   }
 
   
@@ -52,7 +51,7 @@ export class VGridRowCellImage {
 
 
   attached() {
-    this.content = this.element.children[0];//document.createElement("img");
+    this.content = this.element.children[0];
     this.content.classList.add(this.parent.vGrid.vGridConfig.css.cellContent);
     this.valueChanged(this.value);
     this.content.style.margin = "auto";

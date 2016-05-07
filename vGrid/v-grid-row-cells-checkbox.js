@@ -7,9 +7,9 @@
 
 //keeping one for each, so its easier to maintain if I do something special later
 
-import {inject, noView, customElement, processContent, bindable} from 'aurelia-framework';
+import {inject, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
-import {VGridCellContainer} from './v-grid-row-col'
+
 
 
 /*******************************************
@@ -17,16 +17,15 @@ import {VGridCellContainer} from './v-grid-row-col'
  *******************************************/
 
 @customElement('v-grid-checkbox')
-@inject(Element, VGrid, VGridCellContainer)
+@inject(Element, VGrid)
 export class VGridRowCellCheckbox {
   @bindable value;
   @bindable customStyle;
 
 
-  constructor(element, vGrid, VGridCellContainer) {
+  constructor(element, vGrid) {
     this.element = element;
     this.vGrid = vGrid;
-    this.vGridCol = VGridCellContainer;
   }
 
 

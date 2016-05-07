@@ -1131,32 +1131,32 @@ export class VGridGenerator {
   //tested todo: this need to be changed now
   setColumns(paramObj) {
     //todo: this needs a big update
-    this.vGridConfig.attributeArray = paramObj.attributeArray;
-    this.vGridConfig.columnWidthArray = paramObj.columnWidthArray;
-    this.vGridConfig.headerArray = paramObj.headerArray;
-    this.vGridConfig.filterArray = paramObj.filterArray;
-    this.vGridConfig.readOnlyArray = paramObj.readOnlyArray;
+    this.vGridConfig.attributeArray = paramObj.colAttrArray;
+    this.vGridConfig.columnWidthArray = paramObj.colWidthArray;
+    this.vGridConfig.headerArray = paramObj.colHeaderArray;
+    this.vGridConfig.filterArray = paramObj.colFilterArray;
+    this.vGridConfig.readOnlyArray = paramObj.colReadonlyArray;
     this.vGridConfig.colStyleArray = paramObj.colStyleArray;
     this.vGridConfig.colTypeArray = paramObj.colTypeArray;
     this.vGridConfig.colFormaterArray = paramObj.colFormaterArray;
     this.vGridConfig.colEditRawArray = paramObj.colEditRawArray;
-    this.vGridConfig.filterOnKeyArray = paramObj.filterOnKeyArray;
+    this.vGridConfig.filterOnKeyArray = paramObj.colFilterOnKeyArray;
   };
 
 
   getColumns() {
     //todo: this needs a big update
     return {
-      "attributeArray": this.vGridConfig.attributeArray.slice(),
-      "columnWidthArray": this.vGridConfig.columnWidthArray.slice(),
-      "headerArray": this.vGridConfig.headerArray.slice(),
-      "filterArray": this.vGridConfig.filterArray.slice(),
-      "readOnlyArray": this.vGridConfig.readOnlyArray.slice(),
+      "colAttrArray": this.vGridConfig.attributeArray.slice(),
+      "colWidthArray": this.vGridConfig.columnWidthArray.slice(),
+      "colHeaderArray": this.vGridConfig.headerArray.slice(),
+      "colFilterArray": this.vGridConfig.filterArray.slice(),
+      "colReadonlyArray": this.vGridConfig.readOnlyArray.slice(),
       "colStyleArray": this.vGridConfig.colStyleArray.slice(),
       "colTypeArray": this.vGridConfig.colTypeArray.slice(),
       "colFormaterArray": this.vGridConfig.colFormaterArray.slice(),
       "colEditRawArray": this.vGridConfig.colEditRawArray.slice(),
-      "filterOnKeyArray": this.vGridConfig.filterOnKeyArray.slice()
+      "colFilterOnKeyArray": this.vGridConfig.filterOnKeyArray.slice()
     }
   };
 
