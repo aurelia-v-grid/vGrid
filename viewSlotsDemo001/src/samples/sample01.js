@@ -9,7 +9,7 @@ export class sample01 {
   myCollection = [];
   myCurrentEntity = {};
   myGrid = {
-  
+
   };
 
   onRowDraw (data, collectionData, datePicker) {
