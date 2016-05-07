@@ -47,9 +47,9 @@ How to use: (no plugin yet):
 * **v-render-on-scrollbar-scroll** - optional, default true
 * **v-header-filter** - optional, default false
 * **v-header-filter-top** - optional, default true
-* **v-header-filter-not-to** - optional, default ""  sample:"att1,att2" 
+* **v-header-filter-not-to** - optional, default ""  sample:"attribute1,attribute2"
 * **v-sort-on-header-click** - optional, default false
-* **v-sort-not-on-header** - optional, default ""  sample:"att1,att2" 
+* **v-sort-not-on-header** - optional, default ""  sample:"attribute1,attribute2"
 * **v-row-on-draw** - optional, default ""
 
 
