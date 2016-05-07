@@ -53,9 +53,27 @@ export class VGridSelection {
   };
 
 
+  isSelectedMain(row) {
+    var result = false;
+    if (this.selectedRows > 0) {
+      if (this.vGrid.vGridCollection[row]) {
+        result = this.selection.has(this.vGrid.vGridCollection[row][this.vGrid.vGridRowKey]);
+      }
+    }
+    return result;
+  };
+
+
   deSelect(row) {
     if (this.vGrid.vGridCollectionFiltered[row]) {
       this.selection.delete(this.vGrid.vGridCollectionFiltered[row][this.vGrid.vGridRowKey]);
+    }
+  }
+
+
+  deSelectMain(row) {
+    if (this.vGrid.vGridCollection[row]) {
+      this.selection.delete(this.vGrid.vGridCollection[row][this.vGrid.vGridRowKey]);
     }
   }
 
@@ -90,11 +108,52 @@ export class VGridSelection {
   };
 
 
+  selectMain(row, addToSelection) {
+    switch (this.selectionMode) {
+      case "none":
+      case null:
+      case undefined:
+        break;
+      case "single":
+        this.selection.clear();
+        if (this.vGrid.vGridCollection[row]) {
+          this.selection.add(this.vGrid.vGridCollection[row][this.vGrid.vGridRowKey]);
+        }
+        this.selectedRows = this.selection.size;
+        break;
+      case "multible":
+        if (!addToSelection) {
+          this.selection.clear();
+          if (this.vGrid.vGridCollection[row]) {
+            this.selection.add(this.vGrid.vGridCollection[row][this.vGrid.vGridRowKey]);
+          }
+          this.selectedRows = this.selection.size;
+        } else {
+          if (this.vGrid.vGridCollection[row]) {
+            this.selection.add(this.vGrid.vGridCollection[row][this.vGrid.vGridRowKey]);
+          }
+          this.selectedRows = this.selection.size;
+        }
+    }
+  };
+
+
   selectRange(start, end) {
     if (this.selectionMode === "multible") {
       this.selection.clear();
       for (var i = start; i < end + 1; i++) {
         this.selection.add(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
+      }
+      this.selectedRows = this.selection.size;
+    }
+  };
+
+
+  selectRangeMain(start, end) {
+    if (this.selectionMode === "multible") {
+      this.selection.clear();
+      for (var i = start; i < end + 1; i++) {
+        this.selection.add(this.vGrid.vGridCollection[i][this.vGrid.vGridRowKey]);
       }
       this.selectedRows = this.selection.size;
     }
@@ -124,6 +183,18 @@ export class VGridSelection {
   };
 
 
+  getSelectedRowsMain() {
+    var array = [];
+    if (this.selectedRows > 0) {
+      this.vGrid.vGridCollection.forEach((x, index) => {
+        if (this.selection.has(x[this.vGrid.vGridRowKey]) === true) {
+          array.push(index)
+        }
+      });
+    }
+    return array
+  };
+
   setSelectedRows(newRows) {
     if (this.selectedRows > 0) {
       this.selection.clear();
@@ -135,6 +206,17 @@ export class VGridSelection {
   };
 
 
+  setSelectedRowsMain(newRows) {
+    if (this.selectedRows > 0) {
+      this.selection.clear();
+    }
+    for (var i = 0; i < newRows.length; i++) {
+      this.selection.add(this.vGrid.vGridCollection[newRows[i]][this.vGrid.vGridRowKey]);
+    }
+    this.selectedRows = this.selection.size;
+  };
+
+  
   /****************************************************************************************************************************
    * fixes highlight and select...
    ****************************************************************************************************************************/

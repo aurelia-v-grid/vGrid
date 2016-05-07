@@ -253,7 +253,7 @@ export class activeSorting extends VGridAttibutes {
 @customAttribute('v-row-on-draw')
 @inject(Element, Optional.of(VGrid))
 export class eventOnRowDraw extends VGridAttibutes {
-  attribute = "eventOnRowDraw"
+  attribute = "eventOnRowDraw";
   type = "fn";
 }
 
@@ -278,4 +278,19 @@ export class doNotAddFilterTo extends VGridAttibutes {
 export class sortNotOnHeader extends VGridAttibutes {
   attribute = "sortNotOnHeader";
   type = "array";
+}
+
+
+@customAttribute('v-row-onclick')
+@inject(Element, Optional.of(VGrid))
+export class eventOnRowClick extends VGridAttibutes {
+  attribute = "eventOnRowClick";
+  type = "fn";
+}
+
+@customAttribute('v-row-ondblclick')
+@inject(Element, Optional.of(VGrid))
+export class eventOnRowDblClick extends VGridAttibutes {
+  attribute = "eventOnRowDblClick";
+  type = "fn";
 }

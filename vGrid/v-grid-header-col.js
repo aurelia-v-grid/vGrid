@@ -186,7 +186,7 @@ export class VGridCellRowHeader {
 
 
     if (this.vGridConfig.sortNotOnHeader.indexOf(attribute) === -1) {
-      var markup = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconSort}"></span>`;
+      markup = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconSort}"></span>`;
       if (this.vGridConfig.sortOnHeaderClick) {
         if (this.vGrid.vGridGenerator.sortOrder.length !== 0) {
           this.vGrid.vGridSort.getFilter().forEach((x) => {

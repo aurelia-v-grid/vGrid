@@ -50,7 +50,9 @@ How to use: (no plugin yet):
 * **v-header-filter-not-to** - optional, default ""  sample:"attribute1,attribute2"
 * **v-sort-on-header-click** - optional, default false
 * **v-sort-not-on-header** - optional, default ""  sample:"attribute1,attribute2"
-* **v-row-on-draw** - optional, default ""
+* **v-row-on-draw** - optional, default ""  callback where you can modify dummy data for display in row
+* **v-row-onclick** - optional, default "", bind function "myRowClick", returns data, row in main collection, and attribute
+* **v-row-ondblclick** - optional, default "", bind function "myRowDblClick", returns data, row in main collection, and attribute
 
 
 ----
@@ -60,7 +62,7 @@ How to use: (no plugin yet):
 * **v-col-attribute** -mandatory
 * **v-col-header** -mandatory
 * **v-col-read-only** - optional, default false
-* **v-col-css** - optional
+* **v-col-css** - optional  (need to use mustache tag if binding to collection data {{something}} )
 * **v-col-type** - optional (image, checkbox), default normal input
 * **v-col-default-filter** - optional
 * **v-col-filter-on-key** - optional, default false
