@@ -27,7 +27,7 @@ How to use: (no plugin yet):
 .plugin("vGrid/plugin");
 ```
 
-* todo, show more when Ive renamed a few tings/ and cleaned up more
+* todo, show more when Ive renamed a few things/ and cleaned up more
 
 ----
 
@@ -159,8 +159,18 @@ export class sample01 {
 ```
 
 **Webpack** :
+
+----
+
 you need to disable the require, and import it onto page
 
 ```
 <require from="./v-grid.css"></require>
 ```
+
+**CSS** :
+
+---
+
+I only test with and without bootstrap
+using other special libs might mess with some inputs/context menus, if you have suggestion how to improve it then please make a issue with it, or code to fix for someof the css libs out there then that is great, I cant test with every one
