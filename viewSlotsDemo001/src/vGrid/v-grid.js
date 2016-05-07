@@ -91,7 +91,7 @@ export class VGrid {
   vGridGetRowKey(key){
     var rowFound = null;
     this.vGridCollection.forEach((row, index) => {
-      if(!row[this.vGridRowKey] === key){
+      if(row[this.vGridRowKey] === key){
         rowFound = index;
       }
     });

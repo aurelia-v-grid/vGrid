@@ -22,20 +22,20 @@ export class VGridHeaderLabel {
 
   attached() {
     this.content = this.element.children[0];
-    this.setStyle();
+    this.setStyle(this.content);
     this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute())
 
 
   }
 
-  setStyle() {
+  setStyle(element) {
 
     var addClass = (name)=> {
-      this.content.classList.add(name)
+      element.classList.add(name)
     };
 
     var setStyleTag = (tag, value)=> {
-      this.content.style[tag] = value;
+      element.style[tag] = value;
     };
 
     var dragHandle = this.vGridConfig.isSortableHeader ? this.vGridConfig.css.dragHandle : "";

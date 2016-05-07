@@ -94,6 +94,8 @@ export class VGridConfig {
     this.activeSorting = false;
 
     this.eventOnRowDraw = null;
+    this.eventOnRowClick = null;
+    this.eventOnRowDblClick = null;
 
 
     this.doNotAddFilterTo = [];
@@ -297,10 +299,26 @@ export class VGridConfig {
     }
 
 
+
+
     //use helper function to edit cell
     if (this.vGridCurrentEntityRef) {
       this.vGridCellHelper.editCellhelper(row, event);
     }
+
+    if(event.type === "click" && this.eventOnRowClick){
+      var newEvent = document.createEvent('Event');
+      newEvent.initEvent("eventOnRowClick", true, true);
+      event.target.dispatchEvent(newEvent)
+    }
+
+    if(event.type === "dblclick" && this.eventOnRowDblClick){
+      var newEvent = document.createEvent('Event');
+      newEvent.initEvent("eventOnRowDblClick", true, true);
+      event.target.dispatchEvent(newEvent)
+    }
+
+
 
   }
 

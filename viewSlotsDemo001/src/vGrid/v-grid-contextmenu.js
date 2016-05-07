@@ -250,7 +250,7 @@ export class ContextMenuHeader extends ContextMenu {
 
   //main menu lisntner
   menuItemListener(link) {
-    var value = link.getAttribute("data-action")
+    var value = link.getAttribute("data-action");
 
     if (this.altMenuLogic) {
       this.filterMenuLogic(value);
@@ -483,11 +483,13 @@ export class ContextMenuCell extends ContextMenu {
         break;
       case "paste-cell":
         if (this.parent.vGrid.vGridCellHelper.cellValue !== null) {
-          var rows = this.parent.vGrid.vGridSelection.getSelectedRows();
-          rows.forEach((x)=> {
-            this.parent.vGrid.vGridCollectionFiltered[x][this.parent.attribute()] = this.parent.vGrid.vGridCellHelper.cellValue;
-          });
-          this.parent.vGrid.vGridGenerator.fillDataInRows();
+          if(!this.parent.readOnly()){
+            var rows = this.parent.vGrid.vGridSelection.getSelectedRows();
+            rows.forEach((x)=> {
+              this.parent.vGrid.vGridCollectionFiltered[x][this.parent.attribute()] = this.parent.vGrid.vGridCellHelper.cellValue;
+            });
+            this.parent.vGrid.vGridGenerator.fillDataInRows();
+          }
           this.parent.vGrid.vGridCellHelper.refocus();
         } else {
           console.log("no value")

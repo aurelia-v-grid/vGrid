@@ -81,13 +81,28 @@ export class VGridCellContainer {
     }.bind(this));
 
 
-    this.element.ondblclick = function (e) {
-      //todo: do I want do the callback here, if user have added a click event?
-    }.bind(this);
+    this.element.addEventListener("eventOnRowDblClick",function (e) {
+      if(this.vGrid.vGridConfig.eventOnRowDblClick){
+        this.vGrid.vGridConfig.eventOnRowDblClick({
+          evt:e,
+          data:this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
+          attribute:this.attribute(),
+          row: this.vGrid.vGridGetRowKey(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey])
+        });
+      }
+    }.bind(this));
 
-    this.element.onclick = function (e) {
-      //todo: do I want do the callback here, if user have added a click event?
-    }.bind(this);
+
+    this.element.addEventListener("eventOnRowClick",function (e) {
+      if(this.vGrid.vGridConfig.eventOnRowClick){
+        this.vGrid.vGridConfig.eventOnRowClick({
+          evt:e,
+          data:this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
+          attribute:this.attribute(),
+          row: this.vGrid.vGridGetRowKey(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey])
+          });
+      }
+    }.bind(this));
 
   }
 

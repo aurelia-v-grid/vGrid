@@ -25,6 +25,13 @@ export class sample01 {
     }
   }
 
+  singleClick(e){
+    console.log("click")
+  }
+
+  singleDblClick(e){
+    console.log("dblClick")
+  }
   onDatePickerCreate(element, that){
     var picker = new pikaday({
       field: element,

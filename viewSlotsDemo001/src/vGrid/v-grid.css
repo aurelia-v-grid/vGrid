@@ -195,8 +195,8 @@
   box-sizing: border-box;
   position: relative;
   left: 0;
-  width: 100%;
-  height: 100%;
+  /*width: 100%;*/
+  /*height: 100%;*/
   padding-left: 5px;
   white-space: nowrap;
   overflow: hidden;
@@ -227,8 +227,8 @@
 }
 
 .vGrid-filterInputAtTop {
-  height: 50% !important;
-  width: 100% !important;
+  height: 50%;
+  width: 100%;
   border: 0;
   border-left: 0 solid !important;
   position: relative;
@@ -241,8 +241,8 @@
 }
 
 .vGrid-filterInputAtBottom {
-  height: 50% !important;
-  width: 100% !important;
+  height: 50%;
+  width: 100%;
   border: 1px solid rgb(204, 204, 204);
   border-left: 0 solid !important;
   position: relative;
@@ -381,7 +381,6 @@
   content: "\e155";
 }
 
-
 /* context menu */
 
 .v-grid-context-menu {
@@ -394,6 +393,7 @@
   border: solid 1px #dfdfdf;
   box-shadow: 1px 1px 2px #cfcfcf;
 }
+
 
 .v-grid-context-menu a {
   color: black;

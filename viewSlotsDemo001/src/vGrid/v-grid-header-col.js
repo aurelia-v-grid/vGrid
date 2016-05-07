@@ -183,9 +183,10 @@ export class VGridCellRowHeader {
     var lineHeigthStyleTag = `style=line-height:${this.vGridConfig.headerHeight / rows}px;"`;
     var isAscHtml = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconAsc}"></span>`;
     var isDescHtml = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconDesc}"></span>`;
-    var markup = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconSort}"></span>`;
+
 
     if (this.vGridConfig.sortNotOnHeader.indexOf(attribute) === -1) {
+      markup = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconSort}"></span>`;
       if (this.vGridConfig.sortOnHeaderClick) {
         if (this.vGrid.vGridGenerator.sortOrder.length !== 0) {
           this.vGrid.vGridSort.getFilter().forEach((x) => {

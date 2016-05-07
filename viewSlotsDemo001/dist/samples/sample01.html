@@ -13,14 +13,14 @@
     <!------------------------------------------------------------------------------------------------------------------------------------>
 
     <div  class="myRow1">
-
+<!--v-header-filter-not-to="images"-->
 
       <!------------------------------------------------------------------------------------------------------------------------------------>
       <!--GRID------------------------------------------------------------------------------------------------------------------------------>
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">early version- using viewslots 2016.05.07 v22 </h4>
+        <h4 style="margin-left:25px">early version- using viewslots 2016.05.07 v23 </h4>
 
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -29,9 +29,12 @@
           v-resize-also-rows="true"
           v-resizable-headers="true"
           v-header-filter="true"
-           v-header-filter-not-to="images"
+          v-header-filter-not-to="images"
+          v-sort-not-on-header="images"
           v-header-filter-top="true"
           v-sortable-headers="true"
+          v-row-onclick="singleClick"
+          v-row-ondblclick="singleDblClick"
           v-sort-on-header-click="true"
           v-multi-select="true"
           v-row-on-draw="onRowDraw"
@@ -41,7 +44,7 @@
           v-grid-context.bind=myGrid>
           <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">="  v-col-read-only="true"></v-grid-col>
           <v-grid-col v-col-width="100" v-col-attribute="name" v-col-filter-on-key="true" v-col-header="name" v-col-default-filter="*"></v-grid-col>
-          <v-grid-col v-col-width="90" v-col-attribute="images" v-col-header="image" v-col-type="image" v-col-css="border-radius: 50%;height:100%;margin-left:25%;" v-col-default-filter="=*"></v-grid-col>
+          <v-grid-col v-col-width="90" v-col-attribute="images" v-col-header="image" v-col-type="image" v-col-css="border-radius: 50%;height:100%;margin-left:25%;"></v-grid-col>
           <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox" v-col-default-filter="=" ></v-grid-col>
           <v-grid-col v-col-width="80" v-col-attribute="number" v-col-header="Number" v-col-css="color:{{customColor}};font-weight:{{customFont}};text-align:right; padding-right:5px" v-col-formater="numberFormat" v-col-edit-raw="true" v-col-default-filter=">="></v-grid-col>
           <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date"  v-col-formater="dateFormat" v-col-default-filter=">="></v-grid-col>
