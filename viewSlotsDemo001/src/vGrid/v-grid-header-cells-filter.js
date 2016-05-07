@@ -79,16 +79,16 @@ export class VGridHeaderFilter {
       switch(value){
         case true || "true":
           this.state = 2;
-          this.content.style.opacity = "1 !important";
+          this.content.style.opacity = 1;
           this.content.checked = true;
           break;
         case false || "false":
           this.state = 3;
-          this.content.style.opacity = "1 !important";
+          this.content.style.opacity = 1;
           break;
         default:
           this.state = 0;
-          this.content.style.opacity = "0.3 !important";
+          this.content.style.opacity = 0.3;
       }
 
 
