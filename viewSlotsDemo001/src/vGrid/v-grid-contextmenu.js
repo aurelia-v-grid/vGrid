@@ -340,16 +340,11 @@ export class ContextMenuHeader extends ContextMenu {
   defaultMenu(value) {
     switch (value) {
       case "clear-cell" :
-        this.parent.cellInputElement.value = "";
-        if (this.parent.cellInputElement.onkeydown) {
-          this.parent.cellInputElement.onkeydown({keyKode: 13});
-        } else {
-          this.parent.cellInputElement.onchange({keyKode: 13});
-        }
+        this.parent.queryString = "";
         this.toggleMenuOff();
         break;
       case "show-all":
-        var queryHtmlInput = this.parent.vGrid.element.querySelectorAll("." + this.parent.vGridConfig.css.filterHandle);
+        //var queryHtmlInput = this.parent.vGrid.element.querySelectorAll("." + this.parent.vGridConfig.css.filterHandle);
         this.parent.vGridConfig.onFilterRun([]);
         this.toggleMenuOff();
         break;
@@ -481,15 +476,6 @@ export class ContextMenuCell extends ContextMenu {
 
   defaultMenu(value) {
     switch (value) {
-      case "clear-cell" :
-        this.parent.cellInputElement.value = "";
-        if (this.parent.cellInputElement.onkeydown) {
-          this.parent.cellInputElement.onkeydown({keyKode: 13});
-        } else {
-          this.parent.cellInputElement.onchange({keyKode: 13});
-        }
-        this.toggleMenuOff();
-        break;
       case "copy-cell":
         this.parent.vGrid.vGridCellHelper.cellValue = this.parent.vGrid.vGridCurrentEntityRef[this.parent.attribute()];
         this.toggleMenuOff();

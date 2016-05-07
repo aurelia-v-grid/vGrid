@@ -132,9 +132,9 @@ export class VGridConfig {
       //get sel keys
 
       //if they filter we want to make sure the after cell edit happends
-      if (this.vGridCellHelper.curElement && this.vGridCellHelper.updated === false) {
-        this.vGridCellHelper.updateActual(this.vGridCellHelper.callbackObject());
-      }
+      // if (this.vGridCellHelper.curElement && this.vGridCellHelper.updated === false) {
+      //   this.vGridCellHelper.updateActual(this.vGridCellHelper.callbackObject());
+      // }
 
       var curKey = -1;
       if (this.vGridCurrentEntityRef) {
@@ -210,9 +210,9 @@ export class VGridConfig {
   onOrderBy(event, setheaders) {
 
     //if they sort we want to make sure the after cell edit happends
-    if (this.vGridCellHelper.curElement && this.vGridCellHelper.updated === false) {
-      this.vGridCellHelper.updateActual(this.vGridCellHelper.callbackObject());
-    }
+    // if (this.vGridCellHelper.curElement && this.vGridCellHelper.updated === false) {
+    //   this.vGridCellHelper.updateActual(this.vGridCellHelper.callbackObject());
+    // }
 
 
     //get clicked

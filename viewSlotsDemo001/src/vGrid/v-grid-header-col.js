@@ -4,7 +4,7 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {inject, noView, customElement, processContent, bindable, bindingMode} from 'aurelia-framework';
+import {inject, noView, customElement, processContent, Container, bindable, ViewSlot} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 //should I make this into a container and have cells under it?
 
@@ -12,14 +12,16 @@ import {VGrid} from './v-grid'
 @noView
 @customElement('v-grid-header-col')
 @processContent(false)
-@inject(Element, VGrid)
+@inject(Element, VGrid, Container)
 export class VGridCellRowHeader {
   @bindable columnNo;
 
-  constructor(element, vGrid) {
+  constructor(element, vGrid, container) {
     this.element = element;
     this.vGrid = vGrid;
+    this.container = container;
     this.vGridConfig = vGrid.vGridConfig;
+    this.queryString = null
   }
 
   bind(bindingContext) {
@@ -34,15 +36,109 @@ export class VGridCellRowHeader {
 
   attached() {
     this.setStandardClassesAndStyles();
-    this.haveFilter = this.vGridConfig.addFilter;
+
+    //get basic types '(todo, just create setters/getters?
+    this.addFilter = this.vGridConfig.addFilter;
     this.header = this.vGridConfig.headerArray[this.columnNo];
     this.filter = this.vGridConfig.filterArray[this.columnNo];
+    this.filterTop = this.vGridConfig.filterOnAtTop;
+    this.justLabel = this.vGridConfig.doNotAddFilterTo.indexOf(this.attribute());
+    this.filterName = this.vGridConfig.getFilterName(this.filter);
+    let value = this.vGrid.vGridGenerator.queryStringCheck[this.attribute()];
+    if (value) {
+      this.queryString = value;
+    }
 
-    if (!this.haveFilter) {
-      this.createSingleRowLabel();
-    } else {
-      this.createDoubleRowWithFilter();
-    }//end else
+
+    var sortIcon = this.getSortIconMarkup(this.attribute());
+
+    var type = "single";
+    if (this.addFilter) {
+      type = "filterTop";
+      if (!this.filterTop) {
+        type = "filterBottom";
+        if (this.justLabel !== -1) {
+          type = "noFilterBottom";
+        }
+      } else {
+        if (this.justLabel !== -1) {
+          type = "noFilterTop";
+        }
+      }
+
+
+    }
+    this.type = type;
+
+
+    switch (type) {
+      case "single":
+        var viewFactory = this.vGrid.viewCompiler.compile(`
+          <template>
+            <v-grid-label type="single">
+              <div>${this.header}${sortIcon}</div>
+            </v-grid-label>
+          </template>
+          `, this.vGrid.resources);
+        break;
+      case "filterTop":
+        var viewFactory = this.vGrid.viewCompiler.compile(`
+          <template>
+            <v-grid-filter filter-value.bind="queryString" type="filterTop">
+              <input placeholder="${this.filterName}">
+            </v-grid-filter>
+            <v-grid-label type="labelBottom">
+              <div>${this.header}${sortIcon}</div>
+            </v-grid-label>
+          </template>
+          `, this.vGrid.resources);
+        break;
+      case "filterBottom":
+        var viewFactory = this.vGrid.viewCompiler.compile(`
+          <template>
+            <v-grid-label type="labelTop">
+              <div>${this.header}${sortIcon}</div>
+            </v-grid-label>
+             <v-grid-filter filter-value.bind="queryString" type="filterBottom">
+              <input placeholder="${this.filterName}">
+            </v-grid-filter>
+          </template>
+          `, this.vGrid.resources);
+        break;
+      case "noFilterTop":
+        var viewFactory = this.vGrid.viewCompiler.compile(`
+          <template>
+            <v-grid-label type="blankLabel">
+              <div></div>
+            </v-grid-label>
+             <v-grid-label type="labelBottom">
+              <div>${this.header}${sortIcon}</div>
+            </v-grid-label>
+          </template>
+          `, this.vGrid.resources);
+        break;
+      case "noFilterBottom":
+        var viewFactory = this.vGrid.viewCompiler.compile(`
+          <template>
+             <v-grid-label type="labelBottom">
+              <div>${this.header}${sortIcon}</div>
+            </v-grid-label>
+            <v-grid-label type="blankLabel">
+              <div></div>
+            </v-grid-label>
+          </template>
+          `, this.vGrid.resources);
+        break;
+      default:
+        break;
+    }
+
+    var view = viewFactory.create(this.container);
+    this.viewSlot = new ViewSlot(this.element, true);
+    this.viewSlot.add(view);
+    this.viewSlot.bind(this);
+    this.viewSlot.attached();
+
 
   }
 
@@ -67,187 +163,64 @@ export class VGridCellRowHeader {
   }
 
 
-  createSingleRowLabel() {
-
-    //create element
-    var label = document.createElement('div');
-
-    //set styles
-    label.style['line-height'] = this.vGridConfig.headerHeight + "px";
-    label.style.height = "100%";
-    label.style.width = this.vGridConfig.columnWidthArray[this.columnNo] + "px";
-
-    //add classes
-    label.classList.add(this.vGridConfig.css.rowHeaderCell);
-    label.classList.add(this.vGridConfig.css.rowHeaderColumn + this.columnNo);
-    label.classList.add(this.vGridConfig.css.gridColumn + this.columnNo);
-    label.classList.add(this.vGridConfig.css.cellContent);
-    label.classList.add(this.vGridConfig.css.orderHandle);
-
-    //set inner text/sort icon
-    label.innerHTML = this.header + this.getSortIcon(this.attribute());
-
-    //set data attribute
-    label.setAttribute(this.vGridConfig.atts.dataAttribute, this.attribute());
-
-    //add resizable handle
-    var dragHandle = this.vGridConfig.isSortableHeader ? this.vGridConfig.css.dragHandle : "";
-    if (dragHandle !== "") {
-      label.classList.add(dragHandle);
-    }
-
-    //add to DOM
-    this.element.appendChild(label);
-  }
-
-  createDoubleRowWithFilter() {
-    var value = "";
-
-    //get old
-    if (this.vGrid.vGridGenerator.queryStringCheck[this.attribute()] !== undefined) {
-      value = this.vGrid.vGridGenerator.queryStringCheck[this.attribute()];
-    }
-
-    //get html markup
-    this.element.innerHTML = this.getHeaderCellMarkup(this.header, value, this.attribute());
-
-    //set event type to use, onchange is the best one to use...
-    var cellInputElement = this.element.querySelectorAll("." + this.vGridConfig.css.filterHandle)[0];
-
-    if (cellInputElement) {
-      if (this.vGridConfig.filterOnKeyArray[this.columnNo] !== true) {
-        cellInputElement.onkeyup = this.onKeyUpEventOnFilter.bind(this);
-        cellInputElement.onchange = this.onChangeEventOnFilter.bind(this);
-      } else {
-        cellInputElement.onkeyup = this.onChangeEventOnFilter.bind(this);
-      }
-    }
-
-    this.cellInputElement = cellInputElement;
-  }
-
-
   setStandardClassesAndStyles() {
-
     this.element.classList.add(this.vGridConfig.css.rowHeaderCell);
     this.element.classList.add(this.vGridConfig.css.rowHeaderColumn + this.columnNo);
     this.element.classList.add(this.vGridConfig.css.gridColumn + this.columnNo);
     this.element.style.height = '100%';
     this.element.style.width = this.vGridConfig.columnWidthArray[this.columnNo] + 'px';
-
   }
 
 
-  getHeaderCellMarkup = (labelTopCell, valueInput, attribute) => {
+  getSortIconMarkup(attribute) {
+    var markup = "";
+    var rows = 1;
 
-    var dragHandle = this.vGridConfig.isSortableHeader ? this.vGridConfig.css.dragHandle : "";
-
-    var cssLabel, cssInput;
-    if (this.vGridConfig.filterOnAtTop) {
-      cssLabel = `${this.vGridConfig.css.cellContent} ${this.vGridConfig.css.filterLabelBottom} ${dragHandle} ${this.vGridConfig.css.orderHandle}`;
-      cssInput = `${this.vGridConfig.css.cellContent} ${this.vGridConfig.css.filterInputTop} ${this.vGridConfig.css.filterHandle}`;
-    } else {
-      cssLabel = `${this.vGridConfig.css.cellContent} ${this.vGridConfig.css.filterLabelTop} ${dragHandle} ${this.vGridConfig.css.orderHandle}`;
-      cssInput = `${this.vGridConfig.css.cellContent} ${this.vGridConfig.css.filterInputBottom} ${this.vGridConfig.css.filterHandle}`;
+    //setting line height so it stays in the middle
+    if (this.vGridConfig.addFilter) {
+      rows = 2;
     }
+    var lineHeigthStyleTag = `style=line-height:${this.vGridConfig.headerHeight / rows}px;"`;
+    var isAscHtml = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconAsc}"></span>`;
+    var isDescHtml = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconDesc}"></span>`;
+    var markup = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconSort}"></span>`;
 
-    //get sort icon
-    var sortIcon = this.getSortIcon(attribute);
-
-    //get filter name
-    var filter = this.vGridConfig.filterArray[this.vGridConfig.attributeArray.indexOf(attribute)] || "filter";
-    var filterName = this.vGridConfig.getFilterName(filter);
-
-    //setting lineheight so it stays in the middle
-    var lineHeigth = `line-height:${this.vGridConfig.headerHeight / 2}px;`;
-
-    //markup--
-    var cellLabel = `<div style="${lineHeigth}" class="${cssLabel}" ${this.vGridConfig.atts.dataAttribute}="${attribute}">${labelTopCell} ${sortIcon}</div>`;
-    var cellInput = `<input style="${lineHeigth}" placeholder="${filterName}" class="${cssInput}" ${this.vGridConfig.atts.dataAttribute}="${attribute}" value="${valueInput}"/>`;
-
-    //if its in the the array then we want empty block, else it will look like shit if filters are at top
-    if (this.vGridConfig.doNotAddFilterTo.indexOf(attribute) !== -1) {
-      var cssLabeltemp = cssLabel.replace(dragHandle, ""); //the cause huge issues in my sorting logic
-      cellInput = `<div class="${cssLabeltemp}" ${this.vGridConfig.atts.dataAttribute}="${attribute}"></div>`;
+    if (this.vGridConfig.sortNotOnHeader.indexOf(attribute) === -1) {
+      if (this.vGridConfig.sortOnHeaderClick) {
+        if (this.vGrid.vGridGenerator.sortOrder.length !== 0) {
+          this.vGrid.vGridSort.getFilter().forEach((x) => {
+            if (x.attribute === attribute) {
+              var block = x.asc === true ? isAscHtml : isDescHtml;
+              var main = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconNo}${x.no}"></span>`;
+              markup = main + block;
+            }
+          });
+        }
+      }
     }
-
-    //check where to set the filter..
-    var result;
-    if (this.vGridConfig.filterOnAtTop) {
-      result = cellInput + cellLabel;
-    } else {
-      result = cellLabel + cellInput;
-    }
-    return result;
-
+    return markup
   };
 
 
-  getSortIcon(attribute) {
-    var result;
-
-    //setting lineheight so it stays in the middle
-    var lineHeigthStyleTag;
-    if (!this.vGridConfig.addFilter) {
-      lineHeigthStyleTag = `style=line-height:${this.vGridConfig.headerHeight}px;"`;
-    } else {
-      lineHeigthStyleTag = `style=line-height:${this.vGridConfig.headerHeight / 2}px;"`;
-    }
-
-    if (this.vGridConfig.sortNotOnHeader.indexOf(attribute) !== -1) {
-      return "";
-    }
-
-
-    if (this.vGridConfig.sortOnHeaderClick) {
-      var main = `<span class=""><span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconSort}"></span></span>`;
-      if (this.vGrid.vGridGenerator.sortOrder.length === 0) {
-
-        result = main
-
-      } else {
-
-        this.vGrid.vGridGenerator.sortOrder.forEach((x) => {
-
-          if (x.attribute === attribute) {
-            var isAsc = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconAsc}"></span>`;
-            var isDesc = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconDesc}"></span>`;
-
-            var asc = x.asc === true ? isAsc : isDesc;
-            var main = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconNo}${x.no}">`;
-            var end = '</span>';
-
-            result = main + end + asc;
-          }
-
-        });
-      }
-      if (!result) {
-        result = main;
-      }
-    } else {
-      result = "";
-    }
-    return result
-  };
-
-
-  /*------------------------------------------------*/
-  //called when chang event fires in filter input
+  /*************************************************
+   *  called when change event fires in filter input
+   */
   onChangeEventOnFilter(e) {
 
     if (e.keyCode !== 9 && e.keyCode !== 39 && e.keyCode !== 37) {
 
-      //get inputs
-      var queryHtmlInput = this.vGrid.element.querySelectorAll("." + this.vGridConfig.css.filterHandle);
+      //get all inputs
+      var queryInputs = this.vGrid.element.querySelectorAll("." + this.vGridConfig.css.filterHandle);
 
-      //loop all the headers
+      //loop all of them
       var queryParams = [];
-      for (var i = 0; i < queryHtmlInput.length; i++) {
-        var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
+      for (var i = 0; i < queryInputs.length; i++) {
+
+        //get the attribute, valiue etc
+        var dataSourceAttribute = queryInputs[i].getAttribute(this.vGridConfig.atts.dataAttribute);
         var valueFormater = this.vGridConfig.colFormaterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
         var operator = this.vGridConfig.filterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
-        var value = valueFormater ? valueFormater.fromView(queryHtmlInput[i].value) : queryHtmlInput[i].value;
+        var value = valueFormater ? valueFormater.fromView(queryInputs[i].value) : queryInputs[i].value;
 
         //do value exist and is not blank?
         if (value !== "" && value !== undefined) {
@@ -259,28 +232,32 @@ export class VGridCellRowHeader {
             operator: operator
           });
 
-          //This is something I need for later if I add sortable columns.. and callback on each column on build
-          this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = valueFormater ? valueFormater.toView(queryHtmlInput[i].value) : queryHtmlInput[i].value;
-
+          //store the value, since I rebuild the grid when doing sorting...
+          this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = queryInputs[i].value;
         } else {
-
+          //reset to blank for later
           if (value === "") {
-            var dataSourceAttribute = queryHtmlInput[i].getAttribute(this.vGridConfig.atts.dataAttribute);
-            this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = valueFormater ? valueFormater.toView(queryHtmlInput[i].value) : queryHtmlInput[i].value;
+            this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = queryInputs[i].value;
           }
 
         }
       }
+      //run query/filter
       this.vGridConfig.onFilterRun(queryParams)
     }
   };
 
 
-  /*------------------------------------------------*/
-  //called when users hits key down... just to know if user hits enter, so we know we can run filter
+  /*************************************************
+   *  called when users hits key down
+   */
   onKeyUpEventOnFilter(e) {
-    if (e.keyCode === 13) {
+    if (this.vGridConfig.filterOnKeyArray[this.columnNo]) {
       e.target.onchange(e);
+    } else {
+      if (e.keyCode === 13) {
+        e.target.onchange(e);
+      }
     }
   };
 

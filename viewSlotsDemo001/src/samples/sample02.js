@@ -10,13 +10,6 @@ export class sample {
 
   };
 
-  onRowDraw (data, col) {
-    if (data) {
-
-      data.avatarLetter = data.name.charAt(0);
-
-    }
-  }
 
 
   constructor(dummyDataGenerator) {

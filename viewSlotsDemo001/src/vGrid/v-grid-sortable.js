@@ -117,9 +117,9 @@ export class VGridSortable {
     this.vGrid.vGridGenerator.htmlCache.rowTemplate = null; //reset template and fill data
     var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
     [].slice.call(dragHandles).forEach((itemEl, index) => {
-      itemEl.parentNode.setAttribute("column-no", index);
+      itemEl.parentNode.parentNode.setAttribute("column-no", index);
       //update viewmodel, is needed since I dont redraw headers anymore
-      itemEl.parentNode.au["v-grid-header-col"].viewModel.columnNo = index + ""
+      itemEl.parentNode.parentNode.au["v-grid-header-col"].viewModel.columnNo = index + ""
     });
     this.vGrid.vGridGenerator.rebuildColumnsRows();
 

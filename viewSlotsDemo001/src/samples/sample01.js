@@ -8,7 +8,6 @@ export class sample01 {
 
   myCollection = [];
   myCurrentEntity = {};
-  myCurrentEntity2 = {};
   myGrid = {
   
   };
@@ -62,17 +61,17 @@ export class sample01 {
   }
 
   lockStatus = "locked";
-  lockColor = "red"
+  lockColor = "red";
 
   editMode(){
 
     if(this.lockStatus ==="locked" ){
-      this.lockStatus = "unlocked"
-      this.lockColor = "green"
+      this.lockStatus = "unlocked";
+      this.lockColor = "green";
       this.myGrid.ctx.setEditMode(true)
     }else {
-      this.lockStatus = "locked"
-      this.lockColor = "red"
+      this.lockStatus = "locked";
+      this.lockColor = "red";
       this.myGrid.ctx.setEditMode(false)
     }
 

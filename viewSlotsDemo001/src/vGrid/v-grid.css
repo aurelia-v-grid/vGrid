@@ -179,12 +179,12 @@
   /*white-space: nowrap;*/
   /*overflow: hidden;*/
   /*text-overflow: ellipsis;*/
-  /*background-color: inherit;*/
-  /*border: 0px;*/
+  background-color: inherit;
+  border: 0;
   /*line-height: 100%*/
 }
 
-.vGrid-row-cell-header > .vGrid-content {
+.vGrid-row-cell-header * .vGrid-content {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;

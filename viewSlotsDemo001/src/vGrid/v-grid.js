@@ -5,7 +5,7 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {ObserverLocator, bindable, ViewCompiler, ViewSlot, Container, ViewResources} from 'aurelia-framework';
+import {ObserverLocator, bindable, ViewCompiler, ViewSlot, Container, ViewResources, containerless} from 'aurelia-framework';
 import {VGridGenerator} from './v-grid-generator';
 import {VGridFilter} from './v-grid-filter';
 import {VGridSort} from './v-grid-sort';
