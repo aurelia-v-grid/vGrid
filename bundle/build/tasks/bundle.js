@@ -19,7 +19,21 @@ var config = {
     },
     "dist/vendor-build": {
       includes: [
-        'aurelia-framework'
+        'aurelia-framework',
+        'vGrid/v-grid-contextmenu',
+        'vGrid/v-grid-header-cells-label',
+        'vGrid/v-grid-header-cells-filter',
+        'vGrid/v-grid-row-cells-image',
+        'vGrid/v-grid-row-cells-checkbox',
+        'vGrid/v-grid-row-cells-input',
+        'vGrid/v-grid-col',
+        'vGrid/v-grid-header-col',
+        'vGrid/v-grid-row-col',
+        'vGrid/v-grid.js',
+        'vGrid/v-grid-atts',
+        'moment',
+        'numeral',
+        'samples/sample01.js'
       ],
       options: {
         inject: true,
@@ -29,6 +43,6 @@ var config = {
   }
 };
 
-gulp.task('bundle', function() {
+gulp.task('bundle', function () {
   return bundle(config);
 });
