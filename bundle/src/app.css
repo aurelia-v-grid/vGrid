@@ -1,0 +1,93 @@
+
+.myContainer {
+
+  position: relative;
+  height: 899px;
+  width: 1680px;
+ }
+.myRow1 {
+  height:50%;
+  width:100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.myCol {
+  float: left;
+  width:49%;
+  height:100%;
+  position: relative;
+}
+.myCol2 {
+  float: left;
+  width:75%;
+  height:100%;
+  position: relative;
+}
+.myCol3 {
+  float: left;
+  width:25%;
+  height:100%;
+  position: relative;
+}
+
+.myRow2 {
+  height:50%;
+  width:100%;
+  overflow-y: scroll;
+  position: relative;
+}
+
+.colorHeader {
+  background-color: #BBDEFB;
+}
+html, body {
+  height: 100%;
+}
+
+.vGrid-content{
+  border: 0;
+  background-color: inherit;
+  -moz-box-sizing: border-box !important;
+  -webkit-box-sizing: border-box !important;;
+  -ms-box-sizing: border-box !important;;
+  box-sizing: border-box !important;;
+
+}
+
+
+.contact-item {
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 85px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 1.42857143;
+
+
+}
+
+.avatar {
+  width: 65px;
+  height: 65px;
+  float: left;
+  margin-right: 10px;
+  font-size: 25px;
+  color: #fff;
+  text-align: center;
+
+}
+
+.contact-item input {
+  line-height: 100%;
+}
+
+
+
+
+.contact-item .name {
+  font-size: 18px;
+  color: ThreeDDarkShadow;
+
+}
+
