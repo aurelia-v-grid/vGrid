@@ -17,7 +17,17 @@ export class VGridHeaderFilter {
 
   filterValueChanged(newValue, oldValue) {
     this.content.value = newValue;
-    this.content.onchange({keyKode: 13})
+    this.content.onchange({keyKode: 13});
+
+    //checkbox
+    if(this.vGridConfig.colTypeArray[this.parent.columnNo] === "checkbox"){
+      if(newValue === ""){
+        this.state = 0;
+        this.content.style.opacity = 0.3;
+        this.content.checked = false;
+      }
+    }
+
   }
 
 
@@ -28,25 +38,94 @@ export class VGridHeaderFilter {
 
   attached() {
     this.content = this.element.children[0];
-    this.setStyle();
+    this.setStyle(this.content);
     this.content.onkeyup = this.parent.onKeyUpEventOnFilter.bind(this.parent);
     this.content.onchange = this.parent.onChangeEventOnFilter.bind(this.parent);
     this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute());
     this.content.value = this.filterValue ? this.filterValue : "";
+
+
+    //this is just some crap to have checkbox in filter, maybe this should have been own custom element?
+    if(this.vGridConfig.colTypeArray[this.parent.columnNo] === "checkbox"){
+      //lets remove default
+      this.element.removeChild(this.content);
+
+      //create a container and and add it
+      var container = document.createElement("div");
+      this.element.appendChild(container);
+
+      //set the standard styles to the container instead of checkbox, (for the white backgorunbd and borders)
+      this.setStyle(container);
+
+
+      //create new input and append it to container
+      this.content = document.createElement("input");
+      container.appendChild(this.content);
+
+
+      this.content.onkeyup = this.parent.onKeyUpEventOnFilter.bind(this.parent);
+      this.content.onchange = this.parent.onChangeEventOnFilter.bind(this.parent);
+      this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute());
+      this.content.value = this.filterValue ? this.filterValue : "";
+
+
+      this.content.type = "checkbox";
+      this.content.style.height = "100%";
+      this.content.style.display = "block";
+      this.content.style.margin = "auto";
+      this.content.classList.add(this.vGridConfig.css.filterHandle)
+
+      var value = this.filterValue ? this.filterValue : "";
+      switch(value){
+        case true || "true":
+          this.state = 2;
+          this.content.style.opacity = "1 !important";
+          this.content.checked = true;
+          break;
+        case false || "false":
+          this.state = 3;
+          this.content.style.opacity = "1 !important";
+          break;
+        default:
+          this.state = 0;
+          this.content.style.opacity = "0.3 !important";
+      }
+
+
+      this.content.onclick = ()=>{
+        if(this.content.checked){
+          if(this.state === 3){
+            this.state = 0;
+            this.content.style.opacity = 0.3;
+            this.content.checked = false;
+            this.filterValue = "";
+          } else {
+            this.state = 2;
+            this.content.style.opacity = 1;
+            this.filterValue = "true";
+          }
+        } else {
+          this.state = 3;
+          this.content.style.opacity = 1;
+          this.filterValue = "false";
+        }
+      }
+
+    }
+
   }
 
 
-  setStyle() {
+  setStyle(element) {
 
     var addClass = (name)=> {
-      this.content.classList.add(name)
+      element.classList.add(name)
     };
 
     var setStyleTag = (tag, value)=> {
-      this.content.style[tag] = value;
+      element.style[tag] = value;
     };
 
-    var dragHandle = this.vGridConfig.isSortableHeader ? this.vGridConfig.css.dragHandle : "";
 
     switch (this.type) {
       case "filterTop":
@@ -63,6 +142,11 @@ export class VGridHeaderFilter {
       default:
         break;
     }
+
+
+
+
+
   }
 
 
