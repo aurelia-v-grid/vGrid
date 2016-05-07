@@ -34,7 +34,7 @@ How to use: (no plugin yet):
 #### < v-grid > attributes:
 * **v-current-entity.bind**: - mandatory, link you inputs etc to this
 * **v-collection.bind**: - mandatory, link you inputs etc to this
-* **v-grid-context** - optional, default 50
+* **v-grid-context** - optional, mandatory if you want to edit
 * **v-row-index** - (not added yet) optional, supply index to use instead of grid adding one to keep control what ist displaying and not. and for selection
 * **v-row-height** - optional, default 50
 * **v-header-height** - optional, default 0
@@ -69,10 +69,22 @@ How to use: (no plugin yet):
 
 ----
 
-#### How to use in html:
+#### How to use in js/html:
 
 from whats used in the sample
 ```
+
+//js
+myCollection = [];      //collection you use
+myCurrentEntity = {};   //current entity you link to inputs etc 
+myGrid = {};            //this is where you access inner function
+
+
+
+
+
+//html
+
 <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
           v-row-height="40"
@@ -97,4 +109,56 @@ from whats used in the sample
           <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" ></v-grid-col>
         </v-grid>
       </div>
+```
+
+#### < v-grid-context.bind=myGrid > functions:
+
+```
+
+//unlock for editing
+this.myGrid.ctx.setEditMode(true)
+
+//lock 
+this.myGrid.ctx.setEditMode(false)
+
+TODO: add more....
+
+
+```
+##### other:
+
+How to use the dummy generator under data folder
+
+```
+//import it on page/component, inject it, and call generator
+
+import {dummyDataGenerator} from 'data/dummyDataGenerator'
+
+export class sample01 {
+  static inject = [Element, dummyDataGenerator];
+  
+  constructor(element, dummyDataGenerator) {
+      //get this element
+      this.element = element;
+  
+      //this if just for giving us some data
+      this.dummyDataGenerator = dummyDataGenerator;
+      this.dummyDataGenerator.generateData(10000, (data) => {
+        this.myCollection = data;
+        this.collectionLength = this.myCollection.length;
+      });
+  
+    }
+    
+};
+
+
+
+```
+
+**Webpack** :
+you need to disable the require, and import it onto page
+
+```
+<require from="./v-grid.css"></require>
 ```
