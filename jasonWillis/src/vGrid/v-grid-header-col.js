@@ -79,9 +79,9 @@ export class VGridCellRowHeader {
       case "selection":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
-            <v-grid-filter filter-value.bind="queryString" type="filterTop">
-              <input placeholder="${this.filterName}">
-            </v-grid-filter>
+            <v-grid-filter-${this.colType} filter-value.bind="queryString" type="filterTop">
+            
+            </v-grid-filter-${this.colType}>
           </template>
           `, this.vGrid.resources);
         break;
@@ -97,9 +97,9 @@ export class VGridCellRowHeader {
       case "filterTop":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
-            <v-grid-filter filter-value.bind="queryString" type="filterTop">
+            <v-grid-filter-${this.colType} filter-value.bind="queryString" type="filterTop">
               <input placeholder="${this.filterName}">
-            </v-grid-filter>
+            </v-grid-filter-${this.colType}>
             <v-grid-label type="labelBottom">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
@@ -112,9 +112,9 @@ export class VGridCellRowHeader {
             <v-grid-label type="labelTop">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
-             <v-grid-filter filter-value.bind="queryString" type="filterBottom">
+             <v-grid-filter-${this.colType} filter-value.bind="queryString" type="filterBottom">
               <input placeholder="${this.filterName}">
-            </v-grid-filter>
+            </v-grid-filter-${this.colType}>
           </template>
           `, this.vGrid.resources);
         break;

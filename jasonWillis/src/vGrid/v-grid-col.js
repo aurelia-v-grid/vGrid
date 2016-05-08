@@ -45,7 +45,7 @@ export class VGridCol {
     this.vGrid.vGridConfig.filterArray.push(this.vColDefaultFilter || "=");
     this.vGrid.vGridConfig.readOnlyArray.push(this.vColReadOnly === "true" ? true : false);
     this.vGrid.vGridConfig.colStyleArray.push(this.vColCss);
-    this.vGrid.vGridConfig.colTypeArray.push(this.vColType);
+    this.vGrid.vGridConfig.colTypeArray.push(this.vColType ? this.vColType:"text");
     this.vGrid.vGridConfig.filterOnKeyArray.push(this.vColFilterOnKey === "true" ? true : false);
     this.vGrid.vGridConfig.colEditRawArray.push(this.vColEditRaw === "true" ? true : false);
     this.vGrid.vGridConfig.colFormaterArray.push(this.valueConverters(this.vColFormater));

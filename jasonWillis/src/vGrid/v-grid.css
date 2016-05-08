@@ -164,10 +164,10 @@
 }
 
 .vGrid-row-cell * .vGrid-content {
-  /*-webkit-touch-callout: none;*/
-  /*-webkit-user-select: none;*/
-  /*-moz-user-select: none;*/
-  /*-ms-user-select: none;*/
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   /*-moz-box-sizing: border-box;*/
   /*-webkit-box-sizing: border-box;*/
   /*-ms-box-sizing: border-box;*/

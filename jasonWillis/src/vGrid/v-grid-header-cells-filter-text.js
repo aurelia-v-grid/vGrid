@@ -1,10 +1,16 @@
+/*****************************************************************************************************************
+ *    VGridHeaderFilter
+ *    Custom element for use in the header/column container (v-grid-header-col.js)
+ *    Created by vegar ringdal
+ *
+ ****************************************************************************************************************/
 import {inject, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 
 
-@customElement('v-grid-filter')
+@customElement('v-grid-filter-text')
 @inject(Element, VGrid)
-export class VGridHeaderFilter {
+export class VGridHeaderFilterText {
   @bindable type;
   @bindable filterValue;
 
@@ -48,7 +54,7 @@ export class VGridHeaderFilter {
      this.content.style.height = "50%";
      this.content.style.margin = "initial";
 
-
+    //todo: this should ne own elements
     //this is just some crap to have checkbox in filter, maybe this should have been own custom element?
     if (this.vGridConfig.colTypeArray[this.parent.columnNo] === "checkbox") {
       //lets remove default
@@ -167,7 +173,7 @@ export class VGridHeaderFilter {
         } else {
           this.vGrid.vGridSelection.deSelectAll();
         }
-        this.vGrid.vGridGenerator.collectionChange()
+        this.vGrid.vGridGenerator.rebuildColumnsRows()
       }
 
     }

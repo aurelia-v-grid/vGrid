@@ -1,5 +1,5 @@
 /*****************************************************************************************************************
- *    VGridRowCell Input/checkbox/image
+ *    VGridRowCellSelection
  *    Custom element for use in the row/column container (v-grid-row-col.js)
  *    Created by vegar ringdal
  *
@@ -32,7 +32,7 @@ export class VGridRowCellSelection {
   valueChanged(value, old) {
     if (value === undefined || value === null || value === "") {
       this.content.style.display = "none";
-      console.log("test")
+      this.content.checked = false;
     } else {
       this.content.style.display = "block";
       this.content.checked = this.vGrid.vGridSelection.isSelected(this.parent.getRow());
@@ -59,7 +59,7 @@ export class VGridRowCellSelection {
       } else {
         this.vGrid.vGridSelection.deSelect(this.parent.getRow())
       }
-      this.vGrid.vGridGenerator.updateSelectionOnAllRows()
+      this.vGrid.vGridGenerator.updateSelectionOnAllRows();
     }.bind(this);
     this.content.checked = this.vGrid.vGridSelection.isSelected(this.parent.getRow());
     this.content.classList.add(this.parent.vGrid.vGridConfig.css.cellContent);
@@ -69,10 +69,10 @@ export class VGridRowCellSelection {
     this.content.style.display = "block";
     this.content.style.opacity = "initial";
     this.element.appendChild(this.content);
-    this.valueChanged("checked");
+    this.valueChanged(false);
 
     this.content.onchange = ()=> {
-      this.parent.updateValue(this.content.checked);
+      //this.parent.updateValue(this.content.checked);
     };
 
     //set column no

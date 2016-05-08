@@ -1,5 +1,5 @@
 /*****************************************************************************************************************
- *    VGridRowCell
+ *    VGridRowCellImage
  *    Custom element for use in the row/column container (v-grid-row-col.js)
  *    Created by vegar ringdal
  *
@@ -36,6 +36,7 @@ export class VGridRowCellImage {
       this.content.src = "";
     } else {
       this.content.style.display = "block";
+      this.content.src = "";
       this.content.src = value;
     }
   }

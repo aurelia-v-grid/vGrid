@@ -34,9 +34,13 @@ export class VGridCellContainer {
 
     if (this.viewSlot && this.bindingContext) {
       //set default value
-      this.setValue(this.rawValue);
+
       if(this.colType() === "selection"){
-        this.value = this.vGrid.vGridSelection.isSelected(this.getRow());
+        let x = {};
+        this.setValue(x);
+      } else {
+        this.setValue("");
+        this.setValue(this.rawValue);
       }
 
       this.customStyle = this.colStyle();

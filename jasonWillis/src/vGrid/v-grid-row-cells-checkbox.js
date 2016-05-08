@@ -1,5 +1,5 @@
 /*****************************************************************************************************************
- *    VGridRowCell Input/checkbox/image
+ *    VGridRowCellCheckbox
  *    Custom element for use in the row/column container (v-grid-row-col.js)
  *    Created by vegar ringdal
  *
