@@ -37,6 +37,10 @@ export class VGridRowCellSelection {
       this.content.style.display = "block";
       this.content.checked = this.vGrid.vGridSelection.isSelected(this.parent.getRow());
     }
+    if(this.parent.getRow() > this.vGrid.vGridCollectionFiltered.length-1){
+      this.content.style.display = "none";
+      this.content.checked = false;
+    }
   }
 
   customStyleChanged(value, old) {

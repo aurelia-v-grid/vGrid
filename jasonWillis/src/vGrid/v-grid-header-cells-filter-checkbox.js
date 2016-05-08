@@ -22,14 +22,18 @@ export class VGridHeaderFilter {
   }
 
   filterValueChanged(newValue, oldValue) {
+    if(typeof(newValue) === "object"){
+      newValue = "";
+    }
     this.content.value = newValue;
-    this.content.onchange({keyKode: 13});
+
 
     if (newValue === "") {
       this.state = 0;
       this.content.style.opacity = 0.3;
       this.content.checked = false;
     }
+    this.content.onchange({keyKode: 13});
 
 
   }

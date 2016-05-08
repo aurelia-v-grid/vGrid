@@ -350,7 +350,8 @@ export class ContextMenuHeader extends ContextMenu {
   defaultMenu(value) {
     switch (value) {
       case "clear-cell" :
-        this.parent.queryString = "";
+        let x = {};
+        this.parent.queryString = x;
         this.toggleMenuOff();
         break;
       case "show-all":

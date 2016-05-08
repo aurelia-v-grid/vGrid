@@ -22,17 +22,13 @@ export class VGridHeaderFilterText {
   }
 
   filterValueChanged(newValue, oldValue) {
+    if(typeof(newValue) === "object"){
+      newValue = "";
+    }
     this.content.value = newValue;
     this.content.onchange({keyKode: 13});
 
-    //checkbox
-    if (this.vGridConfig.colTypeArray[this.parent.columnNo] === "checkbox") {
-      if (newValue === "") {
-        this.state = 0;
-        this.content.style.opacity = 0.3;
-        this.content.checked = false;
-      }
-    }
+
 
   }
 
