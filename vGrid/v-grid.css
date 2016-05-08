@@ -73,6 +73,7 @@
 
 .vGrid .vGrid-body-scroll {
   background-color: inherit;
+  display: block;
 }
 
 .vGrid div.vGrid-body div.vGrid-row {
@@ -387,11 +388,13 @@
   display: block;
   position: absolute;
   z-index: 10;
-  /*width: 150px;*/
+  width: initial;
   font-size: 11px;
   background-color: #fff;
   border: solid 1px #dfdfdf;
   box-shadow: 1px 1px 2px #cfcfcf;
+  height: initial;
+  line-height: initial;
 }
 
 

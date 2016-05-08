@@ -66,6 +66,9 @@ export class VGridRowCellCheckbox {
     this.content.classList.add(this.parent.vGrid.vGridConfig.css.cellContent);
     this.content.style.height = "100%";
     this.content.style.margin = "auto";
+    this.content.style.position = "initial";
+    this.content.style.display = "block";
+    this.content.style.opacity = "initial";
     this.element.appendChild(this.content);
 
     this.content.onchange = ()=> {

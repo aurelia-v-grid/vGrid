@@ -39,10 +39,14 @@ export class VGridHeaderFilter {
   attached() {
     this.content = this.element.children[0];
     this.setStyle(this.content);
+    this.content.type = "text";
     this.content.onkeyup = this.parent.onKeyUpEventOnFilter.bind(this.parent);
     this.content.onchange = this.parent.onChangeEventOnFilter.bind(this.parent);
     this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute());
     this.content.value = this.filterValue ? this.filterValue : "";
+
+    this.content.style.height = "initial";
+    this.content.style.margin = "auto";
 
 
     //this is just some crap to have checkbox in filter, maybe this should have been own custom element?
@@ -73,6 +77,7 @@ export class VGridHeaderFilter {
       this.content.style.height = "100%";
       this.content.style.display = "block";
       this.content.style.margin = "auto";
+      this.content.style.position = "initial";
       this.content.classList.add(this.vGridConfig.css.filterHandle)
 
       var value = this.filterValue ? this.filterValue : "";

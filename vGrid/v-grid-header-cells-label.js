@@ -24,6 +24,7 @@ export class VGridHeaderLabel {
     this.content = this.element.children[0];
     this.setStyle(this.content);
     this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute())
+    this.content.style.height = "initial";
 
 
   }

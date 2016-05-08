@@ -309,6 +309,7 @@ export class eventOnRowClick extends VGridAttibutes {
 @customAttribute('v-row-ondblclick')
 @inject(Element, Optional.of(VGrid))
 export class eventOnRowDblClick extends VGridAttibutes {
+
   attribute = "eventOnRowDblClick";
   alias = "configEventOnRowDblClick";
   type = "fn";
