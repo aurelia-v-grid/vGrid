@@ -323,7 +323,7 @@ export class VGridCellHelper {
   editCellhelper(row, e) {
     //editCellhelper(row, e, readOnly) {
 
-    if (e.target.tagName === "V-GRID-ROW-COL" || e.target.tagName === "V-GRID-CHECKBOX" || e.target.tagName === "V-GRID-IMAGE") {
+    if (e.target.tagName === "V-GRID-ROW-COL" || e.target.tagName === "V-GRID-CHECKBOX" || e.target.tagName === "V-GRID-IMAGE" || e.target.tagName === "V-GRID-SELECTION") {
       //if this is clicked then its a image or something smaller then the cell, lets send it to the first child
       if (e.target.children) {
         this.editCellhelper(row, {

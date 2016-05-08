@@ -9,7 +9,8 @@ export class sample01 {
   myCollection = [];
   myCurrentEntity = {};
   myGrid = {
-
+    configRowHeight:50,
+    configHeaderHeight:60
 
   };
 
@@ -292,12 +293,12 @@ export class sample01 {
 
   switchNameBtn(){
     let oldState = this.myGrid.ctx.getColumns(this.oldState);
-    let oldIndex= oldState.attributeArray.indexOf("name");
-    let newIndex= oldState.attributeArray.indexOf("color");
+    let oldIndex= oldState.colAttrArray.indexOf("name");
+    let newIndex= oldState.colAttrArray.indexOf("color");
 
 
-    oldState.attributeArray[oldIndex] = "color";
-    oldState.attributeArray[newIndex] = "name";
+    oldState.colAttrArray[oldIndex] = "color";
+    oldState.colAttrArray[newIndex] = "name";
 
     oldState.headerArray[oldIndex] = "Color";
     oldState.headerArray[newIndex] = "Name";

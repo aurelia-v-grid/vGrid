@@ -24,7 +24,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">early version- using viewslots 2016.05.08 v25 (manual selection/column) </h4>
+        <h4 style="margin-left:25px">test v1 12.23AM (5/9/2016) </h4>
 
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -36,12 +36,12 @@
           v-header-filter-not-to="images"
           v-sort-not-on-header="images"
           v-header-filter-top="true"
-          v-manual-sel="true"
           v-sortable-headers="true"
+          v-manual-sel="true"
           v-row-onclick="singleClick($this)"
           v-row-ondblclick="singleDblClick"
           v-sort-on-header-click="true"
-          v-multi-select="true"
+          v-multi-select="false"
           v-row-on-draw="onRowDraw"
           v-format-handler="myFormatHandler"
           v-current-entity.bind=myCurrentEntity
