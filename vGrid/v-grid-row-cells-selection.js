@@ -41,6 +41,7 @@ export class VGridRowCellSelection {
       this.content.style.display = "none";
       this.content.checked = false;
     }
+
   }
 
   customStyleChanged(value, old) {
@@ -63,7 +64,7 @@ export class VGridRowCellSelection {
       } else {
         this.vGrid.vGridSelection.deSelect(this.parent.getRow())
       }
-      this.vGrid.vGridGenerator.updateSelectionOnAllRows();
+      this.vGrid.vGridGenerator.fillDataInRows();
     }.bind(this);
     this.content.checked = this.vGrid.vGridSelection.isSelected(this.parent.getRow());
     this.content.classList.add(this.parent.vGrid.vGridConfig.css.cellContent);
