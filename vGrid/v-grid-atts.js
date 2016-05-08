@@ -237,13 +237,13 @@ export class filterOnAtTop extends VGridAttibutes {
 
 
 
-// @customAttribute('v-sort-on-header-click')
-// @inject(Element, Optional.of(VGrid))
-// export class sortOnHeaderClick extends VGridAttibutes {
-//   attribute = "sortOnHeaderClick";
-//   alias = "sortOnHeaderClick";
-//   type = "bool";
-// }
+@customAttribute('v-sort-on-header-click')
+@inject(Element, Optional.of(VGrid))
+export class sortOnHeaderClick extends VGridAttibutes {
+  attribute = "sortOnHeaderClick";
+  alias = "configSortOnHeaderClick";
+  type = "bool";
+}
 
 
 @customAttribute('v-large-buffer')

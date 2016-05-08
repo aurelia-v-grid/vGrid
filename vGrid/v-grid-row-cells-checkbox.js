@@ -51,7 +51,6 @@ export class VGridRowCellCheckbox {
   attached() {
     this.content = this.element.children[0];//document.createElement("input");
     this.content.type = "checkbox";
-    this.valueChanged(this.value);
     this.content.onclick = function (e) {
       if (this.parent.readOnly() === true && e.keyCode !== 9) {
         return false;
@@ -70,6 +69,7 @@ export class VGridRowCellCheckbox {
     this.content.style.display = "block";
     this.content.style.opacity = "initial";
     this.element.appendChild(this.content);
+    this.valueChanged(this.value);
 
     this.content.onchange = ()=> {
       this.parent.updateValue(this.content.checked);

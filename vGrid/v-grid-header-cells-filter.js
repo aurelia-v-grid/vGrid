@@ -20,8 +20,8 @@ export class VGridHeaderFilter {
     this.content.onchange({keyKode: 13});
 
     //checkbox
-    if(this.vGridConfig.colTypeArray[this.parent.columnNo] === "checkbox"){
-      if(newValue === ""){
+    if (this.vGridConfig.colTypeArray[this.parent.columnNo] === "checkbox") {
+      if (newValue === "") {
         this.state = 0;
         this.content.style.opacity = 0.3;
         this.content.checked = false;
@@ -45,12 +45,12 @@ export class VGridHeaderFilter {
     this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute());
     this.content.value = this.filterValue ? this.filterValue : "";
 
-    this.content.style.height = "initial";
-    this.content.style.margin = "auto";
+     this.content.style.height = "50%";
+     this.content.style.margin = "initial";
 
 
     //this is just some crap to have checkbox in filter, maybe this should have been own custom element?
-    if(this.vGridConfig.colTypeArray[this.parent.columnNo] === "checkbox"){
+    if (this.vGridConfig.colTypeArray[this.parent.columnNo] === "checkbox") {
       //lets remove default
       this.element.removeChild(this.content);
 
@@ -81,7 +81,7 @@ export class VGridHeaderFilter {
       this.content.classList.add(this.vGridConfig.css.filterHandle)
 
       var value = this.filterValue ? this.filterValue : "";
-      switch(value){
+      switch (value) {
         case true || "true":
           this.state = 2;
           this.content.style.opacity = 1;
@@ -97,9 +97,9 @@ export class VGridHeaderFilter {
       }
 
 
-      this.content.onclick = ()=>{
-        if(this.content.checked){
-          if(this.state === 3){
+      this.content.onclick = ()=> {
+        if (this.content.checked) {
+          if (this.state === 3) {
             this.state = 0;
             this.content.style.opacity = 0.3;
             this.content.checked = false;
@@ -147,9 +147,6 @@ export class VGridHeaderFilter {
       default:
         break;
     }
-
-
-
 
 
   }
