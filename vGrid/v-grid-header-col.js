@@ -44,6 +44,7 @@ export class VGridCellRowHeader {
     this.filterTop = this.vGridConfig.filterOnAtTop;
     this.justLabel = this.vGridConfig.doNotAddFilterTo.indexOf(this.attribute());
     this.filterName = this.vGridConfig.getFilterName(this.filter);
+    this.colType = this.vGrid.vGridConfig.colTypeArray[this.columnNo];
     let value = this.vGrid.vGridGenerator.queryStringCheck[this.attribute()];
     if (value) {
       this.queryString = value;
@@ -65,13 +66,25 @@ export class VGridCellRowHeader {
           type = "noFilterTop";
         }
       }
-
-
     }
+
+    if(this.colType === "selection"){
+      type = "selection";
+    }
+
     this.type = type;
 
 
     switch (type) {
+      case "selection":
+        var viewFactory = this.vGrid.viewCompiler.compile(`
+          <template>
+            <v-grid-filter-${this.colType} filter-value.bind="queryString" type="filterTop">
+            
+            </v-grid-filter-${this.colType}>
+          </template>
+          `, this.vGrid.resources);
+        break;
       case "single":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
@@ -84,9 +97,9 @@ export class VGridCellRowHeader {
       case "filterTop":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
-            <v-grid-filter filter-value.bind="queryString" type="filterTop">
+            <v-grid-filter-${this.colType} filter-value.bind="queryString" type="filterTop">
               <input placeholder="${this.filterName}">
-            </v-grid-filter>
+            </v-grid-filter-${this.colType}>
             <v-grid-label type="labelBottom">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
@@ -99,9 +112,9 @@ export class VGridCellRowHeader {
             <v-grid-label type="labelTop">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
-             <v-grid-filter filter-value.bind="queryString" type="filterBottom">
+             <v-grid-filter-${this.colType} filter-value.bind="queryString" type="filterBottom">
               <input placeholder="${this.filterName}">
-            </v-grid-filter>
+            </v-grid-filter-${this.colType}>
           </template>
           `, this.vGrid.resources);
         break;

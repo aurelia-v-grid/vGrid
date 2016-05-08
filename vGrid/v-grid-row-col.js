@@ -34,7 +34,15 @@ export class VGridCellContainer {
 
     if (this.viewSlot && this.bindingContext) {
       //set default value
-      this.setValue(this.rawValue);
+
+      if(this.colType() === "selection"){
+        let x = {};
+        this.setValue(x);
+      } else {
+        this.setValue("");
+        this.setValue(this.rawValue);
+      }
+
       this.customStyle = this.colStyle();
 
       //set back focus when scrolled
@@ -64,6 +72,9 @@ export class VGridCellContainer {
         break;
       case "checkbox":
         var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-checkbox value.bind="value"><input css.bind="customStyle"></v-grid-checkbox></template>', this.vGrid.resources);
+        break;
+      case "selection":
+        var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-selection value.bind="value"><input css.bind="customStyle"></v-grid-selection></template>', this.vGrid.resources);
         break;
       default:
         var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-input  value.bind="value"><input css.bind="customStyle"></v-grid-input></template>', this.vGrid.resources);
@@ -129,6 +140,10 @@ export class VGridCellContainer {
 
   getValue(value) {
     return this.valueFormater ? this.valueFormater.fromView(value) : value;
+  }
+
+  getRow(){
+    return parseInt(this.element.parentNode.getAttribute("row"));
   }
 
 

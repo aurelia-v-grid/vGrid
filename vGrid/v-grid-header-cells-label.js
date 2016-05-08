@@ -1,3 +1,9 @@
+/*****************************************************************************************************************
+ *    VGridHeaderLabel
+ *    Custom element for use in the header/column container (v-grid-header-col.js)
+ *    Created by vegar ringdal
+ *
+ ****************************************************************************************************************/
 import {inject, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 
@@ -23,7 +29,7 @@ export class VGridHeaderLabel {
   attached() {
     this.content = this.element.children[0];
     this.setStyle(this.content);
-    this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute())
+    this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute());
     this.content.style.height = "initial";
 
 
@@ -40,6 +46,7 @@ export class VGridHeaderLabel {
     };
 
     var dragHandle = this.vGridConfig.isSortableHeader ? this.vGridConfig.css.dragHandle : "";
+    
 
     switch (this.type) {
       case "labelTop":

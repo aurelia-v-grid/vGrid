@@ -254,13 +254,13 @@ export class largeBuffer extends VGridAttibutes {
   type = "bool";
 }
 
-// @customAttribute('v-active-sorting')
-// @inject(Element, Optional.of(VGrid))
-// export class activeSorting extends VGridAttibutes {
-//   attribute = "activeSorting";
-//   alias = "activeSorting";
-//   type = "bool";
-// }
+@customAttribute('v-manual-sel')
+@inject(Element, Optional.of(VGrid))
+export class manualSelection extends VGridAttibutes {
+  attribute = "manualSelection";
+  alias = "configManualSelection";
+  type = "bool";
+}
 
 
 @customAttribute('v-row-on-draw')

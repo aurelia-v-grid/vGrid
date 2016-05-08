@@ -53,6 +53,8 @@ How to use: (no plugin yet):
 * **v-row-on-draw** - optional, default ""  callback where you can modify dummy data for display in row
 * **v-row-onclick** - optional, default "", bind function "myRowClick", returns data, row in main collection, and attribute
 * **v-row-ondblclick** - optional, default "", bind function "myRowDblClick", returns data, row in main collection, and attribute
+* **v-manual-sel** optional, default "false", this disable selection with on row click, to use this set fist column like this:```<v-grid-col v-col-width="50" v-col-type="selection"></v-grid-col>``` to be able to control it
+
 
 
 ----
@@ -172,5 +174,6 @@ you need to disable the require, and import it onto page
 
 ---
 
-I only test with and without bootstrap
-using other special libs might mess with some inputs/context menus, if you have suggestion how to improve it then please make a issue with it, or code to fix for someof the css libs out there then that is great, I cant test with every one
+* I only test with and without bootstrap
+* Using other special libs might mess with some inputs/context menus, if you have suggestion how to improve it then please make a issue with it, or code to fix for someof the css libs out there then that is great, I cant test with every one
+* **update** 8.Mai, materlize should also work now 

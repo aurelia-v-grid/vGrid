@@ -149,6 +149,25 @@ export class VGridSelection {
   };
 
 
+  selectAll() {
+    if (this.selectionMode === "multible") {
+      for (var i = 0; i < this.vGrid.vGridCollectionFiltered.length; i++) {
+        this.selection.add(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
+      }
+      this.selectedRows = this.selection.size;
+    }
+  };
+
+  deSelectAll() {
+    if (this.selectionMode === "multible") {
+      for (var i = 0; i < this.vGrid.vGridCollectionFiltered.length; i++) {
+        this.selection.delete(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
+      }
+      this.selectedRows = this.selection.size;
+    }
+  };
+
+
   selectRangeMain(start, end) {
     if (this.selectionMode === "multible") {
       this.selection.clear();
@@ -223,7 +242,8 @@ export class VGridSelection {
   setHightlight(e, currentRow, vGridGenerator) {
 
     var isSel;
-
+    var manualSel = this.vGrid.vGridConfig.manualSelection;
+    if(!manualSel){
     var currentselectedRows = this.getSelectedRows();
 
     if (currentRow !== this.lastRowSelected || currentselectedRows[0] !== currentRow) {
@@ -352,7 +372,9 @@ export class VGridSelection {
       //update selection on rows
       vGridGenerator.updateSelectionOnAllRows()
     }
+    }
   };
+
 
 
 }
