@@ -156,15 +156,18 @@ export class VGridSelection {
       }
       this.selectedRows = this.selection.size;
     }
+    if (this.selectionMode === "single" && this.vGrid.vGridCurrentRow >= 0) {
+      this.selection.clear();
+      this.selection.add(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey]);
+      this.selectedRows = this.selection.size;
+    }
   };
 
   deSelectAll() {
-    if (this.selectionMode === "multible") {
       for (var i = 0; i < this.vGrid.vGridCollectionFiltered.length; i++) {
         this.selection.delete(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
       }
       this.selectedRows = this.selection.size;
-    }
   };
 
 
