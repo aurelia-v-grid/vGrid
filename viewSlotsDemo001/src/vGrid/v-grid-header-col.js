@@ -246,7 +246,12 @@ export class VGridCellRowHeader {
         var dataSourceAttribute = queryInputs[i].getAttribute(this.vGridConfig.atts.dataAttribute);
         var valueFormater = this.vGridConfig.colFormaterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
         var operator = this.vGridConfig.filterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
+        var coltype = this.vGridConfig.colTypeArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
         var value = valueFormater ? valueFormater.fromView(queryInputs[i].value) : queryInputs[i].value;
+
+        if(coltype === "checkbox" && value !== "true" && value !== "false"){ //FF issue
+          value = "";
+        }
 
         //do value exist and is not blank?
         if (value !== "" && value !== undefined) {
