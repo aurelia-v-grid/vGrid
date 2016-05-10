@@ -1,5 +1,5 @@
 /*****************************************************************************************************************
- *    VGridRowCell Input/checkbox/image
+ *    VGridRowCellCheckbox
  *    Custom element for use in the row/column container (v-grid-row-col.js)
  *    Created by vegar ringdal
  *
@@ -39,7 +39,7 @@ export class VGridRowCellCheckbox {
   }
 
   customStyleChanged(value, old) {
-    console.log("wow")
+
   }
 
 
@@ -51,7 +51,6 @@ export class VGridRowCellCheckbox {
   attached() {
     this.content = this.element.children[0];//document.createElement("input");
     this.content.type = "checkbox";
-    this.valueChanged(this.value);
     this.content.onclick = function (e) {
       if (this.parent.readOnly() === true && e.keyCode !== 9) {
         return false;
@@ -66,7 +65,11 @@ export class VGridRowCellCheckbox {
     this.content.classList.add(this.parent.vGrid.vGridConfig.css.cellContent);
     this.content.style.height = "100%";
     this.content.style.margin = "auto";
+    this.content.style.position = "initial";
+    this.content.style.display = "block";
+    this.content.style.opacity = "initial";
     this.element.appendChild(this.content);
+    this.valueChanged(this.value);
 
     this.content.onchange = ()=> {
       this.parent.updateValue(this.content.checked);

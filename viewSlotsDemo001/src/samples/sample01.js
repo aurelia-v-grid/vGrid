@@ -10,7 +10,14 @@ export class sample01 {
   myCurrentEntity = {};
   myGrid = {
 
+
   };
+
+  singleClick(e){
+    console.log("click")
+  }
+
+
 
   onRowDraw (data, collectionData, datePicker) {
     if (data) {
@@ -20,7 +27,6 @@ export class sample01 {
       } else {
         data.customColor = "red";
         data.customFont = "bold";
-
       }
     }
   }
@@ -285,15 +291,15 @@ export class sample01 {
 
   switchNameBtn(){
     let oldState = this.myGrid.ctx.getColumns(this.oldState);
-    let oldIndex= oldState.attributeArray.indexOf("name");
-    let newIndex= oldState.attributeArray.indexOf("color");
+    let oldIndex= oldState.colAttrArray.indexOf("name");
+    let newIndex= oldState.colAttrArray.indexOf("color");
 
 
-    oldState.attributeArray[oldIndex] = "color";
-    oldState.attributeArray[newIndex] = "name";
+    oldState.colAttrArray[oldIndex] = "color";
+    oldState.colAttrArray[newIndex] = "name";
 
-    oldState.headerArray[oldIndex] = "Color";
-    oldState.headerArray[newIndex] = "Name";
+    oldState.colHeaderArray[oldIndex] = "Color";
+    oldState.colHeaderArray[newIndex] = "Name";
 
 
     this.myGrid.ctx.setColumns(oldState);

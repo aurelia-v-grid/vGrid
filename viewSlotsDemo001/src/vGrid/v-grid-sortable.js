@@ -129,11 +129,9 @@ export class VGridSortable {
 
   //sets the elements draggable attribute
   setDraggable(newStatus) {
-
     [].slice.call(this.rootEl.children).forEach(function (itemEl) {
       itemEl.draggable = newStatus;
     });
-
   }
 
 

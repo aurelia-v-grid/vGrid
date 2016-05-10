@@ -1,5 +1,5 @@
 <template>
-
+  <!--<require from="vGrid/v-grid.css"></require>-->
   <require from="app.css"></require>
   <require from="date-format.js"></require>
   <require from="number-format.js"></require>
@@ -13,14 +13,18 @@
     <!------------------------------------------------------------------------------------------------------------------------------------>
 
     <div  class="myRow1">
-<!--v-header-filter-not-to="images"-->
+
+      <!--<v-grid-->
+      <!--v-manual-sel="true">-->
+      <!--<v-grid-col v-col-width="50" v-col-type="selection"></v-grid-col>-->
+      <!--</v-grid>-->
 
       <!------------------------------------------------------------------------------------------------------------------------------------>
       <!--GRID------------------------------------------------------------------------------------------------------------------------------>
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">early version- using viewslots 2016.05.07 v24 </h4>
+        <h4 style="margin-left:25px">demo v25, 10 Mai-2016</h4>
 
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -33,7 +37,7 @@
           v-sort-not-on-header="images"
           v-header-filter-top="true"
           v-sortable-headers="true"
-          v-row-onclick="singleClick"
+          v-row-onclick="singleClick($this)"
           v-row-ondblclick="singleDblClick"
           v-sort-on-header-click="true"
           v-multi-select="true"

@@ -1,5 +1,5 @@
 /*****************************************************************************************************************
- *    VGridHeaderLabel
+ *    VGridHeaderFilter
  *    Custom element for use in the header/column container (v-grid-header-col.js)
  *    Created by vegar ringdal
  *
@@ -8,16 +8,25 @@ import {inject, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 
 
-@customElement('v-grid-label')
+@customElement('v-grid-filter-text')
 @inject(Element, VGrid)
-export class VGridHeaderLabel {
+export class VGridHeaderFilterText {
   @bindable type;
+  @bindable filterValue;
 
 
   constructor(element, vGrid) {
     this.element = element;
     this.vGrid = vGrid;
     this.vGridConfig = vGrid.vGridConfig;
+  }
+
+  filterValueChanged(newValue, oldValue) {
+    if (typeof(newValue) === "object") {
+      newValue = "";
+    }
+    this.content.value = newValue;
+    this.parent.onChangeEventOnFilter({keyKode: 13});
   }
 
 
@@ -29,11 +38,30 @@ export class VGridHeaderLabel {
   attached() {
     this.content = this.element.children[0];
     this.setStyle(this.content);
-    this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute());
-    this.content.style.height = "initial";
+    this.content.type = "text";
+    this.content.onkeyup = (e)=> {
+      if (this.vGridConfig.filterOnKeyArray[this.parent.columnNo]) {
+        this.filterValue = this.content.value;
+      } else {
+        if (e.keyCode === 13) {
+          this.filterValue = this.content.value;
+        }
+      }
 
+    };
+
+    this.content.onchange = ()=> {
+      this.filterValue = this.content.value;
+    };
+
+    this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute());
+    this.content.value = this.filterValue ? this.filterValue : "";
+
+    this.content.style.height = "50%";
+    this.content.style.margin = "initial";
 
   }
+
 
   setStyle(element) {
 
@@ -45,38 +73,18 @@ export class VGridHeaderLabel {
       element.style[tag] = value;
     };
 
-    var dragHandle = this.vGridConfig.isSortableHeader ? this.vGridConfig.css.dragHandle : "";
-    
 
     switch (this.type) {
-      case "labelTop":
+      case "filterTop":
         addClass(this.vGridConfig.css.cellContent);
-        addClass(this.vGridConfig.css.filterLabelTop);
-        dragHandle ? addClass(dragHandle) : "";
-        addClass(this.vGridConfig.css.orderHandle);
+        addClass(this.vGridConfig.css.filterInputTop);
+        addClass(this.vGridConfig.css.filterHandle);
         setStyleTag("line-height", `${this.vGridConfig.headerHeight / 2}px`);
         break;
-      case "labelBottom":
+      case "filterBottom":
         addClass(this.vGridConfig.css.cellContent);
-        addClass(this.vGridConfig.css.filterLabelBottom);
-        dragHandle ? addClass(dragHandle) : "";
-        addClass(this.vGridConfig.css.orderHandle);
+        addClass(this.vGridConfig.css.filterInputBottom);
         setStyleTag("line-height", `${this.vGridConfig.headerHeight / 2}px`);
-        break;
-      case "blankLabel":
-        addClass(this.vGridConfig.css.cellContent);
-        if (this.vGridConfig.filterOnAtTop) {
-          addClass(this.vGridConfig.css.filterLabelBottom);
-        } else {
-          addClass(this.vGridConfig.css.filterLabelTop);
-        }
-        addClass(this.vGridConfig.css.orderHandle);
-        break;
-      case "single":
-        addClass(this.vGridConfig.css.cellContent);
-        dragHandle ? addClass(dragHandle) : "";
-        addClass(this.vGridConfig.css.orderHandle);
-        setStyleTag("line-height", `${this.vGridConfig.headerHeight}px`);
         break;
       default:
         break;

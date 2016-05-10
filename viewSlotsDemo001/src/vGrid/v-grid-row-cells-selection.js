@@ -1,23 +1,16 @@
 /*****************************************************************************************************************
- *    VGridRowCellImage
+ *    VGridRowCellSelection
  *    Custom element for use in the row/column container (v-grid-row-col.js)
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-
-//keeping one for each, so its easier to maintain if I do something special later
-
 import {inject, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 
 
-/*******************************************
- *  Normal input for image
- *******************************************/
-
-@customElement('v-grid-image')
+@customElement('v-grid-selection')
 @inject(Element, VGrid)
-export class VGridRowCellImage {
+export class VGridRowCellSelection {
   @bindable value;
   @bindable customStyle;
 
@@ -29,33 +22,55 @@ export class VGridRowCellImage {
 
 
   valueChanged(value, old) {
-    if (value === undefined) {
+    if (value === undefined || value === null || value === "") {
       this.content.style.display = "none";
-      this.content.src = "";
+      this.content.checked = false;
     } else {
       this.content.style.display = "block";
-      this.content.src = "";
-      this.content.src = value;
+      this.content.checked = this.vGrid.vGridSelection.isSelected(this.parent.getRow());
     }
+    if(this.parent.getRow() > this.vGrid.vGridCollectionFiltered.length-1){
+      this.content.style.display = "none";
+      this.content.checked = false;
+    }
+
   }
 
   customStyleChanged(value, old) {
-
+    
   }
 
 
   bind(parent) {
     this.parent = parent;
+    
   }
 
 
   attached() {
-    this.content = this.element.children[0];
+    this.content = this.element.children[0];//document.createElement("input");
+    this.content.type = "checkbox";
+    this.content.onclick = function (e) {
+      if(this.content.checked){
+        this.vGrid.vGridSelection.select(this.parent.getRow(), true)
+      } else {
+        this.vGrid.vGridSelection.deSelect(this.parent.getRow())
+      }
+      this.vGrid.vGridGenerator.fillDataInRows();
+    }.bind(this);
+    this.content.checked = this.vGrid.vGridSelection.isSelected(this.parent.getRow());
     this.content.classList.add(this.parent.vGrid.vGridConfig.css.cellContent);
-    this.valueChanged(this.value);
+    this.content.style.height = "100%";
     this.content.style.margin = "auto";
-    this.content.style.display = "none";
+    this.content.style.position = "initial";
+    this.content.style.display = "block";
+    this.content.style.opacity = "initial";
     this.element.appendChild(this.content);
+    this.valueChanged(false);
+
+    this.content.onchange = ()=> {
+      
+    };
 
     //set column no
     this.content.columnNo = parseInt(this.parent.columnNo);
@@ -66,6 +81,5 @@ export class VGridRowCellImage {
     }.bind(this));
 
   }
-
-
 }
+

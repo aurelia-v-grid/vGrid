@@ -237,13 +237,13 @@ export class filterOnAtTop extends VGridAttibutes {
 
 
 
-// @customAttribute('v-sort-on-header-click')
-// @inject(Element, Optional.of(VGrid))
-// export class sortOnHeaderClick extends VGridAttibutes {
-//   attribute = "sortOnHeaderClick";
-//   alias = "sortOnHeaderClick";
-//   type = "bool";
-// }
+@customAttribute('v-sort-on-header-click')
+@inject(Element, Optional.of(VGrid))
+export class sortOnHeaderClick extends VGridAttibutes {
+  attribute = "sortOnHeaderClick";
+  alias = "configSortOnHeaderClick";
+  type = "bool";
+}
 
 
 @customAttribute('v-large-buffer')
@@ -254,13 +254,13 @@ export class largeBuffer extends VGridAttibutes {
   type = "bool";
 }
 
-// @customAttribute('v-active-sorting')
-// @inject(Element, Optional.of(VGrid))
-// export class activeSorting extends VGridAttibutes {
-//   attribute = "activeSorting";
-//   alias = "activeSorting";
-//   type = "bool";
-// }
+@customAttribute('v-manual-sel')
+@inject(Element, Optional.of(VGrid))
+export class manualSelection extends VGridAttibutes {
+  attribute = "manualSelection";
+  alias = "configManualSelection";
+  type = "bool";
+}
 
 
 @customAttribute('v-row-on-draw')
@@ -309,6 +309,7 @@ export class eventOnRowClick extends VGridAttibutes {
 @customAttribute('v-row-ondblclick')
 @inject(Element, Optional.of(VGrid))
 export class eventOnRowDblClick extends VGridAttibutes {
+
   attribute = "eventOnRowDblClick";
   alias = "configEventOnRowDblClick";
   type = "fn";
