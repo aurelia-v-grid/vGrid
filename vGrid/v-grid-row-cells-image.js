@@ -11,8 +11,6 @@ import {inject, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 
 
-
-
 /*******************************************
  *  Normal input for image
  *******************************************/
@@ -29,7 +27,7 @@ export class VGridRowCellImage {
     this.vGrid = vGrid;
   }
 
-  
+
   valueChanged(value, old) {
     if (value === undefined) {
       this.content.style.display = "none";
@@ -42,7 +40,7 @@ export class VGridRowCellImage {
   }
 
   customStyleChanged(value, old) {
-    console.log("wow")
+
   }
 
 

@@ -61,8 +61,6 @@ export class VGridHeaderFilter {
     this.content = document.createElement("input");
     container.appendChild(this.content);
 
-
-    this.content.onkeyup = this.parent.onKeyUpEventOnFilter.bind(this.parent);
     this.content.onchange = this.parent.onChangeEventOnFilter.bind(this.parent);
     this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute());
     this.content.value = this.filterValue ? this.filterValue : "";

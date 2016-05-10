@@ -79,66 +79,78 @@ export class VGridCellRowHeader {
       case "selection":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
-            <v-grid-filter-${this.colType} filter-value.bind="queryString" type="filterTop">
-            
-            </v-grid-filter-${this.colType}>
+            <v-grid-filter-${this.colType}></v-grid-filter-${this.colType}>              
           </template>
           `, this.vGrid.resources);
         break;
       case "single":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
+          
             <v-grid-label type="single">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
+            
           </template>
           `, this.vGrid.resources);
         break;
       case "filterTop":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
-            <v-grid-filter-${this.colType} filter-value.bind="queryString" type="filterTop">
+          
+            <v-grid-filter-${this.colType} filter-value.two-way="queryString" type="filterTop">
               <input placeholder="${this.filterName}">
             </v-grid-filter-${this.colType}>
+          
             <v-grid-label type="labelBottom">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
+            
           </template>
           `, this.vGrid.resources);
         break;
       case "filterBottom":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
+          
             <v-grid-label type="labelTop">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
-             <v-grid-filter-${this.colType} filter-value.bind="queryString" type="filterBottom">
+            
+             <v-grid-filter-${this.colType} filter-value..two-way="queryString" type="filterBottom">
               <input placeholder="${this.filterName}">
             </v-grid-filter-${this.colType}>
+            
           </template>
           `, this.vGrid.resources);
         break;
       case "noFilterTop":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
+          
             <v-grid-label type="blankLabel">
               <div></div>
             </v-grid-label>
+            
              <v-grid-label type="labelBottom">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
+            
           </template>
           `, this.vGrid.resources);
         break;
       case "noFilterBottom":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
+          
              <v-grid-label type="labelBottom">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
+            
             <v-grid-label type="blankLabel">
               <div></div>
             </v-grid-label>
+            
           </template>
           `, this.vGrid.resources);
         break;
@@ -265,15 +277,16 @@ export class VGridCellRowHeader {
   /*************************************************
    *  called when users hits key down
    */
-  onKeyUpEventOnFilter(e) {
-    if (this.vGridConfig.filterOnKeyArray[this.columnNo]) {
-      e.target.onchange(e);
-    } else {
-      if (e.keyCode === 13) {
-        e.target.onchange(e);
-      }
-    }
-  };
+  // onKeyUpEventOnFilter(e) {
+  //   console.log("test")
+  //   if (this.vGridConfig.filterOnKeyArray[this.columnNo]) {
+  //     e.target.onchange(e);
+  //   } else {
+  //     if (e.keyCode === 13) {
+  //       e.target.onchange(e);
+  //     }
+  //   }
+  // };
 
 
 }//end class

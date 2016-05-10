@@ -4,17 +4,9 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-
-//keeping one for each, so its easier to maintain if I do something special later
-
 import {inject, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 
-
-
-/*******************************************
- *  Normal input for text/numbers
- *******************************************/
 
 @customElement('v-grid-input')
 @inject(Element, VGrid)
@@ -39,7 +31,7 @@ export class VGridRowCellInput {
   }
 
   customStyleChanged(value, old) {
-    console.log("wow")
+    
   }
 
   bind(parent) {

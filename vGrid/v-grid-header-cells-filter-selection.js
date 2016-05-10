@@ -11,8 +11,6 @@ import {VGrid} from './v-grid'
 @customElement('v-grid-filter-selection')
 @inject(Element, VGrid)
 export class VGridHeaderFilterSelection {
-  @bindable type;
-  @bindable filterValue;
 
 
   constructor(element, vGrid) {
@@ -21,10 +19,6 @@ export class VGridHeaderFilterSelection {
     this.vGridConfig = vGrid.vGridConfig;
   }
 
-  filterValueChanged(newValue, oldValue) {
-    
-
-  }
 
 
   bind(parent) {
@@ -45,6 +39,7 @@ export class VGridHeaderFilterSelection {
 
     //set the standard styles to the container instead of checkbox, (for the white backgorunbd and borders)
     this.setStyle(container);
+    
     //custom for the selection
     container.classList.remove(this.vGridConfig.css.filterInputTop);
     container.style.height = "100%";
@@ -54,8 +49,6 @@ export class VGridHeaderFilterSelection {
     container.appendChild(this.content);
 
 
-    this.content.onkeyup = this.parent.onKeyUpEventOnFilter.bind(this.parent);
-    this.content.onchange = this.parent.onChangeEventOnFilter.bind(this.parent);
     this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute());
     this.content.value = this.filterValue ? this.filterValue : "";
 
@@ -85,7 +78,6 @@ export class VGridHeaderFilterSelection {
 
 
   setStyle(element) {
-
     var addClass = (name)=> {
       element.classList.add(name)
     };
@@ -94,24 +86,10 @@ export class VGridHeaderFilterSelection {
       element.style[tag] = value;
     };
 
-
-    switch (this.type) {
-      case "filterTop":
-        addClass(this.vGridConfig.css.cellContent);
-        addClass(this.vGridConfig.css.filterInputTop);
-        addClass(this.vGridConfig.css.filterHandle);
-        setStyleTag("line-height", `${this.vGridConfig.headerHeight / 2}px`);
-        break;
-      case "filterBottom":
-        addClass(this.vGridConfig.css.cellContent);
-        addClass(this.vGridConfig.css.filterInputBottom);
-        setStyleTag("line-height", `${this.vGridConfig.headerHeight / 2}px`);
-        break;
-      default:
-        break;
-    }
-
-
+    addClass(this.vGridConfig.css.cellContent);
+    addClass(this.vGridConfig.css.filterInputTop);
+    addClass(this.vGridConfig.css.filterHandle);
+    setStyleTag("line-height", `${this.vGridConfig.headerHeight / 2}px`);
   }
 
 

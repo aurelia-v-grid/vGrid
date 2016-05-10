@@ -351,11 +351,10 @@ export class ContextMenuHeader extends ContextMenu {
     switch (value) {
       case "clear-cell" :
         let x = {};
-        this.parent.queryString = x;
+        this.parent.queryString = "";//x;
         this.toggleMenuOff();
         break;
       case "show-all":
-        //var queryHtmlInput = this.parent.vGrid.element.querySelectorAll("." + this.parent.vGridConfig.css.filterHandle);
         this.parent.vGridConfig.onFilterRun([]);
         this.toggleMenuOff();
         break;

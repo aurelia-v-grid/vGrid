@@ -4,17 +4,9 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-
-//keeping one for each, so its easier to maintain if I do something special later
-
 import {inject, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 
-
-
-/*******************************************
- *  Normal input for checkbox
- *******************************************/
 
 @customElement('v-grid-selection')
 @inject(Element, VGrid)
@@ -45,7 +37,7 @@ export class VGridRowCellSelection {
   }
 
   customStyleChanged(value, old) {
-    console.log("wow")
+    
   }
 
 
@@ -77,7 +69,7 @@ export class VGridRowCellSelection {
     this.valueChanged(false);
 
     this.content.onchange = ()=> {
-      //this.parent.updateValue(this.content.checked);
+      
     };
 
     //set column no

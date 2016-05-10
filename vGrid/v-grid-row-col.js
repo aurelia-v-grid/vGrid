@@ -37,7 +37,7 @@ export class VGridCellContainer {
 
       if(this.colType() === "selection"){
         let x = {};
-        this.setValue(x);
+        this.setValue(x); //need to force it to update
       } else {
         this.setValue("");
         this.setValue(this.rawValue);

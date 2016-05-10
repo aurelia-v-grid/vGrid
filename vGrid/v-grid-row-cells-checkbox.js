@@ -39,7 +39,7 @@ export class VGridRowCellCheckbox {
   }
 
   customStyleChanged(value, old) {
-    console.log("wow")
+
   }
 
 
