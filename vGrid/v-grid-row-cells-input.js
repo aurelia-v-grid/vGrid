@@ -15,12 +15,18 @@ export class VGridRowCellInput {
   @bindable customStyle;
 
 
+  /*****************************************************
+   *  Constructor
+   ******************************************************/
   constructor(element, vGrid) {
     this.element = element;
     this.vGrid = vGrid;
   }
 
 
+  /*****************************************************
+   *  bindable event
+   ******************************************************/
   valueChanged(value, old) {
     if (value === undefined) {
       this.content.style.display = "none"
@@ -30,14 +36,26 @@ export class VGridRowCellInput {
     }
   }
 
+
+  /*****************************************************
+   *  bindable event
+   ******************************************************/
   customStyleChanged(value, old) {
-    
+
   }
 
+
+  /*****************************************************
+   *  Element event
+   ******************************************************/
   bind(parent) {
     this.parent = parent;
   }
 
+
+  /*****************************************************
+   *  Element event
+   ******************************************************/
   attached() {
     this.content = this.element.children[0];//document.createElement("input");
     this.content.type = "text";
@@ -45,6 +63,7 @@ export class VGridRowCellInput {
     this.content.style.height = "100%";
     this.content.style.width = "100%";
     this.element.appendChild(this.content);
+
 
     //set column no
     this.content.columnNo = parseInt(this.parent.columnNo);
@@ -56,8 +75,8 @@ export class VGridRowCellInput {
 
 
     this.content.onblur = ()=> {
-        this.parent.setValue(this.parent.getValue(this.value));
-        this.parent.setCss();
+      this.parent.setValue(this.parent.getValue(this.value));
+      this.parent.setCss();
     };
 
 
@@ -83,4 +102,3 @@ export class VGridRowCellInput {
 
 
 }
-

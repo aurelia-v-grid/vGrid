@@ -52,8 +52,8 @@ export class VGrid {
     this.vGridSkipNextUpdateProperty = [];
 
     //my classes the grid uses
-    this.vGridFilter = new VGridFilter();
-    this.vGridSort = new VGridSort();
+    this.vGridFilter = new VGridFilter(this);
+    this.vGridSort = new VGridSort(this);
     this.vGridConfig = new VGridConfig(this);
     this.vGridSelection = new VGridSelection(null, this);
     this.vGridCellHelper = new VGridCellHelper(this);
@@ -98,7 +98,7 @@ export class VGrid {
     return rowFound
   }
 
-  
+
 
 
   /***************************************************************************************
@@ -151,13 +151,13 @@ export class VGrid {
     this.vGridObservables.enableObservablesArray();
     this.vGridObservables.enableObservablesAttributes();
 
-    
+
     this.vGridConfig.init();
-    
+
     //create the grid html/add events etc
     this.vGridGenerator.init(false);
 
- 
+
 
   }
 

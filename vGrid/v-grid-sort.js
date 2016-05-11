@@ -6,8 +6,19 @@
  ****************************************************************************************************************/
 export class VGridSort {
 
+
+  /***************************************************************************************
+   * constsructor
+   ***************************************************************************************/
+  constructor(vGrid) {
+    this.vGrid = vGrid;
+  }
+
+
+  //what they say...
   lastSort = [];
   curSort = [];
+
 
   /***************************************************************************************
    * resets sort
@@ -17,15 +28,21 @@ export class VGridSort {
     this.curSort = [];
   }
 
+
   /***************************************************************************************
    * set the filter
    ***************************************************************************************/
   setFilter(sort, add) {
+
     //do we add or is it the first one
     if (add && this.lastSort.length > 0) {
+
+
       //its adding, so lets get last one
       this.curSort = this.lastSort;
       var exist = false;
+
+
       //loop to se if it exist from before
       this.curSort.forEach(function (x) {
         if (x.attribute === sort.attribute) {
@@ -35,13 +52,17 @@ export class VGridSort {
         }
       });
 
+
       //if it dont exist we add it, else there isnt anythin else to do for now
       if (!exist) {
         this.curSort.push(sort);
         this.curSort[this.curSort.length - 1].no = this.curSort.length;
       }
 
+
     } else {
+
+      //if not adding, just set it
       this.curSort = [sort];
       this.curSort[0].no = 1;
       if (this.lastSort[0]) {
@@ -51,8 +72,13 @@ export class VGridSort {
           }
         }
       }
+
+
     }
+
+
   }
+
 
   /***************************************************************************************
    * returns the filter

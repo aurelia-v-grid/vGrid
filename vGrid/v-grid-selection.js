@@ -164,10 +164,10 @@ export class VGridSelection {
   };
 
   deSelectAll() {
-      for (var i = 0; i < this.vGrid.vGridCollectionFiltered.length; i++) {
-        this.selection.delete(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
-      }
-      this.selectedRows = this.selection.size;
+    for (var i = 0; i < this.vGrid.vGridCollectionFiltered.length; i++) {
+      this.selection.delete(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
+    }
+    this.selectedRows = this.selection.size;
   };
 
 
@@ -238,7 +238,7 @@ export class VGridSelection {
     this.selectedRows = this.selection.size;
   };
 
-  
+
   /****************************************************************************************************************************
    * fixes highlight and select...
    ****************************************************************************************************************************/
@@ -246,138 +246,137 @@ export class VGridSelection {
 
     var isSel;
     var manualSel = this.vGrid.vGridConfig.manualSelection;
-    if(!manualSel){
-    var currentselectedRows = this.getSelectedRows();
+    if (!manualSel) {
+      var currentselectedRows = this.getSelectedRows();
 
-    if (currentRow !== this.lastRowSelected || currentselectedRows[0] !== currentRow) {
+      if (currentRow !== this.lastRowSelected || currentselectedRows[0] !== currentRow) {
 
-      if (currentRow <= (vGridGenerator.vGridConfig.getCollectionLength() - 1)) { //do I need to check this?
+        if (currentRow <= (vGridGenerator.vGridConfig.getCollectionLength() - 1)) { //do I need to check this?
 
-        if (this.selectionMode === "multible") { //if multiselect duh!
+          if (this.selectionMode === "multible") { //if multiselect duh!
 
-          var currentKeyKode = "";
+            var currentKeyKode = "";
 
-          if (e.shiftKey) {
-            currentKeyKode = "shift";
-            currentselectedRows = this.getSelectedRows();
-            if (currentselectedRows.length > 0 && this.lastKeyKodeUsed === "none") {
-              this.lastRowSelected = currentselectedRows[0];
-              this.lastKeyKodeUsed = "shift";
+            if (e.shiftKey) {
+              currentKeyKode = "shift";
+              currentselectedRows = this.getSelectedRows();
+              if (currentselectedRows.length > 0 && this.lastKeyKodeUsed === "none") {
+                this.lastRowSelected = currentselectedRows[0];
+                this.lastKeyKodeUsed = "shift";
+              }
             }
-          }
 
-          if (e.ctrlKey) {
-            currentKeyKode = "ctrl";
-          }
+            if (e.ctrlKey) {
+              currentKeyKode = "ctrl";
+            }
 
-          if (!e.ctrlKey && !e.shiftKey) {
-            currentKeyKode = "none";
-          }
+            if (!e.ctrlKey && !e.shiftKey) {
+              currentKeyKode = "none";
+            }
 
-          switch (true) {
-            case currentKeyKode === "none":
-              this.select(currentRow);
-              break;
-            case this.lastKeyKodeUsed === "shift" && currentKeyKode === "ctrl":
+            switch (true) {
+              case currentKeyKode === "none":
+                this.select(currentRow);
+                break;
+              case this.lastKeyKodeUsed === "shift" && currentKeyKode === "ctrl":
 
-              isSel = this.isSelected(currentRow);
-              if (isSel === true) {
-                this.deSelect(currentRow);
-              } else {
-                this.select(currentRow, true);
-              }
-              this.lastRowSelected = currentRow;
-              break;
+                isSel = this.isSelected(currentRow);
+                if (isSel === true) {
+                  this.deSelect(currentRow);
+                } else {
+                  this.select(currentRow, true);
+                }
+                this.lastRowSelected = currentRow;
+                break;
 
-            case this.lastKeyKodeUsed === "ctrl" && currentKeyKode === "shift":
-              var oldSel = this.getSelectedRows();
-              this.selectRange(this.lastRowSelected, currentRow);
-              var newSel = this.getSelectedRows();
-              this.setSelectedRows(oldSel.concat(newSel));
-
-              break;
-
-            case this.lastKeyKodeUsed === "ctrl" && currentKeyKode === "ctrl":
-
-              isSel = this.isSelected(currentRow);
-              if (isSel === true) {
-                this.deSelect(currentRow);
-              } else {
-                this.select(currentRow, true);
-              }
-              this.lastRowSelected = currentRow;
-              break;
-
-            case this.lastKeyKodeUsed === "none" && currentKeyKode === "ctrl":
-
-              isSel = this.isSelected(currentRow);
-              if (isSel === true) {
-                this.deSelect(currentRow);
-              } else {
-                this.select(currentRow, true);
-              }
-              this.lastRowSelected = currentRow;
-              break;
-
-            case this.lastKeyKodeUsed === "shift" && currentKeyKode === "shift":
-
-              if (this.lastRowSelected > currentRow) {
-                this.selectRange(currentRow, this.lastRowSelected);
-              } else {
+              case this.lastKeyKodeUsed === "ctrl" && currentKeyKode === "shift":
+                var oldSel = this.getSelectedRows();
                 this.selectRange(this.lastRowSelected, currentRow);
-              }
+                var newSel = this.getSelectedRows();
+                this.setSelectedRows(oldSel.concat(newSel));
 
-              break;
+                break;
 
-            case this.lastKeyKodeUsed === "none" && currentKeyKode === "shift":
+              case this.lastKeyKodeUsed === "ctrl" && currentKeyKode === "ctrl":
 
-              if (this.lastRowSelected !== -1) {
+                isSel = this.isSelected(currentRow);
+                if (isSel === true) {
+                  this.deSelect(currentRow);
+                } else {
+                  this.select(currentRow, true);
+                }
+                this.lastRowSelected = currentRow;
+                break;
+
+              case this.lastKeyKodeUsed === "none" && currentKeyKode === "ctrl":
+
+                isSel = this.isSelected(currentRow);
+                if (isSel === true) {
+                  this.deSelect(currentRow);
+                } else {
+                  this.select(currentRow, true);
+                }
+                this.lastRowSelected = currentRow;
+                break;
+
+              case this.lastKeyKodeUsed === "shift" && currentKeyKode === "shift":
+
                 if (this.lastRowSelected > currentRow) {
                   this.selectRange(currentRow, this.lastRowSelected);
                 } else {
                   this.selectRange(this.lastRowSelected, currentRow);
                 }
-              } else {
-                this.lastRowSelected = currentRow;
-                this.select(currentRow);
-              }
-              break;
-            default:
-              console.log("error, this should not happend")
+
+                break;
+
+              case this.lastKeyKodeUsed === "none" && currentKeyKode === "shift":
+
+                if (this.lastRowSelected !== -1) {
+                  if (this.lastRowSelected > currentRow) {
+                    this.selectRange(currentRow, this.lastRowSelected);
+                  } else {
+                    this.selectRange(this.lastRowSelected, currentRow);
+                  }
+                } else {
+                  this.lastRowSelected = currentRow;
+                  this.select(currentRow);
+                }
+                break;
+              default:
+                console.log("error, this should not happend")
+            }
+          } else {
+            this.select(currentRow);
           }
+          this.lastKeyKodeUsed = currentKeyKode;
+
+          //update selection on rows
+          vGridGenerator.updateSelectionOnAllRows()
+        }
+      } else {
+        //same row clicked again
+        if (e.ctrlKey) {
+          currentKeyKode = "ctrl";
+        }
+
+        //if ctrl button we wanto remove selection
+        if (currentKeyKode === "ctrl") {
+          this.lastKeyKodeUsed = currentKeyKode;
+          isSel = this.isSelected(currentRow);
+          if (isSel === true) {
+            this.deSelect(currentRow);
+          }
+          this.lastRowSelected = currentRow
         } else {
+          //else we just wanto make it current..
+          isSel = this.isSelected(currentRow);
           this.select(currentRow);
         }
-        this.lastKeyKodeUsed = currentKeyKode;
-
         //update selection on rows
         vGridGenerator.updateSelectionOnAllRows()
       }
-    } else {
-      //same row clicked again
-      if (e.ctrlKey) {
-        currentKeyKode = "ctrl";
-      }
-
-      //if ctrl button we wanto remove selection
-      if (currentKeyKode === "ctrl") {
-        this.lastKeyKodeUsed = currentKeyKode;
-        isSel = this.isSelected(currentRow);
-        if (isSel === true) {
-          this.deSelect(currentRow);
-        }
-        this.lastRowSelected = currentRow
-      } else {
-        //else we just wanto make it current..
-        isSel = this.isSelected(currentRow);
-        this.select(currentRow);
-      }
-      //update selection on rows
-      vGridGenerator.updateSelectionOnAllRows()
-    }
     }
   };
-
 
 
 }

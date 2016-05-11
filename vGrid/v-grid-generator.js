@@ -424,7 +424,7 @@ export class VGridGenerator {
       row.style.width = this.getTotalColumnWidth() + "px";
 
       //inner magic
-      row.innerHTML = "";
+      row.innerHTML = ""; //? why Im I doing this? todo test... why
 
       //add to scroll body
       this.htmlCache.scrollBody.appendChild(row);
@@ -435,9 +435,13 @@ export class VGridGenerator {
         div: row,
         top: top
       });
+
       //set new top for next row
       top = top + this.vGridConfig.rowHeight;
-    }
+
+    }//end for loop
+
+
   };
 
 
@@ -492,7 +496,6 @@ export class VGridGenerator {
         }
 
         //set highlight
-
         if (this.vGridSelection.isSelected(rowNo)) {
           row.div.classList.add(this.vGridConfig.css.rowSelected)
         } else {
@@ -509,7 +512,8 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   onNormalScrollingLarge() {
 
-    var fixme = false;
+    var fixme = false;//var for chrome issue
+
     //check is user have preformed big scroll, but want it to keep rows inline
     this.scrollVars.lastScrollTop = this.htmlCache.content.scrollTop;
     //fix firefox messing up whn re-setting scroll bar to 0, this is not issue in chrome and edge
@@ -583,7 +587,7 @@ export class VGridGenerator {
         return parseInt(a.top) - parseInt(b.top)
       });
 
-    //chrome fix
+    //chrome fix, some where around v50 / v49 of chrome the div automatically
     if (fixme) {
       this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.rowHeight;
       this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop - this.vGridConfig.rowHeight;

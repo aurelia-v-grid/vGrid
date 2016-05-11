@@ -6,11 +6,17 @@ import {VGridCellRowHeader} from './v-grid-header-col'
 import {VGridCellContainer} from './v-grid-row-col'
 
 
+
+/*****************************************************
+ *  main class, every menu extends this class to make it simpler
+******************************************************/
 var ContextMenu = class {
 
   constructor(element, parent) {
     this.element = element;
     this.parent = parent;
+
+    //main classes, should I just add these to the v-grid-config?
     this.contextMenuClassName = "v-grid-context-menu";
     this.contextMenuItemClassName = "v-grid-context-menu__item";
     this.contextMenuLinkClassName = "v-grid-context-menu__link";
@@ -48,9 +54,11 @@ var ContextMenu = class {
     this.removeListener();
   }
 
+
   canOpen() {
     return true;
   }
+
 
   addListener() {
     this.contextListenerBinded = this.contextListener.bind(this);
@@ -88,9 +96,11 @@ var ContextMenu = class {
     document.addEventListener("click", this.clickListenerBinded)
   }
 
+
   removeMenuClickListner() {
     document.removeEventListener("click", this.clickListenerBinded)
   }
+
 
   clickListener(e) {
     var clickeElIsLink = this.clickInsideElement(e, this.contextMenuLinkClassName);
@@ -132,6 +142,7 @@ var ContextMenu = class {
     document.body.appendChild(this.menu);
     this.menuItems = this.menu.querySelectorAll(".v-grid-context-menu__item");
   }
+
 
   replaceMenu(html) {
     this.menu.innerHTML = html;
@@ -242,11 +253,16 @@ var ContextMenu = class {
 
 };
 
+
+/*****************************************************
+ *  context menu for header
+******************************************************/
 @customAttribute('v-grid-context-menu-header')
 @inject(Element, Optional.of(VGridCellRowHeader))
 export class ContextMenuHeader extends ContextMenu {
   classToOpenOn = "vGrid-queryField"; //class it opens menu on
   altMenuLogic = null; //alt menu to open
+
 
   //main menu lisntner
   menuItemListener(link) {
@@ -260,14 +276,13 @@ export class ContextMenuHeader extends ContextMenu {
 
   };
 
-  canOpen(e) {
 
+  canOpen(e) {
     if(this.parent.colType === "selection"){
       return false;
     } else {
       return true;
     }
-
   }
 
 
@@ -293,6 +308,7 @@ export class ContextMenuHeader extends ContextMenu {
       }
     ]);
   };
+
 
   //alt menu I manually set
   menuHtmlSetFilter() {
@@ -343,9 +359,8 @@ export class ContextMenuHeader extends ContextMenu {
         isHeader: false
       }
     ]);
-
-
   };
+
 
   defaultMenu(value) {
     switch (value) {
@@ -365,7 +380,6 @@ export class ContextMenuHeader extends ContextMenu {
       default:
         console.log(value);
         this.toggleMenuOff();
-
     }
   }
 
@@ -425,7 +439,6 @@ export class ContextMenuHeader extends ContextMenu {
       default:
         console.log(value);
         this.toggleMenuOff();
-
     }
 
     this.altMenuLogic = null; //reset to main menu again
@@ -435,11 +448,16 @@ export class ContextMenuHeader extends ContextMenu {
 }
 
 
+/*****************************************************
+ *  main context menu for row cells
+******************************************************/
 @customAttribute('v-grid-context-menu-cell')
 @inject(Element, Optional.of(VGridCellContainer))
 export class ContextMenuCell extends ContextMenu {
   classToOpenOn = "vGrid-row-cell"; //class it opens menu on
   altMenuLogic = null; //alt menu to open
+
+
   //main menu lisntner
   menuItemListener(link) {
     var value = link.getAttribute("data-action");
@@ -450,8 +468,8 @@ export class ContextMenuCell extends ContextMenu {
     }
   };
 
-  canOpen(e) {
 
+  canOpen(e) {
     if (e.target === this.parent.vGrid.vGridCellHelper.curElement || e.target.firstChild === this.parent.vGrid.vGridCellHelper.curElement) {
       if (this.parent.editMode()) {
         return true;
@@ -461,7 +479,6 @@ export class ContextMenuCell extends ContextMenu {
     } else {
       return false;
     }
-
   }
 
 
@@ -483,6 +500,8 @@ export class ContextMenuCell extends ContextMenu {
       }
     ]);
   };
+
+
 
   defaultMenu(value) {
     switch (value) {
@@ -509,7 +528,6 @@ export class ContextMenuCell extends ContextMenu {
       default:
         console.log(value);
         this.toggleMenuOff();
-
     }
   }
 

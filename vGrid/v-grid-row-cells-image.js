@@ -22,12 +22,18 @@ export class VGridRowCellImage {
   @bindable customStyle;
 
 
+  /*****************************************************
+   *  Constructor
+   ******************************************************/
   constructor(element, vGrid) {
     this.element = element;
     this.vGrid = vGrid;
   }
 
 
+  /*****************************************************
+   *  bindable event
+   ******************************************************/
   valueChanged(value, old) {
     if (value === undefined) {
       this.content.style.display = "none";
@@ -39,16 +45,26 @@ export class VGridRowCellImage {
     }
   }
 
+
+  /*****************************************************
+   *  bindable event
+   ******************************************************/
   customStyleChanged(value, old) {
 
   }
 
 
+  /*****************************************************
+   *  element event
+   ******************************************************/
   bind(parent) {
     this.parent = parent;
   }
 
 
+  /*****************************************************
+   *  element event
+   ******************************************************/
   attached() {
     this.content = this.element.children[0];
     this.content.classList.add(this.parent.vGrid.vGridConfig.css.cellContent);

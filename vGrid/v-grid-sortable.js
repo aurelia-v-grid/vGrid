@@ -52,11 +52,17 @@ export class VGridSortable {
 
   }
 
-  onStart() {this.sortable = true};
+  onStart() {
+    this.sortable = true
+  };
 
-  onCancel() {this.sortable = false};
+  onCancel() {
+    this.sortable = false
+  };
 
-  isDragHandle() {return this.canMove};
+  isDragHandle() {
+    return this.canMove
+  };
 
 
   onUpdateAlt(oldIndex, newIndex) {

@@ -16,6 +16,10 @@ import {VGrid} from './v-grid'
 export class VGridCellRowHeader {
   @bindable columnNo;
 
+
+  /*****************************************************
+   *  constructor
+   ******************************************************/
   constructor(element, vGrid, container) {
     this.element = element;
     this.vGrid = vGrid;
@@ -24,16 +28,26 @@ export class VGridCellRowHeader {
     this.queryString = null
   }
 
+
+  /*****************************************************
+   *  element event
+   ******************************************************/
   bind(bindingContext) {
     this.bindingContext = bindingContext;
   }
 
 
+  /*****************************************************
+   *  element event
+   ******************************************************/
   created() {
     ///nothing atm
   }
 
 
+  /*****************************************************
+   *  element event
+   ******************************************************/
   attached() {
     this.setStandardClassesAndStyles();
 
@@ -53,6 +67,7 @@ export class VGridCellRowHeader {
 
     var sortIcon = this.getSortIconMarkup(this.attribute());
 
+
     var type = "single";
     if (this.addFilter) {
       type = "filterTop";
@@ -68,96 +83,111 @@ export class VGridCellRowHeader {
       }
     }
 
-    if(this.colType === "selection"){
+
+    if (this.colType === "selection") {
       type = "selection";
     }
 
+
     this.type = type;
-
-
     switch (type) {
+
       case "selection":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
-            <v-grid-filter-${this.colType}></v-grid-filter-${this.colType}>              
+            <v-grid-filter-${this.colType}></v-grid-filter-${this.colType}>
           </template>
           `, this.vGrid.resources);
         break;
+
+
       case "single":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
-          
+
             <v-grid-label type="single">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
-            
+
           </template>
           `, this.vGrid.resources);
         break;
+
+
       case "filterTop":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
-          
+
             <v-grid-filter-${this.colType} filter-value.two-way="queryString" type="filterTop">
               <input placeholder="${this.filterName}">
             </v-grid-filter-${this.colType}>
-          
+
             <v-grid-label type="labelBottom">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
-            
+
           </template>
           `, this.vGrid.resources);
         break;
+
+
       case "filterBottom":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
-          
+
             <v-grid-label type="labelTop">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
-            
-             <v-grid-filter-${this.colType} filter-value..two-way="queryString" type="filterBottom">
+
+             <v-grid-filter-${this.colType} filter-value.two-way="queryString" type="filterBottom">
               <input placeholder="${this.filterName}">
             </v-grid-filter-${this.colType}>
-            
+
           </template>
           `, this.vGrid.resources);
         break;
+
+
       case "noFilterTop":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
-          
+
             <v-grid-label type="blankLabel">
               <div></div>
             </v-grid-label>
-            
+
              <v-grid-label type="labelBottom">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
-            
+
           </template>
           `, this.vGrid.resources);
         break;
+
+
       case "noFilterBottom":
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
-          
+
              <v-grid-label type="labelBottom">
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
-            
+
             <v-grid-label type="blankLabel">
               <div></div>
             </v-grid-label>
-            
+
           </template>
           `, this.vGrid.resources);
         break;
+
+
       default:
         break;
     }
 
+
+    //create view and viewslot
     var view = viewFactory.create(this.container);
     this.viewSlot = new ViewSlot(this.element, true);
     this.viewSlot.add(view);
@@ -172,15 +202,18 @@ export class VGridCellRowHeader {
     return this.vGridConfig.attributeArray[this.columnNo];
   }
 
+
   getValue(value) {
     //just for testing not in use
     return this.valueFormater ? this.valueFormater().fromView(value) : value;
   }
 
+
   setValue(value) {
     //just for testing not in use
     return this.valueFormater ? this.valueFormater().toView(value) : value;
   }
+
 
   valueFormater() {
     //just for testing not in use
@@ -235,12 +268,17 @@ export class VGridCellRowHeader {
 
     if (e.keyCode !== 9 && e.keyCode !== 39 && e.keyCode !== 37) {
 
+
       //get all inputs
       var queryInputs = this.vGrid.element.querySelectorAll("." + this.vGridConfig.css.filterHandle);
 
+
       //loop all of them
       var queryParams = [];
+
+
       for (var i = 0; i < queryInputs.length; i++) {
+
 
         //get the attribute, valiue etc
         var dataSourceAttribute = queryInputs[i].getAttribute(this.vGridConfig.atts.dataAttribute);
@@ -249,12 +287,16 @@ export class VGridCellRowHeader {
         var coltype = this.vGridConfig.colTypeArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
         var value = valueFormater ? valueFormater.fromView(queryInputs[i].value) : queryInputs[i].value;
 
-        if(coltype === "checkbox" && value !== "true" && value !== "false"){ //FF issue
+
+        //FF issue, it have value of "on" sometimes...
+        if (coltype === "checkbox" && value !== "true" && value !== "false") {
           value = "";
         }
 
+
         //do value exist and is not blank?
         if (value !== "" && value !== undefined) {
+
 
           //push into array that we send back after
           queryParams.push({
@@ -263,35 +305,29 @@ export class VGridCellRowHeader {
             operator: operator
           });
 
+
           //store the value, since I rebuild the grid when doing sorting...
           this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = queryInputs[i].value;
+
         } else {
+
           //reset to blank for later
           if (value === "") {
             this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = queryInputs[i].value;
           }
 
         }
-      }
+
+
+      }//end for loop
+
+
       //run query/filter
       this.vGridConfig.onFilterRun(queryParams)
     }
+
+
   };
-
-
-  /*************************************************
-   *  called when users hits key down
-   */
-  // onKeyUpEventOnFilter(e) {
-  //   console.log("test")
-  //   if (this.vGridConfig.filterOnKeyArray[this.columnNo]) {
-  //     e.target.onchange(e);
-  //   } else {
-  //     if (e.keyCode === 13) {
-  //       e.target.onchange(e);
-  //     }
-  //   }
-  // };
 
 
 }//end class
