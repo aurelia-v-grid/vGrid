@@ -20,7 +20,7 @@ var ContextMenu = class {
     this.contextMenuClassName = "v-grid-context-menu";
     this.contextMenuItemClassName = "v-grid-context-menu__item";
     this.contextMenuLinkClassName = "v-grid-context-menu__link";
-    this.contextMenuActive = "v-grid-context-menu--active";
+    this.contextMenuSplitClassName = "v-grid-context-menu__split";
 
 
     this.taskItemInContext;
@@ -45,13 +45,16 @@ var ContextMenu = class {
 
 
   attached() {
-    this.addListener();
-
+    if(this.parent.vGrid.vGridConfig.contextmenu){
+      this.addListener();
+    }
   }
 
 
   detached() {
-    this.removeListener();
+    if(this.parent.vGrid.vGridConfig.contextmenu) {
+      this.removeListener();
+    }
   }
 
 
@@ -137,16 +140,16 @@ var ContextMenu = class {
 
   createMenu() {
     this.menu = document.createElement("nav");
-    this.menu.classList.add("v-grid-context-menu");
+    this.menu.classList.add(this.contextMenuClassName);
     this.menu.innerHTML = this.menuHtmlMain();
     document.body.appendChild(this.menu);
-    this.menuItems = this.menu.querySelectorAll(".v-grid-context-menu__item");
+    this.menuItems = this.menu.querySelectorAll("." + this.contextMenuItemClassName);
   }
 
 
   replaceMenu(html) {
     this.menu.innerHTML = html;
-    this.menuItems = this.menu.querySelectorAll(".v-grid-context-menu__item");
+    this.menuItems = this.menu.querySelectorAll("." + this.contextMenuItemClassName);
   }
 
 
@@ -234,12 +237,12 @@ var ContextMenu = class {
 
     menuArray.forEach((row)=> {
       let li = document.createElement("li");
-      li.classList.add("v-grid-context-menu__item");
+      li.classList.add(this.contextMenuItemClassName);
       let a = document.createElement("a");
       if (row.isHeader) {
-        a.classList.add("v-grid-context-menu__split")
+        a.classList.add(this.contextMenuSplitClassName)
       } else {
-        a.classList.add("v-grid-context-menu__link")
+        a.classList.add(this.contextMenuLinkClassName)
       }
       a.setAttribute("data-action", row.action);
       a.innerHTML = row.value;

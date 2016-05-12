@@ -54,6 +54,7 @@ How to use: (no plugin yet):
 * **v-row-onclick** - optional, default "", bind function "myRowClick", returns data, row in main collection, and attribute
 * **v-row-ondblclick** - optional, default "", bind function "myRowDblClick", returns data, row in main collection, and attribute
 * **v-manual-sel** optional, default "false", this disable selection with on row click, to use this set fist column like this:```<v-grid-col v-col-width="50" v-col-type="selection"></v-grid-col>``` to be able to control it
+* **v-contextmenu** optional, default "true"
 
 
 

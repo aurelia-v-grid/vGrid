@@ -91,6 +91,7 @@ export class VGridConfig {
     this.sortOnHeaderClick = false;
     this.largeBuffer = false;
     this.activeSorting = false;
+    this.contextmenu = true;
 
     this.eventOnRowDraw = null;
     this.eventOnRowClick = null;

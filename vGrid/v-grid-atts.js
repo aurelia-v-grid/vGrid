@@ -312,3 +312,12 @@ export class eventOnRowDblClick extends VGridAttibutes {
   alias = "configEventOnRowDblClick";
   type = "fn";
 }
+
+
+@customAttribute('v-contextmenu')
+@inject(Element, Optional.of(VGrid))
+export class contextmenu extends VGridAttibutes {
+  attribute = "contextmenu";
+  alias = "configContextmenu";
+  type = "bool";
+}
