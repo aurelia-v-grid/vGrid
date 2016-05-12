@@ -708,6 +708,7 @@ export class VGridGenerator {
 
 
     var doScroll = () => {
+      
       var currentScrollTop = this.htmlCache.content.scrollTop;
       var currentScrollLeft = this.htmlCache.content.scrollLeft;
 
@@ -1010,6 +1011,7 @@ export class VGridGenerator {
     this.createViewSlots();
     this.fillDataInRows(false); //fillDataInRows
     this.setLargeScrollLimit();
+    this.onNormalScrolling(true, 0);//trigger this so we dont get a short delay
   };
 
 
