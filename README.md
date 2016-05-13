@@ -1,7 +1,7 @@
 ### `<v-grid>`
 ----------------------------------
 
-#### Grid element thats easy to use with multisorting and filtering of a object array.
+##### Data grid element thats easy to use with multisorting and filtering of a object array for aurelia framework
 
 > Updates
 
@@ -10,13 +10,7 @@
 
 ---
 
-[Demo](http://vegarringdal.github.io/vGrid/viewSlotsDemo001/)
-
----
-
-[Wiki](https://github.com/vegarringdal/vGrid/wiki)
-
----
-
-[Aurelia Homepage](http://aurelia.io/)
+* [Demo](http://vegarringdal.github.io/vGrid/viewSlotsDemo001/)
+* [Wiki](https://github.com/vegarringdal/vGrid/wiki)
+* [Aurelia Homepage](http://aurelia.io/)
 
