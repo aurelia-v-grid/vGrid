@@ -96,7 +96,7 @@ export class VGridGenerator {
   scrollVars = {           //internals
     lastScrollTop: 0,     //used in scroll event etc
     lastScrollLeft: 0,    //used for stopping weird scrolling to left
-    halt: false,          //used for knowing if we can update when doing scrolling, used with time var under
+    isScrollBarScrolling: false,          //used for knowing if we can update when doing scrolling, used with time var under
     timer: null,          //timer for stopping updating, "getDataScrollDelay" is the timeout for this
     clickTimersArray: [],  //this is the array of touch events, have it here so I can cancel during scroll
     scrollCallbackTimer: null
@@ -106,7 +106,7 @@ export class VGridGenerator {
   /****************************************************************************************************************************
    * fills data into rows (all)
    ****************************************************************************************************************************/
-  fillDataInRows(clearAllRows) {
+  fillDataInRows() {
     for (var i = 0; i < this.getRowCacheLength(); i++) {
       var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.rowHeight;
       var row = this.htmlCache.rowsArray[i];
@@ -118,7 +118,7 @@ export class VGridGenerator {
   /****************************************************************************************************************************
    * fills data into row, 1 row!
    ****************************************************************************************************************************/
-  fillDataIntoRow(rowno, clearRow) {
+  fillDataIntoRow(rowno) {
     for (var i = 0; i < this.getRowCacheLength(); i++) {
       var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.rowHeight;
       if (rowno === currentRow) {
@@ -585,7 +585,7 @@ export class VGridGenerator {
       });
 
     //update row data
-    this.fillDataInRows(false);
+    this.fillDataInRows();
   };
 
 
@@ -593,6 +593,7 @@ export class VGridGenerator {
    * add the rows to scroll div (for normal scrolling when not using scrollbars)
    ****************************************************************************************************************************/
   onNormalScrolling(isDownScroll, currentScrollTop) {
+
     //check is user have preformed big scroll
     var currentScrollTop = this.htmlCache.content.scrollTop;
     if (this.scrollVars.isScrollBarScrolling === false) {
@@ -708,7 +709,7 @@ export class VGridGenerator {
 
 
     var doScroll = () => {
-      
+
       var currentScrollTop = this.htmlCache.content.scrollTop;
       var currentScrollLeft = this.htmlCache.content.scrollLeft;
 
@@ -1009,9 +1010,9 @@ export class VGridGenerator {
       this.vGridSelection.setMode(this.vGridConfig.isMultiSelect);
     }
     this.createViewSlots();
-    this.fillDataInRows(false); //fillDataInRows
+    this.fillDataInRows(); //fillDataInRows
     this.setLargeScrollLimit();
-    this.onNormalScrolling(true, 0);//trigger this so we dont get a short delay
+
   };
 
 
@@ -1049,7 +1050,7 @@ export class VGridGenerator {
     this.correctColumnsWidthArray();
     this.rebuildGridHeaderHtml();
     this.recreateViewSlots();
-    this.fillDataInRows(true);
+    this.fillDataInRows();
     this.correctRowAndScrollbodyWidth();
     this.updateSelectionOnAllRows();
     this.updateGridScrollbars();
@@ -1062,7 +1063,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   rebuildColumnsRows() {
     this.recreateViewSlots();
-    this.fillDataInRows(true);
+    this.fillDataInRows();
     this.updateSelectionOnAllRows();
     this.fixHeaderWithBody()
   };
@@ -1075,7 +1076,7 @@ export class VGridGenerator {
     this.correctColumnsWidthArray();
     this.rebuildGridHeaderHtml();
     this.recreateViewSlots();
-    this.fillDataInRows(true);
+    this.fillDataInRows();
     this.updateSelectionOnAllRows();
     this.collectionChange(resetScrollToTop);
   };
@@ -1115,7 +1116,7 @@ export class VGridGenerator {
     this.updateSelectionOnAllRows();
     this.fixHeaderWithBody();
     this.onNormalScrollingLarge();
-    this.fillDataInRows(true);
+    this.fillDataInRows();
     if (scrollBottom) {
       this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.rowHeight;
     }
@@ -1199,13 +1200,13 @@ export class VGridGenerator {
   };
 
 
-  updateRow(no, clear) {
-    this.fillDataIntoRow(no, clear)
+  updateRow(no) {
+    this.fillDataIntoRow(no)
   };
 
   setEditMode(value) {
     this.vGridConfig.editMode = value ? true : false;
-    this.fillDataInRows(true);
+    this.fillDataInRows();
   };
 
   clearHeaderSortFilter() {
