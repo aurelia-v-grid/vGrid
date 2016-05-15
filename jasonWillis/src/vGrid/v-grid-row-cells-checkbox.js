@@ -11,7 +11,6 @@ import {inject, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid'
 
 
-
 /*******************************************
  *  Normal input for checkbox
  *******************************************/
@@ -23,12 +22,18 @@ export class VGridRowCellCheckbox {
   @bindable customStyle;
 
 
+  /*****************************************************
+   *  Constructor
+   ******************************************************/
   constructor(element, vGrid) {
     this.element = element;
     this.vGrid = vGrid;
   }
 
 
+  /*****************************************************
+   *  bindable event
+   ******************************************************/
   valueChanged(value, old) {
     if (value === undefined || value === null || value === "") {
       this.content.style.display = "none";
@@ -38,16 +43,26 @@ export class VGridRowCellCheckbox {
     }
   }
 
+
+  /*****************************************************
+   *  bindable event
+   ******************************************************/
   customStyleChanged(value, old) {
-    console.log("wow")
+
   }
 
 
+  /*****************************************************
+   *  element event
+   ******************************************************/
   bind(parent) {
     this.parent = parent;
   }
 
 
+  /*****************************************************
+   *  element event
+   ******************************************************/
   attached() {
     this.content = this.element.children[0];//document.createElement("input");
     this.content.type = "checkbox";
@@ -85,4 +100,3 @@ export class VGridRowCellCheckbox {
 
   }
 }
-

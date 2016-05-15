@@ -236,7 +236,6 @@ export class filterOnAtTop extends VGridAttibutes {
 }
 
 
-
 @customAttribute('v-sort-on-header-click')
 @inject(Element, Optional.of(VGrid))
 export class sortOnHeaderClick extends VGridAttibutes {
@@ -270,7 +269,6 @@ export class eventOnRowDraw extends VGridAttibutes {
   alias = "configEventOnRowDraw";
   type = "fn";
 }
-
 
 
 @customAttribute('v-attibutes-used')
@@ -313,4 +311,13 @@ export class eventOnRowDblClick extends VGridAttibutes {
   attribute = "eventOnRowDblClick";
   alias = "configEventOnRowDblClick";
   type = "fn";
+}
+
+
+@customAttribute('v-contextmenu')
+@inject(Element, Optional.of(VGrid))
+export class contextmenu extends VGridAttibutes {
+  attribute = "contextmenu";
+  alias = "configContextmenu";
+  type = "bool";
 }

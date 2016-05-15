@@ -24,7 +24,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">test v1 12.23AM (5/9/2016) </h4>
+        <h4 style="margin-left:25px">demo v26, 15 Mai-2016</h4>
 
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
@@ -37,17 +37,15 @@
           v-sort-not-on-header="images"
           v-header-filter-top="true"
           v-sortable-headers="true"
-          v-manual-sel="true"
           v-row-onclick="singleClick($this)"
           v-row-ondblclick="singleDblClick"
           v-sort-on-header-click="true"
-          v-multi-select="false"
+          v-multi-select="true"
           v-row-on-draw="onRowDraw"
           v-format-handler="myFormatHandler"
           v-current-entity.bind=myCurrentEntity
           v-collection.bind=myCollection
           v-grid-context.bind=myGrid>
-          <v-grid-col v-col-width="50" v-col-type="selection"></v-grid-col>
           <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">="  v-col-read-only="true"></v-grid-col>
           <v-grid-col v-col-width="100" v-col-attribute="name" v-col-filter-on-key="true" v-col-header="name" v-col-default-filter="*"></v-grid-col>
           <v-grid-col v-col-width="90" v-col-attribute="images" v-col-header="image" v-col-type="image" v-col-css="border-radius: 50%;height:100%;margin-left:25%;"></v-grid-col>

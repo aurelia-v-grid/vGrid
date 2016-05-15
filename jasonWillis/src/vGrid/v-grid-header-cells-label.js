@@ -21,11 +21,17 @@ export class VGridHeaderLabel {
   }
 
 
+  /*****************************************************
+   *  element event
+   ******************************************************/
   bind(parent) {
     this.parent = parent;
   }
 
 
+  /*****************************************************
+   *  element event
+   ******************************************************/
   attached() {
     this.content = this.element.children[0];
     this.setStyle(this.content);
@@ -46,7 +52,7 @@ export class VGridHeaderLabel {
     };
 
     var dragHandle = this.vGridConfig.isSortableHeader ? this.vGridConfig.css.dragHandle : "";
-    
+
 
     switch (this.type) {
       case "labelTop":

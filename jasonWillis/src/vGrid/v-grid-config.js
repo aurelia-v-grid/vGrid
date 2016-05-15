@@ -57,15 +57,14 @@ export class VGridConfig {
     dataAttributeFilter: "v-grid-data-attribute-filter"
   };
 
-  bind() {
-    debugger;
-  }
 
+  /***************************************************************************************
+   * default settings, v-grid-col.js and v-grid-atts populate these defaults with new values
+   ***************************************************************************************/
   constructor(vGrid) {
     this.vGrid = vGrid;
 
-
-    //this.columns = [];
+    //<v-grid-col> attributes
     this.attributeArray = [];
     this.columnWidthArray = [];
     this.headerArray = [];
@@ -77,7 +76,7 @@ export class VGridConfig {
     this.colEditRawArray = [];
     this.filterOnKeyArray = [];
 
-
+    //<v-grid> attibutes
     this.rowHeight = 50;
     this.headerHeight = 0;
     this.footerHeight = 0;
@@ -92,11 +91,11 @@ export class VGridConfig {
     this.sortOnHeaderClick = false;
     this.largeBuffer = false;
     this.activeSorting = false;
+    this.contextmenu = true;
 
     this.eventOnRowDraw = null;
     this.eventOnRowClick = null;
     this.eventOnRowDblClick = null;
-
 
     this.doNotAddFilterTo = [];
     this.sortNotOnHeader = [];
@@ -123,73 +122,72 @@ export class VGridConfig {
     }
   }
 
-  
-  
-  init(){
-    this.attributeArray = this.vGrid.vGridContextObj.colAttrArray ? this.vGrid.vGridContextObj.colAttrArray :this.attributeArray;
-    this.columnWidthArray = this.vGrid.vGridContextObj.colWidthArray ? this.vGrid.vGridContextObj.colWidthArray :this.columnWidthArray;
-    this.headerArray = this.vGrid.vGridContextObj.colHeaderArray ? this.vGrid.vGridContextObj.colHeaderArray :this.headerArray;
-    this.filterArray = this.vGrid.vGridContextObj.colFilterArray ? this.vGrid.vGridContextObj.colFilterArray :this.filterArray;
-    this.readOnlyArray = this.vGrid.vGridContextObj.colReadonlyArray ? this.vGrid.vGridContextObj.colReadonlyArray :this.readOnlyArray;
-    this.colStyleArray = this.vGrid.vGridContextObj.colStyleArray ? this.vGrid.vGridContextObj.colStyleArray :this.colStyleArray;
-    this.colTypeArray = this.vGrid.vGridContextObj.colTypeArray ? this.vGrid.vGridContextObj.colTypeArray :this.colTypeArray;
-    this.colFormaterArray = this.vGrid.vGridContextObj.colFormaterArray ? this.vGrid.vGridContextObj.colFormaterArray :this.colFormaterArray;
-    this.colEditRawArray = this.vGrid.vGridContextObj.colEditRawArray ? this.vGrid.vGridContextObj.colEditRawArray :this.colEditRawArray;
-    this.filterOnKeyArray = this.vGrid.vGridContextObj.colFilterOnKeyArray ? this.vGrid.vGridContextObj.colFilterOnKeyArray :this.filterOnKeyArray;
-    
-    
+
+  /***************************************************************************************
+   * called before the creation of the grid, so its possible to do without the html for setting configuration/override it
+   ***************************************************************************************/
+  init() {
+
+    this.attributeArray = this.vGrid.vGridContextObj.colAttrArray ? this.vGrid.vGridContextObj.colAttrArray : this.attributeArray;
+    this.columnWidthArray = this.vGrid.vGridContextObj.colWidthArray ? this.vGrid.vGridContextObj.colWidthArray : this.columnWidthArray;
+    this.headerArray = this.vGrid.vGridContextObj.colHeaderArray ? this.vGrid.vGridContextObj.colHeaderArray : this.headerArray;
+    this.filterArray = this.vGrid.vGridContextObj.colFilterArray ? this.vGrid.vGridContextObj.colFilterArray : this.filterArray;
+    this.readOnlyArray = this.vGrid.vGridContextObj.colReadonlyArray ? this.vGrid.vGridContextObj.colReadonlyArray : this.readOnlyArray;
+    this.colStyleArray = this.vGrid.vGridContextObj.colStyleArray ? this.vGrid.vGridContextObj.colStyleArray : this.colStyleArray;
+    this.colTypeArray = this.vGrid.vGridContextObj.colTypeArray ? this.vGrid.vGridContextObj.colTypeArray : this.colTypeArray;
+    this.colFormaterArray = this.vGrid.vGridContextObj.colFormaterArray ? this.vGrid.vGridContextObj.colFormaterArray : this.colFormaterArray;
+    this.colEditRawArray = this.vGrid.vGridContextObj.colEditRawArray ? this.vGrid.vGridContextObj.colEditRawArray : this.colEditRawArray;
+    this.filterOnKeyArray = this.vGrid.vGridContextObj.colFilterOnKeyArray ? this.vGrid.vGridContextObj.colFilterOnKeyArray : this.filterOnKeyArray;
+
   }
-  
-  
+
 
   /***************************************************************************************
    * This is called when grid runs filter
    ***************************************************************************************/
-
   onFilterRun = (filterObj) => {
 
-    if (filterObj.length !== 0 || this.vGridCollectionFiltered.length !== this.vGridCollection.length) {
-      //get sel keys
+    if (filterObj.length !== 0 || this.vGrid.vGridCollectionFiltered.length !== this.vGrid.vGridCollection.length) {
 
-      //if they filter we want to make sure the after cell edit happends
-      // if (this.vGridCellHelper.curElement && this.vGridCellHelper.updated === false) {
-      //   this.vGridCellHelper.updateActual(this.vGridCellHelper.callbackObject());
-      // }
 
+      //get current key if there is any, need this to find current row after filter
       var curKey = -1;
-      if (this.vGridCurrentEntityRef) {
-        curKey = this.vGridCurrentEntityRef[this.vGridRowKey];
+      if (this.vGrid.vGridCurrentEntityRef) {
+        curKey = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
       }
-      if (filterObj.length === 0 && this.vGridCollectionFiltered.length !== this.vGridCollection.length) {
-        this.vGridCollectionFiltered = this.vGridCollection.slice(0);
-      } else {
 
-        this.vGridCollectionFiltered = this.vGridFilter.run(this.vGridCollection, filterObj);
-        this.vGridSort.run(this.vGridCollectionFiltered);
 
-      }
+      //run filter
+      this.vGrid.vGridCollectionFiltered = this.vGrid.vGridFilter.run(this.vGrid.vGridCollection, filterObj);
+
+
+      //run sorting
+      this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
 
 
       //set current row/entity in sync
       var newRowNo = -1;
       if (curKey) {
-        this.vGridCollectionFiltered.forEach((x, index) => {
-          if (curKey === x[this.vGridRowKey]) {
+        this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
+          if (curKey === x[this.vGrid.vGridRowKey]) {
             newRowNo = index;
           }
         });
       }
 
+
+      //update current row/current entity/entity ref
       if (newRowNo > -1) {
-        this.vGridCurrentEntityRef = this.vGridCollectionFiltered[newRowNo];
-        this.vGridCurrentEntity[this.vGridRowKey] = this.vGridCurrentEntityRef[this.vGridRowKey];
-        this.vGridCurrentRow = newRowNo;
+        this.vGrid.vGridCurrentEntityRef = this.vGrid.vGridCollectionFiltered[newRowNo];
+        this.vGrid.vGridCurrentEntity[this.vGrid.vGridRowKey] = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
+        this.vGrid.vGridCurrentRow = newRowNo;
       } else {
-        this.vGridCurrentRow = newRowNo;
+        this.vGrid.vGridCurrentRow = newRowNo;
       }
 
-      //update grid
-      this.vGridGenerator.collectionChange(true);
+
+      //update grid rows
+      this.vGrid.vGridGenerator.collectionChange(true);
 
 
     }
@@ -201,7 +199,7 @@ export class VGridConfig {
    * grid asks for the filter name from attibute
    ***************************************************************************************/
   getFilterName(name) {
-    return this.vGridFilter.getNameOfFilter(name)
+    return this.vGrid.vGridFilter.getNameOfFilter(name)
   }
 
 
@@ -210,14 +208,14 @@ export class VGridConfig {
    * Use {} if you want markup of columns, or undefined for total blank rows
    ***************************************************************************************/
   getDataElement(row, isDown, isLargeScroll, callback) {
-    if (this.vGridCollectionFiltered !== undefined) {
+    if (this.vGrid.vGridCollectionFiltered !== undefined) {
       if (this.eventOnRowDraw) {
         //if user have added this then we call it so they can edit the row data before we display it
-        var data = this.getNewObject(this.vGridCollectionFiltered[row]);
-        this.eventOnRowDraw(data, this.vGridCollectionFiltered[row]);
+        var data = this.getNewObject(this.vGrid.vGridCollectionFiltered[row]);
+        this.eventOnRowDraw(data, this.vGrid.vGridCollectionFiltered[row]);
         callback(data)
       } else {
-        callback(this.vGridCollectionFiltered[row]);
+        callback(this.vGrid.vGridCollectionFiltered[row]);
       }
     }
   }
@@ -229,49 +227,51 @@ export class VGridConfig {
    ***************************************************************************************/
   onOrderBy(event, setheaders) {
 
-    //if they sort we want to make sure the after cell edit happends
-    // if (this.vGridCellHelper.curElement && this.vGridCellHelper.updated === false) {
-    //   this.vGridCellHelper.updateActual(this.vGridCellHelper.callbackObject());
-    // }
-
-
-    //get clicked
+    //get attibute of clicked header (todo inprove this part)
     var attribute = event.target.getAttribute(this.atts.dataAttribute);
     if (attribute === null) {
       attribute = event.target.offsetParent.getAttribute(this.atts.dataAttribute);
     }
-    let checked = true;
+
+
+    //check if this attribute can be sorted
+    let canSortThisAttribute = true;
     if (this.sortNotOnHeader.indexOf(attribute) !== -1) {
-      checked = false;
+      canSortThisAttribute = false;
     }
 
-    if (this.vGridCollectionFiltered.length > 0 && attribute && checked) {
+
+    //can we do the sorting?
+    if (this.vGrid.vGridCollectionFiltered.length > 0 && attribute && canSortThisAttribute) {
+
 
       //set filter
-      this.vGridSort.setFilter({
+      this.vGrid.vGridSort.setFilter({
         attribute: attribute,
         asc: true
       }, event.shiftKey);
-      //set headers
-      setheaders(this.vGridSort.getFilter());
-      //get sel keys
+
+
+      //set headers(rebuild the headers, its just simpler, then having any logic to it) Todo: after rebuild having som logic instead of rebuild might be simple enought now.
+      setheaders(this.vGrid.vGridSort.getFilter());
+
 
       //run filter
-      this.vGridSort.run(this.vGridCollectionFiltered);
+      this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
 
 
       //set new row
-      //this.vGridCurrentRow = this.vGrid.vGridGetRowKey(this.vGridCurrentEntity[this.vGridRowKey])
-      this.vGridCollectionFiltered.forEach((x, index) => {
-        if (this.vGridCurrentEntityRef) {
-          if (this.vGridCurrentEntityRef[this.vGridRowKey] === x[this.vGridRowKey]) {
-            this.vGridCurrentRow = index;
+      if (this.vGrid.vGridCurrentEntityRef) {
+        this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
+          if (this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey] === x[this.vGrid.vGridRowKey]) {
+            this.vGrid.vGridCurrentRow = index;
           }
-        }
-      });
+        });
+      }
+
 
       //update grid
-      this.vGridGenerator.collectionChange();
+      this.vGrid.vGridGenerator.collectionChange();
 
     }
 
@@ -285,184 +285,62 @@ export class VGridConfig {
    ***************************************************************************************/
   getCollectionLength() {
     if (this.addFilter) {
-      return this.vGridCollectionFiltered.length;
+      return this.vGrid.vGridCollectionFiltered.length;
     } else {
-      return this.vGridCollection.length;
+      return this.vGrid.vGridCollection.length;
     }
   }
 
 
   /***************************************************************************************
-   * Listen for click on rows,
+   * Listen for click on rows(called from v-grid-generator eventlistner for the buffer rows it created)
    * Snd set current entity, and also allow edit of cell
    ***************************************************************************************/
   clickHandler(event, row) {
 
 
     //set current row of out filtered row
-    this.vGridCurrentRow = row;
+    this.vGrid.vGridCurrentRow = row;
+
 
     //get data ref
-    this.vGridCurrentEntityRef = this.vGridCollectionFiltered[row];
+    this.vGrid.vGridCurrentEntityRef = this.vGrid.vGridCollectionFiltered[row];
 
-    ///loop properties and set them to current entity
-    let data = this.vGridCurrentEntityRef;
+
+    //loop properties and set them to current entity
+    let data = this.vGrid.vGridCurrentEntityRef;
     for (var k in data) {
       if (data.hasOwnProperty(k)) {
-        if (this.vGridCurrentEntity[k] !== data[k]) {
-          this.vGridCurrentEntity[k] = data[k];
-          this.vGridSkipNextUpdateProperty.push(k)
+        if (this.vGrid.vGridCurrentEntity[k] !== data[k]) {
+          this.vGrid.vGridCurrentEntity[k] = data[k];
+          this.vGrid.vGridSkipNextUpdateProperty.push(k)
         }
       }
     }
 
 
-
-
     //use helper function to edit cell
-    if (this.vGridCurrentEntityRef) {
-      this.vGridCellHelper.editCellhelper(row, event);
+    if (this.vGrid.vGridCurrentEntityRef) {
+      this.vGrid.vGridCellHelper.editCellhelper(row, event);
     }
 
-    if(event.type === "click" && this.eventOnRowClick){
+
+    //this dispatch events that v-grid-row-col.js picks up, for calling back is event for single on rows are set
+    if (event.type === "click" && this.eventOnRowClick) {
       var newEvent = document.createEvent('Event');
       newEvent.initEvent("eventOnRowClick", true, true);
       event.target.dispatchEvent(newEvent)
     }
 
-    if(event.type === "dblclick" && this.eventOnRowDblClick){
+
+    //this dispatch events that v-grid-row-col.js picks up, for calling back is event for dblclick on rows are set
+    if (event.type === "dblclick" && this.eventOnRowDblClick) {
       var newEvent = document.createEvent('Event');
       newEvent.initEvent("eventOnRowDblClick", true, true);
       event.target.dispatchEvent(newEvent)
     }
 
 
-
-  }
-
-
-  /***************************************************************************************
-   * getters/setters to make it easier
-   ***************************************************************************************/
-
-  get vGridCellHelper() {
-    if (this.vGrid) {
-      return this.vGrid.vGridCellHelper;
-    } else {
-      return null;
-    }
-  }
-
-  get vGridFilter() {
-    if (this.vGrid) {
-      return this.vGrid.vGridFilter;
-    } else {
-      return null;
-    }
-  }
-
-  get vGridSort() {
-    if (this.vGrid) {
-      return this.vGrid.vGridSort;
-    } else {
-      return null;
-    }
-  }
-
-  get vGridGenerator() {
-    if (this.vGrid) {
-      return this.vGrid.vGridGenerator;
-    } else {
-      return null;
-    }
-  }
-
-  get vGridCollectionFiltered() {
-    if (this.vGrid) {
-      return this.vGrid.vGridCollectionFiltered;
-    } else {
-      return null;
-    }
-  }
-
-  set vGridCollectionFiltered(x) {
-    return this.vGrid.vGridCollectionFiltered = x;
-  }
-
-  get vGridCollection() {
-    if (this.vGrid) {
-      return this.vGrid.vGridCollection;
-    } else {
-      return null;
-    }
-  }
-
-  set vGridCollection(x) {
-    return this.vGrid.vGridCollection = x;
-  }
-
-  get vGridCurrentEntityRef() {
-    if (this.vGrid) {
-      return this.vGrid.vGridCurrentEntityRef;
-    } else {
-      return null;
-    }
-  }
-
-  set vGridCurrentEntityRef(x) {
-    return this.vGrid.vGridCurrentEntityRef = x;
-  }
-
-
-  get vGridCurrentRow() {
-    if (this.vGrid) {
-      return this.vGrid.vGridCurrentRow;
-    } else {
-      return null;
-    }
-  }
-
-  set vGridCurrentRow(x) {
-    return this.vGrid.vGridCurrentRow = x;
-  }
-
-  get vGridCurrentEntity() {
-    if (this.vGrid) {
-      return this.vGrid.vGridCurrentEntity;
-    } else {
-      return null;
-    }
-  }
-
-  set vGridCurrentEntity(x) {
-    return this.vGrid.vGridCurrentEntity = x;
-  }
-
-
-  get vGridSkipNextUpdateProperty() {
-    if (this.vGrid) {
-      return this.vGrid.vGridSkipNextUpdateProperty;
-    } else {
-      return null;
-    }
-  }
-
-  set vGridSkipNextUpdateProperty(x) {
-    return this.vGrid.vGridSkipNextUpdateProperty = x;
-  }
-
-  vGridSkipNextUpdateProperty
-
-  get vGridRowKey() {
-    if (this.vGrid) {
-      return this.vGrid.vGridRowKey;
-    } else {
-      return null;
-    }
-  }
-
-  set vGridRowKey(x) {
-    return this.vGrid.vGridRowKey = x;
   }
 
 

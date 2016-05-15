@@ -28,10 +28,14 @@ export class VGridSortable {
     var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
     [].slice.call(dragHandles).forEach((itemEl) => {
       itemEl.onmouseenter = () => {
-        this.canMove = true
+        this.canMove = true;
+        //add draggable to elements
+        this.setDraggable(true);
       };
       itemEl.onmouseleave = () => {
-        this.canMove = false
+        this.canMove = false;
+        //remove draggable to elements
+        this.setDraggable(false);
       }
 
     });
@@ -39,24 +43,28 @@ export class VGridSortable {
 
 
   init(rootEl, onUpdate, onStart, onCancel, canMove) {
+    //add drag/can move event to label
     this.setDragHandles();
 
     //need to be better, will change when I rebuild header into custom element
     this.rootEl = this.vGrid.vGridGenerator.htmlCache.header.firstChild; //this is BAD!
-
-    //add draggable to elements
-    this.setDraggable(true);
 
     //add eventlistnes for dragable
     this.rootEl.addEventListener('dragstart', this.onDragStart.bind(this), false);
 
   }
 
-  onStart() {this.sortable = true};
+  onStart() {
+    this.sortable = true
+  };
 
-  onCancel() {this.sortable = false};
+  onCancel() {
+    this.sortable = false
+  };
 
-  isDragHandle() {return this.canMove};
+  isDragHandle() {
+    return this.canMove
+  };
 
 
   onUpdateAlt(oldIndex, newIndex) {

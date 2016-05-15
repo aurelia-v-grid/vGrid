@@ -1,72 +1,77 @@
 <template>
-
-  <!--get grid and data-->
-  <require from="vGrid/v-grid.css"></require>
+  <!--<require from="vGrid/v-grid.css"></require>-->
   <require from="app.css"></require>
-  <require from="vGrid/v-grid"></require>
-  <require from="vGrid/v-grid-temp"></require>
+  <require from="date-format.js"></require>
+  <require from="number-format.js"></require>
 
 
-  <div class="col-md-12" style="height:75vh">
-    <div class="row">
-      <div style="position:relative; height:75vh">
 
-        <!--create the grid you want and pass in a "object in you component with keys ctx and   myGrid = {ctx:{},data:[]};-->
-        <v-grid class="center" style="position:absolute;top:0px;left:0;right:0;bottom:0"
-                attibutes-used="name,phone,country"
-                row-height="85"
-                multi-select="false"
-                row-on-draw="onRowDraw"
-                large-buffer="true"
-                current-entity.bind=myCurrentEntity
-                collection.bind=myCollection
-                grid-context.bind=myGrid
-        >
+  <div class="myContainer">
 
-          <!--create row to display on each row and set row height-->
-          <v-grid-row>
-            <div class="contact-list-item" style="width:100%">
-              <div class="row contact-item boxit">
-                <div class="row">
-                  <div class="col-xs-3" style="max-width: 75px;">
-                    <div class="avatar"
-                         css="background-color:${color}">${avatarLetter}</div>
-                  </div>
-                  <div class="col-xs-9">
-                    <div class="row name">
-                      <div class="col-xs-3" style="max-width: 75px;">
-                        <div class=>index</div>
-                      </div>
-                      <div class="col-xs-9">
-                        <div><input class="vGrid-content" value=${name} v-grid-data-attribute="name"></div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xs-3" style="max-width: 75px;">
-                        <strong>Phone:</strong><br>
-                        <strong>Country</strong>
-                      </div>
-                      <div class="col-xs-9">
-                        <div><input class="vGrid-content"
-                                    value=${phone} v-grid-data-attribute="phone"></div>
-                        <div><input class="vGrid-content"
-                                    value=${country} v-grid-data-attribute="country"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </v-grid-row>
+    <!------------------------------------------------------------------------------------------------------------------------------------>
+    <!--ROW1------------------------------------------------------------------------------------------------------------------------------>
+    <!------------------------------------------------------------------------------------------------------------------------------------>
 
+    <div  class="myRow1">
+
+      <!--<v-grid-->
+      <!--v-manual-sel="true">-->
+      <!--<v-grid-col v-col-width="50" v-col-type="selection"></v-grid-col>-->
+      <!--</v-grid>-->
+
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+      <!--GRID------------------------------------------------------------------------------------------------------------------------------>
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+
+      <div class="myCol">
+        <h4 style="margin-left:25px">selection column</h4>
+
+        <v-grid
+          style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
+          v-row-height="40"
+          v-header-height="50"
+          v-resize-also-rows="true"
+          v-resizable-headers="true"
+          v-header-filter="true"
+          v-header-filter-not-to="images"
+          v-sort-not-on-header="images"
+          v-header-filter-top="true"
+          v-sortable-headers="true"
+          v-row-onclick="singleClick($this)"
+          v-row-ondblclick="singleDblClick"
+          v-sort-on-header-click="true"
+          v-multi-select="true"
+          v-manual-sel="true"
+          v-row-on-draw="onRowDraw"
+          v-format-handler="myFormatHandler"
+          v-current-entity.bind=myCurrentEntity
+          v-collection.bind=myCollection
+          v-grid-context.bind=myGrid>
+          <v-grid-col v-col-width="50" v-col-type="selection"></v-grid-col>
+          <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">="  v-col-read-only="true"></v-grid-col>
+          <v-grid-col v-col-width="100" v-col-attribute="name" v-col-filter-on-key="true" v-col-header="name" v-col-default-filter="*"></v-grid-col>
+          <v-grid-col v-col-width="90" v-col-attribute="images" v-col-header="image" v-col-type="image" v-col-css="border-radius: 50%;height:100%;margin-left:25%;"></v-grid-col>
+          <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox" v-col-default-filter="=" ></v-grid-col>
+          <v-grid-col v-col-width="80" v-col-attribute="number" v-col-header="Number" v-col-css="color:{{customColor}};font-weight:{{customFont}};text-align:right; padding-right:5px" v-col-formater="numberFormat" v-col-edit-raw="true" v-col-default-filter=">="></v-grid-col>
+          <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date"  v-col-formater="dateFormat" v-col-default-filter=">="></v-grid-col>
+          <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" ></v-grid-col>
         </v-grid>
+
+
+
+        <button css="margin-left:25px;background-color:yellow;color:${lockColor}" type="button" class="btn btn-default btn-xs" click.trigger="editMode()">${lockStatus}</button>
+
 
       </div>
 
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+      <!--COLLECTIONS BUTTONS--------------------------------------------------------------------------------------------------------------->
+      <!------------------------------------------------------------------------------------------------------------------------------------>
 
-      <!--my test button-->
-      <div class="row center">
-        <h4 style="margin-left:25px">Demo version 03-(2016-04-21)</h4>
+      <div class="myCol">
+        <h4>Collection <span class="label label-default">v-collection.bind=myCollection</span></h4>
+
+
         <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-default btn-xs" click.trigger="replaceBtn(0)">remove all</button>
@@ -132,8 +137,111 @@
             <button type="button" class="btn btn-default btn-xs" click.trigger="addBtn(1000, 1)">add 1000 (push) and scroll bottom</button>
           </div>
         </div>
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="insertOneBtn(1)">insert one at row 2 (all new will always be added to bottom), this is to test current entity</button>
+          </div>
+
+        </div>
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="insertFiveBtn(1)">insert 5 at row 2 (all new will always be added to bottom), this is to test current entity</button>
+          </div>
+
+        </div>
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="miscBtn(1)">pop, splice 2 from index 2, splice 2 from index 2, puh 2</button>
+          </div>
+
+        </div>
+        <h4>Other <span class="label label-default">v-grid-context.bind=myGrid</span></h4>
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="report()">download csv report from filtered</button>
+          </div>
+
+        </div>
+        <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="saveStateBtn()">save state</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="loadStateBtn()">load state</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="switchNameBtn()">switch name and color</button>
+          </div>
+
+        </div>
 
       </div>
     </div>
+
+    <!------------------------------------------------------------------------------------------------------------------------------------>
+    <!--ROW2------------------------------------------------------------------------------------------------------------------------------>
+    <!------------------------------------------------------------------------------------------------------------------------------------>
+
+    <div class="myRow1">
+
+
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+      <!--Current entity-------------------------------------------------------------------------------------------------------------------->
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+
+      <div class="myCol">
+        <h4 style="margin-left:25px">Entity <span class="label label-default">v-current-entity.bind=myCurrentEntity</span></h4>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-6">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">country</label>
+            <div class="col-sm-6">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.number">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">formated/blur</label>
+            <div class="col-sm-6">
+              <input list="browsers" class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.date | dateFormat & updateTrigger:'blur':'paste'">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">unformated</label>
+            <div class="col-sm-6">
+              <input list="browsers" class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.date">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">color</label>
+            <div class="col-sm-6">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.color">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">_vGridKey</label>
+            <div class="col-sm-6">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.__vGridKey">
+            </div>
+          </div>
+      </div>
+      <div class="myCol">
+        <h5><span class="label label-info">Info</span>Collection length:<span class="label label-default">${collectionLength}</span></h5>
+        <h5><span class="label label-info">Info</span>Inputs only modify the comp current entity, grids uses observables to react <span class="label label-default">myCurrentEntity</span></h5>
+        <h5><span class="label label-info">Info</span>Hold down shift while sorting do do multisorting<span class="label label-default">multisorting</span></h5>
+        <h5><span class="label label-info">Info</span>Double click to enter edit mode, enter to exit<span class="label label-default">editing</span></h5>
+        <h5><span class="label label-info">Info</span>Buttons only modify the comp collection, grids uses observables and react to changes <span class="label label-default">myCollection</span></h5>
+        <h5><span class="label label-info">Info</span>So when removing first its removed from you collection, not necessarily first row in grid if you have used filters/sorting </h5>
+        <h5><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do not happend to collection you set in config attribute, at that collection it only adds 2 unique properties to for selection and current row </h5>
+
+      </div>
+
+    </div>
+
   </div>
+
 </template>

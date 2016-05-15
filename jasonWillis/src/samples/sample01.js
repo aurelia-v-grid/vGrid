@@ -9,9 +9,13 @@ export class sample01 {
   myCollection = [];
   myCurrentEntity = {};
   myGrid = {
-    configRowHeight:50,
-    configHeaderHeight:60
 
+
+  };
+  myCurrentEntity2 = {};
+  myGrid2 = {
+    configRowHeight:85,
+    configHeaderHeight:40
   };
 
   singleClick(e){
@@ -20,20 +24,21 @@ export class sample01 {
 
 
 
-  onRowDraw (data, collectionData, datePicker) {
+  onRowDraw (data, collectionData) {
     if (data) {
       if(data.number>100){
-        data.customColor = "green";
-        data.customFont = "normal";
+        data.numberColor = "green";
+        data.numberFont = "normal";
       } else {
-        data.customColor = "red";
-        data.customFont = "bold";
-
+        data.numberColor = "lightgrey";
+        data.numberFont = "bold";
       }
     }
+    data = collectionData;
   }
 
   singleClick(e){
+    e.editable = true;
     console.log("click")
   }
 
@@ -300,8 +305,8 @@ export class sample01 {
     oldState.colAttrArray[oldIndex] = "color";
     oldState.colAttrArray[newIndex] = "name";
 
-    oldState.headerArray[oldIndex] = "Color";
-    oldState.headerArray[newIndex] = "Name";
+    oldState.colHeaderArray[oldIndex] = "Color";
+    oldState.colHeaderArray[newIndex] = "Name";
 
 
     this.myGrid.ctx.setColumns(oldState);

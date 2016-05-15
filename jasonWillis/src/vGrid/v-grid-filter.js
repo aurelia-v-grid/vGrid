@@ -7,37 +7,44 @@
 export class VGridFilter {
 
 
-  constructor() {
-
+  /***************************************************************************************
+   * constsructor
+   ***************************************************************************************/
+  constructor(vGrid) {
+    this.vGrid = vGrid;
   }
 
-  lastFilter; //not is use yet
+  //not in use yet, todo: let it save last filter so I can have active filtering
+  lastFilter;
 
 
+  ///filter table
   filterOperatorTable = {
-    "=": 1, //equal
+    "=": 1,   //equal
     "<=": 2,  //less than or equal to
     ">=": 3,  //greater than or equal to
     "<": 4,   //less than
     ">": 5,   //greater than
     "*": 6,   //contains
-    "!=": 7, //not equal to
+    "!=": 7,  //not equal to
     "!*": 8,  //does not contain
-    "*=": 9, //begin with
-    "=*": 10 //end with
+    "*=": 9,  //begin with
+    "=*": 10  //end with
   };
 
+
+  //filter table
   filterOperatorTableString = {
-    "=": "equals",
-    "<=": "less than or eq",
-    ">=": "greater than or eq",
-    "<": "less than",
-    ">": "greater than",
-    "*": "contains",
-    "!=": "not equal to",
-    "!*": "does not contain",
-    "*=": "begins with",
-    "=*": "ends with"
+    "=": "equals",              //1
+    "<=": "less than or eq",    //2
+    ">=": "greater than or eq", //3
+    "<": "less than",           //4
+    ">": "greater than",        //5
+    "*": "contains",            //6
+    "!=": "not equal to",       //7
+    "!*": "does not contain",   //8
+    "*=": "begins with",        //9
+    "=*": "ends with"           //10
   };
 
 
@@ -59,9 +66,11 @@ export class VGridFilter {
 
     var resultArray = objArray.filter(function (data, i) {
 
+
       //lets have true as default, so all that should not be there we set false..
       var result = true;
       ObjFilter.forEach(function (x) {
+
 
         //vars
         var rowValue;
@@ -69,11 +78,13 @@ export class VGridFilter {
         var filterOperator = filterOperatorTable[x.operator];
         var newFilterOperator;
 
+
         //helper for boolean
         var typeBool = {
           "true": true,
           "false": false
         };
+
 
         //set defult type
         var type;
@@ -105,36 +116,50 @@ export class VGridFilter {
               filterValue = filterValue.substr(1, filterValue.length);
             }
 
+
             //if filter operator is EQUAL TO
             //wildcard first = end with
             if (x.value.charAt(0) === "*" && filterOperator === 1) {
               newFilterOperator = 10;
               filterValue = filterValue.substr(1, filterValue.length);
             }
+
+
             //wildcard end and first = contains
             if (x.value.charAt(x.value.length - 1) === "*" && filterOperator === 1 && newFilterOperator === 10) {
               newFilterOperator = 6;
               filterValue = filterValue.substr(0, filterValue.length - 1)
             }
+
+
             //begin with since wildcard is in the end
             if (x.value.charAt(x.value.length - 1) === "*" && filterOperator === 1 && newFilterOperator !== 10 && newFilterOperator !== 6) {
               newFilterOperator = 9;
               filterValue = filterValue.substr(0, filterValue.length - 1);
             }
+
+
+            //set the filteroperator from new if changed
             if (filterOperator !== newFilterOperator) {
               filterOperator = newFilterOperator;
             }
             break;
+
+
           case "boolean":
             rowValue = data[x.attribute];
             filterValue = typeBool[x.value]
             filterOperator = 1;
             break;
+
+
           case "object":
             rowValue = data[x.attribute].toISOString();
             filterValue = new Date(x.value).toISOString(); //todo, this needs to be better...
             filterOperator = filterOperator || 2;
             break;
+
+
           default :
             //todo: take the stuff under equal to and put in a function and also call i from here.. or just make it fail?
             rowValue = data[x.attribute].toLowerCase();
