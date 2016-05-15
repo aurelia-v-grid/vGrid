@@ -460,21 +460,15 @@ export class VGridGenerator {
         row.div.setAttribute("row", rowNo);
 
 
-        // if (entity === "" || entity === ) {
-        //   let bindingContext = {};
-        //   row.viewSlot.bind(bindingContext, {bindingContext:bindingContext, parentOverrideContext: this.vGrid.overrideContext});
-        //   row.div.classList.add(this.vGridConfig.css.noData)
-        //   if(this.vGrid.vGridConfig.repeater){
-        //     row.div.style.display = "none";
-        //   }
-        // } else {
-        //   if (row.div.classList.contains(this.vGridConfig.css.noData)) {
-        //     row.div.classList.remove(this.vGridConfig.css.noData)
-        //   }
-        //   if(this.vGrid.vGridConfig.repeater){
-        //     row.div.style.display = "block";
-        //   }
-        // }
+        if (entity === "" ) {
+          let bindingContext = {};
+          row.viewSlot.bind(bindingContext, {bindingContext:bindingContext, parentOverrideContext: this.vGrid.overrideContext});
+          row.div.classList.add(this.vGridConfig.css.noData)
+        } else {
+          if (row.div.classList.contains(this.vGridConfig.css.noData)) {
+            row.div.classList.remove(this.vGridConfig.css.noData)
+          }
+        }
 
 
         if (entity !== "" && row.viewSlot !== null) {
