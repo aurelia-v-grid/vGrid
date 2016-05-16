@@ -1144,8 +1144,6 @@ export class VGridGenerator {
   };
 
 
-//todo fix later, get the basics first with date handling
-  //tested todo: this need to be changed now
   setColumns(paramObj) {
     //todo: this needs a big update
     this.vGridConfig.attributeArray = paramObj.colAttrArray;
@@ -1240,45 +1238,7 @@ export class VGridGenerator {
 
 
   //simple csv report from whats shown in the grid/filtered
-  createReport(skipArray) {
-
-    //dont thouch this;
-    if (skipArray === undefined) {
-      skipArray = [];
-    }
-    var content = '';
-    var rows = this.vGrid.vGridCollectionFiltered;
-    var attributes = this.vGridConfig.attributeArray;
-
-    //sets data to our content
-    var setData = (arr) => {
-      content = content + arr.join(';') + '\n';
-    };
-
-    //set headers
-    setData(attributes);
-
-    //loop rows/columns
-    rows.forEach((row)=> {
-      let tempArr = [];
-      attributes.forEach((att)=> {
-        if (skipArray.indexOf(att) === -1) {
-          tempArr.push(row[att]);
-        }
-      });
-      setData(tempArr);
-    });
-
-
-    //download
-    var dummyElement = document.createElement('a');
-    dummyElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-    dummyElement.setAttribute('download', 'contacts.csv');
-    dummyElement.style.display = 'none';
-    document.body.appendChild(dummyElement);
-    dummyElement.click();
-    document.body.removeChild(dummyElement);
-  }
+  
 
 
 } //end widget

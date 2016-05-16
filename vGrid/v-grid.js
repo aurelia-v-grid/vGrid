@@ -15,6 +15,7 @@ import {VGridObservables} from './v-grid-observables';
 import {VGridConfig} from './v-grid-config';
 import {VGridResizable} from './v-grid-resizable';
 import {VGridSelection} from './v-grid-selection';
+import {VGridClientCtx} from './v-grid-clientCtx';
 
 
 export class VGrid {
@@ -61,6 +62,7 @@ export class VGrid {
     this.vGridResizable = new VGridResizable(this);
     this.vGridObservables = new VGridObservables(this, observerLocator);
     this.vGridGenerator = new VGridGenerator(this);
+    this.vGridClientCtx = new VGridClientCtx(this);
 
     this.key = 0;
   }
@@ -118,7 +120,7 @@ export class VGrid {
     }
 
     //set it to users
-    this.vGridContextObj.ctx = this.vGridGenerator;
+    this.vGridContextObj.ctx = this.vGridClientCtx;
 
 
     //lets test that they have set the mandatory config settings
