@@ -255,6 +255,8 @@ export class VGridCellRowHeader {
             }
           });
         }
+      } else {
+        markup = "";
       }
     }
     return markup

@@ -6,17 +6,16 @@ export class sample01 {
 
 
 
+  /********************************************************************
+   *  grid bindable/functions
+   ********************************************************************/
+
   myCollection = [];
   myCurrentEntity = {};
   myGrid = {
 
 
   };
-
-
-  singleClick(e){
-    console.log("click")
-  }
 
 
 
@@ -26,34 +25,21 @@ export class sample01 {
         data.numberColor = "green";
         data.numberFont = "normal";
       } else {
-        data.numberColor = "lightgrey";
+        data.numberColor = "red";
         data.numberFont = "bold";
       }
     }
-    data = collectionData;
+
   }
 
+  
   singleClick(e){
     console.log("click")
-    document.getElementById()
   }
 
+  
   singleDblClick(e){
     console.log("dblClick")
-  }
-  onDatePickerCreate(element, that){
-    var picker = new pikaday({
-      field: element,
-      onSelect: function(date) {
-        that.setValue(date);
-        that.setCss();
-      },
-      onOpen(){
-        if(!that.editMode()){
-          this.hide();
-        }
-      }
-    });
   }
   
   
@@ -187,101 +173,10 @@ export class sample01 {
 
   }
 
-
   /********************************************************************
-   * GRID-CONTEXT BUTTONS
+   *  grid save/load state/report
    ********************************************************************/
-
-  status = {
-    header50: "lightgrey",
-    row50: "lightgrey",
-    footer0:"lightgrey",
-    sortable1:"lightgrey",
-    resize1 : "lightgrey",
-    multiSelect: "lightgrey",
-    locked0: "lightgrey",
-    filter1: "lightgrey",
-    filterAt1: "lightgrey",
-    sort1:"lightgrey"
-
-
-
-  };
-
-  rowHeightBtn(x) {
-
-    this.myGrid.ctx.setRowHeight(x);
-    this.status.row25 = "";
-    this.status.row50 = "";
-    this.status.row75 = "";
-    this.status.row100 = "";
-
-    switch(x){
-      case 25:
-        this.status.row25 = "lightgrey";
-        break;
-      case 50:
-        this.status.row50 = "lightgrey";
-        break;
-      case 75:
-        this.status.row75 = "lightgrey";
-        break;
-      case 100:
-        this.status.row100 = "lightgrey";
-        break;
-    }
-  }
-
-
-
-  headerHeightBtn(x) {
-    this.myGrid.ctx.setHeaderHeight(x)
-    this.status.header0 = "";
-    this.status.header25 = "";
-    this.status.header50 = "";
-    this.status.header75 = "";
-
-    switch(x){
-      case 0:
-        this.status.header0 = "lightgrey";
-        break;
-      case 25:
-        this.status.header25 = "lightgrey";
-        break;
-      case 50:
-        this.status.header50 = "lightgrey";
-        break;
-      case 75:
-        this.status.header75 = "lightgrey";
-        break;
-    }
-  }
-
-
-
-  footerHeightBtn(x) {
-    this.myGrid.ctx.setFooterHeight(x)
-    this.status.footer0 = "";
-    this.status.footer25 = "";
-    this.status.footer50 = "";
-    this.status.footer75 = "";
-
-    switch(x){
-      case 0:
-        this.status.footer0 = "lightgrey";
-        break;
-      case 25:
-        this.status.footer25 = "lightgrey";
-        break;
-      case 50:
-        this.status.footer50 = "lightgrey";
-        break;
-      case 75:
-        this.status.footer75 = "lightgrey";
-        break;
-    }
-  }
-
+  
   oldState= null;
 
   saveStateBtn(){
@@ -312,150 +207,6 @@ export class sample01 {
     this.myGrid.ctx.setColumns(oldState);
     this.myGrid.ctx.rebuildColumns();
 
-  }
-
-
-  selectionBtn(x){
-
-    this.status.noSelect = "";
-    this.status.singleSelect = "";
-    this.status.multiSelect = "";
-
-    switch(x){
-      case 0:
-        this.myGrid.ctx.selection.reset();
-        this.myGrid.ctx.disableSelection();
-        this.status.noSelect = "lightgrey";
-        break;
-      case 1:
-        this.myGrid.ctx.selection.reset();
-        this.myGrid.ctx.setSingleSelection();
-        this.status.singleSelect = "lightgrey";
-        break;
-      case 2:
-        this.myGrid.ctx.selection.reset();
-        this.myGrid.ctx.setMultiSelection();
-        this.status.multiSelect = "lightgrey";
-        break;
-    }
-  }
-
-  sortableBtn(x){
-
-    this.status.sortable0 = "";
-    this.status.sortable1 = "";
-    switch(x){
-      case 0:
-        this.headerHeightBtn(50);
-        this.myGrid.ctx.disableSortableColumns();
-        this.status.sortable0 = "lightgrey";
-        break;
-      case 1:
-        this.headerHeightBtn(50);
-        this.myGrid.ctx.enableSortableColumns();
-        this.status.sortable1 = "lightgrey";
-        break;
-
-    }
-  }
-
-  resizeBtn(x){
-    this.status.resize0 = "";
-    this.status.resize1 = "";
-    this.status.resize2 = "";
-    switch(x){
-      case 0:
-        this.headerHeightBtn(50);
-        this.myGrid.ctx.enableResizableColumns();
-        this.status.resize0 = "lightgrey";
-        break;
-      case 1:
-        this.headerHeightBtn(50);
-        this.myGrid.ctx.enableResizableColumns(true);
-        this.status.resize1 = "lightgrey";
-        break;
-      case 2:
-        this.headerHeightBtn(50);
-        this.myGrid.ctx.disableResizableColumns();
-        this.status.resize2 = "lightgrey";
-        break;
-
-    }
-  }
-
-  lockedBtn(x){
-    this.status.locked0 = "";
-    this.status.locked1 = "";
-    this.status.locked2 = "";
-    this.status.locked3 = "";
-    switch(x){
-      case 0:
-        this.myGrid.ctx.setLockedColumns(0);
-        this.status.locked0 = "lightgrey";
-        break;
-      case 1:
-        this.myGrid.ctx.setLockedColumns(1);
-        this.status.locked1 = "lightgrey";
-        break;
-      case 2:
-        this.myGrid.ctx.setLockedColumns(2);
-        this.status.locked2 = "lightgrey";
-        break;
-      case 3:
-        this.myGrid.ctx.setLockedColumns(3);
-        this.status.locked3 = "lightgrey";
-        break;
-
-    }
-  }
-
-  setFilterBtn(x){
-
-  this.status.filter0 = "";
-  this.status.filter1 = "";
-  switch(x){
-    case 0:
-      this.headerHeightBtn(50);
-      this.myGrid.ctx.disableHeaderFilter();
-      this.status.filter0 = "lightgrey";
-      break;
-    case 1:
-      this.headerHeightBtn(50);
-      this.myGrid.ctx.enableHeaderFilter();
-      this.status.filter1 = "lightgrey";
-      break;
-  }
-}
-  setFilterAtBtn(x){
-
-    this.status.filterAt0 = "";
-    this.status.filterAt1 = "";
-    switch(x){
-      case 0:
-        this.myGrid.ctx.setHeaderFilterAtBottom();
-        this.status.filterAt0 = "lightgrey";
-        break;
-      case 1:
-        this.myGrid.ctx.setHeaderFilterAtTop();
-        this.status.filterAt1 = "lightgrey";
-        break;
-    }
-  }
-
-  setSortBtn(x){
-
-    this.status.sort0 = "";
-    this.status.sort1 = "";
-    switch(x){
-      case 0:
-        this.myGrid.ctx.disableHeaderSort();
-        this.status.sort0 = "lightgrey";
-        break;
-      case 1:
-        this.myGrid.ctx.enableHeaderSort();
-        this.status.sort1 = "lightgrey";
-        break;
-    }
   }
 
   report(){

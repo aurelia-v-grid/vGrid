@@ -4,48 +4,19 @@
   <require from="date-format.js"></require>
   <require from="number-format.js"></require>
 
+  <v-grid
+    style="position:relative;width:500px;height:500px"
+    v-row-height="40"
+    v-header-height="50"
+    v-current-entity.bind=myCurrentEntity
+    v-collection.bind=myCollection
+    v-grid-context.bind=myGrid>
+    <v-grid-col v-col-width="100" v-col-attribute="name" v-col-header="Name"></v-grid-col>
+    <v-grid-col v-col-width="100" v-col-attribute="age" v-col-header="Age"></v-grid-col>
+  </v-grid>
 
-        <v-grid
-          style="position:absolute;top:0px;bottom:0px;right: 0px;left:0px"
-          v-row-height="100"
-          v-attibutes-used="name,country"
-          v-current-entity.bind=myCurrentEntity
-          v-collection.bind=myCollection
-          v-grid-context.bind=myGrid>
-          <v-grid-col-repeat>
-
-            <div class="col-xs-8">
-              <form class="form-horizontal">
-                <div class="form-group">
-                  <label class="col-xs-2 control-label">Name</label>
-                  <div class="col-xs-10">
-                    <input class="form-control input-xs" disabled.bind="!editable"
-                           value.bind="name">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-xs-2 control-label">country</label>
-                  <div class="col-xs-10">
-                    <input class="form-control input-xs" disabled.bind="!editable"
-                           value.bind="country">
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div style="float:right" class="col-xs-2">
-              <div style="padding-top:5px" class="row">
-              <button click.trigger="editClickBtn($this)">edit</button>
-              </div>
-              <div style="padding-top:5px" class="row">
-              <button click.trigger="saveClickBtn($this)">save</button>
-              </div>
-              <div style="padding-top:5px" class="row">
-              <button click.trigger="cancelClickBtn($this)">cancel</button>
-              </div>
-              </div>
-          </v-grid-col-repeat>
-
-        </v-grid>
+  <input disabled.bind="!myCurrentEntity.__vGridKey" value.bind="myCurrentEntity.name">
+  <input disabled.bind="!myCurrentEntity.__vGridKey" value.bind="myCurrentEntity.age">
 
 
 
