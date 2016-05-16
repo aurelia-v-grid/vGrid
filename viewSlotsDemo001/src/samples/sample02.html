@@ -177,24 +177,29 @@
         </div>
 
       </div>
-      <h4>Other <span class="label label-default">v-grid-context.bind=myGrid</span></h4>
+      <h4>Other(testing how to tap into grids filter/sort function) <span class="label label-default">v-grid-context.bind=myGrid</span></h4>
       <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default btn-xs" click.trigger="report()">download csv report from
-            filtered
+          <button type="button" class="btn btn-default btn-xs" click.trigger="sortBy('name')">sort by name</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default btn-xs" click.trigger="sortBy('country')">sort by country</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default btn-xs" click.trigger="sortBy('index')">sort by index
           </button>
         </div>
 
       </div>
       <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default btn-xs" click.trigger="saveStateBtn()">save state</button>
+          <button type="button" class="btn btn-default btn-xs" click.trigger="filter('all')">showAll</button>
         </div>
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default btn-xs" click.trigger="loadStateBtn()">load state</button>
+          <button type="button" class="btn btn-default btn-xs" click.trigger="filter('germany')">country = germany</button>
         </div>
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default btn-xs" click.trigger="switchNameBtn()">switch name and color
+          <button type="button" class="btn btn-default btn-xs" click.trigger="filter('norway')">country = norway
           </button>
         </div>
 
@@ -237,19 +242,6 @@
     <div class="myCol">
       <h5><span class="label label-info">Info</span>Collection length:<span class="label label-default">${collectionLength}</span>
       </h5>
-      <h5><span class="label label-info">Info</span>Inputs only modify the comp current entity, grids uses observables
-        to react <span class="label label-default">myCurrentEntity</span></h5>
-      <h5><span class="label label-info">Info</span>Hold down shift while sorting do do multisorting<span
-        class="label label-default">multisorting</span></h5>
-      <h5><span class="label label-info">Info</span>Double click to enter edit mode, enter to exit<span
-        class="label label-default">editing</span></h5>
-      <h5><span class="label label-info">Info</span>Buttons only modify the comp collection, grids uses observables
-        and react to changes <span class="label label-default">myCollection</span></h5>
-      <h5><span class="label label-info">Info</span>So when removing first its removed from you collection, not
-        necessarily first row in grid if you have used filters/sorting </h5>
-      <h5><span class="label label-info">Info</span>Grid uses a cloned array when filtering/sorting, these changes do
-        not happend to collection you set in config attribute, at that collection it only adds 2 unique properties to
-        for selection and current row </h5>
 
     </div>
 

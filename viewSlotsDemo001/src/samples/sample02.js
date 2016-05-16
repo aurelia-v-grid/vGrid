@@ -195,6 +195,37 @@ export class sample01 {
 
   }
 
+  sortBy(x){
+
+    this.myGrid.ctx.vGrid.vGridSort.setFilter({
+      attribute: x,
+      asc: true
+    }, false);
+
+    //run filter
+    this.myGrid.ctx.vGrid.vGridSort.run(this.myGrid.ctx.vGrid.vGridCollectionFiltered);
+
+    //update grid
+    this.myGrid.ctx.collectionChange();
+  }
+
+
+  filter(x){
+
+    this.myGrid.ctx.vGridConfig.addFilter = true;
+    if(x== "all") {
+      this.myGrid.ctx.vGridConfig.onFilterRun([]);
+    }
+    if(x== "germany") {
+      this.myGrid.ctx.vGridConfig.onFilterRun([{attribute:"country", value:"germany", operator:"*"}]);
+    }
+    if(x== "norway") {
+      this.myGrid.ctx.vGridConfig.onFilterRun([{attribute:"country", value:"norway", operator:"*"}]);
+    }
+
+  }
+
+
 
   /********************************************************************
    * GRID-CONTEXT BUTTONS

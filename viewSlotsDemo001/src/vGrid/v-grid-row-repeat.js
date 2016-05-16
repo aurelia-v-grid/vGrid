@@ -1,6 +1,6 @@
 /*****************************************************************************************************************
- *    VGridCellContainer
- *    Custom element controlling the cell logic, this creates new elements depending on type
+ *    VGridRowRepeat
+ *    Custom element just repeating the heml inside it for each row
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
@@ -12,7 +12,7 @@ import {VGrid} from './v-grid'
 @customElement('v-grid-row-repeat')
 @processContent(false)
 @inject(Element, VGrid, Container)
-export class VGridCellContainer {
+export class VGridRowRepeat {
 
 
   /**************************************************

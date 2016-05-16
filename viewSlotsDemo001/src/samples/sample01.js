@@ -35,6 +35,7 @@ export class sample01 {
 
   singleClick(e){
     console.log("click")
+    document.getElementById()
   }
 
   singleDblClick(e){
