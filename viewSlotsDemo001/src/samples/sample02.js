@@ -27,8 +27,8 @@ export class sample01 {
   }
   cancelClickBtn(e){
     e.editable = false;
-    e.name = this.myCurrentEntity.name;
-    e.country = this.myCurrentEntity.country;
+    e.name = e.currentEntityRef.name;
+    e.country = e.currentEntityRef.country;
   }
 
 
