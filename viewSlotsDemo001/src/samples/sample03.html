@@ -20,8 +20,11 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">First column controls selection (16 Mai-2016, rev02)</h4>
+        <h4 style="margin-left:25px">First column controls selection (16 Mai-2016, rev04)</h4>
+        <table>
+          <colgroup>
 
+          </colgroup>
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
           v-row-height="40"
@@ -52,7 +55,7 @@
           <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date"  v-col-formater="dateFormat" v-col-default-filter=">="></v-grid-col>
           <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" ></v-grid-col>
         </v-grid>
-
+        </table>
 
 
         <button css="margin-left:25px;background-color:yellow;color:${lockColor}" type="button" class="btn btn-default btn-xs" click.trigger="editMode()">${lockStatus}</button>

@@ -16,7 +16,7 @@
     <!------------------------------------------------------------------------------------------------------------------------------------>
 
     <div class="myCol">
-      <h4 style="margin-left:25px"> Repeats the html inside &ltv-grid-row-repeat&gt (16 Mai-2016, rev03)</h4>
+      <h4 style="margin-left:25px"> Repeats the html inside &ltv-grid-row-repeat&gt (16 Mai-2016, rev04)</h4>
       <v-grid
         style="position:absolute;top:70px;bottom:0;right: 25px;left:25px"
         v-row-height="80"
@@ -26,34 +26,37 @@
         v-grid-context.bind=myGrid>
 
         <v-grid-row-repeat>
-
-          <div class="col-md-5">
-            <form class="form-horizontal">
-              <div class="form-group">
-                <label class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-6">
-                  <input class="form-control input-sm" disabled.bind="!editable"
-                         value.bind="name">
-                </div>
+          <template>
+            <div>
+              <div class="col-md-5">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-6">
+                      <input class="form-control input-sm" disabled.bind="!editable"
+                             value.bind="name">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">country</label>
+                    <div class="col-sm-6">
+                      <input class="form-control input-sm" disabled.bind="!editable"
+                             value.bind="country">
+                    </div>
+                  </div>
+                </form>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">country</label>
-                <div class="col-sm-6">
-                  <input class="form-control input-sm" disabled.bind="!editable"
-                         value.bind="country">
-                </div>
+              <div class="col-md-2">
+                <button style="height:50px;width:100px" click.trigger="editClickBtn($this)">edit</button>
               </div>
-            </form>
-          </div>
-          <div class="col-md-2">
-            <button style="height:50px;width:100px" click.trigger="editClickBtn($this)">edit</button>
-          </div>
-          <div class="col-md-2">
-            <button style="height:50px;width:100px" click.trigger="saveClickBtn($this)">save</button>
-          </div>
-          <div class="col-md-2">
-            <button style="height:50px;width:100px" click.trigger="cancelClickBtn($this)">cancel</button>
-          </div>
+              <div class="col-md-2">
+                <button style="height:50px;width:100px" click.trigger="saveClickBtn($this)">save</button>
+              </div>
+              <div class="col-md-2">
+                <button style="height:50px;width:100px" click.trigger="cancelClickBtn($this)">cancel</button>
+              </div>
+            </div>
+          </template>
         </v-grid-row-repeat>
 
       </v-grid>
