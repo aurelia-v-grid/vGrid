@@ -13,6 +13,9 @@ import {VGrid} from './v-grid'
 export class VGridHeaderFilterSelection {
 
 
+  /*****************************************************
+   *  constructor
+   ******************************************************/
   constructor(element, vGrid) {
     this.element = element;
     this.vGrid = vGrid;
@@ -20,12 +23,17 @@ export class VGridHeaderFilterSelection {
   }
 
 
-
+  /*****************************************************
+   *  element event
+   ******************************************************/
   bind(parent) {
     this.parent = parent;
   }
 
 
+  /*****************************************************
+   *  element event
+   ******************************************************/
   attached() {
     //create a container and and add it
     var container = document.createElement("div");
@@ -39,7 +47,7 @@ export class VGridHeaderFilterSelection {
 
     //set the standard styles to the container instead of checkbox, (for the white backgorunbd and borders)
     this.setStyle(container);
-    
+
     //custom for the selection
     container.classList.remove(this.vGridConfig.css.filterInputTop);
     container.style.height = "100%";
@@ -77,6 +85,9 @@ export class VGridHeaderFilterSelection {
   }
 
 
+  /*****************************************************
+   *  setting basic styles/classes
+   ******************************************************/
   setStyle(element) {
     var addClass = (name)=> {
       element.classList.add(name)

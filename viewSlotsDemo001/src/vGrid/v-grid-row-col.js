@@ -8,10 +8,7 @@ import {inject, noView, customElement, processContent, Container, bindable, View
 import {VGrid} from './v-grid'
 
 
-//should I make this into a container and have cells under it?
-
-
-@noView
+@noView()
 @customElement('v-grid-row-col')
 @processContent(false)
 @inject(Element, VGrid, Container)
@@ -19,6 +16,9 @@ export class VGridCellContainer {
   @bindable columnNo;
 
 
+  /**************************************************
+   *  constrcutor, setting defaults
+   **************************************************/
   constructor(element, vGrid, container) {
     this.element = element;
     this.container = container;
@@ -29,13 +29,16 @@ export class VGridCellContainer {
   }
 
 
+  /**************************************************
+   *  element event
+   **************************************************/
   bind(bindingContext) {
     this.bindingContext = bindingContext;
 
     if (this.viewSlot && this.bindingContext) {
       //set default value
 
-      if(this.colType() === "selection"){
+      if (this.colType() === "selection") {
         let x = {};
         this.setValue(x); //need to force it to update
       } else {
@@ -55,17 +58,23 @@ export class VGridCellContainer {
   }
 
 
+  /**************************************************
+   *  element event
+   **************************************************/
   created() {
 
   }
 
 
+  /**************************************************
+   *  element event
+   **************************************************/
   attached() {
 
     //set basic styles for a cell
     this.setStandardClassesAndStyles();
 
-    //create viewslots
+    //create viewfactory
     switch (this.colType()) {
       case "image":
         var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-image value.bind="value"><img css.bind="customStyle"></v-grid-image></template>', this.vGrid.resources);
@@ -80,11 +89,15 @@ export class VGridCellContainer {
         var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-input  value.bind="value"><input css.bind="customStyle"></v-grid-input></template>', this.vGrid.resources);
     }
 
+    //create view
     var view = viewFactory.create(this.container);
+
+    //create viewslot
     this.viewSlot = new ViewSlot(this.element, true);
     this.viewSlot.add(view);
     this.viewSlot.bind(this);
     this.viewSlot.attached();
+
 
     //focus event for setting
     this.element.addEventListener("cellFocus", function (e) {
@@ -92,31 +105,37 @@ export class VGridCellContainer {
     }.bind(this));
 
 
-    this.element.addEventListener("eventOnRowDblClick",function (e) {
-      if(this.vGrid.vGridConfig.eventOnRowDblClick){
+    //for sending back edbl click on row to user
+    this.element.addEventListener("eventOnRowDblClick", function (e) {
+      if (this.vGrid.vGridConfig.eventOnRowDblClick) {
         this.vGrid.vGridConfig.eventOnRowDblClick({
-          evt:e,
-          data:this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
-          attribute:this.attribute(),
+          evt: e,
+          data: this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
+          attribute: this.attribute(),
           row: this.vGrid.vGridGetRowKey(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey])
         });
       }
     }.bind(this));
 
 
-    this.element.addEventListener("eventOnRowClick",function (e) {
-      if(this.vGrid.vGridConfig.eventOnRowClick){
+    //for sending back row click to user
+    this.element.addEventListener("eventOnRowClick", function (e) {
+      if (this.vGrid.vGridConfig.eventOnRowClick) {
         this.vGrid.vGridConfig.eventOnRowClick({
-          evt:e,
-          data:this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
-          attribute:this.attribute(),
+          evt: e,
+          data: this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
+          attribute: this.attribute(),
           row: this.vGrid.vGridGetRowKey(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey])
-          });
+        });
       }
     }.bind(this));
 
   }
 
+
+  /**************************************************
+   * for updating value in collection
+   **************************************************/
   updateValue(value) {
     this.vGrid.vGridCellHelper.updateActual({
       attribute: this.attribute(),
@@ -124,9 +143,10 @@ export class VGridCellContainer {
     });
   }
 
+
   /**************************************************
-   set/get value and hide cell if not defined value
-   */
+   set value/also fixes css focus
+   **************************************************/
   setValue(value, setRawValue) {
     this.removeCssCell();
     if (setRawValue || (this.editMode() && this.editRaw())) {
@@ -138,19 +158,25 @@ export class VGridCellContainer {
   }
 
 
+  /**************************************************
+   gets value
+   **************************************************/
   getValue(value) {
     return this.valueFormater ? this.valueFormater.fromView(value) : value;
   }
 
-  getRow(){
+
+  /**************************************************
+   *  gets current row
+   **************************************************/
+  getRow() {
     return parseInt(this.element.parentNode.getAttribute("row"));
   }
 
 
   /**************************************************
-   basic types/atts
-   */
-
+   *  basic types/atts
+   **************************************************/
 
   editMode() {
     return this.vGrid.vGridConfig.editMode;
@@ -170,21 +196,26 @@ export class VGridCellContainer {
     return this.vGrid.vGridConfig.attributeArray[this.columnNo];
   }
 
+
   get valueFormater() {
     return this.vGrid.vGridConfig.colFormaterArray[this.columnNo];
   }
+
 
   get rawValue() {
     return this.bindingContext[this.attribute()];
   }
 
+
   readOnly() {
     return this.vGrid.vGridConfig.readOnlyArray[this.columnNo];
   }
 
+
   colType() {
     return this.vGrid.vGridConfig.colTypeArray[this.columnNo];
   }
+
 
   colStyle() {
     if (this.vGrid) {
@@ -195,6 +226,7 @@ export class VGridCellContainer {
     }
   }
 
+  //used for getting the mustache tags from the v-grid-col-css attribute
   interpolate(str) {
     if (str) {
       return function interpolate(o) {
@@ -211,10 +243,10 @@ export class VGridCellContainer {
 
   }
 
-  /**************************************************
-   this and last element
-   */
 
+  /**************************************************
+   *  This and last element
+   **************************************************/
   getLastFocusElement() {
     return this.vGrid.vGridCellHelper.lastElement;
   }
@@ -226,9 +258,8 @@ export class VGridCellContainer {
 
 
   /**************************************************
-   get and set classes
-   */
-
+   * Get and set css classes
+   **************************************************/
   containsFocusClass(element) {
     if (element) {
       return element.classList.contains(this.vGrid.vGridConfig.css.editCellFocus)
@@ -267,7 +298,6 @@ export class VGridCellContainer {
 
   addWriteClass(element) {
     if (element) {
-      //this.cellContent.removeAttribute("readonly");
       element.classList.add(this.vGrid.vGridConfig.css.editCellWrite)
     } else {
       return false;
@@ -277,13 +307,12 @@ export class VGridCellContainer {
 
   removeWriteClass(element) {
     if (element) {
-
-
       element.classList.remove(this.vGrid.vGridConfig.css.editCellWrite)
     } else {
       return false;
     }
   }
+
 
   removeCssCell() {
     if (this.containsWriteClass(this.element)) {
@@ -319,6 +348,7 @@ export class VGridCellContainer {
       }
     }
   }
+
 
   setStandardClassesAndStyles() {
     var css = this.vGrid.vGridConfig.css;

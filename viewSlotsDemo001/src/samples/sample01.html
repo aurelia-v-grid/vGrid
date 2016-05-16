@@ -14,20 +14,15 @@
 
     <div  class="myRow1">
 
-      <!--<v-grid-->
-      <!--v-manual-sel="true">-->
-      <!--<v-grid-col v-col-width="50" v-col-type="selection"></v-grid-col>-->
-      <!--</v-grid>-->
-
       <!------------------------------------------------------------------------------------------------------------------------------------>
       <!--GRID------------------------------------------------------------------------------------------------------------------------------>
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">demo v26, 10 Mai-2016</h4>
+        <h4 style="margin-left:25px">Main demo (16 Mai-2016, rev01)</h4>
 
         <v-grid
-          style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
+          style="position:absolute;top:70px;bottom:0;right: 25px;left:25px"
           v-row-height="40"
           v-header-height="50"
           v-resize-also-rows="true"
@@ -37,7 +32,7 @@
           v-sort-not-on-header="images"
           v-header-filter-top="true"
           v-sortable-headers="true"
-          v-row-onclick="singleClick($this)"
+          v-row-onclick="singleClick"
           v-row-ondblclick="singleDblClick"
           v-sort-on-header-click="true"
           v-multi-select="true"
@@ -226,7 +221,13 @@
               <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index" value.bind="myCurrentEntity.__vGridKey">
             </div>
           </div>
+        </form>
       </div>
+
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+      <!--info-------------------------------------------------------------------------------------------------------------------->
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+
       <div class="myCol">
         <h5><span class="label label-info">Info</span>Collection length:<span class="label label-default">${collectionLength}</span></h5>
         <h5><span class="label label-info">Info</span>Inputs only modify the comp current entity, grids uses observables to react <span class="label label-default">myCurrentEntity</span></h5>

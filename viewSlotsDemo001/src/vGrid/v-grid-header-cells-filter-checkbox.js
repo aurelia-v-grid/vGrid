@@ -15,14 +15,22 @@ export class VGridHeaderFilter {
   @bindable filterValue;
 
 
+  /*****************************************************
+   *  constructor
+   ******************************************************/
   constructor(element, vGrid) {
     this.element = element;
     this.vGrid = vGrid;
     this.vGridConfig = vGrid.vGridConfig;
   }
 
+
+  /*****************************************************
+   *  bindable event
+   ******************************************************/
   filterValueChanged(newValue, oldValue) {
-    if(typeof(newValue) === "object"){
+
+    if (typeof(newValue) === "object") {
       newValue = "";
     }
     this.content.value = newValue;
@@ -35,18 +43,24 @@ export class VGridHeaderFilter {
     }
     this.content.onchange({keyKode: 13});
 
-
   }
 
 
+  /*****************************************************
+   *  element event
+   ******************************************************/
   bind(parent) {
     this.parent = parent;
   }
 
 
+  /*****************************************************
+   *  element event
+   ******************************************************/
   attached() {
     this.content = this.element.children[0];
-    //lets remove default
+
+    //lets remove default, dont need to adjust this part for the checkbox to look better
     this.element.removeChild(this.content);
 
     //create a container and and add it
@@ -113,6 +127,9 @@ export class VGridHeaderFilter {
   }
 
 
+  /*****************************************************
+   *  setting most besic styles
+   ******************************************************/
   setStyle(element) {
 
     var addClass = (name)=> {
@@ -139,7 +156,6 @@ export class VGridHeaderFilter {
       default:
         break;
     }
-
 
   }
 

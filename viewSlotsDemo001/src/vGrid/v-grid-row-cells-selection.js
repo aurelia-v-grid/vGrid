@@ -29,7 +29,7 @@ export class VGridRowCellSelection {
       this.content.style.display = "block";
       this.content.checked = this.vGrid.vGridSelection.isSelected(this.parent.getRow());
     }
-    if(this.parent.getRow() > this.vGrid.vGridCollectionFiltered.length-1){
+    if (this.parent.getRow() > this.vGrid.vGridCollectionFiltered.length - 1) {
       this.content.style.display = "none";
       this.content.checked = false;
     }
@@ -37,13 +37,13 @@ export class VGridRowCellSelection {
   }
 
   customStyleChanged(value, old) {
-    
+
   }
 
 
   bind(parent) {
     this.parent = parent;
-    
+
   }
 
 
@@ -51,7 +51,7 @@ export class VGridRowCellSelection {
     this.content = this.element.children[0];//document.createElement("input");
     this.content.type = "checkbox";
     this.content.onclick = function (e) {
-      if(this.content.checked){
+      if (this.content.checked) {
         this.vGrid.vGridSelection.select(this.parent.getRow(), true)
       } else {
         this.vGrid.vGridSelection.deSelect(this.parent.getRow())
@@ -69,7 +69,7 @@ export class VGridRowCellSelection {
     this.valueChanged(false);
 
     this.content.onchange = ()=> {
-      
+
     };
 
     //set column no

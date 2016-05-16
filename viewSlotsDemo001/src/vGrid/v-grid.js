@@ -52,8 +52,8 @@ export class VGrid {
     this.vGridSkipNextUpdateProperty = [];
 
     //my classes the grid uses
-    this.vGridFilter = new VGridFilter();
-    this.vGridSort = new VGridSort();
+    this.vGridFilter = new VGridFilter(this);
+    this.vGridSort = new VGridSort(this);
     this.vGridConfig = new VGridConfig(this);
     this.vGridSelection = new VGridSelection(null, this);
     this.vGridCellHelper = new VGridCellHelper(this);
@@ -98,17 +98,18 @@ export class VGrid {
     return rowFound
   }
 
-  
+
 
 
   /***************************************************************************************
    * when view is bounded
    ***************************************************************************************/
-  bind(parent) {
+  bind(parent, overrideContext) {
 
 
     //parent
     this.$parent = parent;
+    this.overrideContext = overrideContext;
 
     //if they havent binded a context, then lets make one.
     //that context they will be able to trigger event on the grid
@@ -151,13 +152,13 @@ export class VGrid {
     this.vGridObservables.enableObservablesArray();
     this.vGridObservables.enableObservablesAttributes();
 
-    
+
     this.vGridConfig.init();
-    
+
     //create the grid html/add events etc
     this.vGridGenerator.init(false);
 
- 
+
 
   }
 

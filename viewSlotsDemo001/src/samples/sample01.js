@@ -13,22 +13,24 @@ export class sample01 {
 
   };
 
+
   singleClick(e){
     console.log("click")
   }
 
 
 
-  onRowDraw (data, collectionData, datePicker) {
+  onRowDraw (data, collectionData) {
     if (data) {
       if(data.number>100){
-        data.customColor = "green";
-        data.customFont = "normal";
+        data.numberColor = "green";
+        data.numberFont = "normal";
       } else {
-        data.customColor = "red";
-        data.customFont = "bold";
+        data.numberColor = "lightgrey";
+        data.numberFont = "bold";
       }
     }
+    data = collectionData;
   }
 
   singleClick(e){
