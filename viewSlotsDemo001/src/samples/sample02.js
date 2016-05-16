@@ -88,6 +88,10 @@ export class sample01 {
 
   }
 
+  attached(){
+    this.getMaxRows = this.myGrid.ctx.getMaxRows();
+  }
+
   lockStatus = "locked";
   lockColor = "red";
 
@@ -180,6 +184,7 @@ export class sample01 {
     this.collectionLength = this.myCollection.length;
 
   }
+
 
   miscBtn(){
     this.myCollection.pop();

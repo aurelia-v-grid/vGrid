@@ -200,8 +200,41 @@ export class VGridClientCtx {
     return this.vGridGenerator.getColumns();
   };
 
+  getMaxRows() {
+    //https://github.com/mleibman/SlickGrid/blob/bf4705a96c40fea088216034def4d0256a335e65/slick.grid.js
+    var supportedHeight = 10000;
+    var testUpTo = navigator.userAgent.toLowerCase().match(/firefox/) ? 8947840 : 1000000000;
+    var div = document.createElement("div");
+    //div.style.display = "none";
+    document.body.appendChild(div);
+
+    while (true) {
+      var test = supportedHeight + 10000;
+      div.style.height = test +"px";
+      if (test > testUpTo || div.clientHeight !== test) {
+        break;
+      } else {
+        supportedHeight = test;
+      }
+    }
+   div.remove();
+   return (supportedHeight/this.vGridConfig.rowHeight) +", error margin:"+(10000/this.vGridConfig.rowHeight);
+}
+
+
   scrollBottomNext() {
     this.vGridGenerator.scrollBottomNext();
+  };
+
+
+  setEditMode(value) {
+    this.vGridConfig.editMode = value ? true : false;
+    this.vGridGenerator.fillDataInRows();
+  };
+
+
+  getEditMode() {
+    return this.vGridConfig.editMode;
   };
 
 

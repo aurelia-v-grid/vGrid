@@ -74,6 +74,9 @@ export class sample01 {
     });
 
   }
+  attached(){
+    this.getMaxRows = this.myGrid.ctx.getMaxRows();
+  }
 
   lockStatus = "locked";
   lockColor = "red";
