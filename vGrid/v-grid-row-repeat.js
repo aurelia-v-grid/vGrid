@@ -9,7 +9,7 @@ import {VGrid} from './v-grid'
 
 
 @noView()
-@customElement('v-grid-col-repeat')
+@customElement('v-grid-row-repeat')
 @processContent(false)
 @inject(Element, VGrid, Container)
 export class VGridCellContainer {
