@@ -310,9 +310,6 @@
   right: -7px;
 }
 
-.vGrid div.vGrid-body div.vGrid-row-no-data {
-  border-bottom: 0 !important;
-}
 
 .vGrid-glyphicon-1:after {
   content: "1";
