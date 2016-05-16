@@ -197,13 +197,13 @@ export class sample01 {
 
   sortBy(x){
 
-    this.myGrid.ctx.vGrid.vGridSort.setFilter({
+    this.myGrid.ctx.setSorting({
       attribute: x,
       asc: true
     }, false);
 
     //run filter
-    this.myGrid.ctx.vGrid.vGridSort.run(this.myGrid.ctx.vGrid.vGridCollectionFiltered);
+    this.myGrid.ctx.runSorting();
 
     //update grid
     this.myGrid.ctx.collectionChange();
@@ -211,18 +211,15 @@ export class sample01 {
 
 
   filter(x){
-
-    this.myGrid.ctx.vGridConfig.addFilter = true;
     if(x== "all") {
-      this.myGrid.ctx.vGridConfig.onFilterRun([]);
+      this.myGrid.ctx.runFilter([]);
     }
     if(x== "germany") {
-      this.myGrid.ctx.vGridConfig.onFilterRun([{attribute:"country", value:"germany", operator:"*"}]);
+      this.myGrid.ctx.runFilter([{attribute:"country", value:"germany", operator:"*"}]);
     }
     if(x== "norway") {
-      this.myGrid.ctx.vGridConfig.onFilterRun([{attribute:"country", value:"norway", operator:"*"}]);
+      this.myGrid.ctx.runFilter([{attribute:"country", value:"norway", operator:"*"}]);
     }
-
   }
 
 
