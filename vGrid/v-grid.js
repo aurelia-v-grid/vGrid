@@ -104,11 +104,12 @@ export class VGrid {
   /***************************************************************************************
    * when view is bounded
    ***************************************************************************************/
-  bind(parent) {
+  bind(parent, overrideContext) {
 
 
     //parent
     this.$parent = parent;
+    this.overrideContext = overrideContext;
 
     //if they havent binded a context, then lets make one.
     //that context they will be able to trigger event on the grid

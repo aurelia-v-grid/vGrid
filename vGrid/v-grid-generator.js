@@ -165,8 +165,12 @@ export class VGridGenerator {
     if (this.htmlCache.rowTemplate !== null) {
       rowTemplate = this.htmlCache.rowTemplate;
     } else {
-      for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
-        rowTemplate = rowTemplate + `<v-grid-row-col v-grid-context-menu-cell column-no=${i}></v-grid-row-col>`;
+      if(this.vGrid.vGridConfig.repeater){
+        return '<div>' +this.vGrid.vGridConfig.repeatTemplate+'</div>';
+      } else {
+        for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
+          rowTemplate = rowTemplate + `<v-grid-row-col v-grid-context-menu-cell column-no=${i}></v-grid-row-col>`;
+        }
       }
     }
     return rowTemplate;
@@ -266,7 +270,7 @@ export class VGridGenerator {
     this.headerViewSlot = new ViewSlot(this.htmlCache.header.firstChild, true);
     this.headerViewSlot.add(view);
     let bindingContext = {};
-    this.headerViewSlot.bind(bindingContext);
+    this.headerViewSlot.bind(bindingContext, {bindingContext:bindingContext, parentOverrideContext: this.vGrid.overrideContext});
     this.headerViewSlot.attached();
 
 
@@ -296,7 +300,7 @@ export class VGridGenerator {
     this.headerViewSlot = new ViewSlot(this.htmlCache.header.firstChild, true);
     this.headerViewSlot.add(view);
     let bindingContext = {};
-    this.headerViewSlot.bind(bindingContext);
+    this.headerViewSlot.bind(bindingContext, {bindingContext:bindingContext, parentOverrideContext: this.vGrid.overrideContext});
     this.headerViewSlot.attached();
 
     this.addResizableAndSortableEvent();
@@ -456,27 +460,38 @@ export class VGridGenerator {
         row.div.setAttribute("row", rowNo);
 
 
-        if (entity === "") {
+        if (entity === "" ) {
           let bindingContext = {};
-          row.viewSlot.bind(bindingContext);
-          row.div.classList.add(this.vGridConfig.css.noData)
+          row.viewSlot.bind(bindingContext, {bindingContext:bindingContext, parentOverrideContext: this.vGrid.overrideContext});
+          //row.div.classList.add(this.vGridConfig.css.noData)
         } else {
-          if (row.div.classList.contains(this.vGridConfig.css.noData)) {
-            row.div.classList.remove(this.vGridConfig.css.noData)
-          }
+          // if (row.div.classList.contains(this.vGridConfig.css.noData)) {
+          //   row.div.classList.remove(this.vGridConfig.css.noData)
+          // }
         }
 
 
         if (entity !== "" && row.viewSlot !== null) {
           let bindingContext = {};
-          for (var k in entity) {
-            if (entity.hasOwnProperty(k)) {
-              if (bindingContext[k] !== entity[k]) {
-                bindingContext[k] = entity[k];
+            for (var k in entity) {
+              if (entity.hasOwnProperty(k)) {
+                if (bindingContext[k] !== entity[k]) {
+                  bindingContext[k] = entity[k];
+                }
               }
             }
+          bindingContext.currentEntityRef = this.vGrid.vGridCollectionFiltered[rowNo];
+          row.viewSlot.bind(bindingContext, {bindingContext:bindingContext, parentOverrideContext: this.vGrid.overrideContext});
+
+
+        }
+
+        if(this.vGrid.vGridConfig.repeater && row.div.children.length > 0){
+          if(entity === undefined){
+            row.div.children[0].style.display = "none";
+          } else {
+            row.div.children[0].style.display = "block";
           }
-          row.viewSlot.bind(bindingContext);
         }
 
 
@@ -968,7 +983,7 @@ export class VGridGenerator {
       rows[i].viewSlot = new ViewSlot(rows[i].div, true);
       rows[i].viewSlot.add(view);
       let bindingContext = {};
-      rows[i].viewSlot.bind(bindingContext);
+      rows[i].viewSlot.bind(bindingContext, {bindingContext:bindingContext, parentOverrideContext: this.vGrid.overrideContext});
       rows[i].viewSlot.attached();
 
     }
@@ -992,7 +1007,7 @@ export class VGridGenerator {
       rows[i].viewSlot = new ViewSlot(rows[i].div, true);
       rows[i].viewSlot.add(view);
       let bindingContext = {};
-      rows[i].viewSlot.bind(bindingContext);
+      rows[i].viewSlot.bind(bindingContext, {bindingContext:bindingContext, parentOverrideContext: this.vGrid.overrideContext});
       rows[i].viewSlot.attached();
     }
   }
