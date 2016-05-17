@@ -16,7 +16,7 @@
     <!------------------------------------------------------------------------------------------------------------------------------------>
 
     <div class="myCol">
-      <h4 style="margin-left:25px"> Repeats the html inside &ltv-grid-row-repeat&gt (16 Mai-2016, rev04)</h4>
+      <h4 style="margin-left:25px"> Repeats the html inside &ltv-grid-row-repeat&gt (17 Mai-2016, rev01)</h4>
       <v-grid
         style="position:absolute;top:70px;bottom:0;right: 25px;left:25px"
         v-row-height="80"
@@ -26,8 +26,7 @@
         v-grid-context.bind=myGrid>
 
         <v-grid-row-repeat>
-          <template>
-            <div>
+
               <div class="col-md-5">
                 <form class="form-horizontal">
                   <div class="form-group">
@@ -55,8 +54,7 @@
               <div class="col-md-2">
                 <button style="height:50px;width:100px" click.trigger="cancelClickBtn($this)">cancel</button>
               </div>
-            </div>
-          </template>
+
         </v-grid-row-repeat>
 
       </v-grid>
@@ -244,7 +242,7 @@
     </div>
     <div class="myCol">
       <h5><span class="label label-info">Info</span>Collection length:<span class="label label-default">${collectionLength}</span>
-        <h5><span class="label label-info">Info</span>max browser rows:<span class="label label-default">${getMaxRows}</span>
+      <h5><span class="label label-info">Info</span>max browser rows:<span class="label label-default">${getMaxRows}</span>
       </h5>
 
     </div>
