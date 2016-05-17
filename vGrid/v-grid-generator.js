@@ -166,7 +166,14 @@ export class VGridGenerator {
       rowTemplate = this.htmlCache.rowTemplate;
     } else {
       if (this.vGrid.vGridConfig.repeater) {
-        return this.vGrid.vGridConfig.repeatTemplate;
+        console.log(this.vGrid.vGridConfig.repeatTemplate)
+        console.log(this.vGrid.vGridConfig.repeatTemplate.indexOf("template"))
+        if(this.vGrid.vGridConfig.repeatTemplate.indexOf("template") === -1){
+          return '<template>'+this.vGrid.vGridConfig.repeatTemplate+'</template>'
+        } else {
+          return this.vGrid.vGridConfig.repeatTemplate;
+        }
+
       } else {
         rowTemplate = '<template>';
         for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {

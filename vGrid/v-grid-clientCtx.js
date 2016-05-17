@@ -217,7 +217,7 @@ export class VGridClientCtx {
         supportedHeight = test;
       }
     }
-   div.remove();
+    document.body.removeChild(div);
    return (supportedHeight/this.vGridConfig.rowHeight) +", error margin:"+(10000/this.vGridConfig.rowHeight);
 }
 

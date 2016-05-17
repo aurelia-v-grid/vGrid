@@ -180,7 +180,7 @@
   /*white-space: nowrap;*/
   /*overflow: hidden;*/
   /*text-overflow: ellipsis;*/
-  background-color: inherit;
+  background-color: transparent; /*ie11 can inherit background color on inputs, really dont care about IE11, but since this solves it Ill put it in*/
   border: 0;
   /*line-height: 100%*/
 }
