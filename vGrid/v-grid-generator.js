@@ -166,10 +166,8 @@ export class VGridGenerator {
       rowTemplate = this.htmlCache.rowTemplate;
     } else {
       if (this.vGrid.vGridConfig.repeater) {
-        console.log(this.vGrid.vGridConfig.repeatTemplate)
-        console.log(this.vGrid.vGridConfig.repeatTemplate.indexOf("template"))
         if(this.vGrid.vGridConfig.repeatTemplate.indexOf("template") === -1){
-          return '<template>'+this.vGrid.vGridConfig.repeatTemplate+'</template>'
+          return '<template>'+this.vGrid.vGridConfig.repeatTemplate+'</template>' //mostly for IE11, might be better ways of doing this
         } else {
           return this.vGrid.vGridConfig.repeatTemplate;
         }
