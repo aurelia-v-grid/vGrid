@@ -167,7 +167,7 @@ export class VGridGenerator {
     } else {
       if (this.vGrid.vGridConfig.repeater) {
         if(this.vGrid.vGridConfig.repeatTemplate.indexOf("template") === -1){
-          return '<template>'+this.vGrid.vGridConfig.repeatTemplate+'</template>' //mostly for IE11, might be better ways of doing this
+          return '<template>'+this.vGrid.vGridConfig.repeatTemplate+'</template>'
         } else {
           return this.vGrid.vGridConfig.repeatTemplate;
         }
