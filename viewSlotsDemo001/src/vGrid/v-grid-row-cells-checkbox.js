@@ -87,7 +87,11 @@ export class VGridRowCellCheckbox {
     this.valueChanged(this.value);
 
     this.content.onchange = ()=> {
-      this.parent.updateValue(this.content.checked);
+      if(!this.parent.readOnly() && this.parent.editMode()){
+        this.parent.updateValue(this.content.checked);
+      } else {
+        this.content.checked = this.value;
+      }
     };
 
     //set column no

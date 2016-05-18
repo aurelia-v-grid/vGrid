@@ -70,7 +70,11 @@ export class VGridRowCellInput {
 
 
     this.content.onchange = ()=> {
-      this.parent.updateValue(this.content.value);
+      if(!this.parent.readOnly() && this.parent.editMode()){
+        this.parent.updateValue(this.content.value);
+      } else {
+        this.content.value = this.value;
+      }
     };
 
 
