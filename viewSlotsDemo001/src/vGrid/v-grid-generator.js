@@ -166,8 +166,6 @@ export class VGridGenerator {
       rowTemplate = this.htmlCache.rowTemplate;
     } else {
       if (this.vGrid.vGridConfig.repeater) {
-        console.log(this.vGrid.vGridConfig.repeatTemplate)
-        console.log(this.vGrid.vGridConfig.repeatTemplate.indexOf("template"))
         if(this.vGrid.vGridConfig.repeatTemplate.indexOf("template") === -1){
           return '<template>'+this.vGrid.vGridConfig.repeatTemplate+'</template>'
         } else {

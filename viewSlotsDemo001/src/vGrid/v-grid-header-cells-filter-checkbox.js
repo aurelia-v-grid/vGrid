@@ -41,7 +41,7 @@ export class VGridHeaderFilter {
       this.content.style.opacity = 0.3;
       this.content.checked = false;
     }
-    this.content.onchange({keyKode: 13});
+    this.parent.onChangeEventOnFilter({keyKode: 13})
 
   }
 
@@ -75,7 +75,7 @@ export class VGridHeaderFilter {
     this.content = document.createElement("input");
     container.appendChild(this.content);
 
-    this.content.onchange = this.parent.onChangeEventOnFilter.bind(this.parent);
+
     this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute());
     this.content.value = this.filterValue ? this.filterValue : "";
 

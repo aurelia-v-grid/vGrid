@@ -5,7 +5,7 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {ObserverLocator, bindable, ViewCompiler, ViewSlot, Container, ViewResources, containerless} from 'aurelia-framework';
+import {TaskQueue, ObserverLocator, bindable, ViewCompiler, ViewSlot, Container, ViewResources, containerless} from 'aurelia-framework';
 import {VGridGenerator} from './v-grid-generator';
 import {VGridFilter} from './v-grid-filter';
 import {VGridSort} from './v-grid-sort';
@@ -19,14 +19,17 @@ import {VGridClientCtx} from './v-grid-clientCtx';
 
 
 export class VGrid {
-  static inject = [Element, ObserverLocator, ViewCompiler, ViewSlot, Container, ViewResources];
+  static inject = [Element, ObserverLocator, ViewCompiler, ViewSlot, Container, ViewResources, TaskQueue];
   @bindable({attribute: "v-grid-context"}) vGridContextObj;
   @bindable({attribute: "v-collection"}) vGridCollection;
   @bindable({attribute: "v-current-entity"}) vGridCurrentEntity;
+  
+  //loading screen when filtering/sorting
+  @bindable loadingMessage = "Working please wait";
+  loading = false;
 
-
-  constructor(element, observerLocator, viewCompiler, viewSlot, container, viewResources, dom) {
-
+  constructor(element, observerLocator, viewCompiler, viewSlot, container, viewResources, taskQueue) {
+    
     //<v-grid> element
     this.element = element;
 
@@ -36,6 +39,7 @@ export class VGrid {
     this.viewSlot = viewSlot;
     this.container = container;
     this.viewResources = viewResources;
+    this.taskQueue = taskQueue;
 
     //keeps the current entity ref
     this.vGridCurrentEntityRef = null;

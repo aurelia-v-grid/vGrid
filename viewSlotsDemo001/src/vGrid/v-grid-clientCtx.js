@@ -147,7 +147,12 @@ export class VGridClientCtx {
 
 
   runSorting(x) {
-    this.vGridSort.run(this.vGrid.vGridCollectionFiltered);
+    this.vGrid.loading = true;
+    setTimeout(()=>{
+      this.vGridSort.run(this.vGrid.vGridCollectionFiltered);
+      this.vGrid.loading = false;
+    },10)
+
   }
 
   runFilter(filterObj) {
