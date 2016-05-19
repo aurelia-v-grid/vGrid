@@ -149,48 +149,55 @@ export class VGridConfig {
 
     if (filterObj.length !== 0 || this.vGrid.vGridCollectionFiltered.length !== this.vGrid.vGridCollection.length) {
 
+      //set loading screen
+      this.vGrid.loading = true;
 
-      //get current key if there is any, need this to find current row after filter
-      var curKey = -1;
-      if (this.vGrid.vGridCurrentEntityRef) {
-        curKey = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
-      }
-
-
-      //run filter
-      this.vGrid.vGridCollectionFiltered = this.vGrid.vGridFilter.run(this.vGrid.vGridCollection, filterObj);
-
-
-      //run sorting
-      this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
+      //run query
+      setTimeout(()=> {
+        //get current key if there is any, need this to find current row after filter
+        var curKey = -1;
+        if (this.vGrid.vGridCurrentEntityRef) {
+          curKey = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
+        }
 
 
-      //set current row/entity in sync
-      var newRowNo = -1;
-      if (curKey) {
-        this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
-          if (curKey === x[this.vGrid.vGridRowKey]) {
-            newRowNo = index;
-          }
-        });
-      }
+        //run filter
+        this.vGrid.vGridCollectionFiltered = this.vGrid.vGridFilter.run(this.vGrid.vGridCollection, filterObj);
 
 
-      //update current row/current entity/entity ref
-      if (newRowNo > -1) {
-        this.vGrid.vGridCurrentEntityRef = this.vGrid.vGridCollectionFiltered[newRowNo];
-        this.vGrid.vGridCurrentEntity[this.vGrid.vGridRowKey] = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
-        this.vGrid.vGridCurrentRow = newRowNo;
-      } else {
-        this.vGrid.vGridCurrentRow = newRowNo;
-      }
+        //run sorting
+        this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
 
 
-      //update grid rows
-      this.vGrid.vGridGenerator.collectionChange(true);
+        //set current row/entity in sync
+        var newRowNo = -1;
+        if (curKey) {
+          this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
+            if (curKey === x[this.vGrid.vGridRowKey]) {
+              newRowNo = index;
+            }
+          });
+        }
 
+
+        //update current row/current entity/entity ref
+        if (newRowNo > -1) {
+          this.vGrid.vGridCurrentEntityRef = this.vGrid.vGridCollectionFiltered[newRowNo];
+          this.vGrid.vGridCurrentEntity[this.vGrid.vGridRowKey] = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
+          this.vGrid.vGridCurrentRow = newRowNo;
+        } else {
+          this.vGrid.vGridCurrentRow = newRowNo;
+        }
+
+
+        //update grid rows
+        this.vGrid.vGridGenerator.collectionChange(true);
+        this.vGrid.loading = false;
+
+      }, 1);
 
     }
+
 
   };
 
@@ -227,6 +234,7 @@ export class VGridConfig {
    ***************************************************************************************/
   onOrderBy(event, setheaders) {
 
+
     //get attibute of clicked header (todo inprove this part)
     var attribute = event.target.getAttribute(this.atts.dataAttribute);
     if (attribute === null) {
@@ -243,36 +251,41 @@ export class VGridConfig {
 
     //can we do the sorting?
     if (this.vGrid.vGridCollectionFiltered.length > 0 && attribute && canSortThisAttribute) {
+      //set loading screen
+      this.vGrid.loading = true;
+
+      //set query
+      setTimeout(()=> {
+        //set filter
+        this.vGrid.vGridSort.setFilter({
+          attribute: attribute,
+          asc: true
+        }, event.shiftKey);
 
 
-      //set filter
-      this.vGrid.vGridSort.setFilter({
-        attribute: attribute,
-        asc: true
-      }, event.shiftKey);
+        //set headers(rebuild the headers, its just simpler, then having any logic to it) Todo: after rebuild having som logic instead of rebuild might be simple enought now.
+        setheaders(this.vGrid.vGridSort.getFilter());
 
 
-      //set headers(rebuild the headers, its just simpler, then having any logic to it) Todo: after rebuild having som logic instead of rebuild might be simple enought now.
-      setheaders(this.vGrid.vGridSort.getFilter());
+        //run filter
+        this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
 
 
-      //run filter
-      this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
+        //set new row
+        if (this.vGrid.vGridCurrentEntityRef) {
+          this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
+            if (this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey] === x[this.vGrid.vGridRowKey]) {
+              this.vGrid.vGridCurrentRow = index;
+            }
+          });
+        }
 
 
-      //set new row
-      if (this.vGrid.vGridCurrentEntityRef) {
-        this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
-          if (this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey] === x[this.vGrid.vGridRowKey]) {
-            this.vGrid.vGridCurrentRow = index;
-          }
-        });
-      }
+        //update grid
+        this.vGrid.vGridGenerator.collectionChange();
+        this.vGrid.loading = false;
 
-
-      //update grid
-      this.vGrid.vGridGenerator.collectionChange();
-
+      }, 1);
     }
 
 

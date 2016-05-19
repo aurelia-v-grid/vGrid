@@ -62,7 +62,9 @@ export class VGridHeaderFilterText {
         } else {
           if(e.keyCode === 13){
           //filter value will be the same, so we just haveto call the filter this time
-            this.parent.onChangeEventOnFilter({keyKode: 13});
+            if(this.filterValue !== this.content.value){
+              this.parent.onChangeEventOnFilter({keyKode: 13});
+            }
           }
         }
 
