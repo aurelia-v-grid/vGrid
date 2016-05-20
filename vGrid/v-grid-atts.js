@@ -5,7 +5,8 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {inject, customAttribute, Optional} from 'aurelia-framework';
+import {customAttribute} from 'aurelia-templating';
+import {inject, Optional} from 'aurelia-dependency-injection';
 import {VGrid} from './v-grid';
 
 

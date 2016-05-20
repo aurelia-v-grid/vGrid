@@ -5,7 +5,8 @@
  *
  ****************************************************************************************************************/
 
-import {inject, Optional, customElement, bindable} from 'aurelia-framework';
+import {bindable, customElement} from 'aurelia-templating';
+import {inject, Optional} from 'aurelia-dependency-injection';
 import {VGrid} from './v-grid';
 
 @customElement('v-grid-col')
