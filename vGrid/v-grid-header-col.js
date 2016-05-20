@@ -4,9 +4,8 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {noView, customElement, processContent, bindable, ViewSlot} from 'aurelia-templating';
-import {inject, Container} from 'aurelia-dependency-injection';
-import {VGrid} from './v-grid';
+import {inject, noView, customElement, processContent, Container, bindable, ViewSlot} from 'aurelia-framework';
+import {VGrid} from './v-grid'
 //should I make this into a container and have cells under it?
 
 
