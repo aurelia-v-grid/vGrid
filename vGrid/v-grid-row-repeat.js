@@ -5,7 +5,7 @@
  *
  ****************************************************************************************************************/
 import {inject, noView, customElement, processContent, Container, bindable, ViewSlot} from 'aurelia-framework';
-import {VGrid} from './v-grid'
+import {VGrid} from './v-grid';
 
 
 @noView()

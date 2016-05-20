@@ -5,7 +5,7 @@
  *
  ****************************************************************************************************************/
 import {inject, customElement, bindable} from 'aurelia-framework';
-import {VGrid} from './v-grid'
+import {VGrid} from './v-grid';
 
 
 @customElement('v-grid-selection')
@@ -82,4 +82,3 @@ export class VGridRowCellSelection {
 
   }
 }
-

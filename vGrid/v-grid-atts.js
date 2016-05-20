@@ -6,7 +6,7 @@
  *
  ****************************************************************************************************************/
 import {inject, customAttribute, Optional} from 'aurelia-framework';
-import {VGrid} from './v-grid'
+import {VGrid} from './v-grid';
 
 
 var VGridAttibutes = class {

@@ -8,7 +8,7 @@
 //keeping one for each, so its easier to maintain if I do something special later
 
 import {inject, customElement, bindable} from 'aurelia-framework';
-import {VGrid} from './v-grid'
+import {VGrid} from './v-grid';
 
 
 /*******************************************
