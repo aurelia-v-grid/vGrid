@@ -5,7 +5,11 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {TaskQueue, ObserverLocator, bindable, ViewCompiler, ViewSlot, Container, ViewResources, containerless} from 'aurelia-framework';
+import {bindable, ViewSlot, ViewCompiler, ViewResources} from 'aurelia-templating';
+import {TaskQueue} from 'aurelia-task-queue';
+import {ObserverLocator} from 'aurelia-binding';
+import {Container} from 'aurelia-dependency-injection';
+
 import {VGridGenerator} from './v-grid-generator';
 import {VGridFilter} from './v-grid-filter';
 import {VGridSort} from './v-grid-sort';
@@ -23,13 +27,13 @@ export class VGrid {
   @bindable({attribute: "v-grid-context"}) vGridContextObj;
   @bindable({attribute: "v-collection"}) vGridCollection;
   @bindable({attribute: "v-current-entity"}) vGridCurrentEntity;
-  
+
   //loading screen when filtering/sorting
   @bindable loadingMessage = "Working please wait";
   loading = false;
 
   constructor(element, observerLocator, viewCompiler, viewSlot, container, viewResources, taskQueue) {
-    
+
     //<v-grid> element
     this.element = element;
 
