@@ -5,7 +5,7 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {bindable, ViewSlot, ViewCompiler, ViewResources, containerless} from 'aurelia-templating';
+import {bindable, ViewSlot, ViewCompiler, ViewResources} from 'aurelia-templating';
 import {TaskQueue} from 'aurelia-task-queue';
 import {ObserverLocator} from 'aurelia-binding';
 import {Container} from 'aurelia-dependency-injection';
