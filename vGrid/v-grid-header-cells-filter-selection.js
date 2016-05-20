@@ -5,7 +5,9 @@
  *
  ****************************************************************************************************************/
 import {inject, customElement, bindable} from 'aurelia-framework';
-import {VGrid} from './v-grid'
+//import {bindable, customElement} from 'aurelia-templating';
+//import {inject} from 'aurelia-dependency-injection';
+import {VGrid} from './v-grid';
 
 
 @customElement('v-grid-filter-selection')
@@ -66,7 +68,7 @@ export class VGridHeaderFilterSelection {
     this.content.style.display = "block";
     this.content.style.margin = "auto";
     this.content.style.position = "initial";
-    this.content.classList.add(this.vGridConfig.css.filterHandle)
+    this.content.classList.add(this.vGridConfig.css.filterHandle);
 
     this.state = 3;
     this.content.style.opacity = 1;

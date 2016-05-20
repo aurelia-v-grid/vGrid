@@ -6,6 +6,11 @@
  *
  ****************************************************************************************************************/
 import {TaskQueue, ObserverLocator, bindable, ViewCompiler, ViewSlot, Container, ViewResources, containerless} from 'aurelia-framework';
+//import {bindable, ViewSlot, ViewCompiler, ViewResources, containerless} from 'aurelia-templating';
+//import {TaskQueue} from 'aurelia-task-queue';
+//import {ObserverLocator} from 'aurelia-binding';
+//import {Container} from 'aurelia-dependency-injection';
+
 import {VGridGenerator} from './v-grid-generator';
 import {VGridFilter} from './v-grid-filter';
 import {VGridSort} from './v-grid-sort';

@@ -93,6 +93,7 @@ export class VGridConfig {
     this.activeSorting = false;
     this.contextmenu = true;
     this.loadingThreshold = -1;
+    this.tabbingEnabled = true;
 
     this.eventOnRowDraw = null;
     this.eventOnRowClick = null;

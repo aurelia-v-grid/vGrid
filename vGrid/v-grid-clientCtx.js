@@ -236,7 +236,11 @@ export class VGridClientCtx {
 
   setEditMode(value) {
     this.vGridConfig.editMode = value ? true : false;
-    this.vGridGenerator.fillDataInRows();
+    this.vGridGenerator.rebuildColumnsRows();
+  };
+
+  setTabbing(value){
+    this.vGridConfig.tabbingEnabled = value === true ? true:false;
   };
 
 

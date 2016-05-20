@@ -1,5 +1,5 @@
 import {ViewSlot} from 'aurelia-framework';
-
+//import {ViewSlot} from 'aurelia-templating';
 
 /*****************************************************************************************************************
  *    vGridGenerator
@@ -72,16 +72,11 @@ export class VGridGenerator {
    * internal vars
    *************************************************************************************/
 
-  internalDragDropCount = 10; //internal count for index of header column, this can maybe be deleted after rebuild
-  sortOrder = [];           //
   contentHeight = 0;          //internal
   gridHeight = 0;             //internal
   gridWidth = 0;              //internal
-  queryStringCheck = {};     //internal //just to remeber old input, helper for ondrag/drop columns
   scrollBodyHeight = 0;
-
-
-  scrollBottomOnNext = false;   // internal var to know if user wants to scroll to bottom next time array abserver gets called
+  scrollBottomOnNext = false;   // internal var to know if user wants to scroll to bottom next time array abserver gets called move to vgridconfig?
 
   htmlCache = {
     grid: null,       //internal
@@ -98,7 +93,6 @@ export class VGridGenerator {
     lastScrollLeft: 0,    //used for stopping weird scrolling to left
     isScrollBarScrolling: false,          //used for knowing if we can update when doing scrolling, used with time var under
     timer: null,          //timer for stopping updating, "getDataScrollDelay" is the timeout for this
-    clickTimersArray: [],  //this is the array of touch events, have it here so I can cancel during scroll
     scrollCallbackTimer: null
   };
 
@@ -852,8 +846,7 @@ export class VGridGenerator {
     //header click
     if (this.vGridConfig.sortOnHeaderClick) {
       var orderByClick = (event) => {
-        this.vGridConfig.onOrderBy(event, (sortorder) => {
-          this.sortOrder = sortorder;
+        this.vGridConfig.onOrderBy(event, () => {
           this.rebuildGridHeaderHtml();
         });
       };
@@ -896,10 +889,10 @@ export class VGridGenerator {
 
     var handleTabbing = (e) => {
       var currentRow = parseInt(e.currentTarget.getAttribute("row"));
-      this.vGridConfig.clickHandler(e, currentRow);
-      if (this.vGridConfig.isMultiSelect !== undefined) {
-        this.vGridSelection.setHightlight(e, currentRow, this);
-      }
+        this.vGridConfig.clickHandler(e, currentRow);
+        if (this.vGridConfig.isMultiSelect !== undefined) {
+          this.vGridSelection.setHightlight(e, currentRow, this);
+        }
     };
 
 
@@ -1241,12 +1234,11 @@ export class VGridGenerator {
   };
 
   clearHeaderSortFilter() {
-    this.sortOrder = [];
+    this.vGrid.vGridSort.reset();
     this.rebuildGridHeaderHtml();
   };
 
-  setHeaderSortFilter(sortOrder) {
-    this.sortOrder = sortOrder;
+  setHeaderSortFilter() {
     this.rebuildGridHeaderHtml();
   };
 

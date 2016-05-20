@@ -5,7 +5,9 @@
  *
  ****************************************************************************************************************/
 import {inject, customElement, bindable} from 'aurelia-framework';
-import {VGrid} from './v-grid'
+//import {bindable, customElement} from 'aurelia-templating';
+//import {inject} from 'aurelia-dependency-injection';
+import {VGrid} from './v-grid';
 
 
 @customElement('v-grid-label')

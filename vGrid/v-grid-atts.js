@@ -6,7 +6,9 @@
  *
  ****************************************************************************************************************/
 import {inject, customAttribute, Optional} from 'aurelia-framework';
-import {VGrid} from './v-grid'
+//import {customAttribute} from 'aurelia-templating';
+//import {inject, Optional} from 'aurelia-dependency-injection';
+import {VGrid} from './v-grid';
 
 
 var VGridAttibutes = class {
@@ -330,3 +332,5 @@ export class LoadingThreshold extends VGridAttibutes {
   alias = "configLoadingThreshold";
   type = "int";
 }
+
+
