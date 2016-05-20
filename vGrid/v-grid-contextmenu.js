@@ -1,10 +1,9 @@
-import {customAttribute} from 'aurelia-templating';
-import {inject, Optional} from 'aurelia-dependency-injection';
-import {VGridCellRowHeader} from './v-grid-header-col';
-import {VGridCellContainer} from './v-grid-row-col';
-
 //main idea/source https://github.com/callmenick/Custom-Context-Menu
 //just testing atm, not done in any way, will need to do a few chamges, just added some to test more
+
+import {inject, customAttribute, Optional} from 'aurelia-framework';
+import {VGridCellRowHeader} from './v-grid-header-col'
+import {VGridCellContainer} from './v-grid-row-col'
 
 
 

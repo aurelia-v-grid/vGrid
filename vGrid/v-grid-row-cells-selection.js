@@ -4,9 +4,8 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {bindable, customElement} from 'aurelia-templating';
-import {inject} from 'aurelia-dependency-injection';
-import {VGrid} from './v-grid';
+import {inject, customElement, bindable} from 'aurelia-framework';
+import {VGrid} from './v-grid'
 
 
 @customElement('v-grid-selection')
@@ -83,3 +82,4 @@ export class VGridRowCellSelection {
 
   }
 }
+
