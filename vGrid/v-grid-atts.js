@@ -321,3 +321,12 @@ export class contextmenu extends VGridAttibutes {
   alias = "configContextmenu";
   type = "bool";
 }
+
+
+@customAttribute('v-loading-threshold')
+@inject(Element, Optional.of(VGrid))
+export class LoadingThreshold extends VGridAttibutes {
+  attribute = "loadingThreshold";
+  alias = "configLoadingThreshold";
+  type = "int";
+}

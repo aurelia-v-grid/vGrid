@@ -92,6 +92,7 @@ export class VGridConfig {
     this.largeBuffer = false;
     this.activeSorting = false;
     this.contextmenu = true;
+    this.loadingThreshold = -1;
 
     this.eventOnRowDraw = null;
     this.eventOnRowClick = null;
@@ -150,7 +151,9 @@ export class VGridConfig {
     if (filterObj.length !== 0 || this.vGrid.vGridCollectionFiltered.length !== this.vGrid.vGridCollection.length) {
 
       //set loading screen
-      this.vGrid.loading = true;
+      if(this.vGrid.vGridCollection.length > this.loadingThreshold){
+          this.vGrid.loading = true;
+      }
 
       //run query
       setTimeout(()=> {
@@ -194,7 +197,7 @@ export class VGridConfig {
         this.vGrid.vGridGenerator.collectionChange(true);
         this.vGrid.loading = false;
 
-      }, 1);
+      }, 50);
 
     }
 
@@ -252,7 +255,9 @@ export class VGridConfig {
     //can we do the sorting?
     if (this.vGrid.vGridCollectionFiltered.length > 0 && attribute && canSortThisAttribute) {
       //set loading screen
-      this.vGrid.loading = true;
+      if(this.vGrid.vGridCollection.length > this.loadingThreshold){
+          this.vGrid.loading = true;
+      }
 
       //set query
       setTimeout(()=> {
@@ -285,7 +290,7 @@ export class VGridConfig {
         this.vGrid.vGridGenerator.collectionChange();
         this.vGrid.loading = false;
 
-      }, 1);
+      }, 50);
     }
 
 

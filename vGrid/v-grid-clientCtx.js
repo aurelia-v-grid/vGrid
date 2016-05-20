@@ -147,7 +147,9 @@ export class VGridClientCtx {
 
 
   runSorting(x) {
-    this.vGrid.loading = true;
+    if(this.vGridCollection.length > this.vGridConfig.loadingThreshold){
+      this.vGrid.loading = true;
+    }
     setTimeout(()=>{
       this.vGridSort.run(this.vGrid.vGridCollectionFiltered);
       this.vGrid.loading = false;
