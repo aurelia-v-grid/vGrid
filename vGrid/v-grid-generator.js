@@ -1167,6 +1167,7 @@ export class VGridGenerator {
     this.vGridConfig.colFormaterArray = paramObj.colFormaterArray;
     this.vGridConfig.colEditRawArray = paramObj.colEditRawArray;
     this.vGridConfig.filterOnKeyArray = paramObj.colFilterOnKeyArray;
+    this.vGridConfig.colCustomArray = paramObj.colCustomArray;
   };
 
 
@@ -1182,7 +1183,8 @@ export class VGridGenerator {
       "colTypeArray": this.vGridConfig.colTypeArray.slice(),
       "colFormaterArray": this.vGridConfig.colFormaterArray.slice(),
       "colEditRawArray": this.vGridConfig.colEditRawArray.slice(),
-      "colFilterOnKeyArray": this.vGridConfig.filterOnKeyArray.slice()
+      "colFilterOnKeyArray": this.vGridConfig.filterOnKeyArray.slice(),
+      "colCustomArray": this.vGridConfig.colCustomArray.slice()
     }
   };
 

@@ -78,6 +78,9 @@ export class VGridCellContainer {
 
     //create viewfactory
     switch (this.colType()) {
+      case "custom":
+        var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-${this.colCustomName()}  value.bind="value"><input css.bind="customStyle"></v-grid-${this.colCustomName()}></template>', this.vGrid.resources);
+        break;
       case "image":
         var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-image value.bind="value"><img css.bind="customStyle"></v-grid-image></template>', this.vGrid.resources);
         break;
@@ -104,6 +107,10 @@ export class VGridCellContainer {
     //focus event for setting
     this.element.addEventListener("cellFocus", function (e) {
       this.setCss();
+    }.bind(this));
+
+    this.element.addEventListener("focus", function (e) {
+      debugger;
     }.bind(this));
 
 
@@ -216,6 +223,11 @@ export class VGridCellContainer {
 
   colType() {
     return this.vGrid.vGridConfig.colTypeArray[this.columnNo];
+  }
+
+
+  colCustomName() {
+    return this.vGrid.vGridConfig.colCustomArray[this.columnNo];
   }
 
 

@@ -120,6 +120,12 @@ export class VGridSortable {
     this.vGrid.vGridConfig.filterOnKeyArray.splice(oldIndex, 1);
     this.vGrid.vGridConfig.filterOnKeyArray.splice(newIndex, 0, x);
 
+    x = this.vGrid.vGridConfig.colCustomArray[oldIndex];
+    this.vGrid.vGridConfig.colCustomArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.colCustomArray.splice(newIndex, 0, x);
+
+
+
 
     var that = this;
     this.vGrid.vGridGenerator.htmlCache.rowTemplate = null; //reset template and fill data

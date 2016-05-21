@@ -89,6 +89,11 @@ export class VGridCellRowHeader {
       type = "selection";
     }
 
+    
+    if (this.colType === "custom") {
+      this.colType = "text";
+    }
+
 
     this.type = type;
     switch (type) {

@@ -7,11 +7,11 @@
 import {inject, customElement, bindable} from 'aurelia-framework';
 //import {bindable, customElement} from 'aurelia-templating';
 //import {inject} from 'aurelia-dependency-injection';
-import {VGrid} from './v-grid';
+
 
 
 @customElement('v-grid-input')
-@inject(Element, VGrid)
+@inject(Element)
 export class VGridRowCellInput {
   @bindable value;
   @bindable customStyle;
@@ -52,6 +52,7 @@ export class VGridRowCellInput {
    ******************************************************/
   bind(parent) {
     this.parent = parent;
+    this.vGrid = parent.vGrid;
   }
 
 

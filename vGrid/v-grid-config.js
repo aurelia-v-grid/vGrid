@@ -75,6 +75,7 @@ export class VGridConfig {
     this.colFormaterArray = [];
     this.colEditRawArray = [];
     this.filterOnKeyArray = [];
+    this.colCustomArray = [];
 
     //<v-grid> attibutes
     this.rowHeight = 50;
