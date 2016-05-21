@@ -16,6 +16,7 @@ export class VGridFilter {
 
   //not in use yet, todo: let it save last filter so I can have active filtering
   lastFilter;
+  queryStrings = {};
 
 
   ///filter table
@@ -148,7 +149,7 @@ export class VGridFilter {
 
           case "boolean":
             rowValue = data[x.attribute];
-            filterValue = typeBool[x.value]
+            filterValue = typeBool[x.value];
             filterOperator = 1;
             break;
 

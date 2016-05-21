@@ -147,7 +147,9 @@ export class VGridClientCtx {
 
 
   runSorting(x) {
-    this.vGrid.loading = true;
+    if(this.vGridCollection.length > this.vGridConfig.loadingThreshold){
+      this.vGrid.loading = true;
+    }
     setTimeout(()=>{
       this.vGridSort.run(this.vGrid.vGridCollectionFiltered);
       this.vGrid.loading = false;
@@ -234,7 +236,11 @@ export class VGridClientCtx {
 
   setEditMode(value) {
     this.vGridConfig.editMode = value ? true : false;
-    this.vGridGenerator.fillDataInRows();
+    this.vGridGenerator.rebuildColumnsRows();
+  };
+
+  setTabbing(value){
+    this.vGridConfig.tabbingEnabled = value === true ? true:false;
   };
 
 

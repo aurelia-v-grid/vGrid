@@ -19,7 +19,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">Main demo (19 Mai-2016, rev01)</h4>
+        <h4 style="margin-left:25px">Main demo (21 Mai-2016, rev01)</h4>
 
         <v-grid
           style="position:absolute;top:70px;bottom:0;right: 25px;left:25px"
@@ -34,6 +34,7 @@
           v-sortable-headers="true"
           v-row-onclick="singleClick"
           v-row-ondblclick="singleDblClick"
+          v-loading-threshold="10000"
           v-sort-on-header-click="true"
           v-multi-select="true"
           v-row-on-draw="onRowDraw"
@@ -229,6 +230,7 @@
 
       <div class="myCol">
         <h5><span class="label label-info">Info</span>Collection length:<span class="label label-default">${collectionLength}</span></h5>
+        <h5><span class="label label-info">Info</span>Filtered rows length:<span class="label label-default">${filteredRows}</span></h5>
         <h5><span class="label label-info">Info</span>Inputs only modify the comp current entity, grids uses observables to react <span class="label label-default">myCurrentEntity</span></h5>
         <h5><span class="label label-info">Info</span>Hold down shift while sorting do do multisorting<span class="label label-default">multisorting</span></h5>
         <h5><span class="label label-info">Info</span>Buttons only modify the comp collection, grids uses observables and react to changes <span class="label label-default">myCollection</span></h5>

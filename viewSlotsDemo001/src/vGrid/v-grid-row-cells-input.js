@@ -5,7 +5,9 @@
  *
  ****************************************************************************************************************/
 import {inject, customElement, bindable} from 'aurelia-framework';
-import {VGrid} from './v-grid'
+//import {bindable, customElement} from 'aurelia-templating';
+//import {inject} from 'aurelia-dependency-injection';
+import {VGrid} from './v-grid';
 
 
 @customElement('v-grid-input')
@@ -70,7 +72,7 @@ export class VGridRowCellInput {
 
 
     this.content.onchange = ()=> {
-      if(!this.parent.readOnly() && this.parent.editMode()){
+      if (!this.parent.readOnly() && this.parent.editMode()) {
         this.parent.updateValue(this.content.value);
       } else {
         this.content.value = this.value;
@@ -81,6 +83,14 @@ export class VGridRowCellInput {
     this.content.onblur = ()=> {
       this.parent.setValue(this.parent.getValue(this.value));
       this.parent.setCss();
+    };
+
+
+    //fix for cutting text out when not in edit mode
+    this.content.oninput = ()=> {
+      if (!this.parent.editMode() || this.readOnly) {
+        this.content.value = this.value;
+      }
     };
 
 

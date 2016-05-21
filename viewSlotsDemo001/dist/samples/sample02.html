@@ -16,11 +16,12 @@
     <!------------------------------------------------------------------------------------------------------------------------------------>
 
     <div class="myCol">
-      <h4 style="margin-left:25px"> Repeats the html inside &ltv-grid-row-repeat&gt (19 Mai-2016, rev01)</h4>
+      <h4 style="margin-left:25px"> Repeats the html inside &ltv-grid-row-repeat&gt (21 Mai-2016, rev01)</h4>
       <v-grid
         style="position:absolute;top:70px;bottom:0;right: 25px;left:25px"
         v-row-height="80"
         v-attibutes-used="name,country"
+        v-loading-threshold="10000"
         v-current-entity.bind=myCurrentEntity
         v-collection.bind=myCollection
         v-grid-context.bind=myGrid>

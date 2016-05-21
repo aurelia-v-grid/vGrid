@@ -117,7 +117,8 @@ export class VGridCellHelper {
 
     this.vGrid.element.onkeydown = function (e) {
 
-      var queryField = e.target.classList.contains(this.vGrid.vGridConfig.css.filterHandle)
+      var queryField = e.target.classList.contains(this.vGrid.vGridConfig.css.filterHandle);
+
 
 
       //page up
@@ -150,7 +151,7 @@ export class VGridCellHelper {
             this.setCellsFromTopValue(newTop);
             this.dispatchCellClick(this.index);
 
-            var setTop = newTop - parseInt((containerRows * rowHeight) / 2)
+            var setTop = newTop - parseInt((containerRows * rowHeight) / 2);
             this.vGrid.vGridGenerator.setScrollTop(setTop);
 
           }
@@ -188,7 +189,7 @@ export class VGridCellHelper {
             this.setCellsFromTopValue(newTop);
             this.dispatchCellClick(this.index);
 
-            var setTop = newTop - parseInt((containerRows * rowHeight) / 2)
+            var setTop = newTop - parseInt((containerRows * rowHeight) / 2);
             this.vGrid.vGridGenerator.setScrollTop(setTop);
 
           }
@@ -253,6 +254,12 @@ export class VGridCellHelper {
 
       //tab and shift key for tabing in other direction
       if (e.keyCode === 9 && e.shiftKey === true) {
+        //if tabbing is not enabled we stop them all (might need to edit this later)
+        if(!this.vGrid.vGridConfig.tabbingEnabled){
+          e.preventDefault();
+          return false;
+        }
+
         e.preventDefault();
         this.blurBeforeNext();
         this.keyDownDelay(() => {
@@ -271,6 +278,12 @@ export class VGridCellHelper {
 
       //normal tabbing
       if (e.keyCode === 9 && e.shiftKey === false) {
+        //if tabbing is not enabled we stop them all (might need to edit this later)
+        if(!this.vGrid.vGridConfig.tabbingEnabled){
+          e.preventDefault();
+          return false;
+        }
+
         e.preventDefault();
         this.blurBeforeNext();
         this.keyDownDelay(() => {
@@ -321,7 +334,6 @@ export class VGridCellHelper {
    * main edit function,called from row clicks
    ***************************************************************************************/
   editCellhelper(row, e) {
-    //editCellhelper(row, e, readOnly) {
 
     if (e.target.tagName === "V-GRID-ROW-COL" || e.target.tagName === "V-GRID-CHECKBOX" || e.target.tagName === "V-GRID-IMAGE" || e.target.tagName === "V-GRID-SELECTION") {
       //if this is clicked then its a image or something smaller then the cell, lets send it to the first child
@@ -349,6 +361,7 @@ export class VGridCellHelper {
         } else {
           this.last = false;
         }
+
         if (this.index === 0) {
           this.first = true;
         } else {

@@ -1,6 +1,8 @@
 'use strict';
 
 System.register(['bootstrap', 'moment'], function (_export, _context) {
+  "use strict";
+
   var moment;
   return {
     setters: [function (_bootstrap) {}, function (_moment) {
@@ -21,4 +23,4 @@ System.register(['bootstrap', 'moment'], function (_export, _context) {
     }
   };
 });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1haW4uanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQ087OztBQUNQLGFBQU8sTUFBUCxHQUFnQixNQUFoQjs7QUFHTyxlQUFTLFNBQVQsQ0FBbUIsT0FBbkIsRUFBNEI7QUFDakMsZ0JBQVEsR0FBUixDQUNHLHFCQURILEdBRUcsa0JBRkgsR0FHRyxlQUhILENBR21CLFlBSG5CLEVBSUcsTUFKSCxDQUlVLGNBSlYsRUFEaUM7O0FBUWpDLGdCQUFRLEtBQVIsR0FBZ0IsSUFBaEIsQ0FBcUI7aUJBQUssRUFBRSxPQUFGO1NBQUwsQ0FBckIsQ0FSaUM7T0FBNUIiLCJmaWxlIjoibWFpbi5qcyIsInNvdXJjZVJvb3QiOiIvc3JjIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1haW4uanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7QUFDTyxZOzs7QUFDUCxhQUFPLE1BQVAsR0FBZ0IsTUFBaEI7O0FBR08sZUFBUyxTQUFULENBQW1CLE9BQW5CLEVBQTRCO0FBQ2pDLGdCQUFRLEdBQVIsQ0FDRyxxQkFESCxHQUVHLGtCQUZILEdBR0csZUFISCxDQUdtQixZQUhuQixFQUlHLE1BSkgsQ0FJVSxjQUpWOztBQU9BLGdCQUFRLEtBQVIsR0FBZ0IsSUFBaEIsQ0FBcUI7QUFBQSxpQkFBSyxFQUFFLE9BQUYsRUFBTDtBQUFBLFNBQXJCO0FBQ0QiLCJmaWxlIjoibWFpbi5qcyIsInNvdXJjZVJvb3QiOiIvc3JjIn0=

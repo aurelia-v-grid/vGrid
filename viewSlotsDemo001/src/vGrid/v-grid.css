@@ -164,25 +164,13 @@
 }
 
 .vGrid-row-cell * .vGrid-content {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  /*-moz-box-sizing: border-box;*/
-  /*-webkit-box-sizing: border-box;*/
-  /*-ms-box-sizing: border-box;*/
-  /*box-sizing: border-box;*/
-  /*position: relative;*/
-  /*left: 0;*/
-  /*width: 100%;*/
-  /*height: 100%;*/
+  -webkit-touch-callout: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
   padding-left: 5px;
-  /*white-space: nowrap;*/
-  /*overflow: hidden;*/
-  /*text-overflow: ellipsis;*/
   background-color: transparent; /*ie11 can inherit background color on inputs, really dont care about IE11, but since this solves it Ill put it in*/
   border: 0;
-  /*line-height: 100%*/
 }
 
 .vGrid-row-cell-header * .vGrid-content {
@@ -196,8 +184,6 @@
   box-sizing: border-box;
   position: relative;
   left: 0;
-  /*width: 100%;*/
-  /*height: 100%;*/
   padding-left: 5px;
   white-space: nowrap;
   overflow: hidden;
@@ -478,4 +464,5 @@
   background-size: 40px 40px;
   color:black;
 }
+
 

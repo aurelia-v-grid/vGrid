@@ -20,7 +20,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">First column controls selection (19 Mai-2016, rev01)</h4>
+        <h4 style="margin-left:25px">First column controls selection (21 Mai-2016, rev01)</h4>
         <table>
           <colgroup>
 
@@ -33,6 +33,7 @@
           v-resizable-headers="true"
           v-header-filter="true"
           v-header-filter-not-to="images"
+          v-loading-threshold="10000"
           v-sort-not-on-header="images"
           v-header-filter-top="true"
           v-sortable-headers="true"
@@ -42,7 +43,6 @@
           v-multi-select="true"
           v-manual-sel="true"
           v-row-on-draw="onRowDraw"
-          v-format-handler="myFormatHandler"
           v-current-entity.bind=myCurrentEntity
           v-collection.bind=myCollection
           v-grid-context.bind=myGrid>

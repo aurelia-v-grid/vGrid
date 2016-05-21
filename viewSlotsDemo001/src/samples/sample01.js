@@ -17,6 +17,13 @@ export class sample01 {
 
   };
 
+  get filteredRows(){
+    if(this.myGrid.ctx){
+      return this.myGrid.ctx.vGridCollectionFiltered.length
+    } else {
+      return 0
+    }
+  }
 
 
   onRowDraw (data, collectionData) {
@@ -75,6 +82,7 @@ export class sample01 {
       this.lockStatus = "unlocked";
       this.lockColor = "green";
       this.myGrid.ctx.setEditMode(true)
+      
     }else {
       this.lockStatus = "locked";
       this.lockColor = "red";

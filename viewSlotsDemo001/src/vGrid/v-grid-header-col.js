@@ -5,8 +5,9 @@
  *
  ****************************************************************************************************************/
 import {inject, noView, customElement, processContent, Container, bindable, ViewSlot} from 'aurelia-framework';
-import {VGrid} from './v-grid'
-//should I make this into a container and have cells under it?
+//import {noView, customElement, processContent, bindable, ViewSlot} from 'aurelia-templating';
+//import {inject, Container} from 'aurelia-dependency-injection';
+import {VGrid} from './v-grid';
 
 
 @noView
@@ -59,7 +60,7 @@ export class VGridCellRowHeader {
     this.justLabel = this.vGridConfig.doNotAddFilterTo.indexOf(this.attribute());
     this.filterName = this.vGridConfig.getFilterName(this.filter);
     this.colType = this.vGrid.vGridConfig.colTypeArray[this.columnNo];
-    let value = this.vGrid.vGridGenerator.queryStringCheck[this.attribute()];
+    let value = this.vGrid.vGridFilter.queryStrings[this.attribute()];
     if (value) {
       this.queryString = value;
     }
@@ -246,7 +247,7 @@ export class VGridCellRowHeader {
     if (this.vGridConfig.sortNotOnHeader.indexOf(attribute) === -1) {
       markup = `<span ${lineHeigthStyleTag} class="${this.vGridConfig.css.sortIcon} ${this.vGridConfig.css.sortIconSort}"></span>`;
       if (this.vGridConfig.sortOnHeaderClick) {
-        if (this.vGrid.vGridGenerator.sortOrder.length !== 0) {
+        if (this.vGrid.vGridSort.getFilter().length !== 0) {
           this.vGrid.vGridSort.getFilter().forEach((x) => {
             if (x.attribute === attribute) {
               var block = x.asc === true ? isAscHtml : isDescHtml;
@@ -309,13 +310,13 @@ export class VGridCellRowHeader {
 
 
           //store the value, since I rebuild the grid when doing sorting...
-          this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = queryInputs[i].value;
+          this.vGrid.vGridFilter.queryStrings[dataSourceAttribute] = queryInputs[i].value;
 
         } else {
 
           //reset to blank for later
           if (value === "") {
-            this.vGrid.vGridGenerator.queryStringCheck[dataSourceAttribute] = queryInputs[i].value;
+            this.vGrid.vGridFilter.queryStrings[dataSourceAttribute] = queryInputs[i].value;
           }
 
         }
