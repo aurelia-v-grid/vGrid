@@ -119,11 +119,7 @@ export class VGridCellHelper {
 
       var queryField = e.target.classList.contains(this.vGrid.vGridConfig.css.filterHandle);
 
-      //if tabbing is not enabled we stop them all (might need to edit this later)
-      if(!this.vGrid.vGridConfig.tabbingEnabled){
-        e.preventDefault();
-        return false;
-      }
+
 
       //page up
       if (e.keyCode === 33) {
@@ -258,6 +254,12 @@ export class VGridCellHelper {
 
       //tab and shift key for tabing in other direction
       if (e.keyCode === 9 && e.shiftKey === true) {
+        //if tabbing is not enabled we stop them all (might need to edit this later)
+        if(!this.vGrid.vGridConfig.tabbingEnabled){
+          e.preventDefault();
+          return false;
+        }
+
         e.preventDefault();
         this.blurBeforeNext();
         this.keyDownDelay(() => {
@@ -276,6 +278,12 @@ export class VGridCellHelper {
 
       //normal tabbing
       if (e.keyCode === 9 && e.shiftKey === false) {
+        //if tabbing is not enabled we stop them all (might need to edit this later)
+        if(!this.vGrid.vGridConfig.tabbingEnabled){
+          e.preventDefault();
+          return false;
+        }
+
         e.preventDefault();
         this.blurBeforeNext();
         this.keyDownDelay(() => {
