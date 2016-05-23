@@ -1,6 +1,3 @@
-import {ViewSlot} from 'aurelia-framework';
-//import {ViewSlot} from 'aurelia-templating';
-
 /*****************************************************************************************************************
  *    vGridGenerator
  *    This generates all html and handles the scrolling, row clicks etc
@@ -8,6 +5,11 @@ import {ViewSlot} from 'aurelia-framework';
  *    26-03-2016- started to test if I could just write it as a pure es6 class - this is not in use
  *
  ****************************************************************************************************************/
+import {ViewSlot} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
+//import {ViewSlot} from 'aurelia-templating';
+
+
 
 export class VGridGenerator {
 

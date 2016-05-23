@@ -5,6 +5,7 @@
  *
  ****************************************************************************************************************/
 import {inject, customElement, bindable} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
 //import {bindable, customElement} from 'aurelia-templating';
 //import {inject} from 'aurelia-dependency-injection';
 
@@ -20,9 +21,8 @@ export class VGridRowCellInput {
   /*****************************************************
    *  Constructor
    ******************************************************/
-  constructor(element, vGrid) {
+  constructor(element) {
     this.element = element;
-    this.vGrid = vGrid;
   }
 
 
@@ -112,6 +112,8 @@ export class VGridRowCellInput {
     this.content.addEventListener("cellFocus", function (e) {
       this.content.focus();
     }.bind(this));
+    
+
 
   }
 

@@ -5,6 +5,7 @@
  *
  ****************************************************************************************************************/
 import {inject, noView, customElement, processContent, Container, bindable, ViewSlot} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
 //import {noView, customElement, processContent, bindable, ViewSlot} from 'aurelia-templating';
 //import {inject, Container} from 'aurelia-dependency-injection';
 import {VGrid} from './v-grid';

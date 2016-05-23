@@ -5,6 +5,7 @@
  *
  ****************************************************************************************************************/
 import {inject, customElement, bindable} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
 //import {bindable, customElement} from 'aurelia-templating';
 //import {inject} from 'aurelia-dependency-injection';
 

@@ -6,6 +6,7 @@
  *
  ****************************************************************************************************************/
 import {TaskQueue, ObserverLocator, bindable, ViewCompiler, ViewSlot, Container, ViewResources, containerless} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
 //import {bindable, ViewSlot, ViewCompiler, ViewResources, containerless} from 'aurelia-templating';
 //import {TaskQueue} from 'aurelia-task-queue';
 //import {ObserverLocator} from 'aurelia-binding';

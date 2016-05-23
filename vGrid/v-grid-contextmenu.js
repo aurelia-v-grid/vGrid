@@ -1,7 +1,13 @@
-//main idea/source https://github.com/callmenick/Custom-Context-Menu
-//just testing atm, not done in any way, will need to do a few chamges, just added some to test more
 
+/*****************************************************************************************************************
+ *    ContextMenu
+ *    This is where I create all the <v-grid> attibutes, and set then to vGridConfig
+ *    Main idea/source https://github.com/callmenick/Custom-Context-Menu
+ *    Created by vegar ringdal
+ *
+ ****************************************************************************************************************/
 import {inject, customAttribute, Optional} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
 //import {customAttribute} from 'aurelia-templating';
 //import {inject, Optional} from 'aurelia-dependency-injection';
 import {VGridCellRowHeader} from './v-grid-header-col';

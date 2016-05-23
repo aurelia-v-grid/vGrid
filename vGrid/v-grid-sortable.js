@@ -70,15 +70,6 @@ export class VGridSortable {
   onUpdateAlt(oldIndex, newIndex) {
     var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.children;
 
-    // var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
-    // [].slice.call(dragHandles).forEach((itemEl, index) => {
-    //   if (parseInt(itemEl.parentNode.getAttribute("column-no")) === oldIndex) {
-    //    // newIndex = index;
-    //    // console.log(index)
-    //   }
-    // });
-
-
     var x;
     x = this.vGrid.vGridConfig.attributeArray[oldIndex];
     this.vGrid.vGridConfig.attributeArray.splice(oldIndex, 1);

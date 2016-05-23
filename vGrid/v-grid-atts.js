@@ -6,6 +6,7 @@
  *
  ****************************************************************************************************************/
 import {inject, customAttribute, Optional} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
 //import {customAttribute} from 'aurelia-templating';
 //import {inject, Optional} from 'aurelia-dependency-injection';
 import {VGrid} from './v-grid';

@@ -117,7 +117,11 @@ export class VGridCellHelper {
 
     this.vGrid.element.onkeydown = function (e) {
 
-      var queryField = e.target.classList.contains(this.vGrid.vGridConfig.css.filterHandle);
+      //just so tabbing between header filters work, not perfect, bu better then nothing
+      var isQueryField = e.target.classList.contains(this.vGrid.vGridConfig.css.filterHandle);
+      if(isQueryField){
+        return true;
+      } 
 
 
 
@@ -202,7 +206,6 @@ export class VGridCellHelper {
         this.blurBeforeNext();
         this.keyDownDelay(() => {
           if (this.curElement) {
-            //this.removeEditCssClasses(this.curElement);
             this.top = this.setCellsFromElement(this.curElement, +1);
             this.dispatchCellClick(this.index)
           }
@@ -216,7 +219,6 @@ export class VGridCellHelper {
         this.keyDownDelay(() => {
           if (this.curElement) {
             if (!this.last) {
-              //this.removeEditCssClasses(this.curElement);
               this.dispatchCellClick(this.index + 1)
             }
           }
@@ -230,7 +232,6 @@ export class VGridCellHelper {
         this.keyDownDelay(() => {
           if (this.curElement) {
             if (!this.first) {
-              // this.removeEditCssClasses(this.curElement);
               this.dispatchCellClick(this.index - 1)
             }
           }
@@ -244,7 +245,6 @@ export class VGridCellHelper {
         this.blurBeforeNext();
         this.keyDownDelay(() => {
           if (this.curElement) {
-            //this.removeEditCssClasses(this.curElement);
             this.top = this.setCellsFromElement(this.curElement, -1);
             this.dispatchCellClick(this.index)
           }
@@ -264,7 +264,6 @@ export class VGridCellHelper {
         this.blurBeforeNext();
         this.keyDownDelay(() => {
           if (this.curElement) {
-            //this.removeEditCssClasses(this.curElement);
             this.index = this.index - 1;
             if (this.first) {
               this.index = this.cells.length - 1;
@@ -288,7 +287,6 @@ export class VGridCellHelper {
         this.blurBeforeNext();
         this.keyDownDelay(() => {
           if (this.curElement) {
-            //this.removeEditCssClasses(this.curElement);
             this.index = this.index + 1;
             if (this.last) {
               this.index = 0;

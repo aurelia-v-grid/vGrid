@@ -5,21 +5,21 @@
  *
  ****************************************************************************************************************/
 import {inject, customElement, bindable} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
 //import {bindable, customElement} from 'aurelia-templating';
 //import {inject} from 'aurelia-dependency-injection';
-import {VGrid} from './v-grid';
+
 
 
 @customElement('v-grid-selection')
-@inject(Element, VGrid)
+@inject(Element)
 export class VGridRowCellSelection {
   @bindable value;
   @bindable customStyle;
 
 
-  constructor(element, vGrid) {
+  constructor(element) {
     this.element = element;
-    this.vGrid = vGrid;
   }
 
 
@@ -45,6 +45,7 @@ export class VGridRowCellSelection {
 
   bind(parent) {
     this.parent = parent;
+    this.vGrid = parent.vGrid;
 
   }
 
