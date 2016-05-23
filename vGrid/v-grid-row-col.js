@@ -76,10 +76,19 @@ export class VGridCellContainer {
     //set basic styles for a cell
     this.setStandardClassesAndStyles();
 
+    if (this.colType() === "custom") {
+      //does a custom filter exist?
+      if(!this.vGrid.viewCompiler.resources.elements['v-grid-'+this.colCustomName()]){
+        //if not lets just set it to our basic text filter
+        this.vGrid.vGridConfig.colTypeArray[this.columnNo] = "text";
+      }
+    }
+    
+
     //create viewfactory
     switch (this.colType()) {
       case "custom":
-        var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-${this.colCustomName()}  value.bind="value"><input css.bind="customStyle"></v-grid-${this.colCustomName()}></template>', this.vGrid.resources);
+        var viewFactory = this.vGrid.viewCompiler.compile(`<template><v-grid-${this.colCustomName()}  value.bind="value"><input css.bind="customStyle"></v-grid-${this.colCustomName()}></template>`, this.vGrid.resources);
         break;
       case "image":
         var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-image value.bind="value"><img css.bind="customStyle"></v-grid-image></template>', this.vGrid.resources);

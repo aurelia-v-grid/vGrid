@@ -63,7 +63,7 @@ export class VGridCol {
     this.vGrid.vGridConfig.filterOnKeyArray.push(this.vColFilterOnKey === "true" ? true : false);
     this.vGrid.vGridConfig.colEditRawArray.push(this.vColEditRaw === "true" ? true : false);
     this.vGrid.vGridConfig.colFormaterArray.push(this.valueConverters(this.vColFormater));
-    this.vGrid.vGridConfig.colCustomArray.push(this.valueConverters(this.vColCustom));
+    this.vGrid.vGridConfig.colCustomArray.push(this.vColCustom);
   }
 
 
