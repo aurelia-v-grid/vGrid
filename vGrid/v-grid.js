@@ -74,7 +74,6 @@ export class VGrid {
     this.vGridGenerator = new VGridGenerator(this);
     this.vGridClientCtx = new VGridClientCtx(this);
 
-    this.key = 0;
   }
 
 
@@ -86,18 +85,15 @@ export class VGrid {
    // let key = 0; //reset it
     this.vGridCollection.forEach((row) => {
       if(!row[this.vGridRowKey] && row !== undefined && row !== null){
-        row[this.vGridRowKey]= this.key;
-        this.key++;
+        row[this.vGridRowKey]= this.guid();
       }
     });
   }
 
   checkKey(row) {
       if(!row[this.vGridRowKey] && row !== undefined && row !== null){
-        row[this.vGridRowKey]= this.key;
-        this.key++;
+        row[this.vGridRowKey]= this.guid();
       }
-
   }
 
   vGridGetRowKey(key){
@@ -110,6 +106,15 @@ export class VGrid {
     return rowFound
   }
 
+  guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4();
+  }
 
 
 
