@@ -1,0 +1,12 @@
+<template>
+  <!--need to be disabled with using webpack-->
+  <require from="./v-grid.css"></require>
+  <div class="v-grid-overlay" if.bind="loading"></div>
+  <div if.two-way="loading" class="v-grid-progress-indicator">
+    <div class="v-grid-progress-bar" role="progressbar" style="width:100%">
+      <span>${ loadingMessage }</span>
+    </div>
+  </div>
+
+
+</template>
