@@ -21,7 +21,11 @@ export class VGridObservables {
    ***************************************************************************************/
   enableObservablesCollection() {
 
-    let collectionSubscription = this.vGrid.__observers__.vGridCollection.subscribe(this.vGrid, (x, y) => {
+
+
+
+
+    let collectionSubscription = (x, y) => {
 
       //disable array observer
       this.disableObservablesArray();
@@ -35,8 +39,11 @@ export class VGridObservables {
       //reset filter/and collection/selection. (should I have option to check is they want to set something?)
       this.vGrid.vGridCurrentRow = -1;
       this.vGrid.vGridSort.reset();
-      this.vGrid.vGridGenerator.clearHeaderSortFilter();
-      this.vGrid.vGridSelection.reset();
+      if(!this.vGrid.vGridConfig.keepFilterOnCollectionChange){
+        this.vGrid.vGridGenerator.clearHeaderSortFilter();
+        this.vGrid.vGridSelection.reset();
+        this.vGrid.vGridConfig.keepFilterOnCollectionChange = false;
+      }
       this.vGrid.vGridGenerator.collectionChange();
 
       //reset
@@ -52,7 +59,10 @@ export class VGridObservables {
       this.enableObservablesArray();
 
 
-    });
+    };
+    this.vGrid.__observers__.vGridCollection.subscribe(this.vGrid,collectionSubscription);
+    this.collectioncallable = collectionSubscription;
+
     this.collectionSubscription = this.vGrid.__observers__.vGridCollection;
 
   }
@@ -190,8 +200,8 @@ export class VGridObservables {
    *  disable vGridCollection observables
    ***************************************************************************************/
   disableObservablesCollection() {
-    this.collectionSubscription.unsubscribe();
-    this.collectionSubscription = null;
+    this.collectionSubscription.unsubscribe(this.vGrid, this.collectioncallable);
+    //this.collectionSubscription = null;
   }
 
 

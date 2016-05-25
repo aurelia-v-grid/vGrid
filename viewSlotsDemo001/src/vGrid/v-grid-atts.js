@@ -6,6 +6,7 @@
  *
  ****************************************************************************************************************/
 import {inject, customAttribute, Optional} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
 //import {customAttribute} from 'aurelia-templating';
 //import {inject, Optional} from 'aurelia-dependency-injection';
 import {VGrid} from './v-grid';
@@ -41,6 +42,16 @@ var VGridAttibutes = class {
       this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.alias], this.attDefault);
     } else {
       this.vGrid.vGridConfig[this.attribute] = this.setValue(parseInt(this.value), this.attDefault);
+    }
+  }
+
+  setBindValueString() {
+    if (this.vGrid.vGridContextObj[this.alias]) {
+      this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.alias], this.attDefault);
+    } else {
+      if (typeof(this.value) === "string" && this.value !== '') {
+        this.vGrid.vGridConfig[this.attribute] = this.value
+      }
     }
   }
 
@@ -88,6 +99,9 @@ var VGridAttibutes = class {
     switch (this.type) {
       case "bool":
         this.setBindValueBool();
+        break;
+      case "string":
+        this.setBindValueString();
         break;
       case "int":
         this.setBindValueInt();
@@ -309,7 +323,6 @@ export class eventOnRowClick extends VGridAttibutes {
 @customAttribute('v-row-ondblclick')
 @inject(Element, Optional.of(VGrid))
 export class eventOnRowDblClick extends VGridAttibutes {
-
   attribute = "eventOnRowDblClick";
   alias = "configEventOnRowDblClick";
   type = "fn";
@@ -331,6 +344,23 @@ export class LoadingThreshold extends VGridAttibutes {
   attribute = "loadingThreshold";
   alias = "configLoadingThreshold";
   type = "int";
+}
+
+@customAttribute('v-event-onremotecall')
+@inject(Element, Optional.of(VGrid))
+export class eventOnRemoteCall extends VGridAttibutes {
+  attribute = "eventOnRemoteCall";
+  alias = "configEventOnRemoteCall";
+  type = "fn";
+}
+
+
+@customAttribute('v-remote-index')
+@inject(Element, Optional.of(VGrid))
+export class remoteIndex extends VGridAttibutes {
+  attribute = "remoteIndex";
+  alias = "configRemoteIndex";
+  type = "string";
 }
 
 

@@ -6,6 +6,7 @@
  ****************************************************************************************************************/
 
 import {inject, Optional, customElement, bindable} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
 //import {bindable, customElement} from 'aurelia-templating';
 //import {inject, Optional} from 'aurelia-dependency-injection';
 import {VGrid} from './v-grid';
@@ -23,6 +24,7 @@ export class VGridCol {
   @bindable vColFormater;
   @bindable vColEditRaw;
   @bindable vColFilterOnKey;
+  @bindable vColCustom;
 
 
   /*****************************************************
@@ -61,6 +63,7 @@ export class VGridCol {
     this.vGrid.vGridConfig.filterOnKeyArray.push(this.vColFilterOnKey === "true" ? true : false);
     this.vGrid.vGridConfig.colEditRawArray.push(this.vColEditRaw === "true" ? true : false);
     this.vGrid.vGridConfig.colFormaterArray.push(this.valueConverters(this.vColFormater));
+    this.vGrid.vGridConfig.colCustomArray.push(this.vColCustom);
   }
 
 

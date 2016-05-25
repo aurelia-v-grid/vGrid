@@ -12,6 +12,7 @@ export class sample01 {
 
 
 
+
   editClickBtn(e){
     e.editable = true;
   }

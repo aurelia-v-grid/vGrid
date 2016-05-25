@@ -68,6 +68,7 @@ export class VGridSelection {
     if (this.vGrid.vGridCollectionFiltered[row]) {
       this.selection.delete(this.vGrid.vGridCollectionFiltered[row][this.vGrid.vGridRowKey]);
     }
+    this.selectedRows = this.selection.size;
   }
 
 
@@ -75,6 +76,7 @@ export class VGridSelection {
     if (this.vGrid.vGridCollection[row]) {
       this.selection.delete(this.vGrid.vGridCollection[row][this.vGrid.vGridRowKey]);
     }
+    this.selectedRows = this.selection.size;
   }
 
 
@@ -188,7 +190,7 @@ export class VGridSelection {
     }
     this.lastRowSelected = -1;
     this.lastKeyKodeUsed = "none";
-    this.selectedRows = 0;
+    this.selectedRows = this.selection.size;
   };
 
 

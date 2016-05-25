@@ -7,8 +7,8 @@ export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
-    .globalResources("datepicker")
-    .plugin("vGrid/plugin");
+    .plugin("vGrid/plugin")
+    .globalResources("v-grid-row-cells-customx")
 
 
   aurelia.start().then(a => a.setRoot());

@@ -5,9 +5,10 @@
  *
  ****************************************************************************************************************/
 import {inject, customElement, bindable} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
 //import {bindable, customElement} from 'aurelia-templating';
 //import {inject} from 'aurelia-dependency-injection';
-import {VGrid} from './v-grid';
+
 
 
 /*******************************************
@@ -15,7 +16,7 @@ import {VGrid} from './v-grid';
  *******************************************/
 
 @customElement('v-grid-checkbox')
-@inject(Element, VGrid)
+@inject(Element)
 export class VGridRowCellCheckbox {
   @bindable value;
   @bindable customStyle;

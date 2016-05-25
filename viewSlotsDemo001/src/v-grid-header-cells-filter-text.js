@@ -4,16 +4,16 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {inject, customElement, bindable} from 'aurelia-framework';
+import {inject, customElement, bindable, noView} from 'aurelia-framework';
 //for kendo ui bridge, remove import above
 //import {bindable, customElement} from 'aurelia-templating';
 //import {inject} from 'aurelia-dependency-injection';
 
 
-
-@customElement('v-grid-filter-checkbox')
+@noView()
+@customElement('v-grid-filter-customx')
 @inject(Element)
-export class VGridHeaderFilter {
+export class VGridHeaderFilterText {
   @bindable type;
   @bindable filterValue;
 
@@ -30,20 +30,11 @@ export class VGridHeaderFilter {
    *  bindable event
    ******************************************************/
   filterValueChanged(newValue, oldValue) {
-
     if (typeof(newValue) === "object") {
       newValue = "";
     }
     this.content.value = newValue;
-
-
-    if (newValue === "") {
-      this.state = 0;
-      this.content.style.opacity = 0.3;
-      this.content.checked = false;
-    }
-    this.parent.onChangeEventOnFilter({keyKode: 13})
-
+    this.parent.onChangeEventOnFilter({keyKode: 13});
   }
 
 
@@ -62,76 +53,46 @@ export class VGridHeaderFilter {
    ******************************************************/
   attached() {
     this.content = this.element.children[0];
-
-    //lets remove default, dont need to adjust this part for the checkbox to look better
-    this.element.removeChild(this.content);
-
-    //create a container and and add it
-    var container = document.createElement("div");
-    this.element.appendChild(container);
-
-    //set the standard styles to the container instead of checkbox, (for the white backgorunbd and borders)
-    this.setStyle(container);
+    this.setStyle(this.content);
+    this.content.type = "button";
 
 
-    //create new input and append it to container
-    this.content = document.createElement("input");
-    container.appendChild(this.content);
+    this.content.onkeyup = (e)=> {
+      //if filter on key press is set then lets set new filter value
+      if (this.vGridConfig.filterOnKeyArray[this.parent.columnNo] || e.keyCode === 13) {
+        if(this.filterValue !== this.content.value){
+          this.filterValue = this.content.value;
+        } else {
+          if(e.keyCode === 13){
+          //filter value will be the same, so we just haveto call the filter this time
+            if(this.filterValue !== this.content.value){
+              this.parent.onChangeEventOnFilter({keyKode: 13});
+            }
+          }
+        }
+
+      }
+
+    };
+
+
+    this.content.onchange = ()=> {
+      this.filterValue = this.content.value;
+    };
 
 
     this.content.setAttribute(this.vGridConfig.atts.dataAttribute, this.parent.attribute());
     this.content.value = this.filterValue ? this.filterValue : "";
 
 
-    this.content.type = "checkbox";
-    this.content.style.height = "100%";
-    this.content.style.display = "block";
-    this.content.style.margin = "auto";
-    this.content.style.position = "initial";
-    this.content.classList.add(this.vGridConfig.css.filterHandle);
-
-    var value = this.filterValue ? this.filterValue : "";
-    switch (value) {
-      case true || "true":
-        this.state = 2;
-        this.content.style.opacity = 1;
-        this.content.checked = true;
-        break;
-      case false || "false":
-        this.state = 3;
-        this.content.style.opacity = 1;
-        break;
-      default:
-        this.state = 0;
-        this.content.style.opacity = 0.3;
-    }
-
-
-    this.content.onclick = ()=> {
-      if (this.content.checked) {
-        if (this.state === 3) {
-          this.state = 0;
-          this.content.style.opacity = 0.3;
-          this.content.checked = false;
-          this.filterValue = "";
-        } else {
-          this.state = 2;
-          this.content.style.opacity = 1;
-          this.filterValue = "true";
-        }
-      } else {
-        this.state = 3;
-        this.content.style.opacity = 1;
-        this.filterValue = "false";
-      }
-    }
-
+    this.content.style.height = "50%";
+    this.content.style.margin = "initial";
 
   }
 
 
   /*****************************************************
-   *  setting most besic styles
+   *  sets the basic classes styles
    ******************************************************/
   setStyle(element) {
 
@@ -154,11 +115,13 @@ export class VGridHeaderFilter {
       case "filterBottom":
         addClass(this.vGridConfig.css.cellContent);
         addClass(this.vGridConfig.css.filterInputBottom);
+        addClass(this.vGridConfig.css.filterHandle);
         setStyleTag("line-height", `${this.vGridConfig.headerHeight / 2}px`);
         break;
       default:
         break;
     }
+
 
   }
 

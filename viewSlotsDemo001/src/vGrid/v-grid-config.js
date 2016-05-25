@@ -75,6 +75,7 @@ export class VGridConfig {
     this.colFormaterArray = [];
     this.colEditRawArray = [];
     this.filterOnKeyArray = [];
+    this.colCustomArray = [];
 
     //<v-grid> attibutes
     this.rowHeight = 50;
@@ -95,9 +96,11 @@ export class VGridConfig {
     this.loadingThreshold = -1;
     this.tabbingEnabled = true;
 
+
     this.eventOnRowDraw = null;
     this.eventOnRowClick = null;
     this.eventOnRowDblClick = null;
+    this.eventOnRemoteCall = null;
 
     this.doNotAddFilterTo = [];
     this.sortNotOnHeader = [];
@@ -105,7 +108,20 @@ export class VGridConfig {
     //todo create attribute
     this.dataScrollDelay = 200;
 
+    this.keepFilterOnCollectionChange = false;
 
+
+  }
+
+  isRemoteIndex = false;
+
+  set remoteIndex(value){
+    this.isRemoteIndex = true;
+    this.vGrid.vGridRowKey = value;
+  }
+
+  get remoteIndex(){
+    return this.vGrid.vGridRowKey;
   }
 
 
@@ -149,7 +165,7 @@ export class VGridConfig {
    ***************************************************************************************/
   onFilterRun = (filterObj) => {
 
-    if (filterObj.length !== 0 || this.vGrid.vGridCollectionFiltered.length !== this.vGrid.vGridCollection.length) {
+    if (filterObj.length !== 0 || this.vGrid.vGridCollectionFiltered.length !== this.vGrid.vGridCollection.length || this.eventOnRemoteCall) {
 
       //set loading screen
       if(this.vGrid.vGridCollection.length > this.loadingThreshold){
@@ -164,39 +180,66 @@ export class VGridConfig {
           curKey = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
         }
 
-
-        //run filter
-        this.vGrid.vGridCollectionFiltered = this.vGrid.vGridFilter.run(this.vGrid.vGridCollection, filterObj);
-
-
-        //run sorting
-        this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
-
-
-        //set current row/entity in sync
-        var newRowNo = -1;
-        if (curKey) {
-          this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
-            if (curKey === x[this.vGrid.vGridRowKey]) {
-              newRowNo = index;
+        if(this.eventOnRemoteCall){
+          var vGridSort = this.vGrid.vGridSort;
+          vGridSort.lastSort = vGridSort.getFilter().slice(0);
+          this.vGrid.vGridFilter.lastFilter = filterObj;
+          this.eventOnRemoteCall(filterObj, vGridSort.getFilter(), (col)=>{
+            this.vGrid.vGridObservables.disableObservablesArray();
+            this.vGrid.vGridObservables.disableObservablesCollection();
+            this.vGrid.vGridCollection = col;
+            this.vGrid.vGridCollectionFiltered = this.vGrid.vGridCollection.slice(0);
+            this.vGrid.checkKeys();
+            this.vGrid.vGridCurrentRow = -1;
+            if(!this.isRemoteIndex){
+              this.vGrid.vGridSelection.reset();
             }
+
+            this.vGrid.vGridGenerator.collectionChange();
+
+            setTimeout(()=>{
+              this.vGrid.vGridObservables.enableObservablesArray();
+              this.vGrid.vGridObservables.enableObservablesCollection();
+              this.vGrid.loading = false;
+            },200)
           });
+
+        }else {
+
+
+          //run filter
+          this.vGrid.vGridCollectionFiltered = this.vGrid.vGridFilter.run(this.vGrid.vGridCollection, filterObj);
+
+
+          //run sorting
+          this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
+
+
+          //set current row/entity in sync
+          var newRowNo = -1;
+          if (curKey) {
+            this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
+              if (curKey === x[this.vGrid.vGridRowKey]) {
+                newRowNo = index;
+              }
+            });
+          }
+
+
+          //update current row/current entity/entity ref
+          if (newRowNo > -1) {
+            this.vGrid.vGridCurrentEntityRef = this.vGrid.vGridCollectionFiltered[newRowNo];
+            this.vGrid.vGridCurrentEntity[this.vGrid.vGridRowKey] = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
+            this.vGrid.vGridCurrentRow = newRowNo;
+          } else {
+            this.vGrid.vGridCurrentRow = newRowNo;
+          }
+
+
+          //update grid rows
+          this.vGrid.vGridGenerator.collectionChange(true);
+          this.vGrid.loading = false;
         }
-
-
-        //update current row/current entity/entity ref
-        if (newRowNo > -1) {
-          this.vGrid.vGridCurrentEntityRef = this.vGrid.vGridCollectionFiltered[newRowNo];
-          this.vGrid.vGridCurrentEntity[this.vGrid.vGridRowKey] = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
-          this.vGrid.vGridCurrentRow = newRowNo;
-        } else {
-          this.vGrid.vGridCurrentRow = newRowNo;
-        }
-
-
-        //update grid rows
-        this.vGrid.vGridGenerator.collectionChange(true);
-        this.vGrid.loading = false;
 
       }, 50);
 
@@ -272,24 +315,47 @@ export class VGridConfig {
         //set headers(rebuild the headers, its just simpler, then having any logic to it) Todo: after rebuild having som logic instead of rebuild might be simple enought now.
         setheaders(this.vGrid.vGridSort.getFilter());
 
+        if(this.eventOnRemoteCall){
+          var vGridSort = this.vGrid.vGridSort;
+          vGridSort.lastSort = vGridSort.getFilter().slice(0);
 
-        //run filter
-        this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
-
-
-        //set new row
-        if (this.vGrid.vGridCurrentEntityRef) {
-          this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
-            if (this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey] === x[this.vGrid.vGridRowKey]) {
-              this.vGrid.vGridCurrentRow = index;
+          this.eventOnRemoteCall(this.vGrid.vGridFilter.lastFilter, vGridSort.getFilter(), (col)=>{
+            this.vGrid.vGridObservables.disableObservablesArray();
+            this.vGrid.vGridObservables.disableObservablesCollection();
+            this.vGrid.vGridCollection = col;
+            this.vGrid.vGridCollectionFiltered = this.vGrid.vGridCollection.slice(0);
+            this.vGrid.checkKeys();
+            this.vGrid.vGridCurrentRow = -1;
+            if(!this.isRemoteIndex){
+              this.vGrid.vGridSelection.reset();
             }
+            this.vGrid.vGridGenerator.collectionChange();
+            this.vGrid.loading = false;
+            setTimeout(()=>{
+              this.vGrid.vGridObservables.enableObservablesArray();
+              this.vGrid.vGridObservables.enableObservablesCollection();
+            },200)
           });
+
+        }else{
+          //run filter
+          this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
+
+
+          //set new row
+          if (this.vGrid.vGridCurrentEntityRef) {
+            this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
+              if (this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey] === x[this.vGrid.vGridRowKey]) {
+                this.vGrid.vGridCurrentRow = index;
+              }
+            });
+          }
+
+
+          //update grid
+          this.vGrid.vGridGenerator.collectionChange();
+          this.vGrid.loading = false;
         }
-
-
-        //update grid
-        this.vGrid.vGridGenerator.collectionChange();
-        this.vGrid.loading = false;
 
       }, 50);
     }

@@ -4,16 +4,15 @@ import {dummyDataGenerator} from 'data/dummyDataGenerator'
 export class sample01 {
   static inject = [Element, dummyDataGenerator];
 
-
-
   /********************************************************************
    *  grid bindable/functions
    ********************************************************************/
 
   myCollection = [];
   myCurrentEntity = {};
-  myGrid = {
 
+
+  myGrid = {
 
   };
 
@@ -71,6 +70,7 @@ export class sample01 {
 
   attached(){
    this.getMaxRows = this.myGrid.ctx.getMaxRows();
+
   }
 
   lockStatus = "locked";
@@ -221,7 +221,9 @@ export class sample01 {
     this.myGrid.ctx.createReport()
   }
 
-
+  redraw(){
+    this.myGrid.ctx.redrawGrid()
+  }
 
 
 }

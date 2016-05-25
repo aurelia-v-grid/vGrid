@@ -5,6 +5,7 @@
  *
  ****************************************************************************************************************/
 import {inject, noView, customElement, processContent, Container, bindable, ViewSlot} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
 //import {noView, customElement, processContent, bindable, ViewSlot} from 'aurelia-templating';
 //import {inject, Container} from 'aurelia-dependency-injection';
 import {VGrid} from './v-grid';
@@ -89,9 +90,28 @@ export class VGridCellRowHeader {
       type = "selection";
     }
 
+    
+    if (this.colType === "custom") {
+      //does a custom filter exist?
+      if(!this.vGrid.viewCompiler.resources.elements['v-grid-filter-'+this.colCustomName()]){
+        //if not lets just set it to our basic text filter
+        this.colType = "text";
+      }
+
+    }
+
 
     this.type = type;
     switch (type) {
+
+      case "selection":
+        var viewFactory = this.vGrid.viewCompiler.compile(`
+          <template>
+            <v-grid-filter-${this.colType}></v-grid-filter-${this.colType}>
+          </template>
+          `, this.vGrid.resources);
+        break;
+
 
       case "selection":
         var viewFactory = this.vGrid.viewCompiler.compile(`
@@ -221,6 +241,10 @@ export class VGridCellRowHeader {
     return this.vGrid.vGridConfig.colFormaterArray[this.columnNo];
   }
 
+
+  colCustomName() {
+    return this.vGrid.vGridConfig.colCustomArray[this.columnNo];
+  }
 
   setStandardClassesAndStyles() {
     this.element.classList.add(this.vGridConfig.css.rowHeaderCell);

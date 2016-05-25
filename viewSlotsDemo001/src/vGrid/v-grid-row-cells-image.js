@@ -4,13 +4,11 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-
-//keeping one for each, so its easier to maintain if I do something special later
-
 import {inject, customElement, bindable} from 'aurelia-framework';
+//for kendo ui bridge, remove import above
 //import {bindable, customElement} from 'aurelia-templating';
 //import {inject} from 'aurelia-dependency-injection';
-import {VGrid} from './v-grid';
+
 
 
 /*******************************************
@@ -18,7 +16,7 @@ import {VGrid} from './v-grid';
  *******************************************/
 
 @customElement('v-grid-image')
-@inject(Element, VGrid)
+@inject(Element)
 export class VGridRowCellImage {
   @bindable value;
   @bindable customStyle;
@@ -61,6 +59,7 @@ export class VGridRowCellImage {
    ******************************************************/
   bind(parent) {
     this.parent = parent;
+    this.vGrid = parent.vGrid;
   }
 
 
