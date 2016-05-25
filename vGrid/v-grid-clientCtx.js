@@ -145,6 +145,10 @@ export class VGridClientCtx {
     this.vGridSort.setFilter(x)
   }
 
+  keepFilterOnCollectionChange(){
+    this.vGridConfig.keepFilterOnCollectionChange = true;
+  }
+
 
   runSorting(x) {
     if(this.vGridCollection.length > this.vGridConfig.loadingThreshold){
@@ -232,6 +236,11 @@ export class VGridClientCtx {
   scrollBottomNext() {
     this.vGridGenerator.scrollBottomNext();
   };
+
+
+  setLoadingOverlay(value){
+    this.vGrid.loading = value === true ? true:false;
+  }
 
 
   setEditMode(value) {
