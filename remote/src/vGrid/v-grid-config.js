@@ -108,6 +108,8 @@ export class VGridConfig {
     //todo create attribute
     this.dataScrollDelay = 200;
 
+    this.keepFilterOnCollectionChange = false;
+
 
   }
 

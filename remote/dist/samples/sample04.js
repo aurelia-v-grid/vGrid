@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['aurelia-fetch-client'], function (_export, _context) {
+System.register(['aurelia-fetch-client', 'remote/remoteData'], function (_export, _context) {
   "use strict";
 
-  var HttpClient, json, _class, _temp, sample01;
+  var HttpClient, json, RemoteData, _class, _temp, sample01;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -15,91 +15,81 @@ System.register(['aurelia-fetch-client'], function (_export, _context) {
     setters: [function (_aureliaFetchClient) {
       HttpClient = _aureliaFetchClient.HttpClient;
       json = _aureliaFetchClient.json;
+    }, function (_remoteRemoteData) {
+      RemoteData = _remoteRemoteData.RemoteData;
     }],
     execute: function () {
       _export('sample01', sample01 = (_temp = _class = function () {
         sample01.prototype.callRemoteServer = function callRemoteServer(filterArray, orderByArray, callback) {
+          var _this = this;
 
-          var sortString = '?sqlOrderby=';
-          if (orderByArray) {
-            orderByArray.forEach(function (param) {
-              if (sortString !== '?sqlOrderby=') {
-                sortString = sortString + ',';
-              }
-              sortString = sortString + (param.attribute + ' ' + (param.asc ? "asc" : "desc"));
-            });
-          }
           if (filterArray) {
-            var filterString = sortString !== '?sqlOrderby=' ? '&sqlQuery=' : '?sqlQuery=';
-            filterArray.forEach(function (param) {
-              if (filterString.length !== 10) {
-                filterString = filterString + ' and ';
-              }
-              switch (param.operator) {
-                case "=":
-                  filterString = filterString + (param.attribute + ' = "' + param.value + '"');
-                  break;
-                case "*":
-                  filterString = filterString + (param.attribute + ' LIKE "%' + param.value + '%"');
-                  break;
-                case "!=":
-                  filterString = filterString + (param.attribute + ' IS NOT "' + param.value + '"');
-                  break;
-                case "<":
-                  filterString = filterString + (param.attribute + ' ' + param.operator + ' "' + param.value + '"');
-                  break;
-                case ">":
-                  filterString = filterString + (param.attribute + ' ' + param.operator + ' "' + param.value + '"');
-                  break;
-                case "<=":
-                  filterString = filterString + (param.attribute + ' ' + param.operator + ' "' + param.value + '"');
-                  break;
-                case ">=":
-                  filterString = filterString + (param.attribute + ' ' + param.operator + ' "' + param.value + '"');
-                  break;
-                case "*=":
-                  filterString = filterString + (param.attribute + ' LIKE "' + param.value + '%"');
-                  break;
-                case "=*":
-                  filterString = filterString + (param.attribute + ' LIKE "%' + param.value + '"');
-                  break;
-                case "!*":
-                  filterString = filterString + (param.attribute + ' IS NOT "%' + param.value + '%"');
-                  break;
-              }
-            });
-            var urlencode = sortString !== '?sqlOrderby=' ? window.encodeURI(sortString + filterString) : window.encodeURI(filterString);
-          } else {
-            var urlencode = window.encodeURI(sortString);
+            this.remoteData.offset = 0;
           }
 
-          this.http.fetch('data/people/' + urlencode).then(function (response) {
-            return response.json();
-          }).then(function (data) {
-            if (data.success) {
-              callback(data.result);
-            } else {
-              callback([]);
-            }
+          this.remoteData.createOrderByString(orderByArray);
+          this.remoteData.createQueryString(filterArray);
+          this.remoteData.getData().then(function (data) {
+            _this.setpager();
+            callback(data);
+          }).catch(function (err) {
+            console.error(err);
+            callback([]);
           });
         };
 
-        sample01.prototype.onSort = function onSort(orderByArray, callback) {
-          var sortString = '?sqlOrderby=';
-          orderByArray.forEach(function (param) {
-            if (sortString !== '?sqlOrderby=') {
-              sortString = sortString + ',';
-            }
-            sortString = sortString + (param.attribute + ' ' + (param.asc ? "asc" : "desc"));
-          });
+        sample01.prototype.loadData = function loadData() {
+          var _this2 = this;
 
-          var urlencode = window.encodeURI(sortString);
-
-          this.http.fetch('data/people/' + urlencode).then(function (response) {
-            return response.json();
-          }).then(function (data) {
-            callback(data.result);
+          this.myGrid.ctx.setLoadingOverlay(true);
+          this.remoteData.getData().then(function (data) {
+            _this2.setpager();
+            _this2.myGrid.ctx.keepFilterOnCollectionChange();
+            _this2.myCollection = data;
+            _this2.myGrid.ctx.setLoadingOverlay(false);
           });
+        };
+
+        sample01.prototype.setpager = function setpager() {
+          this.collectionLength = this.remoteData.length;
+          this.limit = this.remoteData.limit;
+          this.offset = this.remoteData.offset;
+          this.page = this.offset ? Math.ceil(this.offset / this.limit) + 1 : 1;
+          if (this.page === 1) {
+            this.statusFirstButton = false;
+            this.statusPrevButton = false;
+          } else {
+            this.statusFirstButton = true;
+            this.statusPrevButton = true;
+          }
+
+          if (this.offset >= this.collectionLength - this.limit) {
+            this.statusNextButton = false;
+            this.statusLastButton = false;
+          } else {
+            this.statusNextButton = true;
+            this.statusLastButton = true;
+          }
+        };
+
+        sample01.prototype.firstBtn = function firstBtn() {
+          this.remoteData.offset = 0;
+          this.loadData();
+        };
+
+        sample01.prototype.nextBtn = function nextBtn() {
+          this.remoteData.offset = this.remoteData.offset + this.limit;
+          this.loadData();
+        };
+
+        sample01.prototype.prevBtn = function prevBtn() {
+          this.remoteData.offset = this.remoteData.offset - this.limit;
+          this.loadData();
+        };
+
+        sample01.prototype.lastBtn = function lastBtn() {
+          this.remoteData.offset = this.collectionLength - this.limit;
+          this.loadData();
         };
 
         function sample01(element, http) {
@@ -108,6 +98,7 @@ System.register(['aurelia-fetch-client'], function (_export, _context) {
           this.myCollection = [];
           this.myCurrentEntity = {};
           this.myGrid = {};
+          this.collectionLength = 0;
 
           this.element = element;
 
@@ -117,20 +108,14 @@ System.register(['aurelia-fetch-client'], function (_export, _context) {
             });
           });
           this.http = http;
+
+          this.remoteData = new RemoteData('http://data-nodedataapi.rhcloud.com/', 'data/people');
+          this.remoteData.limit = 20;
         }
 
         sample01.prototype.attached = function attached() {
-          var _this = this;
-
           this.getMaxRows = this.myGrid.ctx.getMaxRows();
-          this.myGrid.ctx.setLoadingOverlay(true);
-          this.http.fetch('data/people').then(function (response) {
-            return response.json();
-          }).then(function (data) {
-
-            _this.myCollection = data.result;
-            _this.myGrid.ctx.setLoadingOverlay(false);
-          });
+          this.loadData();
         };
 
         return sample01;
@@ -140,4 +125,4 @@ System.register(['aurelia-fetch-client'], function (_export, _context) {
     }
   };
 });
-//# sourceMappingURL=data:application/json;base64,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YyxRLEVBQVU7QUFHN0IsY0FBSSxhQUFhLGNBQWpCO0FBQ0EsdUJBQWEsT0FBYixDQUFxQixVQUFDLEtBQUQsRUFBVTtBQUM3QixnQkFBSSxlQUFlLGNBQW5CLEVBQW1DO0FBQ2pDLDJCQUFhLGFBQWEsR0FBMUI7QUFDRDtBQUNELHlCQUFhLGNBQWdCLE1BQU0sU0FBdEIsVUFBbUMsTUFBTSxHQUFOLEdBQVksS0FBWixHQUFvQixNQUF2RCxFQUFiO0FBQ0QsV0FMRDs7QUFRQSxjQUFJLFlBQVksT0FBTyxTQUFQLENBQWlCLFVBQWpCLENBQWhCOztBQUdBLGVBQUssSUFBTCxDQUFVLEtBQVYsQ0FBZ0IsaUJBQWlCLFNBQWpDLEVBQ0csSUFESCxDQUNRO0FBQUEsbUJBQVksU0FBUyxJQUFULEVBQVo7QUFBQSxXQURSLEVBRUcsSUFGSCxDQUVRLGdCQUFRO0FBQ1oscUJBQVMsS0FBSyxNQUFkO0FBQ0QsV0FKSDtBQU1ELFM7O0FBTUQsMEJBQVksT0FBWixFQUFxQixJQUFyQixFQUEyQjtBQUFBOztBQUFBLGVBckczQixZQXFHMkIsR0FyR1osRUFxR1k7QUFBQSxlQXBHM0IsZUFvRzJCLEdBcEdULEVBb0dTO0FBQUEsZUFuRzNCLE1BbUcyQixHQW5HbEIsRUFtR2tCOztBQUV6QixlQUFLLE9BQUwsR0FBZSxPQUFmOztBQUdBLGVBQUssU0FBTCxDQUFlLGtCQUFVO0FBQ3ZCLG1CQUNHLFdBREgsQ0FDZSxzQ0FEZixFQUVHLFlBRkgsQ0FFZ0I7QUFDWiwyQkFBYTtBQURELGFBRmhCO0FBS0QsV0FORDtBQU9BLGVBQUssSUFBTCxHQUFZLElBQVo7QUFLRDs7MkJBTUQsUSx1QkFBVztBQUFBOztBQUNULGVBQUssVUFBTCxHQUFrQixLQUFLLE1BQUwsQ0FBWSxHQUFaLENBQWdCLFVBQWhCLEVBQWxCO0FBQ0EsZUFBSyxNQUFMLENBQVksR0FBWixDQUFnQixpQkFBaEIsQ0FBa0MsSUFBbEM7QUFDQSxlQUFLLElBQUwsQ0FBVSxLQUFWLENBQWdCLGFBQWhCLEVBQ0csSUFESCxDQUNRO0FBQUEsbUJBQVksU0FBUyxJQUFULEVBQVo7QUFBQSxXQURSLEVBRUcsSUFGSCxDQUVRLGdCQUFROztBQUVaLGtCQUFLLFlBQUwsR0FBb0IsS0FBSyxNQUF6QjtBQUNBLGtCQUFLLE1BQUwsQ0FBWSxHQUFaLENBQWdCLGlCQUFoQixDQUFrQyxLQUFsQztBQUNELFdBTkg7QUFRRCxTOzs7a0JBOUlNLE0sR0FBUyxDQUFDLE9BQUQsRUFBVSxVQUFWLEMiLCJmaWxlIjoic2FtcGxlcy9zYW1wbGUwNC5qcyIsInNvdXJjZVJvb3QiOiIvc3JjIn0=
+//# sourceMappingURL=data:application/json;base64,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

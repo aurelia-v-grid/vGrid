@@ -39,8 +39,11 @@ export class VGridObservables {
       //reset filter/and collection/selection. (should I have option to check is they want to set something?)
       this.vGrid.vGridCurrentRow = -1;
       this.vGrid.vGridSort.reset();
-      this.vGrid.vGridGenerator.clearHeaderSortFilter();
-      this.vGrid.vGridSelection.reset();
+      if(!this.vGrid.vGridConfig.keepFilterOnCollectionChange){
+        this.vGrid.vGridGenerator.clearHeaderSortFilter();
+        this.vGrid.vGridSelection.reset();
+        this.vGrid.vGridConfig.keepFilterOnCollectionChange = false;
+      }
       this.vGrid.vGridGenerator.collectionChange();
 
       //reset

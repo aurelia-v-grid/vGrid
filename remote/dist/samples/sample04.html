@@ -20,11 +20,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">First column controls selection (25 Mai-2016, rev01)</h4>
-        <table>
-          <colgroup>
-
-          </colgroup>
+        <h4 style="margin-left:25px">First column controls selection (25 Mai-2016, rev02)</h4>
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
           v-row-height="40"
@@ -50,11 +46,14 @@
           v-grid-context.bind=myGrid>
           <v-grid-col v-col-width="50" v-col-type="selection"></v-grid-col>
           <v-grid-col v-col-width="70" v-col-attribute="id" v-col-header="Id" v-col-default-filter=">="  v-col-read-only="true"></v-grid-col>
-          <v-grid-col v-col-width="100" v-col-attribute="name"  v-col-header="Name" v-col-default-filter="*"></v-grid-col>
+          <v-grid-col v-col-width="100" v-col-attribute="first"  v-col-header="Firstname" v-col-default-filter="*"></v-grid-col>
+          <v-grid-col v-col-width="100" v-col-attribute="last"  v-col-header="Lastname" v-col-default-filter="*"></v-grid-col>
+          <v-grid-col v-col-width="100" v-col-attribute="city"  v-col-header="City" v-col-default-filter="*"></v-grid-col>
+          <v-grid-col v-col-width="100" v-col-attribute="image"  v-col-type="image" v-col-css="border-radius: 50%;height:100%;margin-left:25%;" v-col-header="Image" v-col-default-filter="*"></v-grid-col>
           <v-grid-col v-col-width="100" v-col-attribute="country"  v-col-header="Country" v-col-default-filter="*"></v-grid-col>
 
           </v-grid>
-        </table>
+
 
 
 
@@ -65,18 +64,8 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4>Collection <span class="label label-default">v-collection.bind=myCollection</span></h4>
 
 
-        <!--<div class="btn-group btn-group-justified" role="group" style="margin-top:5px">-->
-          <!--<div class="btn-group" role="group">-->
-            <!--<button type="button" class="btn btn-default btn-xs" click.trigger="test1()">getData</button>-->
-          <!--</div>-->
-          <!--<div class="btn-group" role="group">-->
-            <!--<button type="button" class="btn btn-default btn-xs" click.trigger="test2()">test2</button>-->
-          <!--</div>-->
-
-        <!--</div>-->
 
 
       </div>
@@ -94,6 +83,28 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
+        <div style="margin-left:25px">
+        <h5><span class="label label-info">Info</span>Collection length:<span class="label label-default">${collectionLength}</span></h5>
+        <h5><span class="label label-info">Info</span>Page limit:<span class="label label-default">${limit}</span></h5>
+        <h5><span class="label label-info">Info</span>Page:<span class="label label-default">${page}</span></h5>
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <button disabled.bind="!statusFirstButton" click.trigger="firstBtn()" type="button" class="btn btn-default">first</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button disabled.bind="!statusPrevButton" click.trigger="prevBtn()" type="button" class="btn btn-default">prev</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button disabled.bind="!statusNextButton" click.trigger="nextBtn()" type="button" class="btn btn-default">next</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button disabled.bind="!statusLastButton" click.trigger="lastBtn()" type="button" class="btn btn-default">last</button>
+        </div>
+      </div>
+      </div>
+
+
+
         <h4 style="margin-left:25px">Entity <span class="label label-default">v-current-entity.bind=myCurrentEntity</span></h4>
         <form class="form-horizontal">
           <div class="form-group">
@@ -117,7 +128,7 @@
           </form>
       </div>
       <div class="myCol">
-        <h5><span class="label label-info">Info</span>Collection length:<span class="label label-default">${collectionLength}</span></h5>
+
 
       </div>
 

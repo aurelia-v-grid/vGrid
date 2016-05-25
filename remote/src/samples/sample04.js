@@ -1,4 +1,5 @@
 import {HttpClient, json} from 'aurelia-fetch-client';
+import {RemoteData} from 'remote/remoteData'
 
 
 export class sample01 {
@@ -13,98 +14,91 @@ export class sample01 {
   myCurrentEntity = {};
   myGrid = {};
 
+  collectionLength = 0;
 
-  callRemoteServer(filterArray, orderByArray, callback) {
+  callRemoteServer(filterArray, orderByArray, callback){
 
-    var sortString = '?sqlOrderby=';
-    if (orderByArray) {
-      orderByArray.forEach((param)=> {
-        if (sortString !== '?sqlOrderby=') {
-          sortString = sortString + ','
-        }
-        sortString = sortString + `${param.attribute} ${param.asc ? "asc" : "desc"}`
-      });
+    if(filterArray){
+      this.remoteData.offset = 0;
     }
-    if (filterArray) {
-      var filterString = sortString !== '?sqlOrderby=' ? '&sqlQuery=' : '?sqlQuery=';
-      filterArray.forEach((param)=> {
-        if (filterString.length !== 10) {
-          filterString = filterString + ' and '
-        }
-        switch (param.operator) {
-          case "=": //"equals"
-            filterString = filterString + `${param.attribute} = "${param.value}"`;
-            break;
-          case "*": //"contains"
-            filterString = filterString + `${param.attribute} LIKE "%${param.value}%"`;
-            break;
-          case "!=": //"not equal to"
-            filterString = filterString + `${param.attribute} IS NOT "${param.value}"`;
-            break;
-          case "<": //"less than"
-            filterString = filterString + `${param.attribute} ${param.operator} "${param.value}"`;
-            break;
-          case ">": //"greater than"
-            filterString = filterString + `${param.attribute} ${param.operator} "${param.value}"`;
-            break;
-          case "<=": //"less than or eq"
-            filterString = filterString + `${param.attribute} ${param.operator} "${param.value}"`;
-            break;
-          case ">=": //"greater than or eq"
-            filterString = filterString + `${param.attribute} ${param.operator} "${param.value}"`;
-            break;
-          case "*=": //"begins with"
-            filterString = filterString + `${param.attribute} LIKE "${param.value}%"`;
-            break;
-          case "=*": //"ends with"
-            filterString = filterString + `${param.attribute} LIKE "%${param.value}"`;
-            break;
-          case "!*": //"ends with"
-            filterString = filterString + `${param.attribute} IS NOT "%${param.value}%"`;
-            break;
-        }
+
+    this.remoteData.createOrderByString(orderByArray);
+    this.remoteData.createQueryString(filterArray);
+    this.remoteData.getData()
+      .then((data)=>{
+        this.setpager();
+        callback(data);
+      }).catch((err)=>{
+        console.error(err);
+        callback([]);
       });
-      var  urlencode = sortString !== '?sqlOrderby=' ? window.encodeURI(sortString + filterString) : window.encodeURI(filterString);
+  }
+
+
+
+  loadData(){
+    this.myGrid.ctx.setLoadingOverlay(true);
+    this.remoteData.getData()
+    .then((data)=>{
+      this.setpager();
+      this.myGrid.ctx.keepFilterOnCollectionChange();
+      this.myCollection = data;
+      this.myGrid.ctx.setLoadingOverlay(false);
+    })
+  }
+
+
+  setpager(){
+    this.collectionLength = this.remoteData.length;
+    this.limit = this.remoteData.limit;
+    this.offset = this.remoteData.offset;
+    this.page = this.offset ? Math.ceil(this.offset/this.limit)+1:1;
+    if(this.page === 1){
+      this.statusFirstButton = false;
+      this.statusPrevButton = false;
     } else {
-      var  urlencode = window.encodeURI(sortString)
+      this.statusFirstButton = true;
+      this.statusPrevButton = true;
     }
 
-    //get data
-    this.http.fetch('data/people/' + urlencode)
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          callback(data.result);
-        } else {
-          callback([]);
-        }
-      });
+    if(this.offset >= this.collectionLength-this.limit){
+      this.statusNextButton = false;
+      this.statusLastButton = false;
+    } else {
+      this.statusNextButton = true;
+      this.statusLastButton = true;
+    }
 
   }
 
 
-  onSort(orderByArray, callback) {
 
-    //loop params and build string
-    var sortString = '?sqlOrderby=';
-    orderByArray.forEach((param)=> {
-      if (sortString !== '?sqlOrderby=') {
-        sortString = sortString + ','
-      }
-      sortString = sortString + `${param.attribute} ${param.asc ? "asc" : "desc"}`
-    });
-
-    //url encode
-    let urlencode = window.encodeURI(sortString);
-
-    //get data
-    this.http.fetch('data/people/' + urlencode)
-      .then(response => response.json())
-      .then(data => {
-        callback(data.result);
-      });
-
+  firstBtn(){
+    this.remoteData.offset = 0;
+    this.loadData();
   }
+
+
+
+  nextBtn(){
+    this.remoteData.offset = this.remoteData.offset + this.limit;
+    this.loadData();
+  }
+
+
+
+  prevBtn(){
+    this.remoteData.offset = this.remoteData.offset - this.limit;
+    this.loadData();
+  }
+
+
+
+  lastBtn(){
+    this.remoteData.offset = this.collectionLength-this.limit;
+    this.loadData();
+  }
+
 
 
   /********************************************************************
@@ -125,6 +119,9 @@ export class sample01 {
     this.http = http;
 
 
+    this.remoteData = new RemoteData('http://data-nodedataapi.rhcloud.com/', 'data/people')
+    this.remoteData.limit = 20;
+
 
 
   }
@@ -135,44 +132,13 @@ export class sample01 {
    ********************************************************************/
   attached() {
     this.getMaxRows = this.myGrid.ctx.getMaxRows();
-    this.myGrid.ctx.setLoadingOverlay(true);
-    this.http.fetch('data/people')
-      .then(response => response.json())
-      .then(data => {
+    this.loadData();
 
-        this.myCollection = data.result;
-        this.myGrid.ctx.setLoadingOverlay(false);
-      })
+
 
   }
 
 
-  // test1() {
-  //
-  //   this.myGrid.ctx.setLoadingOverlay(true);
-  //   this.http.fetch('data/people')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //
-  //       this.myCollection = data.result;
-  //       this.myGrid.ctx.setLoadingOverlay(false);
-  //     })
-  //
-  //
-  // }
-  //
-  // test2() {
-  //
-  //   let urlencode = window.encodeURI('?sqlQuery=id="55"');
-  //
-  //   this.http.fetch('data/people/' + urlencode)
-  //     .then(response => response.json())
-  //     .then(data => {
-  //
-  //       this.myCollection = data.result;
-  //     })
-  //
-  // }
 
 
 }
