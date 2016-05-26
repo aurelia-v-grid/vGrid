@@ -398,7 +398,6 @@ export class VGridConfig {
       if (data.hasOwnProperty(k)) {
         if (this.vGrid.vGridCurrentEntity[k] !== data[k]) {
           this.vGrid.vGridCurrentEntity[k] = data[k];
-          this.vGrid.vGridSkipNextUpdateProperty.push(k)
         }
       }
     }
