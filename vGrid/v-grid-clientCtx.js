@@ -141,8 +141,8 @@ export class VGridClientCtx {
   }
 
 
-  setSorting(x) {
-    this.vGridSort.setFilter(x)
+  setSorting(x, add) {
+    this.vGridSort.setFilter(x, add)
   }
 
   keepFilterOnCollectionChange(){
