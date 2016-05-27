@@ -10,7 +10,6 @@ import {ViewSlot} from 'aurelia-framework';
 //import {ViewSlot} from 'aurelia-templating';
 
 
-
 export class VGridGenerator {
 
   constructor(vGrid) {
@@ -162,8 +161,8 @@ export class VGridGenerator {
       rowTemplate = this.htmlCache.rowTemplate;
     } else {
       if (this.vGrid.vGridConfig.repeater) {
-        if(this.vGrid.vGridConfig.repeatTemplate.indexOf("template") === -1){
-          return '<template>'+this.vGrid.vGridConfig.repeatTemplate+'</template>'
+        if (this.vGrid.vGridConfig.repeatTemplate.indexOf("template") === -1) {
+          return '<template>' + this.vGrid.vGridConfig.repeatTemplate + '</template>'
         } else {
           return this.vGrid.vGridConfig.repeatTemplate;
         }
@@ -344,6 +343,20 @@ export class VGridGenerator {
     this.htmlCache.footer.className = this.vGridConfig.css.mainFooter;
     this.htmlCache.footer.style.height = this.vGridConfig.footerHeight + "px";
     this.htmlCache.grid.appendChild(this.htmlCache.footer);
+
+    if (this.vGridConfig.eventOnRemoteCall) {
+      var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-pager></v-grid-pager></template>', this.vGrid.resources);
+      var view = viewFactory.create(this.vGrid.container);
+      this.footerViewSlot = new ViewSlot(this.htmlCache.footer, true);
+      this.footerViewSlot.add(view);
+
+      this.footerViewSlot.bind(this, {
+        bindingContext: this,
+        parentOverrideContext: this.vGrid.overrideContext
+      });
+      this.footerViewSlot.attached();
+    }
+
   };
 
 
@@ -891,10 +904,10 @@ export class VGridGenerator {
 
     var handleTabbing = (e) => {
       var currentRow = parseInt(e.currentTarget.getAttribute("row"));
-        this.vGridConfig.clickHandler(e, currentRow);
-        if (this.vGridConfig.isMultiSelect !== undefined) {
-          this.vGridSelection.setHightlight(e, currentRow, this);
-        }
+      this.vGridConfig.clickHandler(e, currentRow);
+      if (this.vGridConfig.isMultiSelect !== undefined) {
+        this.vGridSelection.setHightlight(e, currentRow, this);
+      }
     };
 
 

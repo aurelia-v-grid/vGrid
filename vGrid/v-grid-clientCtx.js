@@ -136,6 +136,20 @@ export class VGridClientCtx {
   }
 
 
+  setData(data) {
+    this.vGridConfig.remoteLimit = data.limit || 40;
+    this.vGridConfig.remoteLength = data.length || 0;
+    this.vGridConfig.remoteOffset = data.offset || 0;
+    this.keepFilterOnCollectionChange();
+    this.vGrid.vGridCollection = data.col || [];
+    this.setLoadingOverlay(false);
+    this.vGrid.vGridPager.updatePager({
+      limit : this.vGridConfig.remoteLimit,
+      offset : this.vGridConfig.remoteOffset,
+      length : this.vGridConfig.remoteLength
+    });
+  };
+
   collectionChange(resetScrollToTop, scrollBottom) {
     this.vGridGenerator.collectionChange(resetScrollToTop, scrollBottom)
   }
@@ -145,72 +159,84 @@ export class VGridClientCtx {
     this.vGridSort.setFilter(x, add)
   }
 
-  keepFilterOnCollectionChange(){
+  keepFilterOnCollectionChange() {
     this.vGridConfig.keepFilterOnCollectionChange = true;
   }
 
 
+  //todo adjust, will not work with remote atm
   runSorting(x) {
-    if(this.vGridCollection.length > this.vGridConfig.loadingThreshold){
+    if (this.vGridCollection.length > this.vGridConfig.loadingThreshold) {
       this.vGrid.loading = true;
     }
-    setTimeout(()=>{
+    setTimeout(()=> {
       this.vGridSort.run(this.vGrid.vGridCollectionFiltered);
       this.vGrid.loading = false;
-    },10)
+    }, 10)
 
   }
 
   runFilter(filterObj) {
     this.vGridConfig.addFilter = true;
     this.vGridConfig.onFilterRun(filterObj)
-  };
+  }
+  ;
 
 
   rebuildColumns() {
     this.vGridGenerator.rebuildColumns();
-  };
+  }
+  ;
 
 
   scrollBottom() {
     this.vGridGenerator.scrollBottom();
-  };
+  }
+  ;
 
 
   scrollTop() {
     this.vGridGenerator.scrollTop();
-  };
+  }
+  ;
 
 
   setScrollTop(newTop) {
     this.vGridGenerator.setScrollTop(newTop);
-  };
+  }
+  ;
 
 
   rebuildColumnsRows() {
     this.vGridGenerator.rebuildColumnsRows();
-  };
+  }
+  ;
 
 
   columnChangeAndCollection(resetScrollToTop) {
     this.vGridGenerator.columnChangeAndCollection(resetScrollToTop);
-  };
+  }
+  ;
 
 
   redrawGrid() {
     this.vGridGenerator.redrawGrid();
-  };
+  }
+  ;
 
 
   setColumns(paramObj) {
     return this.vGridGenerator.setColumns(paramObj);
-  };
+  }
+  ;
 
 
   getColumns() {
     return this.vGridGenerator.getColumns();
-  };
+  }
+  ;
 
+ //todo, I should test this with the browsers to verify that its correct now
   getMaxRows() {
     //https://github.com/mleibman/SlickGrid/blob/bf4705a96c40fea088216034def4d0256a335e65/slick.grid.js
     var supportedHeight = 10000;
@@ -221,7 +247,7 @@ export class VGridClientCtx {
 
     while (true) {
       var test = supportedHeight + 10000;
-      div.style.height = test +"px";
+      div.style.height = test + "px";
       if (test > testUpTo || div.clientHeight !== test) {
         break;
       } else {
@@ -229,35 +255,40 @@ export class VGridClientCtx {
       }
     }
     document.body.removeChild(div);
-   return (supportedHeight/this.vGridConfig.rowHeight) +", error margin:"+(10000/this.vGridConfig.rowHeight);
-}
+    return (supportedHeight / this.vGridConfig.rowHeight) + ", error margin:" + (10000 / this.vGridConfig.rowHeight);
+  }
 
 
   scrollBottomNext() {
     this.vGridGenerator.scrollBottomNext();
-  };
+  }
+  ;
 
 
-  setLoadingOverlay(value){
-    this.vGrid.loading = value === true ? true:false;
+  setLoadingOverlay(value) {
+    this.vGrid.loading = value === true ? true : false;
   }
 
 
   setEditMode(value) {
     this.vGridConfig.editMode = value ? true : false;
     this.vGridGenerator.rebuildColumnsRows();
-  };
+  }
+  ;
 
-  setTabbing(value){
-    this.vGridConfig.tabbingEnabled = value === true ? true:false;
-  };
+  setTabbing(value) {
+    this.vGridConfig.tabbingEnabled = value === true ? true : false;
+  }
+  ;
 
 
   getEditMode() {
     return this.vGridConfig.editMode;
-  };
+  }
+  ;
 
 
+  //todo, this should use put text in blob or something it will fail with large collection
   createReport(skipArray) {
 
     //dont thouch this;

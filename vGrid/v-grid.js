@@ -71,6 +71,7 @@ export class VGrid {
     this.vGridObservables = new VGridObservables(this, observerLocator);
     this.vGridGenerator = new VGridGenerator(this);
     this.vGridClientCtx = new VGridClientCtx(this);
+    this.vGridPager = null; //set by pager
 
   }
 

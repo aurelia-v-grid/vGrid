@@ -15,7 +15,7 @@ export class VGridFilter {
   }
 
   //not in use yet, todo: let it save last filter so I can have active filtering
-  lastFilter;
+  lastFilter = [];
   queryStrings = {};
 
 
