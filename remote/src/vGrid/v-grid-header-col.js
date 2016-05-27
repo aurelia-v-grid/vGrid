@@ -27,7 +27,7 @@ export class VGridCellRowHeader {
     this.vGrid = vGrid;
     this.container = container;
     this.vGridConfig = vGrid.vGridConfig;
-    this.queryString = null
+    this.queryString = null;
   }
 
 
@@ -60,7 +60,6 @@ export class VGridCellRowHeader {
     this.filterTop = this.vGridConfig.filterOnAtTop;
     this.justLabel = this.vGridConfig.doNotAddFilterTo.indexOf(this.attribute());
     this.filterName = this.vGridConfig.getFilterName(this.filter);
-    this.colType = this.vGrid.vGridConfig.colTypeArray[this.columnNo];
     let value = this.vGrid.vGridFilter.queryStrings[this.attribute()];
     if (value) {
       this.queryString = value;
@@ -86,40 +85,10 @@ export class VGridCellRowHeader {
     }
 
 
-    if (this.colType === "selection") {
-      type = "selection";
-    }
-
-    
-    if (this.colType === "custom") {
-      //does a custom filter exist?
-      if(!this.vGrid.viewCompiler.resources.elements['v-grid-filter-'+this.colCustomName()]){
-        //if not lets just set it to our basic text filter
-        this.colType = "text";
-      }
-
-    }
-
 
     this.type = type;
     switch (type) {
 
-      case "selection":
-        var viewFactory = this.vGrid.viewCompiler.compile(`
-          <template>
-            <v-grid-filter-${this.colType}></v-grid-filter-${this.colType}>
-          </template>
-          `, this.vGrid.resources);
-        break;
-
-
-      case "selection":
-        var viewFactory = this.vGrid.viewCompiler.compile(`
-          <template>
-            <v-grid-filter-${this.colType}></v-grid-filter-${this.colType}>
-          </template>
-          `, this.vGrid.resources);
-        break;
 
 
       case "single":
@@ -139,9 +108,9 @@ export class VGridCellRowHeader {
         var viewFactory = this.vGrid.viewCompiler.compile(`
           <template>
 
-            <v-grid-filter-${this.colType} filter-value.two-way="queryString" type="filterTop">
+            <v-grid-filter-text filter-value.two-way="queryString" type="filterTop">
               <input placeholder="${this.filterName}">
-            </v-grid-filter-${this.colType}>
+            </v-grid-filter-text>
 
             <v-grid-label type="labelBottom">
               <div>${this.header}${sortIcon}</div>
@@ -160,9 +129,9 @@ export class VGridCellRowHeader {
               <div>${this.header}${sortIcon}</div>
             </v-grid-label>
 
-             <v-grid-filter-${this.colType} filter-value.two-way="queryString" type="filterBottom">
+             <v-grid-filter-text filter-value.two-way="queryString" type="filterBottom">
               <input placeholder="${this.filterName}">
-            </v-grid-filter-${this.colType}>
+            </v-grid-filter-text>
 
           </template>
           `, this.vGrid.resources);

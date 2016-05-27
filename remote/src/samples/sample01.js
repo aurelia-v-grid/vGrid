@@ -11,6 +11,7 @@ export class sample01 {
   myCollection = [];
   myCurrentEntity = {};
 
+  wow = "cool";
 
   myGrid = {
 
@@ -20,7 +21,7 @@ export class sample01 {
     if(this.myGrid.ctx){
       return this.myGrid.ctx.vGridCollectionFiltered.length
     } else {
-      return 0
+      return 0;
     }
   }
 
@@ -47,7 +48,20 @@ export class sample01 {
   singleDblClick(e){
     console.log("dblClick")
   }
-  
+
+  myBtn(){
+
+    //set sorting, this will be used after the filter
+    this.myGrid.ctx.setSorting({attribute:"name", asc:true}, true);
+    this.myGrid.ctx.setSorting({attribute:"index", asc:true}, true);
+
+    var simpleFilter = (attribute, value, operator)=>{
+      this.myGrid.ctx.vGridFilter.queryStrings ={[attribute]:value};
+      this.myGrid.ctx.rebuildColumns();
+      this.myGrid.ctx.runFilter([{attribute:attribute, value:value, operator:operator}]);
+    };
+    simpleFilter("name", "ge", "*");
+  }
   
 
   collectionLength= 0;
@@ -81,12 +95,12 @@ export class sample01 {
     if(this.lockStatus ==="locked" ){
       this.lockStatus = "unlocked";
       this.lockColor = "green";
-      this.myGrid.ctx.setEditMode(true)
+      this.myGrid.ctx.setEditMode(true);
       
     }else {
       this.lockStatus = "locked";
       this.lockColor = "red";
-      this.myGrid.ctx.setEditMode(false)
+      this.myGrid.ctx.setEditMode(false);
     }
 
   }
@@ -103,7 +117,7 @@ export class sample01 {
     this.dummyDataGenerator.generateData(x, (data) => {
       this.myCollection = data;
       this.collectionLength = this.myCollection.length;
-    })
+    });
   }
 
   addBtn(x, scrollBottom) {
@@ -111,13 +125,13 @@ export class sample01 {
     this.dummyDataGenerator.generateData(x, (data) => {
       data.forEach((x) => {
         this.myCollection.push(x)
-      })
+      });
       if(scrollBottom){
         this.myGrid.ctx.scrollBottomNext();
       }
 
       this.collectionLength = this.myCollection.length;
-    })
+    });
   }
 
 

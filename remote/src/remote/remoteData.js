@@ -45,21 +45,21 @@ export class RemoteData {
           }
 
           if(this.orderbyString){
-            var op = params ? '&':'?'
+            var op = params ? '&':'?';
             params = params + op + this.orderbyString;
           }
 
           if(this.limit){
-            var op = params ? '&':'?'
+            var op = params ? '&':'?';
             params = params + op + 'sqlLimit=' + this.limit;
           }
 
           if(this.offset){
-            var op = params ? '&':'?'
+            var op = params ? '&':'?';
             params = params + op + 'sqlOffset=' + this.offset;
           }
 
-          console.log('request params:' + params)
+          console.log('request params:' + params);
 
           var encodedString = params !== '' ? window.encodeURI(params):'';
 
@@ -68,16 +68,23 @@ export class RemoteData {
             .then(data => {
 
               if(data.success = true){
-                this.length = data.length
-                resolve(data.result);
+                this.length = data.length;
+                resolve({col:data.result, length:data.length, limit:40});
               } else {
                 this.length = 0;
-                reject(data.error);
+                reject({error:data.error});
               }
             })
         })
       }
 
+      setLimit(x){
+        this.limit = x || 40;
+      }
+
+      setOffset(x){
+        this.offset = x || 0;
+      }
 
       /*
         create orderby string

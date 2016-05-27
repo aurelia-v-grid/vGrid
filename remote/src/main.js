@@ -8,7 +8,7 @@ export function configure(aurelia) {
     .standardConfiguration()
     .developmentLogging()
     .plugin("vGrid/plugin")
-    .globalResources("v-grid-row-cells-customx")
+
 
 
   aurelia.start().then(a => a.setRoot());

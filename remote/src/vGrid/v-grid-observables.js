@@ -50,7 +50,6 @@ export class VGridObservables {
       for (var k in this.vGrid.vGridCurrentEntity) {
         if (this.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
           this.vGrid.vGridCurrentEntity[k] = undefined;
-          this.vGrid.vGridSkipNextUpdateProperty.push(k)
         }
       }
 
@@ -136,7 +135,6 @@ export class VGridObservables {
           for (var k in this.vGrid.vGridCurrentEntity) {
             if (this.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
               this.vGrid.vGridCurrentEntity[k] = undefined;
-              this.vGrid.vGridSkipNextUpdateProperty.push(k);
             }
           }
           this.vGrid.vGridCurrentEntityRef = null;
@@ -175,21 +173,18 @@ export class VGridObservables {
       propertyObserver.subscribe((newValue, oldValue) => {
 
         //should I do the value formatting on the currentEntity also?
-        var newValueCheck = newValue ? newValue.toString() : newValue;
-        var oldValueCheck = oldValue ? oldValue.toString() : oldValue;
+        var newValueCheck = (newValue !== undefined && newValue !== null) ? newValue.toString() : newValue;
+        var oldValueCheck = (oldValue !== undefined && oldValue !== null) ? oldValue.toString() : oldValue;
 
-        if (newValueCheck !== oldValueCheck) {
+        if (newValueCheck !== oldValueCheck && this.vGrid.vGridCurrentEntityRef) {
           //check if we should skip it
-          if (this.vGrid.vGridSkipNextUpdateProperty.indexOf(property) === -1 && this.vGrid.vGridCurrentEntityRef) {
-            this.vGrid.vGridCurrentEntityRef[property] = newValue;
-            this.vGrid.vGridGenerator.updateRow(this.vGrid.vGridCurrentRow, true);
-          } else {
-            //if skipping we also need to remove it
-            this.vGrid.vGridSkipNextUpdateProperty.splice(this.vGrid.vGridSkipNextUpdateProperty.indexOf(property), 1);
-          }
-        } else {
-          this.vGrid.vGridSkipNextUpdateProperty.splice(this.vGrid.vGridSkipNextUpdateProperty.indexOf(property), 1);
-        }
+            var curRefProp = this.vGrid.vGridCurrentEntityRef[property];
+            curRefProp = (curRefProp !== undefined && curRefProp !== null) ? curRefProp.toString() : curRefProp;
+            if(curRefProp !== newValueCheck){
+              this.vGrid.vGridCurrentEntityRef[property] = newValue;
+              this.vGrid.vGridGenerator.updateRow(this.vGrid.vGridCurrentRow, true);
+            }
+        } 
       });
       this.subscriptionsAttributes.push(propertyObserver)
     });

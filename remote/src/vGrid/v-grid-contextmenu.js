@@ -318,7 +318,7 @@ export class ContextMenuHeader extends ContextMenu {
         isHeader: false
       }
     ]);
-  };
+  }
 
 
   //alt menu I manually set
@@ -370,7 +370,7 @@ export class ContextMenuHeader extends ContextMenu {
         isHeader: false
       }
     ]);
-  };
+  }
 
 
   defaultMenu(value) {
@@ -455,91 +455,5 @@ export class ContextMenuHeader extends ContextMenu {
     this.altMenuLogic = null; //reset to main menu again
   }
 
-
-}
-
-
-/*****************************************************
- *  main context menu for row cells
-******************************************************/
-@customAttribute('v-grid-context-menu-cell')
-@inject(Element, Optional.of(VGridCellContainer))
-export class ContextMenuCell extends ContextMenu {
-  classToOpenOn = "vGrid-row-cell"; //class it opens menu on
-  altMenuLogic = null; //alt menu to open
-
-
-  //main menu lisntner
-  menuItemListener(link) {
-    var value = link.getAttribute("data-action");
-    if (this.altMenuLogic) {
-      this.filterMenuLogic(value);
-    } else {
-      this.defaultMenu(value)
-    }
-  };
-
-
-  canOpen(e) {
-    if (e.target === this.parent.vGrid.vGridCellHelper.curElement || e.target.firstChild === this.parent.vGrid.vGridCellHelper.curElement) {
-      if (this.parent.editMode()) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }
-
-
-  //main menu to open
-  menuHtmlMain() {
-    return this.createMenuHTML([
-      {
-        action: "",
-        value: "Options",
-        isHeader: true
-      }, {
-        action: "copy-cell",
-        value: "Copy cell value",
-        isHeader: false
-      }, {
-        action: "paste-cell",
-        value: "Paste into cell/selected rows",
-        isHeader: false
-      }
-    ]);
-  };
-
-
-
-  defaultMenu(value) {
-    switch (value) {
-      case "copy-cell":
-        this.parent.vGrid.vGridCellHelper.cellValue = this.parent.vGrid.vGridCurrentEntityRef[this.parent.attribute()];
-        this.toggleMenuOff();
-        this.parent.vGrid.vGridCellHelper.refocus();
-        break;
-      case "paste-cell":
-        if (this.parent.vGrid.vGridCellHelper.cellValue !== null) {
-          if(!this.parent.readOnly()){
-            var rows = this.parent.vGrid.vGridSelection.getSelectedRows();
-            rows.forEach((x)=> {
-              this.parent.vGrid.vGridCollectionFiltered[x][this.parent.attribute()] = this.parent.vGrid.vGridCellHelper.cellValue;
-            });
-            this.parent.vGrid.vGridGenerator.fillDataInRows();
-          }
-          this.parent.vGrid.vGridCellHelper.refocus();
-        } else {
-          console.log("no value")
-        }
-        this.toggleMenuOff();
-        break;
-      default:
-        console.log(value);
-        this.toggleMenuOff();
-    }
-  }
 
 }

@@ -196,18 +196,7 @@
 
 }
 
-.vGrid-editCell-focus {
-  border: 1px dotted rgb(63, 58, 63) !important;
 
-}
-
-.vGrid-editCell-write {
-  -webkit-touch-callout: text !important;
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
-  border: 1px dashed rgb(81, 41, 81) !important;
-}
 
 .vGrid *:focus {
   outline: 0 !important;
@@ -463,4 +452,23 @@
   -webkit-background-size: 40px 40px;
   background-size: 40px 40px;
   color:black;
+}
+
+
+.v-grid-pager-btn {
+  heigth:25px;
+  width: 50px;
+}
+.v-grid-pager-btn[disabled] {
+  cursor: not-allowed;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: .65;
+}
+
+.v-grid-pager-group {
+  margin: auto;
+  heigth:25px;
+  width: 200px;
 }

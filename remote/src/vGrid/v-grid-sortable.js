@@ -87,26 +87,6 @@ export class VGridSortable {
     this.vGrid.vGridConfig.columnWidthArray.splice(oldIndex, 1);
     this.vGrid.vGridConfig.columnWidthArray.splice(newIndex, 0, x);
 
-    x = this.vGrid.vGridConfig.colStyleArray[oldIndex];
-    this.vGrid.vGridConfig.colStyleArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colStyleArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.colTypeArray[oldIndex];
-    this.vGrid.vGridConfig.colTypeArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colTypeArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.readOnlyArray[oldIndex];
-    this.vGrid.vGridConfig.readOnlyArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.readOnlyArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.colFormaterArray[oldIndex];
-    this.vGrid.vGridConfig.colFormaterArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colFormaterArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.colEditRawArray[oldIndex];
-    this.vGrid.vGridConfig.colEditRawArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colEditRawArray.splice(newIndex, 0, x);
-
     x = this.vGrid.vGridConfig.filterOnKeyArray[oldIndex];
     this.vGrid.vGridConfig.filterOnKeyArray.splice(oldIndex, 1);
     this.vGrid.vGridConfig.filterOnKeyArray.splice(newIndex, 0, x);

@@ -19,11 +19,11 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">Main demo (25 Mai-2016, rev02)</h4>
+        <h4 style="margin-left:25px">Main demo (27 Mai-2016, rev01)</h4>
 
         <v-grid
           style="position:absolute;top:70px;bottom:0;right: 25px;left:25px"
-          v-row-height="40"
+          v-row-height="30"
           v-header-height="50"
           v-resize-also-rows="true"
           v-resizable-headers="true"
@@ -42,18 +42,38 @@
           v-current-entity.bind=myCurrentEntity
           v-collection.bind=myCollection
           v-grid-context.bind=myGrid>
-          <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">="  v-col-read-only="true"></v-grid-col>
-          <v-grid-col v-col-width="100" v-col-attribute="name" v-col-filter-on-key="true" v-col-header="name" v-col-default-filter="*"></v-grid-col>
-          <v-grid-col v-col-width="90" v-col-attribute="images" v-col-header="image" v-col-type="image" v-col-css="border-radius: 50%;height:100%;margin-left:25%;"></v-grid-col>
-          <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox"  v-col-default-filter="=" ></v-grid-col>
-          <v-grid-col v-col-width="80" v-col-attribute="number" v-col-header="Number" v-col-css="color:{{numberColor}};font-weight:{{numberFont}};text-align:right; padding-right:5px" v-col-formater="numberFormat" v-col-edit-raw="true" v-col-default-filter=">="></v-grid-col>
-          <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date"  v-col-formater="dateFormat" v-col-default-filter=">="></v-grid-col>
-          <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" ></v-grid-col>
+
+          <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=">
+            <input class="form-control input-sm " value.bind="currentEntityRef.index" style="height: 100%">
+          </v-grid-col>
+
+          <v-grid-col v-col-width="100" v-col-attribute="name" v-col-filter-on-key="true" v-col-header="name" v-col-default-filter="*">
+            <input class="form-control input-sm " value.bind="currentEntityRef.name" style="height: 100%">
+          </v-grid-col>
+
+          <v-grid-col v-col-width="90" v-col-attribute="images" v-col-header="image">
+            <image src.bind="currentEntityRef.images" style="border-radius: 50%;height:100%;margin-left:25%;">
+          </v-grid-col>
+
+          <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox"  v-col-default-filter="=" >
+                <input type="checkbox" checked.bind="currentEntityRef.bool" style="margin: auto;height:100%;position:initial;display: block">
+          </v-grid-col>
+
+          <v-grid-col v-col-width="80" v-col-attribute="number" v-col-header="Number" v-col-default-filter=">=">
+            <input class="form-control input-sm " value.bind="currentEntityRef.number | numberFormat" css=" height: 100%; color:${numberColor};font-weight:${numberFont};text-align:right; padding-right:5px">
+          </v-grid-col>
+
+          <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date"  v-col-formater="dateFormat" v-col-default-filter=">=">
+            <input class="form-control input-sm " value.bind="currentEntityRef.date | dateFormat" style="height: 100%">
+          </v-grid-col>
+
+          <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" >
+            <input class="form-control input-sm " value.bind="currentEntityRef.color" style="height:100%">
+          </v-grid-col>
+
         </v-grid>
 
 
-
-        <button css="margin-left:25px;background-color:yellow;color:${lockColor}" type="button" class="btn btn-default btn-xs" click.trigger="editMode()">${lockStatus}</button>
 
 
       </div>
@@ -153,6 +173,9 @@
         <div class="btn-group btn-group-justified" role="group" style="margin-top:5px">
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-default btn-xs" click.trigger="report()">download csv report from filtered</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-xs" click.trigger="myBtn()">test filter by code</button>
           </div>
 
         </div>

@@ -12,7 +12,7 @@ System.register(['bootstrap', 'moment'], function (_export, _context) {
       window.moment = moment;
 
       function configure(aurelia) {
-        aurelia.use.standardConfiguration().developmentLogging().plugin("vGrid/plugin").globalResources("v-grid-row-cells-customx");
+        aurelia.use.standardConfiguration().developmentLogging().plugin("vGrid/plugin");
 
         aurelia.start().then(function (a) {
           return a.setRoot();
@@ -23,4 +23,4 @@ System.register(['bootstrap', 'moment'], function (_export, _context) {
     }
   };
 });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1haW4uanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7QUFDTyxZOzs7QUFDUCxhQUFPLE1BQVAsR0FBZ0IsTUFBaEI7O0FBR08sZUFBUyxTQUFULENBQW1CLE9BQW5CLEVBQTRCO0FBQ2pDLGdCQUFRLEdBQVIsQ0FDRyxxQkFESCxHQUVHLGtCQUZILEdBR0csTUFISCxDQUdVLGNBSFYsRUFJRyxlQUpILENBSW1CLDBCQUpuQjs7QUFPQSxnQkFBUSxLQUFSLEdBQWdCLElBQWhCLENBQXFCO0FBQUEsaUJBQUssRUFBRSxPQUFGLEVBQUw7QUFBQSxTQUFyQjtBQUNEIiwiZmlsZSI6Im1haW4uanMiLCJzb3VyY2VSb290IjoiL3NyYyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1haW4uanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7QUFDTyxZOzs7QUFDUCxhQUFPLE1BQVAsR0FBZ0IsTUFBaEI7O0FBR08sZUFBUyxTQUFULENBQW1CLE9BQW5CLEVBQTRCO0FBQ2pDLGdCQUFRLEdBQVIsQ0FDRyxxQkFESCxHQUVHLGtCQUZILEdBR0csTUFISCxDQUdVLGNBSFY7O0FBT0EsZ0JBQVEsS0FBUixHQUFnQixJQUFoQixDQUFxQjtBQUFBLGlCQUFLLEVBQUUsT0FBRixFQUFMO0FBQUEsU0FBckI7QUFDRCIsImZpbGUiOiJtYWluLmpzIiwic291cmNlUm9vdCI6Ii9zcmMifQ==

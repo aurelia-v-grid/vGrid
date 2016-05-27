@@ -76,6 +76,8 @@ export class VGridConfig {
     this.colEditRawArray = [];
     this.filterOnKeyArray = [];
     this.colCustomArray = [];
+    
+
 
     //<v-grid> attibutes
     this.rowHeight = 50;
@@ -109,18 +111,22 @@ export class VGridConfig {
     this.dataScrollDelay = 200;
 
     this.keepFilterOnCollectionChange = false;
+    this.remoteLimit = 40;
+    this.remoteLength = 0;
+    this.remoteOffset = 0;
+    this.updatePager = null;
 
 
   }
 
   isRemoteIndex = false;
 
-  set remoteIndex(value){
+  set remoteIndex(value) {
     this.isRemoteIndex = true;
     this.vGrid.vGridRowKey = value;
   }
 
-  get remoteIndex(){
+  get remoteIndex() {
     return this.vGrid.vGridRowKey;
   }
 
@@ -141,21 +147,45 @@ export class VGridConfig {
   }
 
 
-  /***************************************************************************************
-   * called before the creation of the grid, so its possible to do without the html for setting configuration/override it
-   ***************************************************************************************/
-  init() {
 
-    this.attributeArray = this.vGrid.vGridContextObj.colAttrArray ? this.vGrid.vGridContextObj.colAttrArray : this.attributeArray;
-    this.columnWidthArray = this.vGrid.vGridContextObj.colWidthArray ? this.vGrid.vGridContextObj.colWidthArray : this.columnWidthArray;
-    this.headerArray = this.vGrid.vGridContextObj.colHeaderArray ? this.vGrid.vGridContextObj.colHeaderArray : this.headerArray;
-    this.filterArray = this.vGrid.vGridContextObj.colFilterArray ? this.vGrid.vGridContextObj.colFilterArray : this.filterArray;
-    this.readOnlyArray = this.vGrid.vGridContextObj.colReadonlyArray ? this.vGrid.vGridContextObj.colReadonlyArray : this.readOnlyArray;
-    this.colStyleArray = this.vGrid.vGridContextObj.colStyleArray ? this.vGrid.vGridContextObj.colStyleArray : this.colStyleArray;
-    this.colTypeArray = this.vGrid.vGridContextObj.colTypeArray ? this.vGrid.vGridContextObj.colTypeArray : this.colTypeArray;
-    this.colFormaterArray = this.vGrid.vGridContextObj.colFormaterArray ? this.vGrid.vGridContextObj.colFormaterArray : this.colFormaterArray;
-    this.colEditRawArray = this.vGrid.vGridContextObj.colEditRawArray ? this.vGrid.vGridContextObj.colEditRawArray : this.colEditRawArray;
-    this.filterOnKeyArray = this.vGrid.vGridContextObj.colFilterOnKeyArray ? this.vGrid.vGridContextObj.colFilterOnKeyArray : this.filterOnKeyArray;
+
+  /***************************************************************************************
+   * calls remote function
+   ***************************************************************************************/
+  remoteCall(data) {
+    data = data ? data : {};
+    this.eventOnRemoteCall({
+      filter: data.filter || this.vGrid.vGridFilter.lastFilter,
+      sort: data.sort || this.vGrid.vGridSort.getFilter(),
+      limit: data.limit || this.remoteLimit,
+      offset: data.offset || this.remoteOffset
+    })
+      .then((data)=> {
+
+        this.vGrid.vGridObservables.disableObservablesArray();
+        this.vGrid.vGridObservables.disableObservablesCollection();
+        this.vGrid.vGridCollection = data.col;
+        this.remoteLimit = data.limit;
+        this.remoteLength = data.length;
+        this.vGrid.vGridCollectionFiltered = this.vGrid.vGridCollection.slice(0);
+        this.vGrid.checkKeys();
+        this.vGrid.vGridCurrentRow = -1;
+        if (!this.isRemoteIndex) {
+          this.vGrid.vGridSelection.reset();
+        }
+        this.vGrid.vGridGenerator.collectionChange();
+        this.vGrid.loading = false;
+        this.vGrid.vGridPager.updatePager({
+          limit: this.remoteLimit,
+          offset: this.remoteOffset,
+          length: this.remoteLength
+        });
+        setTimeout(()=> {
+          this.vGrid.vGridObservables.enableObservablesArray();
+          this.vGrid.vGridObservables.enableObservablesCollection();
+        }, 200);
+      });
+
 
   }
 
@@ -168,8 +198,8 @@ export class VGridConfig {
     if (filterObj.length !== 0 || this.vGrid.vGridCollectionFiltered.length !== this.vGrid.vGridCollection.length || this.eventOnRemoteCall) {
 
       //set loading screen
-      if(this.vGrid.vGridCollection.length > this.loadingThreshold){
-          this.vGrid.loading = true;
+      if (this.vGrid.vGridCollection.length > this.loadingThreshold) {
+        this.vGrid.loading = true;
       }
 
       //run query
@@ -180,31 +210,20 @@ export class VGridConfig {
           curKey = this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey];
         }
 
-        if(this.eventOnRemoteCall){
-          var vGridSort = this.vGrid.vGridSort;
-          vGridSort.lastSort = vGridSort.getFilter().slice(0);
+
+        //if remotecall is set then lets use that
+        if (this.eventOnRemoteCall) {
+
+          //set last filter they just set
           this.vGrid.vGridFilter.lastFilter = filterObj;
-          this.eventOnRemoteCall(filterObj, vGridSort.getFilter(), (col)=>{
-            this.vGrid.vGridObservables.disableObservablesArray();
-            this.vGrid.vGridObservables.disableObservablesCollection();
-            this.vGrid.vGridCollection = col;
-            this.vGrid.vGridCollectionFiltered = this.vGrid.vGridCollection.slice(0);
-            this.vGrid.checkKeys();
-            this.vGrid.vGridCurrentRow = -1;
-            if(!this.isRemoteIndex){
-              this.vGrid.vGridSelection.reset();
-            }
 
-            this.vGrid.vGridGenerator.collectionChange();
+          //on filter we need to set offset to 0
+          this.remoteOffset = 0;
 
-            setTimeout(()=>{
-              this.vGrid.vGridObservables.enableObservablesArray();
-              this.vGrid.vGridObservables.enableObservablesCollection();
-              this.vGrid.loading = false;
-            },200)
-          });
+          //trigger remote call
+          this.remoteCall();
 
-        }else {
+        } else {
 
 
           //run filter
@@ -299,8 +318,8 @@ export class VGridConfig {
     //can we do the sorting?
     if (this.vGrid.vGridCollectionFiltered.length > 0 && attribute && canSortThisAttribute) {
       //set loading screen
-      if(this.vGrid.vGridCollection.length > this.loadingThreshold){
-          this.vGrid.loading = true;
+      if (this.vGrid.vGridCollection.length > this.loadingThreshold) {
+        this.vGrid.loading = true;
       }
 
       //set query
@@ -315,29 +334,14 @@ export class VGridConfig {
         //set headers(rebuild the headers, its just simpler, then having any logic to it) Todo: after rebuild having som logic instead of rebuild might be simple enought now.
         setheaders(this.vGrid.vGridSort.getFilter());
 
-        if(this.eventOnRemoteCall){
-          var vGridSort = this.vGrid.vGridSort;
-          vGridSort.lastSort = vGridSort.getFilter().slice(0);
 
-          this.eventOnRemoteCall(this.vGrid.vGridFilter.lastFilter, vGridSort.getFilter(), (col)=>{
-            this.vGrid.vGridObservables.disableObservablesArray();
-            this.vGrid.vGridObservables.disableObservablesCollection();
-            this.vGrid.vGridCollection = col;
-            this.vGrid.vGridCollectionFiltered = this.vGrid.vGridCollection.slice(0);
-            this.vGrid.checkKeys();
-            this.vGrid.vGridCurrentRow = -1;
-            if(!this.isRemoteIndex){
-              this.vGrid.vGridSelection.reset();
-            }
-            this.vGrid.vGridGenerator.collectionChange();
-            this.vGrid.loading = false;
-            setTimeout(()=>{
-              this.vGrid.vGridObservables.enableObservablesArray();
-              this.vGrid.vGridObservables.enableObservablesCollection();
-            },200)
-          });
+        //if remote call is set
+        if (this.eventOnRemoteCall) {
 
-        }else{
+          //trigger remote call
+          this.remoteCall();
+
+        } else {
           //run filter
           this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
 
@@ -398,15 +402,8 @@ export class VGridConfig {
       if (data.hasOwnProperty(k)) {
         if (this.vGrid.vGridCurrentEntity[k] !== data[k]) {
           this.vGrid.vGridCurrentEntity[k] = data[k];
-          this.vGrid.vGridSkipNextUpdateProperty.push(k)
         }
       }
-    }
-
-
-    //use helper function to edit cell
-    if (this.vGrid.vGridCurrentEntityRef) {
-      this.vGrid.vGridCellHelper.editCellhelper(row, event);
     }
 
 

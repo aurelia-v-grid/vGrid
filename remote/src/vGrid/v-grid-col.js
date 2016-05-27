@@ -5,12 +5,14 @@
  *
  ****************************************************************************************************************/
 
-import {inject, Optional, customElement, bindable} from 'aurelia-framework';
+import {inject, Optional, noView, customElement, bindable, processContent} from 'aurelia-framework';
 //for kendo ui bridge, remove import above
 //import {bindable, customElement} from 'aurelia-templating';
 //import {inject, Optional} from 'aurelia-dependency-injection';
 import {VGrid} from './v-grid';
 
+@noView()
+@processContent(false)
 @customElement('v-grid-col')
 @inject(Element, VGrid)
 export class VGridCol {
@@ -24,13 +26,13 @@ export class VGridCol {
   @bindable vColFormater;
   @bindable vColEditRaw;
   @bindable vColFilterOnKey;
-  @bindable vColCustom;
+  //@bindable vColCustom;
 
 
   /*****************************************************
    *  constructor
    ******************************************************/
-  constructor(element, vGrid, valueConverter) {
+  constructor(element, vGrid) {
     this.vGrid = vGrid;
     this.element = element;
 
@@ -43,7 +45,7 @@ export class VGridCol {
    ******************************************************/
   get valueConverters() {
     if (this.vGrid) {
-      return this.vGrid.viewResources.lookupFunctions.valueConverters
+      return this.vGrid.viewResources.lookupFunctions.valueConverters;
     }
   }
 
@@ -57,14 +59,18 @@ export class VGridCol {
     this.vGrid.vGridConfig.columnWidthArray.push(this.vColWidth);
     this.vGrid.vGridConfig.headerArray.push(this.vColHeader || "");
     this.vGrid.vGridConfig.filterArray.push(this.vColDefaultFilter || "=");
-    this.vGrid.vGridConfig.readOnlyArray.push(this.vColReadOnly === "true" ? true : false);
-    this.vGrid.vGridConfig.colStyleArray.push(this.vColCss);
-    this.vGrid.vGridConfig.colTypeArray.push(this.vColType ? this.vColType : "text");
+    this.vGrid.vGridConfig.colCustomArray.push(this.element.innerHTML);
     this.vGrid.vGridConfig.filterOnKeyArray.push(this.vColFilterOnKey === "true" ? true : false);
-    this.vGrid.vGridConfig.colEditRawArray.push(this.vColEditRaw === "true" ? true : false);
-    this.vGrid.vGridConfig.colFormaterArray.push(this.valueConverters(this.vColFormater));
-    this.vGrid.vGridConfig.colCustomArray.push(this.vColCustom);
+
+
+
   }
+
+  attached(){
+
+  }
+
+
 
 
 }

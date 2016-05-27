@@ -155,8 +155,8 @@ export class VGridResizable {
 
     //add mouse move event
     this.vGridGenerator.htmlCache.header.onmousemove = (e) => {
-      this.onmousemove(e)
-    }
+      this.onmousemove(e);
+    };
 
 
   }

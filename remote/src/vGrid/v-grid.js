@@ -59,20 +59,18 @@ export class VGrid {
     //cloned collection used internaly for everything, I never sort the original collection
     this.vGridCollectionFiltered = [];
 
-    //skip row update, used when setting internal values to current entity from row editing, or to undefined
-    this.vGridSkipNextUpdateProperty = [];
 
     //my classes the grid uses
     this.vGridFilter = new VGridFilter(this);
     this.vGridSort = new VGridSort(this);
     this.vGridConfig = new VGridConfig(this);
     this.vGridSelection = new VGridSelection(null, this);
-    this.vGridCellHelper = new VGridCellHelper(this);
     this.vGridSortable = new VGridSortable(this);
     this.vGridResizable = new VGridResizable(this);
     this.vGridObservables = new VGridObservables(this, observerLocator);
     this.vGridGenerator = new VGridGenerator(this);
     this.vGridClientCtx = new VGridClientCtx(this);
+    this.vGridPager = null; //set by pager
 
   }
 
@@ -141,13 +139,13 @@ export class VGrid {
     //lets test that they have set the mandatory config settings
     if (this.vGridCollection === undefined || this.vGridCurrentEntity === undefined) {
       if (this.vGridCollection === undefined && this.vGridCurrentEntity === undefined) {
-        console.warn("currentEntity & collection not set/binded in config attribute")
+        console.warn("currentEntity & collection not set/binded in config attribute");
       } else {
         if (this.vGridCurrentEntity === undefined) {
-          console.warn("currentEntity not set/binded in config attribute")
+          console.warn("currentEntity not set/binded in config attribute");
         }
         if (this.vGridCollection === undefined) {
-          console.warn("collection not set/binded in config attribute")
+          console.warn("collection not set/binded in config attribute");
         }
       }
     } else {
@@ -169,13 +167,8 @@ export class VGrid {
     this.vGridObservables.enableObservablesArray();
     this.vGridObservables.enableObservablesAttributes();
 
-
-    this.vGridConfig.init();
-
     //create the grid html/add events etc
     this.vGridGenerator.init(false);
-
-
 
   }
 
