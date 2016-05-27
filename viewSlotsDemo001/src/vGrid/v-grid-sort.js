@@ -58,6 +58,7 @@ export class VGridSort {
         this.curSort.push(sort);
         this.curSort[this.curSort.length - 1].no = this.curSort.length;
       }
+      this.lastSort = this.curSort;
 
 
     } else {
@@ -72,6 +73,7 @@ export class VGridSort {
           }
         }
       }
+      this.lastSort = this.curSort;
 
 
     }

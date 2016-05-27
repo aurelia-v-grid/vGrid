@@ -313,9 +313,6 @@ export class VGridCellHelper {
   updateActual(obj) {
 
     if (obj.attribute && this.vGrid.vGridCurrentEntityRef) {
-      //so we dont create loop
-      this.vGrid.vGridSkipNextUpdateProperty.push(obj.attribute);
-
       //set current entity and and update row data
       this.vGrid.vGridCurrentEntityRef[obj.attribute] = obj.value;
       this.vGrid.vGridCurrentEntity[obj.attribute] = obj.value;

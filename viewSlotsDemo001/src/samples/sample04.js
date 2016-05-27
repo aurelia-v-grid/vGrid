@@ -16,89 +16,31 @@ export class sample01 {
 
   collectionLength = 0;
 
-  callRemoteServer(filterArray, orderByArray, callback){
+  callRemoteServer(param){//filterArray, orderByArray, callback) {
 
-    if(filterArray){
-      this.remoteData.offset = 0;
-    }
+    this.remoteData.createOrderByString(param.sort);
+    this.remoteData.createQueryString(param.filter);
+    this.remoteData.setLimit(param.limit);
+    this.remoteData.setOffset(param.offset);
 
-    this.remoteData.createOrderByString(orderByArray);
-    this.remoteData.createQueryString(filterArray);
-
-    this.remoteData.getData()
-      .then((data)=>{
-        this.setpager();
-        callback(data);
-      }).catch((err)=>{
-        console.error(err);
-        callback([]);
-      });
+    return this.remoteData.getData()
+      .then((data)=> {
+        return data;
+      }).catch((err)=> {
+      console.error(err);
+        //param.callback([]);
+    });
   }
 
 
-
-  loadData(){
+  loadData() {
     this.myGrid.ctx.setLoadingOverlay(true);
     this.remoteData.getData()
     .then((data)=>{
-      this.setpager();
-      this.myGrid.ctx.keepFilterOnCollectionChange();
-      this.myCollection = data;
-      this.myGrid.ctx.setLoadingOverlay(false);
+      this.myGrid.ctx.setData(data);
     })
   }
 
-
-  setpager(){
-    this.collectionLength = this.remoteData.length;
-    this.limit = this.remoteData.limit;
-    this.offset = this.remoteData.offset;
-    this.page = this.offset ? Math.ceil(this.offset/this.limit)+1:1;
-    if(this.page === 1){
-      this.statusFirstButton = false;
-      this.statusPrevButton = false;
-    } else {
-      this.statusFirstButton = true;
-      this.statusPrevButton = true;
-    }
-
-    if(this.offset >= this.collectionLength-this.limit){
-      this.statusNextButton = false;
-      this.statusLastButton = false;
-    } else {
-      this.statusNextButton = true;
-      this.statusLastButton = true;
-    }
-
-  }
-
-
-
-  firstBtn(){
-    this.remoteData.offset = 0;
-    this.loadData();
-  }
-
-
-
-  nextBtn(){
-    this.remoteData.offset = this.remoteData.offset + this.limit;
-    this.loadData();
-  }
-
-
-
-  prevBtn(){
-    this.remoteData.offset = this.remoteData.offset - this.limit;
-    this.loadData();
-  }
-
-
-
-  lastBtn(){
-    this.remoteData.offset = this.collectionLength-this.limit;
-    this.loadData();
-  }
 
 
 
@@ -124,7 +66,6 @@ export class sample01 {
     this.remoteData.limit = 20;
 
 
-
   }
 
 
@@ -136,10 +77,7 @@ export class sample01 {
     this.loadData();
 
 
-
   }
-
-
 
 
 }

@@ -47,7 +47,20 @@ export class sample01 {
   singleDblClick(e){
     console.log("dblClick")
   }
-  
+
+  myBtn(){
+
+    //set sorting, this will be used after the filter
+    this.myGrid.ctx.setSorting({attribute:"name", asc:true}, true);
+    this.myGrid.ctx.setSorting({attribute:"index", asc:true}, true);
+
+    var simpleFilter = (attribute, value, operator)=>{
+      this.myGrid.ctx.vGridFilter.queryStrings ={[attribute]:value};
+      this.myGrid.ctx.rebuildColumns();
+      this.myGrid.ctx.runFilter([{attribute:attribute, value:value, operator:operator}]);
+    };
+    simpleFilter("name", "ge", "*")
+  }
   
 
   collectionLength= 0;

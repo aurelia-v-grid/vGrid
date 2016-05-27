@@ -20,11 +20,13 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">First column controls selection (25 Mai-2016, rev02)</h4>
+        <h4 style="margin-left:25px">First column controls selection (27 Mai-2016, rev01)</h4>
         <v-grid
           style="position:absolute;top:70px;bottom:0px;right: 25px;left:25px"
           v-row-height="40"
           v-header-height="50"
+          v-footer-height="50"
+
           v-resize-also-rows="true"
           v-resizable-headers="true"
           v-header-filter="true"
@@ -83,25 +85,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <div style="margin-left:25px">
-        <h5><span class="label label-info">Info</span>Collection length:<span class="label label-default">${collectionLength}</span></h5>
-        <h5><span class="label label-info">Info</span>Page limit:<span class="label label-default">${limit}</span></h5>
-        <h5><span class="label label-info">Info</span>Page:<span class="label label-default">${page}</span></h5>
-      <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-          <button disabled.bind="!statusFirstButton" click.trigger="firstBtn()" type="button" class="btn btn-default">first</button>
-        </div>
-        <div class="btn-group" role="group">
-          <button disabled.bind="!statusPrevButton" click.trigger="prevBtn()" type="button" class="btn btn-default">prev</button>
-        </div>
-        <div class="btn-group" role="group">
-          <button disabled.bind="!statusNextButton" click.trigger="nextBtn()" type="button" class="btn btn-default">next</button>
-        </div>
-        <div class="btn-group" role="group">
-          <button disabled.bind="!statusLastButton" click.trigger="lastBtn()" type="button" class="btn btn-default">last</button>
-        </div>
-      </div>
-      </div>
+
 
 
 

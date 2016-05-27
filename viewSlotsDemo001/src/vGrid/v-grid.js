@@ -59,8 +59,6 @@ export class VGrid {
     //cloned collection used internaly for everything, I never sort the original collection
     this.vGridCollectionFiltered = [];
 
-    //skip row update, used when setting internal values to current entity from row editing, or to undefined
-    this.vGridSkipNextUpdateProperty = [];
 
     //my classes the grid uses
     this.vGridFilter = new VGridFilter(this);
@@ -73,6 +71,7 @@ export class VGrid {
     this.vGridObservables = new VGridObservables(this, observerLocator);
     this.vGridGenerator = new VGridGenerator(this);
     this.vGridClientCtx = new VGridClientCtx(this);
+    this.vGridPager = null; //set by pager
 
   }
 
