@@ -491,15 +491,17 @@ export class VGridGenerator {
 
 
         if (entity !== "" && row.viewSlot !== null) {
-          let bindingContext = {};
+          let tempRef = {};
           for (var k in entity) {
             if (entity.hasOwnProperty(k)) {
-              if (bindingContext[k] !== entity[k]) {
-                bindingContext[k] = entity[k];
+              if (tempRef[k] !== entity[k]) {
+                tempRef[k] = entity[k];
               }
             }
           }
-          bindingContext.currentEntityRef = this.vGrid.vGridCollectionFiltered[rowNo];
+          let bindingContext = {};
+          bindingContext.tempRef = tempRef;
+          bindingContext.rowRef = this.vGrid.vGridCollectionFiltered[rowNo];
           row.viewSlot.bind(bindingContext, {
             bindingContext: bindingContext,
             parentOverrideContext: this.vGrid.overrideContext

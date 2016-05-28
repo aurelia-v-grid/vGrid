@@ -3,7 +3,7 @@
 System.register(["remote/remoteData"], function (_export, _context) {
   "use strict";
 
-  var RemoteData, _class, _temp, sample01;
+  var RemoteData, _class, _temp, sample02;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -16,8 +16,8 @@ System.register(["remote/remoteData"], function (_export, _context) {
       RemoteData = _remoteRemoteData.RemoteData;
     }],
     execute: function () {
-      _export("sample01", sample01 = (_temp = _class = function () {
-        sample01.prototype.callRemoteServer = function callRemoteServer(param) {
+      _export("sample02", sample02 = (_temp = _class = function () {
+        sample02.prototype.callRemoteServer = function callRemoteServer(param) {
 
           this.remoteData.createOrderByString(param.sort);
           this.remoteData.createQueryString(param.filter);
@@ -31,7 +31,7 @@ System.register(["remote/remoteData"], function (_export, _context) {
           });
         };
 
-        sample01.prototype.onRowDraw = function onRowDraw(data, collectionData) {
+        sample02.prototype.onRowDraw = function onRowDraw(data, collectionData) {
           if (data) {
             if (data.number > 100) {
               data.numberColor = "green";
@@ -43,7 +43,7 @@ System.register(["remote/remoteData"], function (_export, _context) {
           }
         };
 
-        sample01.prototype.loadData = function loadData() {
+        sample02.prototype.loadData = function loadData() {
           var _this = this;
 
           this.myGrid.ctx.setLoadingOverlay(true);
@@ -52,16 +52,16 @@ System.register(["remote/remoteData"], function (_export, _context) {
           });
         };
 
-        sample01.prototype.singleClick = function singleClick(e) {
+        sample02.prototype.singleClick = function singleClick(e) {
           console.log("click");
         };
 
-        sample01.prototype.singleDblClick = function singleDblClick(e) {
+        sample02.prototype.singleDblClick = function singleDblClick(e) {
           console.log("dblClick");
         };
 
-        function sample01(element) {
-          _classCallCheck(this, sample01);
+        function sample02(element) {
+          _classCallCheck(this, sample02);
 
           this.myCollection = [];
           this.myCurrentEntity = {};
@@ -72,15 +72,15 @@ System.register(["remote/remoteData"], function (_export, _context) {
           this.remoteData = new RemoteData('http://data-nodedataapi.rhcloud.com/', 'data/people');
         }
 
-        sample01.prototype.attached = function attached() {
+        sample02.prototype.attached = function attached() {
           this.getMaxRows = this.myGrid.ctx.getMaxRows();
           this.loadData();
         };
 
-        return sample01;
+        return sample02;
       }(), _class.inject = [Element], _temp));
 
-      _export("sample01", sample01);
+      _export("sample02", sample02);
     }
   };
 });

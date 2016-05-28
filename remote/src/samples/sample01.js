@@ -19,6 +19,8 @@ export class sample01 {
       return 0;
     }
   }
+  
+  
 
 
   onRowDraw (data, collectionData) {

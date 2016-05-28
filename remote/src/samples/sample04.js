@@ -1,6 +1,7 @@
 import {RemoteData} from 'remote/remoteData'
 
-export class sample02 {
+
+export class sample04 {
   static inject = [Element];
 
   /********************************************************************
@@ -10,6 +11,38 @@ export class sample02 {
   myCollection = [];
   myCurrentEntity = {};
   myGrid = {};
+
+  get filteredRows(){
+    if(this.myGrid.ctx){
+      return this.myGrid.ctx.vGridCollectionFiltered.length
+    } else {
+      return 0;
+    }
+  }
+
+
+  onRowDraw (data, collectionData) {
+    if (data) {
+      if(data.number>100){
+        data.numberColor = "green";
+        data.numberFont = "normal";
+      } else {
+        data.numberColor = "red";
+        data.numberFont = "bold";
+      }
+    }
+
+  }
+
+
+  singleClick(e){
+    console.log("click")
+  }
+
+
+  singleDblClick(e){
+    console.log("dblClick")
+  }
 
   callRemoteServer(param){//filterArray, orderByArray, callback) {
 
@@ -27,18 +60,6 @@ export class sample02 {
       });
   }
 
-  onRowDraw (data, collectionData) {
-    if (data) {
-      if(data.number>100){
-        data.numberColor = "green";
-        data.numberFont = "normal";
-      } else {
-        data.numberColor = "red";
-        data.numberFont = "bold";
-      }
-    }
-
-  }
 
   loadData() {
     this.myGrid.ctx.setLoadingOverlay(true);
@@ -49,18 +70,7 @@ export class sample02 {
   }
 
 
-  singleClick(e){
-    console.log("click")
-  }
-
-
-  singleDblClick(e){
-    console.log("dblClick")
-  }
-
-
-
-
+  collectionLength= 0;
 
   /********************************************************************
    * Constructor
@@ -69,9 +79,10 @@ export class sample02 {
     //get this element
     this.element = element;
 
-
-
     this.remoteData = new RemoteData('http://data-nodedataapi.rhcloud.com/', 'data/people')
+
+    //this if just for giving us some data
+
 
   }
 
@@ -80,11 +91,6 @@ export class sample02 {
     this.loadData();
   }
 
-
-
- 
-
-  
 
 
 

@@ -44,31 +44,31 @@
           v-grid-context.bind=myGrid>
 
           <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=">
-            <input class="form-control input-sm " value.bind="index" style="background-color:transparent;height: 100%">
+            <input  class="form-control input-sm " value.bind="tempRef.index" style="background-color:transparent;height: 100%">
           </v-grid-col>
 
           <v-grid-col v-col-width="100" v-col-attribute="name" v-col-filter-on-key="true" v-col-header="name" v-col-default-filter="*">
-            <input class="form-control input-sm " value.bind="currentEntityRef.name" style="background-color:transparent;height: 100%">
+            <input class="form-control input-sm " value.bind="rowRef.name" style="background-color:transparent;height: 100%">
           </v-grid-col>
 
           <v-grid-col v-col-width="90" v-col-attribute="images" v-col-header="image">
-            <image src.bind="images" style="border-radius: 50%;height:100%;margin-left:25%;">
+            <image src.bind="rowRef.images" style="border-radius: 50%;height:100%;margin-left:25%;">
           </v-grid-col>
 
           <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox"  v-col-default-filter="=" >
-                <input type="checkbox" checked.bind="currentEntityRef.bool" style="margin: auto;height:100%;position:initial;display: block">
+                <input type="checkbox" checked.bind="rowRef.bool" style="margin: auto;height:100%;position:initial;display: block">
           </v-grid-col>
 
           <v-grid-col v-col-width="80" v-col-attribute="number" v-col-header="Number" v-col-default-filter=">=">
-            <input class="form-control input-sm " value.bind="currentEntityRef.number | numberFormat" css="background-color:transparent; height: 100%; color:${numberColor};font-weight:${numberFont};text-align:right; padding-right:5px">
+            <input class="form-control input-sm " value.bind="rowRef.number | numberFormat" css="background-color:transparent; height: 100%; color:${tempRef.numberColor};font-weight:${tempRef.numberFont};text-align:right; padding-right:5px">
           </v-grid-col>
 
           <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date"  v-col-formater="dateFormat" v-col-default-filter=">=">
-            <input class="form-control input-sm " value.bind="currentEntityRef.date | dateFormat" style="background-color:transparent;height: 100%">
+            <input class="form-control input-sm " value.bind="rowRef.date | dateFormat" style="background-color:transparent;height: 100%">
           </v-grid-col>
 
           <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color" v-col-default-filter="=*" >
-            <input class="form-control input-sm " value.bind="currentEntityRef.color" style="background-color:transparent;height:100%">
+            <input class="form-control input-sm " value.bind="rowRef.color" style="background-color:transparent;height:100%">
           </v-grid-col>
 
         </v-grid>

@@ -46,31 +46,27 @@
           v-grid-context.bind=myGrid>
 
           <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=">
-            <input readonly class="form-control input-sm " value.bind="currentEntityRef.id" style="background-color:transparent;height: 100%">
+            <input readonly class="form-control input-sm " value.bind="rowRef.id" style="background-color:transparent;height: 100%">
           </v-grid-col>
 
           <v-grid-col v-col-width="100" v-col-attribute="name" v-col-filter-on-key="true" v-col-header="name" v-col-default-filter="*">
-            <input readonly class="form-control input-sm " value.bind="currentEntityRef.first" style="background-color:transparent;height: 100%">
+            <input readonly class="form-control input-sm " value.bind="rowRef.first" style="background-color:transparent;height: 100%">
           </v-grid-col>
 
           <v-grid-col v-col-width="90" v-col-attribute="image" v-col-header="image">
-            <image src.bind="currentEntityRef.image" style="border-radius: 50%;height:100%;margin-left:25%;">
-          </v-grid-col>
-
-          <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox"  v-col-default-filter="=" >
-            <input readonly type="checkbox" checked.bind="currentEntityRef.bool" style="margin: auto;height:100%;position:initial;display: block">
+            <image src.bind="rowRef.image" style="border-radius: 50%;height:100%;margin-left:25%;">
           </v-grid-col>
 
           <v-grid-col v-col-width="80" v-col-attribute="zip" v-col-header="Number" v-col-default-filter=">=">
-            <input readonly class="form-control input-sm " value.bind="currentEntityRef.zip | numberFormat" css="background-color:transparent; height: 100%; color:${numberColor};font-weight:${numberFont};text-align:right; padding-right:5px">
+            <input readonly class="form-control input-sm " value.bind="rowRef.zip | numberFormat" css="background-color:transparent; height: 100%; color:${tempRef.numberColor};font-weight:${tempRef.numberFont};text-align:right; padding-right:5px">
           </v-grid-col>
 
           <v-grid-col v-col-width="180" v-col-attribute="created_a" v-col-header="date"  v-col-formater="dateFormat" v-col-default-filter=">=">
-            <input readonly class="form-control input-sm " value.bind="currentEntityRef.created_at | dateFormat" style="background-color:transparent;height: 100%">
+            <input readonly class="form-control input-sm " value.bind="rowRef.created_at | dateFormat" style="background-color:transparent;height: 100%">
           </v-grid-col>
 
           <v-grid-col v-col-width="160" v-col-attribute="last" v-col-header="Color" v-col-default-filter="=*" >
-            <input readonly class="form-control input-sm " value.bind="currentEntityRef.last" style="background-color:transparent;height:100%">
+            <input readonly class="form-control input-sm " value.bind="rowRef.last" style="background-color:transparent;height:100%">
           </v-grid-col>
 
         </v-grid>
