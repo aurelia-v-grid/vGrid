@@ -145,7 +145,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getHeaderTemplate() {
     var rowTemplate = "";
-    for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
+    for (var i = 0; i < this.vGridConfig.columns; i++) {
       rowTemplate = rowTemplate + `<v-grid-header-col v-grid-context-menu-header column-no="${i}"></v-grid-header-col>`;
     }
     return rowTemplate;
@@ -169,7 +169,7 @@ export class VGridGenerator {
 
       } else {
         rowTemplate = '<template>';
-        for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
+        for (var i = 0; i < this.vGridConfig.columns; i++) {
           rowTemplate = rowTemplate + `<v-grid-row-col v-grid-context-menu-cell column-no=${i}></v-grid-row-col>`;
         }
       }
@@ -192,7 +192,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getTotalColumnWidth() {
     var total = 0;
-    for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
+    for (var i = 0; i < this.vGridConfig.columns; i++) {
       total = total + parseInt(this.vGridConfig.columnWidthArray[i], 10);
     }
     return total;
@@ -500,6 +500,7 @@ export class VGridGenerator {
             }
           }
           let bindingContext = {};
+          bindingContext.row = rowNo;
           bindingContext.tempRef = tempRef;
           bindingContext.rowRef = this.vGrid.vGridCollectionFiltered[rowNo];
           row.viewSlot.bind(bindingContext, {
@@ -956,7 +957,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   correctColumnsWidthArray() {
     var newColumnWidth = [];
-    for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
+    for (var i = 0; i < this.vGridConfig.columns; i++) {
       var columnWidth = this.vGridConfig.columnWidthArray[i] || 100;
       newColumnWidth.push(columnWidth)
     }
@@ -1174,24 +1175,16 @@ export class VGridGenerator {
 
   setColumns(paramObj) {
     //todo: this needs a big update
-    this.vGridConfig.attributeArray = paramObj.colAttrArray;
     this.vGridConfig.columnWidthArray = paramObj.colWidthArray;
-    this.vGridConfig.headerArray = paramObj.colHeaderArray;
-    this.vGridConfig.filterArray = paramObj.colFilterArray;
-    this.vGridConfig.filterOnKeyArray = paramObj.colFilterOnKeyArray;
-    this.vGridConfig.colCustomArray = paramObj.colCustomArray;
+    this.vGridConfig.colRowTemplateArray = paramObj.colRowTemplateArray;
   };
 
 
   getColumns() {
     //todo: this needs a big update
     return {
-      "colAttrArray": this.vGridConfig.attributeArray.slice(),
       "colWidthArray": this.vGridConfig.columnWidthArray.slice(),
-      "colHeaderArray": this.vGridConfig.headerArray.slice(),
-      "colFilterArray": this.vGridConfig.filterArray.slice(),
-      "colFilterOnKeyArray": this.vGridConfig.filterOnKeyArray.slice(),
-      "colCustomArray": this.vGridConfig.colCustomArray.slice()
+      "colRowTemplateArray": this.vGridConfig.colRowTemplateArray.slice()
     }
   };
 

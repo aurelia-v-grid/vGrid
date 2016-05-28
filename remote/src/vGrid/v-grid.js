@@ -29,7 +29,7 @@ export class VGrid {
   @bindable({attribute: "v-grid-context"}) vGridContextObj;
   @bindable({attribute: "v-collection"}) vGridCollection;
   @bindable({attribute: "v-current-entity"}) vGridCurrentEntity;
-  
+  @bindable vEventOnremotecall;
   //loading screen when filtering/sorting
   @bindable loadingMessage = "Working please wait";
   loading = false;
@@ -72,6 +72,20 @@ export class VGrid {
     this.vGridClientCtx = new VGridClientCtx(this);
     this.vGridPager = null; //set by pager
 
+  }
+
+  /***************************************************************************************
+   * event dispatcher
+   ***************************************************************************************/
+
+  raiseEvent(name, data = {}) {
+    let event = new CustomEvent(name, {
+      detail: data,
+      bubbles: true
+    });
+    this.element.dispatchEvent(event);
+
+    return event;
   }
 
 

@@ -13,26 +13,30 @@ import {VGrid} from './v-grid';
 
 @noView()
 @processContent((compiler, resources, element, instruction) => {
-  
-  //here I could also get header, could just allow them to split into header or row and used document.getElementsByTagName("V-ROW");
-  // if they arnt found I use default headers
-  
-  let html = element.innerHTML;
-  if (html !== '') {
-    instruction.template = html;
+
+  var headerTemplateElement = element.getElementsByTagName("V-HEADER-TEMPLATE")[0];
+  let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML:null;
+  if (headerTemplateHtml !== '') {
+    instruction.headerTemplate = headerTemplateHtml;
+  } else {
+    //TODO: future supply template to simplify user experience ?
   }
+    
+  var rowTemplateElement = element.getElementsByTagName("V-ROW-TEMPLATE")[0];
+  let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML:null;
+  if (rowTemplateHtml !== '') {
+    instruction.rowTemplate = rowTemplateHtml;
+  } else {
+    //TODO: future supply template to simplify user experience ?
+  }
+
   element.innerHTML = '';
 
-  // don't return true, so aurelia does not process the content
 })
 @customElement('v-grid-col')
 @inject(Element, VGrid, TargetInstruction)
 export class VGridCol {
   @bindable vColWidth;
-  @bindable vColAttribute;
-  @bindable vColHeader;
-  @bindable vColDefaultFilter;
-  @bindable vColFilterOnKey;
 
 
   /*****************************************************
@@ -41,19 +45,8 @@ export class VGridCol {
   constructor(element, vGrid, targetInstruction) {
     this.vGrid = vGrid;
     this.element = element;
-    this.template = targetInstruction.elementInstruction.template;
-
-
-  }
-
-
-  /*****************************************************
-   *  just returning the value converter
-   ******************************************************/
-  get valueConverters() {
-    if (this.vGrid) {
-      return this.vGrid.viewResources.lookupFunctions.valueConverters;
-    }
+    this.rowTemplate = targetInstruction.elementInstruction.rowTemplate;
+    this.headerTemplate = targetInstruction.elementInstruction.headerTemplate;
   }
 
 
@@ -61,20 +54,10 @@ export class VGridCol {
    *  element event
    ******************************************************/
   bind(bindingContext, overrideContext) {
-    this.vGrid.vGridConfig.attributeArray.push(this.vColAttribute);
-    //this.vGrid.vGridConfig.attributes.push(this.vColAttribute);
-    this.vGrid.vGridConfig.columnWidthArray.push(this.vColWidth);
-    this.vGrid.vGridConfig.headerArray.push(this.vColHeader || "");
-    this.vGrid.vGridConfig.filterArray.push(this.vColDefaultFilter || "=");
-    this.vGrid.vGridConfig.colCustomArray.push(this.template);
-    this.vGrid.vGridConfig.filterOnKeyArray.push(this.vColFilterOnKey === "true" ? true : false);
-
-
-
-  }
-
-  attached(){
-
+    this.vGrid.vGridConfig.columns++; //count columns
+    this.vGrid.vGridConfig.columnWidthArray.push(this.vColWidth);    
+    this.vGrid.vGridConfig.colRowTemplateArray.push(this.rowTemplate);
+    this.vGrid.vGridConfig.colHeaderTemplateArray.push(this.headerTemplate);
   }
 
 

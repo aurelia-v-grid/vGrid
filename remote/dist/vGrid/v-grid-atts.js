@@ -3,7 +3,7 @@
 System.register(['aurelia-framework', './v-grid'], function (_export, _context) {
   "use strict";
 
-  var inject, customAttribute, Optional, VGrid, _dec, _dec2, _class, _dec3, _dec4, _class3, _dec5, _dec6, _class5, _dec7, _dec8, _class7, _dec9, _dec10, _class9, _dec11, _dec12, _class11, _dec13, _dec14, _class13, _dec15, _dec16, _class15, _dec17, _dec18, _class17, _dec19, _dec20, _class19, _dec21, _dec22, _class21, _dec23, _dec24, _class23, _dec25, _dec26, _class25, _dec27, _dec28, _class27, _dec29, _dec30, _class29, _dec31, _dec32, _class31, _dec33, _dec34, _class33, _dec35, _dec36, _class35, _dec37, _dec38, _class37, _dec39, _dec40, _class39, _dec41, _dec42, _class41, _dec43, _dec44, _class43, _dec45, _dec46, _class45, _dec47, _dec48, _class47, VGridAttibutes, rowHeight, headerHeight, footerHeight, isResizableHeaders, isMultiSelect, isSortableHeader, requestAnimationFrame, resizableHeadersAndRows, renderOnScrollbarScroll, addFilter, filterOnAtTop, sortOnHeaderClick, largeBuffer, manualSelection, eventOnRowDraw, attributeArray, doNotAddFilterTo, sortNotOnHeader, eventOnRowClick, eventOnRowDblClick, contextmenu, LoadingThreshold, eventOnRemoteCall, remoteIndex;
+  var inject, customAttribute, Optional, VGrid, _dec, _dec2, _class, _dec3, _dec4, _class3, _dec5, _dec6, _class5, _dec7, _dec8, _class7, _dec9, _dec10, _class9, _dec11, _dec12, _class11, _dec13, _dec14, _class13, _dec15, _dec16, _class15, _dec17, _dec18, _class17, _dec19, _dec20, _class19, _dec21, _dec22, _class21, _dec23, _dec24, _class23, _dec25, _dec26, _class25, _dec27, _dec28, _class27, _dec29, _dec30, _class28, _dec31, _dec32, _class29, _dec33, _dec34, _class30, VGridAttibutes, vGridRowHeight, vGridHeaderHeight, vGridFooterHeight, vGridIsResizableHeaders, vGridAttibutesObserve, vGridIsMultiSelect, vGridIsSortableHeader, vGridRequestAnimationFrame, vGridResizableHeadersAndRows, vGridRenderOnScrollbarScroll, vGridContextmenu, vGridLoadingThreshold, vGridRemoteIndex, vGridEventOnRowDraw, vGridEventOnRemoteCall, vGridHeaderFilterOn, vGridHeaderSortIcon;
 
   function _possibleConstructorReturn(self, call) {
     if (!self) {
@@ -68,20 +68,12 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
         };
 
         VGridAttibutes.prototype.setBindValueInt = function setBindValueInt() {
-          if (this.vGrid.vGridContextObj[this.alias]) {
-            this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.alias], this.attDefault);
-          } else {
-            this.vGrid.vGridConfig[this.attribute] = this.setValue(parseInt(this.value), this.attDefault);
-          }
+          this.vGrid.vGridConfig[this.attribute] = this.setValue(parseInt(this.value), this.attDefault);
         };
 
         VGridAttibutes.prototype.setBindValueString = function setBindValueString() {
-          if (this.vGrid.vGridContextObj[this.alias]) {
-            this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.alias], this.attDefault);
-          } else {
-            if (typeof this.value === "string" && this.value !== '') {
-              this.vGrid.vGridConfig[this.attribute] = this.value;
-            }
+          if (typeof this.value === "string" && this.value !== '') {
+            this.vGrid.vGridConfig[this.attribute] = this.value;
           }
         };
 
@@ -90,24 +82,7 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
             "true": true,
             "false": false
           };
-
-          if (this.vGrid.vGridContextObj[this.alias]) {
-            this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.alias], this.attDefault);
-          } else {
-            this.vGrid.vGridConfig[this.attribute] = this.setValue(type[this.value], this.attDefault);
-          }
-        };
-
-        VGridAttibutes.prototype.setBindValueFn = function setBindValueFn() {
-          if (this.vGrid.vGridContextObj[this.alias]) {
-            if (typeof this.vGrid.vGridContextObj[this.alias] === "function") {
-              this.vGrid.vGridConfig[this.attribute] = this.vGrid.vGridContextObj[this.alias].bind(this.vGrid.$parent);
-            }
-          } else {
-            if (typeof this.vGrid.$parent[this.value] === "function") {
-              this.vGrid.vGridConfig[this.attribute] = this.vGrid.$parent[this.value].bind(this.vGrid.$parent);
-            }
-          }
+          this.vGrid.vGridConfig[this.attribute] = this.setValue(type[this.value], this.attDefault);
         };
 
         VGridAttibutes.prototype.setBindValueArray = function setBindValueArray() {
@@ -128,9 +103,6 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
             case "int":
               this.setBindValueInt();
               break;
-            case "fn":
-              this.setBindValueFn();
-              break;
             case "array":
               this.setBindValueArray();
               break;
@@ -143,500 +115,438 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
           this.attDefault = this.vGrid.vGridConfig[this.attribute];
         };
 
-        VGridAttibutes.prototype.setNewvalue = function setNewvalue(newValue, oldValue) {};
-
         VGridAttibutes.prototype.bind = function bind(bindingContext, overrideContext) {
           this.getDefaultvalue();
           this.setBindValue();
         };
 
-        VGridAttibutes.prototype.valueChanged = function valueChanged(newValue, oldValue) {
-          this.setNewvalue(newValue, oldValue);
-        };
-
         return VGridAttibutes;
       }();
 
-      _export('rowHeight', rowHeight = (_dec = customAttribute('v-row-height'), _dec2 = inject(Element, Optional.of(VGrid)), _dec(_class = _dec2(_class = function (_VGridAttibutes) {
-        _inherits(rowHeight, _VGridAttibutes);
+      _export('vGridRowHeight', vGridRowHeight = (_dec = customAttribute('v-row-height'), _dec2 = inject(Element, Optional.of(VGrid)), _dec(_class = _dec2(_class = function (_VGridAttibutes) {
+        _inherits(vGridRowHeight, _VGridAttibutes);
 
-        function rowHeight() {
+        function vGridRowHeight() {
           var _temp, _this, _ret;
 
-          _classCallCheck(this, rowHeight);
+          _classCallCheck(this, vGridRowHeight);
 
           for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
           }
 
-          return _ret = (_temp = (_this = _possibleConstructorReturn(this, _VGridAttibutes.call.apply(_VGridAttibutes, [this].concat(args))), _this), _this.attribute = "rowHeight", _this.alias = "configRowHeight", _this.type = "int", _temp), _possibleConstructorReturn(_this, _ret);
+          return _ret = (_temp = (_this = _possibleConstructorReturn(this, _VGridAttibutes.call.apply(_VGridAttibutes, [this].concat(args))), _this), _this.attribute = "rowHeight", _this.type = "int", _temp), _possibleConstructorReturn(_this, _ret);
         }
 
-        return rowHeight;
+        return vGridRowHeight;
       }(VGridAttibutes)) || _class) || _class));
 
-      _export('rowHeight', rowHeight);
+      _export('vGridRowHeight', vGridRowHeight);
 
-      _export('headerHeight', headerHeight = (_dec3 = customAttribute('v-header-height'), _dec4 = inject(Element, Optional.of(VGrid)), _dec3(_class3 = _dec4(_class3 = function (_VGridAttibutes2) {
-        _inherits(headerHeight, _VGridAttibutes2);
+      _export('vGridHeaderHeight', vGridHeaderHeight = (_dec3 = customAttribute('v-header-height'), _dec4 = inject(Element, Optional.of(VGrid)), _dec3(_class3 = _dec4(_class3 = function (_VGridAttibutes2) {
+        _inherits(vGridHeaderHeight, _VGridAttibutes2);
 
-        function headerHeight() {
+        function vGridHeaderHeight() {
           var _temp2, _this2, _ret2;
 
-          _classCallCheck(this, headerHeight);
+          _classCallCheck(this, vGridHeaderHeight);
 
           for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
             args[_key2] = arguments[_key2];
           }
 
-          return _ret2 = (_temp2 = (_this2 = _possibleConstructorReturn(this, _VGridAttibutes2.call.apply(_VGridAttibutes2, [this].concat(args))), _this2), _this2.attribute = "headerHeight", _this2.alias = "configHeaderHeight", _this2.type = "int", _temp2), _possibleConstructorReturn(_this2, _ret2);
+          return _ret2 = (_temp2 = (_this2 = _possibleConstructorReturn(this, _VGridAttibutes2.call.apply(_VGridAttibutes2, [this].concat(args))), _this2), _this2.attribute = "headerHeight", _this2.type = "int", _temp2), _possibleConstructorReturn(_this2, _ret2);
         }
 
-        return headerHeight;
+        return vGridHeaderHeight;
       }(VGridAttibutes)) || _class3) || _class3));
 
-      _export('headerHeight', headerHeight);
+      _export('vGridHeaderHeight', vGridHeaderHeight);
 
-      _export('footerHeight', footerHeight = (_dec5 = customAttribute('v-footer-height'), _dec6 = inject(Element, Optional.of(VGrid)), _dec5(_class5 = _dec6(_class5 = function (_VGridAttibutes3) {
-        _inherits(footerHeight, _VGridAttibutes3);
+      _export('vGridFooterHeight', vGridFooterHeight = (_dec5 = customAttribute('v-footer-height'), _dec6 = inject(Element, Optional.of(VGrid)), _dec5(_class5 = _dec6(_class5 = function (_VGridAttibutes3) {
+        _inherits(vGridFooterHeight, _VGridAttibutes3);
 
-        function footerHeight() {
+        function vGridFooterHeight() {
           var _temp3, _this3, _ret3;
 
-          _classCallCheck(this, footerHeight);
+          _classCallCheck(this, vGridFooterHeight);
 
           for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
             args[_key3] = arguments[_key3];
           }
 
-          return _ret3 = (_temp3 = (_this3 = _possibleConstructorReturn(this, _VGridAttibutes3.call.apply(_VGridAttibutes3, [this].concat(args))), _this3), _this3.attribute = "footerHeight", _this3.alias = "configFooterHeight", _this3.type = "int", _temp3), _possibleConstructorReturn(_this3, _ret3);
+          return _ret3 = (_temp3 = (_this3 = _possibleConstructorReturn(this, _VGridAttibutes3.call.apply(_VGridAttibutes3, [this].concat(args))), _this3), _this3.attribute = "footerHeight", _this3.type = "int", _temp3), _possibleConstructorReturn(_this3, _ret3);
         }
 
-        return footerHeight;
+        return vGridFooterHeight;
       }(VGridAttibutes)) || _class5) || _class5));
 
-      _export('footerHeight', footerHeight);
+      _export('vGridFooterHeight', vGridFooterHeight);
 
-      _export('isResizableHeaders', isResizableHeaders = (_dec7 = customAttribute('v-resizable-headers'), _dec8 = inject(Element, Optional.of(VGrid)), _dec7(_class7 = _dec8(_class7 = function (_VGridAttibutes4) {
-        _inherits(isResizableHeaders, _VGridAttibutes4);
+      _export('vGridIsResizableHeaders', vGridIsResizableHeaders = (_dec7 = customAttribute('v-resizable-headers'), _dec8 = inject(Element, Optional.of(VGrid)), _dec7(_class7 = _dec8(_class7 = function (_VGridAttibutes4) {
+        _inherits(vGridIsResizableHeaders, _VGridAttibutes4);
 
-        function isResizableHeaders() {
+        function vGridIsResizableHeaders() {
           var _temp4, _this4, _ret4;
 
-          _classCallCheck(this, isResizableHeaders);
+          _classCallCheck(this, vGridIsResizableHeaders);
 
           for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
             args[_key4] = arguments[_key4];
           }
 
-          return _ret4 = (_temp4 = (_this4 = _possibleConstructorReturn(this, _VGridAttibutes4.call.apply(_VGridAttibutes4, [this].concat(args))), _this4), _this4.attribute = "isResizableHeaders", _this4.alias = "configResizableHeaders", _this4.type = "bool", _temp4), _possibleConstructorReturn(_this4, _ret4);
+          return _ret4 = (_temp4 = (_this4 = _possibleConstructorReturn(this, _VGridAttibutes4.call.apply(_VGridAttibutes4, [this].concat(args))), _this4), _this4.attribute = "isResizableHeaders", _this4.type = "bool", _temp4), _possibleConstructorReturn(_this4, _ret4);
         }
 
-        return isResizableHeaders;
+        return vGridIsResizableHeaders;
       }(VGridAttibutes)) || _class7) || _class7));
 
-      _export('isResizableHeaders', isResizableHeaders);
+      _export('vGridIsResizableHeaders', vGridIsResizableHeaders);
 
-      _export('isMultiSelect', isMultiSelect = (_dec9 = customAttribute('v-multi-select'), _dec10 = inject(Element, Optional.of(VGrid)), _dec9(_class9 = _dec10(_class9 = function (_VGridAttibutes5) {
-        _inherits(isMultiSelect, _VGridAttibutes5);
+      _export('vGridAttibutesObserve', vGridAttibutesObserve = (_dec9 = customAttribute('v-attibutes-observe'), _dec10 = inject(Element, Optional.of(VGrid)), _dec9(_class9 = _dec10(_class9 = function (_VGridAttibutes5) {
+        _inherits(vGridAttibutesObserve, _VGridAttibutes5);
 
-        function isMultiSelect() {
+        function vGridAttibutesObserve() {
           var _temp5, _this5, _ret5;
 
-          _classCallCheck(this, isMultiSelect);
+          _classCallCheck(this, vGridAttibutesObserve);
 
           for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
             args[_key5] = arguments[_key5];
           }
 
-          return _ret5 = (_temp5 = (_this5 = _possibleConstructorReturn(this, _VGridAttibutes5.call.apply(_VGridAttibutes5, [this].concat(args))), _this5), _this5.attribute = "isMultiSelect", _this5.alias = "configMultiSelect", _this5.type = "bool", _temp5), _possibleConstructorReturn(_this5, _ret5);
+          return _ret5 = (_temp5 = (_this5 = _possibleConstructorReturn(this, _VGridAttibutes5.call.apply(_VGridAttibutes5, [this].concat(args))), _this5), _this5.attribute = "attributeArray", _this5.type = "array", _temp5), _possibleConstructorReturn(_this5, _ret5);
         }
 
-        return isMultiSelect;
+        return vGridAttibutesObserve;
       }(VGridAttibutes)) || _class9) || _class9));
 
-      _export('isMultiSelect', isMultiSelect);
+      _export('vGridAttibutesObserve', vGridAttibutesObserve);
 
-      _export('isSortableHeader', isSortableHeader = (_dec11 = customAttribute('v-sortable-headers'), _dec12 = inject(Element, Optional.of(VGrid)), _dec11(_class11 = _dec12(_class11 = function (_VGridAttibutes6) {
-        _inherits(isSortableHeader, _VGridAttibutes6);
+      _export('vGridIsMultiSelect', vGridIsMultiSelect = (_dec11 = customAttribute('v-multi-select'), _dec12 = inject(Element, Optional.of(VGrid)), _dec11(_class11 = _dec12(_class11 = function (_VGridAttibutes6) {
+        _inherits(vGridIsMultiSelect, _VGridAttibutes6);
 
-        function isSortableHeader() {
+        function vGridIsMultiSelect() {
           var _temp6, _this6, _ret6;
 
-          _classCallCheck(this, isSortableHeader);
+          _classCallCheck(this, vGridIsMultiSelect);
 
           for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
             args[_key6] = arguments[_key6];
           }
 
-          return _ret6 = (_temp6 = (_this6 = _possibleConstructorReturn(this, _VGridAttibutes6.call.apply(_VGridAttibutes6, [this].concat(args))), _this6), _this6.attribute = "isSortableHeader", _this6.alias = "configSortableHeader", _this6.type = "bool", _temp6), _possibleConstructorReturn(_this6, _ret6);
+          return _ret6 = (_temp6 = (_this6 = _possibleConstructorReturn(this, _VGridAttibutes6.call.apply(_VGridAttibutes6, [this].concat(args))), _this6), _this6.attribute = "isMultiSelect", _this6.type = "bool", _temp6), _possibleConstructorReturn(_this6, _ret6);
         }
 
-        return isSortableHeader;
+        return vGridIsMultiSelect;
       }(VGridAttibutes)) || _class11) || _class11));
 
-      _export('isSortableHeader', isSortableHeader);
+      _export('vGridIsMultiSelect', vGridIsMultiSelect);
 
-      _export('requestAnimationFrame', requestAnimationFrame = (_dec13 = customAttribute('v-request-animation-frame'), _dec14 = inject(Element, Optional.of(VGrid)), _dec13(_class13 = _dec14(_class13 = function (_VGridAttibutes7) {
-        _inherits(requestAnimationFrame, _VGridAttibutes7);
+      _export('vGridIsSortableHeader', vGridIsSortableHeader = (_dec13 = customAttribute('v-sortable-headers'), _dec14 = inject(Element, Optional.of(VGrid)), _dec13(_class13 = _dec14(_class13 = function (_VGridAttibutes7) {
+        _inherits(vGridIsSortableHeader, _VGridAttibutes7);
 
-        function requestAnimationFrame() {
+        function vGridIsSortableHeader() {
           var _temp7, _this7, _ret7;
 
-          _classCallCheck(this, requestAnimationFrame);
+          _classCallCheck(this, vGridIsSortableHeader);
 
           for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
             args[_key7] = arguments[_key7];
           }
 
-          return _ret7 = (_temp7 = (_this7 = _possibleConstructorReturn(this, _VGridAttibutes7.call.apply(_VGridAttibutes7, [this].concat(args))), _this7), _this7.attribute = "requestAnimationFrame", _this7.alias = "configRequestAnimationFrame", _this7.type = "bool", _temp7), _possibleConstructorReturn(_this7, _ret7);
+          return _ret7 = (_temp7 = (_this7 = _possibleConstructorReturn(this, _VGridAttibutes7.call.apply(_VGridAttibutes7, [this].concat(args))), _this7), _this7.attribute = "isSortableHeader", _this7.type = "bool", _temp7), _possibleConstructorReturn(_this7, _ret7);
         }
 
-        return requestAnimationFrame;
+        return vGridIsSortableHeader;
       }(VGridAttibutes)) || _class13) || _class13));
 
-      _export('requestAnimationFrame', requestAnimationFrame);
+      _export('vGridIsSortableHeader', vGridIsSortableHeader);
 
-      _export('resizableHeadersAndRows', resizableHeadersAndRows = (_dec15 = customAttribute('v-resize-also-rows'), _dec16 = inject(Element, Optional.of(VGrid)), _dec15(_class15 = _dec16(_class15 = function (_VGridAttibutes8) {
-        _inherits(resizableHeadersAndRows, _VGridAttibutes8);
+      _export('vGridRequestAnimationFrame', vGridRequestAnimationFrame = (_dec15 = customAttribute('v-request-animation-frame'), _dec16 = inject(Element, Optional.of(VGrid)), _dec15(_class15 = _dec16(_class15 = function (_VGridAttibutes8) {
+        _inherits(vGridRequestAnimationFrame, _VGridAttibutes8);
 
-        function resizableHeadersAndRows() {
+        function vGridRequestAnimationFrame() {
           var _temp8, _this8, _ret8;
 
-          _classCallCheck(this, resizableHeadersAndRows);
+          _classCallCheck(this, vGridRequestAnimationFrame);
 
           for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
             args[_key8] = arguments[_key8];
           }
 
-          return _ret8 = (_temp8 = (_this8 = _possibleConstructorReturn(this, _VGridAttibutes8.call.apply(_VGridAttibutes8, [this].concat(args))), _this8), _this8.attribute = "resizableHeadersAndRows", _this8.alias = "configResizableHeadersAndRows", _this8.type = "bool", _temp8), _possibleConstructorReturn(_this8, _ret8);
+          return _ret8 = (_temp8 = (_this8 = _possibleConstructorReturn(this, _VGridAttibutes8.call.apply(_VGridAttibutes8, [this].concat(args))), _this8), _this8.attribute = "requestAnimationFrame", _this8.type = "bool", _temp8), _possibleConstructorReturn(_this8, _ret8);
         }
 
-        return resizableHeadersAndRows;
+        return vGridRequestAnimationFrame;
       }(VGridAttibutes)) || _class15) || _class15));
 
-      _export('resizableHeadersAndRows', resizableHeadersAndRows);
+      _export('vGridRequestAnimationFrame', vGridRequestAnimationFrame);
 
-      _export('renderOnScrollbarScroll', renderOnScrollbarScroll = (_dec17 = customAttribute('v-render-on-scrollbar-scroll'), _dec18 = inject(Element, Optional.of(VGrid)), _dec17(_class17 = _dec18(_class17 = function (_VGridAttibutes9) {
-        _inherits(renderOnScrollbarScroll, _VGridAttibutes9);
+      _export('vGridResizableHeadersAndRows', vGridResizableHeadersAndRows = (_dec17 = customAttribute('v-resize-also-rows'), _dec18 = inject(Element, Optional.of(VGrid)), _dec17(_class17 = _dec18(_class17 = function (_VGridAttibutes9) {
+        _inherits(vGridResizableHeadersAndRows, _VGridAttibutes9);
 
-        function renderOnScrollbarScroll() {
+        function vGridResizableHeadersAndRows() {
           var _temp9, _this9, _ret9;
 
-          _classCallCheck(this, renderOnScrollbarScroll);
+          _classCallCheck(this, vGridResizableHeadersAndRows);
 
           for (var _len9 = arguments.length, args = Array(_len9), _key9 = 0; _key9 < _len9; _key9++) {
             args[_key9] = arguments[_key9];
           }
 
-          return _ret9 = (_temp9 = (_this9 = _possibleConstructorReturn(this, _VGridAttibutes9.call.apply(_VGridAttibutes9, [this].concat(args))), _this9), _this9.attribute = "renderOnScrollbarScroll", _this9.alias = "configRenderOnScrollbarScroll", _this9.type = "bool", _temp9), _possibleConstructorReturn(_this9, _ret9);
+          return _ret9 = (_temp9 = (_this9 = _possibleConstructorReturn(this, _VGridAttibutes9.call.apply(_VGridAttibutes9, [this].concat(args))), _this9), _this9.attribute = "resizableHeadersAndRows", _this9.type = "bool", _temp9), _possibleConstructorReturn(_this9, _ret9);
         }
 
-        return renderOnScrollbarScroll;
+        return vGridResizableHeadersAndRows;
       }(VGridAttibutes)) || _class17) || _class17));
 
-      _export('renderOnScrollbarScroll', renderOnScrollbarScroll);
+      _export('vGridResizableHeadersAndRows', vGridResizableHeadersAndRows);
 
-      _export('addFilter', addFilter = (_dec19 = customAttribute('v-header-filter'), _dec20 = inject(Element, Optional.of(VGrid)), _dec19(_class19 = _dec20(_class19 = function (_VGridAttibutes10) {
-        _inherits(addFilter, _VGridAttibutes10);
+      _export('vGridRenderOnScrollbarScroll', vGridRenderOnScrollbarScroll = (_dec19 = customAttribute('v-render-on-scrollbar-scroll'), _dec20 = inject(Element, Optional.of(VGrid)), _dec19(_class19 = _dec20(_class19 = function (_VGridAttibutes10) {
+        _inherits(vGridRenderOnScrollbarScroll, _VGridAttibutes10);
 
-        function addFilter() {
+        function vGridRenderOnScrollbarScroll() {
           var _temp10, _this10, _ret10;
 
-          _classCallCheck(this, addFilter);
+          _classCallCheck(this, vGridRenderOnScrollbarScroll);
 
           for (var _len10 = arguments.length, args = Array(_len10), _key10 = 0; _key10 < _len10; _key10++) {
             args[_key10] = arguments[_key10];
           }
 
-          return _ret10 = (_temp10 = (_this10 = _possibleConstructorReturn(this, _VGridAttibutes10.call.apply(_VGridAttibutes10, [this].concat(args))), _this10), _this10.attribute = "addFilter", _this10.alias = "configAddFilter", _this10.type = "bool", _temp10), _possibleConstructorReturn(_this10, _ret10);
+          return _ret10 = (_temp10 = (_this10 = _possibleConstructorReturn(this, _VGridAttibutes10.call.apply(_VGridAttibutes10, [this].concat(args))), _this10), _this10.attribute = "renderOnScrollbarScroll", _this10.type = "bool", _temp10), _possibleConstructorReturn(_this10, _ret10);
         }
 
-        return addFilter;
+        return vGridRenderOnScrollbarScroll;
       }(VGridAttibutes)) || _class19) || _class19));
 
-      _export('addFilter', addFilter);
+      _export('vGridRenderOnScrollbarScroll', vGridRenderOnScrollbarScroll);
 
-      _export('filterOnAtTop', filterOnAtTop = (_dec21 = customAttribute('v-header-filter-top'), _dec22 = inject(Element, Optional.of(VGrid)), _dec21(_class21 = _dec22(_class21 = function (_VGridAttibutes11) {
-        _inherits(filterOnAtTop, _VGridAttibutes11);
+      _export('vGridContextmenu', vGridContextmenu = (_dec21 = customAttribute('v-contextmenu'), _dec22 = inject(Element, Optional.of(VGrid)), _dec21(_class21 = _dec22(_class21 = function (_VGridAttibutes11) {
+        _inherits(vGridContextmenu, _VGridAttibutes11);
 
-        function filterOnAtTop() {
+        function vGridContextmenu() {
           var _temp11, _this11, _ret11;
 
-          _classCallCheck(this, filterOnAtTop);
+          _classCallCheck(this, vGridContextmenu);
 
           for (var _len11 = arguments.length, args = Array(_len11), _key11 = 0; _key11 < _len11; _key11++) {
             args[_key11] = arguments[_key11];
           }
 
-          return _ret11 = (_temp11 = (_this11 = _possibleConstructorReturn(this, _VGridAttibutes11.call.apply(_VGridAttibutes11, [this].concat(args))), _this11), _this11.attribute = "filterOnAtTop", _this11.alias = "configFilterOnAtTop", _this11.type = "bool", _temp11), _possibleConstructorReturn(_this11, _ret11);
+          return _ret11 = (_temp11 = (_this11 = _possibleConstructorReturn(this, _VGridAttibutes11.call.apply(_VGridAttibutes11, [this].concat(args))), _this11), _this11.attribute = "contextmenu", _this11.type = "bool", _temp11), _possibleConstructorReturn(_this11, _ret11);
         }
 
-        return filterOnAtTop;
+        return vGridContextmenu;
       }(VGridAttibutes)) || _class21) || _class21));
 
-      _export('filterOnAtTop', filterOnAtTop);
+      _export('vGridContextmenu', vGridContextmenu);
 
-      _export('sortOnHeaderClick', sortOnHeaderClick = (_dec23 = customAttribute('v-sort-on-header-click'), _dec24 = inject(Element, Optional.of(VGrid)), _dec23(_class23 = _dec24(_class23 = function (_VGridAttibutes12) {
-        _inherits(sortOnHeaderClick, _VGridAttibutes12);
+      _export('vGridLoadingThreshold', vGridLoadingThreshold = (_dec23 = customAttribute('v-loading-threshold'), _dec24 = inject(Element, Optional.of(VGrid)), _dec23(_class23 = _dec24(_class23 = function (_VGridAttibutes12) {
+        _inherits(vGridLoadingThreshold, _VGridAttibutes12);
 
-        function sortOnHeaderClick() {
+        function vGridLoadingThreshold() {
           var _temp12, _this12, _ret12;
 
-          _classCallCheck(this, sortOnHeaderClick);
+          _classCallCheck(this, vGridLoadingThreshold);
 
           for (var _len12 = arguments.length, args = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
             args[_key12] = arguments[_key12];
           }
 
-          return _ret12 = (_temp12 = (_this12 = _possibleConstructorReturn(this, _VGridAttibutes12.call.apply(_VGridAttibutes12, [this].concat(args))), _this12), _this12.attribute = "sortOnHeaderClick", _this12.alias = "configSortOnHeaderClick", _this12.type = "bool", _temp12), _possibleConstructorReturn(_this12, _ret12);
+          return _ret12 = (_temp12 = (_this12 = _possibleConstructorReturn(this, _VGridAttibutes12.call.apply(_VGridAttibutes12, [this].concat(args))), _this12), _this12.attribute = "loadingThreshold", _this12.type = "int", _temp12), _possibleConstructorReturn(_this12, _ret12);
         }
 
-        return sortOnHeaderClick;
+        return vGridLoadingThreshold;
       }(VGridAttibutes)) || _class23) || _class23));
 
-      _export('sortOnHeaderClick', sortOnHeaderClick);
+      _export('vGridLoadingThreshold', vGridLoadingThreshold);
 
-      _export('largeBuffer', largeBuffer = (_dec25 = customAttribute('v-large-buffer'), _dec26 = inject(Element, Optional.of(VGrid)), _dec25(_class25 = _dec26(_class25 = function (_VGridAttibutes13) {
-        _inherits(largeBuffer, _VGridAttibutes13);
+      _export('vGridRemoteIndex', vGridRemoteIndex = (_dec25 = customAttribute('v-remote-index'), _dec26 = inject(Element, Optional.of(VGrid)), _dec25(_class25 = _dec26(_class25 = function (_VGridAttibutes13) {
+        _inherits(vGridRemoteIndex, _VGridAttibutes13);
 
-        function largeBuffer() {
+        function vGridRemoteIndex() {
           var _temp13, _this13, _ret13;
 
-          _classCallCheck(this, largeBuffer);
+          _classCallCheck(this, vGridRemoteIndex);
 
           for (var _len13 = arguments.length, args = Array(_len13), _key13 = 0; _key13 < _len13; _key13++) {
             args[_key13] = arguments[_key13];
           }
 
-          return _ret13 = (_temp13 = (_this13 = _possibleConstructorReturn(this, _VGridAttibutes13.call.apply(_VGridAttibutes13, [this].concat(args))), _this13), _this13.attribute = "largeBuffer", _this13.alias = "configLargeBuffer", _this13.type = "bool", _temp13), _possibleConstructorReturn(_this13, _ret13);
+          return _ret13 = (_temp13 = (_this13 = _possibleConstructorReturn(this, _VGridAttibutes13.call.apply(_VGridAttibutes13, [this].concat(args))), _this13), _this13.attribute = "remoteIndex", _this13.type = "string", _temp13), _possibleConstructorReturn(_this13, _ret13);
         }
 
-        return largeBuffer;
+        return vGridRemoteIndex;
       }(VGridAttibutes)) || _class25) || _class25));
 
-      _export('largeBuffer', largeBuffer);
+      _export('vGridRemoteIndex', vGridRemoteIndex);
 
-      _export('manualSelection', manualSelection = (_dec27 = customAttribute('v-manual-sel'), _dec28 = inject(Element, Optional.of(VGrid)), _dec27(_class27 = _dec28(_class27 = function (_VGridAttibutes14) {
-        _inherits(manualSelection, _VGridAttibutes14);
+      _export('vGridEventOnRowDraw', vGridEventOnRowDraw = (_dec27 = customAttribute('v-row-on-draw'), _dec28 = inject(Optional.of(VGrid)), _dec27(_class27 = _dec28(_class27 = function () {
+        function vGridEventOnRowDraw(vGrid) {
+          _classCallCheck(this, vGridEventOnRowDraw);
 
-        function manualSelection() {
-          var _temp14, _this14, _ret14;
-
-          _classCallCheck(this, manualSelection);
-
-          for (var _len14 = arguments.length, args = Array(_len14), _key14 = 0; _key14 < _len14; _key14++) {
-            args[_key14] = arguments[_key14];
-          }
-
-          return _ret14 = (_temp14 = (_this14 = _possibleConstructorReturn(this, _VGridAttibutes14.call.apply(_VGridAttibutes14, [this].concat(args))), _this14), _this14.attribute = "manualSelection", _this14.alias = "configManualSelection", _this14.type = "bool", _temp14), _possibleConstructorReturn(_this14, _ret14);
+          this.vGrid = vGrid;
         }
 
-        return manualSelection;
-      }(VGridAttibutes)) || _class27) || _class27));
-
-      _export('manualSelection', manualSelection);
-
-      _export('eventOnRowDraw', eventOnRowDraw = (_dec29 = customAttribute('v-row-on-draw'), _dec30 = inject(Element, Optional.of(VGrid)), _dec29(_class29 = _dec30(_class29 = function (_VGridAttibutes15) {
-        _inherits(eventOnRowDraw, _VGridAttibutes15);
-
-        function eventOnRowDraw() {
-          var _temp15, _this15, _ret15;
-
-          _classCallCheck(this, eventOnRowDraw);
-
-          for (var _len15 = arguments.length, args = Array(_len15), _key15 = 0; _key15 < _len15; _key15++) {
-            args[_key15] = arguments[_key15];
+        vGridEventOnRowDraw.prototype.bind = function bind() {
+          if (typeof this.value === "function") {
+            this.vGrid.vGridConfig.eventOnRowDraw = this.value;
           }
+        };
 
-          return _ret15 = (_temp15 = (_this15 = _possibleConstructorReturn(this, _VGridAttibutes15.call.apply(_VGridAttibutes15, [this].concat(args))), _this15), _this15.attribute = "eventOnRowDraw", _this15.alias = "configEventOnRowDraw", _this15.type = "fn", _temp15), _possibleConstructorReturn(_this15, _ret15);
+        return vGridEventOnRowDraw;
+      }()) || _class27) || _class27));
+
+      _export('vGridEventOnRowDraw', vGridEventOnRowDraw);
+
+      _export('vGridEventOnRemoteCall', vGridEventOnRemoteCall = (_dec29 = customAttribute('v-event-onremote'), _dec30 = inject(Optional.of(VGrid)), _dec29(_class28 = _dec30(_class28 = function () {
+        function vGridEventOnRemoteCall(vGrid) {
+          _classCallCheck(this, vGridEventOnRemoteCall);
+
+          this.vGrid = vGrid;
         }
 
-        return eventOnRowDraw;
-      }(VGridAttibutes)) || _class29) || _class29));
-
-      _export('eventOnRowDraw', eventOnRowDraw);
-
-      _export('attributeArray', attributeArray = (_dec31 = customAttribute('v-attibutes-used'), _dec32 = inject(Element, Optional.of(VGrid)), _dec31(_class31 = _dec32(_class31 = function (_VGridAttibutes16) {
-        _inherits(attributeArray, _VGridAttibutes16);
-
-        function attributeArray() {
-          var _temp16, _this16, _ret16;
-
-          _classCallCheck(this, attributeArray);
-
-          for (var _len16 = arguments.length, args = Array(_len16), _key16 = 0; _key16 < _len16; _key16++) {
-            args[_key16] = arguments[_key16];
+        vGridEventOnRemoteCall.prototype.bind = function bind() {
+          if (typeof this.value === "function") {
+            this.vGrid.vGridConfig.eventOnRemoteCall = this.value;
           }
+        };
 
-          return _ret16 = (_temp16 = (_this16 = _possibleConstructorReturn(this, _VGridAttibutes16.call.apply(_VGridAttibutes16, [this].concat(args))), _this16), _this16.attribute = "attributeArray", _this16.alias = "configAttributeArray", _this16.type = "array", _temp16), _possibleConstructorReturn(_this16, _ret16);
+        return vGridEventOnRemoteCall;
+      }()) || _class28) || _class28));
+
+      _export('vGridEventOnRemoteCall', vGridEventOnRemoteCall);
+
+      _export('vGridHeaderFilterOn', vGridHeaderFilterOn = (_dec31 = customAttribute('v-filter'), _dec32 = inject(Element, VGrid), _dec31(_class29 = _dec32(_class29 = function () {
+        function vGridHeaderFilterOn(element, vGrid) {
+          _classCallCheck(this, vGridHeaderFilterOn);
+
+          this.vGrid = vGrid;
+          this.element = element;
         }
 
-        return attributeArray;
-      }(VGridAttibutes)) || _class31) || _class31));
+        vGridHeaderFilterOn.prototype.bind = function bind(bindingContext, overrideContext) {
+          this.bindingContext = bindingContext;
+          this.overrideContext = overrideContext;
+          var values = this.value.split("|");
+          this.attribute = values[0];
+          this.filterOn = values[1];
+          this.filterOperator = values[2];
+        };
 
-      _export('attributeArray', attributeArray);
+        vGridHeaderFilterOn.prototype.updateFilter = function updateFilter(curFilter) {
+          var _this14 = this;
 
-      _export('doNotAddFilterTo', doNotAddFilterTo = (_dec33 = customAttribute('v-header-filter-not-to'), _dec34 = inject(Element, Optional.of(VGrid)), _dec33(_class33 = _dec34(_class33 = function (_VGridAttibutes17) {
-        _inherits(doNotAddFilterTo, _VGridAttibutes17);
+          var filterIndex;
 
-        function doNotAddFilterTo() {
-          var _temp17, _this17, _ret17;
+          curFilter.forEach(function (filter, index) {
+            if (filter.attribute === _this14.attribute) {
+              filterIndex = index;
+            }
+          });
 
-          _classCallCheck(this, doNotAddFilterTo);
+          if (filterIndex) {
+            if (this.element.value === "") {
+              curFilter.splice(filterIndex, 1);
+            } else {
+              curFilter[filterIndex].value = this.element.value;
+            }
+          } else {
+            if (this.element.value !== "") {
+              curFilter.push({
+                attribute: this.attribute,
+                operator: this.filterOperator,
+                value: this.element.value
+              });
+            }
+          }
+        };
 
-          for (var _len17 = arguments.length, args = Array(_len17), _key17 = 0; _key17 < _len17; _key17++) {
-            args[_key17] = arguments[_key17];
+        vGridHeaderFilterOn.prototype.attached = function attached() {
+          var _this15 = this;
+
+          if (this.filterOn === "enter") {
+            this.element.onkeydown = function (e) {
+              if (e.keyCode === 13) {
+                var curFilter = _this15.vGrid.vGridFilter.lastFilter;
+                _this15.updateFilter(curFilter);
+                _this15.vGrid.vGridConfig.onFilterRun(curFilter);
+              } else {
+                var curFilter = _this15.vGrid.vGridFilter.lastFilter;
+                _this15.updateFilter(curFilter);
+              }
+            };
           }
 
-          return _ret17 = (_temp17 = (_this17 = _possibleConstructorReturn(this, _VGridAttibutes17.call.apply(_VGridAttibutes17, [this].concat(args))), _this17), _this17.attribute = "doNotAddFilterTo", _this17.alias = "configDoNotAddFilterTo", _this17.type = "array", _temp17), _possibleConstructorReturn(_this17, _ret17);
+          if (this.filterOn === "keyDown") {}
+        };
+
+        return vGridHeaderFilterOn;
+      }()) || _class29) || _class29));
+
+      _export('vGridHeaderFilterOn', vGridHeaderFilterOn);
+
+      _export('vGridHeaderSortIcon', vGridHeaderSortIcon = (_dec33 = customAttribute('v-sort'), _dec34 = inject(Element, VGrid), _dec33(_class30 = _dec34(_class30 = function () {
+        function vGridHeaderSortIcon(element, vGrid) {
+          _classCallCheck(this, vGridHeaderSortIcon);
+
+          this.vGrid = vGrid;
+          this.element = element;
         }
 
-        return doNotAddFilterTo;
-      }(VGridAttibutes)) || _class33) || _class33));
+        vGridHeaderSortIcon.prototype.bind = function bind(bindingContext, overrideContext) {
+          this.bindingContext = bindingContext;
+          this.overrideContext = overrideContext;
+          var values = this.value.split("|");
+          this.attribute = values[0];
+          this.icon = values[1] ? true : false;
+          this.filterOperator = values[2];
+        };
 
-      _export('doNotAddFilterTo', doNotAddFilterTo);
+        vGridHeaderSortIcon.prototype.attached = function attached() {
+          var _this16 = this;
 
-      _export('sortNotOnHeader', sortNotOnHeader = (_dec35 = customAttribute('v-sort-not-on-header'), _dec36 = inject(Element, Optional.of(VGrid)), _dec35(_class35 = _dec36(_class35 = function (_VGridAttibutes18) {
-        _inherits(sortNotOnHeader, _VGridAttibutes18);
+          this.sortIcon = document.createElement("SPAN");
+          this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
+          this.element.appendChild(this.sortIcon);
+          this.element.onclick = function (e) {
+            _this16.vGrid.vGridConfig.onOrderBy(_this16.attribute, e.shiftKey);
+          };
 
-        function sortNotOnHeader() {
-          var _temp18, _this18, _ret18;
+          this.vGrid.element.addEventListener("sortIconUpdate", function (e) {
+            _this16.sortIcon.innerHTML = _this16.getSortIconMarkup(_this16.attribute);
+          });
+        };
 
-          _classCallCheck(this, sortNotOnHeader);
+        vGridHeaderSortIcon.prototype.getSortIconMarkup = function getSortIconMarkup(attribute) {
+          var _this17 = this;
 
-          for (var _len18 = arguments.length, args = Array(_len18), _key18 = 0; _key18 < _len18; _key18++) {
-            args[_key18] = arguments[_key18];
+          var css = this.vGrid.vGridConfig.css;
+          var lineHeigthStyleTag = "100%";
+          var isAscHtml = '<span ' + lineHeigthStyleTag + ' class="' + css.sortIcon + ' ' + css.sortIconAsc + '"></span>';
+          var isDescHtml = '<span ' + lineHeigthStyleTag + ' class="' + css.sortIcon + ' ' + css.sortIconDesc + '"></span>';
+          var markup = '<span ' + lineHeigthStyleTag + ' class="' + css.sortIcon + ' ' + css.sortIconSort + '"></span>';
+
+          if (this.vGrid.vGridSort.getFilter().length !== 0) {
+            this.vGrid.vGridSort.getFilter().forEach(function (x) {
+              if (x.attribute === _this17.attribute) {
+                var block = x.asc === true ? isAscHtml : isDescHtml;
+                var main = '<span ' + lineHeigthStyleTag + ' class="' + css.sortIcon + ' ' + css.sortIconNo + x.no + '"></span>';
+                markup = main + block;
+              }
+            });
           }
 
-          return _ret18 = (_temp18 = (_this18 = _possibleConstructorReturn(this, _VGridAttibutes18.call.apply(_VGridAttibutes18, [this].concat(args))), _this18), _this18.attribute = "sortNotOnHeader", _this18.alias = "configSortNotOnHeader", _this18.type = "array", _temp18), _possibleConstructorReturn(_this18, _ret18);
-        }
+          return markup;
+        };
 
-        return sortNotOnHeader;
-      }(VGridAttibutes)) || _class35) || _class35));
+        return vGridHeaderSortIcon;
+      }()) || _class30) || _class30));
 
-      _export('sortNotOnHeader', sortNotOnHeader);
-
-      _export('eventOnRowClick', eventOnRowClick = (_dec37 = customAttribute('v-row-onclick'), _dec38 = inject(Element, Optional.of(VGrid)), _dec37(_class37 = _dec38(_class37 = function (_VGridAttibutes19) {
-        _inherits(eventOnRowClick, _VGridAttibutes19);
-
-        function eventOnRowClick() {
-          var _temp19, _this19, _ret19;
-
-          _classCallCheck(this, eventOnRowClick);
-
-          for (var _len19 = arguments.length, args = Array(_len19), _key19 = 0; _key19 < _len19; _key19++) {
-            args[_key19] = arguments[_key19];
-          }
-
-          return _ret19 = (_temp19 = (_this19 = _possibleConstructorReturn(this, _VGridAttibutes19.call.apply(_VGridAttibutes19, [this].concat(args))), _this19), _this19.attribute = "eventOnRowClick", _this19.alias = "configEventOnRowClick", _this19.type = "fn", _temp19), _possibleConstructorReturn(_this19, _ret19);
-        }
-
-        return eventOnRowClick;
-      }(VGridAttibutes)) || _class37) || _class37));
-
-      _export('eventOnRowClick', eventOnRowClick);
-
-      _export('eventOnRowDblClick', eventOnRowDblClick = (_dec39 = customAttribute('v-row-ondblclick'), _dec40 = inject(Element, Optional.of(VGrid)), _dec39(_class39 = _dec40(_class39 = function (_VGridAttibutes20) {
-        _inherits(eventOnRowDblClick, _VGridAttibutes20);
-
-        function eventOnRowDblClick() {
-          var _temp20, _this20, _ret20;
-
-          _classCallCheck(this, eventOnRowDblClick);
-
-          for (var _len20 = arguments.length, args = Array(_len20), _key20 = 0; _key20 < _len20; _key20++) {
-            args[_key20] = arguments[_key20];
-          }
-
-          return _ret20 = (_temp20 = (_this20 = _possibleConstructorReturn(this, _VGridAttibutes20.call.apply(_VGridAttibutes20, [this].concat(args))), _this20), _this20.attribute = "eventOnRowDblClick", _this20.alias = "configEventOnRowDblClick", _this20.type = "fn", _temp20), _possibleConstructorReturn(_this20, _ret20);
-        }
-
-        return eventOnRowDblClick;
-      }(VGridAttibutes)) || _class39) || _class39));
-
-      _export('eventOnRowDblClick', eventOnRowDblClick);
-
-      _export('contextmenu', contextmenu = (_dec41 = customAttribute('v-contextmenu'), _dec42 = inject(Element, Optional.of(VGrid)), _dec41(_class41 = _dec42(_class41 = function (_VGridAttibutes21) {
-        _inherits(contextmenu, _VGridAttibutes21);
-
-        function contextmenu() {
-          var _temp21, _this21, _ret21;
-
-          _classCallCheck(this, contextmenu);
-
-          for (var _len21 = arguments.length, args = Array(_len21), _key21 = 0; _key21 < _len21; _key21++) {
-            args[_key21] = arguments[_key21];
-          }
-
-          return _ret21 = (_temp21 = (_this21 = _possibleConstructorReturn(this, _VGridAttibutes21.call.apply(_VGridAttibutes21, [this].concat(args))), _this21), _this21.attribute = "contextmenu", _this21.alias = "configContextmenu", _this21.type = "bool", _temp21), _possibleConstructorReturn(_this21, _ret21);
-        }
-
-        return contextmenu;
-      }(VGridAttibutes)) || _class41) || _class41));
-
-      _export('contextmenu', contextmenu);
-
-      _export('LoadingThreshold', LoadingThreshold = (_dec43 = customAttribute('v-loading-threshold'), _dec44 = inject(Element, Optional.of(VGrid)), _dec43(_class43 = _dec44(_class43 = function (_VGridAttibutes22) {
-        _inherits(LoadingThreshold, _VGridAttibutes22);
-
-        function LoadingThreshold() {
-          var _temp22, _this22, _ret22;
-
-          _classCallCheck(this, LoadingThreshold);
-
-          for (var _len22 = arguments.length, args = Array(_len22), _key22 = 0; _key22 < _len22; _key22++) {
-            args[_key22] = arguments[_key22];
-          }
-
-          return _ret22 = (_temp22 = (_this22 = _possibleConstructorReturn(this, _VGridAttibutes22.call.apply(_VGridAttibutes22, [this].concat(args))), _this22), _this22.attribute = "loadingThreshold", _this22.alias = "configLoadingThreshold", _this22.type = "int", _temp22), _possibleConstructorReturn(_this22, _ret22);
-        }
-
-        return LoadingThreshold;
-      }(VGridAttibutes)) || _class43) || _class43));
-
-      _export('LoadingThreshold', LoadingThreshold);
-
-      _export('eventOnRemoteCall', eventOnRemoteCall = (_dec45 = customAttribute('v-event-onremotecall'), _dec46 = inject(Element, Optional.of(VGrid)), _dec45(_class45 = _dec46(_class45 = function (_VGridAttibutes23) {
-        _inherits(eventOnRemoteCall, _VGridAttibutes23);
-
-        function eventOnRemoteCall() {
-          var _temp23, _this23, _ret23;
-
-          _classCallCheck(this, eventOnRemoteCall);
-
-          for (var _len23 = arguments.length, args = Array(_len23), _key23 = 0; _key23 < _len23; _key23++) {
-            args[_key23] = arguments[_key23];
-          }
-
-          return _ret23 = (_temp23 = (_this23 = _possibleConstructorReturn(this, _VGridAttibutes23.call.apply(_VGridAttibutes23, [this].concat(args))), _this23), _this23.attribute = "eventOnRemoteCall", _this23.alias = "configEventOnRemoteCall", _this23.type = "fn", _temp23), _possibleConstructorReturn(_this23, _ret23);
-        }
-
-        return eventOnRemoteCall;
-      }(VGridAttibutes)) || _class45) || _class45));
-
-      _export('eventOnRemoteCall', eventOnRemoteCall);
-
-      _export('remoteIndex', remoteIndex = (_dec47 = customAttribute('v-remote-index'), _dec48 = inject(Element, Optional.of(VGrid)), _dec47(_class47 = _dec48(_class47 = function (_VGridAttibutes24) {
-        _inherits(remoteIndex, _VGridAttibutes24);
-
-        function remoteIndex() {
-          var _temp24, _this24, _ret24;
-
-          _classCallCheck(this, remoteIndex);
-
-          for (var _len24 = arguments.length, args = Array(_len24), _key24 = 0; _key24 < _len24; _key24++) {
-            args[_key24] = arguments[_key24];
-          }
-
-          return _ret24 = (_temp24 = (_this24 = _possibleConstructorReturn(this, _VGridAttibutes24.call.apply(_VGridAttibutes24, [this].concat(args))), _this24), _this24.attribute = "remoteIndex", _this24.alias = "configRemoteIndex", _this24.type = "string", _temp24), _possibleConstructorReturn(_this24, _ret24);
-        }
-
-        return remoteIndex;
-      }(VGridAttibutes)) || _class47) || _class47));
-
-      _export('remoteIndex', remoteIndex);
+      _export('vGridHeaderSortIcon', vGridHeaderSortIcon);
     }
   };
 });
-//# sourceMappingURL=data:application/json;base64,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QWdCLHdCQUFoQixDLFdBQ0EsT0FBTyxPQUFQLEVBQWdCLFNBQVMsRUFBVCxDQUFZLEtBQVosQ0FBaEIsQzs7Ozs7Ozs7Ozs7OzBLQUVDLFMsR0FBWSxrQixVQUNaLEssR0FBUSx3QixVQUNSLEksR0FBTyxPOzs7O1FBSDZCLGM7Ozs7aUNBUXpCLGUsYUFGWixnQkFBZ0Isc0JBQWhCLEMsV0FDQSxPQUFPLE9BQVAsRUFBZ0IsU0FBUyxFQUFULENBQVksS0FBWixDQUFoQixDOzs7Ozs7Ozs7Ozs7MEtBRUMsUyxHQUFZLGlCLFVBQ1osSyxHQUFRLHVCLFVBQ1IsSSxHQUFPLE87Ozs7UUFINEIsYzs7OztpQ0FTeEIsZSxhQUZaLGdCQUFnQixlQUFoQixDLFdBQ0EsT0FBTyxPQUFQLEVBQWdCLFNBQVMsRUFBVCxDQUFZLEtBQVosQ0FBaEIsQzs7Ozs7Ozs7Ozs7OzBLQUVDLFMsR0FBWSxpQixVQUNaLEssR0FBUSx1QixVQUNSLEksR0FBTyxJOzs7O1FBSDRCLGM7Ozs7b0NBUXhCLGtCLGFBRlosZ0JBQWdCLGtCQUFoQixDLFdBQ0EsT0FBTyxPQUFQLEVBQWdCLFNBQVMsRUFBVCxDQUFZLEtBQVosQ0FBaEIsQzs7Ozs7Ozs7Ozs7OzBLQUVDLFMsR0FBWSxvQixVQUNaLEssR0FBUSwwQixVQUNSLEksR0FBTyxJOzs7O1FBSCtCLGM7Ozs7NkJBUzNCLFcsYUFGWixnQkFBZ0IsZUFBaEIsQyxXQUNBLE9BQU8sT0FBUCxFQUFnQixTQUFTLEVBQVQsQ0FBWSxLQUFaLENBQWhCLEM7Ozs7Ozs7Ozs7OzswS0FFQyxTLEdBQVksYSxVQUNaLEssR0FBUSxtQixVQUNSLEksR0FBTyxNOzs7O1FBSHdCLGM7Ozs7a0NBU3BCLGdCLGFBRlosZ0JBQWdCLHFCQUFoQixDLFdBQ0EsT0FBTyxPQUFQLEVBQWdCLFNBQVMsRUFBVCxDQUFZLEtBQVosQ0FBaEIsQzs7Ozs7Ozs7Ozs7OzBLQUVDLFMsR0FBWSxrQixVQUNaLEssR0FBUSx3QixVQUNSLEksR0FBTyxLOzs7O1FBSDZCLGM7Ozs7bUNBUXpCLGlCLGFBRlosZ0JBQWdCLHNCQUFoQixDLFdBQ0EsT0FBTyxPQUFQLEVBQWdCLFNBQVMsRUFBVCxDQUFZLEtBQVosQ0FBaEIsQzs7Ozs7Ozs7Ozs7OzBLQUVDLFMsR0FBWSxtQixVQUNaLEssR0FBUSx5QixVQUNSLEksR0FBTyxJOzs7O1FBSDhCLGM7Ozs7NkJBUzFCLFcsYUFGWixnQkFBZ0IsZ0JBQWhCLEMsV0FDQSxPQUFPLE9BQVAsRUFBZ0IsU0FBUyxFQUFULENBQVksS0FBWixDQUFoQixDOzs7Ozs7Ozs7Ozs7MEtBRUMsUyxHQUFZLGEsVUFDWixLLEdBQVEsbUIsVUFDUixJLEdBQU8sUTs7OztRQUh3QixjIiwiZmlsZSI6InZHcmlkL3YtZ3JpZC1hdHRzLmpzIiwic291cmNlUm9vdCI6Ii9zcmMifQ==
+//# sourceMappingURL=data:application/json;base64,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

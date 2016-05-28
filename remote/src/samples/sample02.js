@@ -27,14 +27,17 @@ export class sample02 {
       });
   }
 
-  onRowDraw (data, collectionData) {
+
+  onRowDraw(data) {
     if (data) {
-      if(data.number>100){
-        data.numberColor = "green";
-        data.numberFont = "normal";
-      } else {
-        data.numberColor = "red";
-        data.numberFont = "bold";
+      if (data.tempRef) {
+        if (data.tempRef.number > 100) {
+          data.tempRef.numberColor = "green";
+          data.tempRef.numberFont = "normal";
+        } else {
+          data.tempRef.numberColor = "red";
+          data.tempRef.numberFont = "bold";
+        }
       }
     }
 

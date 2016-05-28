@@ -12,44 +12,42 @@ export class sample01 {
   myCurrentEntity = {};
   myGrid = {};
 
-  get filteredRows(){
-    if(this.myGrid.ctx){
+  get filteredRows() {
+    if (this.myGrid.ctx) {
       return this.myGrid.ctx.vGridCollectionFiltered.length
     } else {
       return 0;
     }
   }
-  
-  
 
 
-  onRowDraw (data, collectionData) {
+  onRowDraw(data) {
     if (data) {
-      if(data.number>100){
-        data.numberColor = "green";
-        data.numberFont = "normal";
-      } else {
-        data.numberColor = "red";
-        data.numberFont = "bold";
+      if (data.tempRef) {
+        if (data.tempRef.number > 100) {
+          data.tempRef.numberColor = "green";
+          data.tempRef.numberFont = "normal";
+        } else {
+          data.tempRef.numberColor = "red";
+          data.tempRef.numberFont = "bold";
+        }
       }
     }
 
   }
 
-  
-  singleClick(e){
+
+  singleClick(e) {
     console.log("click")
   }
 
-  
-  singleDblClick(e){
+
+  singleDblClick(e) {
     console.log("dblClick")
   }
 
 
-  
-
-  collectionLength= 0;
+  collectionLength = 0;
 
   /********************************************************************
    * Constructor
@@ -67,12 +65,10 @@ export class sample01 {
 
   }
 
-  attached(){
-   this.getMaxRows = this.myGrid.ctx.getMaxRows();
+  attached() {
+    this.getMaxRows = this.myGrid.ctx.getMaxRows();
 
   }
-
-
 
 
   /********************************************************************
@@ -94,7 +90,7 @@ export class sample01 {
       data.forEach((x) => {
         this.myCollection.push(x)
       });
-      if(scrollBottom){
+      if (scrollBottom) {
         this.myGrid.ctx.scrollBottomNext();
       }
 
@@ -103,24 +99,24 @@ export class sample01 {
   }
 
 
-  insertOneBtn(){
+  insertOneBtn() {
     try {
       this.dummyDataGenerator.generateData(1, (data) => {
         this.myCollection.splice(2, 0, data[0])
       });
-    } catch (e){
+    } catch (e) {
       console.log(e)
     }
   }
 
-  insertFiveBtn(){
+  insertFiveBtn() {
     try {
-      for(var i = 0; i < 5; i++){
+      for (var i = 0; i < 5; i++) {
         this.dummyDataGenerator.generateData(1, (data) => {
           this.myCollection.splice(2, 0, data[0])
         });
       }
-    } catch (e){
+    } catch (e) {
       console.log(e)
     }
   }
@@ -149,7 +145,7 @@ export class sample01 {
 
   }
 
-  miscBtn(){
+  miscBtn() {
     this.myCollection.pop();
 
     this.myCollection.splice(2, 2);
@@ -166,25 +162,25 @@ export class sample01 {
   /********************************************************************
    *  grid save/load state/report
    ********************************************************************/
-  
-  oldState= null;
 
-  saveStateBtn(){
+  oldState = null;
+
+  saveStateBtn() {
     this.oldState = this.myGrid.ctx.getColumns(this.oldState);
   }
 
-  loadStateBtn(){
-    if(this.oldState){
+  loadStateBtn() {
+    if (this.oldState) {
       this.myGrid.ctx.setColumns(this.oldState);
       this.myGrid.ctx.rebuildColumns();
     }
 
   }
 
-  switchNameBtn(){
+  switchNameBtn() {
     let oldState = this.myGrid.ctx.getColumns(this.oldState);
-    let oldIndex= oldState.colAttrArray.indexOf("name");
-    let newIndex= oldState.colAttrArray.indexOf("color");
+    let oldIndex = oldState.colAttrArray.indexOf("name");
+    let newIndex = oldState.colAttrArray.indexOf("color");
 
 
     oldState.colAttrArray[oldIndex] = "color";
@@ -199,24 +195,24 @@ export class sample01 {
 
   }
 
-  report(){
+  report() {
     this.myGrid.ctx.createReport()
   }
 
-  redraw(){
+  redraw() {
     this.myGrid.ctx.redrawGrid()
   }
 
-  runFilterByCode(){
+  runFilterByCode() {
 
     //set sorting, this will be used after the filter
-    this.myGrid.ctx.setSorting({attribute:"name", asc:true}, true);
-    this.myGrid.ctx.setSorting({attribute:"index", asc:true}, true);
+    this.myGrid.ctx.setSorting({attribute: "name", asc: true}, true);
+    this.myGrid.ctx.setSorting({attribute: "index", asc: true}, true);
 
-    var simpleFilter = (attribute, value, operator)=>{
-      this.myGrid.ctx.vGridFilter.queryStrings ={[attribute]:value};
+    var simpleFilter = (attribute, value, operator)=> {
+      this.myGrid.ctx.vGridFilter.queryStrings = {[attribute]: value};
       this.myGrid.ctx.rebuildColumns();
-      this.myGrid.ctx.runFilter([{attribute:attribute, value:value, operator:operator}]);
+      this.myGrid.ctx.runFilter([{attribute: attribute, value: value, operator: operator}]);
     };
     simpleFilter("name", "ge", "*");
   }

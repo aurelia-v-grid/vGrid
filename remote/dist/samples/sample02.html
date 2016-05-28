@@ -5,14 +5,13 @@
   <require from="number-format.js"></require>
 
 
-
   <div class="myContainer">
 
     <!------------------------------------------------------------------------------------------------------------------------------------>
     <!--ROW1------------------------------------------------------------------------------------------------------------------------------>
     <!------------------------------------------------------------------------------------------------------------------------------------>
 
-    <div  class="myRow1">
+    <div class="myRow1">
 
       <!------------------------------------------------------------------------------------------------------------------------------------>
       <!--GRID------------------------------------------------------------------------------------------------------------------------------>
@@ -39,39 +38,90 @@
           v-sort-on-header-click="true"
           v-multi-select="true"
           v-remote-data="true"
-          v-row-on-draw="onRowDraw"
-          v-event-onremotecall="callRemoteServer"
+          v-row-on-draw.call="onRowDraw()"
+          v-event-onremote.call="callRemoteServer($event)"
           v-current-entity.bind=myCurrentEntity
           v-collection.bind=myCollection
           v-grid-context.bind=myGrid>
 
-          <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=">
-            <input readonly class="form-control input-sm " value.bind="rowRef.id" style="background-color:transparent;height: 100%">
+          <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index">
+
+            <v-header-template>
+              <input class="form-control input-sm " value.bind="tempRef.name"
+                     style="background-color:transparent;height: 100%">
+            </v-header-template>
+
+            <v-row-template>
+              <input readonly class="form-control input-sm " value.bind="rowRef.id"
+                     style="background-color:transparent;height: 100%">
+            </v-row-template>
           </v-grid-col>
 
-          <v-grid-col v-col-width="100" v-col-attribute="name" v-col-filter-on-key="true" v-col-header="name" v-col-default-filter="*">
-            <input readonly class="form-control input-sm " value.bind="rowRef.first" style="background-color:transparent;height: 100%">
+          <v-grid-col v-col-width="100" v-col-attribute="name" v-col-header="name">
+
+            <v-header-template>
+              <input class="form-control input-sm " value.bind="tempRef.name"
+                     style="background-color:transparent;height: 100%">
+            </v-header-template>
+
+            <v-row-template>
+              <input readonly class="form-control input-sm " value.bind="rowRef.first"
+                     style="background-color:transparent;height: 100%">
+            </v-row-template>
           </v-grid-col>
 
           <v-grid-col v-col-width="90" v-col-attribute="image" v-col-header="image">
-            <image src.bind="rowRef.image" style="border-radius: 50%;height:100%;margin-left:25%;">
+
+            <v-header-template>
+              <input class="form-control input-sm " value.bind="tempRef.name"
+                     style="background-color:transparent;height: 100%">
+            </v-header-template>
+
+            <v-row-template>
+              <image src.bind="rowRef.image" style="border-radius: 50%;height:100%;margin-left:25%;">
+            </v-row-template>
           </v-grid-col>
 
-          <v-grid-col v-col-width="80" v-col-attribute="zip" v-col-header="Number" v-col-default-filter=">=">
-            <input readonly class="form-control input-sm " value.bind="rowRef.zip | numberFormat" css="background-color:transparent; height: 100%; color:${tempRef.numberColor};font-weight:${tempRef.numberFont};text-align:right; padding-right:5px">
+          <v-grid-col v-col-width="80" v-col-attribute="zip" v-col-header="Number">
+
+            <v-header-template>
+              <input class="form-control input-sm " value.bind="tempRef.name"
+                     style="background-color:transparent;height: 100%">
+            </v-header-template>
+
+            <v-row-template>
+              <input readonly class="form-control input-sm " value.bind="rowRef.zip | numberFormat"
+                     css="background-color:transparent; height: 100%; color:${tempRef.numberColor};font-weight:${tempRef.numberFont};text-align:right; padding-right:5px">
+            </v-row-template>
           </v-grid-col>
 
-          <v-grid-col v-col-width="180" v-col-attribute="created_a" v-col-header="date"  v-col-formater="dateFormat" v-col-default-filter=">=">
-            <input readonly class="form-control input-sm " value.bind="rowRef.created_at | dateFormat" style="background-color:transparent;height: 100%">
+          <v-grid-col v-col-width="180" v-col-attribute="created_a" v-col-header="date">
+
+            <v-header-template>
+              <input class="form-control input-sm " value.bind="tempRef.name"
+                     style="background-color:transparent;height: 100%">
+            </v-header-template>
+
+            <v-row-template>
+              <input readonly class="form-control input-sm " value.bind="rowRef.created_at | dateFormat"
+                     style="background-color:transparent;height: 100%">
+            </v-row-template>
           </v-grid-col>
 
-          <v-grid-col v-col-width="160" v-col-attribute="last" v-col-header="Color" v-col-default-filter="=*" >
-            <input readonly class="form-control input-sm " value.bind="rowRef.last" style="background-color:transparent;height:100%">
+          <v-grid-col v-col-width="160" v-col-attribute="last" v-col-header="Color">
+
+            <v-header-template>
+              <input class="form-control input-sm " value.bind="tempRef.name"
+                     style="background-color:transparent;height: 100%">
+            </v-header-template>
+
+            <v-row-template>
+              <input readonly class="form-control input-sm " value.bind="rowRef.last"
+                     style="background-color:transparent;height:100%">
+            </v-row-template>
           </v-grid-col>
 
         </v-grid>
-
-
 
 
 </template>

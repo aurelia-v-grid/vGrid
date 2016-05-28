@@ -77,7 +77,6 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
           this.vGrid = vGrid;
           this.container = container;
           this.vGridConfig = vGrid.vGridConfig;
-          this.queryString = null;
         }
 
         VGridCellRowHeader.prototype.bind = function bind(bindingContext) {
@@ -89,60 +88,8 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
         VGridCellRowHeader.prototype.attached = function attached() {
           this.setStandardClassesAndStyles();
 
-          this.addFilter = this.vGridConfig.addFilter;
-          this.header = this.vGridConfig.headerArray[this.columnNo];
-          this.filter = this.vGridConfig.filterArray[this.columnNo];
-          this.filterTop = this.vGridConfig.filterOnAtTop;
-          this.justLabel = this.vGridConfig.doNotAddFilterTo.indexOf(this.attribute());
-          this.filterName = this.vGridConfig.getFilterName(this.filter);
-          var value = this.vGrid.vGridFilter.queryStrings[this.attribute()];
-          if (value) {
-            this.queryString = value;
-          }
-
-          var sortIcon = this.getSortIconMarkup(this.attribute());
-
-          var type = "single";
-          if (this.addFilter) {
-            type = "filterTop";
-            if (!this.filterTop) {
-              type = "filterBottom";
-              if (this.justLabel !== -1) {
-                type = "noFilterBottom";
-              }
-            } else {
-              if (this.justLabel !== -1) {
-                type = "noFilterTop";
-              }
-            }
-          }
-
-          this.type = type;
-          switch (type) {
-
-            case "single":
-              var viewFactory = this.vGrid.viewCompiler.compile('\n          <template>\n\n            <v-grid-label type="single">\n              <div>' + this.header + sortIcon + '</div>\n            </v-grid-label>\n\n          </template>\n          ', this.vGrid.resources);
-              break;
-
-            case "filterTop":
-              var viewFactory = this.vGrid.viewCompiler.compile('\n          <template>\n\n            <v-grid-filter-text filter-value.two-way="queryString" type="filterTop">\n              <input placeholder="' + this.filterName + '">\n            </v-grid-filter-text>\n\n            <v-grid-label type="labelBottom">\n              <div>' + this.header + sortIcon + '</div>\n            </v-grid-label>\n\n          </template>\n          ', this.vGrid.resources);
-              break;
-
-            case "filterBottom":
-              var viewFactory = this.vGrid.viewCompiler.compile('\n          <template>\n\n            <v-grid-label type="labelTop">\n              <div>' + this.header + sortIcon + '</div>\n            </v-grid-label>\n\n             <v-grid-filter-text filter-value.two-way="queryString" type="filterBottom">\n              <input placeholder="' + this.filterName + '">\n            </v-grid-filter-text>\n\n          </template>\n          ', this.vGrid.resources);
-              break;
-
-            case "noFilterTop":
-              var viewFactory = this.vGrid.viewCompiler.compile('\n          <template>\n\n            <v-grid-label type="blankLabel">\n              <div></div>\n            </v-grid-label>\n\n             <v-grid-label type="labelBottom">\n              <div>' + this.header + sortIcon + '</div>\n            </v-grid-label>\n\n          </template>\n          ', this.vGrid.resources);
-              break;
-
-            case "noFilterBottom":
-              var viewFactory = this.vGrid.viewCompiler.compile('\n          <template>\n\n             <v-grid-label type="labelBottom">\n              <div>' + this.header + sortIcon + '</div>\n            </v-grid-label>\n\n            <v-grid-label type="blankLabel">\n              <div></div>\n            </v-grid-label>\n\n          </template>\n          ', this.vGrid.resources);
-              break;
-
-            default:
-              break;
-          }
+          var tempHtml = this.vGridConfig.colHeaderTemplateArray[this.columnNo];
+          var viewFactory = this.vGrid.viewCompiler.compile('<template>' + tempHtml + '</template>', this.vGrid.viewResources);
 
           var view = viewFactory.create(this.container);
           this.viewSlot = new ViewSlot(this.element, true);
@@ -151,79 +98,12 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
           this.viewSlot.attached();
         };
 
-        VGridCellRowHeader.prototype.attribute = function attribute() {
-          return this.vGridConfig.attributeArray[this.columnNo];
-        };
-
         VGridCellRowHeader.prototype.setStandardClassesAndStyles = function setStandardClassesAndStyles() {
           this.element.classList.add(this.vGridConfig.css.rowHeaderCell);
           this.element.classList.add(this.vGridConfig.css.rowHeaderColumn + this.columnNo);
           this.element.classList.add(this.vGridConfig.css.gridColumn + this.columnNo);
           this.element.style.height = '100%';
           this.element.style.width = this.vGridConfig.columnWidthArray[this.columnNo] + 'px';
-        };
-
-        VGridCellRowHeader.prototype.getSortIconMarkup = function getSortIconMarkup(attribute) {
-          var _this = this;
-
-          var markup = "";
-          var rows = 1;
-
-          if (this.vGridConfig.addFilter) {
-            rows = 2;
-          }
-          var lineHeigthStyleTag = 'style=line-height:' + this.vGridConfig.headerHeight / rows + 'px;"';
-          var isAscHtml = '<span ' + lineHeigthStyleTag + ' class="' + this.vGridConfig.css.sortIcon + ' ' + this.vGridConfig.css.sortIconAsc + '"></span>';
-          var isDescHtml = '<span ' + lineHeigthStyleTag + ' class="' + this.vGridConfig.css.sortIcon + ' ' + this.vGridConfig.css.sortIconDesc + '"></span>';
-
-          if (this.vGridConfig.sortNotOnHeader.indexOf(attribute) === -1) {
-            markup = '<span ' + lineHeigthStyleTag + ' class="' + this.vGridConfig.css.sortIcon + ' ' + this.vGridConfig.css.sortIconSort + '"></span>';
-            if (this.vGridConfig.sortOnHeaderClick) {
-              if (this.vGrid.vGridSort.getFilter().length !== 0) {
-                this.vGrid.vGridSort.getFilter().forEach(function (x) {
-                  if (x.attribute === attribute) {
-                    var block = x.asc === true ? isAscHtml : isDescHtml;
-                    var main = '<span ' + lineHeigthStyleTag + ' class="' + _this.vGridConfig.css.sortIcon + ' ' + _this.vGridConfig.css.sortIconNo + x.no + '"></span>';
-                    markup = main + block;
-                  }
-                });
-              }
-            } else {
-              markup = "";
-            }
-          }
-          return markup;
-        };
-
-        VGridCellRowHeader.prototype.onChangeEventOnFilter = function onChangeEventOnFilter(e) {
-
-          if (e.keyCode !== 9 && e.keyCode !== 39 && e.keyCode !== 37) {
-            var queryInputs = this.vGrid.element.querySelectorAll("." + this.vGridConfig.css.filterHandle);
-
-            var queryParams = [];
-
-            for (var i = 0; i < queryInputs.length; i++) {
-              var dataSourceAttribute = queryInputs[i].getAttribute(this.vGridConfig.atts.dataAttribute);
-              var columnNo = this.vGridConfig.attributeArray.indexOf(dataSourceAttribute);
-              var operator = this.vGridConfig.filterArray[columnNo];
-              var value = queryInputs[i].value;
-
-              if (value !== "" && value !== undefined) {
-                queryParams.push({
-                  attribute: dataSourceAttribute,
-                  value: value,
-                  operator: operator
-                });
-
-                this.vGrid.vGridFilter.queryStrings[dataSourceAttribute] = queryInputs[i].value;
-              } else {
-                if (value === "") {
-                  this.vGrid.vGridFilter.queryStrings[dataSourceAttribute] = queryInputs[i].value;
-                }
-              }
-            }
-            this.vGridConfig.onFilterRun(queryParams);
-          }
         };
 
         return VGridCellRowHeader;
@@ -236,4 +116,4 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
     }
   };
 });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInZHcmlkL3YtZ3JpZC1oZWFkZXItY29sLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFNUSxZLHFCQUFBLE07QUFBUSxZLHFCQUFBLE07QUFBUSxtQixxQkFBQSxhO0FBQWUsb0IscUJBQUEsYztBQUFnQixlLHFCQUFBLFM7QUFBVyxjLHFCQUFBLFE7QUFBVSxjLHFCQUFBLFE7O0FBSXBFLFcsVUFBQSxLOzs7b0NBT0ssa0IsV0FIWixjQUFjLG1CQUFkLEMsVUFDQSxlQUFlLEtBQWYsQyxVQUNBLE9BQU8sT0FBUCxFQUFnQixLQUFoQixFQUF1QixTQUF2QixDLEVBSEEsTTtBQVdDLG9DQUFZLE9BQVosRUFBcUIsS0FBckIsRUFBNEIsU0FBNUIsRUFBdUM7QUFBQTs7QUFBQTs7QUFDckMsZUFBSyxPQUFMLEdBQWUsT0FBZjtBQUNBLGVBQUssS0FBTCxHQUFhLEtBQWI7QUFDQSxlQUFLLFNBQUwsR0FBaUIsU0FBakI7QUFDQSxlQUFLLFdBQUwsR0FBbUIsTUFBTSxXQUF6QjtBQUNBLGVBQUssV0FBTCxHQUFtQixJQUFuQjtBQUNEOztxQ0FNRCxJLGlCQUFLLGMsRUFBZ0I7QUFDbkIsZUFBSyxjQUFMLEdBQXNCLGNBQXRCO0FBQ0QsUzs7cUNBTUQsTyxzQkFBVSxDQUVULEM7O3FDQU1ELFEsdUJBQVc7QUFDVCxlQUFLLDJCQUFMOztBQUdBLGVBQUssU0FBTCxHQUFpQixLQUFLLFdBQUwsQ0FBaUIsU0FBbEM7QUFDQSxlQUFLLE1BQUwsR0FBYyxLQUFLLFdBQUwsQ0FBaUIsV0FBakIsQ0FBNkIsS0FBSyxRQUFsQyxDQUFkO0FBQ0EsZUFBSyxNQUFMLEdBQWMsS0FBSyxXQUFMLENBQWlCLFdBQWpCLENBQTZCLEtBQUssUUFBbEMsQ0FBZDtBQUNBLGVBQUssU0FBTCxHQUFpQixLQUFLLFdBQUwsQ0FBaUIsYUFBbEM7QUFDQSxlQUFLLFNBQUwsR0FBaUIs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d0MsbUJBQXhDLENBQWY7QUFDQSxrQkFBSSxXQUFXLEtBQUssV0FBTCxDQUFpQixXQUFqQixDQUE2QixRQUE3QixDQUFmO0FBQ0Esa0JBQUksUUFBUSxZQUFZLENBQVosRUFBZSxLQUEzQjs7QUFJQSxrQkFBSSxVQUFVLEVBQVYsSUFBZ0IsVUFBVSxTQUE5QixFQUF5QztBQUl2Qyw0QkFBWSxJQUFaLENBQWlCO0FBQ2YsNkJBQVcsbUJBREk7QUFFZix5QkFBTyxLQUZRO0FBR2YsNEJBQVU7QUFISyxpQkFBakI7O0FBUUEscUJBQUssS0FBTCxDQUFXLFdBQVgsQ0FBdUIsWUFBdkIsQ0FBb0MsbUJBQXBDLElBQTJELFlBQVksQ0FBWixFQUFlLEtBQTFFO0FBRUQsZUFkRCxNQWNPO0FBR0wsb0JBQUksVUFBVSxFQUFkLEVBQWtCO0FBQ2hCLHVCQUFLLEtBQUwsQ0FBVyxXQUFYLENBQXVCLFlBQXZCLENBQW9DLG1CQUFwQyxJQUEyRCxZQUFZLENBQVosRUFBZSxLQUExRTtBQUNEO0FBRUY7QUFHRjtBQUlELGlCQUFLLFdBQUwsQ0FBaUIsV0FBakIsQ0FBNkIsV0FBN0I7QUFDRDtBQUdGLFM7OztvRkF0UkEsUSIsImZpbGUiOiJ2R3JpZC92LWdyaWQtaGVhZGVyLWNvbC5qcyIsInNvdXJjZVJvb3QiOiIvc3JjIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInZHcmlkL3YtZ3JpZC1oZWFkZXItY29sLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFNUSxZLHFCQUFBLE07QUFBUSxZLHFCQUFBLE07QUFBUSxtQixxQkFBQSxhO0FBQWUsb0IscUJBQUEsYztBQUFnQixlLHFCQUFBLFM7QUFBVyxjLHFCQUFBLFE7QUFBVSxjLHFCQUFBLFE7O0FBSXBFLFcsVUFBQSxLOzs7b0NBT0ssa0IsV0FIWixjQUFjLG1CQUFkLEMsVUFDQSxlQUFlLEtBQWYsQyxVQUNBLE9BQU8sT0FBUCxFQUFnQixLQUFoQixFQUF1QixTQUF2QixDLEVBSEEsTTtBQVdDLG9DQUFZLE9BQVosRUFBcUIsS0FBckIsRUFBNEIsU0FBNUIsRUFBdUM7QUFBQTs7QUFBQTs7QUFDckMsZUFBSyxPQUFMLEdBQWUsT0FBZjtBQUNBLGVBQUssS0FBTCxHQUFhLEtBQWI7QUFDQSxlQUFLLFNBQUwsR0FBaUIsU0FBakI7QUFDQSxlQUFLLFdBQUwsR0FBbUIsTUFBTSxXQUF6QjtBQUNEOztxQ0FNRCxJLGlCQUFLLGMsRUFBZ0I7QUFDbkIsZUFBSyxjQUFMLEdBQXNCLGNBQXRCO0FBQ0QsUzs7cUNBTUQsTyxzQkFBVSxDQUVULEM7O3FDQU1ELFEsdUJBQVc7QUFDVCxlQUFLLDJCQUFMOztBQUVBLGNBQUksV0FBVyxLQUFLLFdBQUwsQ0FBaUIsc0JBQWpCLENBQXdDLEtBQUssUUFBN0MsQ0FBZjtBQUNBLGNBQUksY0FBYyxLQUFLLEtBQUwsQ0FBVyxZQUFYLENBQXdCLE9BQXhCLGdCQUE2QyxRQUE3QyxrQkFBb0UsS0FBSyxLQUFMLENBQVcsYUFBL0UsQ0FBbEI7O0FBRUEsY0FBSSxPQUFPLFlBQVksTUFBWixDQUFtQixLQUFLLFNBQXhCLENBQVg7QUFDQSxlQUFLLFFBQUwsR0FBZ0IsSUFBSSxRQUFKLENBQWEsS0FBSyxPQUFsQixFQUEyQixJQUEzQixDQUFoQjtBQUNBLGVBQUssUUFBTCxDQUFjLEdBQWQsQ0FBa0IsSUFBbEI7QUFDQSxlQUFLLFFBQUwsQ0FBYyxJQUFkLENBQW1CLElBQW5CO0FBQ0EsZUFBSyxRQUFMLENBQWMsUUFBZDtBQUVELFM7O3FDQUlELDJCLDBDQUE4QjtBQUM1QixlQUFLLE9BQUwsQ0FBYSxTQUFiLENBQXVCLEdBQXZCLENBQTJCLEtBQUssV0FBTCxDQUFpQixHQUFqQixDQUFxQixhQUFoRDtBQUNBLGVBQUssT0FBTCxDQUFhLFNBQWIsQ0FBdUIsR0FBdkIsQ0FBMkIsS0FBSyxXQUFMLENBQWlCLEdBQWpCLENBQXFCLGVBQXJCLEdBQXVDLEtBQUssUUFBdkU7QUFDQSxlQUFLLE9BQUwsQ0FBYSxTQUFiLENBQXVCLEdBQXZCLENBQTJCLEtBQUssV0FBTCxDQUFpQixHQUFqQixDQUFxQixVQUFyQixHQUFrQyxLQUFLLFFBQWxFO0FBQ0EsZUFBSyxPQUFMLENBQWEsS0FBYixDQUFtQixNQUFuQixHQUE0QixNQUE1QjtBQUNBLGVBQUssT0FBTCxDQUFhLEtBQWIsQ0FBbUIsS0FBbkIsR0FBMkIsS0FBSyxXQUFMLENBQWlCLGdCQUFqQixDQUFrQyxLQUFLLFFBQXZDLElBQW1ELElBQTlFO0FBQ0QsUzs7O29GQXZEQSxRIiwiZmlsZSI6InZHcmlkL3YtZ3JpZC1oZWFkZXItY29sLmpzIiwic291cmNlUm9vdCI6Ii9zcmMifQ==

@@ -38,20 +38,12 @@ var VGridAttibutes = class {
 
 
   setBindValueInt() {
-    if (this.vGrid.vGridContextObj[this.alias]) {
-      this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.alias], this.attDefault);
-    } else {
-      this.vGrid.vGridConfig[this.attribute] = this.setValue(parseInt(this.value), this.attDefault);
-    }
+    this.vGrid.vGridConfig[this.attribute] = this.setValue(parseInt(this.value), this.attDefault);
   }
 
   setBindValueString() {
-    if (this.vGrid.vGridContextObj[this.alias]) {
-      this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.alias], this.attDefault);
-    } else {
-      if (typeof(this.value) === "string" && this.value !== '') {
-        this.vGrid.vGridConfig[this.attribute] = this.value
-      }
+    if (typeof(this.value) === "string" && this.value !== '') {
+      this.vGrid.vGridConfig[this.attribute] = this.value
     }
   }
 
@@ -61,29 +53,12 @@ var VGridAttibutes = class {
       "true": true,
       "false": false
     };
-
-    if (this.vGrid.vGridContextObj[this.alias]) {
-      this.vGrid.vGridConfig[this.attribute] = this.setValue(this.vGrid.vGridContextObj[this.alias], this.attDefault);
-    } else {
-      this.vGrid.vGridConfig[this.attribute] = this.setValue(type[this.value], this.attDefault);
-    }
-  }
-
-
-  setBindValueFn() {
-    if (this.vGrid.vGridContextObj[this.alias]) {
-      if (typeof(this.vGrid.vGridContextObj[this.alias]) === "function") {
-        this.vGrid.vGridConfig[this.attribute] = this.vGrid.vGridContextObj[this.alias].bind(this.vGrid.$parent);
-      }
-    } else {
-      if (typeof(this.vGrid.$parent[this.value]) === "function") {
-        this.vGrid.vGridConfig[this.attribute] = this.vGrid.$parent[this.value].bind(this.vGrid.$parent);
-      }
-    }
+    this.vGrid.vGridConfig[this.attribute] = this.setValue(type[this.value], this.attDefault);
   }
 
 
   setBindValueArray() {
+    //todo, trim! but dunno if I need this after rebuild---
     if (this.value !== undefined && this.value !== null) {
       var tempArray = this.value.split(",");
       this.vGrid.vGridConfig[this.attribute] = tempArray;
@@ -106,9 +81,6 @@ var VGridAttibutes = class {
       case "int":
         this.setBindValueInt();
         break;
-      case "fn":
-        this.setBindValueFn();
-        break;
       case "array":
         this.setBindValueArray();
         break;
@@ -128,14 +100,6 @@ var VGridAttibutes = class {
 
 
   /**************************************
-   * Todo
-   */
-  setNewvalue(newValue, oldValue) {
-    //just use them as config for now
-    //this.vGrid.vGridConfig[this.attribute] = this.setValue(parseInt(newValue), oldValue);
-  }
-
-  /**************************************
    * Called when attributes gets binded
    */
   bind(bindingContext, overrideContext) {
@@ -144,223 +108,294 @@ var VGridAttibutes = class {
   }
 
 
-  /**************************************
-   * Called when value chnages
-   */
-  valueChanged(newValue, oldValue) {
-    this.setNewvalue(newValue, oldValue)
-  }
-
 };
 
 
 @customAttribute('v-row-height')
 @inject(Element, Optional.of(VGrid))
-export class rowHeight extends VGridAttibutes {
+export class vGridRowHeight extends VGridAttibutes {
   attribute = "rowHeight";
-  alias = "configRowHeight";
   type = "int";
 }
 
 
 @customAttribute('v-header-height')
 @inject(Element, Optional.of(VGrid))
-export class headerHeight extends VGridAttibutes {
+export class vGridHeaderHeight extends VGridAttibutes {
   attribute = "headerHeight";
-  alias = "configHeaderHeight";
   type = "int";
 }
 
 
 @customAttribute('v-footer-height')
 @inject(Element, Optional.of(VGrid))
-export class footerHeight extends VGridAttibutes {
+export class vGridFooterHeight extends VGridAttibutes {
   attribute = "footerHeight";
-  alias = "configFooterHeight";
   type = "int";
 }
 
 
 @customAttribute('v-resizable-headers')
 @inject(Element, Optional.of(VGrid))
-export class isResizableHeaders extends VGridAttibutes {
+export class vGridIsResizableHeaders extends VGridAttibutes {
   attribute = "isResizableHeaders";
-  alias = "configResizableHeaders";
   type = "bool";
+}
+
+@customAttribute('v-attibutes-observe')
+@inject(Element, Optional.of(VGrid))
+export class vGridAttibutesObserve extends VGridAttibutes {
+  attribute = "attributeArray";
+  type = "array";
 }
 
 
 @customAttribute('v-multi-select')
 @inject(Element, Optional.of(VGrid))
-export class isMultiSelect extends VGridAttibutes {
+export class vGridIsMultiSelect extends VGridAttibutes {
   attribute = "isMultiSelect";
-  alias = "configMultiSelect";
   type = "bool";
 }
 
 
 @customAttribute('v-sortable-headers')
 @inject(Element, Optional.of(VGrid))
-export class isSortableHeader extends VGridAttibutes {
+export class vGridIsSortableHeader extends VGridAttibutes {
   attribute = "isSortableHeader";
-  alias = "configSortableHeader";
   type = "bool";
 }
 
 
 @customAttribute('v-request-animation-frame')
 @inject(Element, Optional.of(VGrid))
-export class requestAnimationFrame extends VGridAttibutes {
+export class vGridRequestAnimationFrame extends VGridAttibutes {
   attribute = "requestAnimationFrame";
-  alias = "configRequestAnimationFrame";
   type = "bool";
 }
 
 
 @customAttribute('v-resize-also-rows')
 @inject(Element, Optional.of(VGrid))
-export class resizableHeadersAndRows extends VGridAttibutes {
+export class vGridResizableHeadersAndRows extends VGridAttibutes {
   attribute = "resizableHeadersAndRows";
-  alias = "configResizableHeadersAndRows";
   type = "bool";
 }
+
 
 @customAttribute('v-render-on-scrollbar-scroll')
 @inject(Element, Optional.of(VGrid))
-export class renderOnScrollbarScroll extends VGridAttibutes {
+export class vGridRenderOnScrollbarScroll extends VGridAttibutes {
   attribute = "renderOnScrollbarScroll";
-  alias = "configRenderOnScrollbarScroll";
   type = "bool";
-}
-
-
-@customAttribute('v-header-filter')
-@inject(Element, Optional.of(VGrid))
-export class addFilter extends VGridAttibutes {
-  attribute = "addFilter";
-  alias = "configAddFilter";
-  type = "bool";
-}
-
-
-@customAttribute('v-header-filter-top')
-@inject(Element, Optional.of(VGrid))
-export class filterOnAtTop extends VGridAttibutes {
-  attribute = "filterOnAtTop";
-  alias = "configFilterOnAtTop";
-  type = "bool";
-}
-
-
-@customAttribute('v-sort-on-header-click')
-@inject(Element, Optional.of(VGrid))
-export class sortOnHeaderClick extends VGridAttibutes {
-  attribute = "sortOnHeaderClick";
-  alias = "configSortOnHeaderClick";
-  type = "bool";
-}
-
-
-@customAttribute('v-large-buffer')
-@inject(Element, Optional.of(VGrid))
-export class largeBuffer extends VGridAttibutes {
-  attribute = "largeBuffer";
-  alias = "configLargeBuffer";
-  type = "bool";
-}
-
-@customAttribute('v-manual-sel')
-@inject(Element, Optional.of(VGrid))
-export class manualSelection extends VGridAttibutes {
-  attribute = "manualSelection";
-  alias = "configManualSelection";
-  type = "bool";
-}
-
-
-@customAttribute('v-row-on-draw')
-@inject(Element, Optional.of(VGrid))
-export class eventOnRowDraw extends VGridAttibutes {
-  attribute = "eventOnRowDraw";
-  alias = "configEventOnRowDraw";
-  type = "fn";
-}
-
-
-@customAttribute('v-attibutes-used')
-@inject(Element, Optional.of(VGrid))
-export class attributeArray extends VGridAttibutes {
-  attribute = "attributeArray";
-  alias = "configAttributeArray";
-  type = "array";
-}
-
-@customAttribute('v-header-filter-not-to')
-@inject(Element, Optional.of(VGrid))
-export class doNotAddFilterTo extends VGridAttibutes {
-  attribute = "doNotAddFilterTo";
-  alias = "configDoNotAddFilterTo";
-  type = "array";
-}
-
-@customAttribute('v-sort-not-on-header')
-@inject(Element, Optional.of(VGrid))
-export class sortNotOnHeader extends VGridAttibutes {
-  attribute = "sortNotOnHeader";
-  alias = "configSortNotOnHeader";
-  type = "array";
-}
-
-
-@customAttribute('v-row-onclick')
-@inject(Element, Optional.of(VGrid))
-export class eventOnRowClick extends VGridAttibutes {
-  attribute = "eventOnRowClick";
-  alias = "configEventOnRowClick";
-  type = "fn";
-}
-
-@customAttribute('v-row-ondblclick')
-@inject(Element, Optional.of(VGrid))
-export class eventOnRowDblClick extends VGridAttibutes {
-  attribute = "eventOnRowDblClick";
-  alias = "configEventOnRowDblClick";
-  type = "fn";
 }
 
 
 @customAttribute('v-contextmenu')
 @inject(Element, Optional.of(VGrid))
-export class contextmenu extends VGridAttibutes {
+export class vGridContextmenu extends VGridAttibutes {
   attribute = "contextmenu";
-  alias = "configContextmenu";
   type = "bool";
 }
 
 
 @customAttribute('v-loading-threshold')
 @inject(Element, Optional.of(VGrid))
-export class LoadingThreshold extends VGridAttibutes {
+export class vGridLoadingThreshold extends VGridAttibutes {
   attribute = "loadingThreshold";
-  alias = "configLoadingThreshold";
   type = "int";
-}
-
-@customAttribute('v-event-onremotecall')
-@inject(Element, Optional.of(VGrid))
-export class eventOnRemoteCall extends VGridAttibutes {
-  attribute = "eventOnRemoteCall";
-  alias = "configEventOnRemoteCall";
-  type = "fn";
 }
 
 
 @customAttribute('v-remote-index')
 @inject(Element, Optional.of(VGrid))
-export class remoteIndex extends VGridAttibutes {
+export class vGridRemoteIndex extends VGridAttibutes {
   attribute = "remoteIndex";
-  alias = "configRemoteIndex";
   type = "string";
+}
+
+
+@customAttribute('v-row-on-draw')
+@inject(Optional.of(VGrid))
+export class vGridEventOnRowDraw {
+
+  constructor(vGrid) {
+    this.vGrid = vGrid;
+  }
+
+  bind() {
+    if (typeof(this.value) === "function") {
+      this.vGrid.vGridConfig.eventOnRowDraw = this.value;
+    }
+  }
+}
+
+
+@customAttribute('v-event-onremote')
+@inject(Optional.of(VGrid))
+export class vGridEventOnRemoteCall {
+
+  constructor(vGrid) {
+    this.vGrid = vGrid;
+  }
+
+
+  bind() {
+    if (typeof(this.value) === "function") {
+      this.vGrid.vGridConfig.eventOnRemoteCall = this.value;
+    }
+  }
+}
+
+
+@customAttribute('v-filter')
+@inject(Element, VGrid)
+export class vGridHeaderFilterOn {
+
+  constructor(element, vGrid) {
+    this.vGrid = vGrid;
+    this.element = element;
+  }
+
+
+  bind(bindingContext, overrideContext) {
+    this.bindingContext = bindingContext;
+    this.overrideContext = overrideContext;
+    let values = this.value.split("|");
+    this.attribute = values[0];
+    this.filterOn = values[1];
+    this.filterOperator = values[2];
+
+  }
+
+
+  updateFilter(curFilter) {
+    var filterIndex;
+
+    //get index of filter
+    curFilter.forEach((filter, index)=> {
+      if (filter.attribute === this.attribute) {
+        filterIndex = index;
+      }
+    });
+
+    if (filterIndex) {
+
+      //we found a filter, lets update
+      //todo: checkbox? how to handle values!?
+      if (this.element.value === "") {
+        curFilter.splice(filterIndex, 1)
+      } else {
+        curFilter[filterIndex].value = this.element.value
+      }
+
+    } else {
+
+      //we didnt find filter, lets add one
+      if (this.element.value !== "") {
+        curFilter.push({
+          attribute: this.attribute,
+          operator: this.filterOperator,
+          value: this.element.value
+        });
+      }
+
+    }
+  }
+
+
+  attached() {
+
+    //set enter filter (when user hits enter)
+    if (this.filterOn === "enter") {
+      this.element.onkeydown = (e) => {
+        if (e.keyCode === 13) {
+
+          //if they hit enter we need to get filter, update and run query
+          var curFilter = this.vGrid.vGridFilter.lastFilter;
+          this.updateFilter(curFilter);
+          this.vGrid.vGridConfig.onFilterRun(curFilter)
+
+        } else {
+
+          //if they hit enter we need to get filter, update
+          var curFilter = this.vGrid.vGridFilter.lastFilter;
+          this.updateFilter(curFilter);
+
+        }
+      };
+    }
+
+
+    if (this.filterOn === "keyDown") {
+      //Todo, wee need for when someone have on key down
+
+    }
+
+  }
+
+}
+
+
+@customAttribute('v-sort')
+@inject(Element, VGrid)
+export class vGridHeaderSortIcon {
+
+  constructor(element, vGrid) {
+    this.vGrid = vGrid;
+    this.element = element;
+  }
+
+
+  bind(bindingContext, overrideContext) {
+    this.bindingContext = bindingContext;
+    this.overrideContext = overrideContext;
+    let values = this.value.split("|");
+    this.attribute = values[0];
+    this.icon = values[1] ? true : false;
+    this.filterOperator = values[2];
+
+  }
+
+  attached(){
+    this.sortIcon = document.createElement("SPAN");
+    this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
+    this.element.appendChild(this.sortIcon);
+    this.element.onclick = (e)=>{
+      this.vGrid.vGridConfig.onOrderBy(this.attribute, e.shiftKey);
+    };
+
+    this.vGrid.element.addEventListener("sortIconUpdate", (e)=>{
+      this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
+    })
+
+    
+  }
+  
+  
+  
+
+
+  getSortIconMarkup(attribute) {
+    var css = this.vGrid.vGridConfig.css;
+    var lineHeigthStyleTag = "100%";
+    var isAscHtml = `<span ${lineHeigthStyleTag} class="${css.sortIcon} ${css.sortIconAsc}"></span>`;
+    var isDescHtml = `<span ${lineHeigthStyleTag} class="${css.sortIcon} ${css.sortIconDesc}"></span>`;
+    var markup = `<span ${lineHeigthStyleTag} class="${css.sortIcon} ${css.sortIconSort}"></span>`;
+
+    if (this.vGrid.vGridSort.getFilter().length !== 0) {
+      this.vGrid.vGridSort.getFilter().forEach((x) => {
+        if (x.attribute === this.attribute) {
+          var block = x.asc === true ? isAscHtml : isDescHtml;
+          var main = `<span ${lineHeigthStyleTag} class="${css.sortIcon} ${css.sortIconNo}${x.no}"></span>`;
+          markup = main + block;
+        }
+      });
+    }
+
+    return markup
+  };
+
+
 }
 
 

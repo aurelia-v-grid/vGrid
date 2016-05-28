@@ -71,29 +71,18 @@ export class VGridSortable {
     var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.children;
 
     var x;
-    x = this.vGrid.vGridConfig.attributeArray[oldIndex];
-    this.vGrid.vGridConfig.attributeArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.attributeArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.filterArray[oldIndex];
-    this.vGrid.vGridConfig.filterArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.filterArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.headerArray[oldIndex];
-    this.vGrid.vGridConfig.headerArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.headerArray.splice(newIndex, 0, x);
 
     x = this.vGrid.vGridConfig.columnWidthArray[oldIndex];
     this.vGrid.vGridConfig.columnWidthArray.splice(oldIndex, 1);
     this.vGrid.vGridConfig.columnWidthArray.splice(newIndex, 0, x);
 
-    x = this.vGrid.vGridConfig.filterOnKeyArray[oldIndex];
-    this.vGrid.vGridConfig.filterOnKeyArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.filterOnKeyArray.splice(newIndex, 0, x);
+     x = this.vGrid.vGridConfig.colHeaderTemplateArray[oldIndex];
+     this.vGrid.vGridConfig.colHeaderTemplateArray.splice(oldIndex, 1);
+     this.vGrid.vGridConfig.colHeaderTemplateArray.splice(newIndex, 0, x);
 
-    x = this.vGrid.vGridConfig.colCustomArray[oldIndex];
-    this.vGrid.vGridConfig.colCustomArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colCustomArray.splice(newIndex, 0, x);
+    x = this.vGrid.vGridConfig.colRowTemplateArray[oldIndex];
+    this.vGrid.vGridConfig.colRowTemplateArray.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.colRowTemplateArray.splice(newIndex, 0, x);
 
 
 

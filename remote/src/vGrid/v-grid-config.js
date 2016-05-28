@@ -65,14 +65,14 @@ export class VGridConfig {
     this.vGrid = vGrid;
 
     //<v-grid-col> attributes
-    this.attributeArray = [];
-    this.columnWidthArray = [];
-    this.headerArray = [];
-    this.filterArray = [];
-    this.filterOnKeyArray = [];
-    this.colCustomArray = [];
-    
+    this.attributeArray = []; //only ised for aatibute observing do not delete
 
+    this.columnWidthArray = [];
+    this.colRowTemplateArray = [];
+    this.colHeaderTemplateArray = [];
+
+    
+    this.columns = 0; //count so I can clean up array in vgridgenerator.js
 
     //<v-grid> attibutes
     this.rowHeight = 50;
@@ -144,8 +144,6 @@ export class VGridConfig {
       return "";
     }
   }
-
-
 
 
   /***************************************************************************************
@@ -284,7 +282,11 @@ export class VGridConfig {
       if (this.eventOnRowDraw) {
         //if user have added this then we call it so they can edit the row data before we display it
         var data = this.getNewObject(this.vGrid.vGridCollectionFiltered[row]);
-        this.eventOnRowDraw(data, this.vGrid.vGridCollectionFiltered[row]);
+        this.eventOnRowDraw({
+            tempRef: data || null,
+            rowRef: this.vGrid.vGridCollectionFiltered[row] || null
+          }
+        );
         callback(data)
       } else {
         callback(this.vGrid.vGridCollectionFiltered[row]);
@@ -297,25 +299,13 @@ export class VGridConfig {
    * This calls the order by function
    * Use {} if you want markup of columns, or undefined for total blank rows
    ***************************************************************************************/
-  onOrderBy(event, setheaders) {
+  onOrderBy(attribute, add) {
 
 
-    //get attibute of clicked header (todo inprove this part)
-    var attribute = event.target.getAttribute(this.atts.dataAttribute);
-    if (attribute === null) {
-      attribute = event.target.offsetParent.getAttribute(this.atts.dataAttribute);
-    }
-
-
-    //check if this attribute can be sorted
-    let canSortThisAttribute = true;
-    if (this.sortNotOnHeader.indexOf(attribute) !== -1) {
-      canSortThisAttribute = false;
-    }
 
 
     //can we do the sorting?
-    if (this.vGrid.vGridCollectionFiltered.length > 0 && attribute && canSortThisAttribute) {
+    if (this.vGrid.vGridCollectionFiltered.length > 0) {
       //set loading screen
       if (this.vGrid.vGridCollection.length > this.loadingThreshold) {
         this.vGrid.loading = true;
@@ -327,11 +317,17 @@ export class VGridConfig {
         this.vGrid.vGridSort.setFilter({
           attribute: attribute,
           asc: true
-        }, event.shiftKey);
+        }, add);
 
 
-        //set headers(rebuild the headers, its just simpler, then having any logic to it) Todo: after rebuild having som logic instead of rebuild might be simple enought now.
-        setheaders(this.vGrid.vGridSort.getFilter());
+
+
+          let event = new CustomEvent("sortIconUpdate", {
+            detail: "",
+            bubbles: true
+          });
+          this.vGrid.element.dispatchEvent(event);
+
 
 
         //if remote call is set
@@ -407,7 +403,7 @@ export class VGridConfig {
 
 
     //this dispatch events that v-grid-row-col.js picks up, for calling back is event for single on rows are set
-    if (event.type === "click" && this.eventOnRowClick) {
+    if (event.type === "click") {
       var newEvent = document.createEvent('Event');
       newEvent.initEvent("eventOnRowClick", true, true);
       event.target.dispatchEvent(newEvent)
@@ -415,7 +411,7 @@ export class VGridConfig {
 
 
     //this dispatch events that v-grid-row-col.js picks up, for calling back is event for dblclick on rows are set
-    if (event.type === "dblclick" && this.eventOnRowDblClick) {
+    if (event.type === "dblclick") {
       var newEvent = document.createEvent('Event');
       newEvent.initEvent("eventOnRowDblClick", true, true);
       event.target.dispatchEvent(newEvent)

@@ -64,7 +64,7 @@ export class VGridCellContainer {
 
 
     //create view
-    var viewFactory = this.vGrid.viewCompiler.compile(`<template>${this.vGrid.vGridConfig.colCustomArray[this.columnNo]}</template>`, this.vGrid.viewResources);
+    var viewFactory = this.vGrid.viewCompiler.compile(`<template>${this.vGrid.vGridConfig.colRowTemplateArray[this.columnNo]}</template>`, this.vGrid.viewResources);
     var view = viewFactory.create(this.container);
 
     //create viewslot
@@ -78,30 +78,22 @@ export class VGridCellContainer {
 
 
 
-
-    //for sending back edbl click on row to user
     this.element.addEventListener("eventOnRowDblClick", function (e) {
-      if (this.vGrid.vGridConfig.eventOnRowDblClick) {
-        this.vGrid.vGridConfig.eventOnRowDblClick({
-          evt: e,
-          data: this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
-          attribute: this.vGrid.vGridConfig.attributeArray[this.columnNo],
-          row: this.vGrid.vGridGetRowKey(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey])
-        });
-      }
+      this.vGrid.raiseEvent("v-row-ondblclick", {
+        evt: e,
+        data: this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
+        row: this.vGrid.vGridGetRowKey(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey])
+      });
     }.bind(this));
 
 
     //for sending back row click to user
     this.element.addEventListener("eventOnRowClick", function (e) {
-      if (this.vGrid.vGridConfig.eventOnRowClick) {
-        this.vGrid.vGridConfig.eventOnRowClick({
-          evt: e,
-          data: this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
-          attribute: this.vGrid.vGridConfig.attributeArray[this.columnNo],
-          row: this.vGrid.vGridGetRowKey(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey])
-        });
-      }
+      this.vGrid.raiseEvent("v-row-onclick", {
+        evt: e,
+        data: this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
+        row: this.vGrid.vGridGetRowKey(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey])
+      });
     }.bind(this));
 
   }
