@@ -368,11 +368,7 @@ export class VGridConfig {
    * Its this you will need to add for server source/paging with endless scrolling
    ***************************************************************************************/
   getCollectionLength() {
-    if (this.addFilter) {
       return this.vGrid.vGridCollectionFiltered.length;
-    } else {
-      return this.vGrid.vGridCollection.length;
-    }
   }
 
 
