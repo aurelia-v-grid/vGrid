@@ -177,14 +177,9 @@ export class VGridObservables {
         var oldValueCheck = (oldValue !== undefined && oldValue !== null) ? oldValue.toString() : oldValue;
 
         if (newValueCheck !== oldValueCheck && this.vGrid.vGridCurrentEntityRef) {
-          //check if we should skip it
-            var curRefProp = this.vGrid.vGridCurrentEntityRef[property];
-            curRefProp = (curRefProp !== undefined && curRefProp !== null) ? curRefProp.toString() : curRefProp;
-            if(curRefProp !== newValueCheck){
               this.vGrid.vGridCurrentEntityRef[property] = newValue;
               this.vGrid.vGridGenerator.updateRow(this.vGrid.vGridCurrentRow, true);
-            }
-        } 
+        }
       });
       this.subscriptionsAttributes.push(propertyObserver)
     });

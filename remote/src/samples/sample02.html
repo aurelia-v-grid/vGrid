@@ -1,0 +1,81 @@
+<template>
+  <!--<require from="vGrid/v-grid.css"></require>-->
+  <require from="app.css"></require>
+  <require from="date-format.js"></require>
+  <require from="number-format.js"></require>
+
+
+
+  <div class="myContainer">
+
+    <!------------------------------------------------------------------------------------------------------------------------------------>
+    <!--ROW1------------------------------------------------------------------------------------------------------------------------------>
+    <!------------------------------------------------------------------------------------------------------------------------------------>
+
+    <div  class="myRow1">
+
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+      <!--GRID------------------------------------------------------------------------------------------------------------------------------>
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+
+      <div class="myCol">
+        <h4 style="margin-left:25px">Main demo (27 Mai-2016, rev01)</h4>
+
+        <v-grid
+          style="position:absolute;top:70px;bottom:0;right: 25px;left:25px"
+          v-row-height="30"
+          v-header-height="50"
+          v-footer-height="50"
+          v-resize-also-rows="true"
+          v-resizable-headers="true"
+          v-header-filter="true"
+          v-header-filter-not-to="images"
+          v-sort-not-on-header="images"
+          v-header-filter-top="true"
+          v-sortable-headers="true"
+          v-row-onclick="singleClick"
+          v-row-ondblclick="singleDblClick"
+          v-loading-threshold="10000"
+          v-sort-on-header-click="true"
+          v-multi-select="true"
+          v-remote-data="true"
+          v-row-on-draw="onRowDraw"
+          v-event-onremotecall="callRemoteServer"
+          v-current-entity.bind=myCurrentEntity
+          v-collection.bind=myCollection
+          v-grid-context.bind=myGrid>
+
+          <v-grid-col v-col-width="70" v-col-attribute="index" v-col-header="Index" v-col-default-filter=">=">
+            <input readonly class="form-control input-sm " value.bind="currentEntityRef.id" style="background-color:transparent;height: 100%">
+          </v-grid-col>
+
+          <v-grid-col v-col-width="100" v-col-attribute="name" v-col-filter-on-key="true" v-col-header="name" v-col-default-filter="*">
+            <input readonly class="form-control input-sm " value.bind="currentEntityRef.first" style="background-color:transparent;height: 100%">
+          </v-grid-col>
+
+          <v-grid-col v-col-width="90" v-col-attribute="image" v-col-header="image">
+            <image src.bind="currentEntityRef.image" style="border-radius: 50%;height:100%;margin-left:25%;">
+          </v-grid-col>
+
+          <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool" v-col-type="checkbox"  v-col-default-filter="=" >
+            <input readonly type="checkbox" checked.bind="currentEntityRef.bool" style="margin: auto;height:100%;position:initial;display: block">
+          </v-grid-col>
+
+          <v-grid-col v-col-width="80" v-col-attribute="zip" v-col-header="Number" v-col-default-filter=">=">
+            <input readonly class="form-control input-sm " value.bind="currentEntityRef.zip | numberFormat" css="background-color:transparent; height: 100%; color:${numberColor};font-weight:${numberFont};text-align:right; padding-right:5px">
+          </v-grid-col>
+
+          <v-grid-col v-col-width="180" v-col-attribute="created_a" v-col-header="date"  v-col-formater="dateFormat" v-col-default-filter=">=">
+            <input readonly class="form-control input-sm " value.bind="currentEntityRef.created_at | dateFormat" style="background-color:transparent;height: 100%">
+          </v-grid-col>
+
+          <v-grid-col v-col-width="160" v-col-attribute="last" v-col-header="Color" v-col-default-filter="=*" >
+            <input readonly class="form-control input-sm " value.bind="currentEntityRef.last" style="background-color:transparent;height:100%">
+          </v-grid-col>
+
+        </v-grid>
+
+
+
+
+</template>

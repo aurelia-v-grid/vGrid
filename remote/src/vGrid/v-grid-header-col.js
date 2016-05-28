@@ -193,28 +193,6 @@ export class VGridCellRowHeader {
   }
 
 
-  getValue(value) {
-    //just for testing not in use
-    return this.valueFormater ? this.valueFormater().fromView(value) : value;
-  }
-
-
-  setValue(value) {
-    //just for testing not in use
-    return this.valueFormater ? this.valueFormater().toView(value) : value;
-  }
-
-
-  valueFormater() {
-    //just for testing not in use
-    return this.vGrid.vGridConfig.colFormaterArray[this.columnNo];
-  }
-
-
-  colCustomName() {
-    return this.vGrid.vGridConfig.colCustomArray[this.columnNo];
-  }
-
   setStandardClassesAndStyles() {
     this.element.classList.add(this.vGridConfig.css.rowHeaderCell);
     this.element.classList.add(this.vGridConfig.css.rowHeaderColumn + this.columnNo);
@@ -278,16 +256,9 @@ export class VGridCellRowHeader {
 
         //get the attribute, valiue etc
         var dataSourceAttribute = queryInputs[i].getAttribute(this.vGridConfig.atts.dataAttribute);
-        var valueFormater = this.vGridConfig.colFormaterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
-        var operator = this.vGridConfig.filterArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
-        var coltype = this.vGridConfig.colTypeArray[this.vGridConfig.attributeArray.indexOf(dataSourceAttribute)];
-        var value = valueFormater ? valueFormater.fromView(queryInputs[i].value) : queryInputs[i].value;
-
-
-        //FF issue, it have value of "on" sometimes...
-        if (coltype === "checkbox" && value !== "true" && value !== "false") {
-          value = "";
-        }
+        var columnNo = this.vGridConfig.attributeArray.indexOf(dataSourceAttribute);
+        var operator = this.vGridConfig.filterArray[columnNo];
+        var value = queryInputs[i].value;
 
 
         //do value exist and is not blank?

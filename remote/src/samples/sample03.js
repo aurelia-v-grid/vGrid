@@ -34,18 +34,18 @@ export class sample01 {
 
   }
 
-  
+
   singleClick(e){
     console.log("click")
   }
 
-  
+
   singleDblClick(e){
     console.log("dblClick")
   }
 
 
-  
+
 
   collectionLength= 0;
 
@@ -66,7 +66,7 @@ export class sample01 {
   }
 
   attached(){
-   this.getMaxRows = this.myGrid.ctx.getMaxRows();
+    this.getMaxRows = this.myGrid.ctx.getMaxRows();
 
   }
 
@@ -164,7 +164,7 @@ export class sample01 {
   /********************************************************************
    *  grid save/load state/report
    ********************************************************************/
-  
+
   oldState= null;
 
   saveStateBtn(){

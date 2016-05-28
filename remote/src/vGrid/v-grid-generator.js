@@ -266,7 +266,7 @@ export class VGridGenerator {
     row.style.width = this.getTotalColumnWidth() + "px";
     this.htmlCache.header.appendChild(row);
 
-    var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.getHeaderTemplate() + '</template>', this.vGrid.resources);
+    var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.getHeaderTemplate() + '</template>', this.vGrid.viewResources);
     var view = viewFactory.create(this.vGrid.container);
     this.headerViewSlot = new ViewSlot(this.htmlCache.header.firstChild, true);
     this.headerViewSlot.add(view);
@@ -295,7 +295,7 @@ export class VGridGenerator {
     row.style.width = this.getTotalColumnWidth() + "px";
     this.htmlCache.header.appendChild(row);
 
-    var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.getHeaderTemplate() + '</template>', this.vGrid.resources);
+    var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.getHeaderTemplate() + '</template>', this.vGrid.viewResources);
     var view = viewFactory.create(this.vGrid.container);
     this.headerViewSlot.unbind();
     this.headerViewSlot.detached();
@@ -345,7 +345,7 @@ export class VGridGenerator {
     this.htmlCache.grid.appendChild(this.htmlCache.footer);
 
     if (this.vGridConfig.eventOnRemoteCall) {
-      var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-pager></v-grid-pager></template>', this.vGrid.resources);
+      var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-pager></v-grid-pager></template>', this.vGrid.viewResources);
       var view = viewFactory.create(this.vGrid.container);
       this.footerViewSlot = new ViewSlot(this.htmlCache.footer, true);
       this.footerViewSlot.add(view);
@@ -998,7 +998,7 @@ export class VGridGenerator {
     var rows = this.htmlCache.rowsArray;
     for (var i = 0; i < rows.length; i++) {
 
-      var viewFactory = this.vGrid.viewCompiler.compile(this.getRowTemplate(), this.vGrid.resources);
+      var viewFactory = this.vGrid.viewCompiler.compile(this.getRowTemplate(), this.vGrid.viewResources);
       var view = viewFactory.create(this.vGrid.container);
       rows[i].viewSlot = new ViewSlot(rows[i].div, true);
       rows[i].viewSlot.add(view);
@@ -1025,7 +1025,7 @@ export class VGridGenerator {
       rows[i].viewSlot = null;
       rows[i].div.innerHTML = "";
       this.htmlCache.rowTemplate = null;
-      var viewFactory = this.vGrid.viewCompiler.compile(this.getRowTemplate(), this.vGrid.resources);
+      var viewFactory = this.vGrid.viewCompiler.compile(this.getRowTemplate(), this.vGrid.viewResources);
       var view = viewFactory.create(this.vGrid.container);
       rows[i].viewSlot = new ViewSlot(rows[i].div, true);
       rows[i].viewSlot.add(view);

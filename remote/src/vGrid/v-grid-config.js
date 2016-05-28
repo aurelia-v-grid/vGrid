@@ -69,11 +69,6 @@ export class VGridConfig {
     this.columnWidthArray = [];
     this.headerArray = [];
     this.filterArray = [];
-    this.readOnlyArray = [];
-    this.colStyleArray = [];
-    this.colTypeArray = [];
-    this.colFormaterArray = [];
-    this.colEditRawArray = [];
     this.filterOnKeyArray = [];
     this.colCustomArray = [];
     
@@ -137,9 +132,13 @@ export class VGridConfig {
   getNewObject(obj) {
     if (obj) {
       var x = {};
-      this.attributes.forEach((prop)=> {
-        x[prop] = obj[prop];
-      });
+      for (var k in obj) {
+        if (obj.hasOwnProperty(k)) {
+          if (x[k] !== obj[k]) {
+            x[k] = obj[k];
+          }
+        }
+      }
       return x;
     } else {
       return "";

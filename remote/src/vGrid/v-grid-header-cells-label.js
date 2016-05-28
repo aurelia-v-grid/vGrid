@@ -16,10 +16,11 @@ import {inject, customElement, bindable} from 'aurelia-framework';
 export class VGridHeaderLabel {
   @bindable type;
 
-
+  /*****************************************************
+   *  constructor
+   ******************************************************/
   constructor(element) {
     this.element = element;
-
   }
 
 
