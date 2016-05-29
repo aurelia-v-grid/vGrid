@@ -166,7 +166,7 @@ export class VGridCtx {
   //
   // //todo adjust, will not work with remote atm
   // runSorting(x) {
-  //   if (this.vGridCollection.length > this.vGridConfig.loadingThreshold) {
+  //   if (this.vGridCollection.length > this.vGridConfig.attLoadingThreshold) {
   //     this.vGrid.loading = true;
   //   }
   //   setTimeout(()=> {
@@ -254,7 +254,7 @@ export class VGridCtx {
       }
     }
     document.body.removeChild(div);
-    return (supportedHeight / this.vGridConfig.rowHeight) + ", error margin:" + (10000 / this.vGridConfig.rowHeight);
+    return (supportedHeight / this.vGridConfig.attRowHeight) + ", error margin:" + (10000 / this.vGridConfig.attRowHeight);
   }
 
 
@@ -283,7 +283,7 @@ export class VGridCtx {
     }
     var content = '';
     var rows = this.vGrid.vGridCollectionFiltered;
-    var attributes = this.vGridConfig.attributeObserve;
+    var attributes = this.vGridConfig.attAttributeObserve;
 
     //sets data to our content
     var setData = (arr) => {

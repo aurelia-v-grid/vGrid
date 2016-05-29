@@ -103,7 +103,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   fillDataInRows() {
     for (var i = 0; i < this.getRowCacheLength(); i++) {
-      var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.rowHeight;
+      var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.attRowHeight;
       var row = this.htmlCache.rowsArray[i];
       this.insertRowMarkup(currentRow, row, true, true);
     }
@@ -115,7 +115,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   fillDataIntoRow(rowno) {
     for (var i = 0; i < this.getRowCacheLength(); i++) {
-      var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.rowHeight;
+      var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.attRowHeight;
       if (rowno === currentRow) {
         var row = this.htmlCache.rowsArray[i];
         this.insertRowMarkup(currentRow, row, true, true);
@@ -130,7 +130,7 @@ export class VGridGenerator {
   updateSelectionOnAllRows() {
     var i;
     for (i = 0; i < this.getRowCacheLength(); i++) {
-      var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.rowHeight;
+      var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.attRowHeight;
       if (this.vGridSelection.isSelected(currentRow)) {
         this.htmlCache.rowsArray[i].div.classList.add(this.vGridConfig.css.rowSelected);
       } else {
@@ -272,13 +272,13 @@ export class VGridGenerator {
     //create and append header div
     this.htmlCache.header = document.createElement("DIV");
     this.htmlCache.header.className = this.vGridConfig.css.mainHeader;
-    this.htmlCache.header.style.height = this.vGridConfig.headerHeight + "px";
+    this.htmlCache.header.style.height = this.vGridConfig.attHeaderHeight + "px";
     this.htmlCache.grid.appendChild(this.htmlCache.header);
 
     var row = document.createElement("DIV");
     row.className = this.vGridConfig.css.row + " " + this.vGridConfig.css.rowHeader;
     //row.style.top = top + "px";
-    row.style.height = this.vGridConfig.headerHeight + "px";
+    row.style.height = this.vGridConfig.attHeaderHeight + "px";
     row.style.width = this.getTotalColumnWidth() + "px";
     this.htmlCache.header.appendChild(row);
 
@@ -310,7 +310,7 @@ export class VGridGenerator {
 
     var row = document.createElement("DIV");
     row.className = this.vGridConfig.css.row + " " + this.vGridConfig.css.rowHeader;
-    row.style.height = this.vGridConfig.headerHeight + "px";
+    row.style.height = this.vGridConfig.attHeaderHeight + "px";
     row.style.width = this.getTotalColumnWidth() + "px";
     this.htmlCache.header.appendChild(row);
     
@@ -349,7 +349,7 @@ export class VGridGenerator {
   createGridHtmlContentWrapper() {
     //calculate content height
     var gridWrapperHeight = this.gridHeight;
-    var headerAndFooterHeight = this.vGridConfig.headerHeight + this.vGridConfig.footerHeight;
+    var headerAndFooterHeight = this.vGridConfig.attHeaderHeight + this.vGridConfig.attFooterHeight;
     this.contentHeight = gridWrapperHeight - headerAndFooterHeight;
 
     //create and append content div
@@ -367,7 +367,7 @@ export class VGridGenerator {
     //create and append
     this.htmlCache.footer = document.createElement("DIV");
     this.htmlCache.footer.className = this.vGridConfig.css.mainFooter;
-    this.htmlCache.footer.style.height = this.vGridConfig.footerHeight + "px";
+    this.htmlCache.footer.style.height = this.vGridConfig.attFooterHeight + "px";
     this.htmlCache.grid.appendChild(this.htmlCache.footer);
 
     if (this.vGridConfig.eventOnRemoteCall) {
@@ -391,7 +391,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   setScrollBodyHeightToVar() {
     var collectionLength = this.vGridConfig.getCollectionLength();
-    this.scrollBodyHeight = collectionLength * this.vGridConfig.rowHeight;
+    this.scrollBodyHeight = collectionLength * this.vGridConfig.attRowHeight;
   };
 
 
@@ -435,7 +435,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   createGridHtmlRowWrapper() {
     //rows we need to fill up visible container
-    var minimumRowsNeeded = parseInt(this.contentHeight / this.vGridConfig.rowHeight, 10);
+    var minimumRowsNeeded = parseInt(this.contentHeight / this.vGridConfig.attRowHeight, 10);
 
     //set extra so we can buffer
     if (minimumRowsNeeded % 2 === 1) {
@@ -460,7 +460,7 @@ export class VGridGenerator {
         row.classList.add(this.vGridConfig.css.rowEven);
       }
 
-      row.style.height = this.vGridConfig.rowHeight + "px";
+      row.style.height = this.vGridConfig.attRowHeight + "px";
 
       this.setRowTopValue([{
         div: row,
@@ -484,7 +484,7 @@ export class VGridGenerator {
       });
 
       //set new top for next row
-      top = top + this.vGridConfig.rowHeight;
+      top = top + this.vGridConfig.attRowHeight;
 
     }//end for loop
 
@@ -582,7 +582,7 @@ export class VGridGenerator {
 
 
     //vars
-    var rowHeight = this.vGridConfig.rowHeight;
+    var rowHeight = this.vGridConfig.attRowHeight;
     var bodyHeight = this.htmlCache.content.clientHeight;
     var currentRow = parseInt(this.scrollVars.lastScrollTop / rowHeight, 10);
     var firstRow = parseInt(this.htmlCache.content.scrollTop / rowHeight, 10);
@@ -610,7 +610,7 @@ export class VGridGenerator {
     //for setting before (when hitting bottom)
     var setHiddenFromView = (cacheRowNumber) => {
       var row = this.htmlCache.rowsArray[cacheRowNumber];
-      this.setRowTopValue([row], 0, -(currentRowTop + (this.vGridConfig.rowHeight * 50)));
+      this.setRowTopValue([row], 0, -(currentRowTop + (this.vGridConfig.attRowHeight * 50)));
     };
 
     //loop row html cache
@@ -661,9 +661,9 @@ export class VGridGenerator {
     var currentScrollTop = this.htmlCache.content.scrollTop;
     if (this.scrollVars.isScrollBarScrolling === false) {
       var newTopValue;
-      var currentRow = parseInt((this.scrollVars.lastScrollTop / this.vGridConfig.rowHeight), 10);
-      var collectionHeight = this.vGridConfig.rowHeight * this.getRowCacheLength();
-      var rowHeight = this.vGridConfig.rowHeight;
+      var currentRow = parseInt((this.scrollVars.lastScrollTop / this.vGridConfig.attRowHeight), 10);
+      var collectionHeight = this.vGridConfig.attRowHeight * this.getRowCacheLength();
+      var rowHeight = this.vGridConfig.attRowHeight;
 
       //loop our row html cache
       for (var i = 0; i < this.getRowCacheLength(); i++) {
@@ -724,12 +724,12 @@ export class VGridGenerator {
    * helper, removes rows, se minus height so we cant scroll to empty
    ****************************************************************************************************************************/
   hideRowsThatIsLargerThanCollection() {
-    var currentRow = parseInt((this.scrollVars.lastScrollTop / this.vGridConfig.rowHeight), 10);
-    //this.scrollVars.firstTop = currentRow * this.vGridConfig.rowHeight;
+    var currentRow = parseInt((this.scrollVars.lastScrollTop / this.vGridConfig.attRowHeight), 10);
+    //this.scrollVars.firstTop = currentRow * this.vGridConfig.attRowHeight;
     for (var i = 0; i < this.getRowCacheLength(); i++) {
       var row = this.htmlCache.rowsArray[i];
       var rowTop = parseInt(row.top, 10);
-      if (rowTop > ((this.vGridConfig.getCollectionLength() - 1) * this.vGridConfig.rowHeight) && rowTop > (parseInt(this.htmlCache.content.style.height) - this.vGridConfig.rowHeight)) {
+      if (rowTop > ((this.vGridConfig.getCollectionLength() - 1) * this.vGridConfig.attRowHeight) && rowTop > (parseInt(this.htmlCache.content.style.height) - this.vGridConfig.attRowHeight)) {
         this.setRowTopValue([row], 0, -5000 + i);
       }
     }
@@ -750,7 +750,7 @@ export class VGridGenerator {
     this.scrollVars.isScrollBarScrolling = true;
 
     //delay before doing update
-    var timeout = this.vGridConfig.dataScrollDelay;
+    var timeout = this.vGridConfig.attDataScrollDelay;
 
     //clear scroll timeout
     clearTimeout(this.scrollVars.timer);
@@ -809,7 +809,7 @@ export class VGridGenerator {
         //check if big scroll
         if (isLargeScroll) {
           //now user can set this, on very large collections this will drag preformance down
-          if (this.vGridConfig.renderOnScrollbarScroll) {
+          if (this.vGridConfig.attRenderOnScrollbarScroll) {
             this.onNormalScrollingLarge(isDownScroll, currentScrollTop)
           } else {
             this.onScrollbarScrolling();
@@ -836,7 +836,7 @@ export class VGridGenerator {
       }
     };
     clearTimeout(this.scrollVars.scrollCallbackTimer);
-    if (this.vGridConfig.requestAnimationFrame) {
+    if (this.vGridConfig.attRequestAnimationFrame) {
       requestAnimationFrame(() => {
         doScroll();
       });
@@ -853,7 +853,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   updateGridScrollbars() {
 
-    var collectionHeight = this.vGridConfig.getCollectionLength() * this.vGridConfig.rowHeight + (this.vGridConfig.rowHeight / 2);
+    var collectionHeight = this.vGridConfig.getCollectionLength() * this.vGridConfig.attRowHeight + (this.vGridConfig.attRowHeight / 2);
     var bodyHeight = this.htmlCache.content.offsetHeight;
     //_private.largeScrollLimit = bodyHeight; why was this here... leave it here incase there is something Im missing atm
 
@@ -887,12 +887,12 @@ export class VGridGenerator {
   addResizableAndSortableEvent() {
 
     //resize headers
-    if (this.vGridConfig.isResizableHeaders) {
+    if (this.vGridConfig.attResizableHeaders) {
       this.vGridResizable.init();
     }
 
     //sortable columns
-    if (this.vGridConfig.isSortableHeader) {
+    if (this.vGridConfig.attSortableHeader) {
       this.vGridSortable.init()
     }
 
@@ -910,7 +910,7 @@ export class VGridGenerator {
     var handleClick = (e) => {
       var currentRow = parseInt(e.currentTarget.getAttribute("row"));
       this.vGridConfig.clickHandler(e, currentRow);
-      if (this.vGridConfig.isMultiSelect !== undefined) {
+      if (this.vGridConfig.attMultiSelect !== undefined) {
         this.vGridSelection.setHightlight(e, currentRow, this);
       }
     };
@@ -1035,7 +1035,7 @@ export class VGridGenerator {
     this.addHtml();
     this.addEvents();
     if (!isRebuild) {
-      this.vGridSelection.setMode(this.vGridConfig.isMultiSelect);
+      this.vGridSelection.setMode(this.vGridConfig.attMultiSelect);
     }
     this.createViewSlots();
     this.fillDataInRows();
@@ -1129,9 +1129,9 @@ export class VGridGenerator {
     }
     if (this.scrollBodyHeight < this.htmlCache.content.scrollTop || scrollBottom) {
       var collectionLength = this.vGridConfig.getCollectionLength();
-      var contentRows = parseInt(this.htmlCache.content.offsetHeight / this.vGridConfig.rowHeight);
-      var scrollOffsetHeight = contentRows * this.vGridConfig.rowHeight;
-      this.htmlCache.content.scrollTop = ((collectionLength * this.vGridConfig.rowHeight) - (scrollOffsetHeight))
+      var contentRows = parseInt(this.htmlCache.content.offsetHeight / this.vGridConfig.attRowHeight);
+      var scrollOffsetHeight = contentRows * this.vGridConfig.attRowHeight;
+      this.htmlCache.content.scrollTop = ((collectionLength * this.vGridConfig.attRowHeight) - (scrollOffsetHeight))
 
     }
 
@@ -1144,7 +1144,7 @@ export class VGridGenerator {
     this.onNormalScrollingLarge();
     this.fillDataInRows();
     if (scrollBottom) {
-      this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.rowHeight;
+      this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.attRowHeight;
     }
 
     //if I dont do this, chrome fails...
@@ -1197,7 +1197,7 @@ export class VGridGenerator {
 
   scrollBottom() {
     var collectionLength = this.vGridConfig.getCollectionLength();
-    this.htmlCache.content.scrollTop = collectionLength * this.vGridConfig.rowHeight;
+    this.htmlCache.content.scrollTop = collectionLength * this.vGridConfig.attRowHeight;
   };
 
 

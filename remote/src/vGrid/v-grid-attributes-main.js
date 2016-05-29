@@ -111,7 +111,7 @@ var VGridAttibutesMain = class {
 @customAttribute('v-row-height')
 @inject(Element, Optional.of(VGrid))
 export class vGridRowHeight extends VGridAttibutesMain {
-  attribute = "rowHeight";
+  attribute = "attRowHeight";
   type = "int";
 }
 
@@ -119,7 +119,7 @@ export class vGridRowHeight extends VGridAttibutesMain {
 @customAttribute('v-header-height')
 @inject(Element, Optional.of(VGrid))
 export class vGridHeaderHeight extends VGridAttibutesMain {
-  attribute = "headerHeight";
+  attribute = "attHeaderHeight";
   type = "int";
 }
 
@@ -127,7 +127,7 @@ export class vGridHeaderHeight extends VGridAttibutesMain {
 @customAttribute('v-footer-height')
 @inject(Element, Optional.of(VGrid))
 export class vGridFooterHeight extends VGridAttibutesMain {
-  attribute = "footerHeight";
+  attribute = "attFooterHeight";
   type = "int";
 }
 
@@ -135,14 +135,14 @@ export class vGridFooterHeight extends VGridAttibutesMain {
 @customAttribute('v-resizable-headers')
 @inject(Element, Optional.of(VGrid))
 export class vGridIsResizableHeaders extends VGridAttibutesMain {
-  attribute = "isResizableHeaders";
+  attribute = "attResizableHeaders";
   type = "bool";
 }
 
 @customAttribute('v-attibutes-observe')
 @inject(Element, Optional.of(VGrid))
 export class vGridAttibutesObserve extends VGridAttibutesMain {
-  attribute = "attributeObserve";
+  attribute = "attAttributeObserve";
   type = "array";
 }
 
@@ -150,7 +150,7 @@ export class vGridAttibutesObserve extends VGridAttibutesMain {
 @customAttribute('v-multi-select')
 @inject(Element, Optional.of(VGrid))
 export class vGridIsMultiSelect extends VGridAttibutesMain {
-  attribute = "isMultiSelect";
+  attribute = "attMultiSelect";
   type = "bool";
 }
 
@@ -158,7 +158,7 @@ export class vGridIsMultiSelect extends VGridAttibutesMain {
 @customAttribute('v-manual-sel')
 @inject(Element, Optional.of(VGrid))
 export class vGridManualSelection extends VGridAttibutesMain {
-  attribute = "manualSelection";
+  attribute = "attManualSelection";
   type = "bool";
 }
 
@@ -166,7 +166,7 @@ export class vGridManualSelection extends VGridAttibutesMain {
 @customAttribute('v-sortable-headers')
 @inject(Element, Optional.of(VGrid))
 export class vGridIsSortableHeader extends VGridAttibutesMain {
-  attribute = "isSortableHeader";
+  attribute = "attSortableHeader";
   type = "bool";
 }
 
@@ -174,7 +174,7 @@ export class vGridIsSortableHeader extends VGridAttibutesMain {
 @customAttribute('v-loading-threshold')
 @inject(Element, Optional.of(VGrid))
 export class vGridLoadingThreshold extends VGridAttibutesMain {
-  attribute = "loadingThreshold";
+  attribute = "attLoadingThreshold";
   type = "int";
 }
 
@@ -191,7 +191,7 @@ export class vGridRemoteIndex  {
 
   bind() {
     if (this.value !== "") {
-      this.vGrid.vGridConfig.isRemoteIndex = true;
+      this.vGrid.vGridConfig.attRemoteIndex = true;
       this.vGrid.vGridRowKey = this.value;
     }
   }

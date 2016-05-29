@@ -62,27 +62,29 @@ export class VGridConfig {
     this.columnLenght = 0;
 
     //<v-grid> attibutes
-    this.attributeObserve = [];
-    this.rowHeight = 50;
-    this.headerHeight = 0;
-    this.footerHeight = 0;
-    this.isResizableHeaders = false;
-    this.isMultiSelect = undefined;
-    this.isSortableHeader = false;
-    this.loadingThreshold = -1; //for when loading screen comes on
+    this.attAttributeObserve = [];
+    this.attRowHeight = 50;
+    this.attHeaderHeight = 0;
+    this.attFooterHeight = 0;
+    this.attResizableHeaders = false;
+    this.attMultiSelect = undefined;
+    this.attSortableHeader = false;
+    this.attLoadingThreshold = -1; //for when loading screen comes on
+    this.attRemoteIndex = false;
+    this.attManualSelection = false;
+
     this.eventOnRowDraw = null;
     this.eventOnRowClick = null;
     this.eventOnRowDblClick = null;
     this.eventOnRemoteCall = null;
-    this.isRemoteIndex = false;
 
 
 
     //static atm (dunno if I want them as options yet)
-    this.dataScrollDelay = 200;
-    this.requestAnimationFrame = true;
-    this.resizableHeadersAndRows = true; //is just here if someone for some reson would like to just resize header, and fix rows after
-    this.renderOnScrollbarScroll = true;
+    this.attDataScrollDelay = 200;
+    this.attRequestAnimationFrame = true;
+    this.attResizableHeadersAndRows = true; //is just here if someone for some reson would like to just resize header, and fix rows after
+    this.attRenderOnScrollbarScroll = true;
 
 
     //remote internal vars
@@ -135,7 +137,7 @@ export class VGridConfig {
         this.vGrid.vGridCollectionFiltered = this.vGrid.vGridCollection.slice(0);
         this.vGrid.checkKeys();
         this.vGrid.vGridCurrentRow = -1;
-        if (!this.isRemoteIndex) {
+        if (!this.attRemoteIndex) {
           this.vGrid.vGridSelection.reset();
         }
         this.vGrid.vGridGenerator.collectionChange();
@@ -163,7 +165,7 @@ export class VGridConfig {
     if (filterObj.length !== 0 || this.vGrid.vGridCollectionFiltered.length !== this.vGrid.vGridCollection.length || this.eventOnRemoteCall) {
 
       //set loading screen
-      if (this.vGrid.vGridCollection.length > this.loadingThreshold) {
+      if (this.vGrid.vGridCollection.length > this.attLoadingThreshold) {
         this.vGrid.loading = true;
       }
 
@@ -275,7 +277,7 @@ export class VGridConfig {
     //can we do the sorting?
     if (this.vGrid.vGridCollectionFiltered.length > 0) {
       //set loading screen
-      if (this.vGrid.vGridCollection.length > this.loadingThreshold) {
+      if (this.vGrid.vGridCollection.length > this.attLoadingThreshold) {
         this.vGrid.loading = true;
       }
 

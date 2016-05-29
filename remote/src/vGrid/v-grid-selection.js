@@ -247,7 +247,7 @@ export class VGridSelection {
   setHightlight(e, currentRow, vGridGenerator) {
 
     var isSel;
-    var manualSel = this.vGrid.vGridConfig.manualSelection;
+    var manualSel = this.vGrid.vGridConfig.attManualSelection;
     if (!manualSel) {
       var currentselectedRows = this.getSelectedRows();
 

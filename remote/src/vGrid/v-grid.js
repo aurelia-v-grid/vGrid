@@ -21,6 +21,7 @@ import {VGridConfig} from './v-grid-config';
 import {VGridResizable} from './v-grid-resizable';
 import {VGridSelection} from './v-grid-selection';
 import {VGridCtx} from './v-grid-ctx';
+import {bindableVGrid} from './v-grid-sort';
 
 
 export class VGrid {
@@ -29,9 +30,14 @@ export class VGrid {
   @bindable({attribute: "v-collection"}) vGridCollection;
   @bindable({attribute: "v-current-entity"}) vGridCurrentEntity;
 
+
+
+
   //loading screen when filtering/sorting
   @bindable loadingMessage = "Working please wait";
   loading = false;
+
+
 
   constructor(element, observerLocator, viewCompiler, viewSlot, container, viewResources, taskQueue) {
     
@@ -70,6 +76,9 @@ export class VGrid {
     this.vGridGenerator = new VGridGenerator(this);
     this.vGridClientCtx = new VGridCtx(this);
     this.vGridPager = null; //set by pager
+
+
+
 
   }
 

@@ -49,7 +49,7 @@ export class VGridResizable {
     //enable sortable headers again
     setTimeout(() => {
       this.resizable = false;
-      if (this.vGridConfig.isSortableHeader) {
+      if (this.vGridConfig.attSortableHeader) {
         this.vGridSortable.option("disabled", this.resizable);
       }
     }, 30);
@@ -119,7 +119,7 @@ export class VGridResizable {
     
 
     //if resize also row attribute is set to true, then we also need to update them
-    if (this.vGridConfig.resizableHeadersAndRows) {
+    if (this.vGridConfig.attResizableHeadersAndRows) {
       var columnsToFix = this.vGridGenerator.htmlCache.content.firstChild.querySelectorAll("." + this.vGridConfig.css.rowColumn + this.index);
 
       for (var col = 0; col < columnsToFix.length; col++) {
@@ -145,7 +145,7 @@ export class VGridResizable {
 
 
     //disable sortable when resizing
-    if (this.vGridConfig.isSortableHeader) {
+    if (this.vGridConfig.attSortableHeader) {
       this.vGridSortable.option("disabled", this.resizable);
     }
 
