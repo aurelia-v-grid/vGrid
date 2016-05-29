@@ -47,7 +47,8 @@ export class vGridAttributesSelection {
           this.vGrid.vGridGenerator.fillDataInRows();
         }
         if (this.value === "row") {
-          this.vGrid.vGridSelection.select(this.bindingContext.row);
+          this.vGrid.vGridSelection.select(this.bindingContext.row, true);
+          this.vGrid.vGridGenerator.fillDataIntoRow(this.bindingContext.row);
         }
       } else {
 
@@ -57,7 +58,8 @@ export class vGridAttributesSelection {
         }
 
         if (this.value === "row") {
-          this.vGrid.vGridSelection.deSelect(this.bindingContext.row);
+          this.vGrid.vGridSelection.deSelect(this.bindingContext.row, true);
+          this.vGrid.vGridGenerator.fillDataIntoRow(this.bindingContext.row);
         }
       }
 

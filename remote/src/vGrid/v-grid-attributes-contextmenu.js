@@ -50,6 +50,12 @@ var Contextmenu = class {
   }
 
 
+  bind(bindingContext, overrideContext) {
+    this.bindingContext = bindingContext;
+    this.overrideContext = overrideContext;
+  }
+
+
   attached() {
       this.element.classList.contains(this.classToOpenOn)? null:this.element.classList.add(this.classToOpenOn)
       this.addListener();
@@ -488,5 +494,80 @@ export class VGridContextmenu extends Contextmenu {
     this.altMenuLogic = null; //reset to main menu again
   }
 
+
+}
+
+
+
+/*****************************************************
+ *  main context menu for row cells
+ ******************************************************/
+@customAttribute('v-grid-row-menu')
+@inject(Element, VGrid)
+export class ContextMenuCell extends Contextmenu {
+  classToOpenOn = "vGrid-row-menu"; //class it opens menu on
+  altMenuLogic = null; //alt menu to open
+
+
+  //main menu lisntner
+  menuItemListener(link) {
+    var value = link.getAttribute("data-action");
+    if (this.altMenuLogic) {
+      this.filterMenuLogic(value);
+    } else {
+      this.defaultMenu(value)
+    }
+  };
+
+
+  canOpen(e) {
+    return true;
+  }
+
+
+  //main menu to open
+  menuHtmlMain() {
+    return this.createMenuHTML([
+      {
+        action: "",
+        value: "Options",
+        isHeader: true
+      }, {
+        action: "copy-cell",
+        value: "Copy cell value",
+        isHeader: false
+      }, {
+        action: "paste-cell",
+        value: "Paste into cell/selected rows",
+        isHeader: false
+      }
+    ]);
+  };
+
+
+
+  defaultMenu(value) {
+    switch (value) {
+      case "copy-cell":
+        this.vGrid.vGridConfig.cellValue = this.bindingContext.rowRef[this.value];
+        this.toggleMenuOff();
+        break;
+      case "paste-cell":
+        if (this.vGrid.vGridConfig.cellValue !== null) {
+            var rows = this.vGrid.vGridSelection.getSelectedRows();
+            rows.forEach((x)=> {
+              this.vGrid.vGridCollectionFiltered[x][this.value] = this.vGrid.vGridConfig.cellValue;
+            });
+            this.vGrid.vGridGenerator.fillDataInRows();
+        } else {
+          console.log("no value")
+        }
+        this.toggleMenuOff();
+        break;
+      default:
+        console.log(value);
+        this.toggleMenuOff();
+    }
+  }
 
 }
