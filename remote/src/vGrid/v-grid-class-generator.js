@@ -146,7 +146,7 @@ export class VGridGenerator {
   getHeaderTemplate() {
     var rowTemplate = "";
     for (var i = 0; i < this.vGridConfig.columns; i++) {
-      rowTemplate = rowTemplate + `<v-grid-header-col v-grid-context-menu-header column-no="${i}"></v-grid-header-col>`;
+      rowTemplate = rowTemplate + `<v-grid-header-col column-no="${i}"></v-grid-header-col>`;
     }
     return rowTemplate;
   };
@@ -161,16 +161,11 @@ export class VGridGenerator {
       rowTemplate = this.htmlCache.rowTemplate;
     } else {
       if (this.vGrid.vGridConfig.repeater) {
-        if (this.vGrid.vGridConfig.repeatTemplate.indexOf("template") === -1) {
           return '<template>' + this.vGrid.vGridConfig.repeatTemplate + '</template>'
-        } else {
-          return this.vGrid.vGridConfig.repeatTemplate;
-        }
-
       } else {
         rowTemplate = '<template>';
         for (var i = 0; i < this.vGridConfig.columns; i++) {
-          rowTemplate = rowTemplate + `<v-grid-row-col v-grid-context-menu-cell column-no=${i}></v-grid-row-col>`;
+          rowTemplate = rowTemplate + `<v-grid-row-col column-no=${i}></v-grid-row-col>`;
         }
       }
     }
@@ -246,7 +241,36 @@ export class VGridGenerator {
     this.gridHeight = this.htmlCache.grid.clientHeight;
     this.gridWidght = this.htmlCache.grid.clientWidth;
 
+
   };
+
+
+  createLoadingScreen(){
+    var test = [
+      '<div class="v-grid-overlay" if.bind="loading">',
+      '</div>',
+      '<div if.two-way="loading" class="v-grid-progress-indicator">',
+      '<div class="v-grid-progress-bar" role="progressbar" style="width:100%">',
+      '<span>${ loadingMessage }</span>',
+      '</div>',
+      '</div>'
+    ];
+
+
+    var viewFactory = this.vGrid.viewCompiler.compile('<template>' + test.join("") + '</template>', this.vGrid.viewResources);
+    var view = viewFactory.create(this.vGrid.container);
+
+    this.headerViewSlot = new ViewSlot(this.htmlCache.grid, true);
+    this.headerViewSlot.add(view);
+
+    //bind
+
+    this.headerViewSlot.bind(this.vGrid, {
+      bindingContext: this.vGrid,
+      parentOverrideContext: this.vGrid.overrideContext
+    });
+    this.headerViewSlot.attached();
+  }
 
 
   /****************************************************************************************************************************
@@ -268,8 +292,11 @@ export class VGridGenerator {
 
     var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.getHeaderTemplate() + '</template>', this.vGrid.viewResources);
     var view = viewFactory.create(this.vGrid.container);
+    
     this.headerViewSlot = new ViewSlot(this.htmlCache.header.firstChild, true);
     this.headerViewSlot.add(view);
+    
+    //bind
     let bindingContext = {};
     this.headerViewSlot.bind(bindingContext, {
       bindingContext: bindingContext,
@@ -294,15 +321,22 @@ export class VGridGenerator {
     row.style.height = this.vGridConfig.headerHeight + "px";
     row.style.width = this.getTotalColumnWidth() + "px";
     this.htmlCache.header.appendChild(row);
-
+    
+    //view/factory
     var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.getHeaderTemplate() + '</template>', this.vGrid.viewResources);
     var view = viewFactory.create(this.vGrid.container);
+    
+    //unbind
     this.headerViewSlot.unbind();
     this.headerViewSlot.detached();
     this.headerViewSlot.removeAll();
     this.headerViewSlot = null;
+    
+    //new
     this.headerViewSlot = new ViewSlot(this.htmlCache.header.firstChild, true);
     this.headerViewSlot.add(view);
+    
+    //bind
     let bindingContext = {};
     this.headerViewSlot.bind(bindingContext, {
       bindingContext: bindingContext,
@@ -982,6 +1016,7 @@ export class VGridGenerator {
 
     //add needed html
     this.createGridHtmlWrapper(); //entire main grid, pretty much just adds a class
+    this.createLoadingScreen();
     this.createGridHtmlHeaderWrapper(); //adds header
     this.createGridHtmlContentWrapper(); //adds content/viewport we see
     this.createGridHtmlFooterWrapper(); //adds footer

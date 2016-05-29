@@ -18,7 +18,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
       <div class="myCol">
-        <h4 style="margin-left:25px">Main demo (27 Mai-2016, rev01)</h4>
+        <h4 style="margin-left:25px">Main demo (29 Mai-2016, rev01)</h4>
 
         <v-grid
           style="position:absolute;top:70px;bottom:0;right: 25px;left:25px"
@@ -44,12 +44,12 @@
 
           <v-grid-col v-col-width="90" v-col-attribute="index" v-col-header="Index">
             <v-header-template>
-              <input v-filter="index|enter|>" class="form-control input-sm " value.bind="tempRef.index"
-                     style="background-color:transparent;height: 50%">
-              <p v-sort="index|icon" style="margin-top:3px;width: 100%;height:50%;text-align: center;">Index</p>
+              <input class="header-input" v-filter="index|enter|>"  value.bind="tempRef.index">
+
+              <p class="vGrid-vGridDragHandle labelBottom" v-sort="index|icon" style="margin-top:3px;width: 100%;height:50%;text-align: center;">Index</p>
             </v-header-template>
             <v-row-template>
-              <input class="form-control input-sm " value.bind="tempRef.index"
+              <input class="form-control input-sm row-cell" value.bind="tempRef.index"
                      style="background-color:transparent;height: 100%">
             </v-row-template>
           </v-grid-col>
@@ -58,12 +58,11 @@
 
           <v-grid-col v-col-width="100" v-col-attribute="name" v-col-header="name">
             <v-header-template>
-              <input v-filter="name|enter|*" class="form-control input-sm " value.bind="tempRef.name"
-                     style="background-color:transparent;height: 50%">
-              <p v-sort="name|icon" style="margin-top:3px;width: 100%;height:50%;text-align: center;">Name</p>
+              <input class="header-input" v-filter="name|enter|*" class="form-control input-sm " value.bind="tempRef.name">
+              <p class="vGrid-vGridDragHandle labelBottom" v-sort="name|icon" style="margin-top:3px;width: 100%;height:50%;text-align: center;">Name</p>
             </v-header-template>
             <v-row-template>
-              <input class="form-control input-sm " value.bind="rowRef.name"
+              <input class="form-control input-sm row-cell" value.bind="rowRef.name"
                      style="background-color:transparent;height:100%">
             </v-row-template>
           </v-grid-col>
@@ -73,8 +72,8 @@
 
           <v-grid-col v-col-width="90" v-col-attribute="images" v-col-header="image">
             <v-header-template>
-              <p  style="margin:initial;width: 100%;height:50%;text-align: center;"></p>
-              <p  style="margin-top:3px;width: 100%;height:50%;text-align: center;">Index</p>
+              <p  class="labelTop" style="margin:initial;width: 100%;height:50%;text-align: center;"></p>
+              <p  class="vGrid-vGridDragHandle labelBottom" style="margin-top:3px;width: 100%;height:50%;text-align: center;">Index</p>
             </v-header-template>
             <v-row-template>
               <image src.bind="rowRef.images" style="border-radius: 50%;height:100%;margin-left:25%;"></image>
@@ -84,9 +83,11 @@
 
           <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool">
             <v-header-template>
+              <div class="header-input">
               <input type="checkbox" v-filter="bool|enter|="
-                     style="margin: auto;height:50%;position:initial;display: block">
-              <p v-sort="bool|icon"  style="margin-top:3px;width: 100%;height:50%;text-align: center;">Bool</p>
+                     style="margin: auto;height:100%;position:initial;display: block">
+              </div>
+              <p class="vGrid-vGridDragHandle labelBottom" v-sort="bool|icon"  style="margin-top:3px;width: 100%;height:50%;text-align: center;">Bool</p>
             </v-header-template>
             <v-row-template>
               <input type="checkbox" checked.bind="rowRef.bool"
@@ -97,12 +98,11 @@
 
           <v-grid-col v-col-width="100" v-col-attribute="number" v-col-header="Number">
             <v-header-template>
-              <input v-filter="number|enter|>=" class="form-control input-sm " value.bind="tempRef.number"
-                     style="background-color:transparent;height: 50%">
-              <p v-sort="number|icon"  style="margin-top:3px;width: 100%;height:50%;text-align: center;">Number</p>
+              <input class="header-input" v-filter="number|enter|>=" class="form-control input-sm " value.bind="tempRef.number">
+              <p class="vGrid-vGridDragHandle labelBottom" v-sort="number|icon"  style="margin-top:3px;width: 100%;height:50%;text-align: center;">Number</p>
             </v-header-template>
             <v-row-template>
-              <input class="form-control input-sm " value.bind="rowRef.number | numberFormat"
+              <input class="form-control input-sm row-cell" value.bind="rowRef.number | numberFormat"
                      css="background-color:transparent; height: 100%; color:${tempRef.numberColor};font-weight:${tempRef.numberFont};text-align:right; padding-right:5px">
             </v-row-template>
           </v-grid-col>
@@ -110,12 +110,11 @@
 
           <v-grid-col v-col-width="180" v-col-attribute="date" v-col-header="date">
             <v-header-template>
-              <input v-filter="date|enter|>=|dateFormat" class="form-control input-sm"
-                     style="background-color:transparent;height: 50%">
-              <p v-sort="date|icon"  style="margin-top:3px;width: 100%;height:50%;text-align: center;">Date</p>
+              <input class="header-input" v-filter="date|enter|>=|dateFormat" class="form-control input-sm">
+              <p class="vGrid-vGridDragHandle labelBottom" v-sort="date|icon"  style="margin-top:3px;width: 100%;height:50%;text-align: center;">Date</p>
             </v-header-template>
             <v-row-template>
-              <input class="form-control input-sm " value.bind="rowRef.date | dateFormat"
+              <input class="form-control input-sm row-cell" value.bind="rowRef.date | dateFormat"
                      style="background-color:transparent;height: 100%">
             </v-row-template>
           </v-grid-col>
@@ -124,12 +123,11 @@
 
           <v-grid-col v-col-width="160" v-col-attribute="color" v-col-header="Color">
             <v-header-template>
-              <input v-filter="bool|enter|*" class="form-control input-sm "
-                     style="background-color:transparent;height: 50%">
-              <p v-sort="color|icon"  style="margin-top:3px;width: 100%;height:50%;text-align: center;">Date</p>
+              <input class="header-input" v-filter="bool|enter|*" class="form-control input-sm ">
+              <p class="vGrid-vGridDragHandle labelBottom" v-sort="color|icon"  style="margin-top:3px;width: 100%;height:50%;text-align: center;">Date</p>
             </v-header-template>
             <v-row-template>
-              <input class="form-control input-sm " value.bind="rowRef.color"
+              <input class="form-control input-sm row-cell" value.bind="rowRef.color"
                      style="background-color:transparent;height:100%">
             </v-row-template>
           </v-grid-col>

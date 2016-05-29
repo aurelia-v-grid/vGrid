@@ -12,16 +12,15 @@ import {TaskQueue, ObserverLocator, bindable, ViewCompiler, ViewSlot, Container,
 //import {ObserverLocator} from 'aurelia-binding';
 //import {Container} from 'aurelia-dependency-injection';
 
-import {VGridGenerator} from './v-grid-generator';
-import {VGridFilter} from './v-grid-filter';
-import {VGridSort} from './v-grid-sort';
-import {VGridSortable} from './v-grid-sortable';
-import {VGridCellHelper} from './v-grid-cell-helper';
-import {VGridObservables} from './v-grid-observables';
-import {VGridConfig} from './v-grid-config';
-import {VGridResizable} from './v-grid-resizable';
-import {VGridSelection} from './v-grid-selection';
-import {VGridClientCtx} from './v-grid-clientCtx';
+import {VGridGenerator} from './v-grid-class-generator';
+import {VGridFilter} from './v-grid-class-filter';
+import {VGridSort} from './v-grid-class-sort';
+import {VGridSortable} from './v-grid-class-sortable';
+import {VGridObservables} from './v-grid-class-observables';
+import {VGridConfig} from './v-grid-class-config';
+import {VGridResizable} from './v-grid-class-resizable';
+import {VGridSelection} from './v-grid-class-selection';
+import {VGridClientCtx} from './v-grid-class-ctx';
 
 
 export class VGrid {
@@ -29,7 +28,7 @@ export class VGrid {
   @bindable({attribute: "v-grid-context"}) vGridContextObj;
   @bindable({attribute: "v-collection"}) vGridCollection;
   @bindable({attribute: "v-current-entity"}) vGridCurrentEntity;
-  @bindable vEventOnremotecall;
+
   //loading screen when filtering/sorting
   @bindable loadingMessage = "Working please wait";
   loading = false;

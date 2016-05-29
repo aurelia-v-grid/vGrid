@@ -150,37 +150,37 @@ export class VGridClientCtx {
     });
   };
 
-  collectionChange(resetScrollToTop, scrollBottom) {
-    this.vGridGenerator.collectionChange(resetScrollToTop, scrollBottom)
-  }
+  // collectionChange(resetScrollToTop, scrollBottom) {
+  //   this.vGridGenerator.collectionChange(resetScrollToTop, scrollBottom)
+  // }
 
 
-  setSorting(x, add) {
-    this.vGridSort.setFilter(x, add)
-  }
-
+  // setSorting(x, add) {
+  //   this.vGridSort.setFilter(x, add)
+  // }
+  //
   keepFilterOnCollectionChange() {
     this.vGridConfig.keepFilterOnCollectionChange = true;
   }
-
-
-  //todo adjust, will not work with remote atm
-  runSorting(x) {
-    if (this.vGridCollection.length > this.vGridConfig.loadingThreshold) {
-      this.vGrid.loading = true;
-    }
-    setTimeout(()=> {
-      this.vGridSort.run(this.vGrid.vGridCollectionFiltered);
-      this.vGrid.loading = false;
-    }, 10);
-
-  }
-
-  runFilter(filterObj) {
-    this.vGridConfig.addFilter = true;
-    this.vGridConfig.onFilterRun(filterObj)
-  }
-  
+  //
+  //
+  // //todo adjust, will not work with remote atm
+  // runSorting(x) {
+  //   if (this.vGridCollection.length > this.vGridConfig.loadingThreshold) {
+  //     this.vGrid.loading = true;
+  //   }
+  //   setTimeout(()=> {
+  //     this.vGridSort.run(this.vGrid.vGridCollectionFiltered);
+  //     this.vGrid.loading = false;
+  //   }, 10);
+  //
+  // }
+  //
+  // runFilter(filterObj) {
+  //   this.vGridConfig.addFilter = true;
+  //   this.vGridConfig.onFilterRun(filterObj)
+  // }
+  //
 
 
   rebuildColumns() {

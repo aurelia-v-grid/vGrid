@@ -10,9 +10,8 @@ import {inject, customAttribute, Optional} from 'aurelia-framework';
 //for kendo ui bridge, remove import above
 //import {customAttribute} from 'aurelia-templating';
 //import {inject, Optional} from 'aurelia-dependency-injection';
-import {VGridCellRowHeader} from './v-grid-header-col';
-import {VGridCellContainer} from './v-grid-row-col';
-
+import {VGrid} from './v-grid';
+//TODO: not fixed
 
 
 /*****************************************************
@@ -20,9 +19,9 @@ import {VGridCellContainer} from './v-grid-row-col';
 ******************************************************/
 var ContextMenu = class {
 
-  constructor(element, parent) {
+  constructor(element, vGrid) {
     this.element = element;
-    this.parent = parent;
+    this.parent = vGrid;
 
     //main classes, should I just add these to the v-grid-config?
     this.contextMenuClassName = "v-grid-context-menu";
@@ -53,14 +52,14 @@ var ContextMenu = class {
 
 
   attached() {
-    if(this.parent.vGrid.vGridConfig.contextmenu){
+    if(this.vGrid.vGridConfig.contextmenu){
       this.addListener();
     }
   }
 
 
   detached() {
-    if(this.parent.vGrid.vGridConfig.contextmenu) {
+    if(this.vGrid.vGridConfig.contextmenu) {
       this.removeListener();
     }
   }
@@ -269,7 +268,7 @@ var ContextMenu = class {
  *  context menu for header
 ******************************************************/
 @customAttribute('v-grid-context-menu-header')
-@inject(Element, Optional.of(VGridCellRowHeader))
+@inject(Element, VGrid)
 export class ContextMenuHeader extends ContextMenu {
   classToOpenOn = "vGrid-queryField"; //class it opens menu on
   altMenuLogic = null; //alt menu to open
@@ -289,11 +288,11 @@ export class ContextMenuHeader extends ContextMenu {
 
 
   canOpen(e) {
-    if(this.parent.colType === "selection"){
-      return false;
-    } else {
+   // if(this.parent.colType === "selection"){
+    //  return false;
+   /// } else {
       return true;
-    }
+  //  }
   }
 
 

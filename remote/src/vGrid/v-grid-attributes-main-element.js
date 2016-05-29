@@ -1,7 +1,5 @@
 /*****************************************************************************************************************
- *    VGridAttibutes
  *    This is where I create all the <v-grid> attibutes, and set then to vGridConfig
- *    Prb doing al kinds of wrong in here, will improve as I learn more
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
@@ -41,8 +39,9 @@ var VGridAttibutes = class {
     this.vGrid.vGridConfig[this.attribute] = this.setValue(parseInt(this.value), this.attDefault);
   }
 
+
   setBindValueString() {
-    if (typeof(this.value) === "string" && this.value !== '') {
+    if (typeof(this.value) === "string" && this.value !== '' && this.value !== undefined && this.value !== null) {
       this.vGrid.vGridConfig[this.attribute] = this.value
     }
   }
@@ -61,9 +60,11 @@ var VGridAttibutes = class {
     //todo, trim! but dunno if I need this after rebuild---
     if (this.value !== undefined && this.value !== null) {
       var tempArray = this.value.split(",");
+      tempArray.forEach((prop)=> {
+        prop = prop.trim();
+      });
       this.vGrid.vGridConfig[this.attribute] = tempArray;
     }
-
   }
 
 
@@ -212,6 +213,7 @@ export class vGridRemoteIndex extends VGridAttibutes {
   attribute = "remoteIndex";
   type = "string";
 }
+//---------------------------------------------------------------------------------------
 
 
 @customAttribute('v-row-on-draw')
@@ -229,6 +231,7 @@ export class vGridEventOnRowDraw {
   }
 }
 
+//---------------------------------------------------------------------------------------
 
 @customAttribute('v-event-onremote')
 @inject(Optional.of(VGrid))
@@ -246,156 +249,8 @@ export class vGridEventOnRemoteCall {
   }
 }
 
-
-@customAttribute('v-filter')
-@inject(Element, VGrid)
-export class vGridHeaderFilterOn {
-
-  constructor(element, vGrid) {
-    this.vGrid = vGrid;
-    this.element = element;
-  }
+//---------------------------------------------------------------------------------------
 
 
-  bind(bindingContext, overrideContext) {
-    this.bindingContext = bindingContext;
-    this.overrideContext = overrideContext;
-    let values = this.value.split("|");
-    this.attribute = values[0];
-    this.filterOn = values[1];
-    this.filterOperator = values[2];
-
-  }
-
-
-  updateFilter(curFilter) {
-    var filterIndex;
-
-    //get index of filter
-    curFilter.forEach((filter, index)=> {
-      if (filter.attribute === this.attribute) {
-        filterIndex = index;
-      }
-    });
-
-    if (filterIndex) {
-
-      //we found a filter, lets update
-      //todo: checkbox? how to handle values!?
-      if (this.element.value === "") {
-        curFilter.splice(filterIndex, 1)
-      } else {
-        curFilter[filterIndex].value = this.element.value
-      }
-
-    } else {
-
-      //we didnt find filter, lets add one
-      if (this.element.value !== "") {
-        curFilter.push({
-          attribute: this.attribute,
-          operator: this.filterOperator,
-          value: this.element.value
-        });
-      }
-
-    }
-  }
-
-
-  attached() {
-
-    //set enter filter (when user hits enter)
-    if (this.filterOn === "enter") {
-      this.element.onkeydown = (e) => {
-        if (e.keyCode === 13) {
-
-          //if they hit enter we need to get filter, update and run query
-          var curFilter = this.vGrid.vGridFilter.lastFilter;
-          this.updateFilter(curFilter);
-          this.vGrid.vGridConfig.onFilterRun(curFilter)
-
-        } else {
-
-          //if they hit enter we need to get filter, update
-          var curFilter = this.vGrid.vGridFilter.lastFilter;
-          this.updateFilter(curFilter);
-
-        }
-      };
-    }
-
-
-    if (this.filterOn === "keyDown") {
-      //Todo, wee need for when someone have on key down
-
-    }
-
-  }
-
-}
-
-
-@customAttribute('v-sort')
-@inject(Element, VGrid)
-export class vGridHeaderSortIcon {
-
-  constructor(element, vGrid) {
-    this.vGrid = vGrid;
-    this.element = element;
-  }
-
-
-  bind(bindingContext, overrideContext) {
-    this.bindingContext = bindingContext;
-    this.overrideContext = overrideContext;
-    let values = this.value.split("|");
-    this.attribute = values[0];
-    this.icon = values[1] ? true : false;
-    this.filterOperator = values[2];
-
-  }
-
-  attached(){
-    this.sortIcon = document.createElement("SPAN");
-    this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
-    this.element.appendChild(this.sortIcon);
-    this.element.onclick = (e)=>{
-      this.vGrid.vGridConfig.onOrderBy(this.attribute, e.shiftKey);
-    };
-
-    this.vGrid.element.addEventListener("sortIconUpdate", (e)=>{
-      this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
-    })
-
-    
-  }
-  
-  
-  
-
-
-  getSortIconMarkup(attribute) {
-    var css = this.vGrid.vGridConfig.css;
-    var lineHeigthStyleTag = "100%";
-    var isAscHtml = `<span ${lineHeigthStyleTag} class="${css.sortIcon} ${css.sortIconAsc}"></span>`;
-    var isDescHtml = `<span ${lineHeigthStyleTag} class="${css.sortIcon} ${css.sortIconDesc}"></span>`;
-    var markup = `<span ${lineHeigthStyleTag} class="${css.sortIcon} ${css.sortIconSort}"></span>`;
-
-    if (this.vGrid.vGridSort.getFilter().length !== 0) {
-      this.vGrid.vGridSort.getFilter().forEach((x) => {
-        if (x.attribute === this.attribute) {
-          var block = x.asc === true ? isAscHtml : isDescHtml;
-          var main = `<span ${lineHeigthStyleTag} class="${css.sortIcon} ${css.sortIconNo}${x.no}"></span>`;
-          markup = main + block;
-        }
-      });
-    }
-
-    return markup
-  };
-
-
-}
 
 

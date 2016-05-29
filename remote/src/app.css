@@ -1,4 +1,58 @@
 
+
+
+.header-input{
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid rgb(230, 230, 230);
+  border-right: 1px solid rgb(230, 230, 230);
+  border-radius: initial;
+  box-shadow: initial;
+  height: 50%;
+  width: 100%;
+  background-color: white;
+}
+
+
+.row-cell{
+  box-sizing: border-box;
+  border: 0;
+  border-radius: initial;
+  box-shadow: initial;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+.row-cell:focus{
+  border: 1px dotted rgb(81, 41, 81) !important;
+}
+
+.labelTop{
+  box-sizing: border-box;
+  border: 0;
+  border-right: 1px solid rgb(230, 230, 230);
+  border-radius: initial;
+  box-shadow: initial;
+  height: 50%;
+  width: 100%;
+}
+
+.labelBottom{
+  box-sizing: border-box;
+  border: 0;
+  border-right: 1px solid rgb(230, 230, 230);
+  border-radius: initial;
+  box-shadow: initial;
+  height: 50%;
+  width: 100%;
+}
+
+
+
+
+
+
 .myContainer {
 
   position: relative;

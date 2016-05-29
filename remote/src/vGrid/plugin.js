@@ -1,3 +1,14 @@
 export function configure(config) {
-  config.globalResources('vGrid/v-grid-footer-pager','vGrid/v-grid-contextmenu','vGrid/v-grid-row-repeat', 'vGrid/v-grid-col', 'vGrid/v-grid-header-col', 'vGrid/v-grid-row-col', 'vGrid/v-grid.js', 'vGrid/v-grid-atts');
+  config.globalResources(
+    'vGrid/v-grid-element-footer-pager',
+    'vGrid/v-grid-element-row-repeat',
+    'vGrid/v-grid-element-col-config',
+    'vGrid/v-grid-element-col-header',
+    'vGrid/v-grid-element-col-row',
+    'vGrid/v-grid.js',
+    'vGrid/v-grid-attributes-main-element',
+    'vGrid/v-grid-attributes-filter',
+    'vGrid/v-grid-attributes-sort',
+    'vGrid/v-grid-attributes-contextmenu'
+  );
 }

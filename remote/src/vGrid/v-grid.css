@@ -66,8 +66,6 @@
 .vGrid div.vGrid-body {
   position: relative;
   white-space: nowrap;
-  /*background-image: url("styles/spinner.gif");*/
-  /*background-position: center;*/
   -webkit-overflow-scrolling: touch;
 }
 
@@ -77,25 +75,16 @@
 }
 
 .vGrid div.vGrid-body div.vGrid-row {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-  position: absolute;
-  border-bottom: 1px solid rgb(230, 230, 230);
-  overflow: hidden;
-  background-color: inherit;
-}
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   -ms-box-sizing: border-box;
+   box-sizing: border-box;
+   position: absolute;
+   border-bottom: 1px solid rgb(230, 230, 230);
+   overflow: hidden;
+   background-color: inherit;
+ }
 
-.vGrid div.vGrid-body div.vGrid-row-container {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-  position: absolute;
-  height: 100%;
-  background-color: inherit;
-}
 
 .ghost {
   background-color: darkcyan !important;
@@ -163,90 +152,7 @@
   position: relative;
 }
 
-.vGrid-row-cell * .vGrid-content {
-  -webkit-touch-callout: text;
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  padding-left: 5px;
-  background-color: transparent; /*ie11 can inherit background color on inputs, really dont care about IE11, but since this solves it Ill put it in*/
-  border: 0;
-}
 
-.vGrid-row-cell-header * .vGrid-content {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-  position: relative;
-  left: 0;
-  padding-left: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-right: 1px solid rgb(204, 204, 204);
-
-}
-
-.vGrid.queryField {
-
-}
-
-
-
-.vGrid *:focus {
-  outline: 0 !important;
-}
-
-.vGrid-filterInputAtTop {
-  height: 50%;
-  width: 100%;
-  border: 0;
-  border-left: 0 solid !important;
-  position: relative;
-  background-color: white !important;
-  border-bottom: 1px solid rgb(230, 230, 230) !important;
-  -webkit-touch-callout: text !important;
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
-}
-
-.vGrid-filterInputAtBottom {
-  height: 50%;
-  width: 100%;
-  border: 1px solid rgb(204, 204, 204);
-  border-left: 0 solid !important;
-  position: relative;
-  background-color: white !important;
-  border-bottom: 0 solid !important;
-  -webkit-touch-callout: text !important;
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
-}
-
-.vGrid-filterLabelAtTop {
-  height: 50% !important;
-  position: relative;
-  border-bottom: 1px solid rgb(230, 230, 230) !important;
-}
-
-.vGrid-filterSelection {
-  height: 100% !important;
-  position: relative;
-  border-bottom: 1px solid rgb(230, 230, 230) !important;
-}
-
-.vGrid-filterLabelAtBottom {
-  height: 50% !important;
-  position: relative;
-  border-bottom: 1 solid rgb(230, 230, 230) !important;
-}
 
 .vGrid-draggable-handler {
   position: absolute;
@@ -280,6 +186,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+
 
 .vGrid-glyphicon-1 {
   right: -3px;
