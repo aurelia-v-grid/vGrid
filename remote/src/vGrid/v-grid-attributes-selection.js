@@ -28,6 +28,7 @@ export class vGridAttributesSelection {
       this.selected = this.vGrid.vGridSelection.isSelected(this.bindingContext.row);
       this.element.checked = this.selected;
     }
+ 
   }
 
 

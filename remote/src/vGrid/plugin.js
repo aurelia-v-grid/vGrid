@@ -10,6 +10,7 @@ export function configure(config) {
     'vGrid/v-grid-attributes-filter',
     'vGrid/v-grid-attributes-sort',
     'vGrid/v-grid-attributes-selection',
+    'vGrid/v-grid-attributes-image',
     'vGrid/v-grid-attributes-contextmenu'
   );
 }
