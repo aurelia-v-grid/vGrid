@@ -444,7 +444,7 @@ export class VGridGenerator {
       minimumRowsNeeded = minimumRowsNeeded + 6;
     }
 
-    
+
     var top = 0;
     for (var i = 0; i < minimumRowsNeeded; i++) {
 
@@ -935,6 +935,13 @@ export class VGridGenerator {
 
     //this have to be after clcik since it will cancel if scroll event
     this.htmlCache.content.addEventListener("scroll", this.onScroll.bind(this));
+
+    //fix bug when tabbing headers, and header is larger then content width
+    this.htmlCache.header.addEventListener("scroll", (e)=>{
+      this.htmlCache.content.scrollLeft = this.htmlCache.header.scrollLeft;
+      this.scrollVars.lastScrollLeft = this.htmlCache.header.scrollLeft;
+
+    });
 
 
     //this also includes the orderby click on header event
