@@ -73,18 +73,9 @@ export class VGridSortable {
 
     var x;
 
-    x = this.vGrid.vGridConfig.columnWidthArray[oldIndex];
-    this.vGrid.vGridConfig.columnWidthArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.columnWidthArray.splice(newIndex, 0, x);
-
-     x = this.vGrid.vGridConfig.colHeaderTemplateArray[oldIndex];
-     this.vGrid.vGridConfig.colHeaderTemplateArray.splice(oldIndex, 1);
-     this.vGrid.vGridConfig.colHeaderTemplateArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.colRowTemplateArray[oldIndex];
-    this.vGrid.vGridConfig.colRowTemplateArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colRowTemplateArray.splice(newIndex, 0, x);
-
+    x = this.vGrid.vGridConfig.colConfig[oldIndex];
+    this.vGrid.vGridConfig.colConfig.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.colConfig.splice(newIndex, 0, x);
 
 
 

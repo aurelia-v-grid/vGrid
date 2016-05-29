@@ -142,7 +142,7 @@ export class vGridIsResizableHeaders extends VGridAttibutesMain {
 @customAttribute('v-attibutes-observe')
 @inject(Element, Optional.of(VGrid))
 export class vGridAttibutesObserve extends VGridAttibutesMain {
-  attribute = "attributeArray";
+  attribute = "attributeObserve";
   type = "array";
 }
 

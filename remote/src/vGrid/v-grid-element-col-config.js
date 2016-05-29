@@ -55,9 +55,14 @@ export class VGridElementColConfig {
    ******************************************************/
   bind(bindingContext, overrideContext) {
     this.vGrid.vGridConfig.columnLenght++; //count columns
-    this.vGrid.vGridConfig.columnWidthArray.push(this.vColWidth);    
-    this.vGrid.vGridConfig.colRowTemplateArray.push(this.rowTemplate);
-    this.vGrid.vGridConfig.colHeaderTemplateArray.push(this.headerTemplate);
+    
+    this.vGrid.vGridConfig.colConfig.push({
+      width:this.vColWidth || 100,
+      rowTemplate:this.rowTemplate,
+      headerTemplate:this.headerTemplate
+    })
+    
+    
   }
 
 

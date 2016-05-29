@@ -56,17 +56,13 @@ export class VGridConfig {
     this.vGrid = vGrid;
 
     //<v-grid-col> attributes
-    this.attributeArray = []; //only ised for aatibute observing do not delete
-
-    this.columnWidthArray = [];
-    this.colRowTemplateArray = [];
-    this.colHeaderTemplateArray = [];
     this.colConfig= [];
 
-    
-    this.columnLenght = 0; //count so I can clean up array in vgridgenerator.js
+    //count of columns;
+    this.columnLenght = 0;
 
     //<v-grid> attibutes
+    this.attributeObserve = [];
     this.rowHeight = 50;
     this.headerHeight = 0;
     this.footerHeight = 0;

@@ -1,4 +1,3 @@
-
 /*****************************************************************************************************************
  *    ContextMenu
  *    This is where I create all the <v-grid> attibutes, and set then to vGridConfig
@@ -11,17 +10,17 @@ import {inject, customAttribute, Optional} from 'aurelia-framework';
 //import {customAttribute} from 'aurelia-templating';
 //import {inject, Optional} from 'aurelia-dependency-injection';
 import {VGrid} from './v-grid';
-//TODO: not fixed
+
 
 
 /*****************************************************
  *  main class, every menu extends this class to make it simpler
 ******************************************************/
-var ContextMenu = class {
+var Contextmenu = class {
 
   constructor(element, vGrid) {
     this.element = element;
-    this.parent = vGrid;
+    this.vGrid = vGrid;
 
     //main classes, should I just add these to the v-grid-config?
     this.contextMenuClassName = "v-grid-context-menu";
@@ -52,16 +51,13 @@ var ContextMenu = class {
 
 
   attached() {
-    if(this.vGrid.vGridConfig.contextmenu){
+      this.element.classList.contains(this.classToOpenOn)? null:this.element.classList.add(this.classToOpenOn)
       this.addListener();
-    }
   }
 
 
   detached() {
-    if(this.vGrid.vGridConfig.contextmenu) {
       this.removeListener();
-    }
   }
 
 
@@ -267,10 +263,10 @@ var ContextMenu = class {
 /*****************************************************
  *  context menu for header
 ******************************************************/
-@customAttribute('v-grid-context-menu-header')
+@customAttribute('v-grid-header-menu')
 @inject(Element, VGrid)
-export class ContextMenuHeader extends ContextMenu {
-  classToOpenOn = "vGrid-queryField"; //class it opens menu on
+export class VGridContextmenu extends Contextmenu {
+  classToOpenOn = "vGrid-header-menu"; //class it opens menu on
   altMenuLogic = null; //alt menu to open
 
 
@@ -288,11 +284,7 @@ export class ContextMenuHeader extends ContextMenu {
 
 
   canOpen(e) {
-   // if(this.parent.colType === "selection"){
-    //  return false;
-   /// } else {
       return true;
-  //  }
   }
 
 
@@ -308,6 +300,10 @@ export class ContextMenuHeader extends ContextMenu {
         value: "Clear cell",
         isHeader: false
       }, {
+        action: "clear-all",
+        value: "Clear All Cells",
+        isHeader: false
+      },{
         action: "show-all",
         value: "Show all (keep filter text)",
         isHeader: false
@@ -375,12 +371,21 @@ export class ContextMenuHeader extends ContextMenu {
   defaultMenu(value) {
     switch (value) {
       case "clear-cell" :
-        let x = {};
-        this.parent.queryString = "";//x;
+        this.triggerEvent("filterClearCell", {
+          attribute:this.value
+        });
+        this.vGrid.vGridConfig.onFilterRun(this.vGrid.vGridFilter.lastFilter);
+        this.toggleMenuOff();
+        break;
+      case "clear-all" :
+        this.triggerEvent("filterClearAll", {
+          attribute:this.value
+        });
+        this.vGrid.vGridConfig.onFilterRun(this.vGrid.vGridFilter.lastFilter);
         this.toggleMenuOff();
         break;
       case "show-all":
-        this.parent.vGridConfig.onFilterRun([]);
+        this.vGrid.vGridConfig.onFilterRun([]);
         this.toggleMenuOff();
         break;
       case "set-filter":
@@ -394,57 +399,86 @@ export class ContextMenuHeader extends ContextMenu {
   }
 
 
+  triggerEvent(name, data){
+    let event = new CustomEvent(name, {
+      detail: data,
+      bubbles: true
+    });
+    this.vGrid.element.dispatchEvent(event);
+  }
+  
+
   filterMenuLogic(value) {
     switch (value) {
       case "set-filter-1":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "=";
+        this.triggerEvent("filterUpdate", {
+          attribute:this.value,
+          operator:"="
+        });
         this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
       case "set-filter-2":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "<=";
+        this.triggerEvent("filterUpdate", {
+          attribute:this.value,
+          operator:"<="
+        });
         this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
       case "set-filter-3":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = ">=";
+        this.triggerEvent("filterUpdate", {
+          attribute:this.value,
+          operator:">="
+        });
         this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
       case "set-filter-4":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "<";
+        this.triggerEvent("filterUpdate", {
+          attribute:this.value,
+          operator:"<"
+        });
         this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
       case "set-filter-5":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = ">";
+        this.triggerEvent("filterUpdate", {
+          attribute:this.value,
+          operator:">"
+        });
         this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
       case "set-filter-6":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "*";
+        this.triggerEvent("filterUpdate", {
+          attribute:this.value,
+          operator:"*"
+        });
         this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
       case "set-filter-7":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "!=";
+        this.triggerEvent("filterUpdate", {
+          attribute:this.value,
+          operator:"!="
+        });
         this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
       case "set-filter-8":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "!*";
+        this.triggerEvent("filterUpdate", {
+          attribute:this.value,
+          operator:"!*"
+        });
         this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
       case "set-filter-9":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "*=";
+        this.triggerEvent("filterUpdate", {
+          attribute:this.value,
+          operator:"*="
+        });
         this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
       case "set-filter-10":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "=*";
+        this.triggerEvent("filterUpdate", {
+          attribute:this.value,
+          operator:"*="
+        });
         this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
         break;
       default:
         console.log(value);

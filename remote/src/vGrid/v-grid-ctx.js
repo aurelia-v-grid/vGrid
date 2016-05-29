@@ -283,7 +283,7 @@ export class VGridCtx {
     }
     var content = '';
     var rows = this.vGrid.vGridCollectionFiltered;
-    var attributes = this.vGridConfig.attributeArray;
+    var attributes = this.vGridConfig.attributeObserve;
 
     //sets data to our content
     var setData = (arr) => {

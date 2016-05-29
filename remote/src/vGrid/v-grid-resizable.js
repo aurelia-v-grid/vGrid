@@ -62,8 +62,10 @@ export class VGridResizable {
 
 
     //update this column width
-    this.vGridConfig.columnWidthArray[this.index] = parseInt(this.xElement.offsetParent.style.width);
+    this.vGridConfig.colConfig[this.index].width = parseInt(this.xElement.offsetParent.style.width);
 
+
+    
 
     //reset template and fill data
     this.vGridGenerator.htmlCache.rowTemplate = null;
@@ -109,10 +111,12 @@ export class VGridResizable {
 
     //updates
     var newWidth = parseInt(this.originalWidth) - ((this.screenX - e.screenX)) + "px";
-    this.vGridConfig.columnWidthArray[this.index] = parseInt(newWidth);
+    this.vGridConfig.colConfig[this.index].width = parseInt(newWidth);
     this.xElement.offsetParent.style.width = parseInt(this.originalWidth) - ((this.screenX - e.screenX)) + "px";
     this.xElement.offsetParent.style.width = parseInt(this.originalWidth) - ((this.screenX - e.screenX)) + "px";
 
+
+    
 
     //if resize also row attribute is set to true, then we also need to update them
     if (this.vGridConfig.resizableHeadersAndRows) {

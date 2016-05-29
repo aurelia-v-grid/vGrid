@@ -50,6 +50,15 @@ export class vGridAttributesFilter {
     }
   }
 
+  resetValue() {
+    if(this.type !== "checkbox"){
+      this.element.value = "";
+    } else {
+      this.state = 0;
+      this.element.checked = false
+    }
+  }
+
 
   updateFilter(curFilter) {
     var filterIndex = null;
@@ -86,6 +95,31 @@ export class vGridAttributesFilter {
 
 
   attached() {
+
+
+    this.vGrid.element.addEventListener("filterUpdate", (e)=> {
+      if(e.detail.attribute === this.attribute){
+        this.filterOperator= e.detail.operator;
+        this.element.placeholder = this.vGrid.vGridFilter.filterOperatorTableString[this.filterOperator];
+        var curFilter = this.vGrid.vGridFilter.lastFilter;
+        this.updateFilter(curFilter);
+      }
+    });
+
+
+    this.vGrid.element.addEventListener("filterClearCell", (e)=> {
+      if(e.detail.attribute === this.attribute){
+        this.resetValue();
+        var curFilter = this.vGrid.vGridFilter.lastFilter;
+        this.updateFilter(curFilter);
+      }
+    });
+
+    this.vGrid.element.addEventListener("filterClearAll", (e)=> {
+        this.resetValue();
+        var curFilter = this.vGrid.vGridFilter.lastFilter;
+        this.updateFilter(curFilter);
+    });
 
 
 

@@ -146,7 +146,7 @@ export class VGridGenerator {
   getHeaderTemplate() {
     var rowTemplate = "";
     for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
-      rowTemplate = rowTemplate + `<v-grid-header-col column-no="${i}">${this.vGridConfig.colHeaderTemplateArray[i]}</v-grid-header-col>`;
+      rowTemplate = rowTemplate + `<v-grid-header-col column-no="${i}">${this.vGridConfig.colConfig[i].headerTemplate}</v-grid-header-col>`;
     }
     return rowTemplate;
   };
@@ -166,7 +166,7 @@ export class VGridGenerator {
       } else {
         rowTemplate = '<template>';
         for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
-          rowTemplate = rowTemplate + `<v-grid-row-col column-no=${i}>${this.vGridConfig.colRowTemplateArray[i]}</v-grid-row-col>`;
+          rowTemplate = rowTemplate + `<v-grid-row-col column-no=${i}>${this.vGridConfig.colConfig[i].rowTemplate}</v-grid-row-col>`;
         }
         rowTemplate + '</template>';
       }
@@ -190,7 +190,7 @@ export class VGridGenerator {
   getTotalColumnWidth() {
     var total = 0;
     for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
-      total = total + parseInt(this.vGridConfig.columnWidthArray[i], 10);
+      total = total + parseInt(this.vGridConfig.colConfig[i].width, 10);
     }
     return total;
   };
@@ -435,8 +435,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   createGridHtmlRowWrapper() {
     //rows we need to fill up visible container
-    var minimumRowsNeeded = (parseInt(this.contentHeight / this.vGridConfig.rowHeight, 10));
-
+    var minimumRowsNeeded = parseInt(this.contentHeight / this.vGridConfig.rowHeight, 10);
 
     //set extra so we can buffer
     if (minimumRowsNeeded % 2 === 1) {
@@ -445,6 +444,7 @@ export class VGridGenerator {
       minimumRowsNeeded = minimumRowsNeeded + 6;
     }
 
+    
     var top = 0;
     for (var i = 0; i < minimumRowsNeeded; i++) {
 
@@ -945,19 +945,6 @@ export class VGridGenerator {
 
 
   /****************************************************************************************************************************
-   * correct columns witdth array, incase they have just defined the first 2, or none
-   ****************************************************************************************************************************/
-  correctColumnsWidthArray() {
-    var newColumnWidth = [];
-    for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
-      var columnWidth = this.vGridConfig.columnWidthArray[i] || 100;
-      newColumnWidth.push(columnWidth)
-    }
-    this.vGridConfig.columnWidthArray = newColumnWidth;
-  };
-
-
-  /****************************************************************************************************************************
    * sett large scroll limit, looks like *3 content height is a better match from lates testing
    ****************************************************************************************************************************/
   setLargeScrollLimit() {
@@ -1038,15 +1025,13 @@ export class VGridGenerator {
    * will create the actual grid (cant be constructor since I call this when rebuilding)
    ****************************************************************************************************************************/
   init(isRebuild) {
-    this.correctColumnsWidthArray(); //less mess later when doing it this way
-    this.addHtml(); //add html
-    this.addEvents(); //add events
+    this.addHtml();
+    this.addEvents();
     if (!isRebuild) {
-      //todo: remeber scroll height , devide on rowheight, and set to what ever new is?
       this.vGridSelection.setMode(this.vGridConfig.isMultiSelect);
     }
     this.createViewSlots();
-    this.fillDataInRows(); //fillDataInRows
+    this.fillDataInRows();
     this.setLargeScrollLimit();
 
   };
@@ -1083,7 +1068,6 @@ export class VGridGenerator {
    * rebuilds columns incl header row, used by internal, but can also be called from outside
    ****************************************************************************************************************************/
   rebuildColumns() {
-    this.correctColumnsWidthArray();
     this.rebuildGridHeaderHtml();
     this.recreateViewSlots();
     this.fillDataInRows();
@@ -1109,7 +1093,6 @@ export class VGridGenerator {
    * rebuilds columns and trigger collection change in grid (rebuild rows), used by internal, but can also be called from outside
    ****************************************************************************************************************************/
   columnChangeAndCollection(resetScrollToTop) {
-    this.correctColumnsWidthArray();
     this.rebuildGridHeaderHtml();
     this.recreateViewSlots();
     this.fillDataInRows();
@@ -1167,16 +1150,29 @@ export class VGridGenerator {
 
   setColumns(paramObj) {
     //todo: this needs a big update
-    this.vGridConfig.columnWidthArray = paramObj.colWidthArray;
-    this.vGridConfig.colRowTemplateArray = paramObj.colRowTemplateArray;
+    this.vGridConfig.colConfig = paramObj.colConfig;
   };
 
 
   getColumns() {
     //todo: this needs a big update
+
+    var arr = [];
+    this.vGridConfig.colConfig.forEach((obj)=>{
+      let x = {};
+      for (var k in obj) {
+        if (obj.hasOwnProperty(k)) {
+          if (x[k] !== obj[k]) {
+            x[k] = obj[k];
+          }
+        }
+      }
+      arr.push(x);
+    });
+
+
     return {
-      "colWidthArray": this.vGridConfig.columnWidthArray.slice(),
-      "colRowTemplateArray": this.vGridConfig.colRowTemplateArray.slice()
+      "colConfig": arr
     }
   };
 

@@ -164,7 +164,7 @@ export class VGridObservables {
    * enable attributes abservables, ->vGridCollection.name etc
    ***************************************************************************************/
   enableObservablesAttributes() {
-    this.vGrid.vGridConfig.attributeArray.forEach((property) => {
+    this.vGrid.vGridConfig.attributeObserve.forEach((property) => {
       let propertyObserver = this.observerLocator.getObserver(this.vGrid.vGridCurrentEntity, property);
       propertyObserver.subscribe((newValue, oldValue) => {
 
