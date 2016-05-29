@@ -145,7 +145,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getHeaderTemplate() {
     var rowTemplate = "";
-    for (var i = 0; i < this.vGridConfig.columns; i++) {
+    for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
       rowTemplate = rowTemplate + `<v-grid-header-col column-no="${i}">${this.vGridConfig.colHeaderTemplateArray[i]}</v-grid-header-col>`;
     }
     return rowTemplate;
@@ -165,7 +165,7 @@ export class VGridGenerator {
         rowTemplate = '<template>' + this.vGrid.vGridConfig.repeatTemplate + '</template>'
       } else {
         rowTemplate = '<template>';
-        for (var i = 0; i < this.vGridConfig.columns; i++) {
+        for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
           rowTemplate = rowTemplate + `<v-grid-row-col column-no=${i}>${this.vGridConfig.colRowTemplateArray[i]}</v-grid-row-col>`;
         }
         rowTemplate + '</template>';
@@ -189,7 +189,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getTotalColumnWidth() {
     var total = 0;
-    for (var i = 0; i < this.vGridConfig.columns; i++) {
+    for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
       total = total + parseInt(this.vGridConfig.columnWidthArray[i], 10);
     }
     return total;
@@ -949,7 +949,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   correctColumnsWidthArray() {
     var newColumnWidth = [];
-    for (var i = 0; i < this.vGridConfig.columns; i++) {
+    for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
       var columnWidth = this.vGridConfig.columnWidthArray[i] || 100;
       newColumnWidth.push(columnWidth)
     }

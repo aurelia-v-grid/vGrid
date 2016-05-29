@@ -64,7 +64,7 @@ export class VGridConfig {
     this.colConfig= [];
 
     
-    this.columns = 0; //count so I can clean up array in vgridgenerator.js
+    this.columnLenght = 0; //count so I can clean up array in vgridgenerator.js
 
     //<v-grid> attibutes
     this.rowHeight = 50;

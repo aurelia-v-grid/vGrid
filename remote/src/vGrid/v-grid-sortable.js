@@ -25,8 +25,9 @@ export class VGridSortable {
 
   setDragHandles() {
     //we haveto control dragging only to headers with draghandle
-    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
+    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.getElementsByTagName('v-grid-header-col');
     [].slice.call(dragHandles).forEach((itemEl) => {
+      itemEl.classList.add("vGrid-vGridDragHandle");
       itemEl.onmouseenter = () => {
         this.canMove = true;
         //add draggable to elements
@@ -89,12 +90,13 @@ export class VGridSortable {
 
     var that = this;
     this.vGrid.vGridGenerator.htmlCache.rowTemplate = null; //reset template and fill data
-    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
+
+    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.getElementsByTagName('v-grid-header-col');
     [].slice.call(dragHandles).forEach((itemEl, index) => {
       //todo,need to improve this part a lot, need to traverse until I get to V-GRID-ROW-COl
-      itemEl.parentNode.setAttribute("column-no", index);
+      itemEl.setAttribute("column-no", index);
       //update viewmodel, is needed since I dont redraw headers anymore
-      itemEl.parentNode.au["v-grid-header-col"].viewModel.columnNo = index + ""
+      itemEl.au["v-grid-header-col"].viewModel.columnNo = index + ""
     });
     this.vGrid.vGridGenerator.rebuildColumnsRows();
 
