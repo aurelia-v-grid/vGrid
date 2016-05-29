@@ -28,9 +28,7 @@ export class VGridConfig {
     rowContainer: "vGrid-row-container",
     rowAlt: "vGrid-row-alt",
     rowEven: "vGrid-row-even",
-    cellContent: "vGrid-content",
     dragHandle: "vGrid-vGridDragHandle",
-    filterHandle: "vGrid-queryField",
     orderHandle: "v-grid-header-orderBy",
     resizeHeaderDragHandle: "vGrid-draggable-handler",
     sortIcon: "vGrid-glyphicon",
@@ -63,6 +61,7 @@ export class VGridConfig {
     this.columnWidthArray = [];
     this.colRowTemplateArray = [];
     this.colHeaderTemplateArray = [];
+    this.colConfig= [];
 
     
     this.columns = 0; //count so I can clean up array in vgridgenerator.js
@@ -74,55 +73,35 @@ export class VGridConfig {
     this.isResizableHeaders = false;
     this.isMultiSelect = undefined;
     this.isSortableHeader = false;
-    this.requestAnimationFrame = true;
-    this.resizableHeadersAndRows = false;
-    this.renderOnScrollbarScroll = true;
-    this.addFilter = false;
-    this.filterOnAtTop = false;
-    this.sortOnHeaderClick = false;
-    this.largeBuffer = false;
-    this.activeSorting = false;
-    this.contextmenu = true;
-    this.loadingThreshold = -1;
-    this.tabbingEnabled = true;
-
-
+    this.loadingThreshold = -1; //for when loading screen comes on
     this.eventOnRowDraw = null;
     this.eventOnRowClick = null;
     this.eventOnRowDblClick = null;
     this.eventOnRemoteCall = null;
+    this.isRemoteIndex = false;
 
-    this.doNotAddFilterTo = [];
-    this.sortNotOnHeader = [];
 
-    //todo create attribute
+
+    //static atm (dunno if I want them as options yet)
     this.dataScrollDelay = 200;
+    this.requestAnimationFrame = true;
+    this.resizableHeadersAndRows = true; //is just here if someone for some reson would like to just resize header, and fix rows after
+    this.renderOnScrollbarScroll = true;
 
-    this.keepFilterOnCollectionChange = false;
+
+    //remote internal vars
+    this.keepFilterOnCollectionChange = false; //for keeping the sorticons like they are
     this.remoteLimit = 40;
     this.remoteLength = 0;
     this.remoteOffset = 0;
-    this.updatePager = null;
+
 
 
   }
 
-  isRemoteIndex = false;
-
-  set remoteIndex(value) {
-    this.isRemoteIndex = true;
-    this.vGrid.vGridRowKey = value;
-  }
-
-  get remoteIndex() {
-    return this.vGrid.vGridRowKey;
-  }
 
 
-  //from string interpolate, this is whats passes into the onrowdraw event, so we dont end up with people enditing their collection
-  attributes = [];
-
-  getNewObject(obj) {
+  getRowProperties(obj) {
     if (obj) {
       var x = {};
       for (var k in obj) {
@@ -274,7 +253,7 @@ export class VGridConfig {
     if (this.vGrid.vGridCollectionFiltered !== undefined) {
       if (this.eventOnRowDraw) {
         //if user have added this then we call it so they can edit the row data before we display it
-        var data = this.getNewObject(this.vGrid.vGridCollectionFiltered[row]);
+        var data = this.getRowProperties(this.vGrid.vGridCollectionFiltered[row]);
         this.eventOnRowDraw({
             tempRef: data || null,
             rowRef: this.vGrid.vGridCollectionFiltered[row] || null
@@ -393,18 +372,24 @@ export class VGridConfig {
 
     //this dispatch events that v-grid-row-col.js picks up, for calling back is event for single on rows are set
     if (event.type === "click") {
-      var newEvent = document.createEvent('Event');
-      newEvent.initEvent("eventOnRowClick", true, true);
-      event.target.dispatchEvent(newEvent)
+      this.vGrid.raiseEvent("v-row-onclick", {
+        evt: event,
+        data: this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
+        row: this.vGrid.vGridGetRowKey(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey])
+      });
     }
 
 
     //this dispatch events that v-grid-row-col.js picks up, for calling back is event for dblclick on rows are set
     if (event.type === "dblclick") {
-      var newEvent = document.createEvent('Event');
-      newEvent.initEvent("eventOnRowDblClick", true, true);
-      event.target.dispatchEvent(newEvent)
+      this.vGrid.raiseEvent("v-row-ondblclick", {
+        evt: event,
+        data: this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
+        row: this.vGrid.vGridGetRowKey(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey])
+      });
     }
+
+
 
 
   }

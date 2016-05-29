@@ -14,7 +14,7 @@ import {VGrid} from './v-grid';
 @customElement('v-grid-row-col')
 @processContent(false)
 @inject(Element, VGrid, Container)
-export class VGridCellContainer {
+export class VGridElementColRow {
   @bindable columnNo;
 
 
@@ -78,37 +78,7 @@ export class VGridCellContainer {
 
 
 
-    this.element.addEventListener("eventOnRowDblClick", function (e) {
-      this.vGrid.raiseEvent("v-row-ondblclick", {
-        evt: e,
-        data: this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
-        row: this.vGrid.vGridGetRowKey(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey])
-      });
-    }.bind(this));
-
-
-    //for sending back row click to user
-    this.element.addEventListener("eventOnRowClick", function (e) {
-      this.vGrid.raiseEvent("v-row-onclick", {
-        evt: e,
-        data: this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow],
-        row: this.vGrid.vGridGetRowKey(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey])
-      });
-    }.bind(this));
-
   }
-
-
-
-
-
-  /**************************************************
-   *  gets current row
-   **************************************************/
-  getRow() {
-    return parseInt(this.element.parentNode.getAttribute("row"));
-  }
-
 
 
 

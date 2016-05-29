@@ -5,7 +5,7 @@
  *
  ****************************************************************************************************************/
 
-export class VGridClientCtx {
+export class VGridCtx {
 
   constructor(vGrid) {
     this.vGrid = vGrid;

@@ -13,7 +13,7 @@ import {inject, customElement, bindable} from 'aurelia-framework';
 
 @customElement('v-grid-pager')
 @inject(Element)
-export class VGridFooterPager {
+export class VGridElementFooterPager {
 
   info = "";
 

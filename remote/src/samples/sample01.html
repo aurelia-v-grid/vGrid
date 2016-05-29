@@ -25,6 +25,7 @@
           v-attibutes-observe="name,country,number,date,color"
           v-row-height="30"
           v-header-height="50"
+          v-manual-sel="true"
           v-resize-also-rows="true"
           v-resizable-headers="true"
           v-header-filter="true"
@@ -79,6 +80,10 @@
               <image src.bind="rowRef.images" style="border-radius: 50%;height:100%;margin-left:25%;"></image>
             </v-row-template>
           </v-grid-col>
+
+
+
+
 
 
           <v-grid-col v-col-width="70" v-col-attribute="bool" v-col-header="bool">
@@ -275,7 +280,7 @@
             </button>
           </div>
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default btn-xs" click.trigger="runFilterByCode()">test filter by code
+            <button type="button" class="btn btn-default btn-xs" click.trigger="redrawGrid()">redraw grid
             </button>
           </div>
         </div>
@@ -287,11 +292,7 @@
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-default btn-xs" click.trigger="loadStateBtn()">load state</button>
           </div>
-          <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default btn-xs" click.trigger="switchNameBtn()">switch name and color
-            </button>
-          </div>
-        </div>
+         </div>
 
       </div>
     </div>

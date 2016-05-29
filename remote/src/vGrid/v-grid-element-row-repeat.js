@@ -35,7 +35,7 @@ import {VGrid} from './v-grid';
 
 })
 @inject(Element, VGrid, TargetInstruction)
-export class VGridRowRepeat {
+export class VGridElementRowRepeat {
 
 
   /**************************************************

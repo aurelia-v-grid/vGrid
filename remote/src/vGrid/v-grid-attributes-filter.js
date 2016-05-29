@@ -13,7 +13,7 @@ import {VGrid} from './v-grid';
 
 @customAttribute('v-filter')
 @inject(Element, VGrid)
-export class vGridHeaderFilterOn {
+export class vGridAttributesFilter {
 
   constructor(element, vGrid) {
     this.vGrid = vGrid;

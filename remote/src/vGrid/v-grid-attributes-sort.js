@@ -12,7 +12,7 @@ import {VGrid} from './v-grid';
 
 @customAttribute('v-sort')
 @inject(Element, VGrid)
-export class vGridHeaderSortIcon {
+export class vGridAttributesSort {
 
   constructor(element, vGrid) {
     this.vGrid = vGrid;

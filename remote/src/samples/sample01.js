@@ -177,22 +177,11 @@ export class sample01 {
 
   }
 
-  switchNameBtn() {
-    let oldState = this.myGrid.ctx.getColumns(this.oldState);
-    let oldIndex = oldState.colAttrArray.indexOf("name");
-    let newIndex = oldState.colAttrArray.indexOf("color");
-
-
-    oldState.colAttrArray[oldIndex] = "color";
-    oldState.colAttrArray[newIndex] = "name";
-
-    oldState.colHeaderArray[oldIndex] = "Color";
-    oldState.colHeaderArray[newIndex] = "Name";
-
-
-    this.myGrid.ctx.setColumns(oldState);
-    this.myGrid.ctx.rebuildColumns();
-
+  redrawGrid() {
+    var t0 = performance.now();
+    this.myGrid.ctx.redrawGrid();
+    var t1 = performance.now();
+    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
   }
 
   report() {

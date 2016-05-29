@@ -445,9 +445,6 @@ export class VGridGenerator {
     //rows we need to fill up visible container
     var minimumRowsNeeded = (parseInt(this.contentHeight / this.vGridConfig.rowHeight, 10));
 
-    if (this.vGridConfig.largeBuffer) {
-      minimumRowsNeeded = minimumRowsNeeded * 3;
-    }
 
     //set extra so we can buffer
     if (minimumRowsNeeded % 2 === 1) {
@@ -533,8 +530,10 @@ export class VGridGenerator {
               }
             }
           }
+          var that = this;
           let bindingContext = {};
           bindingContext.row = rowNo;
+          bindingContext.ctx = this;
           bindingContext.tempRef = tempRef;
           bindingContext.rowRef = this.vGrid.vGridCollectionFiltered[rowNo];
           row.viewSlot.bind(bindingContext, {

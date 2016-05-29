@@ -15,7 +15,7 @@ import {VGrid} from './v-grid';
 @customElement('v-grid-header-col')
 @processContent(false)
 @inject(Element, VGrid, Container)
-export class VGridCellRowHeader {
+export class VGridElementColHeader {
   @bindable columnNo;
 
 

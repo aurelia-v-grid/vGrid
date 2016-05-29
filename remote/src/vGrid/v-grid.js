@@ -12,15 +12,15 @@ import {TaskQueue, ObserverLocator, bindable, ViewCompiler, ViewSlot, Container,
 //import {ObserverLocator} from 'aurelia-binding';
 //import {Container} from 'aurelia-dependency-injection';
 
-import {VGridGenerator} from './v-grid-class-generator';
-import {VGridFilter} from './v-grid-class-filter';
-import {VGridSort} from './v-grid-class-sort';
-import {VGridSortable} from './v-grid-class-sortable';
-import {VGridObservables} from './v-grid-class-observables';
-import {VGridConfig} from './v-grid-class-config';
-import {VGridResizable} from './v-grid-class-resizable';
-import {VGridSelection} from './v-grid-class-selection';
-import {VGridClientCtx} from './v-grid-class-ctx';
+import {VGridGenerator} from './v-grid-generator';
+import {VGridFilter} from './v-grid-filter';
+import {VGridSort} from './v-grid-sort';
+import {VGridSortable} from './v-grid-sortable';
+import {VGridObservables} from './v-grid-observables';
+import {VGridConfig} from './v-grid-config';
+import {VGridResizable} from './v-grid-resizable';
+import {VGridSelection} from './v-grid-selection';
+import {VGridCtx} from './v-grid-ctx';
 
 
 export class VGrid {
@@ -68,7 +68,7 @@ export class VGrid {
     this.vGridResizable = new VGridResizable(this);
     this.vGridObservables = new VGridObservables(this, observerLocator);
     this.vGridGenerator = new VGridGenerator(this);
-    this.vGridClientCtx = new VGridClientCtx(this);
+    this.vGridClientCtx = new VGridCtx(this);
     this.vGridPager = null; //set by pager
 
   }

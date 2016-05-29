@@ -10,7 +10,7 @@ import {inject, customAttribute, Optional} from 'aurelia-framework';
 import {VGrid} from './v-grid';
 
 
-var VGridAttibutes = class {
+var VGridAttibutesMain = class {
 
   constructor(element, vGrid) {
     this.vGrid = vGrid;
@@ -91,14 +91,12 @@ var VGridAttibutes = class {
 
   }
 
-
   /**************************************
    * Gets the default value from vGrigConfig
    */
   getDefaultvalue() {
     this.attDefault = this.vGrid.vGridConfig[this.attribute]
   }
-
 
   /**************************************
    * Called when attributes gets binded
@@ -107,14 +105,12 @@ var VGridAttibutes = class {
     this.getDefaultvalue();
     this.setBindValue();
   }
-
-
 };
 
 
 @customAttribute('v-row-height')
 @inject(Element, Optional.of(VGrid))
-export class vGridRowHeight extends VGridAttibutes {
+export class vGridRowHeight extends VGridAttibutesMain {
   attribute = "rowHeight";
   type = "int";
 }
@@ -122,7 +118,7 @@ export class vGridRowHeight extends VGridAttibutes {
 
 @customAttribute('v-header-height')
 @inject(Element, Optional.of(VGrid))
-export class vGridHeaderHeight extends VGridAttibutes {
+export class vGridHeaderHeight extends VGridAttibutesMain {
   attribute = "headerHeight";
   type = "int";
 }
@@ -130,7 +126,7 @@ export class vGridHeaderHeight extends VGridAttibutes {
 
 @customAttribute('v-footer-height')
 @inject(Element, Optional.of(VGrid))
-export class vGridFooterHeight extends VGridAttibutes {
+export class vGridFooterHeight extends VGridAttibutesMain {
   attribute = "footerHeight";
   type = "int";
 }
@@ -138,14 +134,14 @@ export class vGridFooterHeight extends VGridAttibutes {
 
 @customAttribute('v-resizable-headers')
 @inject(Element, Optional.of(VGrid))
-export class vGridIsResizableHeaders extends VGridAttibutes {
+export class vGridIsResizableHeaders extends VGridAttibutesMain {
   attribute = "isResizableHeaders";
   type = "bool";
 }
 
 @customAttribute('v-attibutes-observe')
 @inject(Element, Optional.of(VGrid))
-export class vGridAttibutesObserve extends VGridAttibutes {
+export class vGridAttibutesObserve extends VGridAttibutesMain {
   attribute = "attributeArray";
   type = "array";
 }
@@ -153,66 +149,55 @@ export class vGridAttibutesObserve extends VGridAttibutes {
 
 @customAttribute('v-multi-select')
 @inject(Element, Optional.of(VGrid))
-export class vGridIsMultiSelect extends VGridAttibutes {
+export class vGridIsMultiSelect extends VGridAttibutesMain {
   attribute = "isMultiSelect";
+  type = "bool";
+}
+
+
+@customAttribute('v-manual-sel')
+@inject(Element, Optional.of(VGrid))
+export class vGridManualSelection extends VGridAttibutesMain {
+  attribute = "manualSelection";
   type = "bool";
 }
 
 
 @customAttribute('v-sortable-headers')
 @inject(Element, Optional.of(VGrid))
-export class vGridIsSortableHeader extends VGridAttibutes {
+export class vGridIsSortableHeader extends VGridAttibutesMain {
   attribute = "isSortableHeader";
-  type = "bool";
-}
-
-
-@customAttribute('v-request-animation-frame')
-@inject(Element, Optional.of(VGrid))
-export class vGridRequestAnimationFrame extends VGridAttibutes {
-  attribute = "requestAnimationFrame";
-  type = "bool";
-}
-
-
-@customAttribute('v-resize-also-rows')
-@inject(Element, Optional.of(VGrid))
-export class vGridResizableHeadersAndRows extends VGridAttibutes {
-  attribute = "resizableHeadersAndRows";
-  type = "bool";
-}
-
-
-@customAttribute('v-render-on-scrollbar-scroll')
-@inject(Element, Optional.of(VGrid))
-export class vGridRenderOnScrollbarScroll extends VGridAttibutes {
-  attribute = "renderOnScrollbarScroll";
-  type = "bool";
-}
-
-
-@customAttribute('v-contextmenu')
-@inject(Element, Optional.of(VGrid))
-export class vGridContextmenu extends VGridAttibutes {
-  attribute = "contextmenu";
   type = "bool";
 }
 
 
 @customAttribute('v-loading-threshold')
 @inject(Element, Optional.of(VGrid))
-export class vGridLoadingThreshold extends VGridAttibutes {
+export class vGridLoadingThreshold extends VGridAttibutesMain {
   attribute = "loadingThreshold";
   type = "int";
 }
 
 
+//---------------------------------------------------------------------------------------
+
 @customAttribute('v-remote-index')
-@inject(Element, Optional.of(VGrid))
-export class vGridRemoteIndex extends VGridAttibutes {
-  attribute = "remoteIndex";
-  type = "string";
+@inject(Optional.of(VGrid))
+export class vGridRemoteIndex  {
+
+  constructor(vGrid) {
+    this.vGrid = vGrid;
+  }
+
+  bind() {
+    if (this.value !== "") {
+      this.vGrid.vGridConfig.isRemoteIndex = true;
+      this.vGrid.vGridRowKey = this.value;
+    }
+  }
 }
+
+
 //---------------------------------------------------------------------------------------
 
 
@@ -231,7 +216,9 @@ export class vGridEventOnRowDraw {
   }
 }
 
+
 //---------------------------------------------------------------------------------------
+
 
 @customAttribute('v-event-onremote')
 @inject(Optional.of(VGrid))
@@ -240,7 +227,6 @@ export class vGridEventOnRemoteCall {
   constructor(vGrid) {
     this.vGrid = vGrid;
   }
-
 
   bind() {
     if (typeof(this.value) === "function") {

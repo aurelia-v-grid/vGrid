@@ -3,7 +3,7 @@
 System.register(['aurelia-framework', './v-grid'], function (_export, _context) {
   "use strict";
 
-  var inject, customAttribute, Optional, VGrid, _dec, _dec2, _class, vGridHeaderSortIcon;
+  var inject, customAttribute, Optional, VGrid, _dec, _dec2, _class, vGridAttributesSort;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -20,15 +20,15 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
       VGrid = _vGrid.VGrid;
     }],
     execute: function () {
-      _export('vGridHeaderSortIcon', vGridHeaderSortIcon = (_dec = customAttribute('v-sort'), _dec2 = inject(Element, VGrid), _dec(_class = _dec2(_class = function () {
-        function vGridHeaderSortIcon(element, vGrid) {
-          _classCallCheck(this, vGridHeaderSortIcon);
+      _export('vGridAttributesSort', vGridAttributesSort = (_dec = customAttribute('v-sort'), _dec2 = inject(Element, VGrid), _dec(_class = _dec2(_class = function () {
+        function vGridAttributesSort(element, vGrid) {
+          _classCallCheck(this, vGridAttributesSort);
 
           this.vGrid = vGrid;
           this.element = element;
         }
 
-        vGridHeaderSortIcon.prototype.bind = function bind(bindingContext, overrideContext) {
+        vGridAttributesSort.prototype.bind = function bind(bindingContext, overrideContext) {
           this.bindingContext = bindingContext;
           this.overrideContext = overrideContext;
 
@@ -38,7 +38,7 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
           this.filterOperator = values[2] || "=";
         };
 
-        vGridHeaderSortIcon.prototype.attached = function attached() {
+        vGridAttributesSort.prototype.attached = function attached() {
           var _this = this;
 
           this.sortIcon = document.createElement("SPAN");
@@ -53,7 +53,7 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
           });
         };
 
-        vGridHeaderSortIcon.prototype.getSortIconMarkup = function getSortIconMarkup(attribute) {
+        vGridAttributesSort.prototype.getSortIconMarkup = function getSortIconMarkup(attribute) {
           var _this2 = this;
 
           var css = this.vGrid.vGridConfig.css;
@@ -74,10 +74,10 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
           return markup;
         };
 
-        return vGridHeaderSortIcon;
+        return vGridAttributesSort;
       }()) || _class) || _class));
 
-      _export('vGridHeaderSortIcon', vGridHeaderSortIcon);
+      _export('vGridAttributesSort', vGridAttributesSort);
     }
   };
 });

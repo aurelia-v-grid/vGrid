@@ -35,7 +35,7 @@ import {VGrid} from './v-grid';
 })
 @customElement('v-grid-col')
 @inject(Element, VGrid, TargetInstruction)
-export class VGridCol {
+export class VGridElementColConfig {
   @bindable vColWidth;
 
 
