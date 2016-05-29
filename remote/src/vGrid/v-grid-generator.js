@@ -146,7 +146,7 @@ export class VGridGenerator {
   getHeaderTemplate() {
     var rowTemplate = "";
     for (var i = 0; i < this.vGridConfig.columns; i++) {
-      rowTemplate = rowTemplate + `<v-grid-header-col column-no="${i}"></v-grid-header-col>`;
+      rowTemplate = rowTemplate + `<v-grid-header-col column-no="${i}">${this.vGridConfig.colHeaderTemplateArray[i]}</v-grid-header-col>`;
     }
     return rowTemplate;
   };
@@ -155,30 +155,32 @@ export class VGridGenerator {
   /****************************************************************************************************************************
    * returns rowTemplate
    ****************************************************************************************************************************/
-  getRowTemplate() {
+  getRowViewFactory() {
     var rowTemplate = "";
+    var viewFactory;
     if (this.htmlCache.rowTemplate !== null) {
-      rowTemplate = this.htmlCache.rowTemplate;
+      viewFactory = this.htmlCache.rowTemplate;
     } else {
       if (this.vGrid.vGridConfig.repeater) {
-          return '<template>' + this.vGrid.vGridConfig.repeatTemplate + '</template>'
+        rowTemplate = '<template>' + this.vGrid.vGridConfig.repeatTemplate + '</template>'
       } else {
         rowTemplate = '<template>';
         for (var i = 0; i < this.vGridConfig.columns; i++) {
-          rowTemplate = rowTemplate + `<v-grid-row-col column-no=${i}></v-grid-row-col>`;
+          rowTemplate = rowTemplate + `<v-grid-row-col column-no=${i}>${this.vGridConfig.colRowTemplateArray[i]}</v-grid-row-col>`;
         }
+        rowTemplate + '</template>';
       }
+
+      viewFactory = this.vGrid.viewCompiler.compile(rowTemplate, this.vGrid.viewResources);
+
     }
-    return rowTemplate + '</template>';
-  };
 
+    //cache template
+    this.htmlCache.rowTemplate = viewFactory;
 
-  /****************************************************************************************************************************
-   * HTML cache.... no idea if this helps really, but lets use it...
-   ****************************************************************************************************************************/
-  cacheRowTemplate(template) {
-    this.htmlCache.rowTemplate = null;
-    this.htmlCache.rowTemplate = template || this.getRowTemplate();
+    //return cache;
+    return this.htmlCache.rowTemplate
+
   };
 
 
@@ -191,16 +193,6 @@ export class VGridGenerator {
       total = total + parseInt(this.vGridConfig.columnWidthArray[i], 10);
     }
     return total;
-  };
-
-
-  /****************************************************************************************************************************
-   * returns row with data from template
-   ****************************************************************************************************************************/
-  createRowMarkup(entity, attributeNames) {
-    var tempColumns = document.createElement("DIV");
-    tempColumns.innerHTML = this.getRowTemplate(attributeNames);
-    return tempColumns.innerHTML;
   };
 
 
@@ -246,7 +238,7 @@ export class VGridGenerator {
 
 
   createLoadingScreen(){
-    var test = [
+    var loadingScreentHtml = [
       '<div class="v-grid-overlay" if.bind="loading">',
       '</div>',
       '<div if.two-way="loading" class="v-grid-progress-indicator">',
@@ -257,7 +249,7 @@ export class VGridGenerator {
     ];
 
 
-    var viewFactory = this.vGrid.viewCompiler.compile('<template>' + test.join("") + '</template>', this.vGrid.viewResources);
+    var viewFactory = this.vGrid.viewCompiler.compile('<template>' + loadingScreentHtml.join("") + '</template>', this.vGrid.viewResources);
     var view = viewFactory.create(this.vGrid.container);
 
     this.headerViewSlot = new ViewSlot(this.htmlCache.grid, true);
@@ -894,21 +886,6 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   addResizableAndSortableEvent() {
 
-    //header click
-    if (this.vGridConfig.sortOnHeaderClick) {
-      var orderByClick = (event) => {
-        this.vGridConfig.onOrderBy(event, () => {
-          this.rebuildGridHeaderHtml();
-        });
-      };
-
-      //get inputs
-      var orderBy = this.vGridElement.querySelectorAll("." + this.vGridConfig.css.orderHandle);
-      for (var i = 0; i < orderBy.length; i++) {
-        orderBy[i].addEventListener("click", orderByClick.bind(this), false);
-      }
-    }
-
     //resize headers
     if (this.vGridConfig.isResizableHeaders) {
       this.vGridResizable.init();
@@ -924,21 +901,13 @@ export class VGridGenerator {
 
 
   /****************************************************************************************************************************
-   * add the events  (TODO: when cleaning up code I need to splitt the stuff in here into more functions..)
+   * add the events  (this is called during rebuild etc
    ****************************************************************************************************************************/
   addEvents() {
 
     /*------------------------------------------------*/
     //normal click
     var handleClick = (e) => {
-      var currentRow = parseInt(e.currentTarget.getAttribute("row"));
-      this.vGridConfig.clickHandler(e, currentRow);
-      if (this.vGridConfig.isMultiSelect !== undefined) {
-        this.vGridSelection.setHightlight(e, currentRow, this);
-      }
-    };
-
-    var handleTabbing = (e) => {
       var currentRow = parseInt(e.currentTarget.getAttribute("row"));
       this.vGridConfig.clickHandler(e, currentRow);
       if (this.vGridConfig.isMultiSelect !== undefined) {
@@ -955,31 +924,21 @@ export class VGridGenerator {
     };
 
 
-    /*------------------------------------------------*/
-    //right click
-    var onMouseDownRow = (e) => {
-      //e.preventDefault();
-      if (e.button === 2) {
-        //nothing atm
-      }
-
-    };
-
 
     //add all click events to rows
     for (var i = 0; i < this.getRowCacheLength(); i++) {
       var div = this.htmlCache.rowsArray[i].div;
-
       div.addEventListener("dblclick", handleDblClick.bind(this), false); //single and doubleclick... this will end bad.., maybe use other key wih click to edit?
       div.addEventListener("click", handleClick.bind(this), false);
-      div.addEventListener("tabbing", handleTabbing.bind(this), false);
-      div.addEventListener("contextmenu", onMouseDownRow.bind(this), false);
     }
+
 
     //this have to be after clcik since it will cancel if scroll event
     this.htmlCache.content.addEventListener("scroll", this.onScroll.bind(this));
 
-    this.addResizableAndSortableEvent(); //this also includes the orderby click on header event
+
+    //this also includes the orderby click on header event
+    this.addResizableAndSortableEvent();
 
 
   };
@@ -1034,8 +993,7 @@ export class VGridGenerator {
 
     var rows = this.htmlCache.rowsArray;
     for (var i = 0; i < rows.length; i++) {
-
-      var viewFactory = this.vGrid.viewCompiler.compile(this.getRowTemplate(), this.vGrid.viewResources);
+      var viewFactory = this.getRowViewFactory();
       var view = viewFactory.create(this.vGrid.container);
       rows[i].viewSlot = new ViewSlot(rows[i].div, true);
       rows[i].viewSlot.add(view);
@@ -1062,7 +1020,7 @@ export class VGridGenerator {
       rows[i].viewSlot = null;
       rows[i].div.innerHTML = "";
       this.htmlCache.rowTemplate = null;
-      var viewFactory = this.vGrid.viewCompiler.compile(this.getRowTemplate(), this.vGrid.viewResources);
+      var viewFactory = this.getRowViewFactory();
       var view = viewFactory.create(this.vGrid.container);
       rows[i].viewSlot = new ViewSlot(rows[i].div, true);
       rows[i].viewSlot.add(view);

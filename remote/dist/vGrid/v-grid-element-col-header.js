@@ -3,7 +3,7 @@
 System.register(['aurelia-framework', './v-grid'], function (_export, _context) {
   "use strict";
 
-  var inject, noView, customElement, processContent, Container, bindable, ViewSlot, VGrid, _dec, _dec2, _dec3, _class, _desc, _value, _class2, _descriptor, VGridElementColHeader;
+  var inject, customElement, bindable, VGrid, _dec, _dec2, _class, _desc, _value, _class2, _descriptor, VGridElementColHeader;
 
   function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
@@ -57,45 +57,32 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
   return {
     setters: [function (_aureliaFramework) {
       inject = _aureliaFramework.inject;
-      noView = _aureliaFramework.noView;
       customElement = _aureliaFramework.customElement;
-      processContent = _aureliaFramework.processContent;
-      Container = _aureliaFramework.Container;
       bindable = _aureliaFramework.bindable;
-      ViewSlot = _aureliaFramework.ViewSlot;
     }, function (_vGrid) {
       VGrid = _vGrid.VGrid;
     }],
     execute: function () {
-      _export('VGridElementColHeader', VGridElementColHeader = (_dec = customElement('v-grid-header-col'), _dec2 = processContent(false), _dec3 = inject(Element, VGrid, Container), noView(_class = _dec(_class = _dec2(_class = _dec3(_class = (_class2 = function () {
-        function VGridElementColHeader(element, vGrid, container) {
+      _export('VGridElementColHeader', VGridElementColHeader = (_dec = customElement('v-grid-header-col'), _dec2 = inject(Element, VGrid), _dec(_class = _dec2(_class = (_class2 = function () {
+        function VGridElementColHeader(element, vGrid) {
           _classCallCheck(this, VGridElementColHeader);
 
           _initDefineProp(this, 'columnNo', _descriptor, this);
 
           this.element = element;
           this.vGrid = vGrid;
-          this.container = container;
           this.vGridConfig = vGrid.vGridConfig;
         }
 
-        VGridElementColHeader.prototype.bind = function bind(bindingContext) {
+        VGridElementColHeader.prototype.bind = function bind(bindingContext, overrideContext) {
           this.bindingContext = bindingContext;
+          this.overrideContext = overrideContext;
         };
 
         VGridElementColHeader.prototype.created = function created() {};
 
         VGridElementColHeader.prototype.attached = function attached() {
           this.setStandardClassesAndStyles();
-
-          var tempHtml = this.vGridConfig.colHeaderTemplateArray[this.columnNo];
-          var viewFactory = this.vGrid.viewCompiler.compile('<template>' + tempHtml + '</template>', this.vGrid.viewResources);
-
-          var view = viewFactory.create(this.container);
-          this.viewSlot = new ViewSlot(this.element, true);
-          this.viewSlot.add(view);
-          this.viewSlot.bind(this);
-          this.viewSlot.attached();
         };
 
         VGridElementColHeader.prototype.setStandardClassesAndStyles = function setStandardClassesAndStyles() {
@@ -110,10 +97,10 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
       }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'columnNo', [bindable], {
         enumerable: true,
         initializer: null
-      })), _class2)) || _class) || _class) || _class) || _class));
+      })), _class2)) || _class) || _class));
 
       _export('VGridElementColHeader', VGridElementColHeader);
     }
   };
 });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInZHcmlkL3YtZ3JpZC1lbGVtZW50LWNvbC1oZWFkZXIuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQU1RLFkscUJBQUEsTTtBQUFRLFkscUJBQUEsTTtBQUFRLG1CLHFCQUFBLGE7QUFBZSxvQixxQkFBQSxjO0FBQWdCLGUscUJBQUEsUztBQUFXLGMscUJBQUEsUTtBQUFVLGMscUJBQUEsUTs7QUFJcEUsVyxVQUFBLEs7Ozt1Q0FPSyxxQixXQUhaLGNBQWMsbUJBQWQsQyxVQUNBLGVBQWUsS0FBZixDLFVBQ0EsT0FBTyxPQUFQLEVBQWdCLEtBQWhCLEVBQXVCLFNBQXZCLEMsRUFIQSxNO0FBV0MsdUNBQVksT0FBWixFQUFxQixLQUFyQixFQUE0QixTQUE1QixFQUF1QztBQUFBOztBQUFBOztBQUNyQyxlQUFLLE9BQUwsR0FBZSxPQUFmO0FBQ0EsZUFBSyxLQUFMLEdBQWEsS0FBYjtBQUNBLGVBQUssU0FBTCxHQUFpQixTQUFqQjtBQUNBLGVBQUssV0FBTCxHQUFtQixNQUFNLFdBQXpCO0FBQ0Q7O3dDQU1ELEksaUJBQUssYyxFQUFnQjtBQUNuQixlQUFLLGNBQUwsR0FBc0IsY0FBdEI7QUFDRCxTOzt3Q0FNRCxPLHNCQUFVLENBRVQsQzs7d0NBTUQsUSx1QkFBVztBQUNULGVBQUssMkJBQUw7O0FBRUEsY0FBSSxXQUFXLEtBQUssV0FBTCxDQUFpQixzQkFBakIsQ0FBd0MsS0FBSyxRQUE3QyxDQUFmO0FBQ0EsY0FBSSxjQUFjLEtBQUssS0FBTCxDQUFXLFlBQVgsQ0FBd0IsT0FBeEIsZ0JBQTZDLFFBQTdDLGtCQUFvRSxLQUFLLEtBQUwsQ0FBVyxhQUEvRSxDQUFsQjs7QUFFQSxjQUFJLE9BQU8sWUFBWSxNQUFaLENBQW1CLEtBQUssU0FBeEIsQ0FBWDtBQUNBLGVBQUssUUFBTCxHQUFnQixJQUFJLFFBQUosQ0FBYSxLQUFLLE9BQWxCLEVBQTJCLElBQTNCLENBQWhCO0FBQ0EsZUFBSyxRQUFMLENBQWMsR0FBZCxDQUFrQixJQUFsQjtBQUNBLGVBQUssUUFBTCxDQUFjLElBQWQsQ0FBbUIsSUFBbkI7QUFDQSxlQUFLLFFBQUwsQ0FBYyxRQUFkO0FBRUQsUzs7d0NBSUQsMkIsMENBQThCO0FBQzVCLGVBQUssT0FBTCxDQUFhLFNBQWIsQ0FBdUIsR0FBdkIsQ0FBMkIsS0FBSyxXQUFMLENBQWlCLEdBQWpCLENBQXFCLGFBQWhEO0FBQ0EsZUFBSyxPQUFMLENBQWEsU0FBYixDQUF1QixHQUF2QixDQUEyQixLQUFLLFdBQUwsQ0FBaUIsR0FBakIsQ0FBcUIsZUFBckIsR0FBdUMsS0FBSyxRQUF2RTtBQUNBLGVBQUssT0FBTCxDQUFhLFNBQWIsQ0FBdUIsR0FBdkIsQ0FBMkIsS0FBSyxXQUFMLENBQWlCLEdBQWpCLENBQXFCLFVBQXJCLEdBQWtDLEtBQUssUUFBbEU7QUFDQSxlQUFLLE9BQUwsQ0FBYSxLQUFiLENBQW1CLE1BQW5CLEdBQTRCLE1BQTVCO0FBQ0EsZUFBSyxPQUFMLENBQWEsS0FBYixDQUFtQixLQUFuQixHQUEyQixLQUFLLFdBQUwsQ0FBaUIsZ0JBQWpCLENBQWtDLEtBQUssUUFBdkMsSUFBbUQsSUFBOUU7QUFDRCxTOzs7b0ZBdkRBLFEiLCJmaWxlIjoidkdyaWQvdi1ncmlkLWVsZW1lbnQtY29sLWhlYWRlci5qcyIsInNvdXJjZVJvb3QiOiIvc3JjIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInZHcmlkL3YtZ3JpZC1lbGVtZW50LWNvbC1oZWFkZXIuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQU1RLFkscUJBQUEsTTtBQUFRLG1CLHFCQUFBLGE7QUFBZSxjLHFCQUFBLFE7O0FBSXZCLFcsVUFBQSxLOzs7dUNBS0sscUIsV0FGWixjQUFjLG1CQUFkLEMsVUFDQSxPQUFPLE9BQVAsRUFBZ0IsS0FBaEIsQztBQVFDLHVDQUFZLE9BQVosRUFBcUIsS0FBckIsRUFBNEI7QUFBQTs7QUFBQTs7QUFDMUIsZUFBSyxPQUFMLEdBQWUsT0FBZjtBQUNBLGVBQUssS0FBTCxHQUFhLEtBQWI7QUFDQSxlQUFLLFdBQUwsR0FBbUIsTUFBTSxXQUF6QjtBQUNEOzt3Q0FNRCxJLGlCQUFLLGMsRUFBZ0IsZSxFQUFpQjtBQUNwQyxlQUFLLGNBQUwsR0FBc0IsY0FBdEI7QUFDQSxlQUFLLGVBQUwsR0FBdUIsZUFBdkI7QUFDRCxTOzt3Q0FNRCxPLHNCQUFVLENBRVQsQzs7d0NBTUQsUSx1QkFBVztBQUNULGVBQUssMkJBQUw7QUFDRCxTOzt3Q0FJRCwyQiwwQ0FBOEI7QUFDNUIsZUFBSyxPQUFMLENBQWEsU0FBYixDQUF1QixHQUF2QixDQUEyQixLQUFLLFdBQUwsQ0FBaUIsR0FBakIsQ0FBcUIsYUFBaEQ7QUFDQSxlQUFLLE9BQUwsQ0FBYSxTQUFiLENBQXVCLEdBQXZCLENBQTJCLEtBQUssV0FBTCxDQUFpQixHQUFqQixDQUFxQixlQUFyQixHQUF1QyxLQUFLLFFBQXZFO0FBQ0EsZUFBSyxPQUFMLENBQWEsU0FBYixDQUF1QixHQUF2QixDQUEyQixLQUFLLFdBQUwsQ0FBaUIsR0FBakIsQ0FBcUIsVUFBckIsR0FBa0MsS0FBSyxRQUFsRTtBQUNBLGVBQUssT0FBTCxDQUFhLEtBQWIsQ0FBbUIsTUFBbkIsR0FBNEIsTUFBNUI7QUFDQSxlQUFLLE9BQUwsQ0FBYSxLQUFiLENBQW1CLEtBQW5CLEdBQTJCLEtBQUssV0FBTCxDQUFpQixnQkFBakIsQ0FBa0MsS0FBSyxRQUF2QyxJQUFtRCxJQUE5RTtBQUNELFM7OztvRkE3Q0EsUSIsImZpbGUiOiJ2R3JpZC92LWdyaWQtZWxlbWVudC1jb2wtaGVhZGVyLmpzIiwic291cmNlUm9vdCI6Ii9zcmMifQ==

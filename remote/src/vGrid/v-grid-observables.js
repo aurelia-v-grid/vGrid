@@ -21,10 +21,6 @@ export class VGridObservables {
    ***************************************************************************************/
   enableObservablesCollection() {
 
-
-
-
-
     let collectionSubscription = (x, y) => {
 
       //disable array observer

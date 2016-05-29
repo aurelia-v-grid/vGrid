@@ -181,7 +181,7 @@ export class sample01 {
     var t0 = performance.now();
     this.myGrid.ctx.redrawGrid();
     var t1 = performance.now();
-    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+    console.log("redraw of grid took " + (t1 - t0) + " milliseconds.")
   }
 
   report() {

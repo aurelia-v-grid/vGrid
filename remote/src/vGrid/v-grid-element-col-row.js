@@ -4,16 +4,15 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {inject, noView, customElement, processContent, Container, bindable, ViewSlot} from 'aurelia-framework';
-//import {noView, customElement, processContent, bindable, ViewSlot} from 'aurelia-templating';
-//import {inject, Container} from 'aurelia-dependency-injection';
+import {inject, customElement, bindable} from 'aurelia-framework';
+//import {customElement, bindable} from 'aurelia-templating';
+//import {inject} from 'aurelia-dependency-injection';
 import {VGrid} from './v-grid';
 
 
-@noView()
+
 @customElement('v-grid-row-col')
-@processContent(false)
-@inject(Element, VGrid, Container)
+@inject(Element, VGrid)
 export class VGridElementColRow {
   @bindable columnNo;
 
@@ -23,7 +22,6 @@ export class VGridElementColRow {
    **************************************************/
   constructor(element, vGrid, container) {
     this.element = element;
-    this.container = container;
     this.vGrid = vGrid;
   }
 
@@ -34,15 +32,6 @@ export class VGridElementColRow {
   bind(bindingContext, overrideContext) {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
-
-    //need to rebind if created and bind is called
-    if (this.viewSlot){
-      this.viewSlot.bind(this.bindingContext, {
-        bindingContext: this.bindingContext,
-        parentOverrideContext: this.overrideContext
-      });
-    }
-
   }
 
 
@@ -50,34 +39,15 @@ export class VGridElementColRow {
    *  element event
    **************************************************/
   created() {
-
+    //nothin atm
   }
-
 
   /**************************************************
    *  element event
    **************************************************/
   attached() {
-
     //set basic styles for a cell
     this.setStandardClassesAndStyles();
-
-
-    //create view
-    var viewFactory = this.vGrid.viewCompiler.compile(`<template>${this.vGrid.vGridConfig.colRowTemplateArray[this.columnNo]}</template>`, this.vGrid.viewResources);
-    var view = viewFactory.create(this.container);
-
-    //create viewslot
-    this.viewSlot = new ViewSlot(this.element, true);
-    this.viewSlot.add(view);
-    this.viewSlot.bind(this.bindingContext, {
-      bindingContext: this.bindingContext,
-      parentOverrideContext: this.overrideContext
-    });
-    this.viewSlot.attached();
-
-
-
   }
 
 

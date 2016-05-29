@@ -3,7 +3,7 @@
 System.register(['aurelia-framework', './v-grid'], function (_export, _context) {
   "use strict";
 
-  var inject, noView, customElement, processContent, Container, bindable, ViewSlot, VGrid, _dec, _dec2, _dec3, _dec4, _class, _desc, _value, _class2, _descriptor, VGridElementColRow;
+  var inject, customElement, bindable, VGrid, _dec, _dec2, _class, _desc, _value, _class2, _descriptor, VGridElementColRow;
 
   function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
@@ -57,54 +57,31 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
   return {
     setters: [function (_aureliaFramework) {
       inject = _aureliaFramework.inject;
-      noView = _aureliaFramework.noView;
       customElement = _aureliaFramework.customElement;
-      processContent = _aureliaFramework.processContent;
-      Container = _aureliaFramework.Container;
       bindable = _aureliaFramework.bindable;
-      ViewSlot = _aureliaFramework.ViewSlot;
     }, function (_vGrid) {
       VGrid = _vGrid.VGrid;
     }],
     execute: function () {
-      _export('VGridElementColRow', VGridElementColRow = (_dec = noView(), _dec2 = customElement('v-grid-row-col'), _dec3 = processContent(false), _dec4 = inject(Element, VGrid, Container), _dec(_class = _dec2(_class = _dec3(_class = _dec4(_class = (_class2 = function () {
+      _export('VGridElementColRow', VGridElementColRow = (_dec = customElement('v-grid-row-col'), _dec2 = inject(Element, VGrid), _dec(_class = _dec2(_class = (_class2 = function () {
         function VGridElementColRow(element, vGrid, container) {
           _classCallCheck(this, VGridElementColRow);
 
           _initDefineProp(this, 'columnNo', _descriptor, this);
 
           this.element = element;
-          this.container = container;
           this.vGrid = vGrid;
         }
 
         VGridElementColRow.prototype.bind = function bind(bindingContext, overrideContext) {
           this.bindingContext = bindingContext;
           this.overrideContext = overrideContext;
-
-          if (this.viewSlot) {
-            this.viewSlot.bind(this.bindingContext, {
-              bindingContext: this.bindingContext,
-              parentOverrideContext: this.overrideContext
-            });
-          }
         };
 
         VGridElementColRow.prototype.created = function created() {};
 
         VGridElementColRow.prototype.attached = function attached() {
           this.setStandardClassesAndStyles();
-
-          var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.vGrid.vGridConfig.colRowTemplateArray[this.columnNo] + '</template>', this.vGrid.viewResources);
-          var view = viewFactory.create(this.container);
-
-          this.viewSlot = new ViewSlot(this.element, true);
-          this.viewSlot.add(view);
-          this.viewSlot.bind(this.bindingContext, {
-            bindingContext: this.bindingContext,
-            parentOverrideContext: this.overrideContext
-          });
-          this.viewSlot.attached();
         };
 
         VGridElementColRow.prototype.setStandardClassesAndStyles = function setStandardClassesAndStyles() {
@@ -120,10 +97,10 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
       }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'columnNo', [bindable], {
         enumerable: true,
         initializer: null
-      })), _class2)) || _class) || _class) || _class) || _class));
+      })), _class2)) || _class) || _class));
 
       _export('VGridElementColRow', VGridElementColRow);
     }
   };
 });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInZHcmlkL3YtZ3JpZC1lbGVtZW50LWNvbC1yb3cuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQU1RLFkscUJBQUEsTTtBQUFRLFkscUJBQUEsTTtBQUFRLG1CLHFCQUFBLGE7QUFBZSxvQixxQkFBQSxjO0FBQWdCLGUscUJBQUEsUztBQUFXLGMscUJBQUEsUTtBQUFVLGMscUJBQUEsUTs7QUFHcEUsVyxVQUFBLEs7OztvQ0FPSyxrQixXQUpaLFEsVUFDQSxjQUFjLGdCQUFkLEMsVUFDQSxlQUFlLEtBQWYsQyxVQUNBLE9BQU8sT0FBUCxFQUFnQixLQUFoQixFQUF1QixTQUF2QixDO0FBUUMsb0NBQVksT0FBWixFQUFxQixLQUFyQixFQUE0QixTQUE1QixFQUF1QztBQUFBOztBQUFBOztBQUNyQyxlQUFLLE9BQUwsR0FBZSxPQUFmO0FBQ0EsZUFBSyxTQUFMLEdBQWlCLFNBQWpCO0FBQ0EsZUFBSyxLQUFMLEdBQWEsS0FBYjtBQUNEOztxQ0FNRCxJLGlCQUFLLGMsRUFBZ0IsZSxFQUFpQjtBQUNwQyxlQUFLLGNBQUwsR0FBc0IsY0FBdEI7QUFDQSxlQUFLLGVBQUwsR0FBdUIsZUFBdkI7O0FBR0EsY0FBSSxLQUFLLFFBQVQsRUFBa0I7QUFDaEIsaUJBQUssUUFBTCxDQUFjLElBQWQsQ0FBbUIsS0FBSyxjQUF4QixFQUF3QztBQUN0Qyw4QkFBZ0IsS0FBSyxjQURpQjtBQUV0QyxxQ0FBdUIsS0FBSztBQUZVLGFBQXhDO0FBSUQ7QUFFRixTOztxQ0FNRCxPLHNCQUFVLENBRVQsQzs7cUNBTUQsUSx1QkFBVztBQUdULGVBQUssMkJBQUw7O0FBSUEsY0FBSSxjQUFjLEtBQUssS0FBTCxDQUFXLFlBQVgsQ0FBd0IsT0FBeEIsZ0JBQTZDLEtBQUssS0FBTCxDQUFXLFdBQVgsQ0FBdUIsbUJBQXZCLENBQTJDLEtBQUssUUFBaEQsQ0FBN0Msa0JBQXFILEtBQUssS0FBTCxDQUFXLGFBQWhJLENBQWxCO0FBQ0EsY0FBSSxPQUFPLFlBQVksTUFBWixDQUFtQixLQUFLLFNBQXhCLENBQVg7O0FBR0EsZUFBSyxRQUFMLEdBQWdCLElBQUksUUFBSixDQUFhLEtBQUssT0FBbEIsRUFBMkIsSUFBM0IsQ0FBaEI7QUFDQSxlQUFLLFFBQUwsQ0FBYyxHQUFkLENBQWtCLElBQWxCO0FBQ0EsZUFBSyxRQUFMLENBQWMsSUFBZCxDQUFtQixLQUFLLGNBQXhCLEVBQXdDO0FBQ3RDLDRCQUFnQixLQUFLLGNBRGlCO0FBRXRDLG1DQUF1QixLQUFLO0FBRlUsV0FBeEM7QUFJQSxlQUFLLFFBQUwsQ0FBYyxRQUFkO0FBSUQsUzs7cUNBSUQsMkIsMENBQThCO0FBQzVCLGNBQUksTUFBTSxLQUFLLEtBQUwsQ0FBVyxXQUFYLENBQXVCLEdBQWpDO0FBQ0EsY0FBSSx1QkFBcUIsS0FBSyxLQUFMLENBQVcsV0FBWCxDQUF1QixnQkFBdkIsQ0FBd0MsS0FBSyxRQUE3QyxDQUFyQixPQUFKO0FBQ0EsZUFBSyxPQUFMLENBQWEsU0FBYixDQUF1QixHQUF2QixDQUEyQixJQUFJLE9BQS9CO0FBQ0EsZUFBSyxPQUFMLENBQWEsU0FBYixDQUF1QixHQUF2QixDQUEyQixJQUFJLFNBQUosR0FBZ0IsS0FBSyxRQUFoRDtBQUNBLGVBQUssT0FBTCxDQUFhLFNBQWIsQ0FBdUIsR0FBdkIsQ0FBMkIsSUFBSSxVQUFKLEdBQWlCLEtBQUssUUFBakQ7QUFDQSxlQUFLLE9BQUwsQ0FBYSxZQUFiLENBQTBCLE9BQTFCLEVBQW1DLFNBQW5DO0FBQ0QsUzs7O29GQTFFQSxRIiwiZmlsZSI6InZHcmlkL3YtZ3JpZC1lbGVtZW50LWNvbC1yb3cuanMiLCJzb3VyY2VSb290IjoiL3NyYyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInZHcmlkL3YtZ3JpZC1lbGVtZW50LWNvbC1yb3cuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQU1RLFkscUJBQUEsTTtBQUFRLG1CLHFCQUFBLGE7QUFBZSxjLHFCQUFBLFE7O0FBR3ZCLFcsVUFBQSxLOzs7b0NBTUssa0IsV0FGWixjQUFjLGdCQUFkLEMsVUFDQSxPQUFPLE9BQVAsRUFBZ0IsS0FBaEIsQztBQVFDLG9DQUFZLE9BQVosRUFBcUIsS0FBckIsRUFBNEIsU0FBNUIsRUFBdUM7QUFBQTs7QUFBQTs7QUFDckMsZUFBSyxPQUFMLEdBQWUsT0FBZjtBQUNBLGVBQUssS0FBTCxHQUFhLEtBQWI7QUFDRDs7cUNBTUQsSSxpQkFBSyxjLEVBQWdCLGUsRUFBaUI7QUFDcEMsZUFBSyxjQUFMLEdBQXNCLGNBQXRCO0FBQ0EsZUFBSyxlQUFMLEdBQXVCLGVBQXZCO0FBQ0QsUzs7cUNBTUQsTyxzQkFBVSxDQUVULEM7O3FDQUtELFEsdUJBQVc7QUFFVCxlQUFLLDJCQUFMO0FBQ0QsUzs7cUNBSUQsMkIsMENBQThCO0FBQzVCLGNBQUksTUFBTSxLQUFLLEtBQUwsQ0FBVyxXQUFYLENBQXVCLEdBQWpDO0FBQ0EsY0FBSSx1QkFBcUIsS0FBSyxLQUFMLENBQVcsV0FBWCxDQUF1QixnQkFBdkIsQ0FBd0MsS0FBSyxRQUE3QyxDQUFyQixPQUFKO0FBQ0EsZUFBSyxPQUFMLENBQWEsU0FBYixDQUF1QixHQUF2QixDQUEyQixJQUFJLE9BQS9CO0FBQ0EsZUFBSyxPQUFMLENBQWEsU0FBYixDQUF1QixHQUF2QixDQUEyQixJQUFJLFNBQUosR0FBZ0IsS0FBSyxRQUFoRDtBQUNBLGVBQUssT0FBTCxDQUFhLFNBQWIsQ0FBdUIsR0FBdkIsQ0FBMkIsSUFBSSxVQUFKLEdBQWlCLEtBQUssUUFBakQ7QUFDQSxlQUFLLE9BQUwsQ0FBYSxZQUFiLENBQTBCLE9BQTFCLEVBQW1DLFNBQW5DO0FBQ0QsUzs7O29GQTdDQSxRIiwiZmlsZSI6InZHcmlkL3YtZ3JpZC1lbGVtZW50LWNvbC1yb3cuanMiLCJzb3VyY2VSb290IjoiL3NyYyJ9

@@ -4,17 +4,15 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {inject, noView, customElement, processContent, Container, bindable, ViewSlot} from 'aurelia-framework';
+import {inject, customElement, bindable} from 'aurelia-framework';
 //for kendo ui bridge, remove import above
-//import {noView, customElement, processContent, bindable, ViewSlot} from 'aurelia-templating';
-//import {inject, Container} from 'aurelia-dependency-injection';
+//import {customElement, bindable} from 'aurelia-templating';
+//import {inject} from 'aurelia-dependency-injection';
 import {VGrid} from './v-grid';
 
 
-@noView
 @customElement('v-grid-header-col')
-@processContent(false)
-@inject(Element, VGrid, Container)
+@inject(Element, VGrid)
 export class VGridElementColHeader {
   @bindable columnNo;
 
@@ -22,10 +20,9 @@ export class VGridElementColHeader {
   /*****************************************************
    *  constructor
    ******************************************************/
-  constructor(element, vGrid, container) {
+  constructor(element, vGrid) {
     this.element = element;
     this.vGrid = vGrid;
-    this.container = container;
     this.vGridConfig = vGrid.vGridConfig;
   }
 
@@ -33,8 +30,9 @@ export class VGridElementColHeader {
   /*****************************************************
    *  element event
    ******************************************************/
-  bind(bindingContext) {
+  bind(bindingContext, overrideContext) {
     this.bindingContext = bindingContext;
+    this.overrideContext = overrideContext;
   }
 
 
@@ -51,16 +49,6 @@ export class VGridElementColHeader {
    ******************************************************/
   attached() {
     this.setStandardClassesAndStyles();
-
-    let tempHtml = this.vGridConfig.colHeaderTemplateArray[this.columnNo];//`<input  class="form-control input-sm " value.bind="tempRef.index" style="background-color:transparent;height: 100%">`
-    var viewFactory = this.vGrid.viewCompiler.compile(`<template>${tempHtml}</template>`, this.vGrid.viewResources);
-    //create view and viewslot
-    var view = viewFactory.create(this.container);
-    this.viewSlot = new ViewSlot(this.element, true);
-    this.viewSlot.add(view);
-    this.viewSlot.bind(this);
-    this.viewSlot.attached();
-
   }
 
 
