@@ -1,5 +1,5 @@
 /*****************************************************************************************************************
- *    Attributes for filtering users can add to headers to activate sorting
+ *    Attributes for header so users can add to headers to activate sorting
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/

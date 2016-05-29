@@ -1,5 +1,5 @@
 /*****************************************************************************************************************
- *    Attributes for filtering users can add to headers to activate filtering
+ *    Attributes for header so users can add to headers to activate filtering
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
