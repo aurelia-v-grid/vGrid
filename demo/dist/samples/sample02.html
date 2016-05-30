@@ -1,0 +1,220 @@
+<template>
+  <!--<require from="vGrid/v-grid.css"></require>-->
+  <require from="app.css"></require>
+  <require from="date-format.js"></require>
+  <require from="number-format.js"></require>
+
+
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+      <!--page header------------------------------------------------------------------------------------------------------------------------------>
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+
+
+      <h3>Remote Data Custom Column Demo <span class="label label-default">updated:30-May-2016, Rev:01</span></h3>
+    </div>
+  </div>
+  <div class="row">
+
+
+    <div class="col-md-5 col-md-offset-3">
+
+
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+      <!--GRID------------------------------------------------------------------------------------------------------------------------------>
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+      <h4>Sample grid </h4>
+
+      <v-grid
+        style="position:relative;height:400px;width:100%"
+        v-row-height="30"
+        v-header-height="50"
+        v-footer-height="50"
+        v-resize-also-rows="true"
+        v-resizable-headers="true"
+        v-header-filter="true"
+        v-header-filter-not-to="images"
+        v-sort-not-on-header="images"
+        v-header-filter-top="true"
+        v-sortable-headers="true"
+        v-manual-sel="true"
+        v-row-onclick="singleClick"
+        v-row-ondblclick="singleDblClick"
+        v-loading-threshold="10000"
+        v-sort-on-header-click="true"
+        v-multi-select="true"
+        v-remote-data="true"
+        v-remote-index="id"
+        v-row-on-draw.call="onRowDraw()"
+        v-event-onremote.call="callRemoteServer($event)"
+        v-current-entity.bind=myCurrentEntity
+        v-collection.bind=myCollection
+        v-grid-context.bind=myGrid>
+
+
+        <v-grid-col v-col-width="23">
+          <v-header-template>
+            <input class="vgrid-checkbox-center" v-selection="header" type="checkbox">
+          </v-header-template>
+          <v-row-template>
+            <input class="vgrid-checkbox-center" v-selection="row" type="checkbox" checked.bind="selection"
+          </v-row-template>
+        </v-grid-col>
+
+
+        <v-grid-col v-col-width="90">
+          <v-header-template>
+            <input v-grid-header-menu="name" class="vgrid-header-input-top" v-filter="index|enter|>|numberFormater"
+                   value.bind="tempRef.name">
+            <p class="vgrid-label-half" v-sort="name">Index</p>
+          </v-header-template>
+          <v-row-template>
+            <input v-grid-row-menu="name" class="vgrid-row-input" value.bind="tempRef.name">
+          </v-row-template>
+        </v-grid-col>
+
+
+        <v-grid-col v-col-width="100">
+          <v-header-template>
+            <input v-grid-header-menu="first" class="vgrid-header-input-top" v-filter="name|enter|*"
+                   value.bind="tempRef.first">
+            <p class="vgrid-label-half" v-sort="first">Name</p>
+          </v-header-template>
+          <v-row-template>
+            <input v-grid-row-menu="first" class="vgrid-row-input" value.bind="rowRef.name">
+          </v-row-template>
+        </v-grid-col>
+
+
+        <v-grid-col v-col-width="90">
+          <v-header-template>
+            <div style="height:50%">
+            </div>
+            <p class=" vgrid-label-half">Image</p>
+          </v-header-template>
+          <v-row-template>
+            <image class="vgrid-image-round" v-image-fix v-grid-row-menu="image" src.bind="rowRef.image"></image>
+          </v-row-template>
+        </v-grid-col>
+
+
+
+        <v-grid-col v-col-width="100">
+          <v-header-template>
+            <input v-grid-header-menu="zip" class="vgrid-header-input-top" v-filter="zip|enter|>="
+                   value.bind="tempRef.zip">
+            <p class="vgrid-label-half" v-sort="zip">Number</p>
+          </v-header-template>
+          <v-row-template>
+            <input v-grid-row-menu="zip" class="vgrid-row-input"
+                   value.bind="rowRef.zip | numberFormat  & updateTrigger:'blur':'paste'"
+                   css="color:${tempRef.numberColor};font-weight:${tempRef.numberFont}">
+          </v-row-template>
+        </v-grid-col>
+
+
+        <v-grid-col v-col-width="180">
+          <v-header-template>
+            <input v-grid-header-menu="created_at" class="vgrid-header-input-top" v-filter="created_at|enter|>=|dateFormat">
+            <p class="vgrid-label-half" v-sort="created_at">Date</p>
+          </v-header-template>
+          <v-row-template>
+            <input v-grid-row-menu="created_at" class="vgrid-row-input" value.bind="rowRef.created_at | dateFormat">
+          </v-row-template>
+        </v-grid-col>
+
+
+
+
+      </v-grid>
+
+
+    </div>
+    <div class="col-md-3">
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+      <!--COLLECTIONS BUTTONS--------------------------------------------------------------------------------------------------------------->
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+
+
+    </div>
+
+
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+      <!--Current entity-------------------------------------------------------------------------------------------------------------------->
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+
+      <div class="myCol">
+        <h4>Entity <span
+          class="label label-default">v-current-entity.bind=myCurrentEntity</span></h4>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-6">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index"
+                     value.bind="myCurrentEntity.name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">country</label>
+            <div class="col-sm-6">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index"
+                     value.bind="myCurrentEntity.number">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">formated/blur</label>
+            <div class="col-sm-6">
+              <input list="browsers" class="form-control input-sm" disabled.bind="!myCurrentEntity.index"
+                     value.bind="myCurrentEntity.date | dateFormat & updateTrigger:'blur':'paste'">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">unformated</label>
+            <div class="col-sm-6">
+              <input list="browsers" class="form-control input-sm" disabled.bind="!myCurrentEntity.index"
+                     value.bind="myCurrentEntity.date">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">color</label>
+            <div class="col-sm-6">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index"
+                     value.bind="myCurrentEntity.color">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">_vGridKey</label>
+            <div class="col-sm-6">
+              <input class="form-control input-sm" disabled.bind="!myCurrentEntity.index"
+                     value.bind="myCurrentEntity.__vGridKey">
+            </div>
+          </div>
+        </form>
+      </div>
+
+
+    </div>
+
+
+    <div class="col-md-5">
+
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+      <!--info-------------------------------------------------------------------------------------------------------------------->
+      <!------------------------------------------------------------------------------------------------------------------------------------>
+
+
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+</template>
