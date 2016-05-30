@@ -31,8 +31,7 @@
 .vgrid-checkbox-center {
   margin: auto;
   height: 100% !important;
-  opacity: 1 !important;
-  width: initial;
+   width: initial;
   left: initial !important;
   position: initial !important;
   display: block;

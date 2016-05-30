@@ -148,8 +148,8 @@ export class vGridAttributesFilter {
 
 
     } else {
-
-
+      //set default!
+      this.element.style.opacity = 0.3;
       //is checkbox
       this.element.onclick = (e) => {
         switch (this.state) {
