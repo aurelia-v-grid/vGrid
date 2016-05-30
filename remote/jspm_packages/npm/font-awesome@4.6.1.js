@@ -1,1 +1,0 @@
-module.exports = require("npm:font-awesome@4.6.1/css/font-awesome.css!");
