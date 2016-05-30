@@ -19,7 +19,7 @@ export class vGridAttributesFilter {
 
   get valueConverters() {
     if (this.vGrid) {
-      return this.vGrid.viewResources.lookupFunctions.valueConverters
+      return this.vGrid.viewResources.lookupFunctions.valueConverters;
     }
   }
 
@@ -53,7 +53,7 @@ export class vGridAttributesFilter {
       this.element.value = "";
     } else {
       this.state = 0;
-      this.element.checked = false
+      this.element.checked = false;
     }
   }
 
@@ -75,7 +75,7 @@ export class vGridAttributesFilter {
       if (this.getValue() === "") {
         curFilter.splice(filterIndex, 1)
       } else {
-        curFilter[filterIndex].value = this.getValue()
+        curFilter[filterIndex].value = this.getValue();
       }
 
     } else {
@@ -100,8 +100,7 @@ export class vGridAttributesFilter {
       if (e.detail.attribute === this.attribute) {
         this.filterOperator = e.detail.operator;
         this.element.placeholder = this.vGrid.vGridFilter.filterOperatorTableString[this.filterOperator];
-        var curFilter = this.vGrid.vGridFilter.lastFilter;
-        this.updateFilter(curFilter);
+        this.updateFilter(this.vGrid.vGridFilter.lastFilter);
       }
     });
 
@@ -109,15 +108,13 @@ export class vGridAttributesFilter {
     this.vGrid.element.addEventListener("filterClearCell", (e)=> {
       if (e.detail.attribute === this.attribute) {
         this.resetValue();
-        var curFilter = this.vGrid.vGridFilter.lastFilter;
-        this.updateFilter(curFilter);
+        this.updateFilter(this.vGrid.vGridFilter.lastFilter);
       }
     });
 
     this.vGrid.element.addEventListener("filterClearAll", (e)=> {
       this.resetValue();
-      var curFilter = this.vGrid.vGridFilter.lastFilter;
-      this.updateFilter(curFilter);
+      this.updateFilter(this.vGrid.vGridFilter.lastFilter);
     });
 
 
@@ -131,17 +128,15 @@ export class vGridAttributesFilter {
         if (e.keyCode === 13) {
 
           //if they hit enter we need to get filter, update and run query
-          var curFilter = this.vGrid.vGridFilter.lastFilter;
-          this.updateFilter(curFilter);
-          this.vGrid.vGridConfig.onFilterRun(curFilter)
+          this.updateFilter(this.vGrid.vGridFilter.lastFilter);
+          this.vGrid.vGridConfig.onFilterRun(this.vGrid.vGridFilter.lastFilter);
 
         } else {
 
           //if they hit enter we need to get filter, update
-          var curFilter = this.vGrid.vGridFilter.lastFilter;
-          this.updateFilter(curFilter);
+          this.updateFilter(this.vGrid.vGridFilter.lastFilter);
           if (this.filterOn === "keydown") {
-            this.vGrid.vGridConfig.onFilterRun(curFilter)
+            this.vGrid.vGridConfig.onFilterRun(this.vGrid.vGridFilter.lastFilter);
           }
         }
       };
@@ -166,9 +161,8 @@ export class vGridAttributesFilter {
             this.state = 0;
             this.element.style.opacity = 0.3;
         }
-        var curFilter = this.vGrid.vGridFilter.lastFilter;
-        this.updateFilter(curFilter);
-        this.vGrid.vGridConfig.onFilterRun(curFilter)
+        this.updateFilter(this.vGrid.vGridFilter.lastFilter);
+        this.vGrid.vGridConfig.onFilterRun(this.vGrid.vGridFilter.lastFilter);
       }
 
 
