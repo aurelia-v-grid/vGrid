@@ -1,28 +1,15 @@
-
 /*****************************************************************************************************************
- *    ContextMenu
- *    This is where I create all the <v-grid> attibutes, and set then to vGridConfig
- *    Main idea/source https://github.com/callmenick/Custom-Context-Menu
+ *    Contextmenu
+ *    Main class for attributes "context menu"
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {inject, customAttribute, Optional} from 'aurelia-framework';
-//for kendo ui bridge, remove import above
-//import {customAttribute} from 'aurelia-templating';
-//import {inject, Optional} from 'aurelia-dependency-injection';
-import {VGridCellRowHeader} from './v-grid-header-col';
-import {VGridCellContainer} from './v-grid-row-col';
 
+export class Contextmenu {
 
-
-/*****************************************************
- *  main class, every menu extends this class to make it simpler
-******************************************************/
-var ContextMenu = class {
-
-  constructor(element, parent) {
+  constructor(element, vGrid) {
     this.element = element;
-    this.parent = parent;
+    this.vGrid = vGrid;
 
     //main classes, should I just add these to the v-grid-config?
     this.contextMenuClassName = "v-grid-context-menu";
@@ -52,17 +39,20 @@ var ContextMenu = class {
   }
 
 
+  bind(bindingContext, overrideContext) {
+    this.bindingContext = bindingContext;
+    this.overrideContext = overrideContext;
+  }
+
+
   attached() {
-    if(this.parent.vGrid.vGridConfig.contextmenu){
+      this.element.classList.contains(this.classToOpenOn)? null:this.element.classList.add(this.classToOpenOn);
       this.addListener();
-    }
   }
 
 
   detached() {
-    if(this.parent.vGrid.vGridConfig.contextmenu) {
       this.removeListener();
-    }
   }
 
 
@@ -104,12 +94,12 @@ var ContextMenu = class {
 
   addMenuClickListner() {
     this.clickListenerBinded = this.clickListener.bind(this);
-    document.addEventListener("click", this.clickListenerBinded)
+    document.addEventListener("click", this.clickListenerBinded);
   }
 
 
   removeMenuClickListner() {
-    document.removeEventListener("click", this.clickListenerBinded)
+    document.removeEventListener("click", this.clickListenerBinded);
   }
 
 
@@ -261,285 +251,5 @@ var ContextMenu = class {
 
   }
 
-
-};
-
-
-/*****************************************************
- *  context menu for header
-******************************************************/
-@customAttribute('v-grid-context-menu-header')
-@inject(Element, Optional.of(VGridCellRowHeader))
-export class ContextMenuHeader extends ContextMenu {
-  classToOpenOn = "vGrid-queryField"; //class it opens menu on
-  altMenuLogic = null; //alt menu to open
-
-
-  //main menu lisntner
-  menuItemListener(link) {
-    var value = link.getAttribute("data-action");
-
-    if (this.altMenuLogic) {
-      this.filterMenuLogic(value);
-    } else {
-      this.defaultMenu(value)
-    }
-
-  };
-
-
-  canOpen(e) {
-    if(this.parent.colType === "selection"){
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-
-  //main menu to open
-  menuHtmlMain() {
-    return this.createMenuHTML([
-      {
-        action: "",
-        value: "Options",
-        isHeader: true
-      }, {
-        action: "clear-cell",
-        value: "Clear cell",
-        isHeader: false
-      }, {
-        action: "show-all",
-        value: "Show all (keep filter text)",
-        isHeader: false
-      }, {
-        action: "set-filter",
-        value: "Set Filter",
-        isHeader: false
-      }
-    ]);
-  };
-
-
-  //alt menu I manually set
-  menuHtmlSetFilter() {
-    return this.createMenuHTML([
-      {
-        action: "",
-        value: "Set filter",
-        isHeader: true
-      }, {
-        action: "set-filter-1",
-        value: "equals",
-        isHeader: false
-      }, {
-        action: "set-filter-2",
-        value: "less than or eq",
-        isHeader: false
-      }, {
-        action: "set-filter-3",
-        value: "greater than or eq",
-        isHeader: false
-      }, {
-        action: "set-filter-4",
-        value: "less than",
-        isHeader: false
-      }, {
-        action: "set-filter-5",
-        value: "greater than",
-        isHeader: false
-      }, {
-        action: "set-filter-6",
-        value: "contains",
-        isHeader: false
-      }, {
-        action: "set-filter-7",
-        value: "not equal to",
-        isHeader: false
-      }, {
-        action: "set-filter-8",
-        value: "does not contain",
-        isHeader: false
-      }, {
-        action: "set-filter-9",
-        value: "begins with",
-        isHeader: false
-      }, {
-        action: "set-filter-10",
-        value: "ends with",
-        isHeader: false
-      }
-    ]);
-  };
-
-
-  defaultMenu(value) {
-    switch (value) {
-      case "clear-cell" :
-        let x = {};
-        this.parent.queryString = "";//x;
-        this.toggleMenuOff();
-        break;
-      case "show-all":
-        this.parent.vGridConfig.onFilterRun([]);
-        this.toggleMenuOff();
-        break;
-      case "set-filter":
-        this.replaceMenu(this.menuHtmlSetFilter());
-        this.altMenuLogic = this.filterMenuLogic;
-        break;
-      default:
-        console.log(value);
-        this.toggleMenuOff();
-    }
-  }
-
-
-  filterMenuLogic(value) {
-    switch (value) {
-      case "set-filter-1":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "=";
-        this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
-        break;
-      case "set-filter-2":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "<=";
-        this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
-        break;
-      case "set-filter-3":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = ">=";
-        this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
-        break;
-      case "set-filter-4":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "<";
-        this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
-        break;
-      case "set-filter-5":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = ">";
-        this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
-        break;
-      case "set-filter-6":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "*";
-        this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
-        break;
-      case "set-filter-7":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "!=";
-        this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
-        break;
-      case "set-filter-8":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "!*";
-        this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
-        break;
-      case "set-filter-9":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "*=";
-        this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
-        break;
-      case "set-filter-10":
-        this.parent.vGridConfig.filterArray[this.parent.columnNo] = "=*";
-        this.toggleMenuOff();
-        this.parent.vGrid.vGridGenerator.rebuildColumns();
-        break;
-      default:
-        console.log(value);
-        this.toggleMenuOff();
-    }
-
-    this.altMenuLogic = null; //reset to main menu again
-  }
-
-
-}
-
-
-/*****************************************************
- *  main context menu for row cells
-******************************************************/
-@customAttribute('v-grid-context-menu-cell')
-@inject(Element, Optional.of(VGridCellContainer))
-export class ContextMenuCell extends ContextMenu {
-  classToOpenOn = "vGrid-row-cell"; //class it opens menu on
-  altMenuLogic = null; //alt menu to open
-
-
-  //main menu lisntner
-  menuItemListener(link) {
-    var value = link.getAttribute("data-action");
-    if (this.altMenuLogic) {
-      this.filterMenuLogic(value);
-    } else {
-      this.defaultMenu(value)
-    }
-  };
-
-
-  canOpen(e) {
-    if (e.target === this.parent.vGrid.vGridCellHelper.curElement || e.target.firstChild === this.parent.vGrid.vGridCellHelper.curElement) {
-      if (this.parent.editMode()) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }
-
-
-  //main menu to open
-  menuHtmlMain() {
-    return this.createMenuHTML([
-      {
-        action: "",
-        value: "Options",
-        isHeader: true
-      }, {
-        action: "copy-cell",
-        value: "Copy cell value",
-        isHeader: false
-      }, {
-        action: "paste-cell",
-        value: "Paste into cell/selected rows",
-        isHeader: false
-      }
-    ]);
-  };
-
-
-
-  defaultMenu(value) {
-    switch (value) {
-      case "copy-cell":
-        this.parent.vGrid.vGridCellHelper.cellValue = this.parent.vGrid.vGridCurrentEntityRef[this.parent.attribute()];
-        this.toggleMenuOff();
-        this.parent.vGrid.vGridCellHelper.refocus();
-        break;
-      case "paste-cell":
-        if (this.parent.vGrid.vGridCellHelper.cellValue !== null) {
-          if(!this.parent.readOnly()){
-            var rows = this.parent.vGrid.vGridSelection.getSelectedRows();
-            rows.forEach((x)=> {
-              this.parent.vGrid.vGridCollectionFiltered[x][this.parent.attribute()] = this.parent.vGrid.vGridCellHelper.cellValue;
-            });
-            this.parent.vGrid.vGridGenerator.fillDataInRows();
-          }
-          this.parent.vGrid.vGridCellHelper.refocus();
-        } else {
-          console.log("no value")
-        }
-        this.toggleMenuOff();
-        break;
-      default:
-        console.log(value);
-        this.toggleMenuOff();
-    }
-  }
 
 }

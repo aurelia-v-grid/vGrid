@@ -6,9 +6,6 @@
  *
  ****************************************************************************************************************/
 import {ViewSlot} from 'aurelia-framework';
-//for kendo ui bridge, remove import above
-//import {ViewSlot} from 'aurelia-templating';
-
 
 export class VGridGenerator {
 
@@ -73,28 +70,28 @@ export class VGridGenerator {
    * internal vars
    *************************************************************************************/
 
-  contentHeight = 0;          //internal
-  gridHeight = 0;             //internal
-  gridWidth = 0;              //internal
+  contentHeight = 0;
+  gridHeight = 0;
+  gridWidth = 0;
   scrollBodyHeight = 0;
-  scrollBottomOnNext = false;   // internal var to know if user wants to scroll to bottom next time array abserver gets called move to vgridconfig?
-
+  scrollBottomOnNext = false;
   htmlCache = {
-    grid: null,       //internal
-    header: null,     //internal
-    content: null,    //internal
-    footer: null,     //internal
-    rowsArray: [],    //internal
-    scrollBody: null, //internal
-    rowTemplate: null //internal
+    grid: null,
+    headerContent: null,
+    headerScrollBody: null,
+    content: null,
+    footer: null,
+    rowsArray: [],
+    scrollBody: null,
+    viewFactory: null
   };
 
-  scrollVars = {           //internals
-    lastScrollTop: 0,     //used in scroll event etc
-    lastScrollLeft: 0,    //used for stopping weird scrolling to left
-    isScrollBarScrolling: false,          //used for knowing if we can update when doing scrolling, used with time var under
-    timer: null,          //timer for stopping updating, "getDataScrollDelay" is the timeout for this
-    scrollCallbackTimer: null
+  scrollVars = {
+    lastScrollTop: 0,
+    lastScrollLeft: 0,
+    isScrollBarScrolling: false,
+    scrollbarScrollingTimer: null,
+    lastScrollType: null
   };
 
 
@@ -103,7 +100,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   fillDataInRows() {
     for (var i = 0; i < this.getRowCacheLength(); i++) {
-      var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.rowHeight;
+      var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.attRowHeight;
       var row = this.htmlCache.rowsArray[i];
       this.insertRowMarkup(currentRow, row, true, true);
     }
@@ -115,7 +112,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   fillDataIntoRow(rowno) {
     for (var i = 0; i < this.getRowCacheLength(); i++) {
-      var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.rowHeight;
+      var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.attRowHeight;
       if (rowno === currentRow) {
         var row = this.htmlCache.rowsArray[i];
         this.insertRowMarkup(currentRow, row, true, true);
@@ -130,7 +127,7 @@ export class VGridGenerator {
   updateSelectionOnAllRows() {
     var i;
     for (i = 0; i < this.getRowCacheLength(); i++) {
-      var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.rowHeight;
+      var currentRow = this.htmlCache.rowsArray[i].top / this.vGridConfig.attRowHeight;
       if (this.vGridSelection.isSelected(currentRow)) {
         this.htmlCache.rowsArray[i].div.classList.add(this.vGridConfig.css.rowSelected);
       } else {
@@ -145,45 +142,41 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getHeaderTemplate() {
     var rowTemplate = "";
-    for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
-      rowTemplate = rowTemplate + `<v-grid-header-col v-grid-context-menu-header column-no="${i}"></v-grid-header-col>`;
+    for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
+      rowTemplate = rowTemplate + `<v-grid-header-col column-no="${i}">${this.vGridConfig.colConfig[i].headerTemplate}</v-grid-header-col>`;
     }
     return rowTemplate;
   };
 
 
   /****************************************************************************************************************************
-   * returns rowTemplate
+   * returns row viewFactory, if it does not exist it creates it
    ****************************************************************************************************************************/
-  getRowTemplate() {
-    var rowTemplate = "";
-    if (this.htmlCache.rowTemplate !== null) {
-      rowTemplate = this.htmlCache.rowTemplate;
-    } else {
-      if (this.vGrid.vGridConfig.repeater) {
-        if (this.vGrid.vGridConfig.repeatTemplate.indexOf("template") === -1) {
-          return '<template>' + this.vGrid.vGridConfig.repeatTemplate + '</template>'
-        } else {
-          return this.vGrid.vGridConfig.repeatTemplate;
-        }
+  getRowViewFactory() {
+    var viewFactory;
 
+    if (this.htmlCache.viewFactory !== null) {
+      viewFactory = this.htmlCache.viewFactory;
+    } else {
+      var rowTemplate = "";
+      if (this.vGrid.vGridConfig.repeater) {
+        rowTemplate = '<template>' + this.vGrid.vGridConfig.repeatTemplate + '</template>'
       } else {
         rowTemplate = '<template>';
-        for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
-          rowTemplate = rowTemplate + `<v-grid-row-col v-grid-context-menu-cell column-no=${i}></v-grid-row-col>`;
+        for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
+          rowTemplate = rowTemplate + `<v-grid-row-col column-no=${i}>${this.vGridConfig.colConfig[i].rowTemplate}</v-grid-row-col>`;
         }
+        rowTemplate + '</template>';
       }
+      viewFactory = this.vGrid.viewCompiler.compile(rowTemplate, this.vGrid.viewResources);
     }
-    return rowTemplate + '</template>';
-  };
 
+    //cache template
+    this.htmlCache.viewFactory = viewFactory;
 
-  /****************************************************************************************************************************
-   * HTML cache.... no idea if this helps really, but lets use it...
-   ****************************************************************************************************************************/
-  cacheRowTemplate(template) {
-    this.htmlCache.rowTemplate = null;
-    this.htmlCache.rowTemplate = template || this.getRowTemplate();
+    //return cache;
+    return this.htmlCache.viewFactory
+
   };
 
 
@@ -192,20 +185,10 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getTotalColumnWidth() {
     var total = 0;
-    for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
-      total = total + parseInt(this.vGridConfig.columnWidthArray[i], 10);
+    for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
+      total = total + parseInt(this.vGridConfig.colConfig[i].width, 10);
     }
     return total;
-  };
-
-
-  /****************************************************************************************************************************
-   * returns row with data from template
-   ****************************************************************************************************************************/
-  createRowMarkup(entity, attributeNames) {
-    var tempColumns = document.createElement("DIV");
-    tempColumns.innerHTML = this.getRowTemplate(attributeNames);
-    return tempColumns.innerHTML;
   };
 
 
@@ -229,7 +212,7 @@ export class VGridGenerator {
   /****************************************************************************************************************************
    * gets the main div to create grid in
    ****************************************************************************************************************************/
-  createGridHtmlWrapper() {
+  createGridElement() {
 
     var x = document.createElement("DIV"); //create this a container for my 3 rows
     this.vGridElement.appendChild(x);
@@ -246,36 +229,85 @@ export class VGridGenerator {
     this.gridHeight = this.htmlCache.grid.clientHeight;
     this.gridWidght = this.htmlCache.grid.clientWidth;
 
+
   };
 
 
   /****************************************************************************************************************************
-   * add header div
+   * creates loading screen
    ****************************************************************************************************************************/
-  createGridHtmlHeaderWrapper() {
-    //create and append header div
-    this.htmlCache.header = document.createElement("DIV");
-    this.htmlCache.header.className = this.vGridConfig.css.mainHeader;
-    this.htmlCache.header.style.height = this.vGridConfig.headerHeight + "px";
-    this.htmlCache.grid.appendChild(this.htmlCache.header);
+  createLoadingScreenViewSlot() {
 
-    var row = document.createElement("DIV");
-    row.className = this.vGridConfig.css.row + " " + this.vGridConfig.css.rowHeader;
-    //row.style.top = top + "px";
-    row.style.height = this.vGridConfig.headerHeight + "px";
-    row.style.width = this.getTotalColumnWidth() + "px";
-    this.htmlCache.header.appendChild(row);
+    var loadingScreentHtml = [
+      '<div class="v-grid-overlay" if.bind="loading">',
+      '</div>',
+      '<div if.two-way="loading" class="v-grid-progress-indicator">',
+      '<div class="v-grid-progress-bar" role="progressbar" style="width:100%">',
+      '<span>${ loadingMessage }</span>',
+      '</div>',
+      '</div>'
+    ];
 
-    var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.getHeaderTemplate() + '</template>', this.vGrid.resources);
+    var viewFactory = this.vGrid.viewCompiler.compile('<template>' + loadingScreentHtml.join("") + '</template>', this.vGrid.viewResources);
     var view = viewFactory.create(this.vGrid.container);
-    this.headerViewSlot = new ViewSlot(this.htmlCache.header.firstChild, true);
+
+    this.loadingScreenViewSlot = new ViewSlot(this.htmlCache.grid, true);
+    this.loadingScreenViewSlot.add(view);
+
+    //bind
+    this.loadingScreenViewSlot.bind(this.vGrid, {
+      bindingContext: this.vGrid,
+      parentOverrideContext: this.vGrid.overrideContext
+    });
+    this.loadingScreenViewSlot.attached();
+  }
+
+
+  /****************************************************************************************************************************
+   * creates the header viewslot
+   ****************************************************************************************************************************/
+  createHeaderViewSlot() {
+
+    var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.getHeaderTemplate() + '</template>', this.vGrid.viewResources);
+    var view = viewFactory.create(this.vGrid.container);
+
+    this.headerViewSlot = new ViewSlot(this.htmlCache.headerScrollBody, true);
     this.headerViewSlot.add(view);
+
+    //bind
     let bindingContext = {};
     this.headerViewSlot.bind(bindingContext, {
       bindingContext: bindingContext,
       parentOverrideContext: this.vGrid.overrideContext
     });
+
     this.headerViewSlot.attached();
+
+  }
+
+
+  /****************************************************************************************************************************
+   * add header div
+   ****************************************************************************************************************************/
+  createGridHeaderElement() {
+
+    //create and append header div
+
+    var header = document.createElement("DIV");
+    header.className = this.vGridConfig.css.mainHeader;
+    header.style.height = this.vGridConfig.attHeaderHeight + "px";
+    if (!this.htmlCache.headerContent) {
+      this.htmlCache.grid.appendChild(header);
+      this.htmlCache.headerContent = header;
+    } else {
+      this.htmlCache.headerContent.innerHTML = header.innerHTML;
+    }
+
+    this.htmlCache.headerScrollBody = document.createElement("DIV");
+    this.htmlCache.headerScrollBody.className = this.vGridConfig.css.row + " " + this.vGridConfig.css.rowHeader;
+    this.htmlCache.headerScrollBody.style.height = this.vGridConfig.attHeaderHeight + "px";
+    this.htmlCache.headerScrollBody.style.width = this.getTotalColumnWidth() + "px";
+    this.htmlCache.headerContent.appendChild(this.htmlCache.headerScrollBody);
 
 
   };
@@ -284,46 +316,34 @@ export class VGridGenerator {
   /****************************************************************************************************************************
    * rebuild header div, needed if user sets new columns or something
    ****************************************************************************************************************************/
-  rebuildGridHeaderHtml() {
+  rebuildGridHeaderHtmlAndViewSlot() {
+
     //get current scrollleft, so we can set it again after.
-    var getScrollLeft = this.htmlCache.header.firstChild.style.left;
-    this.htmlCache.header.removeChild(this.htmlCache.header.firstChild);
+    // var getScrollLeft = this.htmlCache.headerScrollBody.style.left;
 
-    var row = document.createElement("DIV");
-    row.className = this.vGridConfig.css.row + " " + this.vGridConfig.css.rowHeader;
-    row.style.height = this.vGridConfig.headerHeight + "px";
-    row.style.width = this.getTotalColumnWidth() + "px";
-    this.htmlCache.header.appendChild(row);
+    this.unbindDetachHeaderViewSlots();
 
-    var viewFactory = this.vGrid.viewCompiler.compile('<template>' + this.getHeaderTemplate() + '</template>', this.vGrid.resources);
-    var view = viewFactory.create(this.vGrid.container);
-    this.headerViewSlot.unbind();
-    this.headerViewSlot.detached();
-    this.headerViewSlot.removeAll();
-    this.headerViewSlot = null;
-    this.headerViewSlot = new ViewSlot(this.htmlCache.header.firstChild, true);
-    this.headerViewSlot.add(view);
-    let bindingContext = {};
-    this.headerViewSlot.bind(bindingContext, {
-      bindingContext: bindingContext,
-      parentOverrideContext: this.vGrid.overrideContext
-    });
-    this.headerViewSlot.attached();
+    this.htmlCache.headerContent.removeChild(this.htmlCache.headerScrollBody);
+    //this.htmlCache.headerContent.parentNode.removeChild(this.htmlCache.headerContent); //we dont want to remove this
 
+    this.createGridHeaderElement();
+
+    this.createHeaderViewSlot();
     this.addResizableAndSortableEvent();
 
-    //get back last scrollleft
-    this.htmlCache.header.firstChild.style.left = getScrollLeft;
+    //set back last scrollleft
+    //this.htmlCache.headerScrollBody.style.left = getScrollLeft;
   };
 
 
   /****************************************************************************************************************************
    * add content div
    ****************************************************************************************************************************/
-  createGridHtmlContentWrapper() {
+  createGridContentElement() {
+
     //calculate content height
     var gridWrapperHeight = this.gridHeight;
-    var headerAndFooterHeight = this.vGridConfig.headerHeight + this.vGridConfig.footerHeight;
+    var headerAndFooterHeight = this.vGridConfig.attHeaderHeight + this.vGridConfig.attFooterHeight;
     this.contentHeight = gridWrapperHeight - headerAndFooterHeight;
 
     //create and append content div
@@ -331,32 +351,35 @@ export class VGridGenerator {
     this.htmlCache.content.className = this.vGridConfig.css.mainContent;
     this.htmlCache.content.style.height = this.contentHeight + "px";
     this.htmlCache.grid.appendChild(this.htmlCache.content);
+
   };
+
+
+  createFooterViewSlot() {
+    var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-pager></v-grid-pager></template>', this.vGrid.viewResources);
+    var view = viewFactory.create(this.vGrid.container);
+
+    this.footerViewSlot = new ViewSlot(this.htmlCache.footer, true);
+    this.footerViewSlot.add(view);
+
+    this.footerViewSlot.bind(this, {
+      bindingContext: this,
+      parentOverrideContext: this.vGrid.overrideContext
+    });
+
+    this.footerViewSlot.attached();
+  }
 
 
   /****************************************************************************************************************************
    * adds the footer
    ****************************************************************************************************************************/
-  createGridHtmlFooterWrapper() {
+  createGridFooterElement() {
     //create and append
     this.htmlCache.footer = document.createElement("DIV");
     this.htmlCache.footer.className = this.vGridConfig.css.mainFooter;
-    this.htmlCache.footer.style.height = this.vGridConfig.footerHeight + "px";
+    this.htmlCache.footer.style.height = this.vGridConfig.attFooterHeight + "px";
     this.htmlCache.grid.appendChild(this.htmlCache.footer);
-
-    if (this.vGridConfig.eventOnRemoteCall) {
-      var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-pager></v-grid-pager></template>', this.vGrid.resources);
-      var view = viewFactory.create(this.vGrid.container);
-      this.footerViewSlot = new ViewSlot(this.htmlCache.footer, true);
-      this.footerViewSlot.add(view);
-
-      this.footerViewSlot.bind(this, {
-        bindingContext: this,
-        parentOverrideContext: this.vGrid.overrideContext
-      });
-      this.footerViewSlot.attached();
-    }
-
   };
 
 
@@ -365,14 +388,14 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   setScrollBodyHeightToVar() {
     var collectionLength = this.vGridConfig.getCollectionLength();
-    this.scrollBodyHeight = collectionLength * this.vGridConfig.rowHeight;
+    this.scrollBodyHeight = collectionLength * this.vGridConfig.attRowHeight;
   };
 
 
   /****************************************************************************************************************************
    * add the scroll body
    ****************************************************************************************************************************/
-  createGridHtmlScrollBodyWrapper() {
+  createGridScrollBodyElement() {
     this.setScrollBodyHeightToVar();
     //create and append
     this.htmlCache.scrollBody = document.createElement("DIV");
@@ -391,7 +414,7 @@ export class VGridGenerator {
     for (var i = 0; i < this.htmlCache.rowsArray.length; i++) {
       this.htmlCache.rowsArray[i].div.style.width = this.getTotalColumnWidth() + "px";
     }
-    this.htmlCache.header.firstChild.style.width = this.getTotalColumnWidth() + "px";
+    this.htmlCache.headerScrollBody.style.width = this.getTotalColumnWidth() + "px";
   };
 
 
@@ -400,20 +423,16 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   correctHeaderAndScrollbodyWidth() {
     this.htmlCache.scrollBody.style.width = this.getTotalColumnWidth() + "px";
-    this.htmlCache.header.firstChild.style.width = this.getTotalColumnWidth() + "px";
+    this.htmlCache.headerScrollBody.style.width = this.getTotalColumnWidth() + "px";
   };
 
 
   /****************************************************************************************************************************
    * add the rows to scroll div
    ****************************************************************************************************************************/
-  createGridHtmlRowWrapper() {
+  createGridRowElements() {
     //rows we need to fill up visible container
-    var minimumRowsNeeded = (parseInt(this.contentHeight / this.vGridConfig.rowHeight, 10));
-
-    if (this.vGridConfig.largeBuffer) {
-      minimumRowsNeeded = minimumRowsNeeded * 3;
-    }
+    var minimumRowsNeeded = parseInt(this.contentHeight / this.vGridConfig.attRowHeight, 10);
 
     //set extra so we can buffer
     if (minimumRowsNeeded % 2 === 1) {
@@ -421,6 +440,7 @@ export class VGridGenerator {
     } else {
       minimumRowsNeeded = minimumRowsNeeded + 6;
     }
+
 
     var top = 0;
     for (var i = 0; i < minimumRowsNeeded; i++) {
@@ -437,7 +457,7 @@ export class VGridGenerator {
         row.classList.add(this.vGridConfig.css.rowEven);
       }
 
-      row.style.height = this.vGridConfig.rowHeight + "px";
+      row.style.height = this.vGridConfig.attRowHeight + "px";
 
       this.setRowTopValue([{
         div: row,
@@ -461,7 +481,7 @@ export class VGridGenerator {
       });
 
       //set new top for next row
-      top = top + this.vGridConfig.rowHeight;
+      top = top + this.vGridConfig.attRowHeight;
 
     }//end for loop
 
@@ -491,15 +511,20 @@ export class VGridGenerator {
 
 
         if (entity !== "" && row.viewSlot !== null) {
-          let bindingContext = {};
+          let tempRef = {};
           for (var k in entity) {
             if (entity.hasOwnProperty(k)) {
-              if (bindingContext[k] !== entity[k]) {
-                bindingContext[k] = entity[k];
+              if (tempRef[k] !== entity[k]) {
+                tempRef[k] = entity[k];
               }
             }
           }
-          bindingContext.currentEntityRef = this.vGrid.vGridCollectionFiltered[rowNo];
+          var that = this;
+          let bindingContext = {};
+          bindingContext.row = rowNo;
+          bindingContext.ctx = this;
+          bindingContext.tempRef = tempRef;
+          bindingContext.rowRef = this.vGrid.vGridCollectionFiltered[rowNo];
           row.viewSlot.bind(bindingContext, {
             bindingContext: bindingContext,
             parentOverrideContext: this.vGrid.overrideContext
@@ -508,7 +533,7 @@ export class VGridGenerator {
 
         }
 
-        if (entity === undefined || entity === "") {
+        if (entity === undefined || entity === "" || entity === null) {
           row.div.style.display = "none";
         } else {
           row.div.style.display = "block";
@@ -544,7 +569,7 @@ export class VGridGenerator {
   /****************************************************************************************************************************
    * option to scrollbars scrolling where we update all the time and dont use timeout
    ****************************************************************************************************************************/
-  onNormalScrollingLarge() {
+  onLargeScroll() {
 
     this.scrollVars.lastScrollTop = this.htmlCache.content.scrollTop;
 
@@ -554,7 +579,7 @@ export class VGridGenerator {
 
 
     //vars
-    var rowHeight = this.vGridConfig.rowHeight;
+    var rowHeight = this.vGridConfig.attRowHeight;
     var bodyHeight = this.htmlCache.content.clientHeight;
     var currentRow = parseInt(this.scrollVars.lastScrollTop / rowHeight, 10);
     var firstRow = parseInt(this.htmlCache.content.scrollTop / rowHeight, 10);
@@ -582,7 +607,7 @@ export class VGridGenerator {
     //for setting before (when hitting bottom)
     var setHiddenFromView = (cacheRowNumber) => {
       var row = this.htmlCache.rowsArray[cacheRowNumber];
-      this.setRowTopValue([row], 0, -(currentRowTop + (this.vGridConfig.rowHeight * 50)));
+      this.setRowTopValue([row], 0, -(currentRowTop + (this.vGridConfig.attRowHeight * 50)));
     };
 
     //loop row html cache
@@ -627,15 +652,17 @@ export class VGridGenerator {
   /****************************************************************************************************************************
    * add the rows to scroll div (for normal scrolling when not using scrollbars)
    ****************************************************************************************************************************/
-  onNormalScrolling(isDownScroll, currentScrollTop) {
+  onSmallScroll(isDownScroll, currentScrollTop) {
 
     //check is user have preformed big scroll
     var currentScrollTop = this.htmlCache.content.scrollTop;
     if (this.scrollVars.isScrollBarScrolling === false) {
+
+
       var newTopValue;
-      var currentRow = parseInt((this.scrollVars.lastScrollTop / this.vGridConfig.rowHeight), 10);
-      var collectionHeight = this.vGridConfig.rowHeight * this.getRowCacheLength();
-      var rowHeight = this.vGridConfig.rowHeight;
+      var currentRow = parseInt((this.scrollVars.lastScrollTop / this.vGridConfig.attRowHeight), 10);
+      var collectionHeight = this.vGridConfig.attRowHeight * this.getRowCacheLength();
+      var rowHeight = this.vGridConfig.attRowHeight;
 
       //loop our row html cache
       for (var i = 0; i < this.getRowCacheLength(); i++) {
@@ -646,7 +673,7 @@ export class VGridGenerator {
 
 
         if (isDownScroll) {
-          this.lastScrollType = "down";
+          this.scrollVars.lastScrollType = "down";
           if (rowTop < (currentScrollTop - rowHeight)) {
             update = true;
             newTopValue = rowTop + collectionHeight;
@@ -660,7 +687,7 @@ export class VGridGenerator {
           }
 
         } else {
-          this.lastScrollType = "up";
+          this.scrollVars.lastScrollType = "up";
           if (rowTop > ((currentScrollTop + this.contentHeight))) {
             update = true;
             newTopValue = rowTop - collectionHeight;
@@ -696,12 +723,12 @@ export class VGridGenerator {
    * helper, removes rows, se minus height so we cant scroll to empty
    ****************************************************************************************************************************/
   hideRowsThatIsLargerThanCollection() {
-    var currentRow = parseInt((this.scrollVars.lastScrollTop / this.vGridConfig.rowHeight), 10);
-    //this.scrollVars.firstTop = currentRow * this.vGridConfig.rowHeight;
+    var currentRow = parseInt((this.scrollVars.lastScrollTop / this.vGridConfig.attRowHeight), 10);
+    //this.scrollVars.firstTop = currentRow * this.vGridConfig.attRowHeight;
     for (var i = 0; i < this.getRowCacheLength(); i++) {
       var row = this.htmlCache.rowsArray[i];
       var rowTop = parseInt(row.top, 10);
-      if (rowTop > ((this.vGridConfig.getCollectionLength() - 1) * this.vGridConfig.rowHeight) && rowTop > (parseInt(this.htmlCache.content.style.height) - this.vGridConfig.rowHeight)) {
+      if (rowTop > ((this.vGridConfig.getCollectionLength() - 1) * this.vGridConfig.attRowHeight) && rowTop > (parseInt(this.htmlCache.content.style.height) - this.vGridConfig.attRowHeight)) {
         this.setRowTopValue([row], 0, -5000 + i);
       }
     }
@@ -722,14 +749,14 @@ export class VGridGenerator {
     this.scrollVars.isScrollBarScrolling = true;
 
     //delay before doing update
-    var timeout = this.vGridConfig.dataScrollDelay;
+    var timeout = this.vGridConfig.attDataScrollDelay;
 
     //clear scroll timeout
-    clearTimeout(this.scrollVars.timer);
+    clearTimeout(this.scrollVars.scrollbarScrollingTimer);
 
     //set timeout, incase user is still scrolling
-    this.scrollVars.timer = setTimeout(() => {
-      this.onNormalScrollingLarge();
+    this.scrollVars.scrollbarScrollingTimer = setTimeout(() => {
+      this.onLargeScroll();
       this.scrollVars.isScrollBarScrolling = false;
     }, timeout);
 
@@ -740,84 +767,74 @@ export class VGridGenerator {
   /****************************************************************************************************************************
    * fixes scrolling / top of divs
    ****************************************************************************************************************************/
-  onScroll() {
+  scrollEventHandler() {
 
 
-    var doScroll = () => {
+    var currentScrollTop = this.htmlCache.content.scrollTop;
+    var currentScrollLeft = this.htmlCache.content.scrollLeft;
 
-      var currentScrollTop = this.htmlCache.content.scrollTop;
-      var currentScrollLeft = this.htmlCache.content.scrollLeft;
 
-      //are we scrolling ?
-      if (currentScrollTop !== this.scrollVars.lastScrollTop) {
-        //is vert scroll
+    //are we scrolling ?
+    if (currentScrollTop !== this.scrollVars.lastScrollTop) {
+      //is vert scroll
 
-        //stop left scroll...
-        if (currentScrollLeft !== 0) {
-          this.htmlCache.content.scrollLeft = this.scrollVars.lastScrollLeft;
-          this.htmlCache.header.scrollLeft = this.scrollVars.lastScrollLeft
-        }
+      //stop left scroll...
+      if (currentScrollLeft !== 0) {
+        this.htmlCache.content.scrollLeft = this.scrollVars.lastScrollLeft;
+        this.htmlCache.headerContent.scrollLeft = this.scrollVars.lastScrollLeft
+      }
 
-        //check if down scroll.
-        var isDownScroll = true;
-        if (currentScrollTop < this.scrollVars.lastScrollTop) {
-          isDownScroll = false;
-        }
+      //check if down scroll.
+      var isDownScroll = true;
+      if (currentScrollTop < this.scrollVars.lastScrollTop) {
+        isDownScroll = false;
+      }
 
-        //check if big scroll (split m into 2.. simple to read)
-        var isLargeScroll;
-        switch (true) {
-          case currentScrollTop > this.scrollVars.lastScrollTop + this.vGridConfig.largeScrollLimit:
-          case currentScrollTop < this.scrollVars.lastScrollTop - this.vGridConfig.largeScrollLimit:
-            isLargeScroll = true;
-            break;
-          default:
-            isLargeScroll = false;
-        }
+      //check if big scroll (split m into 2.. simple to read)
+      var isLargeScroll;
+      switch (true) {
+        case currentScrollTop > this.scrollVars.lastScrollTop + this.vGridConfig.largeScrollLimit:
+        case currentScrollTop < this.scrollVars.lastScrollTop - this.vGridConfig.largeScrollLimit:
+          isLargeScroll = true;
+          break;
+        default:
+          isLargeScroll = false;
+      }
 
-        //reset scroll top
-        this.scrollVars.lastScrollTop = currentScrollTop;
+      //reset scroll top
+      this.scrollVars.lastScrollTop = currentScrollTop;
 
-        //check if big scroll
-        if (isLargeScroll) {
-          //now user can set this, on very large collections this will drag preformance down
-          if (this.vGridConfig.renderOnScrollbarScroll) {
-            this.onNormalScrollingLarge(isDownScroll, currentScrollTop)
-          } else {
-            this.onScrollbarScrolling();
-          }
+      //check if big scroll
+      if (isLargeScroll) {
+        //now user can set this, on very large collections this will drag preformance down
+        if (this.vGridConfig.attRenderOnScrollbarScroll) {
+          this.onLargeScroll()
         } else {
-          this.onNormalScrolling(isDownScroll, currentScrollTop)
+          this.onScrollbarScrolling();
         }
       } else {
-
-        if (this.htmlCache.content.style.overflowX === "hidden") {
-          //we do not want scrolls left if this is hidden..
-          this.htmlCache.content.scrollLeft = 0;
-          this.scrollVars.lastScrollLeft = 0;
-          this.htmlCache.header.scrollLeft = 0;
-        } else {
-          if (this.scrollVars.lastScrollLeft !== currentScrollLeft) {
-            currentScrollLeft = this.htmlCache.content.scrollLeft;
-            this.scrollVars.lastScrollLeft = currentScrollLeft;
-            this.htmlCache.header.scrollLeft = currentScrollLeft;
-          }
-        }
-
-
+        this.onSmallScroll(isDownScroll, currentScrollTop)
       }
-    };
-    clearTimeout(this.scrollVars.scrollCallbackTimer);
-    if (this.vGridConfig.requestAnimationFrame) {
-      requestAnimationFrame(() => {
-        doScroll();
-      });
     } else {
-      doScroll();
+
+      if (this.htmlCache.content.style.overflowX === "hidden") {
+        //we do not want scrolls left if this is hidden..
+        this.htmlCache.content.scrollLeft = 0;
+        this.scrollVars.lastScrollLeft = 0;
+        this.htmlCache.headerContent.scrollLeft = 0;
+      } else {
+        if (this.scrollVars.lastScrollLeft !== currentScrollLeft) {
+          currentScrollLeft = this.htmlCache.content.scrollLeft;
+          this.scrollVars.lastScrollLeft = currentScrollLeft;
+          this.htmlCache.headerContent.scrollLeft = currentScrollLeft;
+        }
+      }
+
+
     }
 
 
-  }; //end scroll event
+  }
 
 
   /****************************************************************************************************************************
@@ -825,7 +842,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   updateGridScrollbars() {
 
-    var collectionHeight = this.vGridConfig.getCollectionLength() * this.vGridConfig.rowHeight + (this.vGridConfig.rowHeight / 2);
+    var collectionHeight = this.vGridConfig.getCollectionLength() * this.vGridConfig.attRowHeight + (this.vGridConfig.attRowHeight / 2);
     var bodyHeight = this.htmlCache.content.offsetHeight;
     //_private.largeScrollLimit = bodyHeight; why was this here... leave it here incase there is something Im missing atm
 
@@ -835,14 +852,14 @@ export class VGridGenerator {
       this.htmlCache.content.style.overflow = "";
       this.htmlCache.content.style.overflowY = "hidden";
       this.htmlCache.content.style.overflowX = "hidden";
-      this.htmlCache.header.style.overflowY = "hidden";
+      this.htmlCache.headerContent.style.overflowY = "hidden";
 
     } else {
       // this.htmlCache.content.scrollLeft = 0;
       this.htmlCache.content.style.overflow = "";
       this.htmlCache.content.style.overflowY = "scroll";
       this.htmlCache.content.style.overflowX = "hidden";
-      this.htmlCache.header.style.overflowY = "scroll";
+      this.htmlCache.headerContent.style.overflowY = "scroll";
 
     }
 
@@ -858,28 +875,13 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   addResizableAndSortableEvent() {
 
-    //header click
-    if (this.vGridConfig.sortOnHeaderClick) {
-      var orderByClick = (event) => {
-        this.vGridConfig.onOrderBy(event, () => {
-          this.rebuildGridHeaderHtml();
-        });
-      };
-
-      //get inputs
-      var orderBy = this.vGridElement.querySelectorAll("." + this.vGridConfig.css.orderHandle);
-      for (var i = 0; i < orderBy.length; i++) {
-        orderBy[i].addEventListener("click", orderByClick.bind(this), false);
-      }
-    }
-
     //resize headers
-    if (this.vGridConfig.isResizableHeaders) {
+    if (this.vGridConfig.attResizableHeaders) {
       this.vGridResizable.init();
     }
 
     //sortable columns
-    if (this.vGridConfig.isSortableHeader) {
+    if (this.vGridConfig.attSortableHeader) {
       this.vGridSortable.init()
     }
 
@@ -888,77 +890,57 @@ export class VGridGenerator {
 
 
   /****************************************************************************************************************************
-   * add the events  (TODO: when cleaning up code I need to splitt the stuff in here into more functions..)
+   * add the events  (this is called during rebuild etc
    ****************************************************************************************************************************/
   addEvents() {
-
-    /*------------------------------------------------*/
-    //normal click
-    var handleClick = (e) => {
-      var currentRow = parseInt(e.currentTarget.getAttribute("row"));
-      this.vGridConfig.clickHandler(e, currentRow);
-      if (this.vGridConfig.isMultiSelect !== undefined) {
-        this.vGridSelection.setHightlight(e, currentRow, this);
-      }
-    };
-
-    var handleTabbing = (e) => {
-      var currentRow = parseInt(e.currentTarget.getAttribute("row"));
-      this.vGridConfig.clickHandler(e, currentRow);
-      if (this.vGridConfig.isMultiSelect !== undefined) {
-        this.vGridSelection.setHightlight(e, currentRow, this);
-      }
-    };
-
-
-    /*------------------------------------------------*/
-    //doubleclick
-    var handleDblClick = (e) => {
-      var currentRow = parseInt(e.currentTarget.getAttribute("row"));
-      this.vGridConfig.clickHandler(e, currentRow);
-    };
-
-
-    /*------------------------------------------------*/
-    //right click
-    var onMouseDownRow = (e) => {
-      //e.preventDefault();
-      if (e.button === 2) {
-        //nothing atm
-      }
-
-    };
 
 
     //add all click events to rows
     for (var i = 0; i < this.getRowCacheLength(); i++) {
-      var div = this.htmlCache.rowsArray[i].div;
+      var rowElement = this.htmlCache.rowsArray[i].div;
 
-      div.addEventListener("dblclick", handleDblClick.bind(this), false); //single and doubleclick... this will end bad.., maybe use other key wih click to edit?
-      div.addEventListener("click", handleClick.bind(this), false);
-      div.addEventListener("tabbing", handleTabbing.bind(this), false);
-      div.addEventListener("contextmenu", onMouseDownRow.bind(this), false);
+
+      rowElement.addEventListener("dblclick", (e) => {
+        var currentRow = parseInt(e.currentTarget.getAttribute("row"));
+        this.vGridConfig.clickHandler(e, currentRow);
+        if (this.vGridConfig.attMultiSelect !== undefined) {
+          this.vGridSelection.setHightlight(e, currentRow, this);
+        }
+      }, false);
+
+
+      rowElement.addEventListener("click", (e) => {
+        var currentRow = parseInt(e.currentTarget.getAttribute("row"));
+        this.vGridConfig.clickHandler(e, currentRow);
+      }, false);
+
     }
+
 
     //this have to be after clcik since it will cancel if scroll event
-    this.htmlCache.content.addEventListener("scroll", this.onScroll.bind(this));
+    this.htmlCache.content.addEventListener("scroll", (e)=> {
+      if (this.vGridConfig.attRequestAnimationFrame) {
+        requestAnimationFrame(() => {
+          this.scrollEventHandler();
+        });
+      } else {
+        this.scrollEventHandler();
+      }
+    });
 
-    this.addResizableAndSortableEvent(); //this also includes the orderby click on header event
+
+    //fix bug when tabbing headers, and header is larger then content width
+    this.htmlCache.headerContent.addEventListener("scroll", (e)=> {
+      this.htmlCache.content.scrollLeft = this.htmlCache.headerContent.scrollLeft;
+      this.scrollVars.lastScrollLeft = this.htmlCache.headerContent.scrollLeft;
+
+    });
 
 
-  };
+    //this also includes the orderby click on header event
+    this.addResizableAndSortableEvent();
 
 
-  /****************************************************************************************************************************
-   * correct columns witdth array, incase they have just defined the first 2, or none
-   ****************************************************************************************************************************/
-  correctColumnsWidthArray() {
-    var newColumnWidth = [];
-    for (var i = 0; i < this.vGridConfig.attributeArray.length; i++) {
-      var columnWidth = this.vGridConfig.columnWidthArray[i] || 100;
-      newColumnWidth.push(columnWidth)
-    }
-    this.vGridConfig.columnWidthArray = newColumnWidth;
   };
 
 
@@ -977,36 +959,46 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   addHtml() {
 
-    //add needed html
-    this.createGridHtmlWrapper(); //entire main grid, pretty much just adds a class
-    this.createGridHtmlHeaderWrapper(); //adds header
-    this.createGridHtmlContentWrapper(); //adds content/viewport we see
-    this.createGridHtmlFooterWrapper(); //adds footer
-    this.createGridHtmlScrollBodyWrapper(); //adds the scroll height
-    this.createGridHtmlRowWrapper(); //adds html rows needed ++
+    this.createGridElement();
+    this.createLoadingScreenViewSlot();
 
-    //update the scrollbars, so they show only if needed
-    //pretty much just hides/shows -> left/right scroll
+    this.createGridHeaderElement();
+    this.createHeaderViewSlot();
+
+    this.createGridContentElement();
+
+    this.createGridFooterElement();
+    if (this.vGridConfig.eventOnRemoteCall) {
+      this.createFooterViewSlot()
+    }
+
+    this.createGridScrollBodyElement();
+    this.createGridRowElements();
+
     this.updateGridScrollbars();
   };
+
 
   /****************************************************************************************************************************
    * creates the row viewslots
    ****************************************************************************************************************************/
-  createViewSlots() {
+  createRowViewSlots() {
 
     var rows = this.htmlCache.rowsArray;
     for (var i = 0; i < rows.length; i++) {
 
-      var viewFactory = this.vGrid.viewCompiler.compile(this.getRowTemplate(), this.vGrid.resources);
+      var viewFactory = this.getRowViewFactory();
       var view = viewFactory.create(this.vGrid.container);
+
       rows[i].viewSlot = new ViewSlot(rows[i].div, true);
       rows[i].viewSlot.add(view);
+
       let bindingContext = {};
       rows[i].viewSlot.bind(bindingContext, {
         bindingContext: bindingContext,
         parentOverrideContext: this.vGrid.overrideContext
       });
+
       rows[i].viewSlot.attached();
 
     }
@@ -1014,9 +1006,9 @@ export class VGridGenerator {
 
 
   /****************************************************************************************************************************
-   * recreate the row view slots
+   * unbind & detach the  row view slots
    ****************************************************************************************************************************/
-  recreateViewSlots() {
+  unbindDetachRowViewSlots() {
     var rows = this.htmlCache.rowsArray;
     for (var i = 0; i < rows.length; i++) {
       rows[i].viewSlot.unbind();
@@ -1024,18 +1016,65 @@ export class VGridGenerator {
       rows[i].viewSlot.removeAll();
       rows[i].viewSlot = null;
       rows[i].div.innerHTML = "";
-      this.htmlCache.rowTemplate = null;
-      var viewFactory = this.vGrid.viewCompiler.compile(this.getRowTemplate(), this.vGrid.resources);
-      var view = viewFactory.create(this.vGrid.container);
-      rows[i].viewSlot = new ViewSlot(rows[i].div, true);
-      rows[i].viewSlot.add(view);
-      let bindingContext = {};
-      rows[i].viewSlot.bind(bindingContext, {
-        bindingContext: bindingContext,
-        parentOverrideContext: this.vGrid.overrideContext
-      });
-      rows[i].viewSlot.attached();
+      this.htmlCache.viewFactory = null;
     }
+  }
+
+
+  /****************************************************************************************************************************
+   * unbind & detach the  header view slot
+   ****************************************************************************************************************************/
+  unbindDetachHeaderViewSlots() {
+    this.headerViewSlot.unbind();
+    this.headerViewSlot.detached();
+    this.headerViewSlot.removeAll();
+    this.headerViewSlot = null;
+  }
+
+
+  /****************************************************************************************************************************
+   * unbind & detach the  header view slot
+   ****************************************************************************************************************************/
+  unbindDetachFooterViewSlots() {
+    if (this.footerViewSlot) {
+      this.footerViewSlot.unbind();
+      this.footerViewSlot.detached();
+      this.footerViewSlot.removeAll();
+      this.footerViewSlot = null;
+    }
+  }
+
+
+  /****************************************************************************************************************************
+   * unbind & detach the  header view slot
+   ****************************************************************************************************************************/
+  unbindDetachLoadingScreenViewSlots() {
+    if (this.loadingScreenViewSlot) {
+      this.loadingScreenViewSlot.unbind();
+      this.loadingScreenViewSlot.detached();
+      this.loadingScreenViewSlot.removeAll();
+      this.loadingScreenViewSlot = null;
+    }
+  }
+
+
+  /****************************************************************************************************************************
+   * unbind & detach all view slots
+   ****************************************************************************************************************************/
+  unbindDetachViewSlots() {
+    this.unbindDetachRowViewSlots();
+    this.unbindDetachHeaderViewSlots();
+    this.unbindDetachFooterViewSlots();
+    this.unbindDetachLoadingScreenViewSlots();
+  }
+
+
+  /****************************************************************************************************************************
+   * recreate the row view slots
+   ****************************************************************************************************************************/
+  recreateRowViewSlots() {
+    this.unbindDetachRowViewSlots();
+    this.createRowViewSlots();
   }
 
 
@@ -1043,15 +1082,13 @@ export class VGridGenerator {
    * will create the actual grid (cant be constructor since I call this when rebuilding)
    ****************************************************************************************************************************/
   init(isRebuild) {
-    this.correctColumnsWidthArray(); //less mess later when doing it this way
-    this.addHtml(); //add html
-    this.addEvents(); //add events
+    this.addHtml();
+    this.addEvents();
     if (!isRebuild) {
-      //todo: remeber scroll height , devide on rowheight, and set to what ever new is?
-      this.vGridSelection.setMode(this.vGridConfig.isMultiSelect);
+      this.vGridSelection.setMode(this.vGridConfig.attMultiSelect);
     }
-    this.createViewSlots();
-    this.fillDataInRows(); //fillDataInRows
+    this.createRowViewSlots();
+    this.fillDataInRows();
     this.setLargeScrollLimit();
 
   };
@@ -1061,13 +1098,16 @@ export class VGridGenerator {
    * redraws most parts of grid...
    ****************************************************************************************************************************/
   redrawGrid() {
+    this.unbindDetachViewSlots();
     this.vGridElement.getElementsByClassName(this.vGridConfig.css.wrapper)[0].remove();
+
+    this.htmlCache.rowsArray = null;
     this.htmlCache.rowsArray = [];
-    this.htmlCache.header = null;
+    this.htmlCache.headerContent = null;
     this.htmlCache.content = null;
     this.htmlCache.footer = null;
     this.htmlCache.scrollBody = null;
-    this.htmlCache.rowTemplate = null;
+    this.htmlCache.viewFactory = null;
 
     this.init(true);
     this.fixHeaderWithBody();
@@ -1080,7 +1120,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   fixHeaderWithBody() {
     var currentScrollLeft = this.htmlCache.content.scrollLeft;
-    this.htmlCache.header.scrollLeft = currentScrollLeft;
+    this.htmlCache.headerContent.scrollLeft = currentScrollLeft;
   };
 
 
@@ -1088,9 +1128,8 @@ export class VGridGenerator {
    * rebuilds columns incl header row, used by internal, but can also be called from outside
    ****************************************************************************************************************************/
   rebuildColumns() {
-    this.correctColumnsWidthArray();
-    this.rebuildGridHeaderHtml();
-    this.recreateViewSlots();
+    this.rebuildGridHeaderHtmlAndViewSlot();
+    this.recreateRowViewSlots();
     this.fillDataInRows();
     this.correctRowAndScrollbodyWidth();
     this.updateSelectionOnAllRows();
@@ -1103,7 +1142,7 @@ export class VGridGenerator {
    * rebuilds columns (not header), used by internal, but can also be called from outside
    ****************************************************************************************************************************/
   rebuildColumnsRows() {
-    this.recreateViewSlots();
+    this.recreateRowViewSlots();
     this.fillDataInRows();
     this.updateSelectionOnAllRows();
     this.fixHeaderWithBody()
@@ -1114,9 +1153,8 @@ export class VGridGenerator {
    * rebuilds columns and trigger collection change in grid (rebuild rows), used by internal, but can also be called from outside
    ****************************************************************************************************************************/
   columnChangeAndCollection(resetScrollToTop) {
-    this.correctColumnsWidthArray();
-    this.rebuildGridHeaderHtml();
-    this.recreateViewSlots();
+    this.rebuildGridHeaderHtmlAndViewSlot();
+    this.recreateRowViewSlots();
     this.fillDataInRows();
     this.updateSelectionOnAllRows();
     this.collectionChange(resetScrollToTop);
@@ -1144,9 +1182,9 @@ export class VGridGenerator {
     }
     if (this.scrollBodyHeight < this.htmlCache.content.scrollTop || scrollBottom) {
       var collectionLength = this.vGridConfig.getCollectionLength();
-      var contentRows = parseInt(this.htmlCache.content.offsetHeight / this.vGridConfig.rowHeight);
-      var scrollOffsetHeight = contentRows * this.vGridConfig.rowHeight;
-      this.htmlCache.content.scrollTop = ((collectionLength * this.vGridConfig.rowHeight) - (scrollOffsetHeight))
+      var contentRows = parseInt(this.htmlCache.content.offsetHeight / this.vGridConfig.attRowHeight);
+      var scrollOffsetHeight = contentRows * this.vGridConfig.attRowHeight;
+      this.htmlCache.content.scrollTop = ((collectionLength * this.vGridConfig.attRowHeight) - (scrollOffsetHeight))
 
     }
 
@@ -1156,10 +1194,10 @@ export class VGridGenerator {
     this.correctRowAndScrollbodyWidth();
     this.updateSelectionOnAllRows();
     this.fixHeaderWithBody();
-    this.onNormalScrollingLarge();
+    this.onLargeScroll();
     this.fillDataInRows();
     if (scrollBottom) {
-      this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.rowHeight;
+      this.htmlCache.content.scrollTop = this.htmlCache.content.scrollTop + this.vGridConfig.attRowHeight;
     }
 
     //if I dont do this, chrome fails...
@@ -1170,36 +1208,35 @@ export class VGridGenerator {
   };
 
 
+  getHeaderContent() {
+    return this.htmlCache.headerContent;
+  }
+
+  getHeaderContentScrollBody() {
+    return this.htmlCache.headerScrollBody;
+  }
+
+
   setColumns(paramObj) {
-    //todo: this needs a big update
-    this.vGridConfig.attributeArray = paramObj.colAttrArray;
-    this.vGridConfig.columnWidthArray = paramObj.colWidthArray;
-    this.vGridConfig.headerArray = paramObj.colHeaderArray;
-    this.vGridConfig.filterArray = paramObj.colFilterArray;
-    this.vGridConfig.readOnlyArray = paramObj.colReadonlyArray;
-    this.vGridConfig.colStyleArray = paramObj.colStyleArray;
-    this.vGridConfig.colTypeArray = paramObj.colTypeArray;
-    this.vGridConfig.colFormaterArray = paramObj.colFormaterArray;
-    this.vGridConfig.colEditRawArray = paramObj.colEditRawArray;
-    this.vGridConfig.filterOnKeyArray = paramObj.colFilterOnKeyArray;
-    this.vGridConfig.colCustomArray = paramObj.colCustomArray;
+    this.vGridConfig.colConfig = paramObj.colConfig;
   };
 
 
   getColumns() {
-    //todo: this needs a big update
+    var arr = [];
+    this.vGridConfig.colConfig.forEach((obj)=> {
+      let x = {};
+      for (var k in obj) {
+        if (obj.hasOwnProperty(k)) {
+          if (x[k] !== obj[k]) {
+            x[k] = obj[k];
+          }
+        }
+      }
+      arr.push(x);
+    });
     return {
-      "colAttrArray": this.vGridConfig.attributeArray.slice(),
-      "colWidthArray": this.vGridConfig.columnWidthArray.slice(),
-      "colHeaderArray": this.vGridConfig.headerArray.slice(),
-      "colFilterArray": this.vGridConfig.filterArray.slice(),
-      "colReadonlyArray": this.vGridConfig.readOnlyArray.slice(),
-      "colStyleArray": this.vGridConfig.colStyleArray.slice(),
-      "colTypeArray": this.vGridConfig.colTypeArray.slice(),
-      "colFormaterArray": this.vGridConfig.colFormaterArray.slice(),
-      "colEditRawArray": this.vGridConfig.colEditRawArray.slice(),
-      "colFilterOnKeyArray": this.vGridConfig.filterOnKeyArray.slice(),
-      "colCustomArray": this.vGridConfig.colCustomArray.slice()
+      "colConfig": arr
     }
   };
 
@@ -1217,7 +1254,7 @@ export class VGridGenerator {
 
   scrollBottom() {
     var collectionLength = this.vGridConfig.getCollectionLength();
-    this.htmlCache.content.scrollTop = collectionLength * this.vGridConfig.rowHeight;
+    this.htmlCache.content.scrollTop = collectionLength * this.vGridConfig.attRowHeight;
   };
 
 
@@ -1245,18 +1282,10 @@ export class VGridGenerator {
     this.fillDataIntoRow(no)
   };
 
-  setEditMode(value) {
-    this.vGridConfig.editMode = value ? true : false;
-    this.fillDataInRows();
-  };
 
   clearHeaderSortFilter() {
     this.vGrid.vGridSort.reset();
-    this.rebuildGridHeaderHtml();
-  };
-
-  setHeaderSortFilter() {
-    this.rebuildGridHeaderHtml();
+    this.rebuildGridHeaderHtmlAndViewSlot();
   };
 
 

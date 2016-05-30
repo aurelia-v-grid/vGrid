@@ -247,7 +247,7 @@ export class VGridSelection {
   setHightlight(e, currentRow, vGridGenerator) {
 
     var isSel;
-    var manualSel = this.vGrid.vGridConfig.manualSelection;
+    var manualSel = this.vGrid.vGridConfig.attManualSelection;
     if (!manualSel) {
       var currentselectedRows = this.getSelectedRows();
 
@@ -345,7 +345,7 @@ export class VGridSelection {
                 }
                 break;
               default:
-                console.log("error, this should not happend")
+                console.error("error, this should not happen, debug selection")
             }
           } else {
             this.select(currentRow);

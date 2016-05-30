@@ -6,22 +6,18 @@
  *
  ****************************************************************************************************************/
 import {TaskQueue, ObserverLocator, bindable, ViewCompiler, ViewSlot, Container, ViewResources, containerless} from 'aurelia-framework';
-//for kendo ui bridge, remove import above
-//import {bindable, ViewSlot, ViewCompiler, ViewResources, containerless} from 'aurelia-templating';
-//import {TaskQueue} from 'aurelia-task-queue';
-//import {ObserverLocator} from 'aurelia-binding';
-//import {Container} from 'aurelia-dependency-injection';
+
 
 import {VGridGenerator} from './v-grid-generator';
 import {VGridFilter} from './v-grid-filter';
 import {VGridSort} from './v-grid-sort';
 import {VGridSortable} from './v-grid-sortable';
-import {VGridCellHelper} from './v-grid-cell-helper';
 import {VGridObservables} from './v-grid-observables';
 import {VGridConfig} from './v-grid-config';
 import {VGridResizable} from './v-grid-resizable';
 import {VGridSelection} from './v-grid-selection';
-import {VGridClientCtx} from './v-grid-clientCtx';
+import {VGridCtx} from './v-grid-ctx';
+import {bindableVGrid} from './v-grid-sort';
 
 
 export class VGrid {
@@ -29,13 +25,18 @@ export class VGrid {
   @bindable({attribute: "v-grid-context"}) vGridContextObj;
   @bindable({attribute: "v-collection"}) vGridCollection;
   @bindable({attribute: "v-current-entity"}) vGridCurrentEntity;
-  
+
+
+
+
   //loading screen when filtering/sorting
   @bindable loadingMessage = "Working please wait";
   loading = false;
 
+
+
   constructor(element, observerLocator, viewCompiler, viewSlot, container, viewResources, taskQueue) {
-    
+
     //<v-grid> element
     this.element = element;
 
@@ -65,14 +66,30 @@ export class VGrid {
     this.vGridSort = new VGridSort(this);
     this.vGridConfig = new VGridConfig(this);
     this.vGridSelection = new VGridSelection(null, this);
-    this.vGridCellHelper = new VGridCellHelper(this);
     this.vGridSortable = new VGridSortable(this);
     this.vGridResizable = new VGridResizable(this);
     this.vGridObservables = new VGridObservables(this, observerLocator);
     this.vGridGenerator = new VGridGenerator(this);
-    this.vGridClientCtx = new VGridClientCtx(this);
+    this.vGridClientCtx = new VGridCtx(this);
     this.vGridPager = null; //set by pager
 
+
+
+
+  }
+
+  /***************************************************************************************
+   * event dispatcher
+   ***************************************************************************************/
+
+  raiseEvent(name, data = {}) {
+    let event = new CustomEvent(name, {
+      detail: data,
+      bubbles: true
+    });
+    this.element.dispatchEvent(event);
+
+    return event;
   }
 
 
@@ -140,13 +157,13 @@ export class VGrid {
     //lets test that they have set the mandatory config settings
     if (this.vGridCollection === undefined || this.vGridCurrentEntity === undefined) {
       if (this.vGridCollection === undefined && this.vGridCurrentEntity === undefined) {
-        console.warn("currentEntity & collection not set/binded in config attribute")
+        console.warn("currentEntity & collection not set/binded in config attribute");
       } else {
         if (this.vGridCurrentEntity === undefined) {
-          console.warn("currentEntity not set/binded in config attribute")
+          console.warn("currentEntity not set/binded in config attribute");
         }
         if (this.vGridCollection === undefined) {
-          console.warn("collection not set/binded in config attribute")
+          console.warn("collection not set/binded in config attribute");
         }
       }
     } else {
@@ -168,14 +185,14 @@ export class VGrid {
     this.vGridObservables.enableObservablesArray();
     this.vGridObservables.enableObservablesAttributes();
 
-
-    this.vGridConfig.init();
-
     //create the grid html/add events etc
     this.vGridGenerator.init(false);
 
+  }
 
 
+  unbind(){
+    this.vGridGenerator.unbindDetachViewSlots();
   }
 
 

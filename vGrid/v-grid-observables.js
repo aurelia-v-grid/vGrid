@@ -21,10 +21,6 @@ export class VGridObservables {
    ***************************************************************************************/
   enableObservablesCollection() {
 
-
-
-
-
     let collectionSubscription = (x, y) => {
 
       //disable array observer
@@ -56,6 +52,7 @@ export class VGridObservables {
 
       //set array observer
       this.enableObservablesArray();
+
 
 
     };
@@ -159,6 +156,8 @@ export class VGridObservables {
 
 
       }
+
+
     });
     this.subscriptionsArray = arrayObserver
   }
@@ -168,7 +167,7 @@ export class VGridObservables {
    * enable attributes abservables, ->vGridCollection.name etc
    ***************************************************************************************/
   enableObservablesAttributes() {
-    this.vGrid.vGridConfig.attributeArray.forEach((property) => {
+    this.vGrid.vGridConfig.attAttributeObserve.forEach((property) => {
       let propertyObserver = this.observerLocator.getObserver(this.vGrid.vGridCurrentEntity, property);
       propertyObserver.subscribe((newValue, oldValue) => {
 
@@ -177,14 +176,9 @@ export class VGridObservables {
         var oldValueCheck = (oldValue !== undefined && oldValue !== null) ? oldValue.toString() : oldValue;
 
         if (newValueCheck !== oldValueCheck && this.vGrid.vGridCurrentEntityRef) {
-          //check if we should skip it
-            var curRefProp = this.vGrid.vGridCurrentEntityRef[property];
-            curRefProp = (curRefProp !== undefined && curRefProp !== null) ? curRefProp.toString() : curRefProp;
-            if(curRefProp !== newValueCheck){
               this.vGrid.vGridCurrentEntityRef[property] = newValue;
               this.vGrid.vGridGenerator.updateRow(this.vGrid.vGridCurrentRow, true);
-            }
-        } 
+        }
       });
       this.subscriptionsAttributes.push(propertyObserver)
     });

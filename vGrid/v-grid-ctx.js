@@ -5,7 +5,7 @@
  *
  ****************************************************************************************************************/
 
-export class VGridClientCtx {
+export class VGridCtx {
 
   constructor(vGrid) {
     this.vGrid = vGrid;
@@ -150,91 +150,63 @@ export class VGridClientCtx {
     });
   };
 
-  collectionChange(resetScrollToTop, scrollBottom) {
-    this.vGridGenerator.collectionChange(resetScrollToTop, scrollBottom)
-  }
-
-
-  setSorting(x, add) {
-    this.vGridSort.setFilter(x, add)
-  }
 
   keepFilterOnCollectionChange() {
     this.vGridConfig.keepFilterOnCollectionChange = true;
   }
-
-
-  //todo adjust, will not work with remote atm
-  runSorting(x) {
-    if (this.vGridCollection.length > this.vGridConfig.loadingThreshold) {
-      this.vGrid.loading = true;
-    }
-    setTimeout(()=> {
-      this.vGridSort.run(this.vGrid.vGridCollectionFiltered);
-      this.vGrid.loading = false;
-    }, 10)
-
-  }
-
-  runFilter(filterObj) {
-    this.vGridConfig.addFilter = true;
-    this.vGridConfig.onFilterRun(filterObj)
-  }
-  ;
-
+ 
 
   rebuildColumns() {
     this.vGridGenerator.rebuildColumns();
   }
-  ;
 
 
   scrollBottom() {
     this.vGridGenerator.scrollBottom();
   }
-  ;
+
 
 
   scrollTop() {
     this.vGridGenerator.scrollTop();
   }
-  ;
+
 
 
   setScrollTop(newTop) {
     this.vGridGenerator.setScrollTop(newTop);
   }
-  ;
+
 
 
   rebuildColumnsRows() {
     this.vGridGenerator.rebuildColumnsRows();
   }
-  ;
+
 
 
   columnChangeAndCollection(resetScrollToTop) {
     this.vGridGenerator.columnChangeAndCollection(resetScrollToTop);
   }
-  ;
+
 
 
   redrawGrid() {
     this.vGridGenerator.redrawGrid();
   }
-  ;
+
 
 
   setColumns(paramObj) {
     return this.vGridGenerator.setColumns(paramObj);
   }
-  ;
+
 
 
   getColumns() {
     return this.vGridGenerator.getColumns();
   }
-  ;
+
 
  //todo, I should test this with the browsers to verify that its correct now
   getMaxRows() {
@@ -255,14 +227,15 @@ export class VGridClientCtx {
       }
     }
     document.body.removeChild(div);
-    return (supportedHeight / this.vGridConfig.rowHeight) + ", error margin:" + (10000 / this.vGridConfig.rowHeight);
+    var total = Math.ceil(supportedHeight / this.vGridConfig.attRowHeight); //lol
+    return  total + ", error margin:" + Math.ceil(10000 / this.vGridConfig.attRowHeight);
   }
 
 
   scrollBottomNext() {
     this.vGridGenerator.scrollBottomNext();
   }
-  ;
+
 
 
   setLoadingOverlay(value) {
@@ -270,63 +243,46 @@ export class VGridClientCtx {
   }
 
 
-  setEditMode(value) {
-    this.vGridConfig.editMode = value ? true : false;
-    this.vGridGenerator.rebuildColumnsRows();
-  }
-  ;
-
-  setTabbing(value) {
-    this.vGridConfig.tabbingEnabled = value === true ? true : false;
-  }
-  ;
-
-
-  getEditMode() {
-    return this.vGridConfig.editMode;
-  }
-  ;
-
-
   //todo, this should use put text in blob or something it will fail with large collection
-  createReport(skipArray) {
-
-    //dont thouch this;
-    if (skipArray === undefined) {
-      skipArray = [];
-    }
-    var content = '';
-    var rows = this.vGrid.vGridCollectionFiltered;
-    var attributes = this.vGridConfig.attributeArray;
-
-    //sets data to our content
-    var setData = (arr) => {
-      content = content + arr.join(';') + '\n';
-    };
-
-    //set headers
-    setData(attributes);
-
-    //loop rows/columns
-    rows.forEach((row)=> {
-      let tempArr = [];
-      attributes.forEach((att)=> {
-        if (skipArray.indexOf(att) === -1) {
-          tempArr.push(row[att]);
-        }
-      });
-      setData(tempArr);
-    });
-
-
-    //download
-    var dummyElement = document.createElement('a');
-    dummyElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-    dummyElement.setAttribute('download', 'contacts.csv');
-    dummyElement.style.display = 'none';
-    document.body.appendChild(dummyElement);
-    dummyElement.click();
-    document.body.removeChild(dummyElement);
-  }
+  //this will not work with new build!
+  // createReport(skipArray) {
+  //
+  //   //dont thouch this;
+  //   if (skipArray === undefined) {
+  //     skipArray = [];
+  //   }
+  //   var content = '';
+  //   var rows = this.vGrid.vGridCollectionFiltered;
+  //   var attributes = this.vGridConfig.attAttributeObserve;
+  //
+  //   //sets data to our content
+  //   var setData = (arr) => {
+  //     content = content + arr.join(';') + '\n';
+  //   };
+  //
+  //   //set headers
+  //   setData(attributes);
+  //
+  //   //loop rows/columns
+  //   rows.forEach((row)=> {
+  //     let tempArr = [];
+  //     attributes.forEach((att)=> {
+  //       if (skipArray.indexOf(att) === -1) {
+  //         tempArr.push(row[att]);
+  //       }
+  //     });
+  //     setData(tempArr);
+  //   });
+  //
+  //
+  //   //download
+  //   var dummyElement = document.createElement('a');
+  //   dummyElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+  //   dummyElement.setAttribute('download', 'contacts.csv');
+  //   dummyElement.style.display = 'none';
+  //   document.body.appendChild(dummyElement);
+  //   dummyElement.click();
+  //   document.body.removeChild(dummyElement);
+  // }
 
 }

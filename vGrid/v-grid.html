@@ -1,12 +1,9 @@
 <template>
-  <!--need to be disabled with using webpack-->
-  <require from="./v-grid.css"></require>
-  <div class="v-grid-overlay" if.bind="loading"></div>
-  <div if.two-way="loading" class="v-grid-progress-indicator">
-    <div class="v-grid-progress-bar" role="progressbar" style="width:100%">
-      <span>${ loadingMessage }</span>
-    </div>
-  </div>
-
-
+  <require from="./styles/v-grid.css"></require>
+  <require from="./styles/v-grid-contextmenu.css"></require>
+  <require from="./styles/v-grid-draggable.css"></require>
+  <require from="./styles/v-grid-loader.css"></require>
+  <require from="./styles/v-grid-pager.css"></require>
+  <require from="./styles/v-grid-sorticon.css"></require>
+  <require from="./styles/v-grid-optional.css"></require>
 </template>

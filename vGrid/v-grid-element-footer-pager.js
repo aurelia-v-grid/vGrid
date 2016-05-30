@@ -5,19 +5,22 @@
  *
  ****************************************************************************************************************/
 import {inject, customElement, bindable} from 'aurelia-framework';
-//for kendo ui bridge, remove import above
-//import {bindable, customElement} from 'aurelia-templating';
-//import {inject} from 'aurelia-dependency-injection';
+
 
 
 
 @customElement('v-grid-pager')
 @inject(Element)
-export class VGridFooterPager {
+export class VGridElementFooterPager {
 
   info = "";
 
 
+  constructor(element) {
+    this.element = element;
+  }
+
+  
   bind(parent) {
     this.parent = parent;
     this.vGrid = parent.vGrid;
@@ -27,9 +30,6 @@ export class VGridFooterPager {
   }
 
 
-  /*****************************************************
-   *  element event
-   ******************************************************/
   attached() {
     this.statusNextButton = false;
     this.statusLastButton = false;
@@ -37,6 +37,7 @@ export class VGridFooterPager {
     this.statusPrevButton = false;
 
   }
+
 
   updatePager(data){
      this.collectionLength = data.length;

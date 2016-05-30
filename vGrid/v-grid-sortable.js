@@ -25,8 +25,9 @@ export class VGridSortable {
 
   setDragHandles() {
     //we haveto control dragging only to headers with draghandle
-    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
+    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.getElementsByTagName('v-grid-header-col');
     [].slice.call(dragHandles).forEach((itemEl) => {
+      itemEl.classList.add("vGrid-vGridDragHandle");
       itemEl.onmouseenter = () => {
         this.canMove = true;
         //add draggable to elements
@@ -47,7 +48,7 @@ export class VGridSortable {
     this.setDragHandles();
 
     //need to be better, will change when I rebuild header into custom element
-    this.rootEl = this.vGrid.vGridGenerator.htmlCache.header.firstChild; //this is BAD!
+    this.rootEl = this.vGrid.vGridGenerator.getHeaderContentScrollBody(); //this is BAD!
 
     //add eventlistnes for dragable
     this.rootEl.addEventListener('dragstart', this.onDragStart.bind(this), false);
@@ -68,63 +69,25 @@ export class VGridSortable {
 
 
   onUpdateAlt(oldIndex, newIndex) {
-    var children = this.vGrid.vGridGenerator.htmlCache.header.firstChild.children;
+    var children = this.vGrid.vGridGenerator.getHeaderContentScrollBody().children;
 
     var x;
-    x = this.vGrid.vGridConfig.attributeArray[oldIndex];
-    this.vGrid.vGridConfig.attributeArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.attributeArray.splice(newIndex, 0, x);
 
-    x = this.vGrid.vGridConfig.filterArray[oldIndex];
-    this.vGrid.vGridConfig.filterArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.filterArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.headerArray[oldIndex];
-    this.vGrid.vGridConfig.headerArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.headerArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.columnWidthArray[oldIndex];
-    this.vGrid.vGridConfig.columnWidthArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.columnWidthArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.colStyleArray[oldIndex];
-    this.vGrid.vGridConfig.colStyleArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colStyleArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.colTypeArray[oldIndex];
-    this.vGrid.vGridConfig.colTypeArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colTypeArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.readOnlyArray[oldIndex];
-    this.vGrid.vGridConfig.readOnlyArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.readOnlyArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.colFormaterArray[oldIndex];
-    this.vGrid.vGridConfig.colFormaterArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colFormaterArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.colEditRawArray[oldIndex];
-    this.vGrid.vGridConfig.colEditRawArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colEditRawArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.filterOnKeyArray[oldIndex];
-    this.vGrid.vGridConfig.filterOnKeyArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.filterOnKeyArray.splice(newIndex, 0, x);
-
-    x = this.vGrid.vGridConfig.colCustomArray[oldIndex];
-    this.vGrid.vGridConfig.colCustomArray.splice(oldIndex, 1);
-    this.vGrid.vGridConfig.colCustomArray.splice(newIndex, 0, x);
-
+    x = this.vGrid.vGridConfig.colConfig[oldIndex];
+    this.vGrid.vGridConfig.colConfig.splice(oldIndex, 1);
+    this.vGrid.vGridConfig.colConfig.splice(newIndex, 0, x);
 
 
 
     var that = this;
     this.vGrid.vGridGenerator.htmlCache.rowTemplate = null; //reset template and fill data
-    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.querySelectorAll("." + this.vGrid.vGridConfig.css.dragHandle);
+
+    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.getElementsByTagName('v-grid-header-col');
     [].slice.call(dragHandles).forEach((itemEl, index) => {
-      itemEl.parentNode.parentNode.setAttribute("column-no", index);
+      //todo,need to improve this part a lot, need to traverse until I get to V-GRID-ROW-COl
+      itemEl.setAttribute("column-no", index);
       //update viewmodel, is needed since I dont redraw headers anymore
-      itemEl.parentNode.parentNode.au["v-grid-header-col"].viewModel.columnNo = index + ""
+      itemEl.au["v-grid-header-col"].viewModel.columnNo = index + ""
     });
     this.vGrid.vGridGenerator.rebuildColumnsRows();
 
@@ -151,7 +114,7 @@ export class VGridSortable {
       this.nextEl = this.dragEl.nextSibling;
 
       evt.dataTransfer.effectAllowed = 'move';
-      evt.dataTransfer.setData('Text', this.vGrid.vGridConfig.attributeArray[this.oldIndex]);
+      evt.dataTransfer.setData('Text', '');
 
       this.rootEl.addEventListener('dragover', this.onDragOver.bind(this), false);
       this.rootEl.addEventListener('dragend', this.onDragEnd.bind(this), false);
@@ -205,7 +168,6 @@ export class VGridSortable {
           var after = (this.nextSibling !== this.dragEl) && !isLong || halfway && isLong;
           this.rootEl.insertBefore(this.dragEl, after ? target.nextSibling : target);
           if (this.oldIndex !== this.newIndex) {
-            //console.log("move, old:"+this.oldIndex+"new"+this.newIndex)
             this.onUpdateAlt(parseInt(this.oldIndex), parseInt(this.newIndex));
             this.oldIndex = this.newIndex * 1
           }

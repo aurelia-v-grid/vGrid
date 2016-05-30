@@ -26,7 +26,7 @@ export class VGridResizable {
     this.vGridGenerator = this.vGrid.vGridGenerator;
     this.vGridSortable = this.vGrid.vGridSortable;
 
-    var headerCells = this.vGridGenerator.htmlCache.header.querySelectorAll("." + this.vGridConfig.css.rowHeaderCell);
+    var headerCells = this.vGridGenerator.getHeaderContent().querySelectorAll("." + this.vGridConfig.css.rowHeaderCell);
     for (var i = 0; i < headerCells.length; i++) {
 
       var resizeHandle = document.createElement("DIV");
@@ -49,26 +49,28 @@ export class VGridResizable {
     //enable sortable headers again
     setTimeout(() => {
       this.resizable = false;
-      if (this.vGridConfig.isSortableHeader) {
+      if (this.vGridConfig.attSortableHeader) {
         this.vGridSortable.option("disabled", this.resizable);
       }
     }, 30);
 
 
     //remove events
-    this.vGridGenerator.htmlCache.header.onmouseleave = "";
-    this.vGridGenerator.htmlCache.header.onmousemove = "";
-    this.vGridGenerator.htmlCache.header.onmouseup = "";
+    this.vGridGenerator.getHeaderContent().onmouseleave = "";
+    this.vGridGenerator.getHeaderContent().onmousemove = "";
+    this.vGridGenerator.getHeaderContent().onmouseup = "";
 
 
     //update this column width
-    this.vGridConfig.columnWidthArray[this.index] = parseInt(this.xElement.offsetParent.style.width);
+    this.vGridConfig.colConfig[this.index].width = parseInt(this.xElement.offsetParent.style.width);
 
+
+    
 
     //reset template and fill data
     this.vGridGenerator.htmlCache.rowTemplate = null;
     this.vGridGenerator.correctRowAndScrollbodyWidth();
-    this.vGridGenerator.recreateViewSlots();
+    this.vGridGenerator.recreateRowViewSlots();
     this.vGridGenerator.updateGridScrollbars();
     this.vGridGenerator.fillDataInRows(true);
 
@@ -82,13 +84,13 @@ export class VGridResizable {
 
 
     //get when user let go of mouse button
-    this.vGridGenerator.htmlCache.header.onmouseup = () => {
+    this.vGridGenerator.getHeaderContent().onmouseup = () => {
       this.onmouseup();
     };
 
     //if mouse leaves header we want to stop, else it just gets buggy
-    this.vGridGenerator.htmlCache.header.onmouseleave = (e) => {
-      this.vGridGenerator.htmlCache.header.onmouseup(e);
+    this.vGridGenerator.getHeaderContent().onmouseleave = (e) => {
+      this.vGridGenerator.getHeaderContent().onmouseup(e);
     };
 
 
@@ -109,13 +111,15 @@ export class VGridResizable {
 
     //updates
     var newWidth = parseInt(this.originalWidth) - ((this.screenX - e.screenX)) + "px";
-    this.vGridConfig.columnWidthArray[this.index] = parseInt(newWidth);
+    this.vGridConfig.colConfig[this.index].width = parseInt(newWidth);
     this.xElement.offsetParent.style.width = parseInt(this.originalWidth) - ((this.screenX - e.screenX)) + "px";
     this.xElement.offsetParent.style.width = parseInt(this.originalWidth) - ((this.screenX - e.screenX)) + "px";
 
+
+    
 
     //if resize also row attribute is set to true, then we also need to update them
-    if (this.vGridConfig.resizableHeadersAndRows) {
+    if (this.vGridConfig.attResizableHeadersAndRows) {
       var columnsToFix = this.vGridGenerator.htmlCache.content.firstChild.querySelectorAll("." + this.vGridConfig.css.rowColumn + this.index);
 
       for (var col = 0; col < columnsToFix.length; col++) {
@@ -141,7 +145,7 @@ export class VGridResizable {
 
 
     //disable sortable when resizing
-    if (this.vGridConfig.isSortableHeader) {
+    if (this.vGridConfig.attSortableHeader) {
       this.vGridSortable.option("disabled", this.resizable);
     }
 
@@ -154,9 +158,9 @@ export class VGridResizable {
 
 
     //add mouse move event
-    this.vGridGenerator.htmlCache.header.onmousemove = (e) => {
-      this.onmousemove(e)
-    }
+    this.vGridGenerator.getHeaderContent().onmousemove = (e) => {
+      this.onmousemove(e);
+    };
 
 
   }
