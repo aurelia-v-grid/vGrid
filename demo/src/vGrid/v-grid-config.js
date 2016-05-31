@@ -59,7 +59,7 @@ export class VGridConfig {
     this.colConfig= [];
 
     //count of columns;
-    this.columnLenght = 0;
+    this.columnLength = 0;
 
     //<v-grid> attibutes
     this.attAttributeObserve = [];
@@ -78,7 +78,10 @@ export class VGridConfig {
     this.eventOnRowDblClick = null;
     this.eventOnRemoteCall = null;
 
-
+    //repeat html vars
+    this.repeater = false;
+    this.repeatTemplate = null;
+    
 
     //static atm (dunno if I want them as options yet)
     this.attDataScrollDelay = 200;

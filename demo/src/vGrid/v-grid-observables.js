@@ -7,8 +7,8 @@
 export class VGridObservables {
 
 
-  constructor(vGrid, observerLocator) {
-    this.observerLocator = observerLocator;
+  constructor(vGrid, bindingEngine) {
+    this.bindingEngine = bindingEngine;
     this.vGrid = vGrid;
     this.subscriptionsAttributes = []; //here I keep subscriptions to observer on attributes
     this.collectionSubscription = null; //here I keep subscriptions to observer on collection
@@ -36,7 +36,10 @@ export class VGridObservables {
       this.vGrid.vGridCurrentRow = -1;
       this.vGrid.vGridSort.reset();
       if(!this.vGrid.vGridConfig.keepFilterOnCollectionChange){
-        this.vGrid.vGridGenerator.clearHeaderSortFilter();
+        //clear sort icons //todo improve with event
+        this.vGrid.vGridSort.reset();
+        this.vGrid.vGridGenerator.rebuildGridHeaderHtmlAndViewSlot();
+
         this.vGrid.vGridSelection.reset();
         this.vGrid.vGridConfig.keepFilterOnCollectionChange = false;
       }
@@ -69,9 +72,7 @@ export class VGridObservables {
    ***************************************************************************************/
   enableObservablesArray() {
 
-    let arrayObserver = this.observerLocator.getArrayObserver(this.vGrid.vGridCollection);
-    arrayObserver.subscribe((arrayObserverChanges) => {
-
+    let arrayObserver = this.bindingEngine.collectionObserver(this.vGrid.vGridCollection).subscribe((arrayObserverChanges) => {
 
       var colFiltered = this.vGrid.vGridCollectionFiltered;
       var col = this.vGrid.vGridCollection;
@@ -168,8 +169,7 @@ export class VGridObservables {
    ***************************************************************************************/
   enableObservablesAttributes() {
     this.vGrid.vGridConfig.attAttributeObserve.forEach((property) => {
-      let propertyObserver = this.observerLocator.getObserver(this.vGrid.vGridCurrentEntity, property);
-      propertyObserver.subscribe((newValue, oldValue) => {
+      let propertyObserver = this.bindingEngine.propertyObserver(this.vGrid.vGridCurrentEntity, property).subscribe((newValue, oldValue) => {
 
         //should I do the value formatting on the currentEntity also?
         var newValueCheck = (newValue !== undefined && newValue !== null) ? newValue.toString() : newValue;
@@ -177,7 +177,7 @@ export class VGridObservables {
 
         if (newValueCheck !== oldValueCheck && this.vGrid.vGridCurrentEntityRef) {
               this.vGrid.vGridCurrentEntityRef[property] = newValue;
-              this.vGrid.vGridGenerator.updateRow(this.vGrid.vGridCurrentRow, true);
+              this.vGrid.vGridGenerator.fillDataIntoRow(this.vGrid.vGridCurrentRow, true);
         }
       });
       this.subscriptionsAttributes.push(propertyObserver)
@@ -198,7 +198,7 @@ export class VGridObservables {
    * disable the array observables
    ***************************************************************************************/
   disableObservablesArray() {
-    this.subscriptionsArray.unsubscribe();
+    this.subscriptionsArray.dispose();
     this.subscriptionsArray = null;
   }
 
@@ -209,7 +209,7 @@ export class VGridObservables {
   disableObservablesAttributes() {
     for (var i = 0; i < this.subscriptionsAttributes.length; i++) {
       try {
-        this.subscriptionsAttributes[i].unsubscribe()
+        this.subscriptionsAttributes[i].dispose()
       } catch (e) {
       }
     }

@@ -10,6 +10,9 @@ export function configure(aurelia) {
     .plugin("vGrid/plugin")
 
 
-
   aurelia.start().then(a => a.setRoot());
 }
+
+
+
+

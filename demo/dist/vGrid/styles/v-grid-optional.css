@@ -14,19 +14,30 @@
   transition: initial !important;
 }
 
+.vgrid-header-input-bottom {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: initial;
+  box-shadow: initial;
+  border-top: 1px solid rgb(230, 230, 230) !important;
+  height: 50% !important;;
+  width: 100%;
+  background-color: white !important;
+  padding: 5px 10px;
+  margin: initial !important;
+  transition: initial !important;
+}
+
 .vgrid-header-input-top:focus {
   border: 1px dotted rgb(81, 41, 81) !important;
   outline: none !important;
 }
 
-.vgrid-checkbox-container-blank {
-  box-sizing: border-box;
-  border: 0;
-  border-radius: initial;
-  box-shadow: initial;
-  height: 100%;
-  width: 100%;
+.vgrid-header-input-bottom:focus {
+  border: 1px dotted rgb(81, 41, 81) !important;
+  outline: none !important;
 }
+
 
 .vgrid-checkbox-center {
   height: 100% !important;
@@ -62,7 +73,7 @@
   transform: translateX(-50%);
 }
 
-.vgrid-label-half {
+.vgrid-label-bottom{
   box-sizing: border-box;
   border: 0;
   border-radius: initial;
@@ -74,4 +85,34 @@
   top: 25%;
   transform: translateY(-25%);
   text-align: center;
+}
+
+.vgrid-label-top{
+  box-sizing: border-box;
+  border: 0;
+  border-radius: initial;
+  box-shadow: initial;
+
+  height: 50%;
+  width: 100%;
+  position: relative;
+  margin: initial !important;
+  top: 25%;
+  transform: translateY(-25%);
+  text-align: center;
+}
+
+.vgrid-label-full{
+  box-sizing: border-box;
+  border: 0;
+  border-radius: initial;
+  box-shadow: initial;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  margin: initial !important;
+  top: 100%;
+  transform: translateY(-60%);
+  text-align: center;
+
 }

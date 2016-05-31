@@ -12,19 +12,15 @@ import {VGrid} from './v-grid';
 @processContent((compiler, resources, element, instruction) => {
 
   var headerTemplateElement = element.getElementsByTagName("V-HEADER-TEMPLATE")[0];
-  let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML:null;
+  let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
   if (headerTemplateHtml !== '') {
     instruction.headerTemplate = headerTemplateHtml;
-  } else {
-    //TODO: future supply template to simplify user experience ?
   }
 
   var rowTemplateElement = element.getElementsByTagName("V-ROW-TEMPLATE")[0];
-  let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML:null;
+  let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
   if (rowTemplateHtml !== '') {
     instruction.rowTemplate = rowTemplateHtml;
-  } else {
-    //TODO: future supply template to simplify user experience ?
   }
 
   element.innerHTML = '';
@@ -33,12 +29,19 @@ import {VGrid} from './v-grid';
 @customElement('v-grid-col')
 @inject(Element, VGrid, TargetInstruction)
 export class VGridElementColConfig {
-  @bindable vColWidth;
+  @bindable width;//default 100
+  @bindable attribute;
+  @bindable header; //if not set Upperstring first char of attribute
+  @bindable sort; //default false
+  @bindable filter; //default false
+  @bindable filterTop;//default false
+  @bindable filterOperator; //default
+  @bindable contextmenuHeader; //default false
+  @bindable contextmenuRows;//default false
+  @bindable type; //default = text
 
 
-  /*****************************************************
-   *  constructor
-   ******************************************************/
+
   constructor(element, vGrid, targetInstruction) {
     this.vGrid = vGrid;
     this.element = element;
@@ -47,22 +50,33 @@ export class VGridElementColConfig {
   }
 
 
-  /*****************************************************
-   *  element event
-   ******************************************************/
+  capitalize = function (value) {
+    return value.charAt(0).toUpperCase() + value.slice(1);
+  };
+
+
   bind(bindingContext, overrideContext) {
-    this.vGrid.vGridConfig.columnLenght++; //count columns
+    this.vGrid.vGridConfig.columnLength++; //count columns
 
     this.vGrid.vGridConfig.colConfig.push({
-      width:this.vColWidth || 100,
-      rowTemplate:this.rowTemplate,
-      headerTemplate:this.headerTemplate
-    })
+      width: this.vColWidth || 100,
+      rowTemplate: this.rowTemplate,
+      headerTemplate: this.headerTemplate,
+      attribute: this.attribute,
+      header: this.header || this.attribute ? this.capitalize(this.attribute) : null,
+      sort: this.sort === "true" ? true : false,
+      filter: this.filter === "true" ? true : false,
+      filterTop: this.filterTop === "true" ? true : false,
+      filterOperator: this.filterOperator || "=",
+      contextmenuHeader: this.contextmenuHeader === "true" ? true : false,
+      contextmenuRows: this.contextmenuRows === "true" ? true : false,
+      type: this.type || "text"
+    });
 
 
   }
 
-
+  
 
 
 }

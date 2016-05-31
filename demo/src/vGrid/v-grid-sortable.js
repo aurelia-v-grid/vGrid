@@ -25,7 +25,7 @@ export class VGridSortable {
 
   setDragHandles() {
     //we haveto control dragging only to headers with draghandle
-    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.getElementsByTagName('v-grid-header-col');
+    var dragHandles = this.vGrid.vGridGenerator.gridElement.getElementsByTagName('v-grid-header-col');
     [].slice.call(dragHandles).forEach((itemEl) => {
       itemEl.classList.add("vGrid-vGridDragHandle");
       itemEl.onmouseenter = () => {
@@ -48,7 +48,7 @@ export class VGridSortable {
     this.setDragHandles();
 
     //need to be better, will change when I rebuild header into custom element
-    this.rootEl = this.vGrid.vGridGenerator.getHeaderContentScrollBody(); //this is BAD!
+    this.rootEl = this.vGrid.vGridGenerator.headerScrollElement; //this is BAD!
 
     //add eventlistnes for dragable
     this.rootEl.addEventListener('dragstart', this.onDragStart.bind(this), false);
@@ -69,7 +69,7 @@ export class VGridSortable {
 
 
   onUpdateAlt(oldIndex, newIndex) {
-    var children = this.vGrid.vGridGenerator.getHeaderContentScrollBody().children;
+    var children = this.vGrid.vGridGenerator.headerScrollElement.children;
 
     var x;
 
@@ -80,9 +80,9 @@ export class VGridSortable {
 
 
     var that = this;
-    this.vGrid.vGridGenerator.htmlCache.rowTemplate = null; //reset template and fill data
+    this.vGrid.vGridGenerator.rowTemplate = null; //reset template and fill data
 
-    var dragHandles = this.vGrid.vGridGenerator.htmlCache.grid.getElementsByTagName('v-grid-header-col');
+    var dragHandles = this.vGrid.vGridGenerator.gridElement.getElementsByTagName('v-grid-header-col');
     [].slice.call(dragHandles).forEach((itemEl, index) => {
       //todo,need to improve this part a lot, need to traverse until I get to V-GRID-ROW-COl
       itemEl.setAttribute("column-no", index);
@@ -198,5 +198,3 @@ export class VGridSortable {
 
 
 }
-
-

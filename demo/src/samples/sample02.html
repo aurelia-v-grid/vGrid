@@ -14,7 +14,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
 
-      <h3>Remote Data Custom Column Demo <span class="label label-default">updated:30-May-2016, Rev:01</span></h3>
+      <h3>Remote Data Custom Column Demo <span class="label label-default">updated:31-May-2016, Rev:01</span></h3>
     </div>
   </div>
   <div class="row">
@@ -49,7 +49,7 @@
         v-grid-context.bind=myGrid>
 
 
-        <v-grid-col v-col-width="23">
+        <v-grid-col width="23">
           <v-header-template>
             <input class="vgrid-checkbox-center" v-selection="header" type="checkbox">
           </v-header-template>
@@ -59,11 +59,11 @@
         </v-grid-col>
 
 
-        <v-grid-col v-col-width="90">
+        <v-grid-col width="90">
           <v-header-template>
             <input v-grid-header-menu="name" class="vgrid-header-input-top" v-filter="index|enter|>|numberFormater"
                    value.bind="tempRef.name">
-            <p class="vgrid-label-half" v-sort="name">Index</p>
+            <p class="vgrid-label-bottom" v-sort="name">Index</p>
           </v-header-template>
           <v-row-template>
             <input v-grid-row-menu="name" class="vgrid-row-input" value.bind="tempRef.name">
@@ -71,11 +71,11 @@
         </v-grid-col>
 
 
-        <v-grid-col v-col-width="100">
+        <v-grid-col width="100">
           <v-header-template>
             <input v-grid-header-menu="first" class="vgrid-header-input-top" v-filter="name|enter|*"
                    value.bind="tempRef.first">
-            <p class="vgrid-label-half" v-sort="first">Name</p>
+            <p class="vgrid-label-bottom" v-sort="first">Name</p>
           </v-header-template>
           <v-row-template>
             <input v-grid-row-menu="first" class="vgrid-row-input" value.bind="rowRef.name">
@@ -83,11 +83,11 @@
         </v-grid-col>
 
 
-        <v-grid-col v-col-width="90">
+        <v-grid-col width="90">
           <v-header-template>
             <div style="height:50%">
             </div>
-            <p class=" vgrid-label-half">Image</p>
+            <p class=" vgrid-label-bottom">Image</p>
           </v-header-template>
           <v-row-template>
             <image class="vgrid-image-round" v-image-fix v-grid-row-menu="image" src.bind="rowRef.image"></image>
@@ -96,11 +96,11 @@
 
 
 
-        <v-grid-col v-col-width="100">
+        <v-grid-col width="100">
           <v-header-template>
             <input v-grid-header-menu="zip" class="vgrid-header-input-top" v-filter="zip|enter|>="
                    value.bind="tempRef.zip">
-            <p class="vgrid-label-half" v-sort="zip">Number</p>
+            <p class="vgrid-label-bottom" v-sort="zip">Number</p>
           </v-header-template>
           <v-row-template>
             <input v-grid-row-menu="zip" class="vgrid-row-input"
@@ -110,10 +110,10 @@
         </v-grid-col>
 
 
-        <v-grid-col v-col-width="180">
+        <v-grid-col width="180">
           <v-header-template>
             <input v-grid-header-menu="created_at" class="vgrid-header-input-top" v-filter="created_at|enter|>=|dateFormat">
-            <p class="vgrid-label-half" v-sort="created_at">Date</p>
+            <p class="vgrid-label-bottom" v-sort="created_at">Date</p>
           </v-header-template>
           <v-row-template>
             <input v-grid-row-menu="created_at" class="vgrid-row-input" value.bind="rowRef.created_at | dateFormat">

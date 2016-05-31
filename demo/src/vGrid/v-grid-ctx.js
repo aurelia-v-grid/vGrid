@@ -136,6 +136,9 @@ export class VGridCtx {
   }
 
 
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   setData(data) {
     this.vGridConfig.remoteLimit = data.limit || 40;
     this.vGridConfig.remoteLength = data.length || 0;
@@ -151,64 +154,101 @@ export class VGridCtx {
   };
 
 
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   keepFilterOnCollectionChange() {
     this.vGridConfig.keepFilterOnCollectionChange = true;
   }
- 
 
+
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   rebuildColumns() {
     this.vGridGenerator.rebuildColumns();
   }
 
-
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   scrollBottom() {
-    this.vGridGenerator.scrollBottom();
-  }
+    var collectionLength = this.vGridConfig.getCollectionLength();
+    this.contentElement.scrollTop = collectionLength * this.vGridConfig.attRowHeight;
+  };
 
 
-
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   scrollTop() {
-    this.vGridGenerator.scrollTop();
-  }
+    this.vGridGenerator.contentElement.scrollTop = 0;
+  };
 
 
 
   setScrollTop(newTop) {
-    this.vGridGenerator.setScrollTop(newTop);
-  }
+    this.vGridGenerator.contentElement.scrollTop = newTop;
+  };
 
 
-
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   rebuildColumnsRows() {
     this.vGridGenerator.rebuildColumnsRows();
   }
 
 
-
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   columnChangeAndCollection(resetScrollToTop) {
     this.vGridGenerator.columnChangeAndCollection(resetScrollToTop);
   }
 
 
-
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   redrawGrid() {
     this.vGridGenerator.redrawGrid();
   }
 
 
-
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   setColumns(paramObj) {
-    return this.vGridGenerator.setColumns(paramObj);
-  }
+    this.vGridConfig.colConfig = paramObj.colConfig;
+  };
 
 
-
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   getColumns() {
-    return this.vGridGenerator.getColumns();
-  }
+    var arr = [];
+    this.vGridConfig.colConfig.forEach((obj)=> {
+      let x = {};
+      for (var k in obj) {
+        if (obj.hasOwnProperty(k)) {
+          if (x[k] !== obj[k]) {
+            x[k] = obj[k];
+          }
+        }
+      }
+      arr.push(x);
+    });
+    return {
+      "colConfig": arr
+    }
+  };
 
 
- //todo, I should test this with the browsers to verify that its correct now
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   getMaxRows() {
     //https://github.com/mleibman/SlickGrid/blob/bf4705a96c40fea088216034def4d0256a335e65/slick.grid.js
     var supportedHeight = 10000;
@@ -232,57 +272,28 @@ export class VGridCtx {
   }
 
 
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   scrollBottomNext() {
-    this.vGridGenerator.scrollBottomNext();
-  }
+    this.vGridGenerator.scrollBottomOnNext = true;
+  };
 
 
-
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
   setLoadingOverlay(value) {
     this.vGrid.loading = value === true ? true : false;
   }
 
 
-  //todo, this should use put text in blob or something it will fail with large collection
-  //this will not work with new build!
-  // createReport(skipArray) {
-  //
-  //   //dont thouch this;
-  //   if (skipArray === undefined) {
-  //     skipArray = [];
-  //   }
-  //   var content = '';
-  //   var rows = this.vGrid.vGridCollectionFiltered;
-  //   var attributes = this.vGridConfig.attAttributeObserve;
-  //
-  //   //sets data to our content
-  //   var setData = (arr) => {
-  //     content = content + arr.join(';') + '\n';
-  //   };
-  //
-  //   //set headers
-  //   setData(attributes);
-  //
-  //   //loop rows/columns
-  //   rows.forEach((row)=> {
-  //     let tempArr = [];
-  //     attributes.forEach((att)=> {
-  //       if (skipArray.indexOf(att) === -1) {
-  //         tempArr.push(row[att]);
-  //       }
-  //     });
-  //     setData(tempArr);
-  //   });
-  //
-  //
-  //   //download
-  //   var dummyElement = document.createElement('a');
-  //   dummyElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-  //   dummyElement.setAttribute('download', 'contacts.csv');
-  //   dummyElement.style.display = 'none';
-  //   document.body.appendChild(dummyElement);
-  //   dummyElement.click();
-  //   document.body.removeChild(dummyElement);
-  // }
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
+  getScrollTop() {
+    return this.vGridGenerator.contentElement.scrollTop;
+  };
+
 
 }

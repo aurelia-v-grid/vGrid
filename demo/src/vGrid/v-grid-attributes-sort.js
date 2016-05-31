@@ -26,10 +26,9 @@ export class vGridAttributesSort {
     //get values
     let values = this.value.split("|");
     this.attribute = values[0];
-    this.icon = values[1] ? true : false;
-    this.filterOperator = values[2] || "=";
 
   }
+
 
   attached() {
     this.sortIcon = document.createElement("SPAN");
@@ -57,11 +56,9 @@ export class vGridAttributesSort {
       if (x.attribute === this.attribute) {
         var block = x.asc === true ? isAscHtml : isDescHtml;
         var main = `<span $ class="${css.sortIconNo}" data-vgridsort="${x.no}"></span>`;
-
         markup = main + block;
       }
     });
-
 
     return markup;
   };
