@@ -5,7 +5,7 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {TaskQueue, ObserverLocator, bindable, ViewCompiler, ViewSlot, Container, ViewResources, containerless} from 'aurelia-framework';
+import {TaskQueue, BindingEngine, bindable, ViewCompiler, ViewSlot, Container, ViewResources, containerless} from 'aurelia-framework';
 
 
 import {VGridGenerator} from './v-grid-generator';
@@ -18,10 +18,11 @@ import {VGridResizable} from './v-grid-resizable';
 import {VGridSelection} from './v-grid-selection';
 import {VGridCtx} from './v-grid-ctx';
 import {bindableVGrid} from './v-grid-sort';
+import {VGridScrollEvents} from './v-grid-scroll-events';
 
 
 export class VGrid {
-  static inject = [Element, ObserverLocator, ViewCompiler, ViewSlot, Container, ViewResources, TaskQueue];
+  static inject = [Element, BindingEngine, ViewCompiler, ViewSlot, Container, ViewResources, TaskQueue];
   @bindable({attribute: "v-grid-context"}) vGridContextObj;
   @bindable({attribute: "v-collection"}) vGridCollection;
   @bindable({attribute: "v-current-entity"}) vGridCurrentEntity;
@@ -35,7 +36,7 @@ export class VGrid {
 
 
 
-  constructor(element, observerLocator, viewCompiler, viewSlot, container, viewResources, taskQueue) {
+  constructor(element, bindingEngine, viewCompiler, viewSlot, container, viewResources, taskQueue) {
 
     //<v-grid> element
     this.element = element;
@@ -62,13 +63,14 @@ export class VGrid {
 
 
     //my classes the grid uses
+    this.vGridScrollEvents = new VGridScrollEvents(this);
     this.vGridFilter = new VGridFilter(this);
     this.vGridSort = new VGridSort(this);
     this.vGridConfig = new VGridConfig(this);
     this.vGridSelection = new VGridSelection(null, this);
     this.vGridSortable = new VGridSortable(this);
     this.vGridResizable = new VGridResizable(this);
-    this.vGridObservables = new VGridObservables(this, observerLocator);
+    this.vGridObservables = new VGridObservables(this, bindingEngine);
     this.vGridGenerator = new VGridGenerator(this);
     this.vGridClientCtx = new VGridCtx(this);
     this.vGridPager = null; //set by pager

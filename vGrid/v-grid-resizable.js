@@ -26,7 +26,7 @@ export class VGridResizable {
     this.vGridGenerator = this.vGrid.vGridGenerator;
     this.vGridSortable = this.vGrid.vGridSortable;
 
-    var headerCells = this.vGridGenerator.getHeaderContent().querySelectorAll("." + this.vGridConfig.css.rowHeaderCell);
+    var headerCells = this.vGridGenerator.headerElement.querySelectorAll("." + this.vGridConfig.css.rowHeaderCell);
     for (var i = 0; i < headerCells.length; i++) {
 
       var resizeHandle = document.createElement("DIV");
@@ -56,19 +56,19 @@ export class VGridResizable {
 
 
     //remove events
-    this.vGridGenerator.getHeaderContent().onmouseleave = "";
-    this.vGridGenerator.getHeaderContent().onmousemove = "";
-    this.vGridGenerator.getHeaderContent().onmouseup = "";
+    this.vGridGenerator.headerElement.onmouseleave = "";
+    this.vGridGenerator.headerElement.onmousemove = "";
+    this.vGridGenerator.headerElement.onmouseup = "";
 
 
     //update this column width
     this.vGridConfig.colConfig[this.index].width = parseInt(this.xElement.offsetParent.style.width);
 
 
-    
+
 
     //reset template and fill data
-    this.vGridGenerator.htmlCache.rowTemplate = null;
+    this.vGridGenerator.rowTemplate = null;
     this.vGridGenerator.correctRowAndScrollbodyWidth();
     this.vGridGenerator.recreateRowViewSlots();
     this.vGridGenerator.updateGridScrollbars();
@@ -84,13 +84,13 @@ export class VGridResizable {
 
 
     //get when user let go of mouse button
-    this.vGridGenerator.getHeaderContent().onmouseup = () => {
+    this.vGridGenerator.headerElement.onmouseup = () => {
       this.onmouseup();
     };
 
     //if mouse leaves header we want to stop, else it just gets buggy
-    this.vGridGenerator.getHeaderContent().onmouseleave = (e) => {
-      this.vGridGenerator.getHeaderContent().onmouseup(e);
+    this.vGridGenerator.headerElement.onmouseleave = (e) => {
+      this.vGridGenerator.headerElement.onmouseup(e);
     };
 
 
@@ -116,11 +116,11 @@ export class VGridResizable {
     this.xElement.offsetParent.style.width = parseInt(this.originalWidth) - ((this.screenX - e.screenX)) + "px";
 
 
-    
+
 
     //if resize also row attribute is set to true, then we also need to update them
     if (this.vGridConfig.attResizableHeadersAndRows) {
-      var columnsToFix = this.vGridGenerator.htmlCache.content.firstChild.querySelectorAll("." + this.vGridConfig.css.rowColumn + this.index);
+      var columnsToFix = this.vGridGenerator.contentElement.firstChild.querySelectorAll("." + this.vGridConfig.css.rowColumn + this.index);
 
       for (var col = 0; col < columnsToFix.length; col++) {
         columnsToFix[col].style.width = newWidth
@@ -158,7 +158,7 @@ export class VGridResizable {
 
 
     //add mouse move event
-    this.vGridGenerator.getHeaderContent().onmousemove = (e) => {
+    this.vGridGenerator.headerElement.onmousemove = (e) => {
       this.onmousemove(e);
     };
 

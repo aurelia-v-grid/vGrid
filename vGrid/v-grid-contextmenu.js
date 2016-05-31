@@ -18,22 +18,22 @@ export class Contextmenu {
     this.contextMenuSplitClassName = "v-grid-context-menu__split";
 
 
-    this.taskItemInContext;
+    this.taskItemInContext = null;
 
-    this.clickCoords;
-    this.clickCoordsX;
-    this.clickCoordsY;
+    this.clickCoords = null;
+    this.clickCoordsX = null;
+    this.clickCoordsY = null;
 
 
     this.menuState = 0;
-    this.menuWidth;
-    this.menuHeight;
-    this.menuPosition;
-    this.menuPositionX;
-    this.menuPositionY;
+    this.menuWidth = null;
+    this.menuHeight = null;
+    this.menuPosition = null;
+    this.menuPositionX = null;
+    this.menuPositionY = null;
 
-    this.windowWidth;
-    this.windowHeight;
+    this.windowWidth = null;
+    this.windowHeight = null;
 
 
   }

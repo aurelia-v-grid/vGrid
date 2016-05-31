@@ -28,14 +28,46 @@ export class vGridAttributesFilter {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
-    //todo, need to improve this, should just take first, and loop them
+    //splitt options
     let values = this.value.split("|");
+
+    //get attribute
     this.attribute = values[0];
-    this.filterOn = values[1] || "onHitEnter"; //todo give better name
-    this.filterOperator = values[2] || "=";
-    this.valueFormater = values[3] ? this.valueConverters(values[3]) : null;
+
+    //loop values and find out what options are
+    if (values.length > 1) {
+      values.forEach((value, i)=> {
+        if (i !== 0) {
+          this.checkParams(value)
+        }
+      });
+    }
+
+    this.filterOn = this.filterOn || "onEnterKey";
+    this.filterOperator = this.filterOperator || "=";
+    this.valueFormater = this.valueFormater || null;
     this.type = this.element.type;
     this.state = 0;
+
+  }
+
+
+  checkParams(value) {
+
+    let valueConverter = this.valueConverters(value);
+    if (valueConverter) {
+      this.valueFormater = valueConverter;
+    }
+
+    let filterOperator = this.vGrid.vGridFilter.filterOperatorTableString[value];
+    if (filterOperator) {
+      this.filterOperator = value;
+    }
+
+    if (value === "onKeyDown") {
+      this.filterOn = value;
+    }
+
 
   }
 
@@ -48,6 +80,7 @@ export class vGridAttributesFilter {
     }
   }
 
+
   resetValue() {
     if (this.type !== "checkbox") {
       this.element.value = "";
@@ -56,7 +89,6 @@ export class vGridAttributesFilter {
       this.element.checked = false;
     }
   }
-
 
 
   updateFilter(curFilter) {
@@ -95,77 +127,79 @@ export class vGridAttributesFilter {
 
   attached() {
 
+    if (this.attribute) { //if no attibute we do not want to do anything
 
-    this.vGrid.element.addEventListener("filterUpdate", (e)=> {
-      if (e.detail.attribute === this.attribute) {
-        this.filterOperator = e.detail.operator;
-        this.element.placeholder = this.vGrid.vGridFilter.filterOperatorTableString[this.filterOperator];
-        this.updateFilter(this.vGrid.vGridFilter.lastFilter);
-      }
-    });
+      this.vGrid.element.addEventListener("filterUpdate", (e)=> {
+        if (e.detail.attribute === this.attribute) {
+          this.filterOperator = e.detail.operator;
+          this.element.placeholder = this.vGrid.vGridFilter.filterOperatorTableString[this.filterOperator];
+          this.updateFilter(this.vGrid.vGridFilter.lastFilter);
+        }
+      });
 
 
-    this.vGrid.element.addEventListener("filterClearCell", (e)=> {
-      if (e.detail.attribute === this.attribute) {
+      this.vGrid.element.addEventListener("filterClearCell", (e)=> {
+        if (e.detail.attribute === this.attribute) {
+          this.resetValue();
+          this.updateFilter(this.vGrid.vGridFilter.lastFilter);
+        }
+      });
+
+      this.vGrid.element.addEventListener("filterClearAll", (e)=> {
         this.resetValue();
         this.updateFilter(this.vGrid.vGridFilter.lastFilter);
-      }
-    });
-
-    this.vGrid.element.addEventListener("filterClearAll", (e)=> {
-      this.resetValue();
-      this.updateFilter(this.vGrid.vGridFilter.lastFilter);
-    });
+      });
 
 
-    if (this.type !== "checkbox") {
+      if (this.type !== "checkbox") {
 
-      this.element.placeholder = this.vGrid.vGridFilter.filterOperatorTableString[this.filterOperator];
+        this.element.placeholder = this.vGrid.vGridFilter.filterOperatorTableString[this.filterOperator];
 
 
-      //add eveent listner
-      this.element.onkeyup = (e) => {
-        if (e.keyCode === 13) {
+        //add eveent listner
+        this.element.onkeyup = (e) => {
+          if (e.keyCode === 13) {
 
-          //if they hit enter we need to get filter, update and run query
+            //if they hit enter we need to get filter, update and run query
+            this.updateFilter(this.vGrid.vGridFilter.lastFilter);
+            this.vGrid.vGridConfig.onFilterRun(this.vGrid.vGridFilter.lastFilter);
+
+          } else {
+
+            //if they hit enter we need to get filter, update
+            this.updateFilter(this.vGrid.vGridFilter.lastFilter);
+            if (this.filterOn === "onKeyDown") {
+              this.vGrid.vGridConfig.onFilterRun(this.vGrid.vGridFilter.lastFilter);
+            }
+          }
+        };
+
+
+      } else {
+        //set default!
+        this.element.style.opacity = 0.3;
+        //is checkbox
+        this.element.onclick = (e) => {
+          switch (this.state) {
+            case 0:
+              this.state = 2;
+              this.element.style.opacity = 1;
+              break;
+            case 2:
+              this.state = 3;
+              this.element.style.opacity = 1;
+              break;
+            default:
+              this.element.checked = false;
+              this.state = 0;
+              this.element.style.opacity = 0.3;
+          }
           this.updateFilter(this.vGrid.vGridFilter.lastFilter);
           this.vGrid.vGridConfig.onFilterRun(this.vGrid.vGridFilter.lastFilter);
-
-        } else {
-
-          //if they hit enter we need to get filter, update
-          this.updateFilter(this.vGrid.vGridFilter.lastFilter);
-          if (this.filterOn === "keydown") {
-            this.vGrid.vGridConfig.onFilterRun(this.vGrid.vGridFilter.lastFilter);
-          }
         }
-      };
 
 
-    } else {
-      //set default!
-      this.element.style.opacity = 0.3;
-      //is checkbox
-      this.element.onclick = (e) => {
-        switch (this.state) {
-          case 0:
-            this.state = 2;
-            this.element.style.opacity = 1;
-            break;
-          case 2:
-            this.state = 3;
-            this.element.style.opacity = 1;
-            break;
-          default:
-            this.element.checked = false;
-            this.state = 0;
-            this.element.style.opacity = 0.3;
-        }
-        this.updateFilter(this.vGrid.vGridFilter.lastFilter);
-        this.vGrid.vGridConfig.onFilterRun(this.vGrid.vGridFilter.lastFilter);
       }
-
-
     }
   }
 }

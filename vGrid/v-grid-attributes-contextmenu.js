@@ -11,11 +11,9 @@ import {VGrid} from './v-grid';
 import {Contextmenu} from './v-grid-contextmenu';
 
 
-
-
 /*****************************************************
  *  context menu for header
-******************************************************/
+ ******************************************************/
 @customAttribute('v-grid-header-menu')
 @inject(Element, VGrid)
 export class VGridHeaderMenu extends Contextmenu {
@@ -37,7 +35,7 @@ export class VGridHeaderMenu extends Contextmenu {
 
 
   canOpen(e) {
-      return true;
+    return true;
   }
 
 
@@ -51,19 +49,15 @@ export class VGridHeaderMenu extends Contextmenu {
       }, {
         action: "clear-cell",
         value: "Clear cell",
-        isHeader: false
       }, {
         action: "clear-all",
         value: "Clear All Cells",
-        isHeader: false
-      },{
+      }, {
         action: "show-all",
         value: "Show all (keep filter text)",
-        isHeader: false
       }, {
         action: "set-filter",
         value: "Set Filter",
-        isHeader: false
       }
     ]);
   }
@@ -78,61 +72,52 @@ export class VGridHeaderMenu extends Contextmenu {
         isHeader: true
       }, {
         action: "set-filter-1",
-        value: "equals",
-        isHeader: false
+        value: "equals"
       }, {
         action: "set-filter-2",
-        value: "less than or eq",
-        isHeader: false
+        value: "less than or eq"
       }, {
         action: "set-filter-3",
-        value: "greater than or eq",
-        isHeader: false
+        value: "greater than or eq"
       }, {
         action: "set-filter-4",
-        value: "less than",
-        isHeader: false
+        value: "less than"
       }, {
         action: "set-filter-5",
-        value: "greater than",
-        isHeader: false
+        value: "greater than"
       }, {
         action: "set-filter-6",
-        value: "contains",
-        isHeader: false
+        value: "contains"
       }, {
         action: "set-filter-7",
-        value: "not equal to",
-        isHeader: false
+        value: "not equal to"
       }, {
         action: "set-filter-8",
-        value: "does not contain",
-        isHeader: false
+        value: "does not contain"
       }, {
         action: "set-filter-9",
-        value: "begins with",
-        isHeader: false
+        value: "begins with"
       }, {
         action: "set-filter-10",
-        value: "ends with",
-        isHeader: false
+        value: "ends with"
       }
     ]);
   }
 
 
   defaultMenu(value) {
+
     switch (value) {
       case "clear-cell" :
         this.triggerEvent("filterClearCell", {
-          attribute:this.value
+          attribute: this.value
         });
         this.vGrid.vGridConfig.onFilterRun(this.vGrid.vGridFilter.lastFilter);
         this.toggleMenuOff();
         break;
       case "clear-all" :
         this.triggerEvent("filterClearAll", {
-          attribute:this.value
+          attribute: this.value
         });
         this.vGrid.vGridConfig.onFilterRun(this.vGrid.vGridFilter.lastFilter);
         this.toggleMenuOff();
@@ -148,10 +133,12 @@ export class VGridHeaderMenu extends Contextmenu {
       default:
         this.toggleMenuOff();
     }
+
+
   }
 
 
-  triggerEvent(name, data){
+  triggerEvent(name, data) {
     let event = new CustomEvent(name, {
       detail: data,
       bubbles: true
@@ -161,87 +148,56 @@ export class VGridHeaderMenu extends Contextmenu {
 
 
   filterMenuLogic(value) {
+    var newOperator = null;
     switch (value) {
       case "set-filter-1":
-        this.triggerEvent("filterUpdate", {
-          attribute:this.value,
-          operator:"="
-        });
-        this.toggleMenuOff();
+        newOperator = "=";
         break;
       case "set-filter-2":
-        this.triggerEvent("filterUpdate", {
-          attribute:this.value,
-          operator:"<="
-        });
-        this.toggleMenuOff();
+        newOperator = "<=";
         break;
       case "set-filter-3":
-        this.triggerEvent("filterUpdate", {
-          attribute:this.value,
-          operator:">="
-        });
-        this.toggleMenuOff();
+        newOperator = ">=";
         break;
       case "set-filter-4":
-        this.triggerEvent("filterUpdate", {
-          attribute:this.value,
-          operator:"<"
-        });
-        this.toggleMenuOff();
+        newOperator = "<";
         break;
       case "set-filter-5":
-        this.triggerEvent("filterUpdate", {
-          attribute:this.value,
-          operator:">"
-        });
-        this.toggleMenuOff();
+        newOperator = ">";
         break;
       case "set-filter-6":
-        this.triggerEvent("filterUpdate", {
-          attribute:this.value,
-          operator:"*"
-        });
-        this.toggleMenuOff();
+        newOperator = "*";
         break;
       case "set-filter-7":
-        this.triggerEvent("filterUpdate", {
-          attribute:this.value,
-          operator:"!="
-        });
-        this.toggleMenuOff();
+        newOperator = "!=";
         break;
       case "set-filter-8":
-        this.triggerEvent("filterUpdate", {
-          attribute:this.value,
-          operator:"!*"
-        });
-        this.toggleMenuOff();
+        newOperator = "!*";
         break;
       case "set-filter-9":
-        this.triggerEvent("filterUpdate", {
-          attribute:this.value,
-          operator:"*="
-        });
-        this.toggleMenuOff();
+        newOperator = "*=";
         break;
       case "set-filter-10":
-        this.triggerEvent("filterUpdate", {
-          attribute:this.value,
-          operator:"*="
-        });
+        newOperator = "=*";
         this.toggleMenuOff();
         break;
       default:
         this.toggleMenuOff();
     }
+    if (newOperator) {
+      this.triggerEvent("filterUpdate", {
+        attribute: this.value,
+        operator: newOperator
+      });
+      this.toggleMenuOff();
+    }
+
 
     this.altMenuLogic = null; //reset to main menu again
   }
 
 
 }
-
 
 
 /*****************************************************
@@ -291,7 +247,6 @@ export class ContextRowMenu extends Contextmenu {
   };
 
 
-
   defaultMenu(value) {
     switch (value) {
       case "copy-cell":
@@ -300,12 +255,12 @@ export class ContextRowMenu extends Contextmenu {
         break;
       case "paste-cell":
         if (this.vGrid.vGridConfig.cellValue !== null) {
-            var rows = this.vGrid.vGridSelection.getSelectedRows();
-            rows.forEach((x)=> {
-              this.vGrid.vGridCollectionFiltered[x][this.value] = this.vGrid.vGridConfig.cellValue;
-            });
-            this.vGrid.vGridGenerator.fillDataInRows();
-        } 
+          var rows = this.vGrid.vGridSelection.getSelectedRows();
+          rows.forEach((x)=> {
+            this.vGrid.vGridCollectionFiltered[x][this.value] = this.vGrid.vGridConfig.cellValue;
+          });
+          this.vGrid.vGridGenerator.fillDataInRows();
+        }
         this.toggleMenuOff();
         break;
       default:
