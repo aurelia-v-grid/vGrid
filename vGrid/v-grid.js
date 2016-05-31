@@ -17,8 +17,8 @@ import {VGridConfig} from './v-grid-config';
 import {VGridResizable} from './v-grid-resizable';
 import {VGridSelection} from './v-grid-selection';
 import {VGridCtx} from './v-grid-ctx';
-import {bindableVGrid} from './v-grid-sort';
 import {VGridScrollEvents} from './v-grid-scroll-events';
+import {VGridMarkupGenerator} from './v-grid-markup-generator';
 
 
 export class VGrid {
@@ -26,21 +26,16 @@ export class VGrid {
   @bindable({attribute: "v-grid-context"}) vGridContextObj;
   @bindable({attribute: "v-collection"}) vGridCollection;
   @bindable({attribute: "v-current-entity"}) vGridCurrentEntity;
-
-
-
+  @bindable({attribute: "v-columns"}) vGridColumns;
 
   //loading screen when filtering/sorting
   @bindable loadingMessage = "Working please wait";
   loading = false;
 
-
-
   constructor(element, bindingEngine, viewCompiler, viewSlot, container, viewResources, taskQueue) {
 
     //<v-grid> element
     this.element = element;
-
 
     //aurelia stuff I need for creating my cells etc
     this.viewCompiler = viewCompiler;
@@ -61,7 +56,6 @@ export class VGrid {
     //cloned collection used internaly for everything, I never sort the original collection
     this.vGridCollectionFiltered = [];
 
-
     //my classes the grid uses
     this.vGridScrollEvents = new VGridScrollEvents(this);
     this.vGridFilter = new VGridFilter(this);
@@ -73,10 +67,8 @@ export class VGrid {
     this.vGridObservables = new VGridObservables(this, bindingEngine);
     this.vGridGenerator = new VGridGenerator(this);
     this.vGridClientCtx = new VGridCtx(this);
+    this.vGridMarkupGenerator = new VGridMarkupGenerator(this);
     this.vGridPager = null; //set by pager
-
-
-
 
   }
 
@@ -181,6 +173,12 @@ export class VGrid {
    * set all options
    ***************************************************************************************/
   attached() {
+
+
+    if(!this.vGridConfig.repeater){
+      this.vGridMarkupGenerator.generate();
+    }
+
 
     //set observables
     this.vGridObservables.enableObservablesCollection();

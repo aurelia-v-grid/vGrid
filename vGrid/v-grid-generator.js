@@ -1,8 +1,7 @@
 /*****************************************************************************************************************
  *    vGridGenerator
- *    This generates all html and handles the scrolling, row clicks etc
+ *    This generates all html and adds the main events
  *    Created by vegar ringdal
- *    26-03-2016- started to test if I could just write it as a pure es6 class - this is not in use
  *
  ****************************************************************************************************************/
 import {ViewSlot} from 'aurelia-framework';
@@ -148,7 +147,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getHeaderTemplate() {
     var rowTemplate = "";
-    for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
+    for (var i = 0; i < this.vGridConfig.columnLength; i++) {
       rowTemplate = rowTemplate + `<v-grid-header-col column-no="${i}">${this.vGridConfig.colConfig[i].headerTemplate}</v-grid-header-col>`;
     }
     return rowTemplate;
@@ -169,7 +168,7 @@ export class VGridGenerator {
         rowTemplate = '<template>' + this.vGrid.vGridConfig.repeatTemplate + '</template>'
       } else {
         rowTemplate = '<template>';
-        for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
+        for (var i = 0; i < this.vGridConfig.columnLength; i++) {
           rowTemplate = rowTemplate + `<v-grid-row-col column-no=${i}>${this.vGridConfig.colConfig[i].rowTemplate}</v-grid-row-col>`;
         }
         rowTemplate + '</template>';
@@ -191,7 +190,7 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getTotalColumnWidth() {
     var total = 0;
-    for (var i = 0; i < this.vGridConfig.columnLenght; i++) {
+    for (var i = 0; i < this.vGridConfig.columnLength; i++) {
       total = total + parseInt(this.vGridConfig.colConfig[i].width, 10);
     }
     return total;
@@ -222,14 +221,15 @@ export class VGridGenerator {
 
     var x = document.createElement("DIV"); //create this a container for my 3 rows
     this.vGridElement.appendChild(x);
+    this.vGridElement.style.display ="block"; //this was the issue for all my problems
     this.gridElement = x;
 
     //do this for I know very little about css, and doing it like this I didnt get those weird side effects
     //todo look at this again, do not like what Ive done here
     this.gridElement.classList.add(this.vGridConfig.css.wrapper);
     this.gridElement.style.position = "relative";
-    this.gridElement.style.height = this.vGridElement.style.height || '100%';
-    this.gridElement.style.width = this.vGridElement.style.width || "100%";
+    this.gridElement.style.height = '100%';
+    this.gridElement.style.width = "100%";
 
     //get default height and width
     this.gridHeight = this.gridElement.clientHeight;
@@ -855,14 +855,14 @@ export class VGridGenerator {
       rowElement.addEventListener("dblclick", (e) => {
         var currentRow = parseInt(e.currentTarget.getAttribute("row"));
         this.vGridConfig.clickHandler(e, currentRow);
-        if (this.vGridConfig.attMultiSelect !== undefined) {
-          this.vGridSelection.setHightlight(e, currentRow, this);
-        }
       }, false);
 
       rowElement.addEventListener("click", (e) => {
         var currentRow = parseInt(e.currentTarget.getAttribute("row"));
         this.vGridConfig.clickHandler(e, currentRow);
+        if (this.vGridConfig.attMultiSelect !== undefined) {
+          this.vGridSelection.setHightlight(e, currentRow, this);
+        }
       }, false);
 
     }

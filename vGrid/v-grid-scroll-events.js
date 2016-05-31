@@ -1,17 +1,18 @@
-
-
-
+/*****************************************************************************************************************
+ *    VGridScrollEvents
+ *    This just have all the scroll functions the vGridGenerator needs
+ *    Created by vegar ringdal
+ *
+ ****************************************************************************************************************/
 export class VGridScrollEvents {
 
   constructor(vGrid) {
     this.vGrid = vGrid;
-    this.lastScrollTop= 0;
-    this.lastScrollLeft= 0;
-    this.isScrollBarScrolling= false;
-    this.scrollbarScrollingTimer= null;
-    this.lastScrollType= null
-
-
+    this.lastScrollTop = 0;
+    this.lastScrollLeft = 0;
+    this.isScrollBarScrolling = false;
+    this.scrollbarScrollingTimer = null;
+    this.lastScrollType = null
   }
 
   get vGridGenerator() {
@@ -247,81 +248,72 @@ export class VGridScrollEvents {
   };
 
 
+  /****************************************************************************************************************************
+   * fixes scrolling / top of divs
+   ****************************************************************************************************************************/
+  scrollEventHandler() {
 
 
-    /****************************************************************************************************************************
-     * fixes scrolling / top of divs
-     ****************************************************************************************************************************/
-    scrollEventHandler() {
+    var currentScrollTop = this.vGridGenerator.contentElement.scrollTop;
+    var currentScrollLeft = this.vGridGenerator.contentElement.scrollLeft;
 
 
-      var currentScrollTop = this.vGridGenerator.contentElement.scrollTop;
-      var currentScrollLeft = this.vGridGenerator.contentElement.scrollLeft;
+    //are we scrolling ?
+    if (currentScrollTop !== this.lastScrollTop) {
+      //is vert scroll
 
-
-      //are we scrolling ?
-      if (currentScrollTop !== this.lastScrollTop) {
-        //is vert scroll
-
-        //stop left scroll...
-        if (currentScrollLeft !== 0) {
-          this.vGridGenerator.contentElement.scrollLeft = this.lastScrollLeft;
-          this.vGridGenerator.headerElement.scrollLeft = this.lastScrollLeft
-        }
-
-        //check if down scroll.
-        var isDownScroll = true;
-        if (currentScrollTop < this.lastScrollTop) {
-          isDownScroll = false;
-        }
-
-        //check if big scroll (split m into 2.. simple to read)
-        var isLargeScroll;
-        switch (true) {
-          case currentScrollTop > this.lastScrollTop + this.vGridConfig.largeScrollLimit:
-          case currentScrollTop < this.lastScrollTop - this.vGridConfig.largeScrollLimit:
-            isLargeScroll = true;
-            break;
-          default:
-            isLargeScroll = false;
-        }
-
-        //reset scroll top
-        this.lastScrollTop = currentScrollTop;
-
-        //check if big scroll
-        if (isLargeScroll) {
-          //now user can set this, on very large collections this will drag preformance down
-          if (this.vGridConfig.attRenderOnScrollbarScroll) {
-            this.onLargeScroll()
-          } else {
-            this.onScrollbarScrolling();
-          }
-        } else {
-          this.onSmallScroll(isDownScroll, currentScrollTop)
-        }
-      } else {
-
-        if (this.vGridGenerator.contentElement.style.overflowX === "hidden") {
-          //we do not want scrolls left if this is hidden..
-          this.vGridGenerator.contentElement.scrollLeft = 0;
-          this.lastScrollLeft = 0;
-          this.vGridGenerator.headerElement.scrollLeft = 0;
-        } else {
-          if (this.lastScrollLeft !== currentScrollLeft) {
-            currentScrollLeft = this.vGridGenerator.contentElement.scrollLeft;
-            this.lastScrollLeft = currentScrollLeft;
-            this.vGridGenerator.headerElement.scrollLeft = currentScrollLeft;
-          }
-        }
-
-
+      //stop left scroll...
+      if (currentScrollLeft !== 0) {
+        this.vGridGenerator.contentElement.scrollLeft = this.lastScrollLeft;
+        this.vGridGenerator.headerElement.scrollLeft = this.lastScrollLeft
       }
 
+      //check if down scroll.
+      var isDownScroll = true;
+      if (currentScrollTop < this.lastScrollTop) {
+        isDownScroll = false;
+      }
 
+      //check if big scroll (split m into 2.. simple to read)
+      var isLargeScroll;
+      switch (true) {
+        case currentScrollTop > this.lastScrollTop + this.vGridConfig.largeScrollLimit:
+        case currentScrollTop < this.lastScrollTop - this.vGridConfig.largeScrollLimit:
+          isLargeScroll = true;
+          break;
+        default:
+          isLargeScroll = false;
+      }
+
+      //reset scroll top
+      this.lastScrollTop = currentScrollTop;
+
+      //check if big scroll
+      if (isLargeScroll) {
+        //now user can set this, on very large collections this will drag preformance down
+        if (this.vGridConfig.attRenderOnScrollbarScroll) {
+          this.onLargeScroll()
+        } else {
+          this.onScrollbarScrolling();
+        }
+      } else {
+        this.onSmallScroll(isDownScroll, currentScrollTop)
+      }
+    } else {
+
+      if (this.vGridGenerator.contentElement.style.overflowX === "hidden") {
+        //we do not want scrolls left if this is hidden..
+        this.vGridGenerator.contentElement.scrollLeft = 0;
+        this.lastScrollLeft = 0;
+        this.vGridGenerator.headerElement.scrollLeft = 0;
+      } else {
+        if (this.lastScrollLeft !== currentScrollLeft) {
+          currentScrollLeft = this.vGridGenerator.contentElement.scrollLeft;
+          this.lastScrollLeft = currentScrollLeft;
+          this.vGridGenerator.headerElement.scrollLeft = currentScrollLeft;
+        }
+      }
     }
-
-
-
+  }
 
 }
