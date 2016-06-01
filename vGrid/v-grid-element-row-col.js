@@ -40,9 +40,7 @@ export class VGridElementRowCol {
   setStandardClassesAndStyles() {
     var css = this.vGrid.vGridConfig.css;
     var cellStyle = `width:${this.vGrid.vGridConfig.colConfig[this.columnNo].width}px`;
-    this.element.classList.add(css.rowCell);
     this.element.classList.add(css.rowColumn + this.columnNo);
-    //this.element.classList.add(css.gridColumn + this.columnNo);
     this.element.setAttribute("style", cellStyle);
   }
 

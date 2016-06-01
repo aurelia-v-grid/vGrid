@@ -26,7 +26,7 @@ export class VGridResizable {
     this.vGridGenerator = this.vGrid.vGridGenerator;
     this.vGridSortable = this.vGrid.vGridSortable;
 
-    var headerCells = this.vGridGenerator.headerElement.querySelectorAll("." + this.vGridConfig.css.rowHeaderCell);
+    var headerCells = this.vGridGenerator.headerElement.getElementsByTagName("v-grid-header-col");
     for (var i = 0; i < headerCells.length; i++) {
 
       var resizeHandle = document.createElement("DIV");

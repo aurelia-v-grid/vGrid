@@ -18,25 +18,20 @@ export class VGridConfig {
     mainContent: "vGrid-body",
     mainFooter: "vGrid-footer",
     scrollBody: "vGrid-body-scroll",
-    rowCell: "vGrid-row-col",
     rowColumn: "vGrid-row-column",
-    rowHeaderCell: "vGrid-row-col-header",
     rowHeaderColumn: "vGrid-row-column-header",
-    gridColumn: "",//"vGrid-column",
     rowHeader: "vGrid-row-header",
     rowSelected: "vGrid-row-selected",
     rowContainer: "vGrid-row-container",
     rowAlt: "vGrid-row-alt",
     rowEven: "vGrid-row-even",
     dragHandle: "vGrid-vGridDragHandle",
-    orderHandle: "v-grid-header-orderBy",
     resizeHeaderDragHandle: "vGrid-draggable-handler",
     sortIcon: "vGrid-glyphicon",
     sortIconSort: "vGrid-glyphicon-sort",
     sortIconAsc: "vGrid-glyphicon-sort-asc",
     sortIconDesc: "vGrid-glyphicon-sort-desc",
-    sortIconNo: "vGrid-glyphicon",
-    noData: "vGrid-row-no-data"
+    sortIconNo: "vGrid-glyphicon"
   };
 
 
