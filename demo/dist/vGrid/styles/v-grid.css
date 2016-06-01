@@ -99,12 +99,12 @@
   background-color: rgb(203, 195, 203) !important;
 }
 
-.vGrid-row-selected .vGrid-row-cell {
+.vGrid-row-selected .vGrid-row-col {
   box-shadow: none;
   background-color: rgb(203, 195, 203) !important;
 }
 
-.vGrid-row-cell {
+.vGrid-row-col {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -125,7 +125,7 @@
   overflow: hidden;
 }
 
-.vGrid-row-cell-header {
+.vGrid-row-col-header {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;

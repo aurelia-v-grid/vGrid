@@ -68,7 +68,7 @@
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  padding-top: 5%;
+  padding-top: 5px;
 }
 
 .vgrid-label-bottom{
@@ -80,7 +80,7 @@
   width: 100%;
   position: relative;
   margin: initial !important;
-  padding-top: 5%;
+  padding-top: 5px;
   text-align: center;
 }
 
@@ -93,7 +93,7 @@
   width: 100%;
   position: relative;
   margin: initial !important;
-  padding-top: 5%;
+  padding-top: 5px;
   text-align: center;
 }
 
@@ -106,7 +106,7 @@
   width: 100%;
   position: relative;
   margin: initial !important;
-  padding-top: 5%;
+  padding-top: 5px;
   text-align: center;
 
 }
