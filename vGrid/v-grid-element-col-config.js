@@ -39,7 +39,8 @@ export class VGridElementColConfig {
   @bindable contextmenuHeader; //default false
   @bindable contextmenuRow;//default false
   @bindable type; //default = text
-  @bindable tempRef //default = false
+  @bindable tempRef; //default = false
+  @bindable css;
 
 
 
