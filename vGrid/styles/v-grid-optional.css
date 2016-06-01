@@ -49,6 +49,17 @@
   outline: none !important;
 }
 
+
+.vgrid-checkbox-input-center {
+  height: 50% !important;
+   width: initial;
+  left: initial !important;
+  position: initial !important;
+  display: block;
+  margin: auto !important;
+  outline: none !important;
+}
+
 .vgrid-row-input {
   box-sizing: border-box;
   border: 0;
@@ -71,6 +82,7 @@
   position: relative;
   left: 50%;
   transform: translateX(-50%);
+  padding-top: 5%;
 }
 
 .vgrid-label-bottom{
@@ -82,8 +94,9 @@
   width: 100%;
   position: relative;
   margin: initial !important;
-  top: 25%;
-  transform: translateY(-25%);
+  /*top: 25%;
+  transform: translateY(-25%);*/
+  padding-top: 5%;
   text-align: center;
 }
 
@@ -97,8 +110,9 @@
   width: 100%;
   position: relative;
   margin: initial !important;
-  top: 25%;
-  transform: translateY(-25%);
+  /*top: 25%;
+  transform: translateY(-25%);*/
+  padding-top: 5%;
   text-align: center;
 }
 
@@ -111,8 +125,9 @@
   width: 100%;
   position: relative;
   margin: initial !important;
-  top: 100%;
-  transform: translateY(-60%);
+  /*top: 100%;
+  transform: translateY(-60%);*/
+  padding-top: 5%;
   text-align: center;
 
 }

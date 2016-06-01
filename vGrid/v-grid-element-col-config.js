@@ -37,8 +37,9 @@ export class VGridElementColConfig {
   @bindable filterTop;//default false
   @bindable filterOperator; //default
   @bindable contextmenuHeader; //default false
-  @bindable contextmenuRows;//default false
+  @bindable contextmenuRow;//default false
   @bindable type; //default = text
+  @bindable tempRef //default = false
 
 
 
@@ -73,14 +74,15 @@ export class VGridElementColConfig {
       filterTop: this.filterTop === "true" ? true : false,
       filterOperator: this.filterOperator || "=",
       contextmenuHeader: this.contextmenuHeader === "true" ? true : false,
-      contextmenuRows: this.contextmenuRows === "true" ? true : false,
-      type: this.type || "text"
+      contextmenuRow: this.contextmenuRow === "true" ? true : false,
+      type: this.type || "text",
+      tempRef:this.tempRef || false
     });
 
 
   }
 
-  
+
 
 
 }
