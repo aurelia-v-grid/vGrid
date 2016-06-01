@@ -28,18 +28,8 @@
   transition: initial !important;
 }
 
-.vgrid-header-input-top:focus {
-  border: 1px dotted rgb(81, 41, 81) !important;
-  outline: none !important;
-}
 
-.vgrid-header-input-bottom:focus {
-  border: 1px dotted rgb(81, 41, 81) !important;
-  outline: none !important;
-}
-
-
-.vgrid-checkbox-center {
+.vgrid-row-checkbox-100 {
   height: 100% !important;
    width: initial;
   left: initial !important;
@@ -50,7 +40,7 @@
 }
 
 
-.vgrid-checkbox-input-center {
+.vgrid-row-checkbox-50 {
   height: 50% !important;
    width: initial;
   left: initial !important;
@@ -71,10 +61,6 @@
   padding: 5px 10px !important;
 }
 
-.vgrid-row-input:focus {
-  border: 1px dotted rgb(81, 41, 81) !important;
-  outline: none !important;
-}
 
 .vgrid-image-round {
   border-radius: 50%;
@@ -94,8 +80,6 @@
   width: 100%;
   position: relative;
   margin: initial !important;
-  /*top: 25%;
-  transform: translateY(-25%);*/
   padding-top: 5%;
   text-align: center;
 }
@@ -105,13 +89,10 @@
   border: 0;
   border-radius: initial;
   box-shadow: initial;
-
   height: 50%;
   width: 100%;
   position: relative;
   margin: initial !important;
-  /*top: 25%;
-  transform: translateY(-25%);*/
   padding-top: 5%;
   text-align: center;
 }
@@ -125,8 +106,6 @@
   width: 100%;
   position: relative;
   margin: initial !important;
-  /*top: 100%;
-  transform: translateY(-60%);*/
   padding-top: 5%;
   text-align: center;
 

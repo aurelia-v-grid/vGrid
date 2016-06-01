@@ -4,11 +4,6 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-
-
-  //have just started looking at this, just to see how it works.
-
-
 export class VGridMarkupGenerator {
 
   constructor(vGrid) {
@@ -134,7 +129,7 @@ export class VGridMarkupGenerator {
 
   createInputRowMarkup(col){
     //get the values/settings
-    let classNames = `class="${col.type === "checkbox" ? 'vgrid-checkbox-center' : 'vgrid-row-input'}"`;
+    let classNames = `class="${col.type === "checkbox" ? 'vgrid-row-checkbox-100' : 'vgrid-row-input'}"`;
     let type = `type="${col.type}"`;
     let colRef = col.tempRef ? `tempRef.${col.attribute}`:`rowRef.${col.attribute}`;
     let attribute = `${colRef}${col.valueFormater ? "|" + col.valueFormater +"& updateTrigger:'blur':'paste'" : ""}`;
@@ -154,14 +149,14 @@ export class VGridMarkupGenerator {
     //get the values/settings
     let classNames = '';
     let contextmenu = col.contextmenuHeader ? "v-header-menu=" + col.attribute + "" : "";
-    let type = `type="${col.type}"`
+    let type = `type="${col.type}"`;
     let colRef = col.tempRef ? `tempRef.${col.attribute}`:`"rowRef.${col.attribute}`;
     let attribute = `${colRef}${col.attribute}${col.valueFormater ? "|" + col.valueFormater : ''}`;
     let filter = `v-filter="${col.attribute}"`;
 
     //is it a checkbox ?
     if(col.type==="checkbox"){
-      classNames = `class="${col.filterTop ? "vgrid-checkbox-input-center" : "vgrid-checkbox-input-center"}"`;
+      classNames = `class="${col.filterTop ? "vgrid-row-checkbox-50" : "vgrid-row-checkbox-50"}"`;
     } else {
       classNames = `class="${col.filterTop ? "vgrid-header-input-top" : "vgrid-header-input-bottom"}"`;
     }
