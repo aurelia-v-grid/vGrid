@@ -16,7 +16,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
 
-      <h3>Local Array Repeat Html Block Demo <span class="label label-default">updated:31-May-2016, Rev:01</span></h3>
+      <h3>Local Array Repeat Html Block Demo <span class="label label-default">updated:01.June-2016, Rev:01</span></h3>
     </div>
   </div>
   <div class="row">
@@ -42,7 +42,11 @@
         v-collection.bind=myCollection
         v-grid-context.bind=myGrid>
         <v-grid-row-repeat>
+          <v-header-template>
 
+
+          </v-header-template>
+          <v-row-template>
           <form class="form-horizontal">
             <div class="form-group">
               <label class="col-sm-2 control-label">Name</label>
@@ -59,7 +63,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">formated/blur</label>
               <div class="col-sm-6">
-                <input list="browsers" class="form-control input-sm" value.bind="rowRef.date | dateFormat">
+                <input style="width:600px" list="browsers" class="form-control input-sm" value.bind="rowRef.date | dateFormat">
               </div>
             </div>
             <div class="form-group">
@@ -75,7 +79,7 @@
               </div>
             </div>
           </form>
-
+          </v-row-template>
         </v-grid-row-repeat>
 
       </v-grid>

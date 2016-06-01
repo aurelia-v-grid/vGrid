@@ -44,6 +44,22 @@ export class sample01 {
       sort: true,
       contextmenuRow: true,
       contextmenuHeader: true
+    }, {
+      attribute: "bool",
+      filter: true,
+      filterTop: false,
+      sort: true,
+      type:"checkbox",
+      contextmenuRow: true,
+      contextmenuHeader: true
+    }, {
+      attribute: "images",
+      filter: true,
+      filterTop: false,
+      sort: true,
+      type:"image",
+      contextmenuRow: true,
+      contextmenuHeader: true
     }
 
   ]

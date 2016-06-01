@@ -108,6 +108,7 @@ export class vGridAttributesFilter {
         curFilter.splice(filterIndex, 1)
       } else {
         curFilter[filterIndex].value = this.getValue();
+        curFilter[filterIndex].operator = this.filterOperator;
       }
 
     } else {

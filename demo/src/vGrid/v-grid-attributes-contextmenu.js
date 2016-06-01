@@ -14,7 +14,7 @@ import {Contextmenu} from './v-grid-contextmenu';
 /*****************************************************
  *  context menu for header
  ******************************************************/
-@customAttribute('v-grid-header-menu')
+@customAttribute('v-header-menu')
 @inject(Element, VGrid)
 export class VGridHeaderMenu extends Contextmenu {
   classToOpenOn = "vGrid-header-menu"; //class it opens menu on
@@ -204,7 +204,7 @@ export class VGridHeaderMenu extends Contextmenu {
  *  main context menu for row cells
  ******************************************************/
 
-@customAttribute('v-grid-row-menu')
+@customAttribute('v-row-menu')
 @inject(Element, VGrid)
 export class ContextRowMenu extends Contextmenu {
   classToOpenOn = "vGrid-row-menu"; //class it opens menu on

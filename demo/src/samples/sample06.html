@@ -15,7 +15,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
 
-      <h3>Local array, simple row column in html  <span class="label label-default">updated:31-May-2016, Rev:01</span></h3>
+      <h3>Local array, simple row column in html  <span class="label label-default">updated:01.June-2016, Rev:01</span></h3>
     </div>
   </div>
   <div class="row">
@@ -45,10 +45,11 @@
         v-current-entity.bind=myCurrentEntity
         v-collection.bind=myCollection
         v-grid-context.bind=myGrid>
-        <v-grid-col width="70" attribute="last" filter="true"></v-grid-col>
-        <v-grid-col width="70" attribute="first" filter="true"></v-grid-col>
-        <v-grid-col width="70" attribute="name" filter="true"></v-grid-col>
-        <v-grid-col width="70" attribute="color" filter="true"></v-grid-col>
+        <v-grid-col width="70" attribute="last" filter="true" filter-operator="*" sort="true"></v-grid-col>
+        <v-grid-col width="70" attribute="first"></v-grid-col>
+        <v-grid-col width="70" type="checkbox" attribute="bool" filter="true" filter-operator="*" sort="true"></v-grid-col>
+        <v-grid-col width="70" type="image" attribute="images" filter="true" filter-operator="*" sort="true"></v-grid-col>
+        <v-grid-col width="70" attribute="name" filter="true" filter-top="true"></v-grid-col>
       </v-grid>
 
 

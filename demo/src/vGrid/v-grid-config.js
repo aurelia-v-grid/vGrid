@@ -80,7 +80,7 @@ export class VGridConfig {
 
     //repeat html vars
     this.repeater = false;
-    this.repeatTemplate = null;
+    this.repeatRowTemplate = null;
     
 
     //static atm (dunno if I want them as options yet)
