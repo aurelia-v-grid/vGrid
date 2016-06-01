@@ -96,7 +96,7 @@ export class VGridGenerator {
   //viewPorts
   rowViewFactory = null;
   loadingScreenViewSlot = null;
-  headerViewSlot= null;
+  headerViewSlot = null;
   footerViewSlot = null;
 
 
@@ -147,8 +147,12 @@ export class VGridGenerator {
    ****************************************************************************************************************************/
   getHeaderTemplate() {
     var rowTemplate = "";
-    for (var i = 0; i < this.vGridConfig.columnLength; i++) {
-      rowTemplate = rowTemplate + `<v-grid-header-col column-no="${i}">${this.vGridConfig.colConfig[i].headerTemplate}</v-grid-header-col>`;
+    if (this.vGrid.vGridConfig.repeater) {
+      rowTemplate = this.vGrid.vGridConfig.repeatRowHeaderTemplate;
+    } else {
+      for (var i = 0; i < this.vGridConfig.columnLength; i++) {
+        rowTemplate = rowTemplate + `<v-grid-header-col column-no="${i}">${this.vGridConfig.colConfig[i].headerTemplate}</v-grid-header-col>`;
+      }
     }
     return rowTemplate;
   };
@@ -165,7 +169,7 @@ export class VGridGenerator {
     } else {
       var rowTemplate = "";
       if (this.vGrid.vGridConfig.repeater) {
-        rowTemplate = '<template>' + this.vGrid.vGridConfig.repeatTemplate + '</template>'
+        rowTemplate = '<template>' + this.vGrid.vGridConfig.repeatRowTemplate + '</template>'
       } else {
         rowTemplate = '<template>';
         for (var i = 0; i < this.vGridConfig.columnLength; i++) {
@@ -221,7 +225,7 @@ export class VGridGenerator {
 
     var x = document.createElement("DIV"); //create this a container for my 3 rows
     this.vGridElement.appendChild(x);
-    this.vGridElement.style.display ="block"; //this was the issue for all my problems
+    this.vGridElement.style.display = "block"; //this was the issue for all my problems
     this.gridElement = x;
 
     //do this for I know very little about css, and doing it like this I didnt get those weird side effects
@@ -301,7 +305,7 @@ export class VGridGenerator {
     this.headerScrollElement.classList.add(this.vGridConfig.css.row);
     this.headerScrollElement.classList.add(this.vGridConfig.css.rowHeader);
     this.headerScrollElement.style.height = this.vGridConfig.attHeaderHeight + "px";
-    this.headerScrollElement.style.width = this.getTotalColumnWidth() + "px";
+    this.headerScrollElement.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
     this.headerElement.appendChild(this.headerScrollElement);
   };
 
@@ -383,7 +387,7 @@ export class VGridGenerator {
     this.contentScrollBodyElement = document.createElement("DIV");
     this.contentScrollBodyElement.classList.add(this.vGridConfig.css.scrollBody);
     this.contentScrollBodyElement.style.height = this.scrollBodyHeight + "px";
-    this.contentScrollBodyElement.style.width = this.getTotalColumnWidth() + "px";
+    this.contentScrollBodyElement.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
     this.contentElement.appendChild(this.contentScrollBodyElement);
   };
 
@@ -392,11 +396,11 @@ export class VGridGenerator {
    * add the scroll body, this is needed when user chnages columns or resize the columns, so main content knows if scrollbars is needed
    ****************************************************************************************************************************/
   correctRowAndScrollbodyWidth() {
-    this.contentScrollBodyElement.style.width = this.getTotalColumnWidth() + "px";
+    this.contentScrollBodyElement.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
     for (var i = 0; i < this.rowElementArray.length; i++) {
-      this.rowElementArray[i].div.style.width = this.getTotalColumnWidth() + "px";
+      this.rowElementArray[i].div.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
     }
-    this.headerScrollElement.style.width = this.getTotalColumnWidth() + "px";
+    this.headerScrollElement.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
   };
 
 
@@ -404,8 +408,8 @@ export class VGridGenerator {
    *
    ****************************************************************************************************************************/
   correctHeaderAndScrollbodyWidth() {
-    this.contentScrollBodyElement.style.width = this.getTotalColumnWidth() + "px";
-    this.headerScrollElement.style.width = this.getTotalColumnWidth() + "px";
+    this.contentScrollBodyElement.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
+    this.headerScrollElement.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
   };
 
 
@@ -444,7 +448,7 @@ export class VGridGenerator {
       }], 0, top);
 
       row.style.minWidth = this.gridElement.offsetWidth + "px";
-      row.style.width = this.getTotalColumnWidth() + "px";
+      row.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
 
       //inner magic
       row.innerHTML = ""; //? why Im I doing this? todo test... why
@@ -575,12 +579,14 @@ export class VGridGenerator {
       this.contentElement.style.overflowX = "hidden";
       this.headerElement.style.overflowY = "scroll";
     }
+
+    //todo, what to do when its a repeater ?
     if (this.contentElement.offsetWidth - 5 < this.getTotalColumnWidth()) {
       this.contentElement.style.overflowX = "scroll";
     }
+
+
   };
-
-
 
 
   /****************************************************************************************************************************

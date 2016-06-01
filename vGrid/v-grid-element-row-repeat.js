@@ -40,6 +40,7 @@ export class VGridElementRowRepeat {
     this.element = element;
     this.vGrid = vGrid;
     this.rowTemplate = targetInstruction.elementInstruction.rowTemplate;
+    this.headerTemplate = targetInstruction.elementInstruction.headerTemplate;
 
   }
 
@@ -47,7 +48,8 @@ export class VGridElementRowRepeat {
   bind(bindingContext) {
     this.bindingContext = bindingContext;
     this.vGrid.vGridConfig.repeater = true;
-    this.vGrid.vGridConfig.repeatTemplate = this.rowTemplate;
+    this.vGrid.vGridConfig.repeatRowTemplate = this.rowTemplate;
+    this.vGrid.vGridConfig.repeatRowHeaderTemplate = this.headerTemplate;
   }
 
 
