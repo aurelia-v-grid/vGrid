@@ -35,6 +35,7 @@
   left: initial !important;
   position: initial !important;
   display: block;
+  opacity: initial !important;
   margin: auto !important;
   outline: none !important;
 }
@@ -43,6 +44,7 @@
 .vgrid-row-checkbox-50 {
   height: 50% !important;
    width: initial;
+  opacity: initial;
   left: initial !important;
   position: initial !important;
   display: block;
