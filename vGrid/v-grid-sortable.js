@@ -87,7 +87,7 @@ export class VGridSortable {
       //todo,need to improve this part a lot, need to traverse until I get to V-GRID-ROW-COl
       itemEl.setAttribute("column-no", index);
       //update viewmodel, is needed since I dont redraw headers anymore
-      itemEl.au["v-grid-header-col"].viewModel.columnNo = index + ""
+     // itemEl.au["v-grid-header-col"].viewModel.columnNo = index + ""
     });
     this.vGrid.vGridGenerator.rebuildColumnsRows();
 
