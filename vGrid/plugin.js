@@ -6,7 +6,6 @@ export function configure(config) {
     'vGrid/v-grid-element-header-col',
     'vGrid/v-grid-element-row-col',
     'vGrid/v-grid.js',
-    'vGrid/v-grid-attributes-main',
     'vGrid/v-grid-attributes-filter',
     'vGrid/v-grid-attributes-sort',
     'vGrid/v-grid-attributes-selection',

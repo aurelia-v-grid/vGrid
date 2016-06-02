@@ -149,6 +149,9 @@ export class VGridSortable {
         }
         //evt.dataTransfer.dropEffect = 'move'; //this faile in IE
 
+
+        //TODO: this is just a mess! need to improve
+
         var target = evt.target.offsetParent;
         try {
           var targetNode = target.nodeName === 'DIV' || target.nodeName === 'V-GRID-HEADER-COL';
@@ -173,7 +176,7 @@ export class VGridSortable {
           }
         }
         this.timer = null;
-      }, 150)
+      }, 60)
     }
 
 

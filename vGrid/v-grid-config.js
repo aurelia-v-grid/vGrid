@@ -1,6 +1,6 @@
 /*****************************************************************************************************************
  *    VGridConfig
- *    This generates the config used by vGridgenerator, other classes also calls this to get the information
+ *    This generates the config used by vGridgenerator, other classes also calls this to get the information, also have misc utillity functions
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
@@ -51,7 +51,7 @@ export class VGridConfig {
     this.vGrid = vGrid;
 
     //<v-grid-col> attributes
-    this.colConfig= [];
+    this.colConfig = [];
 
     //count of columns;
     this.columnLength = 0;
@@ -67,7 +67,6 @@ export class VGridConfig {
     this.attLoadingThreshold = -1; //for when loading screen comes on
     this.attRemoteIndex = false;
     this.attManualSelection = false;
-
     this.eventOnRowDraw = null;
     this.eventOnRowClick = null;
     this.eventOnRowDblClick = null;
@@ -76,7 +75,7 @@ export class VGridConfig {
     //repeat html vars
     this.repeater = false;
     this.repeatRowTemplate = null;
-    
+
 
     //static atm (dunno if I want them as options yet)
     this.attDataScrollDelay = 200;
@@ -92,7 +91,58 @@ export class VGridConfig {
     this.remoteOffset = 0;
 
 
+  }
 
+
+  /***************************************************************************************
+   *  utillity functions for setting attibutes default, and converting them
+   ***************************************************************************************/
+
+  setValue(htmlAttributeValue, defaultValue) {
+    var value = defaultValue;
+    if (htmlAttributeValue !== undefined && htmlAttributeValue !== null && !isNaN(htmlAttributeValue)) {
+      value = htmlAttributeValue;
+    }
+    return value;
+  };
+
+
+  setBindValueArray(value, toProperty) {
+    if (value !== undefined && value !== null) {
+      var tempArray = value.split(",");
+      tempArray.forEach((prop)=> {
+        prop = prop.trim();
+      });
+      this[toProperty] = tempArray;
+    }
+  }
+
+
+  setBindValueInt(value, toProperty) {
+    this[toProperty] = this.setValue(parseInt(value), this[toProperty]);
+  }
+
+  
+  setBindValueString(value, toProperty) {
+    if (typeof(value) === "string" && value !== '' && value !== undefined && value !== null) {
+      this[toProperty] = this.setValue(value, this[toProperty]);
+    }
+  }
+
+
+  setBindValueFunction(value, toProperty) {
+    if (typeof(value) === "function") {
+      this[toProperty] = value;
+    }
+  }
+
+
+  setBindValueBool(value, toProperty) {
+    let type = {
+      "true": true,
+      "false": false
+    };
+    this[toProperty] = this.setValue(type[value], this[toProperty]);
   }
 
 
@@ -290,14 +340,11 @@ export class VGridConfig {
         }, add);
 
 
-
-
-          let event = new CustomEvent("sortIconUpdate", {
-            detail: "",
-            bubbles: true
-          });
-          this.vGrid.element.dispatchEvent(event);
-
+        let event = new CustomEvent("sortIconUpdate", {
+          detail: "",
+          bubbles: true
+        });
+        this.vGrid.element.dispatchEvent(event);
 
 
         //if remote call is set
@@ -338,7 +385,7 @@ export class VGridConfig {
    * Its this you will need to add for server source/paging with endless scrolling
    ***************************************************************************************/
   getCollectionLength() {
-      return this.vGrid.vGridCollectionFiltered.length;
+    return this.vGrid.vGridCollectionFiltered.length;
   }
 
 
@@ -388,9 +435,76 @@ export class VGridConfig {
     }
 
 
-
-
   }
+
+
+  /****************************************************************************************************************************
+   * calls user for element, user haveto use callback here, might also need to fetch data first..
+   ****************************************************************************************************************************/
+  updateRowBinding(rowNo, row, isDownScroll, isLargeScroll) {
+    //called when drawing row
+    //lets ask for our data, and insert it into row
+    this.getDataElement(rowNo, isDownScroll, isLargeScroll,
+      (entity) => {
+
+        row.div.setAttribute("row", rowNo);
+
+        if (entity === "") {
+          let bindingContext = {};
+          row.viewSlot.bind(bindingContext, {
+            bindingContext: bindingContext,
+            parentOverrideContext: this.vGrid.overrideContext
+          });
+        }
+
+        if (entity !== "" && row.viewSlot !== null) {
+          let tempRef = {};
+          for (var k in entity) {
+            if (entity.hasOwnProperty(k)) {
+              if (tempRef[k] !== entity[k]) {
+                tempRef[k] = entity[k];
+              }
+            }
+          }
+          var that = this;
+          let bindingContext = {};
+          bindingContext.row = rowNo;
+          bindingContext.ctx = this;
+          bindingContext.tempRef = tempRef;
+          bindingContext.rowRef = this.vGrid.vGridCollectionFiltered[rowNo];
+          row.viewSlot.bind(bindingContext, {
+            bindingContext: bindingContext,
+            parentOverrideContext: this.vGrid.overrideContext
+          });
+        }
+
+        if (entity === undefined || entity === "" || entity === null) {
+          row.div.style.display = "none";
+        } else {
+          row.div.style.display = "block";
+        }
+
+        //add alt/even css
+        if (rowNo % 2 === 1) {
+          if (row.div.classList.contains(this.css.rowEven)) {
+            row.div.classList.remove(this.css.rowEven);
+            row.div.classList.add(this.css.rowAlt);
+          }
+
+        } else {
+          if (row.div.classList.contains(this.css.rowAlt)) {
+            row.div.classList.remove(this.css.rowAlt);
+            row.div.classList.add(this.css.rowEven);
+          }
+        }
+        //set highlight
+        if (this.vGrid.vGridSelection.isSelected(rowNo)) {
+          row.div.classList.add(this.css.rowSelected)
+        } else {
+          row.div.classList.remove(this.css.rowSelected)
+        }
+      });
+  };
 
 
 }

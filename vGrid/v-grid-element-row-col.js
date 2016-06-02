@@ -7,14 +7,14 @@
 import {inject, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid';
 
+//I might delete this element, I havent decided yet
 
 @customElement('v-grid-row-col')
 @inject(Element, VGrid)
 export class VGridElementRowCol {
-  @bindable columnNo;
 
 
-  constructor(element, vGrid, container) {
+  constructor(element, vGrid) {
     this.element = element;
     this.vGrid = vGrid;
   }
@@ -32,16 +32,7 @@ export class VGridElementRowCol {
 
 
   attached() {
-    //set basic styles for a cell
-    this.setStandardClassesAndStyles();
-  }
-
-
-  setStandardClassesAndStyles() {
-    var css = this.vGrid.vGridConfig.css;
-    var cellStyle = `width:${this.vGrid.vGridConfig.colConfig[this.columnNo].width}px`;
-    this.element.classList.add(css.rowColumn + this.columnNo);
-    this.element.setAttribute("style", cellStyle);
+    //nothin atm
   }
 
 

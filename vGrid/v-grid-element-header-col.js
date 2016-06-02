@@ -7,17 +7,16 @@
 import {inject, customElement, bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid';
 
+//I might delete this element, I havent decided yet
 
 @customElement('v-grid-header-col')
 @inject(Element, VGrid)
 export class VGridElementHeaderCol {
-  @bindable columnNo;
 
 
   constructor(element, vGrid) {
     this.element = element;
     this.vGrid = vGrid;
-    this.vGridConfig = vGrid.vGridConfig;
   }
 
 
@@ -33,14 +32,8 @@ export class VGridElementHeaderCol {
 
 
   attached() {
-    this.setStandardClassesAndStyles();
+    ///nothing atm
   }
 
-
-  setStandardClassesAndStyles() {
-    this.element.classList.add(this.vGridConfig.css.rowHeaderColumn + this.columnNo);
-    this.element.style.height = '100%';
-    this.element.style.width = this.vGridConfig.colConfig[this.columnNo].width + 'px';
-  }
 
 }

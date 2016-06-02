@@ -67,7 +67,7 @@ export class VGridResizable {
     this.vGridGenerator.correctRowAndScrollbodyWidth();
     this.vGridGenerator.recreateRowViewSlots();
     this.vGridGenerator.updateGridScrollbars();
-    this.vGridGenerator.fillDataInRows(true);
+    this.vGridGenerator.rebindAllRowSlots(true);
 
   }
 
