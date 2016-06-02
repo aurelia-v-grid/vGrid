@@ -78,7 +78,6 @@ export class VGridSortable {
     this.vGrid.vGridConfig.colConfig.splice(newIndex, 0, x);
 
 
-
     var that = this;
     this.vGrid.vGridGenerator.rowTemplate = null; //reset template and fill data
 
@@ -87,7 +86,7 @@ export class VGridSortable {
       //todo,need to improve this part a lot, need to traverse until I get to V-GRID-ROW-COl
       itemEl.setAttribute("column-no", index);
       //update viewmodel, is needed since I dont redraw headers anymore
-     // itemEl.au["v-grid-header-col"].viewModel.columnNo = index + ""
+      // itemEl.au["v-grid-header-col"].viewModel.columnNo = index + ""
     });
     this.vGrid.vGridGenerator.rebuildColumnsRows();
 
@@ -113,7 +112,7 @@ export class VGridSortable {
       this.nextEl = this.dragEl.nextSibling;
 
       var rect = this.dragEl.getBoundingClientRect();
-      this.offsetHandleX = evt.clientX -rect.left;
+      this.offsetHandleX = evt.clientX - rect.left;
 
 
       evt.dataTransfer.effectAllowed = 'move';
@@ -151,28 +150,34 @@ export class VGridSortable {
           evt.stopPropagation();
         }
 
-        //TODO: this is just a mess! need to improve
+        /*************************************************************
+         *TODO: this is just a mess! need to improve
+         *************************************************************/
 
         var target = evt.target.offsetParent;
         try {
-          var targetNode = target.nodeName === 'DIV' || target.nodeName === 'V-GRID-HEADER-COL';
+          var targetNode = target.nodeName === 'V-GRID-HEADER-COL';
         } catch (e) {
+          var targetNode = null;
         }
 
-        if (target && target !== this.dragEl && targetNode){
+        if (target && target !== this.dragEl && targetNode) {
+
           this.newIndex = target.getAttribute("column-no");
+
           var rect = target.getBoundingClientRect();
           var width = rect.right - rect.left;
           var height = rect.bottom - rect.top;
+
           var isWide = (target.offsetWidth > this.dragEl.offsetWidth);
           var isLong = (target.offsetHeight > this.dragEl.offsetHeight);
           var halfway = ((evt.clientX - rect.left) / width) > 0.5;
+
           this.nextSibling = target.nextElementSibling;
-          this.prevSibling = target.previousElementSibling;
           var after = (this.nextSibling !== this.dragEl) && !isLong || halfway && isLong;
 
-          if(after) {
-            if (this.prevSibling && isWide) {
+          if (after) {
+            if (this.nextSibling && isWide) {
               //stop it from jumping back we need to stop 1 way if its wide
               //evt.clientX - this.offsetHandleX = original left +half size need to be larger then opisite side minus half of the element we drag, that way it can jump back
               var halfway = ((evt.clientX - this.offsetHandleX) + this.dragEl.offsetWidth / 2) > rect.right - (this.dragEl.offsetWidth / 2); //lol
@@ -183,8 +188,11 @@ export class VGridSortable {
 
           if (this.oldIndex !== this.newIndex && halfway) {
             this.rootEl.insertBefore(this.dragEl, after ? target.nextSibling : target);
-            this.onUpdateAlt(parseInt(this.oldIndex), parseInt(this.newIndex));
-            this.oldIndex = this.newIndex * 1
+            setTimeout(()=> {
+              this.onUpdateAlt(parseInt(this.oldIndex), parseInt(this.newIndex));
+              this.oldIndex = this.newIndex * 1
+            }, 1);
+
           }
         }
         this.timer = null;
@@ -203,7 +211,6 @@ export class VGridSortable {
     this.dragEl.classList.remove('ghost');
     this.rootEl.removeEventListener('dragover)', this.onDragOver, false);
     this.rootEl.removeEventListener('dragend', this.onDragEnd, false);
-
     if (this.nextEl !== this.dragEl.nextSibling) {
       this.nextSibling = null;
     } else {
