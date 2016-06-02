@@ -259,7 +259,7 @@ export class ContextRowMenu extends Contextmenu {
           rows.forEach((x)=> {
             this.vGrid.vGridCollectionFiltered[x][this.value] = this.vGrid.vGridConfig.cellValue;
           });
-          this.vGrid.vGridGenerator.fillDataInRows();
+          this.vGrid.vGridGenerator.rebindAllRowSlots();
         }
         this.toggleMenuOff();
         break;

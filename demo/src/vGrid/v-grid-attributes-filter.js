@@ -32,7 +32,7 @@ export class vGridAttributesFilter {
     let values = this.value.split("|");
 
     //get attribute
-    this.attribute = values[0];
+    this.attribute = values[0].trim();
 
     //loop values and find out what options are
     if (values.length > 1) {
@@ -53,6 +53,10 @@ export class vGridAttributesFilter {
 
 
   checkParams(value) {
+
+    if (value !== undefined && value !== null) {
+      value = value.trim();
+    }
 
     let valueConverter = this.valueConverters(value);
     if (valueConverter) {

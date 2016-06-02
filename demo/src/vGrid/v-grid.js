@@ -27,8 +27,18 @@ export class VGrid {
   @bindable({attribute: "v-collection"}) vGridCollection;
   @bindable({attribute: "v-current-entity"}) vGridCurrentEntity;
   @bindable({attribute: "v-columns"}) vGridColumns;
-
-  //loading screen when filtering/sorting
+  @bindable({attribute: "v-row-height"}) attRowHeight;
+  @bindable({attribute: "v-header-height"}) attHeaderHeight;
+  @bindable({attribute: "v-footer-height"}) attFooterHeight;
+  @bindable({attribute: "v-resizable-headers"}) attResizableHeaders;
+  @bindable({attribute: "v-attibutes-observe"}) attAttributeObserve;
+  @bindable({attribute: "v-multi-select"}) attMultiSelect;
+  @bindable({attribute: "v-manual-sel"}) attManualSelection;
+  @bindable({attribute: "v-sortable-headers"}) attSortableHeader;
+  @bindable({attribute: "v-loading-threshold"}) attLoadingThreshold;
+  @bindable({attribute: "v-remote-index"}) attRemoteIndex;
+  @bindable({attribute: "v-row-on-draw"}) eventOnRowDraw;
+  @bindable({attribute: "v-event-onremote"}) eventOnRemoteCall;
   @bindable loadingMessage = "Working please wait";
   loading = false;
 
@@ -144,8 +154,21 @@ export class VGrid {
       this.vGridContextObj = {};
     }
 
-    //set it to users
+    //set vgrid attibutes to our config/utillity class
     this.vGridContextObj.ctx = this.vGridClientCtx;
+    var vConfig = this.vGridConfig;
+    vConfig.setBindValueArray(this.attAttributeObserve, 'attAttributeObserve');
+    vConfig.setBindValueInt(this.attRowHeight, 'attRowHeight');
+    vConfig.setBindValueInt(this.attHeaderHeight, 'attHeaderHeight');
+    vConfig.setBindValueInt(this.attFooterHeight, 'attFooterHeight');
+    vConfig.setBindValueBool(this.attResizableHeaders, 'attResizableHeaders');
+    vConfig.setBindValueBool(this.attMultiSelect, 'attMultiSelect');
+    vConfig.setBindValueBool(this.attSortableHeader, 'attSortableHeader');
+    vConfig.setBindValueInt(this.attLoadingThreshold, 'attLoadingThreshold');
+    vConfig.setBindValueString(this.attRemoteIndex, 'attRemoteIndex');
+    vConfig.setBindValueBool(this.attManualSelection, 'attManualSelection');
+    vConfig.setBindValueFunction(this.eventOnRowDraw, 'eventOnRowDraw');
+    vConfig.setBindValueFunction(this.eventOnRemoteCall, 'eventOnRemoteCall');
 
 
     //lets test that they have set the mandatory config settings
@@ -174,11 +197,9 @@ export class VGrid {
    ***************************************************************************************/
   attached() {
 
-
     if(!this.vGridConfig.repeater){
       this.vGridMarkupGenerator.generate();
     }
-
 
     //set observables
     this.vGridObservables.enableObservablesCollection();

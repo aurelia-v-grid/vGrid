@@ -104,7 +104,9 @@
   background-color: rgb(203, 195, 203) !important;
 }
 
-.vGrid-row-col {
+
+/*using element*/
+v-grid-row-col {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -125,7 +127,8 @@
   overflow: hidden;
 }
 
-.vGrid-row-col-header {
+/*using element*/
+v-grid-header-col {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;

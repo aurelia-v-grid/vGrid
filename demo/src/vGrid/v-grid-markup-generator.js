@@ -39,7 +39,6 @@ export class VGridMarkupGenerator {
   }
 
 
-
   processColumns(array) {
 
 
@@ -62,6 +61,7 @@ export class VGridMarkupGenerator {
       col.header = col.header || this.capitalize(col.attribute);
       col.width = col.width || 100;
       col.tempRef = col.tempRef || false;
+      col.css = col.css || '';
 
 
       //does a rowTemplate exist, if not we create one, else we skip it
@@ -78,9 +78,9 @@ export class VGridMarkupGenerator {
         if (col.type === "image") {
           var inputHeader = "";
           var labelHeader = this.createLabelMarkup(col);
-        }else{
-            var inputHeader = this.createInputHeaderMarkup(col);
-            var labelHeader = this.createLabelMarkup(col);
+        } else {
+          var inputHeader = this.createInputHeaderMarkup(col);
+          var labelHeader = this.createLabelMarkup(col);
         }
         if (col.filterTop) {
           col.headerTemplate = inputHeader + labelHeader;
@@ -95,7 +95,7 @@ export class VGridMarkupGenerator {
 
 
   capitalize = function (value) {
-    if(value){
+    if (value) {
       return value.charAt(0).toUpperCase() + value.slice(1);
     } else {
       return "missing!";
@@ -103,59 +103,61 @@ export class VGridMarkupGenerator {
   };
 
 
-  addToObserverArray(attribute){
+  addToObserverArray(attribute) {
     //get array
     var attAttributeObserve = this.vGrid.vGridConfig.attAttributeObserve;
 
     //if not allready added, then lets add them
-    if(attAttributeObserve.indexOf(attribute) === -1 && attribute){
+    if (attAttributeObserve.indexOf(attribute) === -1 && attribute) {
       attAttributeObserve.push(attribute);
     }
 
   }
 
 
-  createImageRowMarkup(col){
+  createImageRowMarkup(col) {
     //get the values/settings
     let classNames = 'class="vgrid-image-round"';
     let contextmenu = col.contextmenuRow ? "v-header-menu=" + col.attribute + "" : "";
-    let attribute = col.tempRef ? `tempRef.${col.attribute}`:`rowRef.${col.attribute}`;
+    let attribute = col.tempRef ? `tempRef.${col.attribute}` : `rowRef.${col.attribute}`;
+    let css = col.css ? `css="${col.css}"` : '';
 
     //insert the markup
-    col.rowTemplate = `<image ${classNames} v-image-fix ${contextmenu} src.bind="${attribute}">`;
+    col.rowTemplate = `<image ${css} ${classNames} v-image-fix ${contextmenu} src.bind="${attribute}">`;
 
   }
 
 
-  createInputRowMarkup(col){
+  createInputRowMarkup(col) {
     //get the values/settings
     let classNames = `class="${col.type === "checkbox" ? 'vgrid-row-checkbox-100' : 'vgrid-row-input'}"`;
     let type = `type="${col.type}"`;
-    let colRef = col.tempRef ? `tempRef.${col.attribute}`:`rowRef.${col.attribute}`;
-    let attribute = `${colRef}${col.valueFormater ? "|" + col.valueFormater +"& updateTrigger:'blur':'paste'" : ""}`;
-    let contextmenu = col.contextmenuRow ? 'v-grid-row-menu="' + col.attribute+'""' : '';
+    let colRef = col.tempRef ? `tempRef.${col.attribute}` : `rowRef.${col.attribute}`;
+    let attribute = `${colRef}${col.valueFormater ? "|" + col.valueFormater + "& updateTrigger:'blur':'paste'" : ""}`;
+    let contextmenu = col.contextmenuRow ? 'v-grid-row-menu="' + col.attribute + '""' : '';
+    let css = col.css ? `css="${col.css}"` : '';
 
     //is it a checkbox?
-    if(col.type==="checkbox"){
-      col.rowTemplate = `<input ${classNames} ${type} ${contextmenu}  checked.bind="${attribute}">`;
+    if (col.type === "checkbox") {
+      col.rowTemplate = `<input ${css} ${classNames} ${type} ${contextmenu}  checked.bind="${attribute}">`;
     } else {
-      col.rowTemplate = `<input ${classNames} ${type} ${contextmenu}  value.bind="${attribute}">`;
+      col.rowTemplate = `<input ${css} ${classNames} ${type} ${contextmenu}  value.bind="${attribute}">`;
     }
 
   }
 
 
-  createInputHeaderMarkup(col){
+  createInputHeaderMarkup(col) {
     //get the values/settings
     let classNames = '';
     let contextmenu = col.contextmenuHeader ? "v-header-menu=" + col.attribute + "" : "";
     let type = `type="${col.type}"`;
-    let colRef = col.tempRef ? `tempRef.${col.attribute}`:`"rowRef.${col.attribute}`;
+    let colRef = col.tempRef ? `tempRef.${col.attribute}` : `"rowRef.${col.attribute}`;
     let attribute = `${colRef}${col.attribute}${col.valueFormater ? "|" + col.valueFormater : ''}`;
     let filter = `v-filter="${col.attribute}"`;
 
     //is it a checkbox ?
-    if(col.type==="checkbox"){
+    if (col.type === "checkbox") {
       classNames = `class="${col.filterTop ? "vgrid-row-checkbox-50" : "vgrid-row-checkbox-50"}"`;
     } else {
       classNames = `class="${col.filterTop ? "vgrid-header-input-top" : "vgrid-header-input-bottom"}"`;
@@ -163,7 +165,7 @@ export class VGridMarkupGenerator {
 
     //is it filter ?
     let markup;
-    if(col.filter){
+    if (col.filter) {
       markup = `<input ${classNames} ${contextmenu} ${type} ${filter}">`;
     } else {
       markup = '';
@@ -174,15 +176,14 @@ export class VGridMarkupGenerator {
   }
 
 
-  createLabelMarkup(col){
+  createLabelMarkup(col) {
     //get the values/settings
-    let classname =  col.filter ? `class="${col.filterTop ? "vgrid-label-bottom" : "vgrid-label-top"}"`:'class="vgrid-label-full"';
+    let classname = col.filter ? `class="${col.filterTop ? "vgrid-label-bottom" : "vgrid-label-top"}"` : 'class="vgrid-label-full"';
     let sort = `${col.sort ? "v-sort=" + col.attribute : ""}`;
     let markup = `<p ${classname} ${sort}>${col.header}</p>`;
     //return the markup
     return markup;
   }
-
 
 
 }

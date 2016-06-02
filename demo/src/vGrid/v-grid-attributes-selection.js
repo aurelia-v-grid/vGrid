@@ -43,22 +43,22 @@ export class vGridAttributesSelection {
       if (status) {
         if (this.value === "header") {
           this.vGrid.vGridSelection.selectAll();
-          this.vGrid.vGridGenerator.fillDataInRows();
+          this.vGrid.vGridGenerator.rebindAllRowSlots();
         }
         if (this.value === "row") {
           this.vGrid.vGridSelection.select(this.bindingContext.row, true);
-          this.vGrid.vGridGenerator.fillDataIntoRow(this.bindingContext.row);
+          this.vGrid.vGridGenerator.rebindRowNumber(this.bindingContext.row);
         }
       } else {
 
         if (this.value === "header") {
           this.vGrid.vGridSelection.deSelectAll();
-          this.vGrid.vGridGenerator.fillDataInRows();
+          this.vGrid.vGridGenerator.rebindAllRowSlots();
         }
 
         if (this.value === "row") {
           this.vGrid.vGridSelection.deSelect(this.bindingContext.row, true);
-          this.vGrid.vGridGenerator.fillDataIntoRow(this.bindingContext.row);
+          this.vGrid.vGridGenerator.rebindRowNumber(this.bindingContext.row);
         }
       }
 

@@ -177,7 +177,7 @@ export class VGridObservables {
 
         if (newValueCheck !== oldValueCheck && this.vGrid.vGridCurrentEntityRef) {
               this.vGrid.vGridCurrentEntityRef[property] = newValue;
-              this.vGrid.vGridGenerator.fillDataIntoRow(this.vGrid.vGridCurrentRow, true);
+              this.vGrid.vGridGenerator.rebindRowNumber(this.vGrid.vGridCurrentRow);
         }
       });
       this.subscriptionsAttributes.push(propertyObserver)

@@ -79,7 +79,7 @@
   height: 50%;
   width: 100%;
   position: relative;
-  margin: initial !important;
+  margin: 0 !important;
   padding-top: 5px;
   text-align: center;
 }
@@ -92,10 +92,21 @@
   height: 50%;
   width: 100%;
   position: relative;
-  margin: initial !important;
+  margin: 0 !important;
   padding-top: 5px;
   text-align: center;
 }
+
+.vgrid-label-top p{
+  margin: 0 !important;
+}
+
+.vgrid-label-bottom p{
+  margin: 0 !important;
+}
+
+
+
 
 .vgrid-label-full{
   box-sizing: border-box;
@@ -105,7 +116,7 @@
   height: 100%;
   width: 100%;
   position: relative;
-  margin: initial !important;
+  margin: 0 !important;
   padding-top: 5px;
   text-align: center;
 

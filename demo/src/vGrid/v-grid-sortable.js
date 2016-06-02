@@ -87,7 +87,7 @@ export class VGridSortable {
       //todo,need to improve this part a lot, need to traverse until I get to V-GRID-ROW-COl
       itemEl.setAttribute("column-no", index);
       //update viewmodel, is needed since I dont redraw headers anymore
-      itemEl.au["v-grid-header-col"].viewModel.columnNo = index + ""
+     // itemEl.au["v-grid-header-col"].viewModel.columnNo = index + ""
     });
     this.vGrid.vGridGenerator.rebuildColumnsRows();
 
@@ -105,13 +105,16 @@ export class VGridSortable {
 
   //triggered on drag start
   onDragStart(evt) {
-
     this.dragEl = evt.target;
     this.oldIndex = evt.target.getAttribute("column-no");
 
     if (this.isDragHandle()) {
       this.onStart();
       this.nextEl = this.dragEl.nextSibling;
+
+      var rect = this.dragEl.getBoundingClientRect();
+      this.offsetHandleX = evt.clientX -rect.left;
+
 
       evt.dataTransfer.effectAllowed = 'move';
       evt.dataTransfer.setData('Text', '');
@@ -147,7 +150,8 @@ export class VGridSortable {
           evt.preventDefault();
           evt.stopPropagation();
         }
-        //evt.dataTransfer.dropEffect = 'move'; //this faile in IE
+
+        //TODO: this is just a mess! need to improve
 
         var target = evt.target.offsetParent;
         try {
@@ -155,8 +159,7 @@ export class VGridSortable {
         } catch (e) {
         }
 
-
-        if (target && target !== this.dragEl && targetNode && target.getAttribute("draggable") === "true") {
+        if (target && target !== this.dragEl && targetNode){
           this.newIndex = target.getAttribute("column-no");
           var rect = target.getBoundingClientRect();
           var width = rect.right - rect.left;
@@ -165,15 +168,27 @@ export class VGridSortable {
           var isLong = (target.offsetHeight > this.dragEl.offsetHeight);
           var halfway = ((evt.clientX - rect.left) / width) > 0.5;
           this.nextSibling = target.nextElementSibling;
+          this.prevSibling = target.previousElementSibling;
           var after = (this.nextSibling !== this.dragEl) && !isLong || halfway && isLong;
-          this.rootEl.insertBefore(this.dragEl, after ? target.nextSibling : target);
-          if (this.oldIndex !== this.newIndex) {
+
+          if(after) {
+            if (this.prevSibling && isWide) {
+              //stop it from jumping back we need to stop 1 way if its wide
+              //evt.clientX - this.offsetHandleX = original left +half size need to be larger then opisite side minus half of the element we drag, that way it can jump back
+              var halfway = ((evt.clientX - this.offsetHandleX) + this.dragEl.offsetWidth / 2) > rect.right - (this.dragEl.offsetWidth / 2); //lol
+            } else {
+              halfway = true;
+            }
+          }
+
+          if (this.oldIndex !== this.newIndex && halfway) {
+            this.rootEl.insertBefore(this.dragEl, after ? target.nextSibling : target);
             this.onUpdateAlt(parseInt(this.oldIndex), parseInt(this.newIndex));
             this.oldIndex = this.newIndex * 1
           }
         }
         this.timer = null;
-      }, 150)
+      }, 30)
     }
 
 

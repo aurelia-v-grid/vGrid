@@ -4,7 +4,6 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-
 import {inject, noView, customElement, bindable, processContent, TargetInstruction} from 'aurelia-framework';
 import {VGrid} from './v-grid';
 
@@ -24,6 +23,13 @@ import {VGrid} from './v-grid';
   }
 
   element.innerHTML = '';
+
+  //we want to get this css attribute and use if later
+  var css = element.getAttribute("css");
+  if(css){
+    instruction.rowCSS = css;
+  }
+
 
 })
 @customElement('v-grid-col')
@@ -49,6 +55,7 @@ export class VGridElementColConfig {
     this.element = element;
     this.rowTemplate = targetInstruction.elementInstruction.rowTemplate;
     this.headerTemplate = targetInstruction.elementInstruction.headerTemplate;
+    this.cssString = targetInstruction.elementInstruction.rowCSS;
   }
 
 
@@ -76,6 +83,7 @@ export class VGridElementColConfig {
       filterOperator: this.filterOperator || "=",
       contextmenuHeader: this.contextmenuHeader === "true" ? true : false,
       contextmenuRow: this.contextmenuRow === "true" ? true : false,
+      css:this.cssString,
       type: this.type || "text",
       tempRef:this.tempRef || false
     });

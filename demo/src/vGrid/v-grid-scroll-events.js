@@ -150,7 +150,7 @@ export class VGridScrollEvents {
       });
 
     //update row data
-    this.vGridGenerator.fillDataInRows();
+    this.vGridGenerator.rebindAllRowSlots();
   };
 
 
@@ -204,7 +204,7 @@ export class VGridScrollEvents {
         //update data
         if (update === true && currentRow >= 0 && currentRow <= this.vGridConfig.getCollectionLength() - 1) {
           this.vGridGenerator.setRowTopValue([row], 0, newTopValue);
-          this.vGridGenerator.insertRowMarkup(currentRow, row, isDownScroll, false);
+          this.vGridConfig.updateRowBinding(currentRow, row, isDownScroll, false);
         }
 
       }
