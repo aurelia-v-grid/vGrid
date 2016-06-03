@@ -142,11 +142,18 @@ export class VGridResizable {
     this.xElement = e.target;
     this.originalWidth = this.xElement.offsetParent.style.width;
     this.index = this.xElement.offsetParent.getAttribute("column-no");
-
+    this.started = false;
 
     //add mouse move event
     this.vGridGenerator.headerElement.onmousemove = (e) => {
+      this.started = true;
       this.onmousemove(e);
+    };
+    //incase they just release right away
+    this.vGridGenerator.headerElement.onmouseup = (e) => {
+      if(!this.started) {
+        this.vGridGenerator.headerElement.onmousemove ="";
+      }
     };
 
   }

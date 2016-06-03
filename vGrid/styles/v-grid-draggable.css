@@ -7,7 +7,7 @@
 .vGrid-draggable-handler {
   position: absolute;
   cursor: w-resize;
-  width: 5px;
+  width: 15px;
   right: 0;
   top: 0;
   bottom: 0;
