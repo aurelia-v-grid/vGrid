@@ -63,29 +63,38 @@ export class VGridMarkupGenerator {
       col.tempRef = col.tempRef || false;
       col.css = col.css || '';
 
+      //if selection type
+      if (col.type === "selection") {
+        //override to manual selection
+        this.vGrid.vGridConfig.attManualSelection = true;
+        //set template
+        col.headerTemplate = `<input class="vgrid-row-checkbox-100" v-selection="header" type="checkbox">`;
+        col.rowTemplate = `<input class="vgrid-row-checkbox-100"  v-selection="row" type="checkbox" >`;
 
-      //does a rowTemplate exist, if not we create one, else we skip it
-      if (!col.rowTemplate) {
-        if (col.type === "image") {
-          this.createImageRowMarkup(col);
-        } else {
-          this.createInputRowMarkup(col);
+      } else {
+
+        //does a rowTemplate exist, if not we create one, else we skip it
+        if (!col.rowTemplate) {
+          if (col.type === "image") {
+            this.createImageRowMarkup(col);
+          } else {
+            this.createInputRowMarkup(col);
+          }
         }
-      }
 
-
-      if (!col.headerTemplate) {
-        if (col.type === "image") {
-          var inputHeader = "";
-          var labelHeader = this.createLabelMarkup(col);
-        } else {
-          var inputHeader = this.createInputHeaderMarkup(col);
-          var labelHeader = this.createLabelMarkup(col);
-        }
-        if (col.filterTop) {
-          col.headerTemplate = inputHeader + labelHeader;
-        } else {
-          col.headerTemplate = labelHeader + inputHeader;
+        if (!col.headerTemplate) {
+          if (col.type === "image") {
+            var inputHeader = "";
+            var labelHeader = this.createLabelMarkup(col);
+          } else {
+            var inputHeader = this.createInputHeaderMarkup(col);
+            var labelHeader = this.createLabelMarkup(col);
+          }
+          if (col.filterTop) {
+            col.headerTemplate = inputHeader + labelHeader;
+          } else {
+            col.headerTemplate = labelHeader + inputHeader;
+          }
         }
       }
 
@@ -155,6 +164,7 @@ export class VGridMarkupGenerator {
     let colRef = col.tempRef ? `tempRef.${col.attribute}` : `"rowRef.${col.attribute}`;
     let attribute = `${colRef}${col.attribute}${col.valueFormater ? "|" + col.valueFormater : ''}`;
     let filter = `v-filter="${col.attribute}"`;
+
 
     //is it a checkbox ?
     if (col.type === "checkbox") {
