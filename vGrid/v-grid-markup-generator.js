@@ -142,7 +142,8 @@ export class VGridMarkupGenerator {
     let classNames = `class="${col.type === "checkbox" ? 'vgrid-row-checkbox-100' : 'vgrid-row-input'}"`;
     let type = `type="${col.type}"`;
     let colRef = col.tempRef ? `tempRef.${col.attribute}` : `rowRef.${col.attribute}`;
-    let attribute = `${colRef}${col.valueFormater ? "|" + col.valueFormater + "& updateTrigger:'blur':'paste'" : ""}`;
+    let valueFormater = `${col.valueFormater ? "|" + col.valueFormater + "& updateTrigger:'blur':'paste'" : ""}`;
+    let attribute = `${colRef}${valueFormater}`;
     let contextmenu = col.contextmenuRow ? 'v-grid-row-menu="' + col.attribute + '""' : '';
     let css = col.css ? `css="${col.css}"` : '';
 
@@ -161,9 +162,11 @@ export class VGridMarkupGenerator {
     let classNames = '';
     let contextmenu = col.contextmenuHeader ? "v-header-menu=" + col.attribute + "" : "";
     let type = `type="${col.type}"`;
-    let colRef = col.tempRef ? `tempRef.${col.attribute}` : `"rowRef.${col.attribute}`;
-    let attribute = `${colRef}${col.attribute}${col.valueFormater ? "|" + col.valueFormater : ''}`;
-    let filter = `v-filter="${col.attribute}"`;
+    let colRef = col.tempRef ? `tempRef.${col.attribute}` : `rowRef.${col.attribute}`;
+    let valueFormater = `${col.valueFormater ? "|" + col.valueFormater : ''}`;
+    let FilterOperater = `${col.attribute}${col.filterOperator ? "|" + col.filterOperator : ''}`;
+    let attribute = `${colRef}${col.attribute}${valueFormater}${FilterOperater}`;
+    let filter = `v-filter="${attribute}"`;
 
 
     //is it a checkbox ?
