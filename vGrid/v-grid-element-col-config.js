@@ -72,7 +72,7 @@ export class VGridElementColConfig {
     this.vGrid.vGridConfig.columnLength++; //count columns
 
     this.vGrid.vGridConfig.colConfig.push({
-      width: this.vColWidth || 100,
+      width: this.width || 100,
       rowTemplate: this.rowTemplate,
       headerTemplate: this.headerTemplate,
       attribute: this.attribute,
