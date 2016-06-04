@@ -140,11 +140,23 @@ export class VGridMarkupGenerator {
   createInputRowMarkup(col) {
     //get the values/settings
     let classNames = `class="${col.type === "checkbox" ? 'vgrid-row-checkbox-100' : 'vgrid-row-input'}"`;
+
+    //type
     let type = `type="${col.type}"`;
+
+    //rowRef or tempRef
     let colRef = col.tempRef ? `tempRef.${col.attribute}` : `rowRef.${col.attribute}`;
-    let valueFormater = `${col.valueFormater ? "|" + col.valueFormater + "& updateTrigger:'blur':'paste'" : ""}`;
+
+    //value formater, if it is we want just on blur event/paste
+    let valueFormater = col.valueFormater ? "|" + col.valueFormater + "& updateTrigger:'blur':'paste'" : "";
+
+    //set attibute by combining colRef and valueFormater
     let attribute = `${colRef}${valueFormater}`;
+
+    //get contextmenu
     let contextmenu = col.contextmenuRow ? 'v-grid-row-menu="' + col.attribute + '""' : '';
+
+    //get css
     let css = col.css ? `css="${col.css}"` : '';
 
     //is it a checkbox?
@@ -158,18 +170,19 @@ export class VGridMarkupGenerator {
 
 
   createInputHeaderMarkup(col) {
-    //get the values/settings
-    let classNames = '';
+    //context menu
     let contextmenu = col.contextmenuHeader ? "v-header-menu=" + col.attribute + "" : "";
-    let type = `type="${col.type}"`;
-    let colRef = col.tempRef ? `tempRef.${col.attribute}` : `rowRef.${col.attribute}`;
-    let valueFormater = `${col.valueFormater ? "|" + col.valueFormater : ''}`;
-    let FilterOperater = `${col.attribute}${col.filterOperator ? "|" + col.filterOperator : ''}`;
-    let attribute = `${colRef}${col.attribute}${valueFormater}${FilterOperater}`;
-    let filter = `v-filter="${attribute}"`;
 
+    //type
+    let type = `type="${col.type}"`;
+
+    //build filter
+    let valueFormater = col.valueFormater ? "|" + col.valueFormater : '';
+    let filterOperater = col.filterOperator ? "|" + col.filterOperator : '';
+    let filter = `v-filter="${col.attribute}${valueFormater}${filterOperater}"`;
 
     //is it a checkbox ?
+    let classNames = '';
     if (col.type === "checkbox") {
       classNames = `class="${col.filterTop ? "vgrid-row-checkbox-50" : "vgrid-row-checkbox-50"}"`;
     } else {
