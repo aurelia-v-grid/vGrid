@@ -30,7 +30,6 @@ export class VGridHeaderMenu extends Contextmenu {
     } else {
       this.defaultMenu(value)
     }
-
   };
 
 
@@ -48,16 +47,16 @@ export class VGridHeaderMenu extends Contextmenu {
         isHeader: true
       }, {
         action: "clear-cell",
-        value: "Clear cell",
+        value: "Clear cell"
       }, {
         action: "clear-all",
-        value: "Clear All Cells",
+        value: "Clear All Cells"
       }, {
         action: "show-all",
-        value: "Show all (keep filter text)",
+        value: "Show all (keep filter text)"
       }, {
         action: "set-filter",
-        value: "Set Filter",
+        value: "Set Filter"
       }
     ]);
   }
@@ -133,9 +132,8 @@ export class VGridHeaderMenu extends Contextmenu {
       default:
         this.toggleMenuOff();
     }
-
-
   }
+
 
 
   triggerEvent(name, data) {

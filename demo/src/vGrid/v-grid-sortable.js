@@ -18,16 +18,36 @@ export class VGridSortable {
   sortable = false;
 
 
+
   constructor(vGrid) {
     this.vGrid = vGrid;
+    this.drophelper = [];
   }
 
 
   setDragHandles() {
     //we haveto control dragging only to headers with draghandle
-    var dragHandles = this.vGrid.vGridGenerator.gridElement.getElementsByTagName('v-grid-header-col');
-    [].slice.call(dragHandles).forEach((itemEl) => {
-      itemEl.classList.add("vGrid-vGridDragHandle");
+    var dragHandles = this.vGrid.vGridGenerator.gridElement.getElementsByClassName('vGrid-vGridDragHandle');
+    [].slice.call(dragHandles).forEach((itemEl, index) => {
+
+      let mainCol = itemEl;
+      while(mainCol.nodeName !== 'V-GRID-HEADER-COL'){
+        mainCol = mainCol.offsetParent;
+      }
+
+      //simple drophelper
+      var drophelper = document.createElement("v-grid-drop");
+      drophelper.style.width = "30px";
+      drophelper.style.bottom  = 0;
+      drophelper.style.top = 0;
+      drophelper.style.left = "50%";
+      drophelper.setAttribute("column-no", index);
+      //drophelper.style["background-color"] = "blue"; enable to see them
+      drophelper.style["z-index"] = "-100";
+      drophelper.style.position = "absolute";
+      mainCol.appendChild(drophelper);
+      this.drophelper.push(drophelper);
+
       itemEl.onmouseenter = () => {
         this.canMove = true;
         //add draggable to elements
@@ -64,6 +84,7 @@ export class VGridSortable {
   };
 
   isDragHandle() {
+
     return this.canMove
   };
 
@@ -85,8 +106,6 @@ export class VGridSortable {
     [].slice.call(dragHandles).forEach((itemEl, index) => {
       //todo,need to improve this part a lot, need to traverse until I get to V-GRID-ROW-COl
       itemEl.setAttribute("column-no", index);
-      //update viewmodel, is needed since I dont redraw headers anymore
-      // itemEl.au["v-grid-header-col"].viewModel.columnNo = index + ""
     });
     this.vGrid.vGridGenerator.rebuildColumnsRows();
 
@@ -105,15 +124,16 @@ export class VGridSortable {
   //triggered on drag start
   onDragStart(evt) {
     this.dragEl = evt.target;
+    console.log(evt)
     this.oldIndex = evt.target.getAttribute("column-no");
+
+    this.drophelper.forEach((item)=>{
+      item.style["z-index"] = "100";
+    });
 
     if (this.isDragHandle()) {
       this.onStart();
       this.nextEl = this.dragEl.nextSibling;
-
-      var rect = this.dragEl.getBoundingClientRect();
-      this.offsetHandleX = evt.clientX - rect.left;
-
 
       evt.dataTransfer.effectAllowed = 'move';
       evt.dataTransfer.setData('Text', '');
@@ -150,43 +170,30 @@ export class VGridSortable {
           evt.stopPropagation();
         }
 
-        /*************************************************************
-         *TODO: this is just a mess! need to improve
-         *************************************************************/
-
         var target = evt.target.offsetParent;
         try {
-          var targetNode = target.nodeName === 'V-GRID-HEADER-COL';
+          var targetNode = evt.target.nodeName === 'V-GRID-DROP';
         } catch (e) {
-          var targetNode = null;
         }
 
         if (target && target !== this.dragEl && targetNode) {
 
+          //get out new index
           this.newIndex = target.getAttribute("column-no");
 
+          //get the rect of what we are moving to
           var rect = target.getBoundingClientRect();
           var width = rect.right - rect.left;
           var height = rect.bottom - rect.top;
 
-          var isWide = (target.offsetWidth > this.dragEl.offsetWidth);
           var isLong = (target.offsetHeight > this.dragEl.offsetHeight);
           var halfway = ((evt.clientX - rect.left) / width) > 0.5;
 
           this.nextSibling = target.nextElementSibling;
           var after = (this.nextSibling !== this.dragEl) && !isLong || halfway && isLong;
 
-          if (after) {
-            if (this.nextSibling && isWide) {
-              //stop it from jumping back we need to stop 1 way if its wide
-              //evt.clientX - this.offsetHandleX = original left +half size need to be larger then opisite side minus half of the element we drag, that way it can jump back
-              var halfway = ((evt.clientX - this.offsetHandleX) + this.dragEl.offsetWidth / 2) > rect.right - (this.dragEl.offsetWidth / 2); //lol
-            } else {
-              halfway = true;
-            }
-          }
 
-          if (this.oldIndex !== this.newIndex && halfway) {
+          if (this.oldIndex !== this.newIndex) {
             this.rootEl.insertBefore(this.dragEl, after ? target.nextSibling : target);
             setTimeout(()=> {
               this.onUpdateAlt(parseInt(this.oldIndex), parseInt(this.newIndex));
@@ -207,7 +214,9 @@ export class VGridSortable {
   onDragEnd(evt) {
 
     evt.preventDefault();
-
+    this.drophelper.forEach((item)=>{
+      item.style["z-index"] = "-100";
+    });
     this.dragEl.classList.remove('ghost');
     this.rootEl.removeEventListener('dragover)', this.onDragOver, false);
     this.rootEl.removeEventListener('dragend', this.onDragEnd, false);

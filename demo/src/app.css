@@ -24,3 +24,27 @@ section {
   height:500px;
   width:100%;
 }
+
+.vgrid-header-input1 {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: initial;
+  box-shadow: initial;
+
+  height: 100%;
+  width: 100%;
+  background-color: white !important;
+  padding: 5px 10px;
+  margin: initial !important;
+  transition: initial !important;
+}
+
+.wow{
+  background-color: white;
+}
+
+td{
+  border-top: 1px solid rgb(230, 230, 230) !important;
+  border-right: 1px solid rgb(230, 230, 230) !important;
+  width:150px;
+}

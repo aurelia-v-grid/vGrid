@@ -15,7 +15,7 @@
     <!------------------------------------------------------------------------------------------------------------------------------------>
 
 
-<h3>Local array custom column demo <span class="label label-default">updated:02.June-2016, Rev:01</span></h3>
+<h3>Local array custom column demo <span class="label label-default">updated:05.June-2016, Rev:01</span></h3>
 </div>
 </div>
 <div class="row">
@@ -62,7 +62,7 @@
           <v-grid-col width="90">
             <v-header-template>
               <input v-header-menu="index" class="vgrid-header-input-top" v-filter="index|>|numberFormater"  value.bind="tempRef.index">
-              <p class="vgrid-label-bottom" v-sort="index">Index</p>
+              <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="index">Index</p>
             </v-header-template>
             <v-row-template>
               <input v-row-menu="index" class="vgrid-row-input" value.bind="tempRef.index">
@@ -73,7 +73,7 @@
           <v-grid-col width="100">
             <v-header-template>
               <input v-header-menu="name" class="vgrid-header-input-top" v-filter="name|enter|*" value.bind="tempRef.name">
-              <p class="vgrid-label-bottom" v-sort="name">Name</p>
+              <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="name">Name</p>
             </v-header-template>
             <v-row-template>
               <input v-row-menu="name" class="vgrid-row-input" value.bind="rowRef.name">
@@ -84,7 +84,7 @@
           <v-grid-col width="100">
             <v-header-template>
               <input v-header-menu="number" class="vgrid-header-input-top" v-filter="number|enter|>=" value.bind="tempRef.number">
-              <p class="vgrid-label-bottom" v-sort="number">Number</p>
+              <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="number">Number</p>
             </v-header-template>
             <v-row-template>
               <input v-row-menu="number" class="vgrid-row-input" value.bind="rowRef.number | numberFormat  & updateTrigger:'blur':'paste'"
@@ -99,8 +99,8 @@
 
           <v-grid-col width="90">
             <v-header-template>
-              <div style="height:50%""></div>
-              <p  class=" vgrid-label-bottom">Index</p>
+              <div style="height:50%"></div>
+              <p  class=" vgrid-label-bottom vGrid-vGridDragHandle">Image</p>
             </v-header-template>
             <v-row-template>
               <image class="vgrid-image-round" v-image-fix v-row-menu="image" src.bind="rowRef.images"></image>
@@ -111,7 +111,7 @@
           <v-grid-col width="70">
             <v-header-template>
               <input class="vgrid-row-checkbox-50" v-header-menu="bool" type="checkbox" v-filter="bool|enter|=">
-              <p class="vgrid-label-bottom" v-sort="bool">Bool</p>
+              <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="bool">Bool</p>
             </v-header-template>
             <v-row-template>
               <input class="vgrid-row-checkbox-100" v-row-menu="bool" type="checkbox" checked.bind="rowRef.bool">
