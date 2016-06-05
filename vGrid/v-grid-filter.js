@@ -102,6 +102,10 @@ export class VGridFilter {
             rowValue = data[x.attribute];
             filterValue = Number(x.value);
             filterOperator = filterOperator || 1;
+            if(filterOperator === 6){
+              filterOperator = 1;
+            }
+
             break;
           case "string":
             rowValue = data[x.attribute].toLowerCase();

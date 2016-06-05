@@ -41,6 +41,7 @@ export class VGridElementColConfig {
   @bindable sort; //default false
   @bindable filter; //default false
   @bindable filterTop;//default false
+  @bindable valueConverter; //default
   @bindable filterOperator; //default
   @bindable contextmenuHeader; //default false
   @bindable contextmenuRow;//default false
@@ -81,6 +82,7 @@ export class VGridElementColConfig {
       filter: this.filter === "true" ? true : false,
       filterTop: this.filterTop === "true" ? true : false,
       filterOperator: this.filterOperator || "=",
+      valueFormater:this.valueConverter || null,
       contextmenuHeader: this.contextmenuHeader === "true" ? true : false,
       contextmenuRow: this.contextmenuRow === "true" ? true : false,
       css:this.cssString,

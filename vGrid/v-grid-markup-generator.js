@@ -67,8 +67,9 @@ export class VGridMarkupGenerator {
       if (col.type === "selection") {
         //override to manual selection
         this.vGrid.vGridConfig.attManualSelection = true;
+        let dragDropClass = this.vGrid.vGridConfig.attSortableHeader ? "vGrid-vGridDragHandle": "";
         //set template
-        col.headerTemplate = `<input class="vgrid-row-checkbox-100" v-selection="header" type="checkbox">`;
+        col.headerTemplate = `<input class="vgrid-row-checkbox-100 ${dragDropClass}" v-selection="header" type="checkbox">`;
         col.rowTemplate = `<input class="vgrid-row-checkbox-100"  v-selection="row" type="checkbox" >`;
 
       } else {
@@ -154,7 +155,7 @@ export class VGridMarkupGenerator {
     let attribute = `${colRef}${valueFormater}`;
 
     //get contextmenu
-    let contextmenu = col.contextmenuRow ? 'v-grid-row-menu="' + col.attribute + '""' : '';
+    let contextmenu = col.contextmenuRow ? 'v-row-menu="' + col.attribute + '""' : '';
 
     //get css
     let css = col.css ? `css="${col.css}"` : '';
@@ -171,22 +172,22 @@ export class VGridMarkupGenerator {
 
   createInputHeaderMarkup(col) {
     //context menu
-    let contextmenu = col.contextmenuHeader ? "v-header-menu=" + col.attribute + "" : "";
+    let contextmenu = col.contextmenuHeader ? `v-header-menu="${col.attribute}"` : '';
 
     //type
     let type = `type="${col.type}"`;
 
     //build filter
-    let valueFormater = col.valueFormater ? "|" + col.valueFormater : '';
-    let filterOperater = col.filterOperator ? "|" + col.filterOperator : '';
+    let valueFormater = col.valueFormater ? '|' + col.valueFormater : '';
+    let filterOperater = col.filterOperator ? '|' + col.filterOperator : '';
     let filter = `v-filter="${col.attribute}${valueFormater}${filterOperater}"`;
 
     //is it a checkbox ?
     let classNames = '';
     if (col.type === "checkbox") {
-      classNames = `class="${col.filterTop ? "vgrid-row-checkbox-50" : "vgrid-row-checkbox-50"}"`;
+      classNames = `class="${col.filterTop ? 'vgrid-row-checkbox-50' : 'vgrid-row-checkbox-50'}"`;
     } else {
-      classNames = `class="${col.filterTop ? "vgrid-header-input-top" : "vgrid-header-input-bottom"}"`;
+      classNames = `class="${col.filterTop ? 'vgrid-header-input-top' : 'vgrid-header-input-bottom'}"`;
     }
 
     //is it filter ?
@@ -204,8 +205,10 @@ export class VGridMarkupGenerator {
 
   createLabelMarkup(col) {
     //get the values/settings
-    let classname = col.filter ? `class="${col.filterTop ? "vgrid-label-bottom" : "vgrid-label-top"}"` : 'class="vgrid-label-full"';
-    let sort = `${col.sort ? "v-sort=" + col.attribute : ""}`;
+    let filterClass = col.filter ? `${col.filterTop ? 'vgrid-label-bottom' : 'vgrid-label-top'}` : 'vgrid-label-full';
+    let dragDropClass = this.vGrid.vGridConfig.attSortableHeader ? 'vGrid-vGridDragHandle': '';
+    let classname = `class="${dragDropClass} ${filterClass}"`;
+    let sort = `${col.sort ? "v-sort=" + col.attribute : ''}`;
     let markup = `<p ${classname} ${sort}>${col.header}</p>`;
     //return the markup
     return markup;

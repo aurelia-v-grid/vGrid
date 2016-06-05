@@ -18,28 +18,35 @@ export class VGridSortable {
   sortable = false;
 
 
+
   constructor(vGrid) {
     this.vGrid = vGrid;
+    this.drophelper = [];
   }
 
 
   setDragHandles() {
     //we haveto control dragging only to headers with draghandle
-    var dragHandles = this.vGrid.vGridGenerator.gridElement.getElementsByTagName('v-grid-header-col');
+    var dragHandles = this.vGrid.vGridGenerator.gridElement.getElementsByClassName('vGrid-vGridDragHandle');
     [].slice.call(dragHandles).forEach((itemEl, index) => {
-      itemEl.classList.add("vGrid-vGridDragHandle");
+
+      let mainCol = itemEl;
+      while(mainCol.nodeName !== 'V-GRID-HEADER-COL'){
+        mainCol = mainCol.offsetParent;
+      }
 
       //simple drophelper
       var drophelper = document.createElement("v-grid-drop");
-      drophelper.style.width = "10px";
+      drophelper.style.width = "30px";
       drophelper.style.bottom  = 0;
       drophelper.style.top = 0;
-      drophelper.style.left = 0;
+      drophelper.style.left = "50%";
       drophelper.setAttribute("column-no", index);
       //drophelper.style["background-color"] = "blue"; enable to see them
-      drophelper.style["z-index"] = "100";
+      drophelper.style["z-index"] = "-100";
       drophelper.style.position = "absolute";
-      itemEl.appendChild(drophelper);
+      mainCol.appendChild(drophelper);
+      this.drophelper.push(drophelper);
 
       itemEl.onmouseenter = () => {
         this.canMove = true;
@@ -77,6 +84,7 @@ export class VGridSortable {
   };
 
   isDragHandle() {
+
     return this.canMove
   };
 
@@ -116,7 +124,12 @@ export class VGridSortable {
   //triggered on drag start
   onDragStart(evt) {
     this.dragEl = evt.target;
+    console.log(evt)
     this.oldIndex = evt.target.getAttribute("column-no");
+
+    this.drophelper.forEach((item)=>{
+      item.style["z-index"] = "100";
+    });
 
     if (this.isDragHandle()) {
       this.onStart();
@@ -201,7 +214,9 @@ export class VGridSortable {
   onDragEnd(evt) {
 
     evt.preventDefault();
-
+    this.drophelper.forEach((item)=>{
+      item.style["z-index"] = "-100";
+    });
     this.dragEl.classList.remove('ghost');
     this.rootEl.removeEventListener('dragover)', this.onDragOver, false);
     this.rootEl.removeEventListener('dragend', this.onDragEnd, false);
