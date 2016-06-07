@@ -125,8 +125,17 @@ export class VGridConfig {
   
   setBindValueString(value, toProperty) {
     if (typeof(value) === "string" && value !== '' && value !== undefined && value !== null) {
-      this[toProperty] = this.setValue(value, this[toProperty]);
+      if(toProperty === "attRemoteIndex"){
+        //this one is special, for tracking remote
+        this[toProperty] = true;
+        this.vGrid.vGridRowKey = value;
+      } else {
+        this[toProperty] = value;
+      }
+
+
     }
+
   }
 
 

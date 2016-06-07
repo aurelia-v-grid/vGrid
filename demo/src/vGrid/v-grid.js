@@ -169,7 +169,7 @@ export class VGrid {
     vConfig.setBindValueBool(this.attManualSelection, 'attManualSelection');
     vConfig.setBindValueFunction(this.eventOnRowDraw, 'eventOnRowDraw');
     vConfig.setBindValueFunction(this.eventOnRemoteCall, 'eventOnRemoteCall');
-
+    
 
     //lets test that they have set the mandatory config settings
     if (this.vGridCollection === undefined || this.vGridCurrentEntity === undefined) {
