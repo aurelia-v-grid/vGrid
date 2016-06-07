@@ -23,43 +23,29 @@ export class sample01 {
 
   columnSetup = [
     {
-      attribute: "date",
-      filter: true,
+      attribute: "rowRef.date | dateFormat",
+      filter: "date|>|dateFormat",
       filterTop: true,
-      sort: true,
-      contextmenuRow: true,
-      contextmenuHeader: true,
-      valueFormater: "dateFormat"
+      sort: "date"
     }, {
-      attribute: "name",
+      attribute: "rowRef.name",
+      filterTop: "name",
+      filter: "name|*|onKeyDown",
+      sort: "name"
+    }, {
+      attribute: "rowRef.first",
+      filter: "first|*",
       filterTop: true,
-      filter: false,
-      sort: true,
-      contextmenuRow: true,
-      contextmenuHeader: true
+      sort: "first"
     }, {
-      attribute: "first",
-      filter: true,
+      attribute: "rowRef.bool",
+      filter: "bool",
       filterTop: false,
-      sort: true,
-      contextmenuRow: true,
-      contextmenuHeader: true
+      sort: "bool",
+      type:"checkbox"
     }, {
-      attribute: "bool",
-      filter: true,
-      filterTop: false,
-      sort: true,
-      type:"checkbox",
-      contextmenuRow: true,
-      contextmenuHeader: true
-    }, {
-      attribute: "images",
-      filter: true,
-      filterTop: false,
-      sort: true,
-      type:"image",
-      contextmenuRow: true,
-      contextmenuHeader: true
+      attribute: "rowRef.images",
+      type:"image"
     }
 
   ]

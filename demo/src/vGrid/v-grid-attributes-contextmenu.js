@@ -6,7 +6,7 @@
  *
  ****************************************************************************************************************/
 
-import {inject, customAttribute, Optional} from 'aurelia-framework';
+import {inject, customAttribute} from 'aurelia-framework';
 import {VGrid} from './v-grid';
 import {Contextmenu} from './v-grid-contextmenu';
 

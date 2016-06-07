@@ -37,7 +37,7 @@
   display: block;
   opacity: initial !important;
   margin: auto !important;
-  outline: none !important;
+  /*outline: none !important;*/
 }
 
 
@@ -49,7 +49,7 @@
   position: initial !important;
   display: block;
   margin: auto !important;
-  outline: none !important;
+  /*outline: none !important;*/
 }
 
 .vgrid-row-input {

@@ -15,7 +15,7 @@
       <!------------------------------------------------------------------------------------------------------------------------------------>
 
 
-      <h3>Local array, simple row column in html  <span class="label label-default">updated:05.June-2016, Rev:01</span></h3>
+      <h3>Local array, simple row column in html  <span class="label label-default">updated:07.June-2016, Rev:01</span></h3>
     </div>
   </div>
   <div class="row">
@@ -32,7 +32,6 @@
 
       <v-grid
         style="position:relative;height:400px;width:100%"
-        v-attibutes-observe="name,country,number,date,color"
         v-row-height="30"
         v-header-height="50"
         v-resizable-headers="true"
@@ -45,11 +44,11 @@
         v-current-entity.bind=myCurrentEntity
         v-collection.bind=myCollection
         v-grid-context.bind=myGrid>
-        <v-grid-col width="110" attribute="number" filter="true" filter-operator="*" sort="true" css="color:${tempRef.numberColor};font-weight:${tempRef.numberFont}"></v-grid-col>
-        <v-grid-col  attribute="first"></v-grid-col>
-        <v-grid-col  type="checkbox" attribute="bool" filter="true" filter-operator="*" sort="true"></v-grid-col>
-        <v-grid-col  type="image" attribute="images" filter="true" filter-operator="*" sort="true"></v-grid-col>
-        <v-grid-col  attribute="name" filter="true" filter-top="true"></v-grid-col>
+        <v-grid-col attribute-row="v-row-menu='number'" width="110" attribute="rowRef.number" filter="number|>" sort="number" css="color:${tempRef.numberColor};font-weight:${tempRef.numberFont}"></v-grid-col>
+        <v-grid-col attribute="rowRef.first"  filter="first|*" ></v-grid-col>
+        <v-grid-col type="checkbox" attribute="rowRef.bool" filter="bool" sort="bool"></v-grid-col>
+        <v-grid-col type="image" attribute="rowRef.images" sort="images"></v-grid-col>
+        <v-grid-col attribute="rowRef.name" filter="name|*|onKeyDown" filter-top="true"></v-grid-col>
       </v-grid>
 
 

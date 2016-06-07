@@ -15,7 +15,7 @@
     <!------------------------------------------------------------------------------------------------------------------------------------>
 
 
-<h3>Local array custom column demo <span class="label label-default">updated:05.June-2016, Rev:01</span></h3>
+<h3>Local array custom column demo <span class="label label-default">updated:07.June-2016, Rev:01</span></h3>
 </div>
 </div>
 <div class="row">
@@ -65,7 +65,7 @@
               <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="index">Index</p>
             </v-header-template>
             <v-row-template>
-              <input v-row-menu="index" class="vgrid-row-input" value.bind="tempRef.index">
+              <input v-key-move v-row-menu="index" class="vgrid-row-input" value.bind="tempRef.index">
             </v-row-template>
           </v-grid-col>
 
@@ -76,9 +76,12 @@
               <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="name">Name</p>
             </v-header-template>
             <v-row-template>
-              <input v-row-menu="name" class="vgrid-row-input" value.bind="rowRef.name">
+              <input v-key-move v-row-menu="name" class="vgrid-row-input" value.bind="rowRef.name">
             </v-row-template>
           </v-grid-col>
+
+
+
 
 
           <v-grid-col width="100">
@@ -87,23 +90,23 @@
               <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="number">Number</p>
             </v-header-template>
             <v-row-template>
-              <input v-row-menu="number" class="vgrid-row-input" value.bind="rowRef.number | numberFormat  & updateTrigger:'blur':'paste'"
+              <input v-key-move v-row-menu="number" class="vgrid-row-input" value.bind="rowRef.number | numberFormat  & updateTrigger:'blur':'paste'"
                      css="color:${tempRef.numberColor};font-weight:${tempRef.numberFont}">
             </v-row-template>
           </v-grid-col>
 
 
 
-          <v-grid-col width="70" attribute="last" filter="true"></v-grid-col>
+          <!-- <v-grid-col width="70" attribute="last" filter="true"></v-grid-col> -->
 
 
-          <v-grid-col width="90">
+           <v-grid-col width="90">
             <v-header-template>
               <div style="height:50%"></div>
               <p  class=" vgrid-label-bottom vGrid-vGridDragHandle">Image</p>
             </v-header-template>
             <v-row-template>
-              <image class="vgrid-image-round" v-image-fix v-row-menu="image" src.bind="rowRef.images"></image>
+              <image  v-key-move tabindex="0" class="vgrid-image-round" v-image-fix v-row-menu="image" src.bind="rowRef.images"></image>
             </v-row-template>
           </v-grid-col>
 
@@ -114,7 +117,7 @@
               <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="bool">Bool</p>
             </v-header-template>
             <v-row-template>
-              <input class="vgrid-row-checkbox-100" v-row-menu="bool" type="checkbox" checked.bind="rowRef.bool">
+              <input v-key-move class="vgrid-row-checkbox-100" v-row-menu="bool" type="checkbox" checked.bind="rowRef.bool">
             </v-row-template>
           </v-grid-col>
 
@@ -123,11 +126,11 @@
 
           <v-grid-col width="180">
             <v-header-template>
-              <input v-header-menu="date" class="vgrid-header-input-top" v-filter="date | enter | >=| dateFormat">
+              <input v-header-menu="date" class="vgrid-header-input-top vGrid-vGridDragHandle" v-filter="date | enter | >=| dateFormat">
               <p class="vgrid-label-bottom" v-sort="date">Date</p>
             </v-header-template>
             <v-row-template>
-              <input v-row-menu="date" class="vgrid-row-input" value.bind="rowRef.date | dateFormat">
+              <input v-key-move v-row-menu="date" class="vgrid-row-input" value.bind="rowRef.date | dateFormat">
             </v-row-template>
           </v-grid-col>
 
@@ -135,11 +138,11 @@
 
           <v-grid-col width="160">
             <v-header-template>
-              <input v-header-menu="color" class="vgrid-header-input-top" v-filter="bool|enter|*">
+              <input v-header-menu="color" class="vgrid-header-input-top vGrid-vGridDragHandle" v-filter="bool|enter|*">
               <p class="vgrid-label-bottom" v-sort="color">Color</p>
             </v-header-template>
             <v-row-template>
-              <input v-row-menu="color" class="vgrid-row-input" value.bind="rowRef.color">
+              <input v-key-move v-row-menu="color" class="vgrid-row-input" value.bind="rowRef.color">
             </v-row-template>
           </v-grid-col>
 

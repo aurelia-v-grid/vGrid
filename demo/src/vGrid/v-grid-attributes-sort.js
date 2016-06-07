@@ -3,7 +3,7 @@
  *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-import {inject, customAttribute, Optional} from 'aurelia-framework';
+import {inject, customAttribute} from 'aurelia-framework';
 import {VGrid} from './v-grid';
 
 
