@@ -9,6 +9,7 @@ export function configure(config) {
     'vGrid/v-grid-attributes-selection',
     'vGrid/v-grid-attributes-image',
     'vGrid/v-grid-attributes-key-move',
-    'vGrid/v-grid-attributes-contextmenu'
+    'vGrid/v-grid-attributes-contextmenu',
+    'vGrid/v-grid-attributes-update-current-entity-on'
   );
 }

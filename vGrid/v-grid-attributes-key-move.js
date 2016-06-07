@@ -39,7 +39,7 @@ export class vGridAttributesKeyMove {
 
     });
 
-    
+
     this.element.addEventListener('focus', (e)=> {
 
       if (this.vGrid.vGridCurrentEntityRef === null) {
