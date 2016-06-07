@@ -9,7 +9,7 @@ import {VGrid} from './v-grid';
 
 @customAttribute('v-key-move')
 @inject(Element, VGrid)
-export class vGridAttributesSort {
+export class vGridAttributesKeyMove {
 
 
   constructor(element, vGrid) {
@@ -32,7 +32,23 @@ export class vGridAttributesSort {
 
     this.element.addEventListener('tabbing', (e)=> {
       this.element.focus();
-    })
+
+      let ev = document.createEvent('Event');
+      ev.initEvent("click", true, true);
+      this.element.offsetParent.dispatchEvent(ev);
+
+    });
+
+    
+    this.element.addEventListener('focus', (e)=> {
+
+      if (this.vGrid.vGridCurrentEntityRef === null) {
+        let ev = document.createEvent('Event');
+        ev.initEvent("click", true, true);
+        this.element.offsetParent.dispatchEvent(ev);
+      }
+
+    });
 
   }
 
@@ -47,14 +63,6 @@ export class vGridAttributesSort {
     if (this.cells[index]) {
       this.cells[index].dispatchEvent(e);
     }
-
-    var e = document.createEvent('Event');
-    e.initEvent("click", true, true);
-
-    if (this.cells[index]) {
-      this.cells[index].offsetParent.dispatchEvent(e);
-    }
-
   }
 
 
@@ -78,7 +86,7 @@ export class vGridAttributesSort {
         }
         node = node.parentNode;
       } catch (err) {
-        console.warn("tabbing failure")
+        //nothing for now
       }
     }
     if (element) {
@@ -144,10 +152,12 @@ export class vGridAttributesSort {
   addGridKeyListner() {
 
 
-    this.element.onkeydown = function (e) {
+    this.element.onkeydown = (e) => {
+
 
       this.setCellsFromElement(this.element, 0);
       this.getIndex();
+
 
       //page up
       if (e.keyCode === 33) {
@@ -172,7 +182,7 @@ export class vGridAttributesSort {
 
           //if last scroll was up then we need to reverse the buffer
           if (this.vGrid.vGridScrollEvents.lastScrollType === "down") {
-            this.vGrid.vGridScrollEvents.onSmallScroll(false)
+            this.vGrid.vGridScrollEvents.onSmallScroll(false);
           }
 
           this.setCellsFromTopValue(newTop);
@@ -268,6 +278,8 @@ export class vGridAttributesSort {
 
       //normal tabbing
       if (e.keyCode === 9 && e.shiftKey === false) {
+
+
         e.preventDefault();
         this.keyDownDelay(() => {
           this.index = this.index + 1;
@@ -283,7 +295,7 @@ export class vGridAttributesSort {
 
       }
 
-    }.bind(this)
+    }
   }
 
 
