@@ -1,0 +1,125 @@
+/*here we can have utillity classes the users can use to simply fy use, and that we can use with future markup generator*/
+
+.vgrid-header-input-top {
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid rgb(230, 230, 230) !important;
+  border-radius: initial;
+  box-shadow: initial;
+  height: 50% !important;;
+  width: 100%;
+  background-color: white !important;
+  padding: 5px 10px;
+  margin: initial !important;
+  transition: initial !important;
+}
+
+.vgrid-header-input-bottom {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: initial;
+  box-shadow: initial;
+  border-top: 1px solid rgb(230, 230, 230) !important;
+  height: 50% !important;;
+  width: 100%;
+  background-color: white !important;
+  padding: 5px 10px;
+  margin: initial !important;
+  transition: initial !important;
+}
+
+
+.vgrid-row-checkbox-100 {
+  height: 100% !important;
+   width: initial;
+  left: initial !important;
+  position: initial !important;
+  display: block;
+  opacity: initial !important;
+  margin: auto !important;
+  /*outline: none !important;*/
+}
+
+
+.vgrid-row-checkbox-50 {
+  height: 50% !important;
+   width: initial;
+  opacity: initial;
+  left: initial !important;
+  position: initial !important;
+  display: block;
+  margin: auto !important;
+  /*outline: none !important;*/
+}
+
+.vgrid-row-input {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: initial;
+  box-shadow: initial;
+  height: 100% !important;
+  width: 100%;
+  background-color: transparent;
+  padding: 5px 10px !important;
+}
+
+
+.vgrid-image-round {
+  border-radius: 50%;
+  height: 100%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-top: 5px;
+}
+
+.vgrid-label-bottom{
+  box-sizing: border-box;
+  border: 0;
+  border-radius: initial;
+  box-shadow: initial;
+  height: 50%;
+  width: 100%;
+  position: relative;
+  margin: 0 !important;
+  padding-top: 5px;
+  text-align: center;
+}
+
+.vgrid-label-top{
+  box-sizing: border-box;
+  border: 0;
+  border-radius: initial;
+  box-shadow: initial;
+  height: 50%;
+  width: 100%;
+  position: relative;
+  margin: 0 !important;
+  padding-top: 5px;
+  text-align: center;
+}
+
+.vgrid-label-top p{
+  margin: 0 !important;
+}
+
+.vgrid-label-bottom p{
+  margin: 0 !important;
+}
+
+
+
+
+.vgrid-label-full{
+  box-sizing: border-box;
+  border: 0;
+  border-radius: initial;
+  box-shadow: initial;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  margin: 0 !important;
+  padding-top: 5px;
+  text-align: center;
+
+}
