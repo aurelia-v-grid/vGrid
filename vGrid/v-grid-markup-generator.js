@@ -51,7 +51,7 @@ export class VGridMarkupGenerator {
 
 
       //we want by default to observe attributes if we can
-      this.addToObserverArray(col.attribute);
+      this.addToObserverArray(this.getAttribute(col.attribute, false));
 
 
       //set default, some can be missing
@@ -60,6 +60,7 @@ export class VGridMarkupGenerator {
       col.header = col.header || this.getAttribute(col.attribute, true);
       col.width = col.width || 100;
       col.css = col.css || '';
+      col.attribute = this.checkAttribute(col.attribute);
 
       //if selection type
       if (col.type === "selection") {
@@ -126,6 +127,21 @@ export class VGridMarkupGenerator {
       return "missing!";
     }
   };
+
+
+  checkAttribute(attribute){
+    //not the best way... temp fix so they dont haveto write rowRef...
+    if(attribute){
+      if(attribute.indexOf("rowRef") === -1 && attribute.indexOf("tempRef") === -1){
+          return "rowRef."+attribute;
+      } else {
+        return attribute;
+      }
+    } else {
+      return attribute;
+    }
+
+  }
 
 
   addToObserverArray(value) {
