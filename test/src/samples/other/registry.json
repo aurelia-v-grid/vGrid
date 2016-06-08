@@ -1,0 +1,9 @@
+{
+  "title": "Other",
+  "samples": {
+    "basic-use": {
+      "default" : true,
+      "files": ["html", "js"]
+    }
+  }
+}

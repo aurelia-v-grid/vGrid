@@ -1,0 +1,1 @@
+module.exports = require("npm:tty-browserify@0.0.0/index");

@@ -1,0 +1,29 @@
+<template>
+  <require from="shared/valueConverters"></require>
+  <div class="row">
+
+    <v-grid
+      class="col-md-6"
+      style="height:350px"
+      v-row-height="25"
+      v-header-height="50"
+      v-multi-select="true"
+      v-row-onclick.delegate="singleClick($event.detail)"
+      v-row-ondblclick.delegate="singleDblClick($event.detail)"
+      v-current-entity.bind=myCurrentEntity
+      v-row-on-draw.call="onRowDraw($event)"
+      v-collection.bind=myCollection
+      v-grid-context.bind=myGrid>
+        <v-grid-col width="80" type="text" attribute="index" sort="index" header="Record" filter="index|>" filter-top="true" attribute-row="v-row-menu='index' v-key-move" attribute-filter="v-header-menu='date'"></v-grid-col>
+        <v-grid-col width="120" type="text" attribute="name" sort="name" header="Full name" filter="name|*|onKeyDown" filter-top="false" attribute-row="v-row-menu='name' v-key-move" attribute-filter="v-header-menu='name'"></v-grid-col>
+        <v-grid-col width="100" attribute="number | numberFormat & updateTrigger:'blur':'paste'" sort="number" header="Salery" filter="number|>=" filter-top="true" attribute-row="v-row-menu='number' v-key-move" attribute-filter="v-header-menu='number'" css="color:${tempRef.numberColor};font-weight:${tempRef.numberFont}"></v-grid-col>
+        <v-grid-col width="105" type="text" attribute="date | dateFormat & updateTrigger:'blur':'paste'" sort="date" header="Created" filter="date|>|dateFormat" filter-top="true" attribute-row="v-row-menu='date' v-key-move" attribute-filter="v-header-menu='date'"></v-grid-col>
+        <v-grid-col width="100" type="checkbox" attribute="bool" sort="bool" header="Booked" filter="bool|=" filter-top="true" attribute-row="v-row-menu='bool' v-key-move" attribute-filter="v-header-menu='bool'"></v-grid-col>
+        <v-grid-col width="107" type="image" attribute="images" header="Profile Img"  attribute-row="v-row-menu='images' v-key-move tabindex='0'" attribute-filter="v-header-menu='images'"></v-grid-col>
+    </v-grid>
+
+      <!-- Form to the right -->
+    <v-grid-control-form entity.bind="myCurrentEntity"></v-grid-control-form>
+
+  </div>
+</template>

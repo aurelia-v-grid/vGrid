@@ -1,0 +1,6 @@
+{
+  "registry": "npm",
+  "dependencies": {
+    "tty-browserify": "0.0.0"
+  }
+}

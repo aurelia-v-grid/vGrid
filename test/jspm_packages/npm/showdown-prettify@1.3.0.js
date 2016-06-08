@@ -1,0 +1,1 @@
+module.exports = require("npm:showdown-prettify@1.3.0/dist/showdown-prettify");

@@ -1,0 +1,12 @@
+{
+  "title": "Simple Html Config",
+  "samples": {
+    "basic-use": {
+      "default" : true,
+      "files": ["html", "js"]
+    },
+    "all": {
+      "files": ["html", "js"]
+    }
+  }
+}
