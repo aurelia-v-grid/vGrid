@@ -9,7 +9,7 @@ import {VGrid} from './v-grid';
 
 @customAttribute('v-update-current-entity-on')
 @inject(Element, VGrid)
-export class vGridAttributesSort {
+export class vGridAttributesUpdateCurrentEntityOn {
 
 
   constructor(element, vGrid) {
