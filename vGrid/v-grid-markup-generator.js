@@ -167,10 +167,11 @@ export class VGridMarkupGenerator {
     let css = col.css ? `css="${col.css}"` : '';
 
     //is it a checkbox?
+    //todo: adding the update part without choice, maybe param for that?
     if (col.type === "checkbox") {
-      col.rowTemplate = `<input ${css} ${classNames} ${type} ${attributeRow}  checked.bind="${col.attribute}">`;
+      col.rowTemplate = `<input v-update-current-entity-on="click" ${css} ${classNames} ${type} ${attributeRow}  checked.bind="${col.attribute}">`;
     } else {
-      col.rowTemplate = `<input ${css} ${classNames} ${type} ${attributeRow}  value.bind="${col.attribute}">`;
+      col.rowTemplate = `<input v-update-current-entity-on="keydown" ${css} ${classNames} ${type} ${attributeRow}  value.bind="${col.attribute}">`;
     }
 
   }
@@ -200,7 +201,7 @@ export class VGridMarkupGenerator {
       }
 
       //apply magic
-      markup = `<input ${classNames} ${attributeFilter} ${type} ${filter}">`;
+      markup = `<input  ${classNames} ${attributeFilter} ${type} ${filter}">`;
     } else {
       markup = '';
     }
@@ -223,7 +224,8 @@ export class VGridMarkupGenerator {
     let sort = col.sort ? `v-sort="${col.sort}"` : '';
 
     //apply magic
-    let markup = `<p ${classname} ${sort} ${attributeLabel}>${col.header}</p>`;
+    //todo, atm Im adding resize columns and dragdrop columns, should this be a choice?
+    let markup = `<p v-drag-drop-col v-resize-col ${classname} ${sort} ${attributeLabel}>${col.header}</p>`;
     //return the markup
     return markup;
   }

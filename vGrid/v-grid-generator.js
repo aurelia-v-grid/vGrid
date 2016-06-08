@@ -48,13 +48,6 @@ export class VGridGenerator {
     }
   }
 
-  get vGridSortable() {
-    if (this.vGrid) {
-      return this.vGrid.vGridSortable;
-    } else {
-      return null;
-    }
-  }
 
   get vGridResizable() {
     if (this.vGrid) {
@@ -177,8 +170,7 @@ export class VGridGenerator {
       this.vGridScrollEvents.lastScrollLeft = this.headerElement.scrollLeft;
 
     });
-    //this also includes the orderby click on header event
-    this.addResizableAndSortableEvent();
+
   }
 
 
@@ -552,7 +544,6 @@ export class VGridGenerator {
     this.headerElement.removeChild(this.headerScrollElement);
     this.createGridHeaderElement();
     this.createHeaderViewSlot();
-    this.addResizableAndSortableEvent();
   };
 
 
@@ -820,19 +811,6 @@ export class VGridGenerator {
   };
 
 
-  /****************************************************************************************************************************
-   * add the events  , info his is called everytime I rebuild headers, easier to rebuild then to have any logic
-   ****************************************************************************************************************************/
-  addResizableAndSortableEvent() {
-    //resize headers
-    if (this.vGridConfig.attResizableHeaders) {
-      this.vGridResizable.init();
-    }
-    //sortable columns
-    if (this.vGridConfig.attSortableHeader) {
-      this.vGridSortable.init()
-    }
-  };
 
 
 }

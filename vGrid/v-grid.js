@@ -11,10 +11,8 @@ import {TaskQueue, BindingEngine, bindable, ViewCompiler, ViewSlot, Container, V
 import {VGridGenerator} from './v-grid-generator';
 import {VGridFilter} from './v-grid-filter';
 import {VGridSort} from './v-grid-sort';
-import {VGridSortable} from './v-grid-sortable';
 import {VGridObservables} from './v-grid-observables';
 import {VGridConfig} from './v-grid-config';
-import {VGridResizable} from './v-grid-resizable';
 import {VGridSelection} from './v-grid-selection';
 import {VGridCtx} from './v-grid-ctx';
 import {VGridScrollEvents} from './v-grid-scroll-events';
@@ -30,11 +28,9 @@ export class VGrid {
   @bindable({attribute: "v-row-height"}) attRowHeight;
   @bindable({attribute: "v-header-height"}) attHeaderHeight;
   @bindable({attribute: "v-footer-height"}) attFooterHeight;
-  @bindable({attribute: "v-resizable-headers"}) attResizableHeaders;
   @bindable({attribute: "v-attibutes-observe"}) attAttributeObserve;
   @bindable({attribute: "v-multi-select"}) attMultiSelect;
   @bindable({attribute: "v-manual-sel"}) attManualSelection;
-  @bindable({attribute: "v-sortable-headers"}) attSortableHeader;
   @bindable({attribute: "v-loading-threshold"}) attLoadingThreshold;
   @bindable({attribute: "v-remote-index"}) attRemoteIndex;
   @bindable({attribute: "v-row-on-draw"}) eventOnRowDraw;
@@ -72,8 +68,6 @@ export class VGrid {
     this.vGridSort = new VGridSort(this);
     this.vGridConfig = new VGridConfig(this);
     this.vGridSelection = new VGridSelection(null, this);
-    this.vGridSortable = new VGridSortable(this);
-    this.vGridResizable = new VGridResizable(this);
     this.vGridObservables = new VGridObservables(this, bindingEngine);
     this.vGridGenerator = new VGridGenerator(this);
     this.vGridClientCtx = new VGridCtx(this);
@@ -169,7 +163,7 @@ export class VGrid {
     vConfig.setBindValueBool(this.attManualSelection, 'attManualSelection');
     vConfig.setBindValueFunction(this.eventOnRowDraw, 'eventOnRowDraw');
     vConfig.setBindValueFunction(this.eventOnRemoteCall, 'eventOnRemoteCall');
-    
+
 
     //lets test that they have set the mandatory config settings
     if (this.vGridCollection === undefined || this.vGridCurrentEntity === undefined) {

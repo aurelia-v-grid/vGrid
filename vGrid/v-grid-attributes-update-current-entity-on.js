@@ -15,6 +15,7 @@ export class vGridAttributesSort {
   constructor(element, vGrid) {
     this.vGrid = vGrid;
     this.element = element;
+    this.timer = null;
   }
 
 
@@ -27,11 +28,11 @@ export class vGridAttributesSort {
 
 
   attached() {
-
     //only way I know how to update this without user clicking on something on same row
 
     this.element.addEventListener(this.value,(e) => {
-      setTimeout(()=>{
+      clearTimeout(this.timer);
+      this.timer = setTimeout(()=>{
         let data = this.vGrid.vGridCurrentEntityRef;
         for (var k in data) {
           if (data.hasOwnProperty(k)) {

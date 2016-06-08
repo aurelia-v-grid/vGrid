@@ -14,7 +14,7 @@ export class VGridFilter {
     this.vGrid = vGrid;
   }
 
-  //not in use yet, todo: let it save last filter so I can have active filtering
+  //not in use yet
   lastFilter = [];
   queryStrings = {};
 

@@ -48,6 +48,9 @@ export class vGridAttributesKeyMove {
         this.element.offsetParent.dispatchEvent(ev);
       }
 
+
+
+
     });
 
   }
@@ -135,12 +138,15 @@ export class vGridAttributesKeyMove {
         this.index = i;
         if (i === 0) {
           this.first = true;
-          this.last = false;
+        } else {
+          this.first = false;
         }
         if (i === this.cells.length - 1) {
-          this.first = false;
           this.last = true;
+        } else {
+          this.last = false;
         }
+
       }
     }
   }
