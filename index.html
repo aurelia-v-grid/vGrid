@@ -20,19 +20,19 @@
       System.import('aurelia-bootstrapper');
 
       // Load the package.json from the root to get the package name
-      System.import("root/package.json!").then(function(m) {
-        var cfg = {
-           packages: {}
-        };
+     // System.import("root/package.json!").then(function(m) {
+    //    var cfg = {
+    //       packages: {}
+    //    };
 
         // Create a new systemjs package with the package name
-        cfg.packages[m.name] = {
-            "main": "index",
-            "dependencies": m.jspm.dependencies
-        };
+     //   cfg.packages[m.name] = {
+     //       "main": "index",
+     //       "dependencies": m.jspm.dependencies
+      //  };
 
-        System.config(cfg);
-      });
+    //    System.config(cfg);
+    //  });
 
     </script>
   </body>
