@@ -1,5 +1,5 @@
 System.config({
-  baseURL: "/vGrid",
+ // baseURL: "/vGrid",
   defaultJSExtensions: true,
   transpiler: "babel",
   babelOptions: {
