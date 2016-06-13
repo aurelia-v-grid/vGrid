@@ -1,7 +1,7 @@
 /* */ 
 (function(Buffer, process) {
-  var nodeAssert = require('assert');
-  var ourAssert = require('./assert');
+  var nodeAssert = require("assert");
+  var ourAssert = require("../assert@1.4.1");
   var keys = Object.keys;
   if (process.env.TEST_NATIVE === true) {
     tests(nodeAssert, 'node assert');
@@ -272,4 +272,4 @@
       }
     });
   }
-})(require('buffer').Buffer, require('process'));
+})(require("buffer").Buffer, require("process"));

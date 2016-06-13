@@ -14,20 +14,20 @@ export class BasicUse {
 
   columnSetup = [
     {
-      attribute: "index"
+      colField: "index"
     }, {
-      attribute: "name"
+      colField: "name"
     }, {
-      attribute: "number"
+      colField: "number"
     }, {
-      attribute: "date"
+      colField: "date"
     }, {
-      attribute: "bool"
+      colField: "bool"
     }, {
-      attribute: "images"
+      colField: "images"
     }
 
-  ]
+  ];
 
 
   //helper for dummy data

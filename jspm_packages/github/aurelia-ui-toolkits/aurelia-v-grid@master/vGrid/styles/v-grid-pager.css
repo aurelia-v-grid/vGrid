@@ -1,0 +1,19 @@
+
+.v-grid-pager-btn {
+  heigth: 25px;
+  width: 50px;
+}
+
+.v-grid-pager-btn[disabled] {
+  cursor: not-allowed;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: .65;
+}
+
+.v-grid-pager-group {
+  margin: auto;
+  heigth: 25px;
+  width: 200px;
+}

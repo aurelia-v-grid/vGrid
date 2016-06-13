@@ -1,0 +1,19 @@
+
+.ghost {
+  background-color: darkcyan !important;
+  z-index: 9999 !important;
+}
+
+.vGrid-draggable-handler {
+  position: absolute;
+  cursor: w-resize;
+  width: 15px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 900;
+}
+
+.vGrid-vGridDragHandle {
+  cursor: move;
+}

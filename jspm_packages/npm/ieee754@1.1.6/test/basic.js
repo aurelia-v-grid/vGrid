@@ -1,7 +1,7 @@
 /* */ 
 (function(Buffer) {
-  var ieee754 = require('../index');
-  var test = require('tape');
+  var ieee754 = require("../../ieee754@1.1.6");
+  var test = require("tape");
   var EPSILON = 0.00001;
   test('read float', function(t) {
     var buf = new Buffer(4);
@@ -17,4 +17,4 @@
     t.ok(Math.abs(num - 42.42) < EPSILON);
     t.end();
   });
-})(require('buffer').Buffer);
+})(require("buffer").Buffer);

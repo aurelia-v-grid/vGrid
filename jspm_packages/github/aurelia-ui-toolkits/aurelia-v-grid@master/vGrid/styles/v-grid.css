@@ -1,0 +1,152 @@
+
+.vGrid {
+  border: 1px solid rgb(230, 230, 230);
+  text-decoration: inherit;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: "RobotoDraft", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  line-height: 100%;
+  background-color: white;
+}
+
+.vGrid div.vGrid-header {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  background-color: rgb(240, 240, 240);
+
+}
+
+.vGrid-row-container {
+  background-color: inherit;
+}
+
+.vGrid div.vGrid-header div.vGrid-row {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: absolute;
+  border-bottom: 2px solid rgb(230, 230, 230);
+  background-color: inherit;
+}
+
+.vGrid div.vGrid-body {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+
+.vGrid div.vGrid-footer {
+  bottom: 0;
+  padding: 5px;
+  text-align: center;
+  background-color: rgb(240, 240, 240);
+}
+
+.vGrid div.vGrid-body {
+  position: relative;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vGrid .vGrid-body-scroll {
+  background-color: inherit;
+  display: block;
+}
+
+.vGrid div.vGrid-body div.vGrid-row {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  border-bottom: 1px solid rgb(230, 230, 230);
+  overflow: hidden;
+  background-color: inherit;
+}
+
+.vGrid-row-alt {
+  background-color: rgb(247, 247, 247) !important;
+}
+
+.vGrid-row-even {
+  background-color: rgb(255, 255, 255) !important;
+}
+
+.vGrid-row-selected {
+  box-shadow: none;
+  background-color: rgb(203, 195, 203) !important;
+}
+
+.vGrid-row-selected .vGrid-row-col {
+  box-shadow: none;
+  background-color: rgb(203, 195, 203) !important;
+}
+
+
+/*using element*/
+v-grid-row-col {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  height: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-right: 1px solid rgb(230, 230, 230);
+  background-color: inherit;
+  float: left;
+  position: relative;
+  overflow: hidden;
+}
+
+/*using element*/
+v-grid-header-col {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  height: 100%;
+  float: left;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: inherit;
+  color: inherit;
+  background-color: inherit;
+  position: relative;
+  border-right: 1px solid rgb(230, 230, 230);
+}

@@ -1,0 +1,77 @@
+<template>
+  <div class="row">
+
+    <v-grid
+      class="col-md-6"
+      style="height:350px"
+      v-row-height="25"
+      v-header-height="50"
+      v-current-entity.bind=myCurrentEntity
+      v-collection.bind=myCollection
+      v-grid-context.bind=myGrid>
+      <v-grid-col>
+        <v-header-template>
+          Index
+        </v-header-template>
+        <v-row-template>
+          ${rowRef.index}
+        </v-row-template>
+      </v-grid-col>
+
+
+      <v-grid-col>
+        <v-header-template>
+          Name
+        </v-header-template>
+        <v-row-template>
+          ${rowRef.name}
+        </v-row-template>
+      </v-grid-col>
+
+
+      <v-grid-col>
+        <v-header-template>
+          Number
+        </v-header-template>
+        <v-row-template>
+          ${rowRef.number}
+        </v-row-template>
+      </v-grid-col>
+
+
+      <v-grid-col>
+        <v-header-template>
+          Bool
+        </v-header-template>
+        <v-row-template>
+          ${rowRef.bool}
+        </v-row-template>
+      </v-grid-col>
+
+
+      <v-grid-col>
+        <v-header-template>
+          Date
+        </v-header-template>
+        <v-row-template>
+          ${rowRef.date}
+        </v-row-template>
+      </v-grid-col>
+
+
+      <v-grid-col>
+        <v-header-template>
+          Images
+        </v-header-template>
+        <v-row-template>
+          ${rowRef.images}
+        </v-row-template>
+      </v-grid-col>
+
+    </v-grid>
+
+    <!-- Form to the right -->
+    <v-grid-control-form entity.bind="myCurrentEntity"></v-grid-control-form>
+
+  </div>
+</template>

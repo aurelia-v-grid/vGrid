@@ -37,60 +37,60 @@ export class BasicUse {
 
   columnSetup = [
     {
-      attribute: "index",
-      width:80,
-      header:"Record",
-      filter: "index|>=",
-      filterOperator: ">",
-      filterTop: "index",
-      sort: true,
-      attributeFilter: "v-header-menu='index'",
-      attributeRow: "v-row-menu='index' v-key-move"
+      colField: "index",
+      colWidth:80,
+      colHeader:"Record",
+      colFilter: "index|>=",
+      colFilterTop: "index",
+      colSort: true,
+      colAddFilterAttributes: "v-header-menu='index'",
+      colAddRowAttributes : "v-row-menu='index' v-key-move"
     }, {
-      attribute: "name",
-      width:120,
-      header:"Full Name",
-      filterTop: false,
-      filter: "name|*|onKeyDown",
-      sort: "name",
-      attributeFilter: "v-header-menu='name'",
-      attributeRow: "v-row-menu='name' v-key-move"
+      colField: "name",
+      colWidth:120,
+      colHeader:"Full Name",
+      colFilterTop: false,
+      colFilter: "name|*|onKeyDown",
+      colSort: "name",
+      colAddFilterAttributes: "v-header-menu='name'",
+      colAddRowAttributes: "v-row-menu='name' v-key-move"
     }, {
-      attribute: "number | numberFormat & updateTrigger:'blur':'paste'",
-      width:100,
-      header:"Salery",
-      filter: "number|>=",
-      filterTop: true,
-      sort: "number",
-      attributeFilter: "v-header-menu='number'",
-      attributeRow: "v-row-menu='number' v-key-move",
-      css:"color:${tempRef.numberColor};font-weight:${tempRef.numberFont}"
+      colField: "number | numberFormat & updateTrigger:'blur':'paste'",
+      colWidth:100,
+      colHeader:"Salery",
+      colFilter: "number|>=",
+      colFilterTop: true,
+      colSort: "number",
+      colAddFilterAttributes: "v-header-menu='number'",
+      colAddRowAttributes: "v-row-menu='number' v-key-move",
+      colCss:"color:${tempRef.numberColor};font-weight:${tempRef.numberFont}"
     }, {
-      attribute: "date | dateFormat & updateTrigger:'blur':'paste'",
-      width:100,
-      header:"Created",
-      filter: "date|>|dateFormat",
-      filterTop: true,
-      sort: "date",
-      attributeFilter: "v-header-menu='date'",
-      attributeRow: "v-row-menu='date' v-key-move"
+      colField: "date | dateFormat & updateTrigger:'blur':'paste'",
+      colWidth:100,
+      colHeader:"Created",
+      colFilter: "date|>|dateFormat",
+      colFilterTop: true,
+      colSort: "date",
+      colAddFilterAttributes: "v-header-menu='date'",
+      colAddRowAttributes: "v-row-menu='date' v-key-move"
     }, {
-      attribute: "bool",
-      width:105,
-      header:"Booked",
-      filter: "bool",
-      filterTop: true,
-      sort: "bool",
-      type: "checkbox",
-      attributeFilter: "v-header-menu='bool'",
-      attributeRow: "v-row-menu='bool' v-key-move"
+      colField: "bool",
+      colWidth:105,
+      colHeader:"Booked",
+      colFilter: "bool",
+      colFilterTop: true,
+      colSort: "bool",
+      colType: "checkbox",
+      colAddFilterAttributes: "v-header-menu='bool'",
+      colAddRowAttributes: "v-row-menu='bool' v-key-move"
     }, {
-      attribute: "images",
-      width:107,
-      header:"Profil img",
-      type: "image",
-      attributeFilter: "v-header-menu='images'",
-      attributeRow: "v-row-menu='images' v-key-move tabindex='0'"
+      colField: "images",
+      colWidth:107,
+      colHeader:"Profil img",
+      colType: "image",
+      colFilterTop:true,
+      colAddFilterAttributes: "v-header-menu='images'",
+      colAddRowAttributes: "v-row-menu='images' v-key-move tabindex='0'"
     }
 
   ];
