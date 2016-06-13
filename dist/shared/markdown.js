@@ -63,7 +63,7 @@ System.register(['aurelia-framework', 'showdown', 'google/code-prettify/loader/r
       Loader = _aureliaFramework.Loader;
     }, function (_showdown) {}, function (_googleCodePrettifyLoaderRun_prettify) {}, function (_showdownPrettify) {}],
     execute: function () {
-      debugger;
+  
 
       _export('AuMarkdown', AuMarkdown = (_dec = customElement('au-markdown'), _dec2 = inject(Element, Loader), _dec(_class = noView(_class = _dec2(_class = (_class2 = function () {
         function AuMarkdown(element, loader) {

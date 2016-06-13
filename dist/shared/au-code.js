@@ -88,7 +88,7 @@ System.register(['aurelia-framework', 'prism', 'prism/themes/prism.css!'], funct
       prism = _prism.default;
     }, function (_prismThemesPrismCss) {}],
     execute: function () {
-      debugger;
+    
 
       _export('AuCode', AuCode = (_dec = processContent(function (compiler, resources, element, instruction) {
         parseCode(element, resources, instruction);
