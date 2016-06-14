@@ -1,0 +1,50 @@
+<template>
+  <nav class="navbar navbar-default">
+    <require from="./route-highlight"></require>
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle Navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" route-href="route: samples">
+        <span>Component Catalog</span>
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+        <li route-highlight="routes: about">
+          <a route-href="route: about">About</a>
+        </li>
+
+        <li route-highlight="routes: installation">
+          <a route-href="route: installation">Installation</a>
+        </li>
+
+        <li route-highlight="routes: documentation">
+          <a route-href="route: documentation">Documentation</a>
+        </li>
+
+        <li route-highlight="routes: help">
+          <a route-href="route: help">Help</a>
+        </li>
+
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="loader" if.bind="router.isNavigating">
+          <i class="fa fa-spinner fa-spin fa-2x"></i>
+        </li>
+        <li class="navbar-brand">
+
+          <span><iframe src="https://ghbtns.com/github-btn.html?user=aurelia-ui-toolkits&repo=aurelia-v-grid&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe></span>
+
+        </li>
+      </ul>
+    </div>
+  </nav>
+</template>

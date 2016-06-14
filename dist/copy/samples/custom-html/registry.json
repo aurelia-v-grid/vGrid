@@ -1,0 +1,18 @@
+{
+  "title": "Custom Html",
+  "samples": {
+    "basic-use": {
+      "default" : true,
+      "files": ["html", "js"]
+    },
+    "all-no-help-classes": {
+      "files": ["html", "js"]
+    },
+    "all-with-help-classes": {
+      "files": ["html", "js"]
+    },
+    "selection-column": {
+      "files": ["html", "js"]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+<template>
+    <section>
+
+        <collapse-panel panel-title.bind="sample.title">
+            <div id="exampleWrap">
+                <compose view-model.bind="sample.path"></compose>
+            </div>
+        </collapse-panel>
+        <collapse-panel panel-title="Code Preview">
+
+            <ul class="nav nav-tabs">
+                <li class="active" show.bind="sample.html"><a data-toggle="tab" href="#html">HTML</a></li>
+                <li show.bind="sample.js"><a data-toggle="tab" href="#javascript">Javascript</a></li>
+                <li show.bind="sample.css"><a data-toggle="tab" href="#css">CSS</a></li>
+                <li show.bind="sample.json"><a data-toggle="tab" href="#json">JSON</a></li>
+                <li show.bind="sample.md"><a data-toggle="tab" href="#md">Documentation</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active fade in" id="html">
+                    <au-code language="markup" url.bind="sample.html">
+                    </au-code>
+                </div>
+
+                <div class="tab-pane fade" id="javascript">
+                    <au-code language="javascript" url.bind="sample.js">
+                    </au-code>
+                </div>
+
+                <div class="tab-pane fade" id="css">
+                    <au-code language="css" url.bind="sample.css">
+                    </au-code>
+                </div>
+
+                <div class="tab-pane fade" id="json">
+                    <au-code language="javascript" url.bind="sample.json">
+                    </au-code>
+                </div>
+
+                <div class="tab-pane fade" id="md">
+                    <au-markdown url.bind="sample.md">
+                    </au-markdown>
+                </div>
+            </div>
+
+        </collapse-panel>
+    </section>
+</template>

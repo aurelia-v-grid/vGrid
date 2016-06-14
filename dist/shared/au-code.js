@@ -88,8 +88,6 @@ System.register(['aurelia-framework', 'prism', 'prism/themes/prism.css!'], funct
       prism = _prism.default;
     }, function (_prismThemesPrismCss) {}],
     execute: function () {
-    
-
       _export('AuCode', AuCode = (_dec = processContent(function (compiler, resources, element, instruction) {
         parseCode(element, resources, instruction);
         return true;
@@ -110,7 +108,7 @@ System.register(['aurelia-framework', 'prism', 'prism/themes/prism.css!'], funct
           var _this = this;
 
           if (this.url) {
-            this.loader.loadText(this.url).then(function (text) {
+            this.loader.loadText('copy/' + this.url).then(function (text) {
               _this.html = text;
               _this.render();
             });
