@@ -1,0 +1,15 @@
+{
+  "title": "Column bind",
+  "samples": {
+    "basic-use": {
+      "default" : true,
+      "files": ["html", "js"]
+    },
+    "all": {
+      "files": ["html", "js"]
+    },
+    "selection-column": {
+      "files": ["html", "js"]
+    }
+  }
+}

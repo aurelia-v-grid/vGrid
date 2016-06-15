@@ -57,7 +57,7 @@ define(['exports', 'aurelia-framework', './v-grid'], function (exports, _aurelia
 
       var mainCol = this.element;
       while (mainCol.nodeName !== 'V-GRID-HEADER-COL') {
-        mainCol = mainCol.offsetParent;
+        mainCol = mainCol.parentNode;
       }
       this.mainCol = mainCol;
 

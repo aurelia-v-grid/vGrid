@@ -3,7 +3,7 @@ import 'showdown';
 import 'google/code-prettify/loader/run_prettify';
 import 'showdown-prettify';
 import {Loader}  from 'aurelia-framework';
-debugger;
+
 @customElement('au-markdown')
 @noView
 @inject(Element, Loader)

@@ -1,0 +1,27 @@
+<template>
+<div class="row">
+
+    <v-grid
+       class="col-md-6"
+       style="height:350px"
+       v-row-height="25"
+       v-header-height="50"
+       v-resizable-headers="true"
+       v-sortable-headers="true"
+       v-multi-select="true"
+       v-current-entity.bind=myCurrentEntity
+       v-collection.bind=myCollection
+       v-grid-context.bind=myGrid>
+         <v-grid-col attribute="index" sort="true" header="my header" filter="true" filter-top="true" contextmenu-row="true" contextmenu-header="true"></v-grid-col>
+         <v-grid-col attribute="name" sort="true" header="my header" filter="true"  contextmenu-row="true" contextmenu-header="true"></v-grid-col>
+         <v-grid-col attribute="number" sort="true"></v-grid-col>
+         <v-grid-col attribute="bool" filter="true" type="checkbox"></v-grid-col>
+         <v-grid-col attribute="date"></v-grid-col>
+         <v-grid-col header="Cool image" attribute="images" type="image"></v-grid-col>
+    </v-grid>
+
+    <!-- Form to the right -->
+    <v-grid-control-form entity.bind="myCurrentEntity"></v-grid-control-form>
+
+</div>
+</template>

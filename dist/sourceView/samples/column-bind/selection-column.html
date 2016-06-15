@@ -1,0 +1,23 @@
+<template>
+  <require from="shared/valueConverters"></require>
+  <div class="row">
+
+    <v-grid
+      class="col-md-6"
+      style="height:350px"
+      v-row-height="25"
+      v-header-height="50"
+      v-multi-select="true"
+      v-row-onclick.delegate="singleClick($event.detail)"
+      v-row-ondblclick.delegate="singleDblClick($event.detail)"
+      v-current-entity.bind=myCurrentEntity
+      v-row-on-draw.call="onRowDraw($event)"
+      v-collection.bind=myCollection
+      v-columns.bind=columnSetup>
+    </v-grid>
+
+    <!-- Form to the right -->
+    <v-grid-control-form entity.bind="myCurrentEntity"></v-grid-control-form>
+
+  </div>
+</template>

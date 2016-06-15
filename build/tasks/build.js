@@ -39,10 +39,10 @@ gulp.task('build-json', function() {
 });
 
 // copies changed html files to the output directory
-gulp.task('build-all', function() {
+gulp.task('build-sourceView', function() {
   return gulp.src(paths.all)
-    .pipe(changed(paths.output+'/copy', {extension: '.*'}))
-    .pipe(gulp.dest(paths.output+'/copy'));
+    .pipe(changed(paths.output+'/sourceView', {extension: '.*'}))
+    .pipe(gulp.dest(paths.output+'/sourceView'));
 });
 
 // copies changed css files to the output directory
@@ -60,7 +60,7 @@ gulp.task('build-css', function() {
 gulp.task('build', function(callback) {
   return runSequence(
     'clean',
-    ['build-system', 'build-html', 'build-css', 'build-json', 'build-all'],
+    ['build-system', 'build-html', 'build-css', 'build-json', 'build-sourceView'],
     callback
   );
 });

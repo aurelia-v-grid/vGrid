@@ -1,0 +1,29 @@
+<template>
+  <require from="shared/valueConverters"></require>
+  <div class="row">
+
+    <v-grid
+      class="col-md-6"
+      style="height:350px"
+      v-row-height="25"
+      v-header-height="50"
+      v-multi-select="true"
+      v-row-onclick.delegate="singleClick($event.detail)"
+      v-row-ondblclick.delegate="singleDblClick($event.detail)"
+      v-current-entity.bind=myCurrentEntity
+      v-row-on-draw.call="onRowDraw($event)"
+      v-collection.bind=myCollection
+      v-grid-context.bind=myGrid>
+        <v-grid-col col-width="80" col-type="text" col-field="index" col-sort="index" col-header-name="Record" col-filter="index|>" col-filter-top="true" col-add-row-attributes="v-row-menu='index' v-key-move" col-add-filter-attributes="v-col-header-name-menu='date'"></v-grid-col>
+        <v-grid-col col-width="120" col-type="text" col-field="name" col-sort="name" col-header-name="Full name" col-filter="name|*|onKeyDown" col-filter-top="false" col-add-row-attributes="v-row-menu='name' v-key-move" col-add-filter-attributes="v-col-header-name-menu='name'"></v-grid-col>
+        <v-grid-col col-width="100" col-field="number | numberFormat & updateTrigger:'blur':'paste'" col-sort="number" col-header-name="Salery" col-filter="number|>=" col-filter-top="true" col-add-row-attributes="v-row-menu='number' v-key-move" col-add-filter-attributes="v-col-header-name-menu='number'" col-css="color:${tempRef.numberColor};font-weight:${tempRef.numberFont}"></v-grid-col>
+        <v-grid-col col-width="105" col-type="text" col-field="date | dateFormat & updateTrigger:'blur':'paste'" col-sort="date" col-header-name="Created" col-filter="date|>|dateFormat" col-filter-top="true" col-add-row-attributes="v-row-menu='date' v-key-move" col-add-filter-attributes="v-col-header-name-menu='date'"></v-grid-col>
+        <v-grid-col col-width="100" col-type="checkbox" col-field="bool" col-sort="bool" col-header-name="Booked" col-filter="bool|=" col-filter-top="true" col-add-row-attributes="v-row-menu='bool' v-key-move" col-add-filter-attributes="v-col-header-name-menu='bool'"></v-grid-col>
+        <v-grid-col col-width="107" col-type="image" col-field="images" col-header-name="Profile Img"  col-filter-top="true" col-add-row-attributes="v-row-menu='images' v-key-move tabindex='0'" col-add-filter-attributes="v-col-header-name-menu='images'"></v-grid-col>
+    </v-grid>
+
+      <!-- Form to the right -->
+    <v-grid-control-form entity.bind="myCurrentEntity"></v-grid-control-form>
+
+  </div>
+</template>

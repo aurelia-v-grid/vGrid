@@ -357,7 +357,6 @@ define(["exports"], function (exports) {
             }
             this.lastRowSelected = currentRow;
           } else {
-            isSel = this.isSelected(currentRow);
             this.select(currentRow);
           }
 
