@@ -1,5 +1,5 @@
 {
-  "title": "Column bind",
+  "title": "Column.bind",
   "samples": {
     "basic-use": {
       "default" : true,

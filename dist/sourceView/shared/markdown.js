@@ -2,7 +2,7 @@ import {bindable, noView, inject, customElement} from 'aurelia-framework';
 import 'showdown';
 import 'google/code-prettify/loader/run_prettify';
 import 'showdown-prettify';
-import {Loader}  from 'aurelia-loader';
+import {Loader}  from 'aurelia-framework';
 
 @customElement('au-markdown')
 @noView

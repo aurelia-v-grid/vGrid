@@ -26,25 +26,25 @@ System.register([], function (_export, _context) {
             route: 'simple-html-col',
             moduleId: './simple-html-col/index',
             nav: true,
-            title: 'Simple Column Html'
+            title: 'Simple Column HTML'
           }, {
             name: 'column-bind',
             route: 'column-bind',
             moduleId: './column-bind/index',
             nav: true,
-            title: 'column.bind="myColumnConfig"'
+            title: 'Column.bind'
           }, {
             name: 'custom-html',
             route: 'custom-html',
             moduleId: './custom-html/index',
             nav: true,
-            title: 'Custom Column html'
+            title: 'Custom Column HTML'
           }, {
             name: 'row-repeat',
             route: 'row-repeat',
             moduleId: './row-repeat/index',
             nav: true,
-            title: 'Row repeat (no columns)'
+            title: 'Row repeat'
           }, { name: 'remote', route: 'other', moduleId: './remote/index', nav: true, title: 'remote' }, { name: 'default', route: '', redirect: 'simple-html-col' }]);
           this.router = router;
         };

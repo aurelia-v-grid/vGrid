@@ -251,3 +251,35 @@ li.L0, li.L1, li.L2, li.L3,
 li.L5, li.L6, li.L7, li.L8 {
   list-style-type: decimal !important
 }
+
+
+.nav > li > a, .nav > li > a {
+  text-decoration: none;
+  color: #555;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  color: #555 !important;
+  background-color: #ccc9c9 !important;
+  padding:5px;
+  margin-left: 5px;
+}
+
+.menu2 > li > a:hover, .menu2 > li > a:focus {
+   text-decoration: none;
+   background-color: #DEDBDB !important;
+
+   padding:5px;
+  margin-left: 5px;
+ }
+
+.menu2 > li > a, .menu2 > li > a {
+  text-decoration: none;
+  background-color: #eee;
+  padding:5px !important;
+  margin-left: 5px;
+}
+.nav-justified > li > a {
+  margin-bottom: 0;
+  margin-left: 5px;
+}

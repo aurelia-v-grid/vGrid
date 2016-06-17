@@ -1,7 +1,7 @@
 import {inject, bindable, noView, customElement, processContent, TargetInstruction} from 'aurelia-framework';
 import prism from 'prism';
 import 'prism/themes/prism.css!';
-import {Loader}  from 'aurelia-loader';
+import {Loader}  from 'aurelia-framework';
 
 @processContent((compiler, resources, element, instruction) => {
   parseCode(element, resources, instruction);
