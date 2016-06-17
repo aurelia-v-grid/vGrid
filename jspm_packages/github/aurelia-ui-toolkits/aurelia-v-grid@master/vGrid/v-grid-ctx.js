@@ -84,6 +84,37 @@ define(["exports"], function (exports) {
       this.vGridGenerator.redrawGrid();
     };
 
+    VGridCtx.prototype.showSelectedAndNotSelected = function showSelectedAndNotSelected() {
+      this.vGrid.vGridCollectionFiltered = this.vGrid.vGridCollection.slice(0);
+      this.vGridGenerator.collectionChange();
+    };
+
+    VGridCtx.prototype.showOnlySelected = function showOnlySelected() {
+      var _this = this;
+
+      var newArray = [];
+      this.vGridCollection.forEach(function (x, i) {
+        if (_this.vGridSelection.isSelectedMain(i)) {
+          newArray.push(x);
+        }
+      });
+      this.vGrid.vGridCollectionFiltered = newArray;
+      this.vGridGenerator.collectionChange();
+    };
+
+    VGridCtx.prototype.showOnlyNotSelected = function showOnlyNotSelected() {
+      var _this2 = this;
+
+      var newArray = [];
+      this.vGridCollection.forEach(function (x, i) {
+        if (!_this2.vGridSelection.isSelectedMain(i)) {
+          newArray.push(x);
+        }
+      });
+      this.vGrid.vGridCollectionFiltered = newArray;
+      this.vGridGenerator.collectionChange();
+    };
+
     VGridCtx.prototype.setColumns = function setColumns(paramObj) {
       this.vGridConfig.colConfig = paramObj.colConfig;
     };

@@ -4,9 +4,6 @@
     "basic-use": {
       "default" : true,
       "files": ["html", "js"]
-    },
-    "all": {
-      "files": ["html", "js"]
     }
   }
 }

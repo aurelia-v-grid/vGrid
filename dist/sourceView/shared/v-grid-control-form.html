@@ -1,24 +1,25 @@
-<template bindable="entity">
+<template bindable="context">
   <form  class="col-md-6">
     <div style="height:350px" class="well well-sm ">
       <div class="form-group">
         <label for="name">Name</label>
-        <input class="form-control" id="name" value.bind="entity.name" disabled.bind="!entity.__vGridKey">
+        <input class="form-control" id="name" value.bind="context.myCurrentEntity.name" disabled.bind="!context.myCurrentEntity.__vGridKey">
       </div>
       <div class="form-group">
         <label for="Number">Number</label>
-        <input  class="form-control" id="Number" value.bind="entity.number" disabled.bind="!entity.__vGridKey">
+        <input  class="form-control" id="Number" value.bind="context.myCurrentEntity.number" disabled.bind="!context.myCurrentEntity.__vGridKey">
       </div>
       <div class="form-group">
         <label for="Date">Date</label>
-        <input  class="form-control" id="Date" value.bind="entity.date" disabled.bind="!entity.__vGridKey">
+        <input  class="form-control" id="Date" value.bind="context.myCurrentEntity.date" disabled.bind="!context.myCurrentEntity.__vGridKey">
       </div>
       <div class="checkbox">
         <label>
-          <input type="checkbox" checked.bind="entity.bool" disabled.bind="!entity.__vGridKey"> Bool
+          <input type="checkbox" checked.bind="context.myCurrentEntity.bool" disabled.bind="!context.myCurrentEntity.__vGridKey"> Bool
         </label>
     </div>
-    <img if.bind="entity.__vGridKey" src.bind="entity.images" alt="images" class="img-circle">
+    <img if.bind="context.myCurrentEntity.__vGridKey" src.bind="context.myCurrentEntity.images" alt="images" class="img-circle">
     </div>
+    <label><input type="checkbox" checked.bind="context.showButtonsForm" />show buttons</label>
   </form>
 </template>

@@ -50,6 +50,9 @@ System.register(["shared/dummyDataGenerator"], function (_export, _context) {
           this.dummyDataGenerator.generateData(10000, function (data) {
             _this.myCollection = data;
           });
+
+          this.context = this;
+          this.showButtonsForm = false;
         }
 
         return BasicUse;

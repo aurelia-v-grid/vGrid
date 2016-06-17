@@ -1,7 +1,7 @@
 import {inject, bindable, noView, customElement, processContent, TargetInstruction} from 'aurelia-framework';
 import prism from 'prism';
 import 'prism/themes/prism.css!';
-import {Loader}  from 'aurelia-framework';
+import {Loader}  from 'aurelia-loader';
 
 @processContent((compiler, resources, element, instruction) => {
   parseCode(element, resources, instruction);
@@ -23,7 +23,7 @@ export class AuCode {
 
   urlChanged() {
     if (this.url) {
-      this.loader.loadText('sourceView/'+this.url)
+      this.loader.loadText(this.url)
       .then(text => {
         this.html = text;
         this.render();

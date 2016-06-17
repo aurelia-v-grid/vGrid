@@ -22,8 +22,9 @@
         <v-grid-col col-width="107" col-type="image" col-field="images" col-header-name="Profile Img"  col-filter-top="true" col-add-row-attributes="v-row-menu='images' v-key-move tabindex='0'" col-add-filter-attributes="v-col-header-name-menu='images'"></v-grid-col>
     </v-grid>
 
-      <!-- Form to the right -->
-    <v-grid-control-form entity.bind="myCurrentEntity"></v-grid-control-form>
+    <!-- Form to the right -->
+    <v-grid-control-form context.bind="context"></v-grid-control-form>
+    <v-grid-buttons-form show.bind="showButtonsForm" context.bind="context"></v-grid-buttons-form>
 
   </div>
 </template>

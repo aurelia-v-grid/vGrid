@@ -209,8 +209,8 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
           top: 0
         }], 0, top);
 
-        row.style.minWidth = this.gridElement.offsetWidth + "px";
-        row.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
+        row.style["min-width"] = this.getTotalColumnWidth() + "px";
+        row.style.width = "100%";
 
         row.innerHTML = "";
         this.contentScrollBodyElement.appendChild(row);
@@ -393,7 +393,8 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
     VGridGenerator.prototype.correctRowAndScrollbodyWidth = function correctRowAndScrollbodyWidth() {
       this.contentScrollBodyElement.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
       for (var i = 0; i < this.rowElementArray.length; i++) {
-        this.rowElementArray[i].div.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
+        this.rowElementArray[i].div.style.width = "100%";
+        this.rowElementArray[i].div.style["min-width"] = this.getTotalColumnWidth() + "px";
       }
       this.headerScrollElement.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
     };

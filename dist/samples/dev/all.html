@@ -1,0 +1,27 @@
+<template>
+  <require from="shared/valueConverters"></require>
+  <div class="row">
+
+    <v-grid
+      class="col-md-6"
+      style="height:350px"
+      v-row-height="25"
+      v-current-entity.bind=myCurrentEntity
+      v-collection.bind="myCollection| selected:'isSelected':showOnlySelected"
+      v-grid-context.bind=myGrid>
+      <v-grid-col col-field="id"></v-grid-col>
+      <v-grid-col col-type="checkbox" col-field="isSelected"></v-grid-col>
+      <!--<v-grid-row-repeat>-->
+        <!--<label><input type="checkbox" checked.bind="rowRef.isSelected" /> ${rowRef.id}</label>-->
+      <!--</v-grid-row-repeat>-->
+    </v-grid>
+
+    <!-- Form to the right -->
+    <v-grid-control-form context.bind="context"></v-grid-control-form>
+    <v-grid-buttons-form show.bind="showButtonsForm" context.bind="context"></v-grid-buttons-form>
+
+    <div class="col-md-6">
+      <label><input type="checkbox" checked.bind="showOnlySelected" />show only selected</label>
+    </div>
+  </div>
+</template>

@@ -14,6 +14,7 @@ System.register(['bootstrap'], function (_export, _context) {
         aurelia.use.globalResources('shared/logger');
         aurelia.use.globalResources('shared/au-code');
         aurelia.use.globalResources('shared/v-grid-control-form.html');
+        aurelia.use.globalResources('shared/v-grid-buttons-form');
 
         aurelia.start().then(function (au) {
           return au.setRoot('app');

@@ -1,27 +1,49 @@
 <template>
-<div class="row">
+  <require from="shared/valueConverters"></require>
+  <div class="row">
 
     <v-grid
-       class="col-md-6"
-       style="height:350px"
-       v-row-height="25"
-       v-header-height="50"
-       v-resizable-headers="true"
-       v-sortable-headers="true"
-       v-multi-select="true"
-       v-current-entity.bind=myCurrentEntity
-       v-collection.bind=myCollection
-       v-grid-context.bind=myGrid>
-         <v-grid-col attribute="index" sort="true" header="my header" filter="true" filter-top="true" contextmenu-row="true" contextmenu-header="true"></v-grid-col>
-         <v-grid-col attribute="name" sort="true" header="my header" filter="true"  contextmenu-row="true" contextmenu-header="true"></v-grid-col>
-         <v-grid-col attribute="number" sort="true"></v-grid-col>
-         <v-grid-col attribute="bool" filter="true" type="checkbox"></v-grid-col>
-         <v-grid-col attribute="date"></v-grid-col>
-         <v-grid-col header="Cool image" attribute="images" type="image"></v-grid-col>
+      class="col-md-6"
+      style="height:350px"
+      v-row-height="200"
+      v-resizable-headers="true"
+      v-sortable-headers="true"
+      v-multi-select="true"
+      v-current-entity.bind=myCurrentEntity
+      v-collection.bind=myCollection
+      v-grid-context.bind=myGrid>
+      <v-grid-row-repeat>
+
+        <form class="col-md-6">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" id="name" value.bind="rowRef.name" disabled.bind="!rowRef.__vGridKey">
+          </div>
+          <div class="form-group">
+            <label for="Number">Number</label>
+            <input class="form-control" id="Number" value.bind="rowRef.number" disabled.bind="!rowRef.__vGridKey">
+          </div>
+          <div class="form-group">
+            <label for="Date">Date</label>
+            <input class="form-control" id="Date" value.bind="rowRef.date | dateFormat & updateTrigger:'blur':'paste'"
+                   disabled.bind="!rowRef.__vGridKey">
+          </div>
+        </form>
+        <form class="col-md-6">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" checked.bind="rowRef.bool" disabled.bind="!rowRef.__vGridKey"> Bool
+            </label>
+          </div>
+          <img v-image-fix if.bind="rowRef.__vGridKey" src.bind="rowRef.images" alt="images" class="img-circle">
+
+        </form>
+
+      </v-grid-row-repeat>
     </v-grid>
 
     <!-- Form to the right -->
-    <v-grid-control-form entity.bind="myCurrentEntity"></v-grid-control-form>
+    <v-grid-buttons-form context.bind="context"></v-grid-buttons-form>
 
-</div>
+  </div>
 </template>

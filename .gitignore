@@ -1,0 +1,9 @@
+node_modules
+
+bower_components
+.idea
+.DS_STORE
+
+build/reports
+coverage
+test/e2e/dist

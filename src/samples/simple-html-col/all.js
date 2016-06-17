@@ -42,7 +42,10 @@ export class BasicUse {
     this.dummyDataGenerator = dummyDataGenerator;
     this.dummyDataGenerator.generateData(10000, (data) => {
       this.myCollection = data;
-    })
+    });
+
+    this.context = this;
+    this.showButtonsForm = false;
 
   }
 
