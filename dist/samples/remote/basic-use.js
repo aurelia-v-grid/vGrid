@@ -46,7 +46,8 @@ System.register(["shared/remoteData"], function (_export, _context) {
           this.myCurrentEntity = {};
           this.myCollection = [];
 
-          this.remoteData = new RemoteData('http://data-nodedataapi.rhcloud.com/', 'data/people');
+          this.remoteData = new RemoteData('http://vgriddummydata-nodedataapi.rhcloud.com/', 'data/people');
+          this.context = this;
         }
 
         BasicUse.prototype.attached = function attached() {

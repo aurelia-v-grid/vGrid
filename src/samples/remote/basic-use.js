@@ -38,7 +38,8 @@ export class BasicUse {
 
   //helper for dummy data
   constructor(dummyDataGenerator) {
-    this.remoteData = new RemoteData('http://data-nodedataapi.rhcloud.com/', 'data/people')
+    this.remoteData = new RemoteData('http://vgriddummydata-nodedataapi.rhcloud.com/', 'data/people');
+    this.context = this;
   }
 
 
