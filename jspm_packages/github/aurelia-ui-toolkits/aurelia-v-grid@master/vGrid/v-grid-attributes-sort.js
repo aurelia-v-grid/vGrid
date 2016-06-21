@@ -41,7 +41,7 @@ define(['exports', 'aurelia-framework', './v-grid'], function (exports, _aurelia
         _this.vGrid.vGridConfig.onOrderBy(_this.attribute, e.shiftKey);
       };
 
-      this.vGrid.element.addEventListener("sortIconUpdate", function (e) {
+      this.vGrid.element.addEventListener("sortIconUpdate", function () {
         _this.sortIcon.innerHTML = _this.getSortIconMarkup(_this.attribute);
       });
     };

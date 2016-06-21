@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-System.register(['shared/dummyDataGenerator'], function (_export, _context) {
+System.register(["shared/remoteData"], function (_export, _context) {
   "use strict";
 
-  var dummyDataGenerator, _class, _temp, _initialiseProps, BasicUse, SelectedValueConverter;
+  var RemoteData, BasicUse;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -12,50 +12,86 @@ System.register(['shared/dummyDataGenerator'], function (_export, _context) {
   }
 
   return {
-    setters: [function (_sharedDummyDataGenerator) {
-      dummyDataGenerator = _sharedDummyDataGenerator.dummyDataGenerator;
+    setters: [function (_sharedRemoteData) {
+      RemoteData = _sharedRemoteData.RemoteData;
     }],
     execute: function () {
-      _export('BasicUse', BasicUse = (_temp = _class = function BasicUse(dummyDataGenerator) {
-        _classCallCheck(this, BasicUse);
-
-        _initialiseProps.call(this);
-
-        for (var i = 0; i < 1000; i++) {
-          this.myCollection.push({ id: i, title: 'item ' + (i + 1), isSelected: false });
-        }
-
-        this.context = this;
-        this.showOnlySelected = false;
-      }, _class.inject = [dummyDataGenerator], _initialiseProps = function _initialiseProps() {
-        this.myGrid = {};
-        this.myCurrentEntity = {};
-        this.myCollection = [];
-      }, _temp));
-
-      _export('BasicUse', BasicUse);
-
-      _export('SelectedValueConverter', SelectedValueConverter = function () {
-        function SelectedValueConverter() {
-          _classCallCheck(this, SelectedValueConverter);
-        }
-
-        SelectedValueConverter.prototype.toView = function toView(array, selectedProperty, isActive) {
-          if (array) {
-            if (isActive) {
-              return array.filter(function (item) {
-                return item.isSelected;
-              });
-            } else {
-              return array;
+      _export("BasicUse", BasicUse = function () {
+        BasicUse.prototype.onRowDraw = function onRowDraw(data) {
+          if (data) {
+            if (data.tempRef) {
+              if (data.tempRef.number > 100) {
+                data.tempRef.numberColor = "green";
+                data.tempRef.numberFont = "normal";
+              } else {
+                data.tempRef.numberColor = "red";
+                data.tempRef.numberFont = "bold";
+              }
             }
           }
         };
 
-        return SelectedValueConverter;
+        BasicUse.prototype.singleClick = function singleClick(e) {
+          console.log("click");
+        };
+
+        BasicUse.prototype.singleDblClick = function singleDblClick(e) {
+          console.log("dblClick");
+        };
+
+        function BasicUse(dummyDataGenerator) {
+          _classCallCheck(this, BasicUse);
+
+          this.myGrid = {};
+          this.myCurrentEntity = {};
+          this.myCollection = [];
+          this.myLang = {
+            menuMainHeaderOptions: "dine valg",
+            pagerBtnNext: "neste",
+            pagerStringOf: "#"
+          };
+
+          this.remoteData = new RemoteData('http://vgriddummydata-nodedataapi.rhcloud.com/', 'data/people');
+          this.context = this;
+        }
+
+        BasicUse.prototype.attached = function attached() {
+          this.loadData();
+        };
+
+        BasicUse.prototype.remotePagerEvent = function remotePagerEvent(e) {
+          console.log(e);
+        };
+
+        BasicUse.prototype.loadData = function loadData() {
+          var _this = this;
+
+          this.myGrid.ctx.setLoadingOverlay(true);
+          this.remoteData.setLimit(40);
+          this.remoteData.setOffset(0);
+          this.remoteData.getData().then(function (data) {
+            _this.myGrid.ctx.setData(data);
+          });
+        };
+
+        BasicUse.prototype.callRemoteServer = function callRemoteServer(param) {
+
+          this.remoteData.createOrderByString(param.sort);
+          this.remoteData.createQueryString(param.filter);
+          this.remoteData.setLimit(param.limit);
+          this.remoteData.setOffset(param.offset);
+
+          return this.remoteData.getData().then(function (data) {
+            return data;
+          }).catch(function (err) {
+            console.error(err);
+          });
+        };
+
+        return BasicUse;
       }());
 
-      _export('SelectedValueConverter', SelectedValueConverter);
+      _export("BasicUse", BasicUse);
     }
   };
 });

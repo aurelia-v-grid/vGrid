@@ -7,7 +7,6 @@
   text-align: left;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -25,7 +24,6 @@
 .vGrid div.vGrid-header {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
@@ -40,7 +38,6 @@
 .vGrid div.vGrid-header div.vGrid-row {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
   overflow: hidden;
   box-sizing: border-box;
   position: absolute;
@@ -51,7 +48,6 @@
 .vGrid div.vGrid-body {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
   box-sizing: border-box;
   height: 100%;
   width: 100%;
@@ -78,7 +74,6 @@
 .vGrid div.vGrid-body div.vGrid-row {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
   box-sizing: border-box;
   position: absolute;
   border-bottom: 1px solid rgb(230, 230, 230);
@@ -113,7 +108,6 @@ v-grid-row-col {
   -ms-user-select: none;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
   box-sizing: border-box;
   top: 0;
   left: 0;
@@ -135,7 +129,6 @@ v-grid-header-col {
   -ms-user-select: none;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
   box-sizing: border-box;
   top: 0;
   left: 0;

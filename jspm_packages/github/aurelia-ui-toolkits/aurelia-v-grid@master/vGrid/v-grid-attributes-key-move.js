@@ -43,7 +43,7 @@ define(['exports', 'aurelia-framework', './v-grid'], function (exports, _aurelia
         _this.element.offsetParent.dispatchEvent(ev);
       });
 
-      this.element.addEventListener('focus', function (e) {
+      this.element.addEventListener('focus', function () {
 
         if (_this.vGrid.vGridCurrentEntityRef === null) {
           var ev = document.createEvent('Event');
@@ -138,8 +138,6 @@ define(['exports', 'aurelia-framework', './v-grid'], function (exports, _aurelia
         if (e.keyCode === 33) {
           e.preventDefault();
           _this3.keyDownDelay(function () {
-            var currentscrolltop = _this3.vGrid.vGridClientCtx.getScrollTop();
-
             var rowHeight = _this3.vGrid.vGridConfig.attRowHeight;
             var containerHeight = _this3.vGrid.vGridGenerator.contentElement.clientHeight;
             var containerRows = parseInt(containerHeight / rowHeight, 10);

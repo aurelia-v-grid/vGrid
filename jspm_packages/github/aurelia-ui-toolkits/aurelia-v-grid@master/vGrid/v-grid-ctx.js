@@ -170,6 +170,42 @@ define(["exports"], function (exports) {
       return this.vGridGenerator.contentElement.scrollTop;
     };
 
+    VGridCtx.prototype.remoteGoToFirst = function remoteGoToFirst() {
+      this.vGrid.loading = true;
+      this.vGridConfig.remoteOffset = 0;
+      this.vGridConfig.remoteCall();
+    };
+
+    VGridCtx.prototype.remoteGoToNext = function remoteGoToNext() {
+      this.vGrid.loading = true;
+      this.vGridConfig.remoteOffset = this.vGridConfig.remoteOffset + this.vGridConfig.remoteLimit;
+      this.vGridConfig.remoteCall();
+    };
+
+    VGridCtx.prototype.remoteGoToPage = function remoteGoToPage(x) {
+      this.vGrid.loading = true;
+      this.vGridConfig.remoteOffset = x * this.vGridConfig.remoteLimit;
+      this.vGridConfig.remoteCall();
+    };
+
+    VGridCtx.prototype.remoteGoToOffset = function remoteGoToOffset(x) {
+      this.vGrid.loading = true;
+      this.vGridConfig.remoteOffset = x;
+      this.vGridConfig.remoteCall();
+    };
+
+    VGridCtx.prototype.remoteGoTofirstPrev = function remoteGoTofirstPrev() {
+      this.vGrid.loading = true;
+      this.vGridConfig.remoteOffset = this.vGridConfig.remoteOffset - this.vGridConfig.remoteLimit;
+      this.vGridConfig.remoteCall();
+    };
+
+    VGridCtx.prototype.remoteGoTofirstLast = function remoteGoTofirstLast() {
+      this.vGrid.loading = true;
+      this.vGridConfig.remoteOffset = this.vGridConfig.remoteLength - this.vGridConfig.remoteLimit;
+      this.vGridConfig.remoteCall();
+    };
+
     _createClass(VGridCtx, [{
       key: "vGridSelection",
       get: function get() {

@@ -64,6 +64,8 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
       this.updateGridScrollbars();
       this.rebindAllRowSlots();
       this.setLargeScrollLimit();
+
+      this.vGrid.sendCollectionEvent();
     };
 
     VGridGenerator.prototype.addHtml = function addHtml() {
@@ -97,7 +99,7 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
           var currentRow = parseInt(e.currentTarget.getAttribute("row"));
           _this.vGridConfig.clickHandler(e, currentRow);
           if (_this.vGridConfig.attMultiSelect !== undefined) {
-            _this.vGridSelection.setHightlight(e, currentRow, _this);
+            _this.vGridSelection.highlight(e, currentRow, _this);
           }
         }, false);
       }
@@ -270,7 +272,8 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
     };
 
     VGridGenerator.prototype.createFooterViewSlot = function createFooterViewSlot() {
-      var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-pager></v-grid-pager></template>', this.vGrid.viewResources);
+      var pagerElement = this.vGridConfig.attCustomPager || '<v-grid-pager></v-grid-pager>';
+      var viewFactory = this.vGrid.viewCompiler.compile("<template>" + pagerElement + "</template>", this.vGrid.viewResources);
       var view = viewFactory.create(this.vGrid.container);
 
       this.footerViewSlot = new _aureliaFramework.ViewSlot(this.footerElement, true);
@@ -570,6 +573,8 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
 
       this.contentScrollBodyElement.style.height = this.scrollBodyHeight - 1 + "px";
       this.contentScrollBodyElement.style.height = this.scrollBodyHeight + 1 + "px";
+
+      this.vGrid.sendCollectionEvent();
     };
 
     _createClass(VGridGenerator, [{

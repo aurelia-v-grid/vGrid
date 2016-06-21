@@ -11,6 +11,8 @@ export class BasicUse {
   //collection to display
   myCollection = [];
 
+ 
+
 
   onRowDraw(data) {
     if (data) {

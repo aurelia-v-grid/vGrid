@@ -57,7 +57,7 @@ define(["exports"], function (exports) {
     VGridFilter.prototype.run = function run(objArray, ObjFilter) {
       var filterOperatorTable = this.filterOperatorTable;
 
-      var resultArray = objArray.filter(function (data, i) {
+      var resultArray = objArray.filter(function (data) {
         var result = true;
         ObjFilter.forEach(function (x) {
           var rowValue;

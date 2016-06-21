@@ -153,7 +153,7 @@ define(['exports', 'aurelia-framework', './v-grid'], function (exports, _aurelia
           }
         });
 
-        this.vGrid.element.addEventListener("filterClearAll", function (e) {
+        this.vGrid.element.addEventListener("filterClearAll", function () {
           _this3.resetValue();
           _this3.updateFilter(_this3.vGrid.vGridFilter.lastFilter);
         });

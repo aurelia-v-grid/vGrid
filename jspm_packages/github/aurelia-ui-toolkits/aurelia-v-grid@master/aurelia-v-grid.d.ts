@@ -28,7 +28,7 @@ declare module 'aurelia-v-grid' {
   
   /*****************************************************************************************************************
    *    ContextMenu
-   *    This is where I create all the <v-grid> attibutes, and set then to vGridConfig
+   *    This is where I create all the <v-grid> attributes, and set then to vGridConfig
    *    Main idea/source https://github.com/callmenick/Custom-Context-Menu
    *    Created by vegar ringdal
    *
@@ -43,9 +43,9 @@ declare module 'aurelia-v-grid' {
     altMenuLogic: any;
     
     //alt menu to open
-    //main menu lisntner
+    //main menu listener
     menuItemListener(link: any): any;
-    canOpen(e: any): any;
+    canOpen(): any;
     
     //main menu to open
     menuHtmlMain(): any;
@@ -68,9 +68,9 @@ declare module 'aurelia-v-grid' {
     altMenuLogic: any;
     
     //alt menu to open
-    //main menu lisntner
+    //main menu listener
     menuItemListener(link: any): any;
-    canOpen(e: any): any;
+    canOpen(): any;
     
     //main menu to open
     menuHtmlMain(): any;
@@ -344,10 +344,12 @@ declare module 'aurelia-v-grid' {
    ****************************************************************************************************************/
   export class Contextmenu {
     constructor(element: any, vGrid: any);
+    getLang(value: any): any;
     bind(bindingContext: any, overrideContext: any): any;
     attached(): any;
     detached(): any;
     canOpen(): any;
+    closeIfOpen(): any;
     addListener(): any;
     removeListener(): any;
     contextListener(e: any): any;
@@ -390,7 +392,6 @@ declare module 'aurelia-v-grid' {
     vGridCellHelper: any;
     vGridElement: any;
     vGridSortable: any;
-    vGridResizable: any;
     vGridResizable: any;
     vGridFilter: any;
     vGridSort: any;
@@ -486,6 +487,16 @@ declare module 'aurelia-v-grid' {
        * explain
        ****************************************************************************************************************************/
     getScrollTop(): any;
+    
+    /****************************************************************************************************************************
+       * remote external call for pager
+       ****************************************************************************************************************************/
+    remoteGoToFirst(): any;
+    remoteGoToNext(): any;
+    remoteGoToPage(x: any): any;
+    remoteGoToOffset(x: any): any;
+    remoteGoTofirstPrev(): any;
+    remoteGoTofirstLast(): any;
   }
   
   /*****************************************************************************************************************
@@ -520,6 +531,7 @@ declare module 'aurelia-v-grid' {
     constructor(element: any);
     bind(parent: any): any;
     attached(): any;
+    getLang(value: any): any;
     updatePager(data: any): any;
     firstBtn(): any;
     nextBtn(): any;
@@ -969,15 +981,8 @@ declare module 'aurelia-v-grid' {
    *
    ****************************************************************************************************************/
   export class VGridSelection {
-    selectionMode: any;
-    lastRowSelected: any;
-    
-    //this ned to be reset when filtering
-    lastKeyKodeUsed: any;
-    
-    //this ned to be reset when filtering
-    selectedRows: any;
     constructor(mode: any, vGrid: any);
+    triggerEvent(): any;
     setMode(mode: any): any;
     isSelected(row: any): any;
     isSelectedMain(row: any): any;
@@ -998,7 +1003,7 @@ declare module 'aurelia-v-grid' {
     /****************************************************************************************************************************
        * fixes highlight and select...
        ****************************************************************************************************************************/
-    setHightlight(e: any, currentRow: any, vGridGenerator: any): any;
+    highlight(e: any, currentRow: any, vGridGenerator: any): any;
   }
   
   /*****************************************************************************************************************
@@ -1061,15 +1066,20 @@ declare module 'aurelia-v-grid' {
     attRemoteIndex: any;
     eventOnRowDraw: any;
     eventOnRemoteCall: any;
+    attHidePagerInfo: any;
+    attCustomPager: any;
+    attLanguage: any;
     loadingMessage: any;
     loading: any;
     constructor(element: any, bindingEngine: any, viewCompiler: any, viewSlot: any, container: any, viewResources: any, taskQueue: any);
     
-    //set by pager
     /***************************************************************************************
        * event dispatcher
        ***************************************************************************************/
     raiseEvent(name: any, data?: any): any;
+    
+    //sends out event that total/filtered or selection have changed
+    sendCollectionEvent(): any;
     
     /***************************************************************************************
        * resets internal key on vGridCollection/internal vGridCollectionFiltered

@@ -2,19 +2,19 @@
 
     <div class="v-grid-pager-group">
 
-        <button disabled.bind="!statusFirstButton" click.trigger="firstBtn()" type="button" class="v-grid-pager-btn">first</button>
+        <button disabled.bind="!statusFirstButton" click.trigger="firstBtn()" type="button" class="v-grid-pager-btn">${statusFirstButtonTitle}</button>
 
 
-        <button disabled.bind="!statusPrevButton" click.trigger="prevBtn()" type="button" class="v-grid-pager-btn">prev</button>
+        <button disabled.bind="!statusPrevButton" click.trigger="prevBtn()" type="button" class="v-grid-pager-btn">${statusPrevButtonTitle}</button>
 
 
-        <button disabled.bind="!statusNextButton" click.trigger="nextBtn()" type="button" class="v-grid-pager-btn">next</button>
+        <button disabled.bind="!statusNextButton" click.trigger="nextBtn()" type="button" class="v-grid-pager-btn">${statusNextButtonTitle}</button>
 
 
-        <button disabled.bind="!statusLastButton" click.trigger="lastBtn()" type="button" class="v-grid-pager-btn">last</button>
+        <button disabled.bind="!statusLastButton" click.trigger="lastBtn()" type="button" class="v-grid-pager-btn">${statusLastButtonTitle}</button>
 
     </div>
-  <div style="margin-top: 5px" class="v-grid-pager-group">
+  <div style="margin-top: 1px" class="v-grid-pager-group">
       <p>${info}</p>
   </div>
 

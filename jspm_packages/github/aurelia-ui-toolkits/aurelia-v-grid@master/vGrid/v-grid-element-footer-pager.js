@@ -36,13 +36,29 @@ define(['exports', 'aurelia-framework'], function (exports, _aureliaFramework) {
       this.statusLastButton = false;
       this.statusFirstButton = false;
       this.statusPrevButton = false;
+
+      this.statusNextButtonTitle = this.getLang("pagerBtnNext") || "Next";
+      this.statusLastButtonTitle = this.getLang("pagerBtnLast") || "Last";
+      this.statusFirstButtonTitle = this.getLang("pagerBtnFirst") || "First";
+      this.statusPrevButtonTitle = this.getLang("pagerBtnLast") || "Last";
+
+      this.pagerStringPage = this.getLang("pagerStringPage") || "Page ";
+      this.pagerStringOf = this.getLang("pagerStringOf") || " of ";
+      this.pagerStringTotalEntities = this.getLang("pagerStringTotalEntities") || ", Total entities:";
+      this.pagerStringPageSize = this.getLang("pagerStringPageSize") || ", page size ";
+    };
+
+    VGridElementFooterPager.prototype.getLang = function getLang(value) {
+      return this.vGrid.vGridConfig.attLanguage[value];
     };
 
     VGridElementFooterPager.prototype.updatePager = function updatePager(data) {
       this.collectionLength = data.length;
       this.limit = data.limit;
       this.offset = data.offset;
+
       this.page = this.offset ? Math.ceil(this.offset / this.limit) + 1 : 1;
+
       if (this.page === 1) {
         this.statusFirstButton = false;
         this.statusPrevButton = false;
@@ -59,7 +75,17 @@ define(['exports', 'aurelia-framework'], function (exports, _aureliaFramework) {
         this.statusLastButton = true;
       }
 
-      this.info = 'Page ' + this.page + ' of ' + Math.ceil(this.collectionLength / this.limit) + ', Total entities:' + this.collectionLength + ', page size ' + this.limit;
+      if (!this.vGridConfig.attHidePagerInfo) {
+        this.info = '' + this.pagerStringPage + this.page + this.pagerStringOf + Math.ceil(this.collectionLength / this.limit) + this.pagerStringTotalEntities + this.collectionLength + this.pagerStringPageSize + this.limit;
+      }
+
+      this.vGrid.raiseEvent("v-remote-collection-event", {
+        evt: "v-remote-collection-event",
+        page: this.page,
+        pages: Math.ceil(this.collectionLength / this.limit),
+        length: this.collectionLength,
+        pageSize: this.limit
+      });
     };
 
     VGridElementFooterPager.prototype.firstBtn = function firstBtn() {

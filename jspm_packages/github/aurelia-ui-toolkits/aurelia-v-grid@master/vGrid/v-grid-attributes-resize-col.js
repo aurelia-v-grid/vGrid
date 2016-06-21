@@ -122,7 +122,7 @@ define(['exports', 'aurelia-framework', './v-grid'], function (exports, _aurelia
         _this3.onmousemove(e);
       };
 
-      this.vGridGenerator.headerElement.onmouseup = function (e) {
+      this.vGridGenerator.headerElement.onmouseup = function () {
         if (!_this3.started) {
           _this3.vGridGenerator.headerElement.onmousemove = "";
         }

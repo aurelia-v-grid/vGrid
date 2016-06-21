@@ -56,9 +56,9 @@ define(['exports', 'aurelia-framework', './v-grid-generator', './v-grid-filter',
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
   }
 
-  var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _class2, _temp;
+  var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _class2, _temp;
 
-  var VGrid = exports.VGrid = (_dec = (0, _aureliaFramework.bindable)({ attribute: "v-grid-context" }), _dec2 = (0, _aureliaFramework.bindable)({ attribute: "v-collection" }), _dec3 = (0, _aureliaFramework.bindable)({ attribute: "v-current-entity" }), _dec4 = (0, _aureliaFramework.bindable)({ attribute: "v-columns" }), _dec5 = (0, _aureliaFramework.bindable)({ attribute: "v-row-height" }), _dec6 = (0, _aureliaFramework.bindable)({ attribute: "v-header-height" }), _dec7 = (0, _aureliaFramework.bindable)({ attribute: "v-footer-height" }), _dec8 = (0, _aureliaFramework.bindable)({ attribute: "v-multi-select" }), _dec9 = (0, _aureliaFramework.bindable)({ attribute: "v-manual-sel" }), _dec10 = (0, _aureliaFramework.bindable)({ attribute: "v-loading-threshold" }), _dec11 = (0, _aureliaFramework.bindable)({ attribute: "v-remote-index" }), _dec12 = (0, _aureliaFramework.bindable)({ attribute: "v-row-on-draw" }), _dec13 = (0, _aureliaFramework.bindable)({ attribute: "v-event-onremote" }), (_class = (_temp = _class2 = function () {
+  var VGrid = exports.VGrid = (_dec = (0, _aureliaFramework.bindable)({ attribute: "v-grid-context" }), _dec2 = (0, _aureliaFramework.bindable)({ attribute: "v-collection" }), _dec3 = (0, _aureliaFramework.bindable)({ attribute: "v-current-entity" }), _dec4 = (0, _aureliaFramework.bindable)({ attribute: "v-columns" }), _dec5 = (0, _aureliaFramework.bindable)({ attribute: "v-row-height" }), _dec6 = (0, _aureliaFramework.bindable)({ attribute: "v-header-height" }), _dec7 = (0, _aureliaFramework.bindable)({ attribute: "v-footer-height" }), _dec8 = (0, _aureliaFramework.bindable)({ attribute: "v-multi-select" }), _dec9 = (0, _aureliaFramework.bindable)({ attribute: "v-manual-sel" }), _dec10 = (0, _aureliaFramework.bindable)({ attribute: "v-loading-threshold" }), _dec11 = (0, _aureliaFramework.bindable)({ attribute: "v-remote-index" }), _dec12 = (0, _aureliaFramework.bindable)({ attribute: "v-row-on-draw" }), _dec13 = (0, _aureliaFramework.bindable)({ attribute: "v-event-onremote" }), _dec14 = (0, _aureliaFramework.bindable)({ attribute: "v-hide-pager-info" }), _dec15 = (0, _aureliaFramework.bindable)({ attribute: "v-custom-pager" }), _dec16 = (0, _aureliaFramework.bindable)({ attribute: "v-language" }), (_class = (_temp = _class2 = function () {
     function VGrid(element, bindingEngine, viewCompiler, viewSlot, container, viewResources, taskQueue) {
       _classCallCheck(this, VGrid);
 
@@ -88,7 +88,13 @@ define(['exports', 'aurelia-framework', './v-grid-generator', './v-grid-filter',
 
       _initDefineProp(this, 'eventOnRemoteCall', _descriptor13, this);
 
-      _initDefineProp(this, 'loadingMessage', _descriptor14, this);
+      _initDefineProp(this, 'attHidePagerInfo', _descriptor14, this);
+
+      _initDefineProp(this, 'attCustomPager', _descriptor15, this);
+
+      _initDefineProp(this, 'attLanguage', _descriptor16, this);
+
+      _initDefineProp(this, 'loadingMessage', _descriptor17, this);
 
       this.loading = false;
 
@@ -118,6 +124,9 @@ define(['exports', 'aurelia-framework', './v-grid-generator', './v-grid-filter',
       this.vGridClientCtx = new _vGridCtx.VGridCtx(this);
       this.vGridMarkupGenerator = new _vGridMarkupGenerator.VGridMarkupGenerator(this);
       this.vGridPager = null;
+      this.lastCollectionLength;
+      this.lastFilterLength;
+      this.lastSelectionLength;
     }
 
     VGrid.prototype.raiseEvent = function raiseEvent(name) {
@@ -130,6 +139,29 @@ define(['exports', 'aurelia-framework', './v-grid-generator', './v-grid-filter',
       this.element.dispatchEvent(event);
 
       return event;
+    };
+
+    VGrid.prototype.sendCollectionEvent = function sendCollectionEvent() {
+
+      var x1 = this.lastCollectionLength;
+      var x2 = this.lastFilterLength;
+      var x3 = this.lastSelectionLength;
+      var y1 = this.vGridCollection.length;
+      var y2 = this.vGridCollectionFiltered.length;
+      var y3 = this.vGridSelection.selectedRows;
+
+      if (x1 !== y1 || x2 !== y2 || x3 !== y3) {
+        this.raiseEvent("v-local-collection-event", {
+          evt: "v-local-collection-event",
+          totalLength: this.vGridCollection.length,
+          filterLength: this.vGridCollectionFiltered.length,
+          selectionLength: this.vGridSelection.selectedRows
+        });
+
+        this.lastCollectionLength = this.vGridCollection.length;
+        this.lastFilterLength = this.vGridCollectionFiltered.length;
+        this.lastSelectionLength = this.vGridSelection.selectedRows;
+      }
     };
 
     VGrid.prototype.checkKeys = function checkKeys() {
@@ -189,6 +221,9 @@ define(['exports', 'aurelia-framework', './v-grid-generator', './v-grid-filter',
       vConfig.setBindValueBool(this.attManualSelection, 'attManualSelection');
       vConfig.setBindValueFunction(this.eventOnRowDraw, 'eventOnRowDraw');
       vConfig.setBindValueFunction(this.eventOnRemoteCall, 'eventOnRemoteCall');
+      vConfig.setBindValueBool(this.attHidePagerInfo, 'attHidePagerInfo');
+      vConfig.setBindValueString(this.attCustomPager, 'attCustomPager');
+      this.vGridConfig.attLanguage = this.attLanguage || this.vGridConfig.attLanguage;
 
       if (this.vGridCollection === undefined || this.vGridCurrentEntity === undefined) {
         if (this.vGridCollection === undefined && this.vGridCurrentEntity === undefined) {
@@ -271,7 +306,16 @@ define(['exports', 'aurelia-framework', './v-grid-generator', './v-grid-filter',
   }), _descriptor13 = _applyDecoratedDescriptor(_class.prototype, 'eventOnRemoteCall', [_dec13], {
     enumerable: true,
     initializer: null
-  }), _descriptor14 = _applyDecoratedDescriptor(_class.prototype, 'loadingMessage', [_aureliaFramework.bindable], {
+  }), _descriptor14 = _applyDecoratedDescriptor(_class.prototype, 'attHidePagerInfo', [_dec14], {
+    enumerable: true,
+    initializer: null
+  }), _descriptor15 = _applyDecoratedDescriptor(_class.prototype, 'attCustomPager', [_dec15], {
+    enumerable: true,
+    initializer: null
+  }), _descriptor16 = _applyDecoratedDescriptor(_class.prototype, 'attLanguage', [_dec16], {
+    enumerable: true,
+    initializer: null
+  }), _descriptor17 = _applyDecoratedDescriptor(_class.prototype, 'loadingMessage', [_aureliaFramework.bindable], {
     enumerable: true,
     initializer: function initializer() {
       return "Working please wait";

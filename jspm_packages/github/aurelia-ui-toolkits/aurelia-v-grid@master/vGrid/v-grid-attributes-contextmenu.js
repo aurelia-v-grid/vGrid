@@ -64,65 +64,65 @@ define(['exports', 'aurelia-framework', './v-grid', './v-grid-contextmenu'], fun
       }
     };
 
-    VGridHeaderMenu.prototype.canOpen = function canOpen(e) {
+    VGridHeaderMenu.prototype.canOpen = function canOpen() {
       return true;
     };
 
     VGridHeaderMenu.prototype.menuHtmlMain = function menuHtmlMain() {
       return this.createMenuHTML([{
         action: "",
-        value: "Options",
+        value: this.getLang("menuMainHeaderOptions") || "Options",
         isHeader: true
       }, {
         action: "clear-cell",
-        value: "Clear cell"
+        value: this.getLang("menuMainHeaderClearCell") || "Clear cell"
       }, {
         action: "clear-all",
-        value: "Clear All Cells"
+        value: this.getLang("menuMainHeaderClearAllCells") || "Clear All Cells"
       }, {
         action: "show-all",
-        value: "Show all (keep filter text)"
+        value: this.getLang("menuMainHeaderShowAll") || "Show all (keep filter text)"
       }, {
         action: "set-filter",
-        value: "Set Filter"
+        value: this.getLang("menuMainHeaderSetFilter") || "Set Filter"
       }]);
     };
 
     VGridHeaderMenu.prototype.menuHtmlSetFilter = function menuHtmlSetFilter() {
       return this.createMenuHTML([{
         action: "",
-        value: "Set filter",
+        value: this.getLang("menuFilterHeaderSetFilter") || "Set filter",
         isHeader: true
       }, {
         action: "set-filter-1",
-        value: "equals"
+        value: this.getLang("menuFilterHeaderEquals") || "equals"
       }, {
         action: "set-filter-2",
-        value: "less than or eq"
+        value: this.getLang("menuFilterHeaderLessThanOrEq") || "less than or eq"
       }, {
         action: "set-filter-3",
-        value: "greater than or eq"
+        value: this.getLang("menuFilterHeaderGreaterThanOrEq") || "greater than or eq"
       }, {
         action: "set-filter-4",
-        value: "less than"
+        value: this.getLang("menuFilterHeaderLessThan") || "less than"
       }, {
         action: "set-filter-5",
-        value: "greater than"
+        value: this.getLang("menuFilterHeaderGreaterThan") || "greater than"
       }, {
         action: "set-filter-6",
-        value: "contains"
+        value: this.getLang("menuFilterHeaderContains") || "contains"
       }, {
         action: "set-filter-7",
-        value: "not equal to"
+        value: this.getLang("menuFilterHeaderNotEqualTo") || "not equal to"
       }, {
         action: "set-filter-8",
-        value: "does not contain"
+        value: this.getLang("menuFilterHeaderDoesNotContain") || "does not contain"
       }, {
         action: "set-filter-9",
-        value: "begins with"
+        value: this.getLang("menuFilterHeaderBeginsWith") || "begins with"
       }, {
         action: "set-filter-10",
-        value: "ends with"
+        value: this.getLang("menuFilterEndsWith") || "ends with"
       }]);
     };
 
@@ -238,22 +238,22 @@ define(['exports', 'aurelia-framework', './v-grid', './v-grid-contextmenu'], fun
       }
     };
 
-    ContextRowMenu.prototype.canOpen = function canOpen(e) {
+    ContextRowMenu.prototype.canOpen = function canOpen() {
       return true;
     };
 
     ContextRowMenu.prototype.menuHtmlMain = function menuHtmlMain() {
       return this.createMenuHTML([{
         action: "",
-        value: "Options",
+        value: this.getLang("menuRowOptions") || "Options",
         isHeader: true
       }, {
         action: "copy-cell",
-        value: "Copy cell value",
+        value: this.getLang("menuRowCopyCellValue") || "Copy cell value",
         isHeader: false
       }, {
         action: "paste-cell",
-        value: "Paste into cell/selected rows",
+        value: this.getLang("menuRowCopyPasteIntoCell") || "Paste into cell/selected rows",
         isHeader: false
       }]);
     };

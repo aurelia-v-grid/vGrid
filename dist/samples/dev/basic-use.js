@@ -17,6 +17,10 @@ System.register(['shared/dummyDataGenerator'], function (_export, _context) {
     }],
     execute: function () {
       _export('BasicUse', BasicUse = (_temp = _class = function () {
+        BasicUse.prototype.collectionChange = function collectionChange(e) {
+          console.log(e);
+        };
+
         function BasicUse(dummyDataGenerator) {
           var _this = this;
 

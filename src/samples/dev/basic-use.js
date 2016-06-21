@@ -12,6 +12,10 @@ export class BasicUse {
   myCollection = [];
 
 
+  collectionChange(e){
+    console.log(e)
+  }
+
   //helper for dummy data
   constructor(dummyDataGenerator) {
     //get this element
