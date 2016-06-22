@@ -56,11 +56,15 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
     }
 
     VGridGenerator.prototype.init = function init(isRebuild) {
+
       this.addHtml();
+      this.addRowsAndSlots();
       this.addEvents();
       if (!isRebuild) {
         this.vGridSelection.setMode(this.vGridConfig.attMultiSelect);
+        this.listenForWindowResize();
       }
+
       this.updateGridScrollbars();
       this.rebindAllRowSlots();
       this.setLargeScrollLimit();
@@ -75,6 +79,9 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
       this.createGridFooterElement();
       this.createGridScrollBodyElement();
       this.createGridRowElements();
+    };
+
+    VGridGenerator.prototype.addRowsAndSlots = function addRowsAndSlots() {
 
       this.createLoadingScreenViewSlot();
       this.createHeaderViewSlot();
@@ -185,11 +192,17 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
     VGridGenerator.prototype.createGridRowElements = function createGridRowElements() {
       var minimumRowsNeeded = parseInt(this.contentHeight / this.vGridConfig.attRowHeight, 10);
 
+      if (0 > this.contentHeight) {
+        minimumRowsNeeded = 100;
+      }
+
       if (minimumRowsNeeded % 2 === 1) {
         minimumRowsNeeded = minimumRowsNeeded + 7;
       } else {
         minimumRowsNeeded = minimumRowsNeeded + 6;
       }
+
+      this.minimumRowsNeeded = minimumRowsNeeded;
 
       var top = 0;
       for (var i = 0; i < minimumRowsNeeded; i++) {
@@ -438,7 +451,7 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
         this.headerElement.style.overflowY = "scroll";
       }
 
-      if (this.contentElement.offsetWidth - 5 < this.getTotalColumnWidth()) {
+      if (this.contentElement.offsetWidth < this.getTotalColumnWidth()) {
         this.contentElement.style.overflowX = "scroll";
       }
     };
@@ -575,6 +588,31 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
       this.contentScrollBodyElement.style.height = this.scrollBodyHeight + 1 + "px";
 
       this.vGrid.sendCollectionEvent();
+    };
+
+    VGridGenerator.prototype.listenForWindowResize = function listenForWindowResize() {
+      var _this2 = this;
+
+      window.addEventListener("resize", function () {
+
+        _this2.gridHeight = _this2.gridElement.clientHeight;
+        _this2.gridWidght = _this2.gridElement.clientWidth;
+        var gridWrapperHeight = _this2.gridHeight;
+        var headerAndFooterHeight = _this2.vGridConfig.attHeaderHeight + _this2.vGridConfig.attFooterHeight;
+        _this2.contentHeight = gridWrapperHeight - headerAndFooterHeight;
+        _this2.contentElement.style.height = _this2.contentHeight + "px";
+
+        var minimumRowsNeeded = parseInt(_this2.contentHeight / _this2.vGridConfig.attRowHeight, 10);
+        if (minimumRowsNeeded > _this2.minimumRowsNeeded) {
+          var last = _this2.contentElement.scrollTop;
+
+          _this2.redrawGrid();
+
+          _this2.contentElement.scrollTop = last;
+
+          _this2.vGridScrollEvents.onScrollbarScrolling();
+        }
+      });
     };
 
     _createClass(VGridGenerator, [{

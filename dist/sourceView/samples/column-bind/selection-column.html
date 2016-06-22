@@ -12,6 +12,7 @@
       v-row-ondblclick.delegate="singleDblClick($event.detail)"
       v-current-entity.bind=myCurrentEntity
       v-row-on-draw.call="onRowDraw($event)"
+      v-grid-context=myGrid
       v-collection.bind=myCollection
       v-columns.bind=columnSetup>
     </v-grid>

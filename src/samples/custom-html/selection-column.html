@@ -12,11 +12,11 @@
       v-row-ondblclick.delegate="singleDblClick($event.detail)"
       v-current-entity.bind=myCurrentEntity
       v-multi-select="true"
+      v-grid-context.bind=myGrid
       v-row-on-draw.call="onRowDraw($event)"
-      v-collection.bind=myCollection
-      v-grid-context.bind=myGrid>
+      v-collection.bind=myCollection>
 
-
+      v-manual-sel="true"
       <v-grid-col col-width="30">
         <v-header-template>
           <input class="vgrid-row-checkbox-100" v-selection="header" type="checkbox">

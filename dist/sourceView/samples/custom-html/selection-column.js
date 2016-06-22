@@ -3,7 +3,6 @@ import {dummyDataGenerator} from 'shared/dummyDataGenerator'
 export class BasicUse {
   static inject = [dummyDataGenerator];
 
-
   //utillity functions
   myGrid = {};
   //current entity, link this to inputs etc
