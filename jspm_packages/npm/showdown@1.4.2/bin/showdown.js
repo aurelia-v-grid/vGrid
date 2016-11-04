@@ -1,2 +1,0 @@
-/* */ 
-require('../src/cli/cli');

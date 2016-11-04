@@ -1,9 +1,0 @@
-{
-  "title": "Remote",
-  "samples": {
-    "basic-use": {
-      "default" : true,
-      "files": ["html", "js", "md"]
-    }
-  }
-}

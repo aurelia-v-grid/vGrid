@@ -1,6 +1,6 @@
 /* */ 
-var isArray = require("../isarray@1.0.0");
-var test = require("tape");
+var isArray = require('./index');
+var test = require('tape');
 test('is array', function(t) {
   t.ok(isArray([]));
   t.notOk(isArray({}));

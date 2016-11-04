@@ -3,9 +3,9 @@
   'use strict';
   if (process.env.OBJECT_IMPL)
     global.TYPED_ARRAY_SUPPORT = false;
-  var Buffer = require("../../../buffer@3.6.0").Buffer;
+  var Buffer = require('../../index').Buffer;
   var common = {};
-  var assert = require("assert");
+  var assert = require('assert');
   var zero = [];
   var one = [new Buffer('asdf')];
   var long = [];
@@ -23,4 +23,4 @@
   assert.throws(function() {
     Buffer.concat([42]);
   }, TypeError);
-})(require("process"));
+})(require('process'));

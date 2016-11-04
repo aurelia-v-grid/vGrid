@@ -2,8 +2,8 @@
 (function(process) {
   if (process.env.OBJECT_IMPL)
     global.TYPED_ARRAY_SUPPORT = false;
-  var B = require("../../buffer@3.6.0").Buffer;
-  var test = require("tape");
+  var B = require('../index').Buffer;
+  var test = require('tape');
   test('new buffer from array', function(t) {
     t.equal(new B([1, 2, 3]).toString(), '\u0001\u0002\u0003');
     t.end();
@@ -129,4 +129,4 @@
     t.ok(buf.equals(copy));
     t.end();
   });
-})(require("process"));
+})(require('process'));

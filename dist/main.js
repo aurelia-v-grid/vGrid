@@ -1,28 +1,21 @@
-'use strict';
+"use strict";
 
-System.register(['bootstrap'], function (_export, _context) {
+System.register(["bootstrap"], function (_export, _context) {
   "use strict";
+
+  function configure(aurelia) {
+    aurelia.use.standardConfiguration().developmentLogging().plugin("aurelia-v-grid");
+
+    aurelia.start().then(function () {
+      return aurelia.setRoot();
+    });
+  }
+
+  _export("configure", configure);
 
   return {
     setters: [function (_bootstrap) {}],
-    execute: function () {
-      function configure(aurelia) {
-        aurelia.use.standardConfiguration().developmentLogging().plugin('aurelia-v-grid');
-
-        aurelia.use.globalResources('shared/collapse-panel');
-        aurelia.use.globalResources('shared/markdown');
-        aurelia.use.globalResources('shared/logger');
-        aurelia.use.globalResources('shared/au-code');
-        aurelia.use.globalResources('shared/v-grid-control-form.html');
-        aurelia.use.globalResources('shared/v-grid-buttons-form');
-
-        aurelia.start().then(function (au) {
-          return au.setRoot('app');
-        });
-      }
-
-      _export('configure', configure);
-    }
+    execute: function () {}
   };
 });
 //# sourceMappingURL=main.js.map

@@ -3,9 +3,9 @@
   'use strict';
   if (process.env.OBJECT_IMPL)
     global.TYPED_ARRAY_SUPPORT = false;
-  var Buffer = require("../../../buffer@3.6.0").Buffer;
+  var Buffer = require('../../index').Buffer;
   var common = {};
-  var assert = require("assert");
+  var assert = require('assert');
   assert.equal(Buffer('hérité').toString('ascii'), 'hC)ritC)');
   var input = 'C’est, graphiquement, la réunion d’un accent aigu ' + 'et d’un accent grave.';
   var expected = 'Cb\u0000\u0019est, graphiquement, la rC)union ' + 'db\u0000\u0019un accent aigu et db\u0000\u0019un ' + 'accent grave.';
@@ -17,4 +17,4 @@
     if (input.charCodeAt(i) > 127)
       ++i;
   }
-})(require("process"));
+})(require('process'));

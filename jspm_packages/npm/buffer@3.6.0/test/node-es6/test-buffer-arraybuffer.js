@@ -3,10 +3,10 @@
   'use strict';
   if (process.env.OBJECT_IMPL)
     global.TYPED_ARRAY_SUPPORT = false;
-  var Buffer = require("../../../buffer@3.6.0").Buffer;
+  var Buffer = require('../../index').Buffer;
   var common = {};
-  var assert = require("assert");
-  var Buffer = require("../../../buffer@3.6.0").Buffer;
+  var assert = require('assert');
+  var Buffer = require('../../index').Buffer;
   var LENGTH = 16;
   var ab = new ArrayBuffer(LENGTH);
   var dv = new DataView(ab);
@@ -34,4 +34,4 @@
     AB.prototype.__proto__ = ArrayBuffer.prototype;
     new Buffer(new AB());
   }, TypeError);
-})(require("process"));
+})(require('process'));

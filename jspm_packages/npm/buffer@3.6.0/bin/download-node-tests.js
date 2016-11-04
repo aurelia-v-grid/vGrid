@@ -1,11 +1,11 @@
 /* */ 
 (function(process) {
-  var concat = require("concat-stream");
-  var fs = require("fs");
-  var hyperquest = require("hyperquest");
-  var cp = require("child_process");
-  var split = require("split");
-  var through = require("through2");
+  var concat = require('concat-stream');
+  var fs = require('fs');
+  var hyperquest = require('hyperquest');
+  var cp = require('child_process');
+  var split = require('split');
+  var through = require('through2');
   var url = 'https://api.github.com/repos/nodejs/io.js/contents';
   var dirs = ['/test/parallel', '/test/pummel'];
   cp.execSync('rm -rf node/*.js', {cwd: __dirname + '/../test'});
@@ -71,4 +71,4 @@
       cb(null, line + '\n');
     });
   }
-})(require("process"));
+})(require('process'));

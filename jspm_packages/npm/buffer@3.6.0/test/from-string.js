@@ -2,8 +2,8 @@
 (function(process) {
   if (process.env.OBJECT_IMPL)
     global.TYPED_ARRAY_SUPPORT = false;
-  var B = require("../../buffer@3.6.0").Buffer;
-  var test = require("tape");
+  var B = require('../index').Buffer;
+  var test = require('tape');
   test('detect utf16 surrogate pairs', function(t) {
     var text = '\uD83D\uDE38' + '\uD83D\uDCAD' + '\uD83D\uDC4D';
     var buf = new B(text);
@@ -108,4 +108,4 @@
     t.deepEqual(buf, new B([0x61]));
     t.end();
   });
-})(require("process"));
+})(require('process'));

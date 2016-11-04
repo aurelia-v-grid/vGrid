@@ -2,8 +2,8 @@
 (function(process) {
   if (process.env.OBJECT_IMPL)
     global.TYPED_ARRAY_SUPPORT = false;
-  var B = require("../../buffer@3.6.0").Buffer;
-  var test = require("tape");
+  var B = require('../index').Buffer;
+  var test = require('tape');
   test('buffer.toJSON', function(t) {
     var data = [1, 2, 3, 4];
     t.deepEqual(new B(data).toJSON(), {
@@ -106,4 +106,4 @@
     t.equal((new B('hallo')).slice(10, 2).toString(), '');
     t.end();
   });
-})(require("process"));
+})(require('process'));

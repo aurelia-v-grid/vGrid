@@ -3,10 +3,10 @@
   'use strict';
   if (process.env.OBJECT_IMPL)
     global.TYPED_ARRAY_SUPPORT = false;
-  var Buffer = require("../../../buffer@3.6.0").Buffer;
+  var Buffer = require('../../index').Buffer;
   var common = {};
-  var assert = require("assert");
-  var Buffer = require("../../../buffer@3.6.0").Buffer;
+  var assert = require('assert');
+  var Buffer = require('../../index').Buffer;
   var b = new Buffer('abcdef');
   var buf_a = new Buffer('a');
   var buf_bc = new Buffer('bc');
@@ -75,4 +75,4 @@
   assert.throws(function() {
     b.indexOf([]);
   });
-})(require("process"));
+})(require('process'));

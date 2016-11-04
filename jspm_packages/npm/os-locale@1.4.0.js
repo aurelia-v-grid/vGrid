@@ -1,1 +1,0 @@
-module.exports = require("npm:os-locale@1.4.0/index");

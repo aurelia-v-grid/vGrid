@@ -1,1 +1,0 @@
-module.exports = require("npm:is-fullwidth-code-point@1.0.0/index");

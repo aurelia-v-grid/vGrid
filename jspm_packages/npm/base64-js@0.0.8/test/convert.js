@@ -1,6 +1,6 @@
 /* */ 
-var test = require("tape"),
-    b64 = require("../lib/b64"),
+var test = require('tape'),
+    b64 = require('../lib/b64'),
     checks = ['a', 'aa', 'aaa', 'hi', 'hi!', 'hi!!', 'sup', 'sup?', 'sup?!'];
 test('convert to base64 and back', function(t) {
   t.plan(checks.length);

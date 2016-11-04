@@ -20,9 +20,8 @@ System.register([], function (_export, _context) {
         }
 
         App.prototype.configureRouter = function configureRouter(config, router) {
-          config.title = 'Aurelia Skeleton Bridge App';
-
-          config.map([{ name: 'about', route: ['about'], moduleId: 'about/about', title: 'About' }, { name: 'catalog-index', route: 'catalog-index', moduleId: 'catalog-index/controls', title: 'Catalog-index' }, { name: 'documentation', route: 'documentation', moduleId: 'documentation/documentation', title: 'Documentation' }, { name: 'help', route: 'help', moduleId: 'help/help', title: 'Help' }, { name: 'home', route: '', redirect: 'about/about' }, { name: 'installation', route: 'installation', moduleId: 'installation/installation', title: 'Installation' }, { name: 'samples', route: 'samples', moduleId: 'samples/index', title: 'Samples' }]);
+          config.title = 'Aurelia';
+          config.map([{ route: ['', 'welcome'], name: 'welcome', moduleId: 'welcome', nav: true, title: '5k rows' }, { route: 'users', name: 'users', moduleId: 'users', nav: true, title: '50k rows' }, { route: 'child-router', name: 'child-router', moduleId: 'child-router', nav: true, title: 'Child Router' }]);
 
           this.router = router;
         };

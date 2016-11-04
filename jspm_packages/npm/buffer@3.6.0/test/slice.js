@@ -2,8 +2,8 @@
 (function(process) {
   if (process.env.OBJECT_IMPL)
     global.TYPED_ARRAY_SUPPORT = false;
-  var B = require("../../buffer@3.6.0").Buffer;
-  var test = require("tape");
+  var B = require('../index').Buffer;
+  var test = require('tape');
   test('modifying buffer created by .slice() modifies original memory', function(t) {
     if (!B.TYPED_ARRAY_SUPPORT)
       return t.end();
@@ -30,4 +30,4 @@
     t.equal(buf2.toString('ascii', 0, buf2.length), '!bc');
     t.end();
   });
-})(require("process"));
+})(require('process'));

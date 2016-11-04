@@ -1,1 +1,0 @@
-module.exports = require("npm:string-width@1.0.1/index");

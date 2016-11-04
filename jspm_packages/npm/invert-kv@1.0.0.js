@@ -1,1 +1,0 @@
-module.exports = require("npm:invert-kv@1.0.0/index");

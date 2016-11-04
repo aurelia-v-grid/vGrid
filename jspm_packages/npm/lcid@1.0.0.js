@@ -1,1 +1,0 @@
-module.exports = require("npm:lcid@1.0.0/index");

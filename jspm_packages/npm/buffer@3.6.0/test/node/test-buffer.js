@@ -3,11 +3,11 @@
   'use strict';
   if (process.env.OBJECT_IMPL)
     global.TYPED_ARRAY_SUPPORT = false;
-  var Buffer = require("../../../buffer@3.6.0").Buffer;
+  var Buffer = require('../../index').Buffer;
   var common = {};
-  var assert = require("assert");
-  var Buffer = require("../../../buffer@3.6.0").Buffer;
-  var SlowBuffer = require("../../../buffer@3.6.0").SlowBuffer;
+  var assert = require('assert');
+  var Buffer = require('../../index').Buffer;
+  var SlowBuffer = require('../../index').SlowBuffer;
   var cntr = 0;
   var b = Buffer(1024);
   assert.strictEqual(1024, b.length);
@@ -801,4 +801,4 @@
   assert.throws(function() {
     new Buffer(null);
   }, /must start with number, buffer, array or string/);
-})(require("process"));
+})(require('process'));

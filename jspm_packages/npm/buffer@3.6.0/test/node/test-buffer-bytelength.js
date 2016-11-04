@@ -3,10 +3,10 @@
   'use strict';
   if (process.env.OBJECT_IMPL)
     global.TYPED_ARRAY_SUPPORT = false;
-  var Buffer = require("../../../buffer@3.6.0").Buffer;
+  var Buffer = require('../../index').Buffer;
   var common = {};
-  var assert = require("assert");
-  var Buffer = require("../../../buffer@3.6.0").Buffer;
+  var assert = require('assert');
+  var Buffer = require('../../index').Buffer;
   assert.equal(Buffer.byteLength(32, 'raw'), 2);
   assert.equal(Buffer.byteLength(NaN, 'utf8'), 3);
   assert.equal(Buffer.byteLength({}, 'raws'), 15);
@@ -35,4 +35,4 @@
   ['ucs2', 'ucs-2', 'utf16le', 'utf-16le'].forEach(function(encoding) {
     assert.equal(24, Buffer.byteLength('Il était tué', encoding));
   });
-})(require("process"));
+})(require('process'));
