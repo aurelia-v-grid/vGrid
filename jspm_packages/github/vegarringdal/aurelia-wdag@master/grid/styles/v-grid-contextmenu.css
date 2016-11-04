@@ -1,0 +1,55 @@
+
+.v-grid-context-menu {
+  display: block;
+  position: absolute;
+  z-index: 10;
+  width: initial;
+  font-size: 11px;
+  background-color: #fff;
+  border: solid 1px #dfdfdf;
+  box-shadow: 1px 1px 2px #cfcfcf;
+  height: initial;
+  line-height: initial;
+}
+
+.v-grid-context-menu a {
+  color: black;
+}
+
+.v-grid-context-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.v-grid-context-menu__split {
+  display: block;
+  padding: 4px 12px 4px 4px;
+  text-decoration: none;
+  background-color: lightgrey;
+}
+
+.v-grid-context-menu__item {
+  display: block;
+  margin-bottom: 0;
+}
+
+.v-grid-context-menu__link {
+  display: block;
+  padding: 4px 12px;
+  text-decoration: none;
+}
+
+.v-grid-context-menu__link:hover {
+  color: black;
+  background-color: darkgrey;
+  text-decoration: none;
+}
+
+.v-grid-context-menu__item:last-child {
+  margin-bottom: 0;
+}
+
+.v-grid-context-menu__item:first-child {
+  margin-top: 4px;
+}
