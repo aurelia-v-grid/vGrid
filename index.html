@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
-  <body aurelia-app="main">
+  <body aurelia-app="sample/main">
     <div class="splash">
       <div class="message">Aurelia Navigation Skeleton</div>
       <i class="fa fa-spinner fa-spin"></i>
@@ -22,7 +22,20 @@
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
     <script>
-      System.import('aurelia-bootstrapper');
+      System.import('aurelia-bootstrapper');       
+
+        var cfg = {
+           packages: {}
+        };
+
+        // Create a new systemjs package with the package name
+        cfg.packages["aurelia-v-grid"] = {
+            "main": "index",
+            "dependencies": "aurleia-framework"
+        };
+
+        System.config(cfg);
+        
     </script>
   </body>
 </html>
