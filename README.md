@@ -5,9 +5,9 @@
 
 11 November 2016
 
-* Started working on a new one with grouping and pinned columns
-* This is very exprimental atm and a lot might change/ might not work very well
-* some places have a lot of repeated code, and might be very messy
-* Not everything will be compatable will the old grid.
-* Not made this as a plugin atm, and is kinda messy some places, plugin folder under src + aurelia-v-grid.js file is the plugin files, just have it like this because it was simple for me while developing
-* For issues /question/suggestions on the exprimental grid please keep it under here : https://github.com/vegarringdal/vGrid/issues
+* Started working on a new one with grouping and pinned columns 2 weeks ago, source will be held here until more stable/less buggy
+* This is very experimental atm and a lot might change/ might not work very well, some parts is very messy
+* Not everything will be compatible will the old grid, so old docs is not correct everywhere
+* Not made this as a plugin right now, own catalog for sample files and own for plugin under SRC
+* For issues /question/suggestions on the experimental grid please keep it under here : https://github.com/vegarringdal/vGrid/issues
+* Some commits in the start might have sample and grid changes.. this is more or less to keep code somewhere safe/ make it possible to test/comment code/suggestions
