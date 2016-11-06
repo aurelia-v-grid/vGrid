@@ -1,0 +1,126 @@
+
+.avg-default{
+  border: 1px solid rgb(230, 230, 230);
+    -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}  
+
+.avg-default .avg-top-panel{
+  border-bottom:1px solid rgb(230, 230, 230);
+  background-color: rgb(240, 240, 240);
+}
+
+.avg-default .avg-header{
+  border-bottom:1px solid rgb(230, 230, 230);
+  
+}
+.avg-default .avg-footer{
+  border-top:1px solid rgb(230, 230, 230);
+  background-color: rgb(240, 240, 240);
+}
+
+.avg-default .avg-content-right{
+    background-color:white;
+    border-top: 1px solid rgb(230, 230, 230);
+}
+
+
+.avg-default .avg-content-left {
+  background-color:white;
+  border-top: 1px solid rgb(230, 230, 230);
+}
+
+.avg-default .avg-header-main {
+  background-color: rgb(240, 240, 240);
+}
+
+.avg-default .avg-header-left{
+    background-color: rgb(240, 240, 240);
+}
+
+.avg-default .avg-header-right{
+  background-color: rgb(240, 240, 240);
+}
+
+.avg-default .avg-content-main {
+  background-color:white;
+  border-top: 1px solid rgb(230, 230, 230);
+}
+
+.avg-default .avg-row{
+  border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.avg-default .avg-header-left .avg-col{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-right: 1px solid rgb(230, 230, 230);
+  overflow: hidden;
+}
+
+
+.avg-default .avg-header-main .avg-col{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-right: 1px solid rgb(230, 230, 230);
+  overflow: hidden;
+}
+
+.avg-default .avg-header-right .avg-col{  
+  border-left: 1px solid rgb(230, 230, 230);
+}
+
+.avg-default .avg-content-left .avg-col{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-right: 1px solid rgb(230, 230, 230);
+  overflow: hidden;
+}
+
+
+.avg-default .avg-content-main .avg-col{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-right: 1px solid rgb(230, 230, 230);
+  overflow: hidden;
+}
+
+.avg-default .avg-content-right .avg-col{  
+  border-left: 1px solid rgb(230, 230, 230);
+}
+
+
+.avg-default .avg-col-group{
+  pointer-events: all;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background-color:  rgb(250, 250, 250);
+  border-top: 1px solid rgb(230, 230, 230);
+  padding: 5px 10px;
+}
+
+.avg-default .avg-col-grouping{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background-color:  rgb(250, 250, 250);
+  border-right: 1px solid rgb(230, 230, 230);
+  overflow: hidden;
+}
+
+.avg-default .avg-col-grouping-header{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background-color: rgb(240, 240, 240);
+  border-right: 1px solid rgb(230, 230, 230);
+  overflow: hidden;
+}
+
+.avg-default .avg-selected-row{
+  box-shadow: none;
+  background-color: rgb(203, 195, 203);
+}
+
+
