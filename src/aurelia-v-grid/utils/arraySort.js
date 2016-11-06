@@ -25,7 +25,7 @@ export class ArraySort {
       sort = {
         attribute: attribute,
         asc: true
-      }
+      };
     } else {
       sort = {
         attribute: attribute.attribute,

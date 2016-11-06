@@ -15,12 +15,12 @@ export class RowDataBinder {
     this.rebindRowBinded = this.rebindRow.bind(this);
     this.rebindAllRowsBinded = this.rebindAllRows.bind(this);
     this.element.addEventListener("avg-rebind-row", this.rebindRowBinded);
-    this.element.addEventListener("avg-rebind-all-rows", this.rebindAllRowsBinded)
+    this.element.addEventListener("avg-rebind-all-rows", this.rebindAllRowsBinded);
   }
 
   removeEventListener() {
     this.element.removeEventListener("avg-rebind-row", this.rebindRowBinded);
-    this.element.removeEventListener("avg-rebind-all-rows", this.rebindAllRowsBinded)
+    this.element.removeEventListener("avg-rebind-all-rows", this.rebindAllRowsBinded);
   }
 
 
@@ -62,14 +62,14 @@ export class RowDataBinder {
           rowCache.main.avgSelected = true;
           rowCache.left.classList.add("avg-selected-row");
           rowCache.main.classList.add("avg-selected-row");
-          rowCache.right.classList.add("avg-selected-row")
+          rowCache.right.classList.add("avg-selected-row");
         }
       } else {
         if (rowCache.main.avgSelected) {
           rowCache.main.avgSelected = false;
           rowCache.left.classList.remove("avg-selected-row");
           rowCache.main.classList.remove("avg-selected-row");
-          rowCache.right.classList.remove("avg-selected-row")
+          rowCache.right.classList.remove("avg-selected-row");
         }
       }
 
@@ -153,7 +153,7 @@ export class RowDataBinder {
             rowCache[i].main.avgSelected = true;
             rowCache[i].left.classList.add("avg-selected-row");
             rowCache[i].main.classList.add("avg-selected-row");
-            rowCache[i].right.classList.add("avg-selected-row")
+            rowCache[i].right.classList.add("avg-selected-row");
           }
 
         } else {
@@ -161,7 +161,7 @@ export class RowDataBinder {
             rowCache[i].main.avgSelected = false;
             rowCache[i].left.classList.remove("avg-selected-row");
             rowCache[i].main.classList.remove("avg-selected-row");
-            rowCache[i].right.classList.remove("avg-selected-row")
+            rowCache[i].right.classList.remove("avg-selected-row");
           }
         }
 
@@ -206,7 +206,7 @@ export class RowDataBinder {
         overrideRight.bindingContext.row = rowCache[i].row;
         overrideGroup.bindingContext.row = rowCache[i].row;
 
-      })
+      });
 
     }
 

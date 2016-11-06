@@ -7,7 +7,7 @@ export class Collection {
     this.keys = [];
     this.count = 0;
     this.length = 0;
-    this.ungroupedArray = []
+    this.ungroupedArray = [];
   }
 
 
@@ -29,11 +29,11 @@ export class Collection {
       }
 
       if (!rowData.__group) {
-        this.keys.push(rowData[this.key])
+        this.keys.push(rowData[this.key]);
       } else {
-        this.keys.push(null)
+        this.keys.push(null);
       }
-      this.entities.push(rowData)
+      this.entities.push(rowData);
     });
 
   }
@@ -48,7 +48,7 @@ export class Collection {
   }
 
   getRowFromKey(key) {
-    return this.keys.indexOf(key)
+    return this.keys.indexOf(key);
   }
 
   getRow(row) {

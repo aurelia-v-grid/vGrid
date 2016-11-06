@@ -95,7 +95,7 @@ export class vMenu {
         sort: this.sort,
         pinned: this.pinned,
         callback: this.callbackBinded
-      })
+      });
     }
 
   }
@@ -110,7 +110,6 @@ export class vMenu {
     var posx = 0;
     var posy = 0;
 
-    if (!e) var e = window.event;
 
     if (e.pageX || e.pageY) {
       posx = e.pageX;
@@ -123,7 +122,7 @@ export class vMenu {
     return {
       x: posx,
       y: posy
-    }
+    };
   }
 
 

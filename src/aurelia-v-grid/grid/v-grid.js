@@ -62,7 +62,7 @@ export class VGrid {
     this.columnMarkup = new ColumnMarkup(element, viewCompiler, container, viewResources, this.htmlCache, this.viewSlots, this.columnBindingContext);
     this.groupingElements = new GroupingElements(element, viewCompiler, container, viewResources, this.htmlCache, this.viewSlots, this.columnBindingContext);
     this.loadingScreen = new LoadingScreen(element, viewCompiler, container, viewResources, this.viewSlots);
-    this.contextMenu = new ContextMenu(viewCompiler, container, viewResources, this.viewSlots)
+    this.contextMenu = new ContextMenu(viewCompiler, container, viewResources, this.viewSlots);
   }
 
 
@@ -117,7 +117,7 @@ export class VGrid {
     //todo: should I bind the main, grouping and loading screen here?
 
     //connect gridConnector to this controler
-    this.attGridConnector.gridCreated(this.controller)
+    this.attGridConnector.gridCreated(this.controller);
   }
 
 

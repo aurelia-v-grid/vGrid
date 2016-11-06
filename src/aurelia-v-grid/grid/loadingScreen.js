@@ -46,8 +46,8 @@ export class LoadingScreen {
       this.loading = collectionLength ? collectionLength > 10000 ? true : false : false;
       this.loadingMessage = msg || "Loading";
       setTimeout(() => {
-        resolve()
-      })
+        resolve();
+      });
     });
 
   }
@@ -57,8 +57,8 @@ export class LoadingScreen {
     return new Promise((resolve, reject) => {
       this.loading = false;
       setTimeout(() => {
-        resolve()
-      })
+        resolve();
+      });
     });
   }
 

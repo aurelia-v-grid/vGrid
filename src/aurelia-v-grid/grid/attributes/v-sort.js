@@ -35,8 +35,8 @@ export class vGridAttributesSort {
         }
       };
       setTimeout(()=> {
-        this.element.onmouseup = null
-      }, 300)
+        this.element.onmouseup = null;
+      }, 300);
 
     };
 
@@ -47,7 +47,7 @@ export class vGridAttributesSort {
 
 
   detached() {
-    this.element.removeChild(this.sortIcon)
+    this.element.removeChild(this.sortIcon);
   }
 
 

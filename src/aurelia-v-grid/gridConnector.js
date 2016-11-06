@@ -54,7 +54,7 @@ export class GridConnector {
 
       default:
         console.log("unknown event");
-        console.log(event)
+        console.log(event);
 
     }
 
@@ -92,8 +92,8 @@ export class GridConnector {
 
   group(grouping, keepExpanded) {
     this.controller.setLoadingScreen(true, null, this.length()).then(()=> {
-      this.datasource.group(grouping, keepExpanded)
-    })
+      this.datasource.group(grouping, keepExpanded);
+    });
   }
 
 
@@ -115,19 +115,19 @@ export class GridConnector {
   query(a) {
     this.controller.setLoadingScreen(true, null, this.length()).then(()=> {
       this.datasource.query(a);
-    })
+    });
   }
 
 
   orderBy(attribute, addToCurrentSort) {
     this.controller.setLoadingScreen(true, null, this.length()).then(()=> {
-      this.datasource.orderBy(attribute, addToCurrentSort)
+      this.datasource.orderBy(attribute, addToCurrentSort);
     });
   }
 
 
   destroy() {
-    this.datasource.removeEventlistener(this.eventID)
+    this.datasource.removeEventlistener(this.eventID);
   }
 
 
@@ -156,7 +156,7 @@ export class GridConnector {
   collapseGroup(id) {
     this.controller.setLoadingScreen(true, null, this.length()).then(()=> {
       this.datasource.groupCollapse(id);
-    })
+    });
   }
 
 }

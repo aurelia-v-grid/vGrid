@@ -52,7 +52,7 @@ export class GroupingElements {
       let viewSlot = new ViewSlot(this.avgTopPanel, true);
       viewSlot.add(view);
       this.groupContext[name].viewSlot = viewSlot;
-      this.viewSlots.groupingViewSlots.push(this.groupContext[name])
+      this.viewSlots.groupingViewSlots.push(this.groupContext[name]);
     }
     this.groupContext[name].viewSlot.bind(this.groupContext[name]);
     this.groupContext[name].viewSlot.attached();

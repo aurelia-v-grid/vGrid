@@ -70,6 +70,7 @@ export class Selection {
           this.selection.add(this.getRowKey(row));
           this.selectedRows = this.selection.size;
         }
+        break;
       default:
       //nothing-> warn ?
     }
@@ -91,7 +92,7 @@ export class Selection {
     if (this.selectedRows > 0) {
       this.selection.forEach((value) => {
         array.push(this.getRowFromKey(value));
-      })
+      });
     }
     return array;
   }

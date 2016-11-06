@@ -28,7 +28,7 @@ export class MainScrollEvents {
     this.vhandle = this.htmlCache.avg_content_vhandle;
     this.hhandle = this.htmlCache.avg_content_hhandle;
     this.group = this.htmlCache.avg_content_group;
-    this.scroll = this.htmlCache.avg_content_scroll
+    this.scroll = this.htmlCache.avg_content_scroll;
 
   }
 
@@ -171,7 +171,7 @@ export class MainScrollEvents {
         this.timerLeft = setTimeout(() => {
           this.addScrollEvents("left");
           this.timerLeft = null;
-        }, 30)
+        }, 30);
       });
     });
 
@@ -195,7 +195,7 @@ export class MainScrollEvents {
         this.timerWheel = setTimeout(() => {
           this.addScrollEvents("wheel");
           this.timerWheel = null;
-        }, 30)
+        }, 30);
 
       });
 
@@ -232,7 +232,7 @@ export class MainScrollEvents {
         this.timerMain = setTimeout(() => {
           this.addScrollEvents("main");
           this.timerMain = null;
-        }, 30)
+        }, 30);
       });
 
     });
@@ -263,7 +263,7 @@ export class MainScrollEvents {
         this.timerRight = setTimeout(() => {
           this.addScrollEvents("right");
           this.timerRight = null;
-        }, 30)
+        }, 30);
       });
 
     });
@@ -293,7 +293,7 @@ export class MainScrollEvents {
         this.timerVhandle = setTimeout(() => {
           this.addScrollEvents("Vhandle");
           this.timerVhandle = null;
-        }, 30)
+        }, 30);
       });
 
     });
@@ -319,7 +319,7 @@ export class MainScrollEvents {
         this.timerHhandle = setTimeout(() => {
           this.addScrollEvents("Hhandle");
           this.timerHhandle = null;
-        }, 30)
+        }, 30);
 
       });
 

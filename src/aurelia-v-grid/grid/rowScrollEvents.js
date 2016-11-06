@@ -74,7 +74,7 @@ export class RowScrollEvents {
         this.timer = setTimeout(() => {
           this.largeScroll = false;
           this.scrollScrollBar(newTopPosition, isDown);
-        }, this.largeScrollUpdateDelay)
+        }, this.largeScrollUpdateDelay);
       } else {
         this.scrollScrollBar(newTopPosition, isDown);
       }
@@ -102,7 +102,7 @@ export class RowScrollEvents {
     cache.group.avgRow = Math.floor(top / this.rowHeight);
     cache.top = top;
     cache.row = Math.floor(top / this.rowHeight);
-  };
+  }
 
 
   scrollNormal(newTopPosition, downScroll) {
@@ -143,7 +143,7 @@ export class RowScrollEvents {
     //sort array
     this.rowCache.sort(
       function (a, b) {
-        return parseInt(a.top) - parseInt(b.top)
+        return parseInt(a.top) - parseInt(b.top);
       });
   }
 
@@ -218,21 +218,21 @@ export class RowScrollEvents {
     //I now sort the array again.
     this.rowCache.sort(
       function (a, b) {
-        return parseInt(a.top) - parseInt(b.top)
+        return parseInt(a.top) - parseInt(b.top);
       });
 
     //update row data
-    this.triggerRebindAllRowsEvent(downScroll, this.rowCache)
-  };
+    this.triggerRebindAllRowsEvent(downScroll, this.rowCache);
+  }
 
 
   addEventListener() {
     this.onScrollBinded = this.onScroll.bind(this);
-    this.element.addEventListener("avg-scroll", this.onScrollBinded)
+    this.element.addEventListener("avg-scroll", this.onScrollBinded);
   }
 
   removeEventListener() {
-    this.element.removeEventListener("avg-scroll", this.onScrollBinded)
+    this.element.removeEventListener("avg-scroll", this.onScrollBinded);
   }
 
 

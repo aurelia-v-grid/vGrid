@@ -88,7 +88,7 @@ export class Controller {
     this.loadingScreen.init(this.overrideContext);
 
     //add context menu
-    this.contextMenu.init()
+    this.contextMenu.init();
 
 
   }
@@ -105,26 +105,26 @@ export class Controller {
   }
 
   getOperatorName(name) {
-    return this.attGridConnector.getFilterOperatorName(name)
+    return this.attGridConnector.getFilterOperatorName(name);
   }
 
   expandGroup(id) {
-    this.attGridConnector.expandGroup(id)
+    this.attGridConnector.expandGroup(id);
   }
 
   collapseGroup(id) {
-    this.attGridConnector.collapseGroup(id)
+    this.attGridConnector.collapseGroup(id);
   }
 
   select(row) {
-    this.attGridConnector.select(row)
+    this.attGridConnector.select(row);
   }
 
 
   addToGrouping(attribute) {
     let currentGrouping = this.attGridConnector.getGrouping();
     currentGrouping.push(attribute);
-    this.attGridConnector.group(currentGrouping, true)
+    this.attGridConnector.group(currentGrouping, true);
   }
 
   removeFromGrouping(attribute) {
@@ -132,7 +132,7 @@ export class Controller {
     let index = currentGrouping.indexOf(attribute);
     if (index !== -1) {
       currentGrouping.splice(index, 1);
-      this.attGridConnector.group(currentGrouping, true)
+      this.attGridConnector.group(currentGrouping, true);
     }
 
   }
@@ -153,22 +153,22 @@ export class Controller {
   setLoadingScreen(value, msg, collectionLength) {
 
     if (value) {
-      return this.loadingScreen.enable(msg, collectionLength)
+      return this.loadingScreen.enable(msg, collectionLength);
     } else {
-      return this.loadingScreen.disable()
+      return this.loadingScreen.disable();
     }
   }
 
 
   updateHeights() {
     this.rowScrollEvents.setCollectionLength(this.attGridConnector.length());
-    this.htmlHeightWidth.setCollectionLength(this.attGridConnector.length())
+    this.htmlHeightWidth.setCollectionLength(this.attGridConnector.length());
   }
 
   updateHeaderGrouping(groups) {
     let length = groups.length;
     this.columnBindingContext.setupgrouping = length;
-    this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length)
+    this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
   }
 
   collectionLength() {
@@ -186,7 +186,7 @@ export class Controller {
       isScrollBarScrolling: true,
       isDown: true,
       newTopPosition: position
-    })
+    });
   }
 
 
@@ -194,14 +194,14 @@ export class Controller {
     this.raiseEvent("avg-rebind-all-rows", {
       rowCache: this.htmlCache.rowCache,
       downScroll: true
-    })
+    });
   }
 
 
   addEventListeners() {
     this.element.addEventListener("getElement", (event) => {
       this.attGridConnector.getElement(event.detail);
-    })
+    });
   }
 
 

@@ -66,7 +66,7 @@ export class vGridDragDropCol {
     }
 
 
-    if (result.ok && result.target.nodeName == 'AVG-TOP-PANEL') {
+    if (result.ok && result.target.nodeName === 'AVG-TOP-PANEL') {
       //if panel we need to listen and do some stuff differently
       this.isPanel = true;
       this.sharedContext.panel = result.target;
@@ -74,7 +74,7 @@ export class vGridDragDropCol {
       //if we leave, remve group
       result.target.onmouseleave = (event) => {
         if (this.sharedContext.dragging) {
-          this.groupingElements.removeGroup("")
+          this.groupingElements.removeGroup("");
         }
       };
 
@@ -93,7 +93,7 @@ export class vGridDragDropCol {
         if (this.sharedContext.dragging) {
           this.groupingElements.addToGrouping();
         }
-      }
+      };
 
 
     }
@@ -145,14 +145,11 @@ export class vGridDragDropCol {
     this.sharedContext.columnsArraySorted = [];
     this.sharedContext.columnsArray.forEach((x) => {
       this.sharedContext.columnsArraySorted.push(x);
-    })
+    });
 
 
   }
 
-  unbind() {
-    // console.log("unbind")
-  }
 
   detached() {
     //  console.log("detached")
@@ -175,7 +172,7 @@ export class vGridDragDropCol {
         if (!left) {
           this.switchColumns({
             colType: "left"
-          })
+          });
         }
       }
 
@@ -191,7 +188,7 @@ export class vGridDragDropCol {
         if (!right) {
           this.switchColumns({
             colType: "right"
-          })
+          });
         }
       }
 
@@ -245,12 +242,12 @@ export class vGridDragDropCol {
               x.left = appendValue;
               appendValue = appendValue + x.width;
             }
-          })
+          });
         }
 
         //if coltype and colno is diffent
         if (result.colNo !== this.sharedContext.colNo && result.colType !== this.sharedContext.colType) {
-          this.switchColumns(result)
+          this.switchColumns(result);
 
         }
 
@@ -371,7 +368,7 @@ export class vGridDragDropCol {
 
         break;
       default:
-        console.log("Todo: Move to :" + newColType + ", from:" + oldColType);
+       // console.log("Todo: Move to :" + newColType + ", from:" + oldColType);
         break;
     }
 
@@ -540,7 +537,7 @@ export class vGridDragDropCol {
       context: context,
       columnsArray: columnsArray,
       panel: panel
-    }
+    };
 
   }
 

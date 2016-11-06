@@ -133,7 +133,7 @@ export class vGridAttributesResizeCol {
         }
 
 
-      })
+      });
 
     }
 
@@ -171,13 +171,13 @@ export class vGridAttributesResizeCol {
 
 
     if (this.colType === "main") {
-      this.isLast = this.vGrid.htmlHeightWidth.avgContentMainScroll_Width === (this.context.left + this.context.width)
+      this.isLast = this.vGrid.htmlHeightWidth.avgContentMainScroll_Width === (this.context.left + this.context.width);
     }
     if (this.colType === "left") {
-      this.isLast = this.vGrid.htmlHeightWidth.avgContentLeft_Width === (this.context.left + this.context.width + this.vGrid.htmlHeightWidth.avgScrollBarWidth) + this.columnBindingContext.setupgrouping * 15
+      this.isLast = this.vGrid.htmlHeightWidth.avgContentLeft_Width === (this.context.left + this.context.width + this.vGrid.htmlHeightWidth.avgScrollBarWidth) + this.columnBindingContext.setupgrouping * 15;
     }
     if (this.colType === "right") {
-      this.isLast = this.vGrid.htmlHeightWidth.avgContentRight_Width === (this.context.left + this.context.width + this.vGrid.htmlHeightWidth.avgScrollBarWidth)
+      this.isLast = this.vGrid.htmlHeightWidth.avgContentRight_Width === (this.context.left + this.context.width + this.vGrid.htmlHeightWidth.avgScrollBarWidth);
     }
 
 

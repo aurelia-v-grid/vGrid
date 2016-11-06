@@ -35,7 +35,7 @@ export class ArrayGrouping {
           //get last group created, and group children
           let childGroupArray = groups[groups.length - 1];
           let newSubGroup = this.groupChildren(childGroupArray, groupBy, groupNo);
-          groups.push(newSubGroup)
+          groups.push(newSubGroup);
 
         }
 
@@ -46,7 +46,7 @@ export class ArrayGrouping {
       if (!keepExpanded) {
         return groups[0];
       } else {
-        return this.expand(null, this.expanded)
+        return this.expand(null, this.expanded);
       }
     } else {
       arrayToGroup.forEach((row)=> {
@@ -119,7 +119,7 @@ export class ArrayGrouping {
 
           tempValue = child[groupBy];
           rebuiltChildrenArray.push(curGroup);
-          tempGroupArray.push(curGroup)
+          tempGroupArray.push(curGroup);
         } else {
           child.__groupLvl = groupNo + 1;
           curGroup.__groupChildren.push(child);
@@ -168,12 +168,12 @@ export class ArrayGrouping {
             if (sg.__groupChildren) {
               sg.__groupExpanded = true;
               this.expanded.add(sg.__groupID);
-              subGroup(sg)
+              subGroup(sg);
             }
             break;
         }
 
-      })
+      });
     };
 
     //loop main groups
@@ -187,7 +187,7 @@ export class ArrayGrouping {
           g.__groupExpanded = true;
           this.expanded.add(g.__groupID);
           if (g.__groupChildren) {
-            subGroup(g)
+            subGroup(g);
           }
           break;
       }
@@ -213,7 +213,7 @@ export class ArrayGrouping {
             if (sg.__groupChildren) {
               sg.__groupExpanded = false;
               this.expanded.delete(sg.__groupID);
-              subGroup(sg)
+              subGroup(sg);
             }
             break;
           case sg.__groupID === id:
@@ -224,11 +224,11 @@ export class ArrayGrouping {
           default:
             collection.push(sg);
             if (sg.__groupChildren && sg.__groupExpanded) {
-              subGroup(sg)
+              subGroup(sg);
             }
             break;
         }
-      })
+      });
     };
 
     //loop main groups
@@ -239,7 +239,7 @@ export class ArrayGrouping {
           g.__groupExpanded = false;
           this.expanded.delete(g.__groupID);
           if (g.__groupChildren) {
-            subGroup(g)
+            subGroup(g);
           }
           break;
         case g.__groupID === id:
@@ -248,7 +248,7 @@ export class ArrayGrouping {
           break;
         default:
           if (g.__groupChildren && g.__groupExpanded) {
-            subGroup(g)
+            subGroup(g);
           }
           break;
       }

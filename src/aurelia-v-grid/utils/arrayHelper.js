@@ -1,4 +1,4 @@
-import {FilterOperators} from './filterOperators'
+import {FilterOperators} from './filterOperators';
 import {ArrayFilter} from './arrayFilter';
 import {ArraySort} from './arraySort';
 import {ArrayGrouping} from './arrayGrouping';
@@ -53,7 +53,7 @@ export class ArrayHelper {
             sort.asc = sort.asc === true ? false : true;
             sort.no = count;
             exist = true;
-            newSort.push(sort)
+            newSort.push(sort);
           }
         }
 
@@ -76,7 +76,7 @@ export class ArrayHelper {
       result = {
         fixed: groupedArray,
         full: collection
-      }
+      };
     } else {
       if (!attribute) {
         //no attribute, just reset last sort...
@@ -87,14 +87,14 @@ export class ArrayHelper {
         result = {
           fixed: collection,
           full: collection
-        }
+        };
       } else {
         this.setOrderBy(attribute, addToCurrentSort);
         this.runOrderbyOn(collection);
         result = {
           fixed: collection,
           full: collection
-        }
+        };
       }
 
     }
@@ -106,15 +106,15 @@ export class ArrayHelper {
   }
 
   getGrouping() {
-    return this.arrayGrouping.getGrouping()
+    return this.arrayGrouping.getGrouping();
   }
 
   groupCollapse(id) {
-    return this.arrayGrouping.collapse(id)
+    return this.arrayGrouping.collapse(id);
   }
 
   groupExpand(id) {
-    return this.arrayGrouping.expand(id)
+    return this.arrayGrouping.expand(id);
   }
 
   getOrderBy() {
@@ -146,7 +146,7 @@ export class ArrayHelper {
   }
 
   query(array, params) {
-    return this.arrayFilter.runQueryOn(array, params)
+    return this.arrayFilter.runQueryOn(array, params);
   }
 
 }

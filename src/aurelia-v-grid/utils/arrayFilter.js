@@ -194,17 +194,17 @@ export class ArrayFilter {
         }
         if (type === "string") {
           if (x.value.charAt(0) === "*" && x.value.length === 1) {
-            result = true
+            result = true;
           }
         }
 
 
       });//end foreach obj
-      return result
+      return result;
 
     });
     return resultArray;
-  };
+  }
 
 
 }

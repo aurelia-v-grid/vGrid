@@ -68,7 +68,7 @@ export class ColumnMarkup {
         '</avg-col>'
       ];
 
-      viewMarkup = markupArray.join("")
+      viewMarkup = markupArray.join("");
     } else {
       for (let i = 0; i < this.configLength; i++) {
 

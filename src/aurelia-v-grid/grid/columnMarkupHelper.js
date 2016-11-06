@@ -20,7 +20,7 @@ export class ColumnMarkupHelper {
 
     if (colConfig && colConfig.length > 0) {
       columnsToUse = colConfig;
-      type = 'typeHtml'
+      type = 'typeHtml';
     }
 
     if (!type) {
@@ -90,7 +90,7 @@ export class ColumnMarkupHelper {
         case "image":
           inputHeader = '<p class="avg-label-top"></p>';
           if (!col.colFilterTop) {
-            col.colFilter = "x"
+            col.colFilter = "x";
           }
           labelHeader = this.createLabelMarkup(col);
           break;
@@ -179,7 +179,7 @@ export class ColumnMarkupHelper {
     }
 
     return returnValue;
-  };
+  }
 
 
   /********************************************************************

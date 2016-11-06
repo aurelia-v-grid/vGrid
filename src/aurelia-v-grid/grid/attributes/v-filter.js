@@ -196,7 +196,7 @@ export class vGridAttributesFilter {
           }
           this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
           this.vGrid.attGridConnector.query(this.vGrid.attGridConnector.getCurrentFilter());
-        }
+        };
 
 
       }

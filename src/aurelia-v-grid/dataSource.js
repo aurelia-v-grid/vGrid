@@ -1,6 +1,6 @@
 import {Selection} from "./selection";
 import {Collection} from './collection';
-import {ArrayHelper} from './utils/arrayHelper'
+import {ArrayHelper} from './utils/arrayHelper';
 
 export class DataSource {
 
@@ -54,7 +54,7 @@ export class DataSource {
     //call all event listeners
     this.eventCallBacks.forEach((FN)=> {
       FN(event);
-    })
+    });
   }
 
 
@@ -74,7 +74,7 @@ export class DataSource {
   removeEventListener(id) {
 
     //remove listtener from id
-    this.eventCallBacks.splice(id, 1)
+    this.eventCallBacks.splice(id, 1);
   }
 
 
@@ -82,7 +82,7 @@ export class DataSource {
 
     //if collection, then get row key
     if (this.collection) {
-      return this.collection.getRowKey(row)
+      return this.collection.getRowKey(row);
     } else {
       return -1;
     }
@@ -94,7 +94,7 @@ export class DataSource {
 
     //if collection then get row from key
     if (this.collection) {
-      return this.collection.getRowFromKey(key)
+      return this.collection.getRowFromKey(key);
     } else {
       return -1;
     }
@@ -115,7 +115,7 @@ export class DataSource {
     //set our main collection, we will use this for later
     this.mainArray = this.collection.getEntities();
 
-    this.triggerEvent("collection_changed")
+    this.triggerEvent("collection_changed");
   }
 
 
@@ -140,7 +140,7 @@ export class DataSource {
     this.orderBy(null, true);
 
     //trigger event so grid updates
-    this.triggerEvent("collection_filtered")
+    this.triggerEvent("collection_filtered");
 
   }
 
@@ -157,14 +157,8 @@ export class DataSource {
     this.collection.setData(result.fixed, result.full);
 
     //trigger event to update grid
-    this.triggerEvent("collection_sorted")
+    this.triggerEvent("collection_sorted");
 
-  }
-
-
-  getGrouping() {
-    //just return the current grouping to grid (string array)
-    return this.arrayHelper.getGrouping()
   }
 
 
@@ -196,7 +190,7 @@ export class DataSource {
 
     this.collection.setData(groupedArray, untouchedgrouped);
 
-    this.triggerEvent("collection_grouped")
+    this.triggerEvent("collection_grouped");
 
   }
 
@@ -206,9 +200,9 @@ export class DataSource {
     let oldArray = this.collection.getEntities();
     this.collection.setData(newArray, oldArray);
     if (id) {
-      this.triggerEvent("collection_collapsed")
+      this.triggerEvent("collection_collapsed");
     } else {
-      this.triggerEvent("collection_collapsed_all")
+      this.triggerEvent("collection_collapsed_all");
     }
 
   }
@@ -219,9 +213,9 @@ export class DataSource {
     let oldArray = this.collection.getEntities();
     this.collection.setData(newArray, oldArray);
     if (id) {
-      this.triggerEvent("collection_expanded")
+      this.triggerEvent("collection_expanded");
     } else {
-      this.triggerEvent("collection_expanded_all")
+      this.triggerEvent("collection_expanded_all");
     }
   }
 
@@ -238,7 +232,7 @@ export class DataSource {
 
   addElement(data) {
     if (data) {
-
+      //todo
     } else {
       let newElement = {};
       this.mainArray.unshift(newElement);
@@ -246,13 +240,15 @@ export class DataSource {
       let oldMaybeGroupedArray = this.collection.entities;
       let index = oldArray.indexOf(newElement);
       if (index === -1) {
-        oldArray.unshift(newElement)
+        oldArray.unshift(newElement);
       }
       oldMaybeGroupedArray.unshift(newElement);
       this.collection.setData(oldMaybeGroupedArray, oldArray);
-      this.triggerEvent("collection_filtered")
+      this.triggerEvent("collection_filtered");
     }
   }
+
+
 
 
 }

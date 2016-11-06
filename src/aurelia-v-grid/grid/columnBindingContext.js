@@ -10,14 +10,14 @@ export class ColumnBindingContext {
     this.changeGrouping = (x) => {
       if (x) {
         if (x.__groupExpanded) {
-          this.controller.collapseGroup(x.__groupID)
+          this.controller.collapseGroup(x.__groupID);
         } else {
-          this.controller.expandGroup(x.__groupID)
+          this.controller.expandGroup(x.__groupID);
         }
 
       }
 
-    }
+    };
 
   }
 
