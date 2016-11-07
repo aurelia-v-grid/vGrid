@@ -168,7 +168,7 @@ export class ArrayFilter {
             }
             break;
           case 7: //not equal to
-            if (rowValue !== filterValue) {
+            if (rowValue === filterValue) {
               result = false;
             }
             break;
