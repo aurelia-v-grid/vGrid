@@ -44,7 +44,14 @@ export class VGrid {
 
     //use by v-grid-col element, that takes the data it gets and puts it in here
     this.colConfig = [];
+    this.colRepeater = false;
+    this.colRepeatRowTemplate = null;
+    this.colRepeatRowHeaderTemplate = null;
+    
+    //to know if new or hidden by "if"
     this.newGrid = true;
+
+    
 
     //create our classes
     this.controller = new Controller(this);

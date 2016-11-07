@@ -1,6 +1,5 @@
-//TODO not in use atm
 
-/*import {inject, noView, customElement, processContent, Container, TargetInstruction,bindable, ViewSlot} from 'aurelia-framework';
+import {inject, noView, customElement, processContent, TargetInstruction,bindable} from 'aurelia-framework';
 import {VGrid} from './v-grid';
 
 
@@ -43,12 +42,12 @@ export class VGridElementRowRepeat {
 
   bind(bindingContext) {
     this.bindingContext = bindingContext;
-    this.vGrid.vGridConfig.repeater = true;
-    this.vGrid.vGridConfig.repeatRowTemplate = this.rowTemplate;
-    this.vGrid.vGridConfig.repeatRowHeaderTemplate = this.headerTemplate;
+    this.vGrid.colRepeater = true;
+    this.vGrid.colRepeatRowTemplate = this.rowTemplate;
+    this.vGrid.colRepeatRowHeaderTemplate = this.headerTemplate;
   }
 
 
 
 
-}*/
+}

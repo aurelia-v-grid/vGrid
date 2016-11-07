@@ -17,13 +17,22 @@ export class ColumnMarkup {
   }
 
 
-  init(colConfig, overrideContext) {
+  init(colConfig, overrideContext, colRepeater, colRepeatRowTemplate, colRepeatRowHeaderTemplate) {
     this.overrideContext = overrideContext;
     this.colConfig = colConfig;
     this.configLength = colConfig.length;
-    this.markupHelper.generate(this.colConfig);
+    this.colRepeater = colRepeater;
+    this.colRepeatRowTemplate = colRepeatRowTemplate;
+    this.colRepeatRowHeaderTemplate = colRepeatRowHeaderTemplate;
     this.updateInternalHtmlCache();
-    this.generate();
+    if(this.colConfig.length > 0){
+      this.markupHelper.generate(this.colConfig);
+    }
+
+    this.generateColumns();
+    
+    
+    
   }
 
 
@@ -70,25 +79,30 @@ export class ColumnMarkup {
 
       viewMarkup = markupArray.join("");
     } else {
-      for (let i = 0; i < this.configLength; i++) {
+      if(this.colRepeater && type === "main"){
+        let style = 'style="left:0;right:0"';
+        viewMarkup = `<avg-repeat class="avg-col" if.bind="rowRef.__group !== true" ${style}>${this.colRepeatRowTemplate}</avg-repeat>`;
+      } else {
+        for (let i = 0; i < this.configLength; i++) {
 
-        let style;
-        switch (type) {
-          case "left":
-            style = 'css="width:${setupleft[' + i + '].width}px;left:${setupleft[' + i + '].left+ (setupgrouping * 15)}px"';
-            break;
-          case "main":
-            style = 'css="width:${setupmain[' + i + '].width}px;left:${setupmain[' + i + '].left}px"';
-            break;
-          case "right":
-            style = 'css="width:${setupright[' + i + '].width}px;left:${setupright[' + i + '].left}px"';
-            break;
+          let style;
+          switch (type) {
+            case "left":
+              style = 'css="width:${setupleft[' + i + '].width}px;left:${setupleft[' + i + '].left+ (setupgrouping * 15)}px"';
+              break;
+            case "main":
+              style = 'css="width:${setupmain[' + i + '].width}px;left:${setupmain[' + i + '].left}px"';
+              break;
+            case "right":
+              style = 'css="width:${setupright[' + i + '].width}px;left:${setupright[' + i + '].left}px"';
+              break;
+          }
+
+          let template = this.colConfig[i].colRowTemplate;
+          let colMarkup = `<avg-col class="avg-col"  if.bind="setup${type}[${i}].show && rowRef.__group !== true" ${style}>${template}</avg-col>`;
+          viewMarkup = viewMarkup + colMarkup;
+
         }
-
-        let template = this.colConfig[i].colRowTemplate;
-        let colMarkup = `<avg-col class="avg-col"  if.bind="setup${type}[${i}].show && rowRef.__group !== true" ${style}>${template}</avg-col>`;
-        viewMarkup = viewMarkup + colMarkup;
-
       }
     }
 
@@ -142,26 +156,30 @@ export class ColumnMarkup {
     let left = 0;
     let viewMarkup = "";
 
+    if(this.colRepeater && type === "main"){
+        let style = 'css="left:0;right:0"';
+        viewMarkup = `<div class="avg-col" ${style}>${this.colRepeatHeaderTemplate}</div>`;
+      } else {
+        for (let i = 0; i < this.configLength; i++) {
+          let style;
+          switch (type) {
+            case "left":
+              style = 'css="width:${setupleft[' + i + '].width}px;left:${setupleft[' + i + '].left + (setupgrouping * 15)}px"';
+              break;
+            case "main":
+              style = 'css="width:${setupmain[' + i + '].width}px;left:${setupmain[' + i + '].left}px"';
+              break;
+            case "right":
+              style = 'css="width:${setupright[' + i + '].width}px;left:${setupright[' + i + '].left}px"';
+              break;
+          }
 
-    for (let i = 0; i < this.configLength; i++) {
-      let style;
-      switch (type) {
-        case "left":
-          style = 'css="width:${setupleft[' + i + '].width}px;left:${setupleft[' + i + '].left + (setupgrouping * 15)}px"';
-          break;
-        case "main":
-          style = 'css="width:${setupmain[' + i + '].width}px;left:${setupmain[' + i + '].left}px"';
-          break;
-        case "right":
-          style = 'css="width:${setupright[' + i + '].width}px;left:${setupright[' + i + '].left}px"';
-          break;
+
+          let template = this.colConfig[i].colHeaderTemplate;
+          let colMarkup = `<avg-col avg-type="${type}" avg-config-col="${i}" class="avg-col" if.bind="setup${type}[${i}].show" ${style}>${template}</avg-col>`;
+          viewMarkup = viewMarkup + colMarkup;
+        }
       }
-
-
-      let template = this.colConfig[i].colHeaderTemplate;
-      let colMarkup = `<avg-col avg-type="${type}" avg-config-col="${i}" class="avg-col" if.bind="setup${type}[${i}].show" ${style}>${template}</avg-col>`;
-      viewMarkup = viewMarkup + colMarkup;
-    }
 
     //this is the block that puches the column from left for grouping
     let groupingBlock = "";
@@ -174,7 +192,7 @@ export class ColumnMarkup {
   }
 
 
-  generate() {
+  generateColumns() {
 
     if (this.columnBindingContext.setupmain.length === 0) {
       //grid hidden by if.bind...lets keep what ever is in here

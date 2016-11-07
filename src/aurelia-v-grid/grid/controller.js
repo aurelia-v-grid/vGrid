@@ -15,6 +15,9 @@ export class Controller {
     let c = this.vGrid;
     //column configuration
     this.colConfig = c.colConfig;
+    this.colRepeater = c.colRepeater;
+    this.colRepeatRowTemplate = c.colRepeatRowTemplate;
+    this.colRepeatRowHeaderTemplate = c.colRepeatRowHeaderTemplate;
 
     //aurelia classes
     this.viewCompiler = c.viewCompiler;
@@ -72,7 +75,7 @@ export class Controller {
     this.rowScrollEvents.init(this.attRowHeight);
 
     //creates the views/viewports we need
-    this.columnMarkup.init(this.colConfig, this.overrideContext);
+    this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate);
 
 
     //more updates to main markup

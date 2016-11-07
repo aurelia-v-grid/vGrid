@@ -1,0 +1,49 @@
+<template>
+    <require from="bootstrap/css/bootstrap.css"></require>
+    <require from="./numberConverter"></require>
+    <div class="col-md-6" style="top:50px">
+        
+        <v-grid if.bind="!hidden"v-multi-select="true" v-manual-sel="true" v-grid-connector.bind="gridConnector"  v-row-height="200" v-header-height="0" v-panel-height="0" v-footer-height="0" css="height:${height}px">
+            <v-grid-row-repeat>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                        <input type="name" class="form-control" value.bind="rowRef.name" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="country" class="col-sm-2 control-label">Country</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" value.bind="rowRef.country">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                            <input type="checkbox" checked.bind="rowRef.bool"> Remember me
+                            </label>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">something</button>
+                        </div>
+                    </div>
+                </form>
+            </v-grid-row-repeat>
+        </v-grid>
+    </div>
+
+
+ 
+    <button click.delegate="expand()">expand all</button>
+    <button click.delegate="collapse()">collapse all</button>
+    <button click.delegate="group()">group</button>
+    <button click.delegate="show()">show</button>
+    <button click.delegate="hide()">hide</button>
+    <input value.bind="ds.entity.name">
+
+</template>
