@@ -6,6 +6,13 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+  meta: {
+    "bootstrap": {
+      "deps": [
+        "jquery"
+      ]
+    }
+  },
   map: {
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.1",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0",
@@ -20,13 +27,11 @@ System.config({
     "aurelia-templating-binding": "npm:aurelia-templating-binding@1.0.0",
     "aurelia-templating-resources": "npm:aurelia-templating-resources@1.1.1",
     "aurelia-templating-router": "npm:aurelia-templating-router@1.0.0",
-    "aurelia-wdag": "github:vegarringdal/aurelia-wdag@master",
     "bluebird": "npm:bluebird@3.4.1",
     "bootstrap": "github:twbs/bootstrap@3.3.7",
     "fetch": "github:github/fetch@1.0.0",
     "font-awesome": "npm:font-awesome@4.6.3",
     "jquery": "npm:jquery@2.2.4",
-    "json": "github:systemjs/plugin-json@0.2.0",
     "text": "github:systemjs/plugin-text@0.0.8",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
@@ -45,10 +50,6 @@ System.config({
     },
     "github:twbs/bootstrap@3.3.7": {
       "jquery": "npm:jquery@2.2.4"
-    },
-    "github:vegarringdal/aurelia-wdag@master": {
-      "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.1",
-      "aurelia-framework": "npm:aurelia-framework@1.0.6"
     },
     "npm:assert@1.4.1": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",

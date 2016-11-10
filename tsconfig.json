@@ -1,0 +1,35 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "sourceMap": true,
+    "target": "es5",
+    "module": "amd",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "lib": ["es2015", "dom"],
+    "baseUrl": "./",
+    "paths": {
+      "src/*": ["src/*"],
+      "aurelia-v-grid":"./src/aurelia-v-grid"
+    }
+  },
+  "filesGlob": [
+    "./src/**/*.ts",
+    "./test/**/*.ts",
+    "./typings/index.d.ts",
+    "./custom_typings/**/*.d.ts",
+    "./jspm_packages/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "jspm_packages"
+  ],
+  "atom": {
+    "rewriteTsconfig": false
+  }
+}
