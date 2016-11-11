@@ -11,3 +11,4 @@
 * Not made this as a plugin right now, own catalog for sample files and own for plugin under SRC
 * For issues /question/suggestions on the experimental grid please keep it under here : https://github.com/vegarringdal/vGrid/issues
 * Some commits in the start might have sample and grid changes.. this is more or less to keep code somewhere safe/ make it possible to test/comment code/suggestions
+* [temp demo](http://vegarringdal.github.io/vGrid/) not always updated
