@@ -1,47 +1,35 @@
-'use strict';
-
-System.register(['aurelia-framework', '../v-grid'], function (_export, _context) {
-  "use strict";
-
-  var inject, customAttribute, VGrid, _dec, _dec2, _class, vGridAttributesImageFix;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  return {
-    setters: [function (_aureliaFramework) {
-      inject = _aureliaFramework.inject;
-      customAttribute = _aureliaFramework.customAttribute;
-    }, function (_vGrid) {
-      VGrid = _vGrid.VGrid;
-    }],
-    execute: function () {
-      _export('vGridAttributesImageFix', vGridAttributesImageFix = (_dec = customAttribute('v-image-fix'), _dec2 = inject(Element, VGrid), _dec(_class = _dec2(_class = function () {
-        function vGridAttributesImageFix(element, vGrid) {
-          _classCallCheck(this, vGridAttributesImageFix);
-
-          this.vGrid = vGrid;
-          this.element = element;
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define(["require", "exports", 'aurelia-framework', '../v-grid'], function (require, exports, aurelia_framework_1, v_grid_1) {
+    "use strict";
+    var VGridAttributesImageFix = (function () {
+        function VGridAttributesImageFix(element, vGrid) {
+            this.vGrid = vGrid;
+            this.element = element;
         }
-
-        vGridAttributesImageFix.prototype.valueChanged = function valueChanged(newValue, oldValue) {
-          this.element.src = "";
-          this.element.src = this.value || newValue;
+        VGridAttributesImageFix.prototype.valueChanged = function (newValue, oldValue) {
+            this.element.src = '';
+            this.element.src = this.value || newValue;
         };
-
-        vGridAttributesImageFix.prototype.bind = function bind(bindingContext, overrideContext) {
-          this.element.src = "";
-          this.element.src = this.value || "";
+        VGridAttributesImageFix.prototype.bind = function (bindingContext, overrideContext) {
+            this.element.src = '';
+            this.element.src = this.value || '';
         };
-
-        return vGridAttributesImageFix;
-      }()) || _class) || _class));
-
-      _export('vGridAttributesImageFix', vGridAttributesImageFix);
-    }
-  };
+        VGridAttributesImageFix = __decorate([
+            aurelia_framework_1.customAttribute('v-image-fix'),
+            aurelia_framework_1.inject(Element, v_grid_1.VGrid), 
+            __metadata('design:paramtypes', [Element, v_grid_1.VGrid])
+        ], VGridAttributesImageFix);
+        return VGridAttributesImageFix;
+    }());
+    exports.VGridAttributesImageFix = VGridAttributesImageFix;
 });
+
 //# sourceMappingURL=v-image.js.map

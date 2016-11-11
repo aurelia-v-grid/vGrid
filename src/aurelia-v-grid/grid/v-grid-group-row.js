@@ -1,1 +1,0 @@
-//todo, want user to be able to have custom html in group row

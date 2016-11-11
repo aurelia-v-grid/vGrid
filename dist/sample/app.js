@@ -1,36 +1,20 @@
-'use strict';
-
-System.register([], function (_export, _context) {
-  "use strict";
-
-  var App;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _export('App', App = function () {
+define(["require", "exports"], function (require, exports) {
+    "use strict";
+    var App = (function () {
         function App() {
-          _classCallCheck(this, App);
         }
-
-        App.prototype.configureRouter = function configureRouter(config, router) {
-          config.title = 'Aurelia';
-          config.map([{ route: ['', 'welcome'], name: 'welcome', moduleId: './welcome', nav: true, title: '5k rows' }, { route: 'users', name: 'users', moduleId: './users', nav: true, title: '50k rows' }, { route: 'child-router', name: 'child-router', moduleId: './child-router', nav: true, title: 'Child Router' }]);
-
-          this.router = router;
+        App.prototype.configureRouter = function (config, router) {
+            config.title = 'Aurelia';
+            config.map([
+                { route: ['', '5k-rows'], name: '5k-rows', moduleId: './5k-rows', nav: true, title: '5k-rows' },
+                { route: '50k-rows', name: '50k-rows', moduleId: './50k-rows', nav: true, title: '50k-rows' },
+                { route: 'child-router', name: 'child-router', moduleId: './child-router', nav: true, title: 'Child Router' }
+            ]);
+            this.router = router;
         };
-
         return App;
-      }());
-
-      _export('App', App);
-    }
-  };
+    }());
+    exports.App = App;
 });
+
 //# sourceMappingURL=app.js.map

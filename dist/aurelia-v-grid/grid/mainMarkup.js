@@ -1,57 +1,28 @@
-'use strict';
-
-System.register(['aurelia-framework', './mainMarkupHtmlString'], function (_export, _context) {
+define(["require", "exports", 'aurelia-framework', './mainMarkupHtmlString'], function (require, exports, aurelia_framework_1, mainMarkupHtmlString_1) {
     "use strict";
-
-    var ViewSlot, MainMarkupHtmlString, MainMarkup;
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
+    var MainMarkup = (function () {
+        function MainMarkup(element, viewCompiler, container, viewResources, htmlHeightWidth, viewSlots) {
+            this.element = element;
+            this.viewCompiler = viewCompiler;
+            this.container = container;
+            this.viewResources = viewResources;
+            this.htmlHeightWidth = htmlHeightWidth;
+            this.viewSlots = viewSlots;
         }
-    }
-
-    return {
-        setters: [function (_aureliaFramework) {
-            ViewSlot = _aureliaFramework.ViewSlot;
-        }, function (_mainMarkupHtmlString) {
-            MainMarkupHtmlString = _mainMarkupHtmlString.MainMarkupHtmlString;
-        }],
-        execute: function () {
-            _export('MainMarkup', MainMarkup = function () {
-                function MainMarkup(element, viewCompiler, container, viewResources, htmlHeightWidth, viewSlots) {
-                    _classCallCheck(this, MainMarkup);
-
-                    this.element = element;
-
-                    this.viewCompiler = viewCompiler;
-                    this.container = container;
-                    this.viewResources = viewResources;
-
-                    this.htmlHeightWidth = htmlHeightWidth;
-                    this.viewSlots = viewSlots;
-                }
-
-                MainMarkup.prototype.generateMainMarkup = function generateMainMarkup() {
-
-                    this.viewFactory = this.viewCompiler.compile('<template>' + MainMarkupHtmlString + '</template>', this.viewResources);
-                    this.view = this.viewFactory.create(this.container);
-                    this.viewSlots.mainViewSlot = new ViewSlot(this.element, true);
-                    this.viewSlots.mainViewSlot.add(this.view);
-
-                    this.viewSlots.mainViewSlot.bind(this, {
-                        bindingContext: this,
-                        parentOverrideContext: this.htmlHeightWidth
-                    });
-
-                    this.viewSlots.mainViewSlot.attached();
-                };
-
-                return MainMarkup;
-            }());
-
-            _export('MainMarkup', MainMarkup);
-        }
-    };
+        MainMarkup.prototype.generateMainMarkup = function () {
+            this.viewFactory = this.viewCompiler.compile('<template>' + mainMarkupHtmlString_1.MainMarkupHtmlString + '</template>', this.viewResources);
+            this.view = this.viewFactory.create(this.container);
+            this.viewSlots.mainViewSlot = new aurelia_framework_1.ViewSlot(this.element, true);
+            this.viewSlots.mainViewSlot.add(this.view);
+            this.viewSlots.mainViewSlot.bind(this, {
+                bindingContext: this,
+                parentOverrideContext: this.htmlHeightWidth
+            });
+            this.viewSlots.mainViewSlot.attached();
+        };
+        return MainMarkup;
+    }());
+    exports.MainMarkup = MainMarkup;
 });
+
 //# sourceMappingURL=mainMarkup.js.map

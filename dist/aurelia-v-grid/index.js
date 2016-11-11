@@ -1,44 +1,17 @@
-'use strict';
-
-System.register(['./gridConnector', './selection', './dataSource', './collection'], function (_export, _context) {
-  "use strict";
-
-  var gridConnector, selection, datasource, collection, prefix, GridConnector, Selection, DataSource, Collection;
-  function configure(config) {
-    config.globalResources(prefix + '/attributes/v-filter', prefix + '/attributes/v-sort', prefix + '/attributes/v-image', prefix + '/attributes/v-drag-drop-col', prefix + '/attributes/v-resize-col', prefix + '/attributes/v-menu', prefix + '/attributes/v-selection', prefix + '/v-grid-row-repeat', prefix + '/v-grid-col', prefix + '/v-grid');
-  }
-
-  _export('configure', configure);
-
-  return {
-    setters: [function (_gridConnector) {
-      gridConnector = _gridConnector;
-    }, function (_selection) {
-      selection = _selection;
-    }, function (_dataSource) {
-      datasource = _dataSource;
-    }, function (_collection) {
-      collection = _collection;
-    }],
-    execute: function () {
-      prefix = './grid';
-
-      _export('GridConnector', GridConnector = gridConnector.GridConnector);
-
-      _export('GridConnector', GridConnector);
-
-      _export('Selection', Selection = selection.Selection);
-
-      _export('Selection', Selection);
-
-      _export('DataSource', DataSource = datasource.DataSource);
-
-      _export('DataSource', DataSource);
-
-      _export('Collection', Collection = collection.Collection);
-
-      _export('Collection', Collection);
+define(["require", "exports", './gridConnector', './selection', './dataSource', './collection'], function (require, exports, gridConnector_1, selection_1, dataSource_1, collection_1) {
+    "use strict";
+    function __export(m) {
+        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
     }
-  };
+    __export(gridConnector_1);
+    __export(selection_1);
+    __export(dataSource_1);
+    __export(collection_1);
+    var prefix = './grid';
+    function configure(config) {
+        config.globalResources(prefix + '/attributes/v-filter', prefix + '/attributes/v-sort', prefix + '/attributes/v-image', prefix + '/attributes/v-drag-drop-col', prefix + '/attributes/v-resize-col', prefix + '/attributes/v-menu', prefix + '/attributes/v-selection', prefix + '/v-grid-row-repeat', prefix + '/v-grid-col', prefix + '/v-grid');
+    }
+    exports.configure = configure;
 });
+
 //# sourceMappingURL=index.js.map
