@@ -5,7 +5,6 @@
   font-style: normal;
 }
 
-
 .avg-default .avg-fa {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
@@ -53,7 +52,6 @@
   content: "\f196";
 }
 
-
 .avg-default .avg-fa-times-circle-o:after {
   content: "\f014";
 }
@@ -62,9 +60,8 @@
   content: "\f110";
 }
 
-
 .avg-default .avg-fa-thumb-tack:before {
-    content: "\f08d";
+  content: "\f08d";
 }
 
 .avg-default .avg-fa-filter:before {
@@ -73,4 +70,8 @@
 
 .avg-default .avg-fa-arrow-left:before {
   content: "\f060";
+}
+
+.avg-default .avg-fa-sitemap:before {
+  content: "\f0e8";
 }

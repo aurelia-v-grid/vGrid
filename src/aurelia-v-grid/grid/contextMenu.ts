@@ -15,6 +15,7 @@ export class ContextMenu {
     private sortMenu: boolean;
     private filterMainMenu: boolean;
     private filterOptionsMenu: boolean;
+    private groupbyMenu: boolean;
     private callback: any;
 
 
@@ -52,15 +53,17 @@ export class ContextMenu {
     public openMenu(options: {
         left: number,
         top: number,
-        pinned?: boolean,
-        sort?: boolean,
-        filter?: boolean,
+        pinned?: string,
+        sort?: string,
+        groupby?: string,
+        filter?: string,
         callback?: Function
     }): void {
         this.left = options.left;
         this.top = options.top;
         this.pinnedMenu = options.pinned ? true : false;
         this.sortMenu = options.sort ? true : false;
+        this.groupbyMenu =  options.groupby ? true : false;
         this.filterMainMenu = options.filter ? true : false;
         this.show = true;
         this.callback = options.callback;
@@ -146,6 +149,14 @@ export class ContextMenu {
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('pinned','right', $event)" class="avg-menu__link">
                     <i class="avg-fa avg-fa-thumb-tack"></i> Pin Right
+                </p>
+                </li>
+            </ul>
+
+           <ul if.bind="groupbyMenu && !filterOptionsMenu" class="avg-menu__items">
+                <li class="avg-menu__item">
+                <p click.delegate="menuClick('groupby','groupby', $event)" class="avg-menu__link">
+                    <i class="avg-fa avg-fa-sitemap"></i> group by
                 </p>
                 </li>
             </ul>

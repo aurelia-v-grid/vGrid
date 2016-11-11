@@ -2,6 +2,7 @@ import { bindable, inject, customAttribute } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
 // for typings
 import { Controller } from '../controller';
+import { GroupingElements } from '../groupingElements';
 
 @customAttribute('v-menu')
 @inject(Element, VGrid)
@@ -12,18 +13,21 @@ export class VGridAttributeMenu {
   private openBinded: any;
   private checkBinded: any;
   private callbackBinded: any;
+  private groupingElements: GroupingElements;
 
 
-  @bindable private filter;
-  @bindable private sort;
-  @bindable private pinned;
-  @bindable private copypaste; //todo
+  @bindable private filter: string;
+  @bindable private sort: string ;
+  @bindable private pinned: string;
+  @bindable private groupby: string;
+  @bindable private copypaste: string; //todo
 
 
   constructor(element, vGrid) {
     this.element = element;
     this.controller = vGrid.controller;
     this.raiseEvent = vGrid.controller.raiseEvent;
+    this.groupingElements = vGrid.groupingElements;
 
     this.openBinded = this.open.bind(this);
     this.checkBinded = this.check.bind(this);
@@ -81,6 +85,12 @@ export class VGridAttributeMenu {
       return true;
     }
 
+    if (type === 'groupby') {
+      this.groupingElements.addGroup(this.groupby, this.groupby);
+      this.groupingElements.addToGrouping();
+      return true;
+    }
+
     if (type === 'filterOption') {
       this.raiseEvent('filterUpdate', {
         attribute: this.filter.replace('rowRef.', ''),
@@ -104,6 +114,7 @@ export class VGridAttributeMenu {
         filter: this.filter,
         sort: this.sort,
         pinned: this.pinned,
+        groupby: this.groupby,
         callback: this.callbackBinded
       });
     }

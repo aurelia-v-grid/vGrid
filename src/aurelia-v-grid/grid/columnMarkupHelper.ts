@@ -286,10 +286,14 @@ export class ColumnMarkupHelper {
       extraAttributes = '';
     }
 
+    let tempFieldSplit = col.colField.split(' ');
+    let groupby = tempFieldSplit[0].replace('rowRef.', '');
+
+
     // apply magic
     // todo, atm Im adding resize columns and dragdrop columns, should this be a choice?
     return `<p 
-      v-menu="sort:${col.colSort}" 
+      v-menu="sort:${col.colSort};groupby:${groupby}" 
       ${extraAttributes} 
       ${classname} 
       ${sort} 
