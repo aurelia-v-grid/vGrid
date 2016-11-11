@@ -165,7 +165,9 @@ define(["require", "exports"], function (require, exports) {
             if (this.useCustomOnly) {
                 extraAttributes = '';
             }
-            return "<p \n      v-menu=\"sort:" + col.colSort + "\" \n      " + extraAttributes + " \n      " + classname + " \n      " + sort + " \n      " + colAddLabelAttributes + ">\n      " + col.colHeaderName + "\n      </p>";
+            var tempFieldSplit = col.colField.split(' ');
+            var groupby = tempFieldSplit[0].replace('rowRef.', '');
+            return "<p \n      v-menu=\"sort:" + col.colSort + ";groupby:" + groupby + "\" \n      " + extraAttributes + " \n      " + classname + " \n      " + sort + " \n      " + colAddLabelAttributes + ">\n      " + col.colHeaderName + "\n      </p>";
         };
         return ColumnMarkupHelper;
     }());

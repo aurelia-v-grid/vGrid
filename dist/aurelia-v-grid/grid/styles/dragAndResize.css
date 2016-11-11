@@ -1,5 +1,3 @@
-
-
 .avg-default .avg-draggable-handler {
   position: absolute;
   cursor: w-resize;
@@ -12,14 +10,13 @@
 
 .avg-default .avg-vGridDragHandle {
   cursor: move;
-  
 }
 
-.avg-default.avg-drag{
+.avg-default.avg-drag {
   border: 1px solid rgb(230, 230, 230);
   box-sizing: border-box;
   box-shadow: initial;
-  line-height:50%;
+  line-height: 50%;
   pointer-events: none;
   background-color: rgb(240, 240, 240);
   height: 25px;

@@ -14,6 +14,7 @@ define(["require", "exports", 'aurelia-framework', '../v-grid'], function (requi
             this.element = element;
             this.controller = vGrid.controller;
             this.raiseEvent = vGrid.controller.raiseEvent;
+            this.groupingElements = vGrid.groupingElements;
             this.openBinded = this.open.bind(this);
             this.checkBinded = this.check.bind(this);
             this.callbackBinded = this.callback.bind(this);
@@ -57,6 +58,11 @@ define(["require", "exports", 'aurelia-framework', '../v-grid'], function (requi
                 document.removeEventListener('click', this.checkBinded);
                 return true;
             }
+            if (type === 'groupby') {
+                this.groupingElements.addGroup(this.groupby, this.groupby);
+                this.groupingElements.addToGrouping();
+                return true;
+            }
             if (type === 'filterOption') {
                 this.raiseEvent('filterUpdate', {
                     attribute: this.filter.replace('rowRef.', ''),
@@ -78,6 +84,7 @@ define(["require", "exports", 'aurelia-framework', '../v-grid'], function (requi
                     filter: this.filter,
                     sort: this.sort,
                     pinned: this.pinned,
+                    groupby: this.groupby,
                     callback: this.callbackBinded
                 });
             }
@@ -100,19 +107,23 @@ define(["require", "exports", 'aurelia-framework', '../v-grid'], function (requi
         };
         __decorate([
             aurelia_framework_1.bindable, 
-            __metadata('design:type', Object)
+            __metadata('design:type', String)
         ], VGridAttributeMenu.prototype, "filter", void 0);
         __decorate([
             aurelia_framework_1.bindable, 
-            __metadata('design:type', Object)
+            __metadata('design:type', String)
         ], VGridAttributeMenu.prototype, "sort", void 0);
         __decorate([
             aurelia_framework_1.bindable, 
-            __metadata('design:type', Object)
+            __metadata('design:type', String)
         ], VGridAttributeMenu.prototype, "pinned", void 0);
         __decorate([
             aurelia_framework_1.bindable, 
-            __metadata('design:type', Object)
+            __metadata('design:type', String)
+        ], VGridAttributeMenu.prototype, "groupby", void 0);
+        __decorate([
+            aurelia_framework_1.bindable, 
+            __metadata('design:type', String)
         ], VGridAttributeMenu.prototype, "copypaste", void 0);
         VGridAttributeMenu = __decorate([
             aurelia_framework_1.customAttribute('v-menu'),
