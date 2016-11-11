@@ -44,13 +44,13 @@ export class GroupingElements {
   }
 
 
-  public init(controller) {
+  public init(controller: Controller) {
     this.controller = controller;
     this.avgTopPanel = this.htmlCache.avg_top_panel;
   }
 
 
-  public addGroup(name, field): void {
+  public addGroup(name: string, field: string): void {
 
 
     if (!this.groupContext[name]) {
@@ -90,7 +90,7 @@ export class GroupingElements {
   }
 
 
-  public removeGroup(name): void {
+  public removeGroup(name?: string): void {
     if (name) {
       this.groupContext[name].viewSlot.unbind();
       this.groupContext[name].viewSlot.detached();
@@ -117,7 +117,7 @@ export class GroupingElements {
   }
 
 
-  public removeFromGrouping(field): void {
+  public removeFromGrouping(field: string): void {
     this.controller.removeFromGrouping(field);
   }
 

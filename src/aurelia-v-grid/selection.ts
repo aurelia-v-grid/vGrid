@@ -19,24 +19,24 @@ export class Selection {
     // todo
   }
 
-  public getRowKey(row): string {
+  public getRowKey(row: number): number {
     return row;
   }
 
-  public getRowFromKey(row): number {
+  public getRowFromKey(row: number): number {
     return row;
   }
 
-  public overrideGetRowKey(fn): void {
+  public overrideGetRowKey(fn: any): void {
     this.getRowKey = fn;
   }
 
-  public overrideGetRowFromKey(fn): void {
+  public overrideGetRowFromKey(fn: any): void {
     this.getRowFromKey = fn;
   }
 
 
-  public isSelected(row): boolean {
+  public isSelected(row: number): boolean {
     let result = false;
     if (this.selectedRows > 0) {
       result = this.selection.has(this.getRowKey(row));
@@ -50,12 +50,12 @@ export class Selection {
     this.selectedRows = this.selection.size;
   }
 
-  public deSelect(row): void {
+  public deSelect(row: number): void {
     this.selection.delete(this.getRowKey(row));
     this.selectedRows = this.selection.size;
   }
 
-  public select(row, add): void {
+  public select(row: number, add?: boolean): void {
     switch (this.mode) {
       case 'none':
       case null:
@@ -82,7 +82,7 @@ export class Selection {
   }
 
 
-  public selectRange(start, end): void {
+  public selectRange(start: number, end: number): void {
     if (this.mode === 'multiple') {
       this.selection.clear();
       for (let i = start; i < end + 1; i++) {
@@ -102,7 +102,7 @@ export class Selection {
     return array;
   }
 
-  public setSelectedRows(newRows): void {
+  public setSelectedRows(newRows: Array<number>): void {
     if (this.selectedRows > 0) {
       this.selection.clear();
     }

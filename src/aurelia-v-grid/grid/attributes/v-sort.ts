@@ -13,13 +13,13 @@ export class VGridAttributesSort {
   private sortIcon: any;
   private value: any;
 
-  constructor(element, vGrid) {
+  constructor(element: Element, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
   }
 
 
-  public bind(bindingContext, overrideContext): void {
+  public bind(bindingContext: any, overrideContext: any): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
@@ -57,7 +57,7 @@ export class VGridAttributesSort {
   }
 
 
-  private getSortIconMarkup(attribute): string {
+  private getSortIconMarkup(attribute: string): string {
 
     let markup = `&nbsp;<i  class="${'avg-fa avg-fa-sort'}"></i>`;
     let isAscHtml = `&nbsp;<i  class="${'avg-fa avg-fa-sort-asc'}"></i>`;

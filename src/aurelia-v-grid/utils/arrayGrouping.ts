@@ -14,7 +14,7 @@ export class ArrayGrouping {
 
 
   // @params grouping : ["attribute", "attribute2"  etc etc ])
-  public group(arrayToGroup, grouping, keepExpanded) {
+  public group(arrayToGroup: Array<any>, grouping: Array<any>, keepExpanded?: boolean) {
 
     if (grouping.length > 0) {
 
@@ -68,7 +68,7 @@ export class ArrayGrouping {
   }
 
 
-  public expand(id, array?: Set<any>) {
+  public expand(id: string, array?: Set<any>) {
     let all = id ? false : true; // if no id, then all
     if (!id) {
       if (array) {
@@ -84,7 +84,7 @@ export class ArrayGrouping {
     let mainGroups = this.groups[0];
 
     // lopp children
-    subGroup = (g) => {
+    subGroup = (g: any) => {
       g.__groupChildren.forEach((sg) => {
         collection.push(sg);
         switch (true) {
@@ -107,7 +107,7 @@ export class ArrayGrouping {
     };
 
     // loop main groups
-    mainGroups.forEach((g) => {
+    mainGroups.forEach((g: any) => {
       collection.push(g);
       switch (true) {
         case all:
@@ -130,7 +130,7 @@ export class ArrayGrouping {
   }
 
 
-  public collapse(id) {
+  public collapse(id: string) {
     let all = id ? false : true; // if no id, then all
     id = id === undefined ? null : id;
     let subGroup;
@@ -138,7 +138,7 @@ export class ArrayGrouping {
     let mainGroups = this.groups[0];
 
     // lopp children
-    subGroup = (g) => {
+    subGroup = (g: any) => {
       g.__groupChildren.forEach((sg) => {
 
         switch (true) {
@@ -165,7 +165,7 @@ export class ArrayGrouping {
     };
 
     // loop main groups
-    mainGroups.forEach((g) => {
+    mainGroups.forEach((g: any) => {
       collection.push(g);
       switch (true) {
         case all:
@@ -190,7 +190,7 @@ export class ArrayGrouping {
     return collection;
   }
 
-    private groupMain(array, groupBy, groupNo) {
+    private groupMain(array: Array<any>, groupBy: string, groupNo: number) {
     let tempGroupArray = [];
     let curGroup: any = {};
     let tempValue = null;
@@ -222,17 +222,17 @@ export class ArrayGrouping {
   }
 
 
-  private groupChildren(childGroupArray, groupBy, groupNo) {
+  private groupChildren(childGroupArray: Array<any>, groupBy: string, groupNo: number) {
     let tempGroupArray = [];
 
     let curGroup: any = {};
 
     // loop groups
-    childGroupArray.forEach((element, i) => {
+    childGroupArray.forEach((element: any, i: number) => {
       let tempValue = null;
       // loop children
       let rebuiltChildrenArray = [];
-      element.__groupChildren.forEach((child) => {
+      element.__groupChildren.forEach((child: any) => {
         this.gID++;
         if (child[groupBy] !== tempValue) {
           let gidm = child[groupBy] || 'blank';

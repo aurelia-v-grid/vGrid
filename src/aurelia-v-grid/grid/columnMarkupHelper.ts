@@ -23,7 +23,7 @@ export class ColumnMarkupHelper {
 
 
 
-  private processColumns(array): void {
+  private processColumns(array: Array<any>): void {
 
     array.forEach((col, index) => {
 
@@ -51,7 +51,7 @@ export class ColumnMarkupHelper {
   }
 
 
-  private createHeaderTemplate(col): void {
+  private createHeaderTemplate(col: any): void {
 
     // if header template does not exist then lets create it
     if (!col.colHeaderTemplate) {
@@ -95,7 +95,7 @@ export class ColumnMarkupHelper {
   }
 
 
-  private createRowTemplate(col): void {
+  private createRowTemplate(col: any): void {
 
     // if row template does not exist, then lets create it
     if (!col.colRowTemplate) {
@@ -127,7 +127,7 @@ export class ColumnMarkupHelper {
   }
 
 
-  private getAttribute(value, capitalize): string {
+  private getAttribute(value: string, capitalize: boolean): string {
 
     let returnValue = value || 'missing!';
 
@@ -165,7 +165,7 @@ export class ColumnMarkupHelper {
 
 
 
-  private checkAttribute(attribute): string {
+  private checkAttribute(attribute: string): string {
     let value = attribute;
     if (attribute) {
       if (attribute.indexOf('rowRef') === -1 && attribute.indexOf('tempRef') === -1) {

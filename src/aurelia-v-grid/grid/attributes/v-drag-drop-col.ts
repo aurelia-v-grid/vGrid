@@ -100,14 +100,14 @@ export class VGridDragDropCol {
       this.sharedContext.panel = result.target;
 
       // if we leave, remve group
-      result.target.onmouseleave = (event) => {
+      result.target.onmouseleave = (event: MouseEvent) => {
         if (this.sharedContext.dragging) {
           this.groupingElements.removeGroup('');
         }
       };
 
       // if enter and dragging, add grouping
-      result.target.onmouseenter = (event) => {
+      result.target.onmouseenter = (event: MouseEvent) => {
         if (this.sharedContext.dragging) {
           let name = this.vGrid.colConfig[this.sharedContext.colNo].colHeaderName;
           let field = this.vGrid.colConfig[this.sharedContext.colNo].colField.replace('rowRef.', '');
@@ -117,7 +117,7 @@ export class VGridDragDropCol {
       };
 
       // if mouse up during dragging we grop, if group ios added
-      result.target.onmouseup = (event) => {
+      result.target.onmouseup = (event: MouseEvent) => {
         if (this.sharedContext.dragging) {
           this.groupingElements.addToGrouping();
         }
@@ -147,7 +147,7 @@ export class VGridDragDropCol {
   }
 
 
-  private onDragstart(event): void {
+  private onDragstart(event: MouseEvent): void {
 
     // register mouseup, so we can exit
     document.addEventListener('mouseup', this.onDragendBinded);
@@ -181,7 +181,7 @@ export class VGridDragDropCol {
 
 
 
-  private onDragOutSide(event): void {
+  private onDragOutSide(event: MouseEvent): void {
 
     if (this.sharedContext.dragging) {
 
@@ -223,13 +223,13 @@ export class VGridDragDropCol {
   }
 
 
-  private onDragenter(event): void {
+  private onDragenter(event: MouseEvent): void {
 
     // event.preventDefault();
     if (this.sharedContext.dragging) {
 
       // get results
-      let result = this.getTargetData(event.target);
+      let result = this.getTargetData((event.target as HTMLElement));
 
       // if ok, and AVG-COL
       if (result.target.nodeName === 'AVG-COL' && result.ok && this.sharedContext.lastTarget !== result.target) {
@@ -282,7 +282,7 @@ export class VGridDragDropCol {
   }
 
 
-  private onDragover(event): void {
+  private onDragover(event: MouseEvent): void {
 
     // setting position of out dragBlock
     if (this.dragColumnBlock) {
@@ -293,7 +293,7 @@ export class VGridDragDropCol {
   }
 
 
-  private onDragend(event): void {
+  private onDragend(event: MouseEvent): void {
 
     // clear mosuemove timer
     clearTimeout(this.mouseMoveTimer);
@@ -323,7 +323,7 @@ export class VGridDragDropCol {
   }
 
 
-  private switchColumns(result): void {
+  private switchColumns(result: any): void {
 
     // get vars 
     let width;
@@ -490,7 +490,7 @@ export class VGridDragDropCol {
   }
 
 
-  private getTargetData(curTarget): any {
+  private getTargetData(curTarget: Element): any {
 
     // set variables
     let draggableTarget = null;
@@ -509,7 +509,7 @@ export class VGridDragDropCol {
       } else {
 
         // if draggable, and not set, then we set it
-        if (curTarget.draggable === true && draggableTarget === null) {
+        if ((curTarget as HTMLElement).draggable === true && draggableTarget === null) {
           draggableTarget = curTarget;
         }
 
@@ -521,7 +521,7 @@ export class VGridDragDropCol {
             exit = false;
             break;
           default:
-            curTarget = curTarget.parentNode;
+            curTarget = (curTarget.parentNode as Element);
             break;
         }
       }
@@ -543,7 +543,7 @@ export class VGridDragDropCol {
     // if ok, get variables we need
     if (isOk && curTarget.nodeName === 'AVG-COL') {
       curColType = curTarget.attributes.getNamedItem('avg-type').value;
-      curColNo = curTarget.attributes.getNamedItem('avg-config-col').value * 1;
+      curColNo = parseInt(curTarget.attributes.getNamedItem('avg-config-col').value, 10);
       curContext = this.vGrid.columnBindingContext['setup' + curColType][curColNo];
       curColumnsArray = this.vGrid.columnBindingContext['setup' + curColType];
     }

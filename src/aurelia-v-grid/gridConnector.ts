@@ -1,7 +1,7 @@
 // for typing only
 import { DataSource } from './dataSource';
 import { Selection } from './selection';
-
+import { Controller} from './grid/controller';
 
 
 export class GridConnector {
@@ -21,7 +21,7 @@ export class GridConnector {
   }
 
 
-  public gridCreated(controller): void {
+  public gridCreated(controller: Controller): void {
     this.controller = controller;
     this.eventID = this.datasource.addEventListener(this.eventHandler.bind(this));
 
@@ -32,7 +32,7 @@ export class GridConnector {
     this.controller.updateHeaderGrouping(this.datasource.getGrouping());
   }
 
-  public select(row): void {
+  public select(row: number): void {
     this.datasource.select(row);
   }
 
@@ -47,14 +47,14 @@ export class GridConnector {
   }
 
 
-  public group(grouping: Array<any>, keepExpanded?: Array<any>) {
+  public group(grouping: Array<any>, keepExpanded?: boolean) {
     this.controller.setLoadingScreen(true, null, this.length()).then(() => {
       this.datasource.group(grouping, keepExpanded);
     });
   }
 
 
-  public getElement(options): void {
+  public getElement(options: any): void {
     let curRow = options.row;
     // let isDown = options.isDown;
     let callback = options.callback;
@@ -69,14 +69,14 @@ export class GridConnector {
   }
 
 
-  public query(a): void {
+  public query(a: Object): void {
     this.controller.setLoadingScreen(true, null, this.length()).then(() => {
       this.datasource.query(a);
     });
   }
 
 
-  public orderBy(attribute, addToCurrentSort): void {
+  public orderBy(attribute: string, addToCurrentSort?: boolean): void {
     this.controller.setLoadingScreen(true, null, this.length()).then(() => {
       this.datasource.orderBy(attribute, addToCurrentSort);
     });
@@ -98,26 +98,26 @@ export class GridConnector {
   }
 
 
-  public getFilterOperatorName(operator): string {
+  public getFilterOperatorName(operator: string): string {
     return this.datasource.getFilterOperatorName(operator);
   }
 
 
-  public expandGroup(id): void {
+  public expandGroup(id: string): void {
     this.controller.setLoadingScreen(true, null, this.length()).then(() => {
       this.datasource.groupExpand(id);
     });
   }
 
 
-  public collapseGroup(id): void {
+  public collapseGroup(id: string): void {
     this.controller.setLoadingScreen(true, null, this.length()).then(() => {
       this.datasource.groupCollapse(id);
     });
   }
 
 
-  private eventHandler(event): void {
+  private eventHandler(event: string): void {
     switch (event) {
       case 'collection_changed':
       case 'collection_grouped':
@@ -158,7 +158,7 @@ export class GridConnector {
   }
 
 
-  private raiseEvent(name, data = {}): void {
+  private raiseEvent(name: string, data = {}): void {
     let event = new CustomEvent(name, {
       detail: data,
       bubbles: true

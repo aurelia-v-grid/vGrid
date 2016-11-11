@@ -107,7 +107,7 @@ export class RowClickHandler {
   }
 
 
-  private singleClick(event): void {
+  private singleClick(event: any): void {
     if (!event.currentTarget.avgGroup) {
       this.highlightRow(event, event.currentTarget.avgRow);
       this.controller.select(event.currentTarget.avgRow);
@@ -123,7 +123,7 @@ export class RowClickHandler {
 
 
 
-  private doubleClick(event): void {
+  private doubleClick(event: any): void {
     this.controller.raiseEvent('v-row-ondblclick', {
       evt: event,
       data: null, // todo, row data ?
@@ -132,22 +132,22 @@ export class RowClickHandler {
   }
 
 
-  private isSelected(row): boolean {
+  private isSelected(row: number): boolean {
     return this.selection.isSelected(row);
   }
 
 
-  private deSelect(row): void {
+  private deSelect(row: number): void {
     this.selection.deSelect(row);
   }
 
 
-  private select(row, addToSelection): void {
+  private select(row: number, addToSelection: boolean): void {
     this.selection.select(row, addToSelection);
   }
 
 
-  private selectRange(start, end): void {
+  private selectRange(start: number, end: number): void {
     this.selection.selectRange(start, end);
   }
 
@@ -157,7 +157,7 @@ export class RowClickHandler {
   }
 
 
-  private setSelectedRows(newRows): void {
+  private setSelectedRows(newRows: Array<number>): void {
     this.selection.setSelectedRows(newRows);
   }
 
@@ -168,7 +168,7 @@ export class RowClickHandler {
 
 
 
-  private highlightRow(e, currentRow): void {
+  private highlightRow(e: MouseEvent, currentRow: number): void {
 
     let isSel;
     let manualSel = this.manualSelection;

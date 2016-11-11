@@ -53,7 +53,7 @@ export class VGridElementColConfig {
   @bindable({attribute: 'col-type'}) private colType;
 
 
-  constructor(element, vGrid, targetInstruction) {
+  constructor(element: Element, vGrid: VGrid, targetInstruction: any) {
     this.vGrid = vGrid;
     this.element = element;
     this.colRowTemplate = targetInstruction.elementInstruction.colRowTemplate;
@@ -62,7 +62,7 @@ export class VGridElementColConfig {
   }
 
 
-  public bind(bindingContext, overrideContext): void {
+  public bind(bindingContext: any, overrideContext: any): void {
     this.vGrid.colConfig.push({
       colWidth: this.colWidth ? this.colWidth * 1 : 100,
       colRowTemplate: this.colRowTemplate,

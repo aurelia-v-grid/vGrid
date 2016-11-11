@@ -57,11 +57,11 @@ export class Collection {
     return this.entities;
   }
 
-  public getRowKey(row): string {
+  public getRowKey(row: number): string {
     return this.keys[row];
   }
 
-  public getRowFromKey(key): number {
+  public getRowFromKey(key: string): number {
     return this.keys.indexOf(key);
   }
 
@@ -70,7 +70,7 @@ export class Collection {
   }
 
 
-  public getRowFromEntity(entity): any {
+  public getRowFromEntity(entity: any): any {
     return this.entities.indexOf(entity);
   }
 

@@ -9,19 +9,19 @@ export class VGridAttributesImageFix {
   private element: any;
   private value: any;
 
-  constructor(element, vGrid) {
+  constructor(element: Element, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
   }
 
 
-  public valueChanged(newValue, oldValue): void {
+  public valueChanged(newValue: string, oldValue: string): void {
     this.element.src = '';
     this.element.src = this.value || newValue;
   }
 
 
-  public bind(bindingContext, overrideContext): void {
+  public bind(bindingContext: any, overrideContext: any): void {
     this.element.src = '';
     this.element.src = this.value || '';
   }

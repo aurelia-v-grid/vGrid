@@ -4,7 +4,7 @@ import { VGrid } from '../v-grid';
 
 @customAttribute('v-resize-col')
 @inject(Element, VGrid)
-export class vGridAttributesResizeCol {
+export class VGridAttributesResizeCol {
   private vGrid: VGrid;
   private ctx: any;
   private element: any;
@@ -41,7 +41,7 @@ export class vGridAttributesResizeCol {
   private rightColNoWidth: number;
 
 
-  constructor(element, vGrid) {
+  constructor(element: Element, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.ctx = vGrid.resizeAttributeSharedContext;
     this.element = element;
@@ -59,7 +59,7 @@ export class vGridAttributesResizeCol {
   }
 
 
-  public bind(bindingContext, overrideContext): void {
+  public bind(bindingContext: any, overrideContext: any): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
@@ -96,12 +96,12 @@ export class vGridAttributesResizeCol {
   }
 
 
-  private onmousemove(e): void {
+  private onmousemove(e: MouseEvent): void {
     this.updateHeader(e);
   }
 
 
-  private updateHeader(e): void {
+  private updateHeader(e: MouseEvent): void {
 
     let w = Math.abs(this.screenX - e.screenX);
 
@@ -174,7 +174,7 @@ export class vGridAttributesResizeCol {
   }
 
 
-  private onmousedown(e): void {
+  private onmousedown(e: MouseEvent): void {
 
 
     // get some vars

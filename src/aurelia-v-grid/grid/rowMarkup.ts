@@ -22,7 +22,7 @@ export class RowMarkup {
 
 
 
-  public init(rowHeight): void {
+  public init(rowHeight: number): void {
     this.rowHeight = rowHeight;
     this.updateInternalHtmlCache();
     this.generateRows();

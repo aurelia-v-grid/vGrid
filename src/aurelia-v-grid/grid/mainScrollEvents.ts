@@ -54,7 +54,7 @@ export class MainScrollEvents {
   }
 
 
-  private onWeel(event): boolean {
+  private onWeel(event: MouseWheelEvent): boolean {
 
     if (this.vhandle.scrollHeight === (this.vhandle.parentNode as HTMLElement).clientHeight) {
       return false;
@@ -74,7 +74,7 @@ export class MainScrollEvents {
   }
 
 
-  private addScrollEvents(type): void {
+  private addScrollEvents(type: string): void {
 
     switch (type) {
       case 'all':
@@ -165,7 +165,7 @@ export class MainScrollEvents {
         (this.vhandle as HTMLElement).onscroll = null;
         (this.group as HTMLElement).onscroll = null;
         break;
-        default:
+      default:
     }
   }
 
@@ -201,7 +201,7 @@ export class MainScrollEvents {
 
   }
 
-  private handleEventWheelScroll(newTopPosition): void {
+  private handleEventWheelScroll(newTopPosition: number): void {
     requestAnimationFrame(() => {
       if (this.timerWheel) {
         clearTimeout(this.timerWheel);
@@ -353,7 +353,7 @@ export class MainScrollEvents {
   }
 
 
-  private checkScroll(newTopPosition): void {
+  private checkScroll(newTopPosition: number): void {
     if (this.lastTopPosition !== newTopPosition) {
 
       // check is scroll bar scrolling
@@ -378,12 +378,16 @@ export class MainScrollEvents {
   }
 
 
-  private triggerGridScrollEvent(isScrollBarScrollingNow, isDownNow, newTopPositionNow): void {
+  private triggerGridScrollEvent(
+    scrollbarScrolling: boolean,
+    down: boolean,
+    topPosition: number): void {
+
     let event = new CustomEvent('avg-scroll', {
       detail: {
-        isScrollBarScrolling: isScrollBarScrollingNow,
-        isDown: isDownNow,
-        newTopPosition: newTopPositionNow
+        isScrollBarScrolling: scrollbarScrolling,
+        isDown: down,
+        newTopPosition: topPosition
       },
       bubbles: false
     });

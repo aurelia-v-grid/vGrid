@@ -14,24 +14,24 @@ export class ArraySort {
     this.curSort = [];
   }
 
-  public setLastSort(array) {
+  public setLastSort(array: Array<any>): void {
     this.lastSort = array;
     this.curSort = array;
   }
 
 
-  public setOrderBy(attribute, add) {
+  public setOrderBy(param: string|any, add): void {
     let sort;
     let useSetValue = false;
-    if (attribute.asc === undefined) {
+    if (param.asc === undefined) {
       sort = {
-        attribute: attribute,
+        attribute: param,
         asc: true
       };
     } else {
       sort = {
-        attribute: attribute.attribute,
-        asc: attribute.asc
+        attribute: param.attribute,
+        asc: param.asc
       };
       useSetValue = true;
     }
@@ -47,7 +47,7 @@ export class ArraySort {
 
 
       // loop to se if it exist from before
-      this.curSort.forEach(function (x) {
+      this.curSort.forEach((x) => {
         if (!useSetValue) {
           if (x.attribute === sort.attribute) {
             exist = true;
@@ -85,22 +85,20 @@ export class ArraySort {
   }
 
 
-  public getOrderBy() {
+  public getOrderBy(): Array<any> {
     return this.curSort;
   }
 
 
-  /***************************************************************************************
-   * run the sort
-   ***************************************************************************************/
-  public runOrderbyOn(array) {
+
+  public runOrderbyOn(array: Array<any>): void {
 
 
     // super simple for now.. atleast I have som form for sort
     let thisSort = this.getOrderBy();
 
     // this is mix from different sources... from what I can tell it works now
-    array.sort(function (obj1, obj2) {
+    array.sort((obj1: any, obj2: any) => {
       let result = 0;
 
       for (let i = 0; i < thisSort.length && result === 0; ++i) {

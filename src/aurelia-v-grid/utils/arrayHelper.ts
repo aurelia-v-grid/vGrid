@@ -18,7 +18,7 @@ export class ArrayHelper {
 
   }
 
-  public orderBy(collection, attribute, addToCurrentSort) {
+  public orderBy(collection: Array<any>, attribute: string, addToCurrentSort?: boolean): any {
 
 
     let grouping = this.getGrouping();
@@ -105,51 +105,51 @@ export class ArrayHelper {
     return result;
   }
 
-  public group(array, grouping, keepExpanded) {
+  public group(array: Array<any>, grouping: Array<any>, keepExpanded: boolean): Array<any> {
     return this.arrayGrouping.group(array, grouping, keepExpanded);
   }
 
-  public getGrouping() {
+  public getGrouping(): Array<any> {
     return this.arrayGrouping.getGrouping();
   }
 
-  public groupCollapse(id) {
+  public groupCollapse(id: string): Array<any> {
     return this.arrayGrouping.collapse(id);
   }
 
-  public groupExpand(id) {
+  public groupExpand(id: string): Array<any> {
     return this.arrayGrouping.expand(id);
   }
 
-  public getOrderBy() {
+  public getOrderBy(): Array<any> {
     return this.arraySort.getOrderBy();
   }
 
-  public setLastSort(array) {
+  public setLastSort(array: Array<any>): void {
     this.arraySort.setLastSort(array);
   }
 
-  public setOrderBy(attribute, addToCurrentSort) {
+  public setOrderBy(attribute: string, addToCurrentSort?: boolean): void {
     this.arraySort.setOrderBy(attribute, addToCurrentSort);
   }
 
-  public runOrderbyOn(array) {
+  public runOrderbyOn(array: Array<any>): void {
     this.arraySort.runOrderbyOn(array);
   }
 
-  public resetSort() {
+  public resetSort(): void {
     this.arraySort.reset();
   }
 
-  public getFilterOperatorName(operator) {
+  public getFilterOperatorName(operator: string): string {
     return this.filterOperators.getName(operator);
   }
 
-  public getCurrentFilter() {
+  public getCurrentFilter(): Array<any> {
     return this.arrayFilter.getLastFilter();
   }
 
-  public query(array, params) {
+  public query(array: Array<any>, params: any): Array<any> {
     return this.arrayFilter.runQueryOn(array, params);
   }
 

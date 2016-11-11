@@ -60,7 +60,7 @@ export class DataSource {
   }
 
 
-  public triggerEvent(event): void {
+  public triggerEvent(event: string): void {
     // call all event listeners
     this.eventCallBacks.forEach((FN) => {
       FN(event);
@@ -68,7 +68,7 @@ export class DataSource {
   }
 
 
-  public addEventListener(callback): number {
+  public addEventListener(callback: Function): number {
 
     // add key
     this.eventIdCount++;
@@ -88,7 +88,7 @@ export class DataSource {
   }
 
 
-  public getRowKey(row): string {
+  public getRowKey(row: number): string {
 
     // if collection, then get row key
     if (this.collection) {
@@ -100,7 +100,7 @@ export class DataSource {
   }
 
 
-  public getRowFromKey(key): number {
+  public getRowFromKey(key: string): number {
 
     // if collection then get row from key
     if (this.collection) {
@@ -111,7 +111,7 @@ export class DataSource {
   }
 
 
-  public setArray(array): void {
+  public setArray(array: Array<any>): void {
 
     // new collection
     this.collection = new Collection(this);
@@ -129,13 +129,13 @@ export class DataSource {
   }
 
 
-  public select(row): void {
+  public select(row: number): void {
     // get row and set as current entity "entity" of datasource
     this.entity = this.collection.getRow(row);
   }
 
 
-  public query(options): void {
+  public query(options: Array<any>|Object): void {
     if (options) {
       // query data (using main here, so we query all data set)
       let newArray = this.arrayHelper.query(this.mainArray, options);
@@ -155,7 +155,7 @@ export class DataSource {
   }
 
 
-  public orderBy(attribute, addToCurrentSort): void {
+  public orderBy(attribute: string, addToCurrentSort?: boolean): void {
 
     // get collection (cant use main,,, might be filtered)
     let collection = this.collection.getEntities();
@@ -183,12 +183,12 @@ export class DataSource {
   }
 
 
-  public getElement(row): any {
+  public getElement(row: number): any {
     return this.collection.getRow(row);
   }
 
 
-  public group(grouping, keepExpanded): void {
+  public group(grouping: Array<any>, keepExpanded?: boolean): void {
     this.arrayHelper.resetSort();
     grouping.forEach((groupName, i) => {
       this.arrayHelper.setOrderBy(groupName, true);
@@ -205,7 +205,7 @@ export class DataSource {
   }
 
 
-  public groupCollapse(id): void {
+  public groupCollapse(id: string): void {
     let newArray = this.arrayHelper.groupCollapse(id);
     let oldArray = this.collection.getEntities();
     this.collection.setData(newArray, oldArray);
@@ -218,7 +218,7 @@ export class DataSource {
   }
 
 
-  public groupExpand(id): void {
+  public groupExpand(id: string): void {
     let newArray = this.arrayHelper.groupExpand(id);
     let oldArray = this.collection.getEntities();
     this.collection.setData(newArray, oldArray);
@@ -230,7 +230,7 @@ export class DataSource {
   }
 
 
-  public getFilterOperatorName(operator): string {
+  public getFilterOperatorName(operator: string): string {
     return this.arrayHelper.getFilterOperatorName(operator);
   }
 
@@ -240,7 +240,7 @@ export class DataSource {
   }
 
 
-  public addElement(data): void {
+  public addElement(data: any): void {
     if (data) {
       // todo
     } else {

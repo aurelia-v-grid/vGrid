@@ -40,8 +40,8 @@ export class VGridAttributeMenu {
   }
 
 
-  private check(e): void {
-    let x = e.target.classList.contains('avg-menu__link');
+  private check(e: MouseEvent): void {
+    let x = (e.target as HTMLElement).classList.contains('avg-menu__link');
     if (!x) {
       this.controller.contextMenu.setDefaults();
       document.removeEventListener('click', this.checkBinded);
@@ -49,7 +49,7 @@ export class VGridAttributeMenu {
   }
 
 
-  private callback(type, option, event): boolean {
+  private callback(type: string, option: string, event: MouseEvent): boolean {
     if (type === 'filter') {
       if (option === 'clear') {
         this.raiseEvent('filterClearCell', { attribute: this.filter.replace('rowRef.', '') });
@@ -92,7 +92,7 @@ export class VGridAttributeMenu {
   }
 
 
-  private open(e): void {
+  private open(e: MouseEvent): void {
     this.check(e);
     document.addEventListener('click', this.checkBinded);
     e.preventDefault();
@@ -111,7 +111,7 @@ export class VGridAttributeMenu {
   }
 
 
-  private getPosition(e): any {
+  private getPosition(e: MouseEvent): any {
     let posx = 0;
     let posy = 0;
 

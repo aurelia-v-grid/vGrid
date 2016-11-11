@@ -39,7 +39,7 @@ export class ContextMenu {
 
 
     public init(): void {
-        let viewFactory = this.viewCompiler.compile(`<template>${this.menuHtml}</template>`, this.viewResources);
+        let viewFactory = this.viewCompiler.compile(`<template>${this.menuHtml()}</template>`, this.viewResources);
         let view = viewFactory.create(this.container);
         let viewSlot: ViewSlot = new ViewSlot(document.body, true);
         viewSlot.add(view);
@@ -49,7 +49,14 @@ export class ContextMenu {
     }
 
 
-    public openMenu(options): void {
+    public openMenu(options: {
+        left: number,
+        top: number,
+        pinned?: boolean,
+        sort?: boolean,
+        filter?: boolean,
+        callback?: Function
+    }): void {
         this.left = options.left;
         this.top = options.top;
         this.pinnedMenu = options.pinned ? true : false;
@@ -60,20 +67,7 @@ export class ContextMenu {
     }
 
 
-    private showFilterOptions(): void {
-        this.filterOptionsMenu = true;
-    }
-
-
-    private hideFilterOptions(): void {
-        this.filterOptionsMenu = false;
-    }
-
-
-
-
-
-    private menuClick(type, option, event): void {
+    public menuClick(type: string, option: string, event: Event): void {
         switch (true) {
             case type === 'filter' && option === 'options':
                 this.showFilterOptions();
@@ -94,6 +88,16 @@ export class ContextMenu {
                     this.filterOptionsMenu = false;
                 }
         }
+    }
+
+
+    private showFilterOptions(): void {
+        this.filterOptionsMenu = true;
+    }
+
+
+    private hideFilterOptions(): void {
+        this.filterOptionsMenu = false;
     }
 
 
@@ -123,7 +127,7 @@ export class ContextMenu {
 
 
     // not the best way of doing, but easy... not very userfiendly for other languages atm
-    menuHtml = `
+    private menuHtml(): string{ return `
         <nav css="top:` + '${top}px;left:${left}px' + `" if.bind="show" class="avg-default avg-menu">
             <ul if.bind="show" class="avg-menu__items">
                 <li class="avg-menu__item">
@@ -244,5 +248,6 @@ export class ContextMenu {
                 </li>
             </ul>
 
-        </nav>`;
+        </nav>`
+    }
 }

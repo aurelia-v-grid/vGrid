@@ -16,18 +16,18 @@ export class ArrayFilter {
   }
 
 
-  public runQueryOn(objArray, ObjFilter) {
+  public runQueryOn(objArray: Array<Object>, ObjFilter: Array<Object>) {
 
     // my operators
     let filterOperatorTable = this.filterOperators.getFilterNumbers();
 
 
-    let resultArray = objArray.filter(function (data) {
+    let resultArray = objArray.filter((data) => {
 
 
       // lets have true as default, so all that should not be there we set false..
       let result = true;
-      ObjFilter.forEach(function (x) {
+      ObjFilter.forEach((x: any) => {
 
 
         // vars

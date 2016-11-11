@@ -35,17 +35,17 @@ export class FilterOperators {
   }
 
 
-  public getFilterNumbers() {
+  public getFilterNumbers(): Array<any> {
     return this.filterOperatorsNumbers;
   }
 
 
-  public getName(operator) {
+  public getName(operator: string): string {
     return this.filterOperatorNames[operator];
   }
 
 
-  public getOperatorNo(operator) {
+  public getOperatorNo(operator: string): number {
     return this.filterOperatorsNumbers[operator];
   }
 

@@ -138,7 +138,7 @@ export class VGrid {
   }
 
 
-  public bind(bindingContext, overrideContext): void {
+  public bind(bindingContext: any, overrideContext: any): void {
 
     // binding contexts, will need some for the views we create
     this.bindingContext = bindingContext;

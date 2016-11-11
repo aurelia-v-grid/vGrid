@@ -3,6 +3,7 @@ import {inject, noView, customElement, processContent, TargetInstruction} from '
 import {VGrid} from './v-grid';
 
 
+
 @noView()
 @customElement('v-grid-row-repeat')
 @processContent((compiler, resources, element, instruction) => {
@@ -34,7 +35,7 @@ export class VGridElementRowRepeat {
   private rowTemplate: string;
   private headerTemplate: string;
 
-  constructor(element, vGrid, targetInstruction) {
+  constructor(element: Element, vGrid: VGrid, targetInstruction: any) {
     this.element = element;
     this.vGrid = vGrid;
     this.rowTemplate = targetInstruction.elementInstruction.rowTemplate;

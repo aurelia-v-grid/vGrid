@@ -37,7 +37,7 @@ export class ViewSlots {
 
   }
 
-  public bindAndAttachColumns(overrideContext, columnBindingContext): void {
+  public bindAndAttachColumns(overrideContext: any, columnBindingContext: any): void {
 
     let context = {};
     let newParentOverrideContext = {

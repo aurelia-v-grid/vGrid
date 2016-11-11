@@ -31,7 +31,7 @@ export class RowDataBinder {
   }
 
 
-  private rebindRow(event): void {
+  private rebindRow(event: CustomEvent): void {
     let currentRow = event.detail.currentRow;
     let rowCache = event.detail.rowCache;
     let downScroll = event.detail.downScroll;
@@ -123,7 +123,7 @@ export class RowDataBinder {
   }
 
 
-  private rebindAllRows(event): void {
+  private rebindAllRows(event: CustomEvent): void {
 
     let rowCache = event.detail.rowCache;
     let downScroll = event.detail.downScroll;

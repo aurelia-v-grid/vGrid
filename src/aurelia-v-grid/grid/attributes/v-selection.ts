@@ -20,14 +20,14 @@ export class VGridAttributesSelection {
     this.element = element;
   }
 
-  public selectedChanged(newValue, oldValue): void {
+  public selectedChanged(newValue: boolean, oldValue: boolean): void {
     if (this.type === 'row') {
       this.element.checked = newValue;
     }
   }
 
 
-  public bind(bindingContext, overrideContext): void {
+  public bind(bindingContext: any, overrideContext: any): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
   }

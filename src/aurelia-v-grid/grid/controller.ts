@@ -184,12 +184,12 @@ export class Controller {
     this.attGridConnector.collapseGroup(id);
   }
 
-  public select(row): void {
+  public select(row: number): void {
     this.attGridConnector.select(row);
   }
 
 
-  public addToGrouping(attribute): void {
+  public addToGrouping(attribute: string): void {
     let currentGrouping = this.attGridConnector.getGrouping();
     if (currentGrouping.indexOf(attribute) === -1) {
       currentGrouping.push(attribute);
@@ -200,7 +200,7 @@ export class Controller {
 
 
 
-  public removeFromGrouping(attribute) {
+  public removeFromGrouping(attribute: string) {
     let currentGrouping = this.attGridConnector.getGrouping();
     let index = currentGrouping.indexOf(attribute);
     if (index !== -1) {
@@ -222,7 +222,7 @@ export class Controller {
     this.element.dispatchEvent(event);
   }
 
-  public setLoadingScreen(value, msg, collectionLength): Promise<any> {
+  public setLoadingScreen(value: string, msg: string, collectionLength: number): Promise<any> {
 
     if (value) {
       return this.loadingScreen.enable(msg, collectionLength);
@@ -237,7 +237,7 @@ export class Controller {
     this.htmlHeightWidth.setCollectionLength(this.attGridConnector.length());
   }
 
-  public updateHeaderGrouping(groups): void {
+  public updateHeaderGrouping(groups: Array<any>): void {
     let length = groups.length;
     this.columnBindingContext.setupgrouping = length;
     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
@@ -247,7 +247,7 @@ export class Controller {
     return this.attGridConnector.length();
   }
 
-  public triggerScroll(position): void {
+  public triggerScroll(position: number): void {
     if (position === null || position === undefined) {
       position = this.htmlCache.avg_content_main.scrollTop;
     } else {

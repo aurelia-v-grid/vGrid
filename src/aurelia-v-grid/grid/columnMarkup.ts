@@ -45,7 +45,8 @@ export class ColumnMarkup {
     viewResources: ViewResources,
     htmlCache: HtmlCache,
     viewSlots: ViewSlots,
-    columnBindingContext: ColumnBindingContext) {
+    columnBindingContext: ColumnBindingContext
+  ) {
 
     this.element = element;
     this.htmlCache = htmlCache;
@@ -59,7 +60,13 @@ export class ColumnMarkup {
   }
 
 
-  public init(colConfig, overrideContext, colRepeater, colRepeatRowTemplate, colRepeatRowHeaderTemplate): void {
+  public init(
+    colConfig,
+    overrideContext: any,
+    colRepeater: boolean,
+    colRepeatRowTemplate: string,
+    colRepeatRowHeaderTemplate: string
+  ): void {
     this.overrideContext = overrideContext;
     this.colConfig = colConfig;
     this.configLength = colConfig.length;
@@ -78,7 +85,7 @@ export class ColumnMarkup {
 
 
 
-  private getRowViews(type): ViewFactory {
+  private getRowViews(type: string): ViewFactory {
     let viewMarkup = '';
     let markupArray = [];
 
@@ -152,7 +159,7 @@ export class ColumnMarkup {
   }
 
 
-  private createColSetupContext(type): void {
+  private createColSetupContext(type: string): void {
 
     let leftCur = 0;
     for (let i = 0; i < this.configLength; i++) {
@@ -185,7 +192,7 @@ export class ColumnMarkup {
   }
 
 
-  private getHeaderViews(type): ViewFactory {
+  private getHeaderViews(type: string): ViewFactory {
     let viewMarkup = '';
 
     if (this.colRepeater && type === 'main' && this.colRepeatHeaderTemplate) {
@@ -279,7 +286,7 @@ export class ColumnMarkup {
   }
 
 
-  private createViewSlot(element, viewFactory): ViewSlot {
+  private createViewSlot(element: Element, viewFactory: ViewFactory): ViewSlot {
 
     let view = viewFactory.create(this.container); // <<< time consumer, I should rebuild ?
     let viewSlot = new ViewSlot(element, true);

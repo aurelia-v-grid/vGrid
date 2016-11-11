@@ -21,7 +21,7 @@ export class RowScrollEvents {
   private right: any;
   private scroller: any;
 
-  constructor(element, htmlCache) {
+  constructor(element: Element, htmlCache: HtmlCache) {
     this.htmlCache = htmlCache;
     this.element = element;
     this.timer = null;
@@ -31,7 +31,7 @@ export class RowScrollEvents {
   }
 
 
-  public init(rowHeight): void {
+  public init(rowHeight: number): void {
     this.rowCache = this.htmlCache.rowCache;
     this.rowHeight = rowHeight;
     this.updateInternalHtmlCache();
@@ -40,7 +40,7 @@ export class RowScrollEvents {
   }
 
 
-  public setCollectionLength(length): void {
+  public setCollectionLength(length: number): void {
     this.collectionLength = length;
   }
 
@@ -88,7 +88,7 @@ export class RowScrollEvents {
   }
 
 
-  private onScroll(event): void {
+  private onScroll(event: CustomEvent): void {
     let isDown = event.detail.isDown;
     let isScrollBarScrolling = event.detail.isScrollBarScrolling;
     let newTopPosition = event.detail.newTopPosition;
@@ -118,7 +118,7 @@ export class RowScrollEvents {
   }
 
 
-  private setRowTopValue(cache, top) {
+  private setRowTopValue(cache: any, top: number) {
     cache.left.style.transform = `translate3d(0px,${top}px, 0px)`;
     cache.main.style.transform = `translate3d(0px,${top}px, 0px)`;
     cache.right.style.transform = `translate3d(0px,${top}px, 0px)`;
@@ -132,7 +132,7 @@ export class RowScrollEvents {
   }
 
 
-  private scrollNormal(newTopPosition, downScroll) {
+  private scrollNormal(newTopPosition: number, downScroll: boolean) {
 
     let rowHeight = this.rowHeight;
     let currentRow = Math.floor(newTopPosition / rowHeight);
@@ -169,13 +169,13 @@ export class RowScrollEvents {
 
     // sort array
     this.rowCache.sort(
-      function (a, b) {
+      (a, b) => {
         return parseInt(a.top, 10) - parseInt(b.top, 10);
       });
   }
 
 
-  private scrollScrollBar(newTopPosition, downScroll) {
+  private scrollScrollBar(newTopPosition: number, downScroll: boolean) {
 
     if (this.collectionLength <= this.cacheLength) {
       newTopPosition = 0;
@@ -192,7 +192,7 @@ export class RowScrollEvents {
 
 
     // for setting after
-    let setAfter = (no) => {
+    let setAfter = (no: number) => {
       let row = this.rowCache[no];
       this.setRowTopValue(row, currentRowTop);
       currentRowTop = currentRowTop + rowHeight;
@@ -200,7 +200,7 @@ export class RowScrollEvents {
 
 
     // for setting before (when hitting bottom)
-    let setBefore = (no) => {
+    let setBefore = (no: number) => {
       let row = this.rowCache[no];
       firstRowTop = firstRowTop - rowHeight;
       this.setRowTopValue(row, firstRowTop);
@@ -208,7 +208,7 @@ export class RowScrollEvents {
 
 
     // for setting before (when hitting bottom)
-    let setHiddenFromView = (no) => {
+    let setHiddenFromView = (no: number) => {
       let row = this.rowCache[no];
       this.setRowTopValue(row, -(currentRowTop + (rowHeight * 50)));
     };
@@ -245,7 +245,7 @@ export class RowScrollEvents {
 
     // I now sort the array again.
     this.rowCache.sort(
-      function (a, b) {
+      (a, b) => {
         return parseInt(a.top, 10) - parseInt(b.top, 10);
       });
 
@@ -254,23 +254,23 @@ export class RowScrollEvents {
   }
 
 
-  private addEventListener() {
+  private addEventListener(): void {
     this.onScrollBinded = this.onScroll.bind(this);
     this.element.addEventListener('avg-scroll', this.onScrollBinded);
   }
 
 
-  private removeEventListener() {
+  private removeEventListener(): void {
     this.element.removeEventListener('avg-scroll', this.onScrollBinded);
   }
 
 
-  private triggerRebindRowEvent(currentRow, rowCache, downScroll) {
+  private triggerRebindRowEvent(curRow: number, curRowCache: any, isDownScroll: boolean): void {
     let event = new CustomEvent('avg-rebind-row', {
       detail: {
-        currentRow: currentRow,
-        rowCache: rowCache,
-        downScroll: downScroll
+        currentRow: curRow,
+        rowCache: curRowCache,
+        downScroll: isDownScroll
       },
       bubbles: false
     });
@@ -278,11 +278,11 @@ export class RowScrollEvents {
   }
 
 
-  private triggerRebindAllRowsEvent(downScroll, rowCache) {
+  private triggerRebindAllRowsEvent(isDownScroll: boolean, curRowCache: any): void {
     let event = new CustomEvent('avg-rebind-all-rows', {
       detail: {
-        downScroll: downScroll,
-        rowCache: rowCache
+        downScroll: isDownScroll,
+        rowCache: curRowCache
       },
       bubbles: false
     });

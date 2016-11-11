@@ -18,7 +18,7 @@ export class VGridAttributesFilter {
   private state: number;
 
 
-  constructor(element, vGrid) {
+  constructor(element: Element, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
   }
@@ -110,7 +110,7 @@ export class VGridAttributesFilter {
     }
   }
 
-  public bind(bindingContext, overrideContext): void {
+  public bind(bindingContext: any, overrideContext: any): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
@@ -138,7 +138,7 @@ export class VGridAttributesFilter {
   }
 
 
-  private checkParams(value): void {
+  private checkParams(value: string): void {
 
     if (value !== undefined && value !== null) {
       value = value.trim();
