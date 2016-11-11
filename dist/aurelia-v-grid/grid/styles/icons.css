@@ -75,3 +75,19 @@
 .avg-default .avg-fa-sitemap:before {
   content: "\f0e8";
 }
+
+.avg-default .avg-text:before {
+
+}
+
+
+.avg-default .avg-fa-eraser:before {
+  content: "\f12d";
+}
+
+.avg-default .avg-fa-globe:before {
+  content: "\f0ac";
+}
+    
+
+ 
