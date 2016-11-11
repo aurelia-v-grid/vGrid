@@ -177,17 +177,17 @@ export class ContextMenu {
             <ul if.bind="filterMainMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filter','showall', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Show All
+                    <i class="avg-fa avg-fa-globe"></i> Show All
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filter','clear', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Clear current
+                    <i class="avg-fa avg-fa-eraser"></i> Clear current
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filter','clearall', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Clear all
+                    <i class="avg-fa avg-fa-eraser"></i> Clear all
                 </p>
                 </li>
                 <li class="avg-menu__item">
@@ -209,52 +209,52 @@ export class ContextMenu {
             <ul if.bind="filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','=', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Equals
+                    <i class="avg-fa avg-text"">&#x2261</i> Equals
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','<=', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Less than or equal
+                    <i class="avg-fa avg-text">&#x2264</i> Less than or equal
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','>=', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Greater than or equal
+                    <i class="avg-fa avg-text"">&#x2265</i> Greater than or equal
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','<', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Less than
+                    <i class="avg-fa avg-text"">&#x22D6</i> Less than
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','>', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Greater than
+                    <i class="avg-fa avg-text"">&#x22D7</i> Greater than
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','*', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Contains
+                    <i class="avg-fa avg-text"">*</i> Contains
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','!=', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Not equal to
+                    <i class="avg-fa avg-text"">&#x2262</i> Not equal to
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','!*', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Does not contain
+                    <i class="avg-fa avg-text"">&#x2223&#x22C6</i> Does not contain
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','*=', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Begins with
+                    <i class="avg-fa avg-text"">&#x2261&#x22C6</i> Begins with
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','=*', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> Ends with
+                    <i class="avg-fa avg-text"">&#x22C6&#x2261</i> Ends with
                 </p>
                 </li>
             </ul>
