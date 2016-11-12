@@ -53,14 +53,14 @@ export class VGrid {
 
 
 
-  @bindable({ attribute: 'v-row-height' }) public attRowHeight;
-  @bindable({ attribute: 'v-header-height' }) public attHeaderHeight;
-  @bindable({ attribute: 'v-footer-height' }) public attFooterHeight;
-  @bindable({ attribute: 'v-panel-height' }) public attPanelHeight;
+  @bindable({ attribute: 'v-row-height' }) public attRowHeight: number;
+  @bindable({ attribute: 'v-header-height' }) public attHeaderHeight: number;
+  @bindable({ attribute: 'v-footer-height' }) public attFooterHeight: number;
+  @bindable({ attribute: 'v-panel-height' }) public attPanelHeight: number;
   @bindable({ attribute: 'v-grid-connector' }) public attGridConnector: GridConnector;
-  @bindable({ attribute: 'v-multi-select' }) public attMultiSelect;
-  @bindable({ attribute: 'v-manual-sel' }) public attManualSelection;
-  @bindable({ attribute: 'v-theme' }) public attTheme;
+  @bindable({ attribute: 'v-multi-select' }) public attMultiSelect: boolean;
+  @bindable({ attribute: 'v-manual-sel' }) public attManualSelection: boolean;
+  @bindable({ attribute: 'v-theme' }) public attTheme: string;
   // @bindable({attribute: "v-columns"}) vGridColumns; TODO...
 
 
@@ -152,8 +152,8 @@ export class VGrid {
     this.attHeaderHeight = this.attHeaderHeight ? this.attHeaderHeight * 1 : 25;
     this.attFooterHeight = this.attFooterHeight ? this.attFooterHeight * 1 : 25;
     this.attPanelHeight = this.attPanelHeight ? this.attPanelHeight * 1 : 25;
-    this.attMultiSelect = this.attMultiSelect ? this.attMultiSelect === 'true' ? true : false : null;
-    this.attManualSelection = this.attManualSelection ? this.attManualSelection === 'true' ? true : false : null;
+    this.attMultiSelect = this.checkBool(this.attMultiSelect);
+    this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
     this.attTheme = this.attTheme || 'avg-default';
 
     // todo... use for theming
@@ -192,6 +192,27 @@ export class VGrid {
 
     // connect gridConnector to this controler
     this.attGridConnector.gridCreated(this.controller);
+  }
+
+  private checkBool(value: string | boolean): boolean {
+    if (typeof value === 'string') {
+      value = value.toLowerCase();
+    }
+
+    switch (true) {
+      case value === 'true':
+      case value === true:
+        value = true;
+        break;
+      case value === 'false':
+      case value === false:
+        value = false;
+        break;
+      default:
+        value = false;
+        break;
+    }
+    return value;
   }
 
 

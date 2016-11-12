@@ -50,12 +50,12 @@ export class Controller {
   public colRepeatRowHeaderTemplate: string;
   public bindingContext: any;
   public overrideContext: any;
-  public attRowHeight: any;
-  public attHeaderHeight: any;
-  public attFooterHeight: any;
-  public attPanelHeight: any;
-  public attMultiSelect: any;
-  public attManualSelection: any;
+  public attRowHeight: number;
+  public attHeaderHeight: number;
+  public attFooterHeight: number;
+  public attPanelHeight: number;
+  public attMultiSelect: boolean;
+  public attManualSelection: boolean;
   public attGridConnector: GridConnector;
 
 

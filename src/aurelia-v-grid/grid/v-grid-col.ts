@@ -39,18 +39,18 @@ export class VGridElementColConfig {
 
 
 
-  @bindable({attribute: 'col-width'}) private colWidth;
-  @bindable({attribute: 'col-field'}) private colField;
-  @bindable({attribute: 'col-header-name'}) private colHeaderName;
-  @bindable({attribute: 'col-sort'}) private colSort;
-  @bindable({attribute: 'col-pin-left'}) private colPinLeft;
-  @bindable({attribute: 'col-pin-right'}) private colPinRight;
-  @bindable({attribute: 'col-filter'}) private colFilter;
-  @bindable({attribute: 'col-filter-top'}) private colFilterTop;
-  @bindable({attribute: 'col-add-label-attributes'}) private colAddLabelAttributes;
-  @bindable({attribute: 'col-add-filter-attributes'}) private colAddFilterAttributes;
-  @bindable({attribute: 'col-add-row-attributes'}) private colAddRowAttributes;
-  @bindable({attribute: 'col-type'}) private colType;
+  @bindable({attribute: 'col-width'}) private colWidth: number;
+  @bindable({attribute: 'col-field'}) private colField: string;
+  @bindable({attribute: 'col-header-name'}) private colHeaderName: string;
+  @bindable({attribute: 'col-sort'}) private colSort: string;
+  @bindable({attribute: 'col-pin-left'}) private colPinLeft: boolean;
+  @bindable({attribute: 'col-pin-right'}) private colPinRight: boolean;
+  @bindable({attribute: 'col-filter'}) private colFilter: string;
+  @bindable({attribute: 'col-filter-top'}) private colFilterTop: boolean;
+  @bindable({attribute: 'col-add-label-attributes'}) private colAddLabelAttributes: string;
+  @bindable({attribute: 'col-add-filter-attributes'}) private colAddFilterAttributes: string;
+  @bindable({attribute: 'col-add-row-attributes'}) private colAddRowAttributes: string;
+  @bindable({attribute: 'col-type'}) private colType: string;
 
 
   constructor(element: Element, vGrid: VGrid, targetInstruction: any) {
@@ -68,20 +68,40 @@ export class VGridElementColConfig {
       colRowTemplate: this.colRowTemplate,
       colHeaderTemplate: this.colHeaderTemplate,
       colField: this.colField,
-      colPinLeft: this.colPinLeft === 'true' ? true : false,
-      colPinRight: this.colPinRight === 'true' ? true : false,
+      colPinLeft: this.checkBool(this.colPinLeft),
+      colPinRight: this.checkBool(this.colPinRight),
       colHeaderName: this.colHeaderName,
       colAddLabelAttributes: this.colAddLabelAttributes,
       colAddFilterAttributes: this.colAddFilterAttributes,
       colAddRowAttributes: this.colAddRowAttributes,
       colSort: this.colSort,
       colFilter: this.colFilter,
-      colFilterTop: this.colFilterTop === 'true' ? true : false,
+      colFilterTop: this.checkBool(this.colFilterTop),
       colCss: this.colCss,
       colType: this.colType || 'text'
     });
 
+  }
 
+  private checkBool(value: string | boolean): boolean {
+    if (typeof value === 'string') {
+      value = value.toLowerCase();
+    }
+
+    switch (true) {
+      case value === 'true':
+      case value === true:
+        value = true;
+        break;
+      case value === 'false':
+      case value === false:
+        value = false;
+        break;
+      default:
+        value = false;
+        break;
+    }
+    return value;
   }
 
 
