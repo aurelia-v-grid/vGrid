@@ -1,5 +1,5 @@
 // for typings only
-import { bindable, ViewCompiler, Container, ViewResources, TaskQueue } from 'aurelia-framework';
+import { ViewCompiler, Container, ViewResources, TaskQueue } from 'aurelia-framework';
 import { MainMarkup } from './mainMarkup';
 import { MainScrollEvents } from './mainScrollEvents';
 import { RowMarkup } from './rowMarkup';
@@ -16,7 +16,9 @@ import { LoadingScreen } from './loadingScreen';
 import { ContextMenu } from './contextMenu';
 import { VGrid } from './v-grid';
 
-
+//for typing only
+import { GridConnector } from '../gridConnector';
+import { Selection } from '../selection';
 
 export class Controller {
   public vGrid: VGrid;
@@ -54,7 +56,7 @@ export class Controller {
   public attPanelHeight: any;
   public attMultiSelect: any;
   public attManualSelection: any;
-  public attGridConnector: any;
+  public attGridConnector: GridConnector;
 
 
   constructor(vGrid) {
@@ -164,11 +166,11 @@ export class Controller {
 
   // misc function, all calls to/from gridconnector will go in functions here, mostly.. I think...
 
-  public getElement(row, isDown, callback): void {
+  public getElement(rowNumber: number, isDownScroll: boolean, callbackFN: Function): void {
     this.attGridConnector.getElement({
-      row: row,
-      isDown: isDown,
-      callback: callback
+      row: rowNumber,
+      isDown: isDownScroll,
+      callback: callbackFN
     });
   }
 
@@ -211,7 +213,8 @@ export class Controller {
 
 
   public getSelectionContext(): Selection {
-    return this.attGridConnector.selection;
+    let sel: Selection =  this.attGridConnector.getSelection();
+    return sel;
   }
 
   public raiseEvent(name, data = {}): void {
@@ -233,8 +236,8 @@ export class Controller {
 
 
   public updateHeights(): void {
-    this.rowScrollEvents.setCollectionLength(this.attGridConnector.length());
-    this.htmlHeightWidth.setCollectionLength(this.attGridConnector.length());
+    this.rowScrollEvents.setCollectionLength(this.attGridConnector.getDatasourceLength());
+    this.htmlHeightWidth.setCollectionLength(this.attGridConnector.getDatasourceLength());
   }
 
   public updateHeaderGrouping(groups: Array<any>): void {
@@ -244,7 +247,7 @@ export class Controller {
   }
 
   public collectionLength(): number {
-    return this.attGridConnector.length();
+    return this.attGridConnector.getDatasourceLength();
   }
 
   public triggerScroll(position: number): void {

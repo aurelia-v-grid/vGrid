@@ -3,15 +3,16 @@ import { Collection } from './collection';
 import { ArrayHelper } from './utils/arrayHelper';
 
 export class DataSource {
-  public selection: Selection;
   public entity: any;
-  public key: string;
+  private selection: Selection;
+  private key: string;
   private arrayHelper: ArrayHelper;
   private mainArray: Array<any>;
   private config: any;
   private eventIdCount: number;
   private eventCallBacks: Array<any>;
   private collection: Collection;
+
 
   constructor(selection: Selection, config: any) {
 
@@ -55,7 +56,18 @@ export class DataSource {
 
   }
 
-  public length(): number {
+
+  public getSelection() {
+    return this.selection;
+  }
+
+
+  public getKey(): string {
+    return this.key;
+  }
+
+
+  public get length(): number {
     return this.collection.length;
   }
 
@@ -88,29 +100,6 @@ export class DataSource {
   }
 
 
-  public getRowKey(row: number): string {
-
-    // if collection, then get row key
-    if (this.collection) {
-      return this.collection.getRowKey(row);
-    } else {
-      return null;
-    }
-
-  }
-
-
-  public getRowFromKey(key: string): number {
-
-    // if collection then get row from key
-    if (this.collection) {
-      return this.collection.getRowFromKey(key);
-    } else {
-      return -1;
-    }
-  }
-
-
   public setArray(array: Array<any>): void {
 
     // new collection
@@ -135,7 +124,7 @@ export class DataSource {
   }
 
 
-  public query(options: Array<any>|Object): void {
+  public query(options: Array<any> | Object): void {
     if (options) {
       // query data (using main here, so we query all data set)
       let newArray = this.arrayHelper.query(this.mainArray, options);
@@ -155,7 +144,7 @@ export class DataSource {
   }
 
 
-  public orderBy(attribute: string, addToCurrentSort?: boolean): void {
+  public orderBy(attribute: string|{attribute: string, asc: boolean}, addToCurrentSort?: boolean): void {
 
     // get collection (cant use main,,, might be filtered)
     let collection = this.collection.getEntities();
@@ -184,11 +173,16 @@ export class DataSource {
 
 
   public getElement(row: number): any {
-    return this.collection.getRow(row);
+    if (row === undefined || row === null) {
+      throw new Error('row missing');
+    } else {
+      return this.collection.getRow(row);
+    }
   }
 
 
   public group(grouping: Array<any>, keepExpanded?: boolean): void {
+
     this.arrayHelper.resetSort();
     grouping.forEach((groupName, i) => {
       this.arrayHelper.setOrderBy(groupName, true);
@@ -214,7 +208,6 @@ export class DataSource {
     } else {
       this.triggerEvent('collection_collapsed_all');
     }
-
   }
 
 
@@ -255,6 +248,28 @@ export class DataSource {
       oldMaybeGroupedArray.unshift(newElement);
       this.collection.setData(oldMaybeGroupedArray, oldArray);
       this.triggerEvent('collection_filtered');
+    }
+  }
+
+  private getRowKey(row: number): string {
+
+    // if collection, then get row key
+    if (this.collection) {
+      return this.collection.getRowKey(row);
+    } else {
+      return null;
+    }
+
+  }
+
+
+  private getRowFromKey(key: string): number {
+
+    // if collection then get row from key
+    if (this.collection) {
+      return this.collection.getRowFromKey(key);
+    } else {
+      return -1;
     }
   }
 

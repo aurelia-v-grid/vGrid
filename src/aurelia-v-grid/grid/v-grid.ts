@@ -15,6 +15,9 @@ import { Controller } from './controller';
 import { LoadingScreen } from './loadingScreen';
 import { ContextMenu } from './contextMenu';
 
+//for typing only
+import { GridConnector } from '../gridConnector';
+
 
 export class VGrid {
   public static inject = [Element, ViewCompiler, Container, ViewResources, TaskQueue];
@@ -54,7 +57,7 @@ export class VGrid {
   @bindable({ attribute: 'v-header-height' }) public attHeaderHeight;
   @bindable({ attribute: 'v-footer-height' }) public attFooterHeight;
   @bindable({ attribute: 'v-panel-height' }) public attPanelHeight;
-  @bindable({ attribute: 'v-grid-connector' }) public attGridConnector;
+  @bindable({ attribute: 'v-grid-connector' }) public attGridConnector: GridConnector;
   @bindable({ attribute: 'v-multi-select' }) public attMultiSelect;
   @bindable({ attribute: 'v-manual-sel' }) public attManualSelection;
   @bindable({ attribute: 'v-theme' }) public attTheme;
@@ -151,7 +154,6 @@ export class VGrid {
     this.attPanelHeight = this.attPanelHeight ? this.attPanelHeight * 1 : 25;
     this.attMultiSelect = this.attMultiSelect ? this.attMultiSelect === 'true' ? true : false : null;
     this.attManualSelection = this.attManualSelection ? this.attManualSelection === 'true' ? true : false : null;
-    this.attGridConnector.vGrid = this;
     this.attTheme = this.attTheme || 'avg-default';
 
     // todo... use for theming

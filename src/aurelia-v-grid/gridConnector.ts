@@ -4,20 +4,27 @@ import { Selection } from './selection';
 import { Controller} from './grid/controller';
 
 
+
 export class GridConnector {
-  public selection: Selection;
+  private selection: Selection;
   private controller: any;
   private datasource: DataSource;
   private key: any;
   private errorhandler: Function;
   private eventID: number;
 
+
   constructor(datasource: DataSource, selection: Selection, errorHandler?: Function) {
     this.controller = null;
     this.datasource = datasource;
-    this.key = datasource.key;
-    this.selection = datasource.selection;
+    this.key = datasource.getKey();
+    this.selection = datasource.getSelection();
     this.errorhandler = errorHandler || null;
+  }
+
+
+  public getSelection(): Selection {
+    return this.selection;
   }
 
 
@@ -37,8 +44,8 @@ export class GridConnector {
   }
 
 
-  public length(): number {
-    return this.datasource.length();
+  public getDatasourceLength(): number {
+    return this.datasource.length;
   }
 
 
@@ -48,36 +55,34 @@ export class GridConnector {
 
 
   public group(grouping: Array<any>, keepExpanded?: boolean) {
-    this.controller.setLoadingScreen(true, null, this.length()).then(() => {
+    this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.group(grouping, keepExpanded);
     });
   }
 
 
-  public getElement(options: any): void {
-    let curRow = options.row;
-    // let isDown = options.isDown;
-    let callback = options.callback;
+  public getElement(options: {row: number, isDown: boolean, callback: Function}): void {
+
     let rowContext = {
-      row: curRow,
+      row: options.row,
       selection: this.selection,
-      rowRef: this.datasource.getElement(curRow)
+      rowRef: this.datasource.getElement(options.row)
     };
 
-    callback(rowContext);
+    options.callback(rowContext);
 
   }
 
 
   public query(a: Object): void {
-    this.controller.setLoadingScreen(true, null, this.length()).then(() => {
+    this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.query(a);
     });
   }
 
 
-  public orderBy(attribute: string, addToCurrentSort?: boolean): void {
-    this.controller.setLoadingScreen(true, null, this.length()).then(() => {
+  public orderBy(attribute: string|{attribute: string, asc: boolean}, addToCurrentSort?: boolean): void {
+    this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.orderBy(attribute, addToCurrentSort);
     });
   }
@@ -104,14 +109,14 @@ export class GridConnector {
 
 
   public expandGroup(id: string): void {
-    this.controller.setLoadingScreen(true, null, this.length()).then(() => {
+    this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.groupExpand(id);
     });
   }
 
 
   public collapseGroup(id: string): void {
-    this.controller.setLoadingScreen(true, null, this.length()).then(() => {
+    this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.groupCollapse(id);
     });
   }

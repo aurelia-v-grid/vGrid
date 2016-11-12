@@ -12,7 +12,7 @@ export class Collection {
 
   constructor(datasource: DataSource) {
     this.datasource = datasource;
-    this.key = datasource.key;
+    this.key = datasource.getKey();
     this.entities = [];
     this.keys = [];
     this.count = 0;

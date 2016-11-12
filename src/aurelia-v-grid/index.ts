@@ -7,6 +7,7 @@ export * from './gridConnector';
 export * from './selection';
 export * from './dataSource';
 export * from './collection';
+export * from './grid/v-grid';
 
 const prefix = './grid';
 

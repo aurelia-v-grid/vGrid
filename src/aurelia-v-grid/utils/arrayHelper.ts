@@ -1,7 +1,7 @@
-import {FilterOperators} from './filterOperators';
-import {ArrayFilter} from './arrayFilter';
-import {ArraySort} from './arraySort';
-import {ArrayGrouping} from './arrayGrouping';
+import { FilterOperators } from './filterOperators';
+import { ArrayFilter } from './arrayFilter';
+import { ArraySort } from './arraySort';
+import { ArrayGrouping } from './arrayGrouping';
 
 
 export class ArrayHelper {
@@ -18,7 +18,10 @@ export class ArrayHelper {
 
   }
 
-  public orderBy(collection: Array<any>, attribute: string, addToCurrentSort?: boolean): any {
+  public orderBy(
+    collection: Array<any>,
+    attribute: string | { attribute: string, asc: boolean },
+    addToCurrentSort?: boolean): any {
 
 
     let grouping = this.getGrouping();
@@ -129,7 +132,7 @@ export class ArrayHelper {
     this.arraySort.setLastSort(array);
   }
 
-  public setOrderBy(attribute: string, addToCurrentSort?: boolean): void {
+  public setOrderBy(attribute: string| { attribute: string, asc: boolean }, addToCurrentSort?: boolean): void {
     this.arraySort.setOrderBy(attribute, addToCurrentSort);
   }
 
