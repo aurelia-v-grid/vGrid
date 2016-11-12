@@ -1,24 +1,28 @@
-// for typings only
-import { ViewCompiler, Container, ViewResources, TaskQueue } from 'aurelia-framework';
-import { MainMarkup } from './mainMarkup';
-import { MainScrollEvents } from './mainScrollEvents';
-import { RowMarkup } from './rowMarkup';
-import { RowScrollEvents } from './rowScrollEvents';
-import { ColumnMarkup } from './columnMarkup';
-import { HtmlCache } from './htmlCache';
-import { HtmlHeightWidth } from './htmlHeightWidth';
-import { ViewSlots } from './viewSlots';
-import { ColumnBindingContext } from './columnBindingContext';
-import { RowDataBinder } from './rowDataBinder';
-import { RowClickHandler } from './rowClickHandler';
-import { GroupingElements } from './groupingElements';
-import { LoadingScreen } from './loadingScreen';
-import { ContextMenu } from './contextMenu';
-import { VGrid } from './v-grid';
+import {
+  ViewCompiler,
+  ViewResources,
+  Container,
+  TaskQueue,
+  MainMarkup,
+  MainScrollEvents,
+  ColumnMarkup,
+  HtmlHeightWidth,
+  ViewSlots,
+  ColumnBindingContext,
+  HtmlCache,
+  RowDataBinder,
+  RowClickHandler,
+  GroupingElements,
+  RowMarkup,
+  LoadingScreen,
+  ContextMenu,
+  VGrid,
+  GridConnector,
+  Selection,
+  RowScrollEvents
+} from '../interfaces';
 
-//for typing only
-import { GridConnector } from '../gridConnector';
-import { Selection } from '../selection';
+
 
 export class Controller {
   public vGrid: VGrid;
@@ -213,7 +217,7 @@ export class Controller {
 
 
   public getSelectionContext(): Selection {
-    let sel: Selection =  this.attGridConnector.getSelection();
+    let sel: Selection = this.attGridConnector.getSelection();
     return sel;
   }
 

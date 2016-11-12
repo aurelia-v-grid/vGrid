@@ -1,11 +1,15 @@
 import { ViewSlot } from 'aurelia-framework';
 import { ColumnMarkupHelper } from './columnMarkupHelper';
+import {
+  ViewCompiler,
+  Container,
+  ViewResources,
+  ViewFactory,
+  HtmlCache,
+  ColumnBindingContext,
+  ViewSlots
+} from '../interfaces';
 
-// for typins only:
-import { ViewCompiler, Container, ViewResources, ViewFactory } from 'aurelia-framework';
-import { HtmlCache } from './htmlCache';
-import { ColumnBindingContext } from './columnBindingContext';
-import { ViewSlots } from './viewSlots';
 
 
 export class ColumnMarkup {

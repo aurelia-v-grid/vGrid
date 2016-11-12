@@ -1,6 +1,5 @@
-// for typings only:
-import { HtmlCache } from './htmlCache';
-import { Controller } from './controller';
+import { HtmlCache, Controller } from '../interfaces';
+
 
 export class RowClickHandler {
   private element: Element;

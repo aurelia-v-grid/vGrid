@@ -14,9 +14,7 @@ import { GroupingElements } from './groupingElements';
 import { Controller } from './controller';
 import { LoadingScreen } from './loadingScreen';
 import { ContextMenu } from './contextMenu';
-
-//for typing only
-import { GridConnector } from '../gridConnector';
+import { GridConnector } from '../interfaces';
 
 
 export class VGrid {

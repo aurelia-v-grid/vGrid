@@ -1,4 +1,4 @@
-import {FilterOperators} from './filterOperators'; // todo make a interface
+import {FilterOperators} from '../interfaces'; // todo make a interface
 
 export class ArrayFilter {
   private filterOperators: FilterOperators;

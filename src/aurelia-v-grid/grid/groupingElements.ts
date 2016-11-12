@@ -1,10 +1,14 @@
 import { ViewSlot } from 'aurelia-framework';
-// for typings:
-import { ViewCompiler, Container, ViewResources } from 'aurelia-framework';
-import { HtmlCache } from './htmlCache';
-import { ColumnBindingContext } from './columnBindingContext';
-import { ViewSlots } from './viewSlots';
-import { Controller } from './controller';
+import {
+  ViewCompiler,
+  Container,
+  ViewResources,
+  HtmlCache,
+  ColumnBindingContext,
+  ViewSlots,
+  Controller
+} from '../interfaces';
+
 
 
 export class GroupingElements {

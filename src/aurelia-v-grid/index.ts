@@ -1,16 +1,5 @@
-/*import * as gridConnector from './gridConnector';
-import * as selection from './selection';
-import * as datasource from './dataSource';
-import * as collection from './collection';*/
-
-export * from './gridConnector';
-export * from './selection';
-export * from './dataSource';
-export * from './collection';
-export * from './grid/v-grid';
-
+export * from './interfaces';
 const prefix = './grid';
-
 export function configure(config) {
   config.globalResources(
     prefix + '/attributes/v-filter',
@@ -26,9 +15,4 @@ export function configure(config) {
   );
 }
 
-
-/*export const GridConnector = gridConnector.GridConnector;
-export const Selection = selection.Selection;
-export const DataSource = datasource.DataSource;
-export const Collection = collection.Collection;*/
 

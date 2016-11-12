@@ -1,4 +1,4 @@
-import { DataSource } from './dataSource'; // todo,create interface when datasource is stable
+import { DataSource } from './interfaces'; // todo,create interface when datasource is stable
 
 export class Collection {
   public length: number;

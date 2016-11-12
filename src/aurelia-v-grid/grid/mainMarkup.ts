@@ -1,9 +1,15 @@
 import { ViewSlot } from 'aurelia-framework';
 import { MainMarkupHtmlString } from './mainMarkupHtmlString';
-// for typings only
-import { ViewCompiler, Container, ViewResources, ViewFactory, View } from 'aurelia-framework';
-import { ViewSlots } from './viewSlots';
-import { HtmlHeightWidth } from './htmlHeightWidth';
+import {
+  ViewCompiler,
+  Container,
+  ViewResources,
+  ViewFactory,
+  View,
+  ViewSlots,
+  HtmlHeightWidth
+} from '../interfaces';
+
 
 export class MainMarkup {
   private element: any;

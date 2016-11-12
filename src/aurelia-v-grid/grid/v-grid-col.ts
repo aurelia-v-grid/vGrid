@@ -1,7 +1,6 @@
 import { inject, noView, customElement, bindable, processContent, TargetInstruction } from 'aurelia-framework';
 import { VGrid } from './v-grid';
-// for typings
-import { ViewCompiler, ViewResources} from 'aurelia-framework';
+import { ViewCompiler, ViewResources} from '../interfaces';
 
 
 @noView()

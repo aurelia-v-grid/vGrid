@@ -1,5 +1,4 @@
-// for typings only
-import { HtmlCache } from './htmlCache';
+import { HtmlCache } from '../interfaces';
 
 export class RowMarkup {
   private element: Element;

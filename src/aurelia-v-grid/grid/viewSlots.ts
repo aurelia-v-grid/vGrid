@@ -1,6 +1,5 @@
-// for typings only
-import {ViewSlot} from 'aurelia-framework';
-import { HtmlCache } from './htmlCache';
+import {ViewSlot, HtmlCache} from '../interfaces';
+
 
 export class ViewSlots {
   public leftRowViewSlots: Array<ViewSlot>;

@@ -1,5 +1,4 @@
-// for typings only
-import {Controller} from './controller';
+import {Controller} from '../interfaces';
 
 export class RowDataBinder {
   private element: Element;
@@ -82,14 +81,11 @@ export class RowDataBinder {
       // row ref
       bindingContext.rowRef = data.rowRef;
 
-
       // selection
       bindingContext.selection = data.selection;
 
-
       // is selected
       bindingContext.selected = isSelected;
-
 
       // row number
       bindingContext.row = currentRow;

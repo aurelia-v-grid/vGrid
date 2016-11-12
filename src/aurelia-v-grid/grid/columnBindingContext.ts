@@ -1,5 +1,4 @@
-//for typings only
-import { Controller } from './controller';
+import { Controller } from '../interfaces';
 
 
 export class ColumnBindingContext {

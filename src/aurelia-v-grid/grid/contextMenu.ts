@@ -1,7 +1,6 @@
 import { ViewSlot } from 'aurelia-framework';
-// for typings only
-import { ViewCompiler, Container, ViewResources } from 'aurelia-framework';
-import { ViewSlots } from './viewSlots';
+import { ViewCompiler, Container, ViewResources, ViewSlots } from '../interfaces';
+
 
 export class ContextMenu {
     public show: boolean;
