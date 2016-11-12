@@ -6,12 +6,12 @@ import { Controller, GroupingElements } from '../../interfaces';
 @customAttribute('v-menu')
 @inject(Element, VGrid)
 export class VGridAttributeMenu {
-  private element: any;
+  private element: Element;
   private controller: Controller;
-  private raiseEvent: any;
-  private openBinded: any;
-  private checkBinded: any;
-  private callbackBinded: any;
+  private raiseEvent: Function;
+  private openBinded: EventListenerOrEventListenerObject;
+  private checkBinded: EventListenerOrEventListenerObject;
+  private callbackBinded: Function;
   private groupingElements: GroupingElements;
 
 

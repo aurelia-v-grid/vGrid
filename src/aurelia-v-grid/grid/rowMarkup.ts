@@ -3,10 +3,10 @@ import { HtmlCache } from '../interfaces';
 export class RowMarkup {
   private element: Element;
   private htmlCache: HtmlCache;
-  private left: any;
-  private main: any;
-  private right: any;
-  private full: any;
+  private left: Element;
+  private main: Element;
+  private right: Element;
+  private group: Element;
   private rowHeight: number;
 
 
@@ -68,7 +68,7 @@ export class RowMarkup {
     this.left.innerHTML = markupLeft;
     this.main.innerHTML = markupLeft;
     this.right.innerHTML = markupLeft;
-    this.full.innerHTML = markupGroup;
+    this.group.innerHTML = markupGroup;
 
   }
 
@@ -77,7 +77,7 @@ export class RowMarkup {
     this.left = this.htmlCache.avg_content_left_scroll;
     this.main = this.htmlCache.avg_content_main_scroll;
     this.right = this.htmlCache.avg_content_right_scroll;
-    this.full = this.htmlCache.avg_content_group_scroll;
+    this.group = this.htmlCache.avg_content_group_scroll;
   }
 
 }

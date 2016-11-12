@@ -1,34 +1,41 @@
 import { inject, customAttribute } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-import { GroupingElements, Controller, BindingContext, OverrideContext } from '../../interfaces';
+import {
+  ColumBindingContextObject,
+  DragDropShardContext,
+  GroupingElements,
+  Controller,
+  BindingContext,
+  OverrideContext
+} from '../../interfaces';
 
 
 @customAttribute('v-drag-drop-col')
 @inject(Element, VGrid)
 export class VGridDragDropCol {
   private vGrid: VGrid;
-  private element: any;
-  private column: any;
+  private element: Element;
+  private column: Element;
   private vGridElement: Element;
   private controller: Controller;
   private groupingElements: GroupingElements;
-  private sharedContext: any;
+  private sharedContext: DragDropShardContext;
   private entered: boolean;
   private curColNo: number;
   private bindingContext: BindingContext;
   private overrideContext: OverrideContext;
-  private onDragstartBinded: any;
-  private onDragenterBinded: any;
-  private onDragoverBinded: any;
-  private onDragendBinded: any;
-  private onDragOutSideBinded: any;
+  private onDragstartBinded: EventListenerOrEventListenerObject;
+  private onDragenterBinded: EventListenerOrEventListenerObject;
+  private onDragoverBinded: EventListenerOrEventListenerObject;
+  private onDragendBinded: EventListenerOrEventListenerObject;
+  private onDragOutSideBinded: EventListenerOrEventListenerObject;
   private colType: string;
   private colNo: number;
-  private context: any;
-  private columnsArray: Array<any>;
+  private context: ColumBindingContextObject;
+  private columnsArray: Array<ColumBindingContextObject>;
   private isPanel: boolean;
-  private dragColumnBlock: any;
-  private mouseMoveTimer: any;
+  private dragColumnBlock: HTMLElement;
+  private mouseMoveTimer: number;
 
   constructor(element, vGrid) {
     // get contexts
@@ -79,7 +86,7 @@ export class VGridDragDropCol {
       // get column data
       this.column = result.target;
       this.colType = this.column.attributes.getNamedItem('avg-type').value;
-      this.colNo = this.column.attributes.getNamedItem('avg-config-col').value * 1;
+      this.colNo = parseInt(this.column.attributes.getNamedItem('avg-config-col').value, 10);
       this.context = this.vGrid.columnBindingContext['setup' + this.colType][this.colNo];
       this.columnsArray = this.vGrid.columnBindingContext['setup' + this.colType];
 

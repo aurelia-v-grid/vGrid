@@ -1,5 +1,6 @@
-import {ViewSlot} from 'aurelia-framework';
+import { ViewSlot } from 'aurelia-framework';
 import { Selection } from './selection';
+import {GroupingElements} from './grid/groupingElements';
 export * from 'aurelia-framework';
 export { HtmlCache } from './grid/htmlCache';
 export { Controller } from './grid/controller';
@@ -20,7 +21,7 @@ export { VGrid } from './grid/v-grid';
 export { GridConnector } from './gridConnector';
 export { DataSource } from './dataSource';
 export { Selection } from './selection';
-export {FilterOperators} from './utils/filterOperators';
+export { FilterOperators } from './utils/filterOperators';
 export { ArrayFilter } from './utils/arrayFilter';
 export { ArraySort } from './utils/arraySort';
 export { ArrayGrouping } from './utils/arrayGrouping';
@@ -43,34 +44,34 @@ export interface RowCache {
 }
 
 export interface HeaderCache {
-    left: HTMLElement;
-    main: HTMLElement;
-    right: HTMLElement;
-    group: HTMLElement;
-    bindingContext: any;
-    overrideContext: any;
-    leftRowViewSlot: ViewSlot;
-    mainRowViewSlot: ViewSlot;
-    rightRowViewSlot: ViewSlot;
-    groupRowViewSlot: ViewSlot;
+  left: HTMLElement;
+  main: HTMLElement;
+  right: HTMLElement;
+  group: HTMLElement;
+  bindingContext: any;
+  overrideContext: any;
+  leftRowViewSlot: ViewSlot;
+  mainRowViewSlot: ViewSlot;
+  rightRowViewSlot: ViewSlot;
+  groupRowViewSlot: ViewSlot;
 }
 
 export interface ColConfig {
-      colWidth: number;
-      colRowTemplate: string;
-      colHeaderTemplate: string;
-      colField: string;
-      colPinLeft: boolean;
-      colPinRight: boolean;
-      colHeaderName: string;
-      colAddLabelAttributes: string;
-      colAddFilterAttributes: string;
-      colAddRowAttributes: string;
-      colSort: string;
-      colFilter: string;
-      colFilterTop: boolean;
-      colCss: string;
-      colType: string;
+  colWidth: number;
+  colRowTemplate: string;
+  colHeaderTemplate: string;
+  colField: string;
+  colPinLeft: boolean;
+  colPinRight: boolean;
+  colHeaderName: string;
+  colAddLabelAttributes: string;
+  colAddFilterAttributes: string;
+  colAddRowAttributes: string;
+  colSort: string;
+  colFilter: string;
+  colFilterTop: boolean;
+  colCss: string;
+  colType: string;
 }
 
 export interface BindingContext {
@@ -82,4 +83,35 @@ export interface BindingContext {
 export interface OverrideContext {
   bindContext: BindingContext;
   parentOverrideContext: OverrideContext;
+}
+
+export interface DragDropShardContext {
+  dragging: boolean;
+  panel: Element;
+  lastTarget: Element;
+  colType: string;
+  colNo: number;
+  curColNo: number;
+  columnsArray: Array<any>;
+  columnsArraySorted: Array<any>;
+  context: any;
+  group: any;
+}
+
+export interface ResizeShardContext {
+  resizing: boolean;
+}
+
+export interface ColumBindingContextObject {
+  show: boolean;
+  left: number;
+  width: number;
+}
+
+export interface GroupingContext {
+  viewSlot: ViewSlot;
+  name: string;
+  field: string;
+  remove: Function;
+  ctx: GroupingElements;
 }

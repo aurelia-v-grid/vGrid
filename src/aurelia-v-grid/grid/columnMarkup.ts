@@ -7,7 +7,8 @@ import {
   ViewFactory,
   HtmlCache,
   ColumnBindingContext,
-  ViewSlots
+  ViewSlots,
+  ColConfig
 } from '../interfaces';
 
 
@@ -22,7 +23,7 @@ export class ColumnMarkup {
   private container: Container;
   private viewResources: ViewResources;
   private overrideContext: any;
-  private colConfig: Array<any>;
+  private colConfig: Array<ColConfig>;
   private configLength: number;
   private colRepeater: boolean;
   private colRepeatRowTemplate: string;

@@ -6,7 +6,8 @@ import {
   HtmlCache,
   ColumnBindingContext,
   ViewSlots,
-  Controller
+  Controller,
+  GroupingContext
 } from '../interfaces';
 
 
@@ -18,10 +19,10 @@ export class GroupingElements {
   private viewCompiler: ViewCompiler;
   private container: Container;
   private viewResources: ViewResources;
-  private groupContext: any;
-  private lastAdded: any;
+  private groupContext: GroupingContext;
+  private lastAdded: string;
   private controller: Controller;
-  private avgTopPanel: any;
+  private avgTopPanel: Element;
 
 
   constructor(
@@ -43,7 +44,7 @@ export class GroupingElements {
     this.viewResources = viewResources;
 
     // group context
-    this.groupContext = {};
+    this.groupContext = ({} as GroupingContext);
     this.lastAdded = null;
   }
 
@@ -59,7 +60,7 @@ export class GroupingElements {
 
     if (!this.groupContext[name]) {
       this.lastAdded = name;
-      this.groupContext[name] = {};
+      this.groupContext[name] = ({} as GroupingContext);
       this.groupContext[name].name = name;
       this.groupContext[name].ctx = this;
       this.groupContext[name].field = field;

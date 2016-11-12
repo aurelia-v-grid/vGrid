@@ -22,7 +22,9 @@ import {
   RowScrollEvents,
   ColConfig,
   BindingContext,
-  OverrideContext
+  OverrideContext,
+  DragDropShardContext,
+  ResizeShardContext
 } from '../interfaces';
 
 
@@ -49,8 +51,8 @@ export class Controller {
   public container: Container;
   public viewResources: ViewResources;
   public taskQueue: TaskQueue;
-  public dragDropAttributeSharedContext: any;
-  public resizeAttributeSharedContext: any;
+  public dragDropAttributeSharedContext: DragDropShardContext;
+  public resizeAttributeSharedContext: ResizeShardContext;
   public colConfig: Array<ColConfig>;
   public colRepeater: boolean;
   public colRepeatRowTemplate: string;

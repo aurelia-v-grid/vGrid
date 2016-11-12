@@ -1,17 +1,17 @@
 import { ViewSlot } from 'aurelia-framework';
 import { ViewCompiler, Container, ViewResources, ViewSlots } from '../interfaces';
-
+import {OverrideContext} from '../interfaces';
 
 
 export class LoadingScreen {
-  private element: any;
+  private element: Element;
   private viewSlots: ViewSlots;
   private viewCompiler: ViewCompiler;
   private container: Container;
   private viewResources: ViewResources;
   private loading: boolean;
   private loadingMessage: string;
-  private overrideContext: any;
+  private overrideContext: OverrideContext;
 
 
   constructor(element, viewCompiler, container, viewResources, viewSlots) {
@@ -25,7 +25,7 @@ export class LoadingScreen {
     this.loadingMessage = 'Loading';
   }
 
-  public init(overrideContext): void {
+  public init(overrideContext: OverrideContext): void {
     this.overrideContext = overrideContext;
     let loadingScreentHtml = [
       '<div class="avg-overlay" if.bind="loading">',

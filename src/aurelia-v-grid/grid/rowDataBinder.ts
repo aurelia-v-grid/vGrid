@@ -3,8 +3,8 @@ import {Controller, RowCache} from '../interfaces';
 export class RowDataBinder {
   private element: Element;
   private controller: Controller;
-  private rebindRowBinded: any;
-  private rebindAllRowsBinded: any;
+  private rebindRowBinded: EventListenerOrEventListenerObject;
+  private rebindAllRowsBinded: EventListenerOrEventListenerObject;
 
   constructor(element: Element, controller: Controller) {
     this.element = element;

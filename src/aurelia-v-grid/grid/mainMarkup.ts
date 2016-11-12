@@ -12,7 +12,7 @@ import {
 
 
 export class MainMarkup {
-  private element: any;
+  private element: Element;
   private viewCompiler: ViewCompiler;
   private container: Container;
   private viewResources: ViewResources;

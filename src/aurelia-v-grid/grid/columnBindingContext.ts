@@ -1,11 +1,11 @@
-import { Controller } from '../interfaces';
+import { Controller, ColumBindingContextObject } from '../interfaces';
 
 
 export class ColumnBindingContext {
-  public setupleft: Array<any>;
-  public setupmain: Array<any>;
-  public setupright: Array<any>;
-  public setupgroup: Array<any>;
+  public setupleft: Array<ColumBindingContextObject>;
+  public setupmain: Array<ColumBindingContextObject>;
+  public setupright: Array<ColumBindingContextObject>;
+  public setupgroup: Array<ColumBindingContextObject>;
   public setupgrouping: number;
   public changeGrouping: Function;
   private controller: Controller;

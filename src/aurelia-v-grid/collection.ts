@@ -3,8 +3,8 @@ import { DataSource } from './interfaces'; // todo,create interface when datasou
 export class Collection {
   public length: number;
   private entities: Array<any>;
-  private keys: Array<any>;
-  private key: any;
+  private keys: Array<string>;
+  private key: string;
   private count: number;
   private datasource: DataSource;
   private ungroupedArray: Array<any>;

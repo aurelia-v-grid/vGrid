@@ -3,12 +3,12 @@ import { HtmlCache } from './htmlCache';
 
 export class MainScrollEvents {
   private element: Element;
-  private timerLeft: any;
-  private timerMain: any;
-  private timerRight: any;
-  private timerVhandle: any;
-  private timerWheel: any;
-  private timerHhandle: any;
+  private timerLeft: number;
+  private timerMain: number;
+  private timerRight: number;
+  private timerVhandle: number;
+  private timerWheel: number;
+  private timerHhandle: number;
   private lastTopPosition: number;
   private htmlCache: HtmlCache;
   private left: Element;

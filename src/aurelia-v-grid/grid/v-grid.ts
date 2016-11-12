@@ -14,18 +14,25 @@ import { GroupingElements } from './groupingElements';
 import { Controller } from './controller';
 import { LoadingScreen } from './loadingScreen';
 import { ContextMenu } from './contextMenu';
-import { GridConnector, ColConfig, BindingContext, OverrideContext} from '../interfaces';
+import {
+  ResizeShardContext,
+  GridConnector,
+  DragDropShardContext,
+  ColConfig,
+  BindingContext,
+  OverrideContext
+} from '../interfaces';
 
 
 export class VGrid {
   public static inject = [Element, ViewCompiler, Container, ViewResources, TaskQueue];
-  public element: any;
+  public element: Element;
   public viewCompiler: ViewCompiler;
   public container: Container;
   public viewResources: ViewResources;
   public taskQueue: TaskQueue;
-  public dragDropAttributeSharedContext: any;
-  public resizeAttributeSharedContext: any;
+  public dragDropAttributeSharedContext: DragDropShardContext;
+  public resizeAttributeSharedContext: ResizeShardContext;
   public colConfig: Array<ColConfig>;
   public colRepeater: boolean;
   public colRepeatRowTemplate: string;
@@ -73,8 +80,8 @@ export class VGrid {
     this.taskQueue = taskQueue;
 
     // used by attributes for holding data
-    this.dragDropAttributeSharedContext = {};
-    this.resizeAttributeSharedContext = {};
+    this.dragDropAttributeSharedContext = ({} as DragDropShardContext);
+    this.resizeAttributeSharedContext = ({} as ResizeShardContext);
 
     // use by v-grid-col element, that takes the data it gets and puts it in here
     this.colConfig = [];

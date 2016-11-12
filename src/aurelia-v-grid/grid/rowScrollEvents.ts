@@ -3,22 +3,22 @@ import {HtmlCache, RowCache} from '../interfaces';
 export class RowScrollEvents {
   private htmlCache: HtmlCache;
   private element: Element;
-  private timer: any;
+  private timer: number;
   private largeScroll: boolean;
   private collectionLength: number;
   private largeScrollUpdateDelay: number;
   private rowCache: Array<RowCache>;
   private rowHeight: number;
   private cacheLength: number;
-  private leftRows: NodeListOf<any>;
-  private mainRows: NodeListOf<any>;
-  private rightRows: NodeListOf<any>;
-  private groupRows: NodeListOf<any>;
-  private onScrollBinded: any;
-  private left: any;
-  private main: any;
-  private right: any;
-  private scroller: any;
+  private leftRows: NodeListOf<Element>;
+  private mainRows: NodeListOf<Element>;
+  private rightRows: NodeListOf<Element>;
+  private groupRows: NodeListOf<Element>;
+  private onScrollBinded: EventListenerOrEventListenerObject;
+  private left: Element;
+  private main: Element;
+  private right: Element;
+  private scroller: Element;
 
   constructor(element: Element, htmlCache: HtmlCache) {
     this.htmlCache = htmlCache;
@@ -47,10 +47,10 @@ export class RowScrollEvents {
   private createRowCache(): void {
     for (let i = 0; i < this.cacheLength; i++) {
       this.rowCache.push(({
-        left: (this.leftRows[i] as HTMLElement),
-        main: (this.mainRows[i] as HTMLElement),
-        right: (this.rightRows[i] as HTMLElement),
-        group: (this.groupRows[i] as HTMLElement),
+        left: this.leftRows[i],
+        main: this.mainRows[i],
+        right: this.rightRows[i],
+        group: this.groupRows[i],
         top: this.rowHeight * i,
         row: i
       } as RowCache));

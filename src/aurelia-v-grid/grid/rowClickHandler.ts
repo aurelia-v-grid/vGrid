@@ -1,4 +1,4 @@
-import { HtmlCache, Controller } from '../interfaces';
+import { HtmlCache, Controller, Selection } from '../interfaces';
 
 
 export class RowClickHandler {
@@ -9,7 +9,7 @@ export class RowClickHandler {
   private lastKeyKodeUsed: string;
   private selectedRows: number;
   private controller: Controller;
-  private selection: any; // create interface
+  private selection: Selection;
   private manualSelection: boolean;
 
 

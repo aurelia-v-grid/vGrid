@@ -1,45 +1,45 @@
-import {ColConfig} from '../interfaces';
+import {ColConfig, ColumnBindingContext} from '../interfaces';
 
 export class HtmlHeightWidth {
-  public avgScrollBarWidth: any;
-  public avgPanel_Height: any;
-  public avgHeader_Height: any;
-  public avgHeader_Top: any;
-  public avgContent_Top: any;
-  public avgContent_Bottom: any;
-  public avgHeaderLeft_Width: any;
-  public avgHeaderMain_Left: any;
-  public avgHeaderMain_Right: any;
-  public avgHeaderMainScroll_Width: any;
-  public avgHeaderMainScroll_Height: any;
-  public avgHeaderRight_Right: any;
-  public avgHeaderRight_Width: any;
-  public avgContentLeft_Width: any;
-  public avgContentLeftScroll_Width: any;
-  public avgContentLeftScroll_Height: any;
-  public avgContentMain_Left: any;
-  public avgContentMain_Right: any;
-  public avgContentMainScroll_Width: any;
-  public avgContentMainScroll_Height: any;
-  public avgContentRight_Right: any;
-  public avgContentRight_Width: any;
-  public avgContentRightScroll_Width: any;
-  public avgContentRightScroll_Height: any;
-  public avgContentGroup_Width: any;
-  public avgContentGroup_Height: any;
-  public avgContentGroup_Top: any;
-  public avgContentGroup_Bottom: any;
-  public avgContentVhandle_Width: any;
-  public avgContentVhandle_Height: any;
-  public avgContentVhandle_Top: any;
-  public avgContentVhandleScroll_Height: any;
-  public avgContentVhandle_Bottom: any;
-  public avgContentHhandle_Bottom: any;
-  public avgContentHhandle_Right: any;
-  public avgContentHhandle_Left: any;
-  public avgContentHhandle_Height: any;
-  public avgContentHhandleScroll_Width: any;
-  public avgFooter_Height: any;
+  public avgScrollBarWidth: number;
+  public avgPanel_Height: number;
+  public avgHeader_Height: number;
+  public avgHeader_Top: number;
+  public avgContent_Top: number;
+  public avgContent_Bottom: number;
+  public avgHeaderLeft_Width: number;
+  public avgHeaderMain_Left: number;
+  public avgHeaderMain_Right: number;
+  public avgHeaderMainScroll_Width: number;
+  public avgHeaderMainScroll_Height: number;
+  public avgHeaderRight_Right: number;
+  public avgHeaderRight_Width: number;
+  public avgContentLeft_Width: number;
+  public avgContentLeftScroll_Width: string;
+  public avgContentLeftScroll_Height: number;
+  public avgContentMain_Left: number;
+  public avgContentMain_Right: number;
+  public avgContentMainScroll_Width: number;
+  public avgContentMainScroll_Height: number;
+  public avgContentRight_Right: number;
+  public avgContentRight_Width: number;
+  public avgContentRightScroll_Width: string;
+  public avgContentRightScroll_Height: number;
+  public avgContentGroup_Width: number;
+  public avgContentGroup_Height: number;
+  public avgContentGroup_Top: number;
+  public avgContentGroup_Bottom: number;
+  public avgContentVhandle_Width: number;
+  public avgContentVhandle_Height: number;
+  public avgContentVhandle_Top: number;
+  public avgContentVhandleScroll_Height: number;
+  public avgContentVhandle_Bottom: number;
+  public avgContentHhandle_Bottom: number;
+  public avgContentHhandle_Right: number;
+  public avgContentHhandle_Left: number;
+  public avgContentHhandle_Height: number;
+  public avgContentHhandleScroll_Width: number;
+  public avgFooter_Height: number;
   public attHeaderHeight: number;
   public attRowHeight: number;
   public attFooterHeight: number;
@@ -150,7 +150,7 @@ export class HtmlHeightWidth {
   }
 
 
-  public adjustWidthsColumns(columnBindingContext, groupsLength): void {
+  public adjustWidthsColumns(columnBindingContext: ColumnBindingContext, groupsLength: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
     let main = 0;
     let right = 0;

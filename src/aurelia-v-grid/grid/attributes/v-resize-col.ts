@@ -1,27 +1,33 @@
 import { inject, customAttribute } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-
+import {
+  ResizeShardContext,
+  BindingContext,
+  OverrideContext,
+  ColumnBindingContext,
+  ColumBindingContextObject
+} from '../../interfaces';
 
 @customAttribute('v-resize-col')
 @inject(Element, VGrid)
 export class VGridAttributesResizeCol {
   private vGrid: VGrid;
-  private ctx: any;
-  private element: any;
+  private ctx: ResizeShardContext;
+  private element: Element;
   private screenX: number;
   private originalWidth: number;
-  private column: any;
+  private column: Element;
   private colType: string;
   private colNo: number;
-  private context: any;
-  private columnsArray: Array<any>;
-  private columnBindingContext: any;
-  private bindingContext: any;
-  private overrideContext: any;
-  private onmousedownBinded: any;
-  private onmousemoveBinded: any;
-  private onmouseupBinded: any;
-  private originals: Array<any>;
+  private context: ColumBindingContextObject;
+  private columnsArray: Array<ColumBindingContextObject>;
+  private columnBindingContext: ColumnBindingContext;
+  private bindingContext: BindingContext;
+  private overrideContext: OverrideContext;
+  private onmousedownBinded: EventListenerOrEventListenerObject;
+  private onmousemoveBinded: EventListenerOrEventListenerObject;
+  private onmouseupBinded: EventListenerOrEventListenerObject;
+  private originals: Array<number>;
 
   private avgContentLeft_Width: number;
   private avgHeaderLeft_Width: number;
@@ -49,10 +55,10 @@ export class VGridAttributesResizeCol {
     this.originalWidth = 0;
     this.column = this.element;
     while (this.column.nodeName !== 'AVG-COL') {
-      this.column = this.column.parentNode;
+      this.column = (this.column.parentNode as HTMLElement);
     }
     this.colType = this.column.attributes.getNamedItem('avg-type').value;
-    this.colNo = this.column.attributes.getNamedItem('avg-config-col').value * 1;
+    this.colNo = parseInt(this.column.attributes.getNamedItem('avg-config-col').value, 10);
     this.context = vGrid.columnBindingContext['setup' + this.colType][this.colNo];
     this.columnsArray = vGrid.columnBindingContext['setup' + this.colType];
     this.columnBindingContext = vGrid.columnBindingContext;

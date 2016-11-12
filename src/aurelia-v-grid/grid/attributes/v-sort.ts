@@ -6,14 +6,14 @@ import {BindingContext, OverrideContext} from '../../interfaces';
 @inject(Element, VGrid)
 export class VGridAttributesSort {
   private vGrid: VGrid;
-  private element: Element;
+  private element: HTMLElement;
   private bindingContext: BindingContext;
   private overrideContext: OverrideContext;
   private attribute: string;
   private sortIcon: HTMLElement;
   private value: string;
 
-  constructor(element: Element, vGrid: VGrid) {
+  constructor(element: HTMLElement, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
   }
@@ -34,14 +34,14 @@ export class VGridAttributesSort {
     this.sortIcon = document.createElement('i');
     this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
     this.element.appendChild(this.sortIcon);
-    (this.element as HTMLElement).onmousedown = (e) => {
-      (this.element as HTMLElement).onmouseup = (e) => {
+    this.element.onmousedown = (e) => {
+      this.element.onmouseup = (e) => {
         if (e.button === 0) {
           this.vGrid.attGridConnector.orderBy(this.attribute, e.shiftKey);
         }
       };
       setTimeout(() => {
-        (this.element as HTMLElement).onmouseup = null;
+        this.element.onmouseup = null;
       }, 300);
 
     };

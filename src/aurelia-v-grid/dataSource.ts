@@ -10,7 +10,7 @@ export class DataSource {
   private mainArray: Array<any>;
   private config: any;
   private eventIdCount: number;
-  private eventCallBacks: Array<any>;
+  private eventCallBacks: Array<Function>;
   private collection: Collection;
 
 
