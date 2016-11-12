@@ -234,7 +234,7 @@ export class Controller {
     this.element.dispatchEvent(event);
   }
 
-  public setLoadingScreen(value: string, msg: string, collectionLength: number): Promise<any> {
+  public setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<any> {
 
     if (value) {
       return this.loadingScreen.enable(msg, collectionLength);

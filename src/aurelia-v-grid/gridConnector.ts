@@ -1,15 +1,15 @@
 // for typing only
-import { DataSource } from './dataSource';
-import { Selection } from './selection';
-import { Controller} from './grid/controller';
+import { DataSource, Selection, Entity, Controller } from './interfaces';
+
+
 
 
 
 export class GridConnector {
   private selection: Selection;
-  private controller: any;
+  private controller: Controller;
   private datasource: DataSource;
-  private key: any;
+  private key: string;
   private errorhandler: Function;
   private eventID: number;
 
@@ -61,7 +61,7 @@ export class GridConnector {
   }
 
 
-  public getElement(options: {row: number, isDown: boolean, callback: Function}): void {
+  public getElement(options: { row: number, isDown: boolean, callback: Function }): void {
 
     let rowContext = {
       row: options.row,
@@ -81,7 +81,7 @@ export class GridConnector {
   }
 
 
-  public orderBy(attribute: string|{attribute: string, asc: boolean}, addToCurrentSort?: boolean): void {
+  public orderBy(attribute: string | { attribute: string, asc: boolean }, addToCurrentSort?: boolean): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.orderBy(attribute, addToCurrentSort);
     });
@@ -150,7 +150,7 @@ export class GridConnector {
       case 'collection_filtered':
         this.raiseEvent('sortIconUpdate');
         this.controller.updateHeights();
-        this.controller.triggerScroll();
+        this.controller.triggerScroll(null);
         this.controller.setLoadingScreen(false);
         break;
 

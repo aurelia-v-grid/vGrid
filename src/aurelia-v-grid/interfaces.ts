@@ -31,8 +31,8 @@ export interface RowCache {
   main: HTMLElement;
   right: HTMLElement;
   group: HTMLElement;
-  bindingContext: any;
-  overrideContext: any;
+  bindingContext: BindingContext;
+  overrideContext: OverrideContext;
   leftRowViewSlot: ViewSlot;
   mainRowViewSlot: ViewSlot;
   rightRowViewSlot: ViewSlot;
@@ -48,8 +48,8 @@ export interface HeaderCache {
   main: HTMLElement;
   right: HTMLElement;
   group: HTMLElement;
-  bindingContext: any;
-  overrideContext: any;
+  bindingContext: BindingContext;
+  overrideContext: OverrideContext;
   leftRowViewSlot: ViewSlot;
   mainRowViewSlot: ViewSlot;
   rightRowViewSlot: ViewSlot;
@@ -74,10 +74,20 @@ export interface ColConfig {
   colType: string;
 }
 
+export interface Entity {
+  __group: string;
+}
+
+
+export interface DatasourceConfig {
+  key: string;
+}
+
 export interface BindingContext {
-  rowRef: any;
+  rowRef: Entity;
   selection: Selection;
   row; number;
+  selected: boolean;
 }
 
 export interface OverrideContext {
@@ -92,10 +102,9 @@ export interface DragDropShardContext {
   colType: string;
   colNo: number;
   curColNo: number;
-  columnsArray: Array<any>;
-  columnsArraySorted: Array<any>;
-  context: any;
-  group: any;
+  columnsArray: Array<ColumBindingContextObject>;
+  columnsArraySorted: Array<ColumBindingContextObject>;
+  context: ColumBindingContextObject;
 }
 
 export interface ResizeShardContext {

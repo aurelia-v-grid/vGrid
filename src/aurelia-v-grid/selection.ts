@@ -1,7 +1,9 @@
+import {Entity} from './interfaces';
+
 export class Selection {
   private mode: string;
   private selectedRows: number;
-  private selection: Set<any>;
+  private selection: Set<number>;
   private lastRowSelected: number;
   private lastKeyKodeUsed: string;
 
@@ -27,11 +29,11 @@ export class Selection {
     return row;
   }
 
-  public overrideGetRowKey(fn: any): void {
+  public overrideGetRowKey(fn: (row: number) => number): void {
     this.getRowKey = fn;
   }
 
-  public overrideGetRowFromKey(fn: any): void {
+  public overrideGetRowFromKey(fn: (row: number) => number): void {
     this.getRowFromKey = fn;
   }
 
@@ -92,7 +94,7 @@ export class Selection {
     }
   }
 
-  public getSelectedRows(): Array<any> {
+  public getSelectedRows(): Array<number> {
     let array = [];
     if (this.selectedRows > 0) {
       this.selection.forEach((value) => {

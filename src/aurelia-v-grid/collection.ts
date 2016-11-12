@@ -1,13 +1,13 @@
-import { DataSource } from './interfaces'; // todo,create interface when datasource is stable
+import { DataSource, Entity } from './interfaces'; // todo,create interface when datasource is stable
 
 export class Collection {
   public length: number;
-  private entities: Array<any>;
+  private entities: Array<Entity>;
   private keys: Array<string>;
   private key: string;
   private count: number;
   private datasource: DataSource;
-  private ungroupedArray: Array<any>;
+  private ungroupedArray: Array<Entity>;
 
 
   constructor(datasource: DataSource) {
@@ -21,7 +21,7 @@ export class Collection {
   }
 
 
-  public setData(array: Array<any>, ungroupedArray?: Array<any>): void {
+  public setData(array: Array<Entity>, ungroupedArray?: Array<Entity>): void {
     this.entities = [];
     this.keys = [];
 
@@ -49,11 +49,11 @@ export class Collection {
   }
 
 
-  public getEntities(): Array<any> {
+  public getEntities(): Array<Entity> {
     return this.ungroupedArray;
   }
 
-  public getCurrentEntities(): Array<any> {
+  public getCurrentEntities(): Array<Entity> {
     return this.entities;
   }
 
@@ -65,12 +65,12 @@ export class Collection {
     return this.keys.indexOf(key);
   }
 
-  public getRow(row): number {
+  public getRow(row): Entity {
     return this.entities[row];
   }
 
 
-  public getRowFromEntity(entity: any): any {
+  public getRowFromEntity(entity: Entity): number {
     return this.entities.indexOf(entity);
   }
 

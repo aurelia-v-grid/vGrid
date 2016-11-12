@@ -1,20 +1,21 @@
 import { Selection } from './selection';
 import { Collection } from './collection';
 import { ArrayHelper } from './utils/arrayHelper';
+import {Entity, DatasourceConfig} from './interfaces';
 
 export class DataSource {
-  public entity: any;
+  public entity: Entity;
   private selection: Selection;
   private key: string;
   private arrayHelper: ArrayHelper;
-  private mainArray: Array<any>;
-  private config: any;
+  private mainArray: Array<Entity>;
+  private config: DatasourceConfig;
   private eventIdCount: number;
   private eventCallBacks: Array<Function>;
   private collection: Collection;
 
 
-  constructor(selection: Selection, config: any) {
+  constructor(selection: Selection, config: DatasourceConfig) {
 
     // selection
     this.selection = selection || new Selection('single');
@@ -100,7 +101,7 @@ export class DataSource {
   }
 
 
-  public setArray(array: Array<any>): void {
+  public setArray(array: Array<Entity>): void {
 
     // new collection
     this.collection = new Collection(this);
@@ -124,7 +125,7 @@ export class DataSource {
   }
 
 
-  public query(options: Array<any> | Object): void {
+  public query(options: Array<Entity> | Object): void {
     if (options) {
       // query data (using main here, so we query all data set)
       let newArray = this.arrayHelper.query(this.mainArray, options);
@@ -161,18 +162,18 @@ export class DataSource {
   }
 
 
-  public getCurrentOrderBy(): Array<any> {
+  public getCurrentOrderBy(): Array<Entity> {
     // get
     return this.arrayHelper.getOrderBy();
   }
 
 
-  public getCurrentFilter(): Array<any> {
+  public getCurrentFilter(): Array<Entity> {
     return this.arrayHelper.getCurrentFilter();
   }
 
 
-  public getElement(row: number): any {
+  public getElement(row: number): Entity {
     if (row === undefined || row === null) {
       throw new Error('row missing');
     } else {
@@ -181,10 +182,10 @@ export class DataSource {
   }
 
 
-  public group(grouping: Array<any>, keepExpanded?: boolean): void {
+  public group(grouping: Array<String>, keepExpanded?: boolean): void {
 
     this.arrayHelper.resetSort();
-    grouping.forEach((groupName, i) => {
+    grouping.forEach((groupName: string, i: number) => {
       this.arrayHelper.setOrderBy(groupName, true);
     });
 
@@ -228,16 +229,16 @@ export class DataSource {
   }
 
 
-  public getGrouping(): Array<any> {
+  public getGrouping(): Array<Entity> {
     return this.arrayHelper.getGrouping();
   }
 
 
-  public addElement(data: any): void {
+  public addElement(data: Entity): void {
     if (data) {
       // todo
     } else {
-      let newElement = {};
+      let newElement = ({} as Entity);
       this.mainArray.unshift(newElement);
       let oldArray = this.collection.getEntities();
       let oldMaybeGroupedArray = this.collection.getCurrentEntities();

@@ -315,7 +315,7 @@ export class VGridDragDropCol {
 
     // reset blocks
     this.sharedContext.lastTarget = null;
-    this.sharedContext.group = null;
+    //this.sharedContext.group = null;
 
     // if drag column then remove
     if (this.dragColumnBlock) {
