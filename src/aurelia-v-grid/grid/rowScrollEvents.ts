@@ -1,4 +1,4 @@
-import {HtmlCache} from '../interfaces';
+import {HtmlCache, RowCache} from '../interfaces';
 
 export class RowScrollEvents {
   private htmlCache: HtmlCache;
@@ -7,7 +7,7 @@ export class RowScrollEvents {
   private largeScroll: boolean;
   private collectionLength: number;
   private largeScrollUpdateDelay: number;
-  private rowCache: Array<any>;
+  private rowCache: Array<RowCache>;
   private rowHeight: number;
   private cacheLength: number;
   private leftRows: NodeListOf<any>;
@@ -46,14 +46,14 @@ export class RowScrollEvents {
 
   private createRowCache(): void {
     for (let i = 0; i < this.cacheLength; i++) {
-      this.rowCache.push({
-        left: this.leftRows[i],
-        main: this.mainRows[i],
-        right: this.rightRows[i],
-        group: this.groupRows[i],
+      this.rowCache.push(({
+        left: (this.leftRows[i] as HTMLElement),
+        main: (this.mainRows[i] as HTMLElement),
+        right: (this.rightRows[i] as HTMLElement),
+        group: (this.groupRows[i] as HTMLElement),
         top: this.rowHeight * i,
         row: i
-      });
+      } as RowCache));
     }
   }
 
@@ -161,7 +161,7 @@ export class RowScrollEvents {
     // sort array
     this.rowCache.sort(
       (a, b) => {
-        return parseInt(a.top, 10) - parseInt(b.top, 10);
+        return a.top - b.top;
       });
   }
 
@@ -237,7 +237,7 @@ export class RowScrollEvents {
     // I now sort the array again.
     this.rowCache.sort(
       (a, b) => {
-        return parseInt(a.top, 10) - parseInt(b.top, 10);
+        return a.top - b.top;
       });
 
     // update row data
@@ -256,7 +256,7 @@ export class RowScrollEvents {
   }
 
 
-  private triggerRebindRowEvent(curRow: number, curRowCache: any, isDownScroll: boolean): void {
+  private triggerRebindRowEvent(curRow: number, curRowCache: RowCache, isDownScroll: boolean): void {
     let event = new CustomEvent('avg-rebind-row', {
       detail: {
         currentRow: curRow,
@@ -269,7 +269,7 @@ export class RowScrollEvents {
   }
 
 
-  private triggerRebindAllRowsEvent(isDownScroll: boolean, curRowCache: any): void {
+  private triggerRebindAllRowsEvent(isDownScroll: boolean, curRowCache: Array<RowCache>): void {
     let event = new CustomEvent('avg-rebind-all-rows', {
       detail: {
         downScroll: isDownScroll,

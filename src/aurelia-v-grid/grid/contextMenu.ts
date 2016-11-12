@@ -15,7 +15,7 @@ export class ContextMenu {
     private filterMainMenu: boolean;
     private filterOptionsMenu: boolean;
     private groupbyMenu: boolean;
-    private callback: any;
+    private callback: Function;
 
 
     constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots) {

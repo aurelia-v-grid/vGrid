@@ -1,3 +1,5 @@
+import {ColConfig} from '../interfaces';
+
 export class HtmlHeightWidth {
   public avgScrollBarWidth: any;
   public avgPanel_Height: any;
@@ -186,7 +188,7 @@ export class HtmlHeightWidth {
   }
 
 
-  public setWidthFromColumnConfig(colConfig: Array<any>, groupsLength?: number): void {
+  public setWidthFromColumnConfig(colConfig: Array<ColConfig>, groupsLength?: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
     let main = 0;
     let right = 0;

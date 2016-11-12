@@ -25,8 +25,8 @@ export class ColumnMarkup {
   private colConfig: Array<any>;
   private configLength: number;
   private colRepeater: boolean;
-  private colRepeatRowTemplate: any;
-  private colRepeatHeaderTemplate: any;
+  private colRepeatRowTemplate: string;
+  private colRepeatHeaderTemplate: string;
   private leftScroll: Element;
   private mainScroll: Element;
   private rightScroll: Element;

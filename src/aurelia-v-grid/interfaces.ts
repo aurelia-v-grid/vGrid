@@ -1,4 +1,5 @@
 import {ViewSlot} from 'aurelia-framework';
+import { Selection } from './selection';
 export * from 'aurelia-framework';
 export { HtmlCache } from './grid/htmlCache';
 export { Controller } from './grid/controller';
@@ -36,6 +37,7 @@ export interface RowCache {
   rightRowViewSlot: ViewSlot;
   groupRowViewSlot: ViewSlot;
   row: number;
+  top: number;
   isGroup: boolean;
   selected: boolean;
 }
@@ -51,4 +53,33 @@ export interface HeaderCache {
     mainRowViewSlot: ViewSlot;
     rightRowViewSlot: ViewSlot;
     groupRowViewSlot: ViewSlot;
+}
+
+export interface ColConfig {
+      colWidth: number;
+      colRowTemplate: string;
+      colHeaderTemplate: string;
+      colField: string;
+      colPinLeft: boolean;
+      colPinRight: boolean;
+      colHeaderName: string;
+      colAddLabelAttributes: string;
+      colAddFilterAttributes: string;
+      colAddRowAttributes: string;
+      colSort: string;
+      colFilter: string;
+      colFilterTop: boolean;
+      colCss: string;
+      colType: string;
+}
+
+export interface BindingContext {
+  rowRef: any;
+  selection: Selection;
+  row; number;
+}
+
+export interface OverrideContext {
+  bindContext: BindingContext;
+  parentOverrideContext: OverrideContext;
 }

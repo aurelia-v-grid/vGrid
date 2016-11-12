@@ -14,7 +14,7 @@ import { GroupingElements } from './groupingElements';
 import { Controller } from './controller';
 import { LoadingScreen } from './loadingScreen';
 import { ContextMenu } from './contextMenu';
-import { GridConnector } from '../interfaces';
+import { GridConnector, ColConfig, BindingContext, OverrideContext} from '../interfaces';
 
 
 export class VGrid {
@@ -26,7 +26,7 @@ export class VGrid {
   public taskQueue: TaskQueue;
   public dragDropAttributeSharedContext: any;
   public resizeAttributeSharedContext: any;
-  public colConfig: Array<any>;
+  public colConfig: Array<ColConfig>;
   public colRepeater: boolean;
   public colRepeatRowTemplate: string;
   public colRepeatRowHeaderTemplate: string;
@@ -46,8 +46,8 @@ export class VGrid {
   public groupingElements: GroupingElements;
   public loadingScreen: LoadingScreen;
   public contextMenu: ContextMenu;
-  public bindingContext: any;
-  public overrideContext: any;
+  public bindingContext: BindingContext;
+  public overrideContext: OverrideContext;
 
 
 
@@ -139,7 +139,7 @@ export class VGrid {
   }
 
 
-  public bind(bindingContext: any, overrideContext: any): void {
+  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
 
     // binding contexts, will need some for the views we create
     this.bindingContext = bindingContext;

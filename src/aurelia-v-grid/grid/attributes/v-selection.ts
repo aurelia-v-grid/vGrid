@@ -1,20 +1,19 @@
 import { bindable, inject, customAttribute } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-// for typings
-import { Controller } from '../controller';
+import { Controller, BindingContext, OverrideContext } from '../../interfaces';
 
 @customAttribute('v-selection')
 @inject(Element, VGrid)
 export class VGridAttributesSelection {
-  private element: any;
+  private element: HTMLInputElement;
   private vGrid: VGrid;
   private controller: Controller;
-  private bindingContext: any;
-  private overrideContext: any;
-  @bindable private selected;
-  @bindable private type;
+  private bindingContext: BindingContext;
+  private overrideContext: OverrideContext;
+  @bindable private selected: boolean;
+  @bindable private type: string;
 
-  constructor(element, vGrid) {
+  constructor(element: HTMLInputElement, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.controller = vGrid.controller;
     this.element = element;
@@ -22,12 +21,12 @@ export class VGridAttributesSelection {
 
   public selectedChanged(newValue: boolean, oldValue: boolean): void {
     if (this.type === 'row') {
-      this.element.checked = newValue;
+      (this.element as HTMLInputElement).checked = newValue;
     }
   }
 
 
-  public bind(bindingContext: any, overrideContext: any): void {
+  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
   }
@@ -38,7 +37,8 @@ export class VGridAttributesSelection {
     this.element.checked = this.selected;
     this.element.onclick = () => {
 
-      let status = this.element.checked === 'true' || this.element.checked === true ? true : false;
+      //todo, check... think ff had something weird here
+      let status = (this.element.checked as any) === 'true' || this.element.checked === true ? true : false;
 
       if (status) {
         if (this.type === 'header') {
@@ -57,7 +57,7 @@ export class VGridAttributesSelection {
         }
 
         if (this.type === 'row') {
-          this.bindingContext.selection.deSelect(this.bindingContext.row, true);
+          this.bindingContext.selection.deSelect(this.bindingContext.row);
           this.controller.rowClickHandler.updateSelectionOnAllRows();
         }
       }

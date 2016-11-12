@@ -1,17 +1,17 @@
 import {inject, customAttribute} from 'aurelia-framework';
 import {VGrid} from '../v-grid';
-
+import {BindingContext, OverrideContext} from '../../interfaces';
 
 @customAttribute('v-sort')
 @inject(Element, VGrid)
 export class VGridAttributesSort {
   private vGrid: VGrid;
-  private element: any;
-  private bindingContext: any;
-  private overrideContext: any;
-  private attribute: any;
-  private sortIcon: any;
-  private value: any;
+  private element: Element;
+  private bindingContext: BindingContext;
+  private overrideContext: OverrideContext;
+  private attribute: string;
+  private sortIcon: HTMLElement;
+  private value: string;
 
   constructor(element: Element, vGrid: VGrid) {
     this.vGrid = vGrid;
@@ -19,7 +19,7 @@ export class VGridAttributesSort {
   }
 
 
-  public bind(bindingContext: any, overrideContext: any): void {
+  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
@@ -34,14 +34,14 @@ export class VGridAttributesSort {
     this.sortIcon = document.createElement('i');
     this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
     this.element.appendChild(this.sortIcon);
-    this.element.onmousedown = (e) => {
-      this.element.onmouseup = (e) => {
+    (this.element as HTMLElement).onmousedown = (e) => {
+      (this.element as HTMLElement).onmouseup = (e) => {
         if (e.button === 0) {
           this.vGrid.attGridConnector.orderBy(this.attribute, e.shiftKey);
         }
       };
       setTimeout(() => {
-        this.element.onmouseup = null;
+        (this.element as HTMLElement).onmouseup = null;
       }, 300);
 
     };

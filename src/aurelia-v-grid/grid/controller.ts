@@ -19,7 +19,10 @@ import {
   VGrid,
   GridConnector,
   Selection,
-  RowScrollEvents
+  RowScrollEvents,
+  ColConfig,
+  BindingContext,
+  OverrideContext
 } from '../interfaces';
 
 
@@ -48,12 +51,12 @@ export class Controller {
   public taskQueue: TaskQueue;
   public dragDropAttributeSharedContext: any;
   public resizeAttributeSharedContext: any;
-  public colConfig: Array<any>;
+  public colConfig: Array<ColConfig>;
   public colRepeater: boolean;
   public colRepeatRowTemplate: string;
   public colRepeatRowHeaderTemplate: string;
-  public bindingContext: any;
-  public overrideContext: any;
+  public bindingContext: BindingContext;
+  public overrideContext: OverrideContext;
   public attRowHeight: number;
   public attHeaderHeight: number;
   public attFooterHeight: number;

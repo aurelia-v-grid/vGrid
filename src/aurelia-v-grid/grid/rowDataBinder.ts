@@ -1,4 +1,4 @@
-import {Controller} from '../interfaces';
+import {Controller, RowCache} from '../interfaces';
 
 export class RowDataBinder {
   private element: Element;
@@ -32,7 +32,7 @@ export class RowDataBinder {
 
   private rebindRow(event: CustomEvent): void {
     let currentRow = event.detail.currentRow;
-    let rowCache = event.detail.rowCache;
+    let rowCache: RowCache = event.detail.rowCache;
     let downScroll = event.detail.downScroll;
 
     let bindingContext = rowCache.bindingContext;
@@ -90,17 +90,13 @@ export class RowDataBinder {
       // row number
       bindingContext.row = currentRow;
 
-
-
     });
-
-
   }
 
 
   private rebindAllRows(event: CustomEvent): void {
 
-    let rowCache = event.detail.rowCache;
+    let rowCache: Array<RowCache> = event.detail.rowCache;
     let downScroll = event.detail.downScroll;
 
     for (let i = 0; i < rowCache.length; i++) {
@@ -149,18 +145,14 @@ export class RowDataBinder {
           rowCache[i].group.style.display = 'block';
         }
 
-
         // row ref
         bindingContext.rowRef = data.rowRef;
-
 
         // selection
         bindingContext.selection = data.selection;
 
-
         // is selected
         bindingContext.selected = isSelected;
-
 
         // row number
         bindingContext.row = rowCache[i].row;

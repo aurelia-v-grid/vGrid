@@ -1,6 +1,6 @@
 import { inject, noView, customElement, bindable, processContent, TargetInstruction } from 'aurelia-framework';
 import { VGrid } from './v-grid';
-import { ViewCompiler, ViewResources} from '../interfaces';
+import { ViewCompiler, ViewResources, ColConfig} from '../interfaces';
 
 
 @noView()
@@ -69,7 +69,7 @@ export class VGridElementColConfig {
 
 
   public bind(bindingContext: any, overrideContext: any): void {
-    this.vGrid.colConfig.push({
+    this.vGrid.colConfig.push(({
       colWidth: this.colWidth ? this.colWidth * 1 : 100,
       colRowTemplate: this.colRowTemplate,
       colHeaderTemplate: this.colHeaderTemplate,
@@ -85,7 +85,7 @@ export class VGridElementColConfig {
       colFilterTop: this.checkBool(this.colFilterTop),
       colCss: this.colCss,
       colType: this.colType || 'text'
-    });
+    } as ColConfig));
 
   }
 

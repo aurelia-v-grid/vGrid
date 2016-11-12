@@ -1,8 +1,7 @@
 import { bindable, inject, customAttribute } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-// for typings
-import { Controller } from '../controller';
-import { GroupingElements } from '../groupingElements';
+import { Controller, GroupingElements } from '../../interfaces';
+
 
 @customAttribute('v-menu')
 @inject(Element, VGrid)

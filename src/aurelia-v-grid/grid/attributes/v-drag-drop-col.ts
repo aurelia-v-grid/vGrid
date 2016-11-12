@@ -1,8 +1,7 @@
 import { inject, customAttribute } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-// for typings:
-import { GroupingElements } from '../groupingElements';
-import { Controller } from '../controller';
+import { GroupingElements, Controller, BindingContext, OverrideContext } from '../../interfaces';
+
 
 @customAttribute('v-drag-drop-col')
 @inject(Element, VGrid)
@@ -16,8 +15,8 @@ export class VGridDragDropCol {
   private sharedContext: any;
   private entered: boolean;
   private curColNo: number;
-  private bindingContext: any;
-  private overrideContext: any;
+  private bindingContext: BindingContext;
+  private overrideContext: OverrideContext;
   private onDragstartBinded: any;
   private onDragenterBinded: any;
   private onDragoverBinded: any;
@@ -49,7 +48,7 @@ export class VGridDragDropCol {
   }
 
 
-  public bind(bindingContext, overrideContext): void {
+  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
