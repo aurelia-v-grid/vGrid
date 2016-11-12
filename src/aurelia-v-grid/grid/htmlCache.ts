@@ -1,3 +1,7 @@
+//for typings
+import { ViewSlot } from 'aurelia-framework';
+
+
 export class HtmlCache {
   public element: Element;
   public avg_top_panel: Element;
@@ -24,7 +28,35 @@ export class HtmlCache {
   public avg_main_rows: NodeListOf<any>;
   public avg_right_rows: NodeListOf<any>;
   public avg_group_rows: NodeListOf<any>;
-  public rowCache: Array<any>;
+
+  public rowCache: Array<{
+    left: HTMLElement;
+    main: HTMLElement;
+    right: HTMLElement;
+    group: HTMLElement;
+    bindingContext: any;
+    overrideContext: any;
+    leftRowViewSlot: ViewSlot;
+    mainRowViewSlot: ViewSlot;
+    rightRowViewSlot: ViewSlot;
+    groupRowViewSlot: ViewSlot;
+    row: number;
+    isGroup: boolean;
+    selected: boolean;
+  }>;
+
+  public headerCache: {
+    left: HTMLElement;
+    main: HTMLElement;
+    right: HTMLElement;
+    group: HTMLElement;
+    bindingContext: any;
+    overrideContext: any;
+    leftRowViewSlot: ViewSlot;
+    mainRowViewSlot: ViewSlot;
+    rightRowViewSlot: ViewSlot;
+    groupRowViewSlot: ViewSlot;
+  };
 
 
   constructor(element) {
@@ -63,6 +95,19 @@ export class HtmlCache {
     this.avg_group_rows = null;
 
     this.rowCache = [];
+    this.headerCache = {
+      left: null,
+      main: null,
+      right: null,
+      group: null,
+      bindingContext: null,
+      overrideContext: null,
+      leftRowViewSlot: null,
+      mainRowViewSlot: null,
+      rightRowViewSlot: null,
+      groupRowViewSlot: null
+    };
+
   }
 
 

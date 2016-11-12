@@ -94,7 +94,7 @@ export class VGrid {
     this.htmlCache = new HtmlCache(element);
 
     this.htmlHeightWidth = new HtmlHeightWidth();
-    this.viewSlots = new ViewSlots();
+    this.viewSlots = new ViewSlots(this.htmlCache);
     this.columnBindingContext = new ColumnBindingContext(this.controller);
     this.rowDataBinder = new RowDataBinder(element, this.controller);
     this.mainMarkup = new MainMarkup(

@@ -45,20 +45,20 @@ export class RowClickHandler {
     let rowCache = this.htmlCache.rowCache;
     for (let i = 0; i < rowCache.length; i++) {
       let isSelected = this.selection.isSelected(rowCache[i].row);
-      rowCache[i].mainRowViewSlot.bindingContext.selected = isSelected;
-      rowCache[i].leftRowViewSlot.bindingContext.selected = isSelected;
-      rowCache[i].rightRowViewSlot.bindingContext.selected = isSelected;
+      rowCache[i].bindingContext.selected = isSelected;
+      rowCache[i].bindingContext.selected = isSelected;
+      rowCache[i].bindingContext.selected = isSelected;
 
       if (isSelected) {
-        if (!rowCache[i].main.avgSelected) {
-          rowCache[i].main.avgSelected = true;
+        if (!rowCache[i].selected) {
+          rowCache[i].selected = true;
           rowCache[i].left.classList.add('avg-selected-row');
           rowCache[i].main.classList.add('avg-selected-row');
           rowCache[i].right.classList.add('avg-selected-row');
         }
       } else {
-        if (rowCache[i].main.avgSelected) {
-          rowCache[i].main.avgSelected = false;
+        if (rowCache[i].selected) {
+          rowCache[i].selected = false;
           rowCache[i].left.classList.remove('avg-selected-row');
           rowCache[i].main.classList.remove('avg-selected-row');
           rowCache[i].right.classList.remove('avg-selected-row');
@@ -107,16 +107,42 @@ export class RowClickHandler {
   }
 
 
+  private getCache(target): any {
+    let no = -1;
+    this.htmlCache.rowCache.forEach((row, i) => {
+      if (row.left === target) {
+        no = i;
+      }
+      if (row.main === target) {
+        no = i;
+      }
+      if (row.right === target) {
+        no = i;
+      }
+      if (row.group === target) {
+        no = i;
+      }
+    });
+    if (no !== -1) {
+      return this.htmlCache.rowCache[no];
+    } else {
+      return null;
+    }
+
+  }
+
+
   private singleClick(event: any): void {
-    if (!event.currentTarget.avgGroup) {
-      this.highlightRow(event, event.currentTarget.avgRow);
-      this.controller.select(event.currentTarget.avgRow);
+    let cache = this.getCache(event.currentTarget) || {};
+    if (!cache.isGroup) {
+      this.highlightRow(event, cache.row);
+      this.controller.select(cache.row);
     }
     if (!this.manualSelection) {
       this.controller.raiseEvent('v-row-onclick', {
         evt: event,
         data: null, // todo, row data ?
-        row: event.currentTarget.avgRow
+        row: cache.row
       });
     }
   }
@@ -124,10 +150,11 @@ export class RowClickHandler {
 
 
   private doubleClick(event: any): void {
+    let cache = this.getCache(event.currentTarget) || {};
     this.controller.raiseEvent('v-row-ondblclick', {
       evt: event,
       data: null, // todo, row data ?
-      row: event.currentTarget.avgRow
+      row: cache.row
     });
   }
 

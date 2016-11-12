@@ -55,10 +55,6 @@ export class RowScrollEvents {
         top: this.rowHeight * i,
         row: i
       });
-      this.leftRows[i].avgRow = i;
-      this.mainRows[i].avgRow = i;
-      this.rightRows[i].avgRow = i;
-      this.groupRows[i].avgRow = i;
     }
   }
 
@@ -123,10 +119,6 @@ export class RowScrollEvents {
     cache.main.style.transform = `translate3d(0px,${top}px, 0px)`;
     cache.right.style.transform = `translate3d(0px,${top}px, 0px)`;
     cache.group.style.transform = `translate3d(0px,${top}px, 0px)`;
-    cache.left.avgRow = Math.floor(top / this.rowHeight);
-    cache.main.avgRow = Math.floor(top / this.rowHeight);
-    cache.right.avgRow = Math.floor(top / this.rowHeight);
-    cache.group.avgRow = Math.floor(top / this.rowHeight);
     cache.top = top;
     cache.row = Math.floor(top / this.rowHeight);
   }
