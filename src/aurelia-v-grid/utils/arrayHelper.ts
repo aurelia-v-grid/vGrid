@@ -2,7 +2,7 @@ import { FilterOperators } from './filterOperators';
 import { ArrayFilter } from './arrayFilter';
 import { ArraySort } from './arraySort';
 import { ArrayGrouping } from './arrayGrouping';
-
+import {SortObject, FilterObject, Entity} from '../interfaces';
 
 export class ArrayHelper {
   public filterOperators: FilterOperators;
@@ -19,9 +19,10 @@ export class ArrayHelper {
   }
 
   public orderBy(
-    collection: Array<any>,
-    attribute: string | { attribute: string, asc: boolean },
-    addToCurrentSort?: boolean): any {
+    collection: Array<Entity>,
+    attribute: string | SortObject,
+    addToCurrentSort?: boolean
+    ): {fixed: Array<Entity>, full: Array<Entity>} {
 
 
     let grouping = this.getGrouping();
@@ -108,7 +109,7 @@ export class ArrayHelper {
     return result;
   }
 
-  public group(array: Array<any>, grouping: Array<any>, keepExpanded: boolean): Array<any> {
+  public group(array: Array<Entity>, grouping: Array<string>, keepExpanded: boolean): Array<Entity> {
     return this.arrayGrouping.group(array, grouping, keepExpanded);
   }
 
@@ -116,27 +117,27 @@ export class ArrayHelper {
     return this.arrayGrouping.getGrouping();
   }
 
-  public groupCollapse(id: string): Array<any> {
+  public groupCollapse(id: string): Array<Entity> {
     return this.arrayGrouping.collapse(id);
   }
 
-  public groupExpand(id: string): Array<any> {
+  public groupExpand(id: string): Array<Entity> {
     return this.arrayGrouping.expand(id);
   }
 
-  public getOrderBy(): Array<any> {
+  public getOrderBy(): Array<SortObject> {
     return this.arraySort.getOrderBy();
   }
 
-  public setLastSort(array: Array<any>): void {
+  public setLastSort(array: Array<SortObject>): void {
     this.arraySort.setLastSort(array);
   }
 
-  public setOrderBy(attribute: string| { attribute: string, asc: boolean }, addToCurrentSort?: boolean): void {
+  public setOrderBy(attribute: string| SortObject, addToCurrentSort?: boolean): void {
     this.arraySort.setOrderBy(attribute, addToCurrentSort);
   }
 
-  public runOrderbyOn(array: Array<any>): void {
+  public runOrderbyOn(array: Array<Entity>): void {
     this.arraySort.runOrderbyOn(array);
   }
 
@@ -148,11 +149,11 @@ export class ArrayHelper {
     return this.filterOperators.getName(operator);
   }
 
-  public getCurrentFilter(): Array<any> {
+  public getCurrentFilter(): Array<FilterObject> {
     return this.arrayFilter.getLastFilter();
   }
 
-  public query(array: Array<any>, params: any): Array<any> {
+  public query(array: Array<Entity>, params: Array<FilterObject>): Array<Entity> {
     return this.arrayFilter.runQueryOn(array, params);
   }
 

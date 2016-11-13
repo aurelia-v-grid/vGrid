@@ -1,3 +1,6 @@
+
+
+
 export class FilterOperators {
   private filterOperatorsNumbers: any;
   private filterOperatorNames: any;
@@ -32,11 +35,6 @@ export class FilterOperators {
       '*=': 'begins with',        // 9
       '=*': 'ends with'           // 10
     };
-  }
-
-
-  public getFilterNumbers(): Array<any> {
-    return this.filterOperatorsNumbers;
   }
 
 

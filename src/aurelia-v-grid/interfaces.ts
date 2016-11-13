@@ -78,6 +78,19 @@ export interface ColConfig {
 
 export interface Entity {
   __group: string;
+  __groupLvl: number;
+}
+
+export interface FilterObject {
+  operator: string;
+  value: any;
+  attribute: string;
+}
+
+export interface SortObject {
+  attribute: string;
+  asc: boolean;
+  no?: number;
 }
 
 
@@ -95,11 +108,11 @@ export interface CustomTargetInstruction extends TargetInstruction {
 }
 
 export interface CustomBehaviorInstruction extends BehaviorInstruction {
-    colHeaderTemplate: string;
-    colRowTemplate: string;
-    colCss: string;
-    headerTemplate: string;
-    rowTemplate: string;
+  colHeaderTemplate: string;
+  colRowTemplate: string;
+  colCss: string;
+  headerTemplate: string;
+  rowTemplate: string;
 }
 
 export interface BindingContext {
@@ -144,3 +157,6 @@ export interface GroupingContext {
   remove: Function;
   ctx: GroupingElements;
 }
+
+
+

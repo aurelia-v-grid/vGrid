@@ -1,6 +1,8 @@
+import { SortObject, Entity } from '../interfaces';
+
 export class ArraySort {
-  private lastSort: Array<any>;
-  private curSort: Array<any>;
+  private lastSort: Array<SortObject>;
+  private curSort: Array<SortObject>;
 
 
   constructor() {
@@ -14,13 +16,13 @@ export class ArraySort {
     this.curSort = [];
   }
 
-  public setLastSort(array: Array<any>): void {
+  public setLastSort(array: Array<SortObject>): void {
     this.lastSort = array;
     this.curSort = array;
   }
 
-
-  public setOrderBy(param: string|any, add): void {
+  // any = "string"
+  public setOrderBy(param: SortObject | any, add): void {
     let sort;
     let useSetValue = false;
     if (param.asc === undefined) {
@@ -85,20 +87,20 @@ export class ArraySort {
   }
 
 
-  public getOrderBy(): Array<any> {
+  public getOrderBy(): Array<SortObject> {
     return this.curSort;
   }
 
 
 
-  public runOrderbyOn(array: Array<any>): void {
+  public runOrderbyOn(array: Array<Entity>): void {
 
 
     // super simple for now.. atleast I have som form for sort
     let thisSort = this.getOrderBy();
 
     // this is mix from different sources... from what I can tell it works now
-    array.sort((obj1: any, obj2: any) => {
+    array.sort((obj1: Entity, obj2: Entity) => {
       let result = 0;
 
       for (let i = 0; i < thisSort.length && result === 0; ++i) {

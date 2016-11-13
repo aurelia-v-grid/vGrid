@@ -1,5 +1,5 @@
 // for typing only
-import { DataSource, Selection, Entity, Controller } from './interfaces';
+import { DataSource, Selection, SortObject, FilterObject, Entity, Controller } from './interfaces';
 
 
 
@@ -49,12 +49,12 @@ export class GridConnector {
   }
 
 
-  public getGrouping(): Array<any> {
+  public getGrouping(): Array<string> {
     return this.datasource.getGrouping();
   }
 
 
-  public group(grouping: Array<any>, keepExpanded?: boolean) {
+  public group(grouping: Array<string>, keepExpanded?: boolean) {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.group(grouping, keepExpanded);
     });
@@ -74,14 +74,14 @@ export class GridConnector {
   }
 
 
-  public query(a: Object): void {
+  public query(a: Array<FilterObject>): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.query(a);
     });
   }
 
 
-  public orderBy(attribute: string | { attribute: string, asc: boolean }, addToCurrentSort?: boolean): void {
+  public orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.orderBy(attribute, addToCurrentSort);
     });
@@ -93,12 +93,12 @@ export class GridConnector {
   }
 
 
-  public getCurrentOrderBy(): Array<any> {
+  public getCurrentOrderBy(): Array<SortObject> {
     return this.datasource.getCurrentOrderBy();
   }
 
 
-  public getCurrentFilter(): Array<any> {
+  public getCurrentFilter(): Array<FilterObject> {
     return this.datasource.getCurrentFilter();
   }
 

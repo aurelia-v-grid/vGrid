@@ -1,8 +1,8 @@
-import {FilterOperators} from '../interfaces'; // todo make a interface
+import {FilterOperators, FilterObject, Entity} from '../interfaces'; // todo make a interface
 
 export class ArrayFilter {
   private filterOperators: FilterOperators;
-  private lastFilter: Array<any>;
+  private lastFilter: Array<FilterObject>;
 
   constructor(filterOperators: FilterOperators) {
     this.filterOperators = filterOperators;
@@ -16,10 +16,10 @@ export class ArrayFilter {
   }
 
 
-  public runQueryOn(objArray: Array<Object>, ObjFilter: Array<Object>) {
+  public runQueryOn(objArray: Array<Entity>, ObjFilter: Array<FilterObject>) {
 
     // my operators
-    let filterOperatorTable = this.filterOperators.getFilterNumbers();
+   // let filterOperatorTable = this.filterOperators.getOperatorNo();
 
 
     let resultArray = objArray.filter((data) => {
@@ -27,13 +27,13 @@ export class ArrayFilter {
 
       // lets have true as default, so all that should not be there we set false..
       let result = true;
-      ObjFilter.forEach((x: any) => {
+      ObjFilter.forEach((x: FilterObject) => {
 
 
         // vars
         let rowValue;
         let filterValue;
-        let filterOperator = filterOperatorTable[x.operator];
+        let filterOperator = this.filterOperators.getOperatorNo(x.operator);
         let newFilterOperator;
 
 

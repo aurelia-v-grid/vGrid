@@ -1,7 +1,7 @@
 import { Selection } from './selection';
 import { Collection } from './collection';
 import { ArrayHelper } from './utils/arrayHelper';
-import {Entity, DatasourceConfig} from './interfaces';
+import {Entity, DatasourceConfig, SortObject, FilterObject} from './interfaces';
 
 export class DataSource {
   public entity: Entity;
@@ -125,7 +125,7 @@ export class DataSource {
   }
 
 
-  public query(options: Array<Entity> | Object): void {
+  public query(options: Array<FilterObject>): void {
     if (options) {
       // query data (using main here, so we query all data set)
       let newArray = this.arrayHelper.query(this.mainArray, options);
@@ -145,7 +145,7 @@ export class DataSource {
   }
 
 
-  public orderBy(attribute: string|{attribute: string, asc: boolean}, addToCurrentSort?: boolean): void {
+  public orderBy(attribute: string|SortObject, addToCurrentSort?: boolean): void {
 
     // get collection (cant use main,,, might be filtered)
     let collection = this.collection.getEntities();
@@ -162,13 +162,13 @@ export class DataSource {
   }
 
 
-  public getCurrentOrderBy(): Array<Entity> {
+  public getCurrentOrderBy(): Array<SortObject> {
     // get
     return this.arrayHelper.getOrderBy();
   }
 
 
-  public getCurrentFilter(): Array<Entity> {
+  public getCurrentFilter(): Array<FilterObject> {
     return this.arrayHelper.getCurrentFilter();
   }
 
@@ -182,7 +182,7 @@ export class DataSource {
   }
 
 
-  public group(grouping: Array<String>, keepExpanded?: boolean): void {
+  public group(grouping: Array<string>, keepExpanded?: boolean): void {
 
     this.arrayHelper.resetSort();
     grouping.forEach((groupName: string, i: number) => {

@@ -1,11 +1,13 @@
+import {Entity} from '../interfaces'; // todo make a interface
+
+
 export class ArrayGrouping {
-  private gID: any;
-  private groups: any;
-  private grouping: any;
+  private groups: Array<any>;
+  private grouping: Array<string>;
   private expanded: Set<any>;
 
   constructor() {
-    this.gID = 0;
+
     this.grouping = [];
     this.expanded = new Set([]);
 
@@ -14,7 +16,7 @@ export class ArrayGrouping {
 
 
   // @params grouping : ["attribute", "attribute2"  etc etc ])
-  public group(arrayToGroup: Array<any>, grouping: Array<string>, keepExpanded?: boolean) {
+  public group(arrayToGroup: Array<Entity>, grouping: Array<string>, keepExpanded?: boolean) {
 
     if (grouping.length > 0) {
 
@@ -197,7 +199,7 @@ export class ArrayGrouping {
 
     // first level, here we use array
     array.forEach((element, i) => {
-      this.gID++;
+
       if (element[groupBy] !== tempValue) {
         curGroup = {
           __groupName: element[groupBy] || 'blank',
@@ -233,7 +235,7 @@ export class ArrayGrouping {
       // loop children
       let rebuiltChildrenArray = [];
       element.__groupChildren.forEach((child: any) => {
-        this.gID++;
+
         if (child[groupBy] !== tempValue) {
           let gidm = child[groupBy] || 'blank';
           let gidc = element.__groupID || 'blank';
