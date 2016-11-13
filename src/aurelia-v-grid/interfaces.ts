@@ -1,6 +1,6 @@
-import { ViewSlot } from 'aurelia-framework';
+import { ViewSlot, TargetInstruction, BehaviorInstruction } from 'aurelia-framework';
 import { Selection } from './selection';
-import {GroupingElements} from './grid/groupingElements';
+import { GroupingElements } from './grid/groupingElements';
 export * from 'aurelia-framework';
 export { HtmlCache } from './grid/htmlCache';
 export { Controller } from './grid/controller';
@@ -32,7 +32,8 @@ export interface RowCache {
   right: HTMLElement;
   group: HTMLElement;
   bindingContext: BindingContext;
-  overrideContext: OverrideContext;
+  overrideContext: any;
+  parentOverrideContext: any;
   leftRowViewSlot: ViewSlot;
   mainRowViewSlot: ViewSlot;
   rightRowViewSlot: ViewSlot;
@@ -49,7 +50,8 @@ export interface HeaderCache {
   right: HTMLElement;
   group: HTMLElement;
   bindingContext: BindingContext;
-  overrideContext: OverrideContext;
+  overrideContext: any;
+  parentOverrideContext: any;
   leftRowViewSlot: ViewSlot;
   mainRowViewSlot: ViewSlot;
   rightRowViewSlot: ViewSlot;
@@ -83,6 +85,23 @@ export interface DatasourceConfig {
   key: string;
 }
 
+export interface CustomTargetInstruction extends TargetInstruction {
+  colHeaderTemplate: string;
+  colRowTemplate: string;
+  colCss: string;
+  headerTemplate: string;
+  rowTemplate: string;
+  elementInstruction: CustomBehaviorInstruction;
+}
+
+export interface CustomBehaviorInstruction extends BehaviorInstruction {
+    colHeaderTemplate: string;
+    colRowTemplate: string;
+    colCss: string;
+    headerTemplate: string;
+    rowTemplate: string;
+}
+
 export interface BindingContext {
   rowRef: Entity;
   selection: Selection;
@@ -91,8 +110,8 @@ export interface BindingContext {
 }
 
 export interface OverrideContext {
-  bindContext: BindingContext;
-  parentOverrideContext: OverrideContext;
+  bindContext: any;
+  parentOverrideContext: any;
 }
 
 export interface DragDropShardContext {
@@ -115,6 +134,7 @@ export interface ColumBindingContextObject {
   show: boolean;
   left: number;
   width: number;
+
 }
 
 export interface GroupingContext {

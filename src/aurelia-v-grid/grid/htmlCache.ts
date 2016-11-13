@@ -68,7 +68,7 @@ export class HtmlCache {
         this.avg_group_rows = null;
 
         this.rowCache = [];
-        this.headerCache = {
+        this.headerCache = ({
             left: null,
             main: null,
             right: null,
@@ -79,7 +79,7 @@ export class HtmlCache {
             mainRowViewSlot: null,
             rightRowViewSlot: null,
             groupRowViewSlot: null
-        };
+        } as HeaderCache);
 
     }
 

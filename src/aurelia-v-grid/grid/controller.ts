@@ -46,7 +46,7 @@ export class Controller {
   public loadingScreen: LoadingScreen;
   public contextMenu: ContextMenu;
   public htmlcolumnMarkupCache: ColumnMarkup;
-  public element: any;
+  public element: Element;
   public viewCompiler: ViewCompiler;
   public container: Container;
   public viewResources: ViewResources;
@@ -234,7 +234,7 @@ export class Controller {
     this.element.dispatchEvent(event);
   }
 
-  public setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<any> {
+  public setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<void> {
 
     if (value) {
       return this.loadingScreen.enable(msg, collectionLength);
@@ -249,7 +249,7 @@ export class Controller {
     this.htmlHeightWidth.setCollectionLength(this.attGridConnector.getDatasourceLength());
   }
 
-  public updateHeaderGrouping(groups: Array<any>): void {
+  public updateHeaderGrouping(groups: Array<string>): void {
     let length = groups.length;
     this.columnBindingContext.setupgrouping = length;
     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
@@ -283,7 +283,7 @@ export class Controller {
 
 
   public addEventListeners(): void {
-    this.element.addEventListener('getElement', (event) => {
+    this.element.addEventListener('getElement', (event: CustomEvent) => {
       this.attGridConnector.getElement(event.detail);
     });
   }

@@ -112,7 +112,7 @@ export class ArrayHelper {
     return this.arrayGrouping.group(array, grouping, keepExpanded);
   }
 
-  public getGrouping(): Array<any> {
+  public getGrouping(): Array<string> {
     return this.arrayGrouping.getGrouping();
   }
 

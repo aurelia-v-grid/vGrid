@@ -113,7 +113,7 @@ export class RowScrollEvents {
   }
 
 
-  private setRowTopValue(cache: any, top: number) {
+  private setRowTopValue(cache: RowCache, top: number) {
     cache.left.style.transform = `translate3d(0px,${top}px, 0px)`;
     cache.main.style.transform = `translate3d(0px,${top}px, 0px)`;
     cache.right.style.transform = `translate3d(0px,${top}px, 0px)`;

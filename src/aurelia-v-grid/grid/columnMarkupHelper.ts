@@ -1,8 +1,10 @@
+import {ColConfig} from '../interfaces';
+
 export class ColumnMarkupHelper {
   private useCustomOnly: boolean;
 
   // todo use same if column setup is just json binded to grid
-  public generate(colConfig: Array<any>): void {
+  public generate(colConfig: Array<ColConfig>): void {
     this.useCustomOnly = false;
     let columnsToUse = [];
     let type = null;

@@ -1,4 +1,12 @@
-import {ViewSlot, HtmlCache} from '../interfaces';
+import {
+  ViewSlot,
+  BindingContext,
+  HeaderCache,
+  RowCache,
+  OverrideContext,
+  HtmlCache,
+  ColumnBindingContext
+} from '../interfaces';
 
 
 export class ViewSlots {
@@ -13,14 +21,14 @@ export class ViewSlots {
   public loadingScreenViewSlot: ViewSlot;
   public contextMenu: ViewSlot;
   public groupingViewSlots: Array<ViewSlot>;
-  private rowCache: any;
-  private headerCache: any;
+  private rowCache: Array<RowCache>;
+  private headerCache: HeaderCache;
 
 
   // plan was to keep all viewslots here so i can bind/unbind... but...
   constructor(htmlCache: HtmlCache) {
-    this.rowCache =  htmlCache.rowCache;
-    this.headerCache =  htmlCache.headerCache;
+    this.rowCache = htmlCache.rowCache;
+    this.headerCache = htmlCache.headerCache;
     this.leftRowViewSlots = [];
     this.mainRowViewSlots = [];
     this.rightRowViewSlots = [];
@@ -40,9 +48,10 @@ export class ViewSlots {
 
   }
 
-  public bindAndAttachColumns(overrideContext: any, columnBindingContext: any): void {
+  public bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext): void {
 
-    let context = {};
+    let context;
+
     let newParentOverrideContext = {
       bindingContext: columnBindingContext,
       parentOverrideContext: overrideContext
@@ -51,7 +60,7 @@ export class ViewSlots {
 
     for (let i = 0; i < this.rowCache.length; i++) {
       // one for each row.
-      context = {};
+      context = ({} as any);
 
       this.rowCache[i].bindingContext = context;
       this.rowCache[i].parentOverrideContext = {
@@ -77,9 +86,9 @@ export class ViewSlots {
     context = {};
     this.headerCache.bindingContext = context;
     this.headerCache.parentOverrideContext = {
-        bindingContext: context,
-        parentOverrideContext: newParentOverrideContext
-      };
+      bindingContext: context,
+      parentOverrideContext: newParentOverrideContext
+    };
 
     this.leftHeaderViewSlot.bind(this.headerCache.bindingContext, this.headerCache.parentOverrideContext);
     this.leftHeaderViewSlot.attached();

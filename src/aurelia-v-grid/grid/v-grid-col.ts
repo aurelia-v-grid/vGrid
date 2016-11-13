@@ -1,6 +1,14 @@
 import { inject, noView, customElement, bindable, processContent, TargetInstruction } from 'aurelia-framework';
 import { VGrid } from './v-grid';
-import { ViewCompiler, ViewResources, ColConfig} from '../interfaces';
+import {
+  ViewCompiler,
+  ViewResources,
+  ColConfig,
+  BindingContext,
+  CustomTargetInstruction,
+  CustomBehaviorInstruction,
+  OverrideContext
+} from '../interfaces';
 
 
 @noView()
@@ -8,19 +16,19 @@ import { ViewCompiler, ViewResources, ColConfig} from '../interfaces';
   compiler: ViewCompiler,
   resources: ViewResources,
   element: HTMLElement,
-  instruction: TargetInstruction) => {
+  instruction: CustomBehaviorInstruction) => {
 
 
   let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
   let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
   if (headerTemplateHtml !== '') {
-    (instruction as any).colHeaderTemplate = headerTemplateHtml;
+    instruction.colHeaderTemplate = headerTemplateHtml;
   }
 
   let rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
   let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
   if (rowTemplateHtml !== '') {
-    (instruction as any).colRowTemplate = rowTemplateHtml;
+    instruction.colRowTemplate = rowTemplateHtml;
   }
 
   element.innerHTML = '';
@@ -28,7 +36,7 @@ import { ViewCompiler, ViewResources, ColConfig} from '../interfaces';
   // we want to get this css attribute and use if later
   let css = element.getAttribute('col-css');
   if (css) {
-    (instruction as any).colCss = css;
+   instruction.colCss = css;
   }
 
 
@@ -59,16 +67,16 @@ export class VGridElementColConfig {
   @bindable({ attribute: 'col-type' }) private colType: string;
 
 
-  constructor(element: Element, vGrid: VGrid, targetInstruction: TargetInstruction) {
+  constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
     this.vGrid = vGrid;
     this.element = element;
-    this.colRowTemplate = (targetInstruction.elementInstruction as any).colRowTemplate;
-    this.colHeaderTemplate = (targetInstruction.elementInstruction as any).colHeaderTemplate;
-    this.colCss = (targetInstruction.elementInstruction as any).colCss;
+    this.colRowTemplate = targetInstruction.elementInstruction.colRowTemplate;
+    this.colHeaderTemplate = targetInstruction.elementInstruction.colHeaderTemplate;
+    this.colCss = targetInstruction.elementInstruction.colCss;
   }
 
 
-  public bind(bindingContext: any, overrideContext: any): void {
+  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.vGrid.colConfig.push(({
       colWidth: this.colWidth ? this.colWidth * 1 : 100,
       colRowTemplate: this.colRowTemplate,

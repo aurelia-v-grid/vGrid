@@ -229,7 +229,7 @@ export class DataSource {
   }
 
 
-  public getGrouping(): Array<Entity> {
+  public getGrouping(): Array<string> {
     return this.arrayHelper.getGrouping();
   }
 

@@ -8,7 +8,9 @@ import {
   HtmlCache,
   ColumnBindingContext,
   ViewSlots,
-  ColConfig
+  ColConfig,
+  OverrideContext,
+  BindingContext
 } from '../interfaces';
 
 
@@ -22,7 +24,7 @@ export class ColumnMarkup {
   private viewCompiler: ViewCompiler;
   private container: Container;
   private viewResources: ViewResources;
-  private overrideContext: any;
+  private overrideContext: OverrideContext;
   private colConfig: Array<ColConfig>;
   private configLength: number;
   private colRepeater: boolean;
@@ -67,7 +69,7 @@ export class ColumnMarkup {
 
   public init(
     colConfig,
-    overrideContext: any,
+    overrideContext: OverrideContext,
     colRepeater: boolean,
     colRepeatRowTemplate: string,
     colRepeatRowHeaderTemplate: string

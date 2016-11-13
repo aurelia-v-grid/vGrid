@@ -14,7 +14,7 @@ export class ArrayGrouping {
 
 
   // @params grouping : ["attribute", "attribute2"  etc etc ])
-  public group(arrayToGroup: Array<any>, grouping: Array<any>, keepExpanded?: boolean) {
+  public group(arrayToGroup: Array<any>, grouping: Array<string>, keepExpanded?: boolean) {
 
     if (grouping.length > 0) {
 

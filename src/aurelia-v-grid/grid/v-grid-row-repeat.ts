@@ -1,6 +1,6 @@
 import { inject, noView, customElement, processContent, TargetInstruction } from 'aurelia-framework';
 import { VGrid } from './v-grid';
-import { ViewCompiler, ViewResources } from '../interfaces';
+import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
 
 @noView()
@@ -9,23 +9,23 @@ import { ViewCompiler, ViewResources } from '../interfaces';
   compiler: ViewCompiler,
   resources: ViewResources,
   element: Element,
-  instruction: TargetInstruction) => {
+  instruction: CustomBehaviorInstruction) => {
 
   let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
   let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
   if (headerTemplateHtml !== '') {
-    (instruction as any).headerTemplate = headerTemplateHtml;
+    instruction.headerTemplate = headerTemplateHtml;
   }
 
   let rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
   let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
   if (rowTemplateHtml !== '') {
-    (instruction as any).rowTemplate = rowTemplateHtml;
+    instruction.rowTemplate = rowTemplateHtml;
   }
 
   // if we didnt get anything we use it all
   if (!rowTemplateHtml) {
-    (instruction as any).rowTemplate = element.innerHTML;
+    instruction.rowTemplate = element.innerHTML;
   }
 
   element.innerHTML = '';
@@ -38,11 +38,11 @@ export class VGridElementRowRepeat {
   private rowTemplate: string;
   private headerTemplate: string;
 
-  constructor(element: Element, vGrid: VGrid, targetInstruction: TargetInstruction) {
+  constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
     this.element = element;
     this.vGrid = vGrid;
-    this.rowTemplate = (targetInstruction.elementInstruction as any).rowTemplate;
-    this.headerTemplate = (targetInstruction.elementInstruction as any).headerTemplate;
+    this.rowTemplate = targetInstruction.elementInstruction.rowTemplate;
+    this.headerTemplate = targetInstruction.elementInstruction.headerTemplate;
 
   }
 
