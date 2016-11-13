@@ -76,9 +76,16 @@ export interface ColConfig {
   colType: string;
 }
 
+// the properties will mostly only be on group entities..
+// want to rename these to .__avgXXX so we cant crash with someone else
 export interface Entity {
-  __group: string;
+  __group: boolean;
+  __groupID: string;
+  __groupName: string;
   __groupLvl: number;
+  __groupTotal: number;
+  __groupChildren: Array<Entity>;
+  __groupExpanded: boolean;
 }
 
 export interface FilterObject {

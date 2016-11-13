@@ -1,9 +1,13 @@
 
+interface Operators {
+// no point...
+}
+
 
 
 export class FilterOperators {
-  private filterOperatorsNumbers: any;
-  private filterOperatorNames: any;
+  private filterOperatorsNumbers: Operators;
+  private filterOperatorNames: Operators;
 
   constructor() {
 

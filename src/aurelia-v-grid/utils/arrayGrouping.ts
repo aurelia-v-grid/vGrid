@@ -2,9 +2,9 @@ import {Entity} from '../interfaces'; // todo make a interface
 
 
 export class ArrayGrouping {
-  private groups: Array<any>;
+  private groups: Array<Array<Entity>>;
   private grouping: Array<string>;
-  private expanded: Set<any>;
+  private expanded: Set<string>;
 
   constructor() {
 
@@ -70,7 +70,7 @@ export class ArrayGrouping {
   }
 
 
-  public expand(id: string, array?: Set<any>) {
+  public expand(id: string, array?: Set<string>) {
     let all = id ? false : true; // if no id, then all
     if (!id) {
       if (array) {
@@ -86,8 +86,8 @@ export class ArrayGrouping {
     let mainGroups = this.groups[0];
 
     // lopp children
-    subGroup = (g: any) => {
-      g.__groupChildren.forEach((sg) => {
+    subGroup = (g: Entity) => {
+      g.__groupChildren.forEach((sg: Entity) => {
         collection.push(sg);
         switch (true) {
           case all:
@@ -109,7 +109,7 @@ export class ArrayGrouping {
     };
 
     // loop main groups
-    mainGroups.forEach((g: any) => {
+    mainGroups.forEach((g: Entity) => {
       collection.push(g);
       switch (true) {
         case all:
@@ -140,8 +140,8 @@ export class ArrayGrouping {
     let mainGroups = this.groups[0];
 
     // lopp children
-    subGroup = (g: any) => {
-      g.__groupChildren.forEach((sg) => {
+    subGroup = (g: Entity) => {
+      g.__groupChildren.forEach((sg: Entity) => {
 
         switch (true) {
           case all:
@@ -167,7 +167,7 @@ export class ArrayGrouping {
     };
 
     // loop main groups
-    mainGroups.forEach((g: any) => {
+    mainGroups.forEach((g: Entity) => {
       collection.push(g);
       switch (true) {
         case all:
@@ -192,9 +192,9 @@ export class ArrayGrouping {
     return collection;
   }
 
-    private groupMain(array: Array<any>, groupBy: string, groupNo: number) {
+    private groupMain(array: Array<Entity>, groupBy: string, groupNo: number) {
     let tempGroupArray = [];
-    let curGroup: any = {};
+    let curGroup: Entity = ({} as Entity);
     let tempValue = null;
 
     // first level, here we use array
@@ -224,17 +224,17 @@ export class ArrayGrouping {
   }
 
 
-  private groupChildren(childGroupArray: Array<any>, groupBy: string, groupNo: number) {
+  private groupChildren(childGroupArray: Array<Entity>, groupBy: string, groupNo: number) {
     let tempGroupArray = [];
 
-    let curGroup: any = {};
+    let curGroup: Entity = ({} as Entity);
 
     // loop groups
-    childGroupArray.forEach((element: any, i: number) => {
+    childGroupArray.forEach((element: Entity, i: number) => {
       let tempValue = null;
       // loop children
       let rebuiltChildrenArray = [];
-      element.__groupChildren.forEach((child: any) => {
+      element.__groupChildren.forEach((child: Entity) => {
 
         if (child[groupBy] !== tempValue) {
           let gidm = child[groupBy] || 'blank';
