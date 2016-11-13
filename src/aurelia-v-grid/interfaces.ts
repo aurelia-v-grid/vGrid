@@ -88,6 +88,18 @@ export interface Entity {
   __groupExpanded: boolean;
 }
 
+export interface TargetData {
+  draggable: boolean;
+  ok: boolean;
+  target: HTMLElement;
+  colType: string;
+  colNo: number;
+  context: boolean;
+  columnsArray: Array<any>;
+  panel: boolean;
+}
+
+
 export interface FilterObject {
   operator: string;
   value: any;

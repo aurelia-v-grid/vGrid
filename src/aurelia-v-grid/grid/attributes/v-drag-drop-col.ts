@@ -6,7 +6,8 @@ import {
   GroupingElements,
   Controller,
   BindingContext,
-  OverrideContext
+  OverrideContext,
+  TargetData
 } from '../../interfaces';
 
 
@@ -201,9 +202,9 @@ export class VGridDragDropCol {
         });
 
         if (!left) {
-          this.switchColumns({
+          this.switchColumns(({
             colType: 'left'
-          });
+          } as TargetData));
         }
       }
 
@@ -217,9 +218,9 @@ export class VGridDragDropCol {
         });
 
         if (!right) {
-          this.switchColumns({
+          this.switchColumns(({
             colType: 'right'
-          });
+          } as TargetData));
         }
       }
 
@@ -329,7 +330,7 @@ export class VGridDragDropCol {
   }
 
 
-  private switchColumns(result: any): void {
+  private switchColumns(result: TargetData): void {
 
     // get vars 
     let width;
@@ -496,7 +497,7 @@ export class VGridDragDropCol {
   }
 
 
-  private getTargetData(curTarget: Element): any {
+  private getTargetData(curTarget: Element): TargetData {
 
     // set variables
     let draggableTarget = null;
@@ -509,7 +510,7 @@ export class VGridDragDropCol {
       // have count, so we dont end up locking browser if anything goes really bad
       count++;
 
-      // if we dont have any target, fail!
+      // if we dont have target, fail!
       if (!curTarget.parentNode) {
         exit = false;
       } else {
@@ -559,7 +560,7 @@ export class VGridDragDropCol {
     }
 
     // return super object :-)
-    return {
+    return ({
       draggable: draggableTarget,
       ok: isOk,
       target: curTarget,
@@ -568,7 +569,7 @@ export class VGridDragDropCol {
       context: curContext,
       columnsArray: curColumnsArray,
       panel: isPanel
-    };
+    } as TargetData);
 
   }
 

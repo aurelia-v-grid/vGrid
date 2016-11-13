@@ -65,7 +65,7 @@ export class VGridAttributesResizeCol {
   }
 
 
-  public bind(bindingContext: any, overrideContext: any): void {
+  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
