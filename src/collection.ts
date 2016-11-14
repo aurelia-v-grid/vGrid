@@ -1,18 +1,18 @@
-import {DataSource} from './dataSource';//todo,create interface when datasource is stable
+import { DataSource, Entity } from './interfaces'; // todo,create interface when datasource is stable
 
 export class Collection {
-  private entities:Array<any>;
-  private keys:Array<any>;
-  private key:any;
-  private count:number;
-  public length:number;
-  private datasource:DataSource;
-  private ungroupedArray:Array<any>;
+  public length: number;
+  private entities: Array<Entity>;
+  private keys: Array<string>;
+  private key: string;
+  private count: number;
+  private datasource: DataSource;
+  private ungroupedArray: Array<Entity>;
 
 
-  constructor(datasource:DataSource) {
+  constructor(datasource: DataSource) {
     this.datasource = datasource;
-    this.key = datasource.key;
+    this.key = datasource.getKey();
     this.entities = [];
     this.keys = [];
     this.count = 0;
@@ -21,21 +21,21 @@ export class Collection {
   }
 
 
-  setData(array:Array<any>, ungroupedArray?:Array<any>) {
+  public setData(array: Array<Entity>, ungroupedArray?: Array<Entity>): void {
     this.entities = [];
     this.keys = [];
 
-    //need a ungrouped collection, so we can use that forward when needing to sort, regroup etc
+    // need a ungrouped collection, so we can use that forward when needing to sort, regroup etc
     this.ungroupedArray = ungroupedArray || array;
 
-    //get length;
+    // get length;
     this.length = array.length;
 
-    //create entities
-    array.forEach((rowData, i)=> {
+    // create entities
+    array.forEach((rowData, i) => {
       if (!rowData[this.key]) {
         this.count++;
-        rowData[this.key] = "key" + this.count;
+        rowData[this.key] = 'key' + this.count;
       }
 
       if (!rowData.__group) {
@@ -49,28 +49,28 @@ export class Collection {
   }
 
 
-  getEntities() {
+  public getEntities(): Array<Entity> {
     return this.ungroupedArray;
   }
 
-  getCurrentEntities() {
+  public getCurrentEntities(): Array<Entity> {
     return this.entities;
   }
 
-  getRowKey(row) {
+  public getRowKey(row: number): string {
     return this.keys[row];
   }
 
-  getRowFromKey(key) {
+  public getRowFromKey(key: string): number {
     return this.keys.indexOf(key);
   }
 
-  getRow(row) {
+  public getRow(row): Entity {
     return this.entities[row];
   }
 
 
-  getRowFromEntity(entity) {
+  public getRowFromEntity(entity: Entity): number {
     return this.entities.indexOf(entity);
   }
 

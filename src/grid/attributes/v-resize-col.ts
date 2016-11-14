@@ -1,123 +1,128 @@
-import {inject, customAttribute} from 'aurelia-framework';
-import {VGrid} from '../v-grid';
-
+import { inject, customAttribute } from 'aurelia-framework';
+import { VGrid } from '../v-grid';
+import {
+  ResizeShardContext,
+  BindingContext,
+  OverrideContext,
+  ColumnBindingContext,
+  ColumBindingContextObject
+} from '../../interfaces';
 
 @customAttribute('v-resize-col')
 @inject(Element, VGrid)
-export class vGridAttributesResizeCol {
-  vGrid:VGrid;
-  ctx:any;
-  element:any;
-  screenX:number;
-  originalWidth:string;
-  column:any;
-  colType:string;
-  colNo:number;
-  context:any;
-  columnsArray:Array<any>
-  columnBindingContext:any;
-  bindingContext:any;
-  overrideContext:any;
-  onmousedownBinded:any;
-  onmousemoveBinded:any;
-  onmouseupBinded:any;
-  originals:Array<any>;
+export class VGridAttributesResizeCol {
+  private vGrid: VGrid;
+  private ctx: ResizeShardContext;
+  private element: Element;
+  private screenX: number;
+  private originalWidth: number;
+  private column: Element;
+  private colType: string;
+  private colNo: number;
+  private context: ColumBindingContextObject;
+  private columnsArray: Array<ColumBindingContextObject>;
+  private columnBindingContext: ColumnBindingContext;
+  private bindingContext: BindingContext;
+  private overrideContext: OverrideContext;
+  private onmousedownBinded: EventListenerOrEventListenerObject;
+  private onmousemoveBinded: EventListenerOrEventListenerObject;
+  private onmouseupBinded: EventListenerOrEventListenerObject;
+  private originals: Array<number>;
 
-  avgContentLeft_Width:number;
-  avgHeaderLeft_Width:number;
-  avgContentMainScroll_Width:number;
-  avgHeaderMain_Left:number;
-  avgContentMain_Left:number;
-  avgContentMain_Right:number;
-  avgHeaderMain_Right:number;
-  avgContentRight_Width:number;
-  avgHeaderRight_Width:number;
-  avgContentHhandle_Right:number;
-  avgContentHhandle_Left:number;
-  avgContentHhandleScroll_Width:number;
-  avgContentMainScrollLeft:number;
-  isLast:boolean;
+  private avgContentLeft_Width: number;
+  private avgHeaderLeft_Width: number;
+  private avgContentMainScroll_Width: number;
+  private avgHeaderMain_Left: number;
+  private avgContentMain_Left: number;
+  private avgContentMain_Right: number;
+  private avgHeaderMain_Right: number;
+  private avgContentRight_Width: number;
+  private avgHeaderRight_Width: number;
+  private avgContentHhandle_Right: number;
+  private avgContentHhandle_Left: number;
+  private avgContentHhandleScroll_Width: number;
+  private avgContentMainScrollLeft: number;
+  private isLast: boolean;
+  private rightColNo: number;
+  private rightColNoWidth: number;
 
-  rightColNo:number;
-  rightColNoWidth:number;
 
-
-  constructor(element, vGrid) {
+  constructor(element: Element, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.ctx = vGrid.resizeAttributeSharedContext;
     this.element = element;
-    this.screenX;
-    this.originalWidth;
+    this.screenX = 0;
+    this.originalWidth = 0;
     this.column = this.element;
     while (this.column.nodeName !== 'AVG-COL') {
-      this.column = this.column.parentNode;
+      this.column = (this.column.parentNode as HTMLElement);
     }
-    this.colType = this.column.attributes.getNamedItem("avg-type").value;
-    this.colNo = this.column.attributes.getNamedItem("avg-config-col").value * 1;
-    this.context = vGrid.columnBindingContext["setup" + this.colType][this.colNo];
-    this.columnsArray = vGrid.columnBindingContext["setup" + this.colType];
+    this.colType = this.column.attributes.getNamedItem('avg-type').value;
+    this.colNo = parseInt(this.column.attributes.getNamedItem('avg-config-col').value, 10);
+    this.context = vGrid.columnBindingContext['setup' + this.colType][this.colNo];
+    this.columnsArray = vGrid.columnBindingContext['setup' + this.colType];
     this.columnBindingContext = vGrid.columnBindingContext;
   }
 
 
-  bind(bindingContext, overrideContext) {
+  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
   }
 
 
-  attached() {
+  public attached(): void {
 
-    //add resize handle
-    var resizeHandle = document.createElement("DIV");
-    resizeHandle.classList.add("avg-draggable-handler");
+    // add resize handle
+    let resizeHandle = document.createElement('DIV');
+    resizeHandle.classList.add('avg-draggable-handler');
 
     this.onmousedownBinded = this.onmousedown.bind(this);
     this.onmousemoveBinded = this.onmousemove.bind(this);
     this.onmouseupBinded = this.onmouseup.bind(this);
 
-    //register onmouse down event
+    // register onmouse down event
     resizeHandle.onmousedown = (e) => {
       this.ctx.resizing = true;
       this.onmousedown(e);
     };
 
-    //add
+    // add
     this.column.appendChild(resizeHandle);
 
   }
 
 
-  onmouseup() {
-    //remove events
-    document.removeEventListener("mousemove", this.onmousemoveBinded);
-    document.removeEventListener("mouseup", this.onmouseupBinded);
+  private onmouseup(): void {
+    // remove events
+    document.removeEventListener('mousemove', this.onmousemoveBinded);
+    document.removeEventListener('mouseup', this.onmouseupBinded);
     this.ctx.resizing = false;
   }
 
 
-  onmousemove(e) {
+  private onmousemove(e: MouseEvent): void {
     this.updateHeader(e);
   }
 
 
-  updateHeader(e) {
+  private updateHeader(e: MouseEvent): void {
 
-    var w = Math.abs(this.screenX - e.screenX);
+    let w = Math.abs(this.screenX - e.screenX);
 
-    if (w % 2 === 0) { //no need for every px...
+    if (w % 2 === 0) { // no need for every px...
 
       requestAnimationFrame(() => {
-        let movementX = parseInt(this.originalWidth) - ((this.screenX - e.screenX)) + "px";
-        let appendValue = parseInt(this.originalWidth) - parseInt(movementX);
+        let movementX = this.originalWidth - (this.screenX - e.screenX);
+        let appendValue = this.originalWidth - movementX;
 
-        if (this.colType === "main") {
+        if (this.colType === 'main') {
 
-          this.columnsArray[this.colNo].width = parseInt(movementX);
+          this.columnsArray[this.colNo].width = movementX;
           this.vGrid.colConfig[this.colNo].colWidth = this.columnsArray[this.colNo].width;
 
-          for (var i = 0; i < this.columnsArray.length; i++) {
+          for (let i = 0; i < this.columnsArray.length; i++) {
             if (this.columnsArray[this.colNo].left < this.columnsArray[i].left) {
               this.columnsArray[i].left = this.originals[i] - appendValue;
             }
@@ -128,11 +133,11 @@ export class vGridAttributesResizeCol {
         }
 
 
-        if (this.colType === "right") {
-          this.columnsArray[this.colNo].width = parseInt(movementX);
+        if (this.colType === 'right') {
+          this.columnsArray[this.colNo].width = movementX;
           this.vGrid.colConfig[this.colNo].colWidth = this.columnsArray[this.colNo].width;
 
-          for (var i = 0; i < this.columnsArray.length; i++) {
+          for (let i = 0; i < this.columnsArray.length; i++) {
             if (this.columnsArray[this.colNo].left < this.columnsArray[i].left) {
               this.columnsArray[i].left = this.originals[i] - appendValue;
             }
@@ -148,11 +153,11 @@ export class vGridAttributesResizeCol {
         }
 
 
-        if (this.colType === "left") {
-          this.columnsArray[this.colNo].width = parseInt(movementX);
+        if (this.colType === 'left') {
+          this.columnsArray[this.colNo].width = movementX;
           this.vGrid.colConfig[this.colNo].colWidth = this.columnsArray[this.colNo].width;
 
-          for (var i = 0; i < this.columnsArray.length; i++) {
+          for (let i = 0; i < this.columnsArray.length; i++) {
             if (this.columnsArray[this.colNo].left < this.columnsArray[i].left) {
               this.columnsArray[i].left = this.originals[i] - appendValue;
             }
@@ -175,16 +180,16 @@ export class vGridAttributesResizeCol {
   }
 
 
-  onmousedown(e) {
+  private onmousedown(e: MouseEvent): void {
 
 
-    //get some vars
+    // get some vars
     this.screenX = e.screenX;
 
     this.originalWidth = this.context.width;
 
     this.originals = [];
-    for (var i = 0; i < this.columnsArray.length; i++) {
+    for (let i = 0; i < this.columnsArray.length; i++) {
       this.originals.push(this.columnsArray[i].left);
     }
 
@@ -205,20 +210,23 @@ export class vGridAttributesResizeCol {
     this.avgContentMainScrollLeft = this.vGrid.htmlCache.avg_content_main.scrollLeft;
 
 
-    if (this.colType === "main") {
+    if (this.colType === 'main') {
       this.isLast = this.vGrid.htmlHeightWidth.avgContentMainScroll_Width === (this.context.left + this.context.width);
     }
-    if (this.colType === "left") {
-      this.isLast = this.vGrid.htmlHeightWidth.avgContentLeft_Width === (this.context.left + this.context.width + this.vGrid.htmlHeightWidth.avgScrollBarWidth) + this.columnBindingContext.setupgrouping * 15;
+    if (this.colType === 'left') {
+      let sumContext = this.context.left + this.context.width + this.vGrid.htmlHeightWidth.avgScrollBarWidth;
+      let sumGrouping = this.columnBindingContext.setupgrouping * 15;
+      this.isLast = this.vGrid.htmlHeightWidth.avgContentLeft_Width === (sumContext + sumGrouping);
     }
-    if (this.colType === "right") {
-      this.isLast = this.vGrid.htmlHeightWidth.avgContentRight_Width === (this.context.left + this.context.width + this.vGrid.htmlHeightWidth.avgScrollBarWidth);
+    if (this.colType === 'right') {
+      let sum = this.context.left + this.context.width + this.vGrid.htmlHeightWidth.avgScrollBarWidth;
+      this.isLast = this.vGrid.htmlHeightWidth.avgContentRight_Width === sum;
     }
 
 
     let setupRight = this.vGrid.columnBindingContext.setupright;
-    this.rightColNo;
-    this.rightColNoWidth;
+    this.rightColNo = 0;
+    this.rightColNoWidth = 0;
     setupRight.forEach((col, i) => {
       if (col.left === 0) {
         this.rightColNo = i;
@@ -227,9 +235,9 @@ export class vGridAttributesResizeCol {
     });
 
 
-    //register mosemove and mouse up event
-    document.addEventListener("mousemove", this.onmousemoveBinded);
-    document.addEventListener("mouseup", this.onmouseupBinded);
+    // register mosemove and mouse up event
+    document.addEventListener('mousemove', this.onmousemoveBinded);
+    document.addEventListener('mouseup', this.onmouseupBinded);
 
 
   }

@@ -1,18 +1,17 @@
-//for typings only
-import {Controller} from './controller'
+import { Controller, ColumBindingContextObject } from '../interfaces';
 
 
 export class ColumnBindingContext {
-  controller:Controller;
-  setupleft:Array<any>;
-  setupmain:Array<any>;
-  setupright:Array<any>;
-  setupgroup:Array<any>;
-  setupgrouping:number;
-  changeGrouping:Function;
+  public setupleft: Array<ColumBindingContextObject>;
+  public setupmain: Array<ColumBindingContextObject>;
+  public setupright: Array<ColumBindingContextObject>;
+  public setupgroup: Array<ColumBindingContextObject>;
+  public setupgrouping: number;
+  public changeGrouping: Function;
+  private controller: Controller;
 
 
-  constructor(controller:Controller) {
+  constructor(controller: Controller) {
     this.controller = controller;
     this.setupleft = [];
     this.setupmain = [];

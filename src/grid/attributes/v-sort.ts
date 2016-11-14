@@ -1,74 +1,73 @@
 import {inject, customAttribute} from 'aurelia-framework';
 import {VGrid} from '../v-grid';
-
+import {BindingContext, OverrideContext} from '../../interfaces';
 
 @customAttribute('v-sort')
 @inject(Element, VGrid)
-export class vGridAttributesSort {
-  vGrid:VGrid;
-  element:any;
-  bindingContext:any;
-  overrideContext:any;
-  attribute:any;
-  sortIcon:any;
-  value:any;
+export class VGridAttributesSort {
+  private vGrid: VGrid;
+  private element: HTMLElement;
+  private bindingContext: BindingContext;
+  private overrideContext: OverrideContext;
+  private attribute: string;
+  private sortIcon: HTMLElement;
+  private value: string;
 
-  constructor(element, vGrid) {
+  constructor(element: HTMLElement, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
   }
 
 
-  bind(bindingContext, overrideContext) {
+  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
-    //get values
-    let values = this.value.split("|");
+    // get values
+    let values = this.value.split('|');
     this.attribute = values[0];
 
   }
 
 
-  attached() {
-    this.sortIcon = document.createElement("i");
+  public attached(): void {
+    this.sortIcon = document.createElement('i');
     this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
     this.element.appendChild(this.sortIcon);
-    this.element.onmousedown = (e)=> {
-      this.element.onmouseup = (e)=> {
+    this.element.onmousedown = (e) => {
+      this.element.onmouseup = (e) => {
         if (e.button === 0) {
           this.vGrid.attGridConnector.orderBy(this.attribute, e.shiftKey);
         }
       };
-      setTimeout(()=> {
+      setTimeout(() => {
         this.element.onmouseup = null;
       }, 300);
 
     };
 
-    this.vGrid.element.addEventListener("sortIconUpdate", ()=> {
+    this.vGrid.element.addEventListener('sortIconUpdate', () => {
       this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
     });
   }
 
 
-  detached() {
+  public detached(): void {
     this.element.removeChild(this.sortIcon);
   }
 
 
-  getSortIconMarkup(attribute) {
+  private getSortIconMarkup(attribute: string): string {
 
-    var markup = `&nbsp;<i  class="${"avg-fa avg-fa-sort"}"></i>`;
-    var isAscHtml = `&nbsp;<i  class="${"avg-fa avg-fa-sort-asc"}"></i>`;
-    var isDescHtml = `&nbsp;<i  class="${"avg-fa avg-fa-sort-desc"}"></i>`;
+    let markup = `&nbsp;<i  class="${'avg-fa avg-fa-sort'}"></i>`;
+    let isAscHtml = `&nbsp;<i  class="${'avg-fa avg-fa-sort-asc'}"></i>`;
+    let isDescHtml = `&nbsp;<i  class="${'avg-fa avg-fa-sort-desc'}"></i>`;
 
 
-    let sortNo = this.vGrid.attGridConnector.getCurrentOrderBy();
     this.vGrid.attGridConnector.getCurrentOrderBy().forEach((x) => {
       if (x.attribute === this.attribute) {
-        var block = x.asc === true ? isAscHtml : isDescHtml;
-        var main = `<i class="${"avg-fa-sort-number"}" data-vgridsort="${x.no}"></i>`;
+        let block = x.asc === true ? isAscHtml : isDescHtml;
+        let main = `<i class="${'avg-fa-sort-number'}" data-vgridsort="${x.no}"></i>`;
         markup = block + main;
       }
     });

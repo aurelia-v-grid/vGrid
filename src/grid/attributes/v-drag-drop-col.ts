@@ -1,44 +1,51 @@
-import {inject, customAttribute} from 'aurelia-framework';
-import {VGrid} from '../v-grid';
-//for typings:
-import {GroupingElements} from '../groupingElements';
-import {Controller} from '../controller';
+import { inject, customAttribute } from 'aurelia-framework';
+import { VGrid } from '../v-grid';
+import {
+  ColumBindingContextObject,
+  DragDropShardContext,
+  GroupingElements,
+  Controller,
+  BindingContext,
+  OverrideContext,
+  TargetData
+} from '../../interfaces';
+
 
 @customAttribute('v-drag-drop-col')
 @inject(Element, VGrid)
-export class vGridDragDropCol {
-  vGrid:VGrid;
-  element:any;
-  column:any;
-  vGridElement:Element;
-  controller:Controller;
-  groupingElements:GroupingElements;
-  sharedContext:any;
-  entered:boolean;
-  curColNo:number;
-  bindingContext:any;
-  overrideContext:any;
-  onDragstartBinded:any;
-  onDragenterBinded:any;
-  onDragoverBinded:any;
-  onDragendBinded:any;
-  onDragOutSideBinded:any;
-  colType:string;
-  colNo:number;
-  context:any;
-  columnsArray:Array<any>;
-  isPanel:boolean;
-  dragColumnBlock:any;
-  mouseMoveTimer:any;
+export class VGridDragDropCol {
+  private vGrid: VGrid;
+  private element: Element;
+  private column: Element;
+  private vGridElement: Element;
+  private controller: Controller;
+  private groupingElements: GroupingElements;
+  private sharedContext: DragDropShardContext;
+  private entered: boolean;
+  private curColNo: number;
+  private bindingContext: BindingContext;
+  private overrideContext: OverrideContext;
+  private onDragstartBinded: EventListenerOrEventListenerObject;
+  private onDragenterBinded: EventListenerOrEventListenerObject;
+  private onDragoverBinded: EventListenerOrEventListenerObject;
+  private onDragendBinded: EventListenerOrEventListenerObject;
+  private onDragOutSideBinded: EventListenerOrEventListenerObject;
+  private colType: string;
+  private colNo: number;
+  private context: ColumBindingContextObject;
+  private columnsArray: Array<ColumBindingContextObject>;
+  private isPanel: boolean;
+  private dragColumnBlock: HTMLElement;
+  private mouseMoveTimer: number;
 
   constructor(element, vGrid) {
-    //get contexts
+    // get contexts
     this.vGrid = vGrid;
     this.vGridElement = vGrid.element;
     this.controller = vGrid.controller;
     this.groupingElements = vGrid.groupingElements;
 
-    //get our shared context between our dragdrop attributes, holds data of the dragged one
+    // get our shared context between our dragdrop attributes, holds data of the dragged one
     this.sharedContext = vGrid.dragDropAttributeSharedContext;
 
     this.element = element;
@@ -49,11 +56,11 @@ export class vGridDragDropCol {
   }
 
 
-  bind(bindingContext, overrideContext) {
+  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
-    //set binded context to our functions, wont be able to remove if binded during setting event
+    // set binded context to our functions, wont be able to remove if binded during setting event
     this.onDragstartBinded = this.onDragstart.bind(this);
     this.onDragenterBinded = this.onDragenter.bind(this);
     this.onDragoverBinded = this.onDragover.bind(this);
@@ -62,58 +69,62 @@ export class vGridDragDropCol {
   }
 
 
-  unbind() {
-    //todo remove event listeners
+  public unbind(): void {
+    // todo remove event listeners
+  }
+
+  public detached(): void {
+    //  console.log("detached")
   }
 
 
-  attached() {
+  public attached(): void {
 
-    //get our target data (this case: this actual column..)
+    // get our target data (this case: this actual column..)
     let result = this.getTargetData(this.column);
 
     if (result.ok && !result.panel) {
-      //get column data
+      // get column data
       this.column = result.target;
-      this.colType = this.column.attributes.getNamedItem("avg-type").value;
-      this.colNo = this.column.attributes.getNamedItem("avg-config-col").value * 1;
-      this.context = this.vGrid.columnBindingContext["setup" + this.colType][this.colNo];
-      this.columnsArray = this.vGrid.columnBindingContext["setup" + this.colType];
+      this.colType = this.column.attributes.getNamedItem('avg-type').value;
+      this.colNo = parseInt(this.column.attributes.getNamedItem('avg-config-col').value, 10);
+      this.context = this.vGrid.columnBindingContext['setup' + this.colType][this.colNo];
+      this.columnsArray = this.vGrid.columnBindingContext['setup' + this.colType];
 
-      //when user starts to drag
-      this.element.addEventListener("mousedown", this.onDragstartBinded);
+      // when user starts to drag
+      this.element.addEventListener('mousedown', this.onDragstartBinded);
 
-      //why target ? bacuse thats the entire column object no mather what user have inside
-      result.target.addEventListener("mouseenter", this.onDragenterBinded);
+      // why target ? bacuse thats the entire column object no mather what user have inside
+      result.target.addEventListener('mouseenter', this.onDragenterBinded);
 
 
     }
 
 
     if (result.ok && result.target.nodeName === 'AVG-TOP-PANEL') {
-      //if panel we need to listen and do some stuff differently
+      // if panel we need to listen and do some stuff differently
       this.isPanel = true;
       this.sharedContext.panel = result.target;
 
-      //if we leave, remve group
-      result.target.onmouseleave = (event) => {
+      // if we leave, remve group
+      result.target.onmouseleave = (event: MouseEvent) => {
         if (this.sharedContext.dragging) {
-          this.groupingElements.removeGroup("");
+          this.groupingElements.removeGroup('');
         }
       };
 
-      //if enter and dragging, add grouping
-      result.target.onmouseenter = (event) => {
+      // if enter and dragging, add grouping
+      result.target.onmouseenter = (event: MouseEvent) => {
         if (this.sharedContext.dragging) {
           let name = this.vGrid.colConfig[this.sharedContext.colNo].colHeaderName;
-          let field = this.vGrid.colConfig[this.sharedContext.colNo].colField.replace("rowRef.", "");
+          let field = this.vGrid.colConfig[this.sharedContext.colNo].colField.replace('rowRef.', '');
           this.groupingElements.addGroup(name, field);
           this.sharedContext.lastTarget = result.target;
         }
       };
 
-      //if mouse up during dragging we grop, if group ios added
-      result.target.onmouseup = (event) => {
+      // if mouse up during dragging we grop, if group ios added
+      result.target.onmouseup = (event: MouseEvent) => {
         if (this.sharedContext.dragging) {
           this.groupingElements.addToGrouping();
         }
@@ -126,38 +137,39 @@ export class vGridDragDropCol {
   }
 
 
-  createDragElement() {
+  private createDragElement(): void {
 
-    //just creates the element we drag
-    this.dragColumnBlock = document.createElement("div");
+    // just creates the element we drag
+    this.dragColumnBlock = document.createElement('div');
     this.dragColumnBlock.classList.add(this.vGrid.attTheme);
-    this.dragColumnBlock.classList.add("avg-drag");
-    this.dragColumnBlock.style.top = -1200 + "px"; //hide it
-    this.dragColumnBlock.style.left = -1200 + "px";
+    this.dragColumnBlock.classList.add('avg-drag');
+    this.dragColumnBlock.style.top = -1200 + 'px'; // hide it
+    this.dragColumnBlock.style.left = -1200 + 'px';
     document.body.appendChild(this.dragColumnBlock);
 
-    this.dragColumnBlock.innerHTML = this.vGrid.colConfig[this.colNo].colHeaderName; //<- need to do something here, use value for custom html?
+    // <- maybe do something here, use value for custom html?
+    this.dragColumnBlock.innerHTML = this.vGrid.colConfig[this.colNo].colHeaderName;
 
 
   }
 
 
-  onDragstart(event) {
+  private onDragstart(event: MouseEvent): void {
 
-    //register mouseup, so we can exit
-    document.addEventListener("mouseup", this.onDragendBinded);
-    this.vGridElement.addEventListener("mouseleave", this.onDragOutSideBinded);
+    // register mouseup, so we can exit
+    document.addEventListener('mouseup', this.onDragendBinded);
+    this.vGridElement.addEventListener('mouseleave', this.onDragOutSideBinded);
     this.createDragElement();
 
 
-    //want to delay this a little
+    // want to delay this a little
     this.mouseMoveTimer = setTimeout(() => {
-      //create our element we drag with upo
-      document.addEventListener("mousemove", this.onDragoverBinded, false);
+      // create our element we drag with upo
+      document.addEventListener('mousemove', this.onDragoverBinded, false);
     }, 300);
 
 
-    //set our shared resources for all the drag drop so we know them when we enter another
+    // set our shared resources for all the drag drop so we know them when we enter another
     this.sharedContext.dragging = true;
     this.sharedContext.colType = this.colType;
     this.sharedContext.context = this.context;
@@ -165,7 +177,7 @@ export class vGridDragDropCol {
     this.sharedContext.curColNo = this.colNo;
     this.sharedContext.columnsArray = this.columnsArray;
 
-    //build up new array we will use for setting new left
+    // build up new array we will use for setting new left
     this.sharedContext.columnsArraySorted = [];
     this.sharedContext.columnsArray.forEach((x) => {
       this.sharedContext.columnsArraySorted.push(x);
@@ -175,12 +187,8 @@ export class vGridDragDropCol {
   }
 
 
-  detached() {
-    //  console.log("detached")
-  }
 
-
-  onDragOutSide(event) {
+  private onDragOutSide(event: MouseEvent): void {
 
     if (this.sharedContext.dragging) {
 
@@ -194,9 +202,9 @@ export class vGridDragDropCol {
         });
 
         if (!left) {
-          this.switchColumns({
-            colType: "left"
-          });
+          this.switchColumns(({
+            colType: 'left'
+          } as TargetData));
         }
       }
 
@@ -210,9 +218,9 @@ export class vGridDragDropCol {
         });
 
         if (!right) {
-          this.switchColumns({
-            colType: "right"
-          });
+          this.switchColumns(({
+            colType: 'right'
+          } as TargetData));
         }
       }
 
@@ -222,24 +230,24 @@ export class vGridDragDropCol {
   }
 
 
-  onDragenter(event) {
+  private onDragenter(event: MouseEvent): void {
 
-    //event.preventDefault();
+    // event.preventDefault();
     if (this.sharedContext.dragging) {
 
-      //get results
-      let result = this.getTargetData(event.target);
+      // get results
+      let result = this.getTargetData((event.target as HTMLElement));
 
-      //if ok, and AVG-COL
+      // if ok, and AVG-COL
       if (result.target.nodeName === 'AVG-COL' && result.ok && this.sharedContext.lastTarget !== result.target) {
 
-        //set last target
+        // set last target
         this.sharedContext.lastTarget = result.target;
 
-        //if fifferent column, and same type (main/left/right) 
+        // if fifferent column, and same type (main/left/right) 
         if (result.colNo !== this.sharedContext.colNo && result.colType === this.sharedContext.colType) {
 
-          //get the left
+          // get the left
           let newLeft = this.sharedContext.columnsArray[result.colNo].left;
           let oldLeft = this.sharedContext.columnsArray[this.sharedContext.colNo].left;
 
@@ -252,14 +260,14 @@ export class vGridDragDropCol {
             this.sharedContext.columnsArray[result.colNo].left = newLeft - 1;
           }
 
-          //sort columns
+          // sort columns
           this.sharedContext.columnsArraySorted.sort(
-            function (a, b) {
+            (a, b) => {
               return a.left - b.left;
             });
 
 
-          //loop and set left/right  
+          // loop and set left/right  
           let appendValue = 0;
           this.sharedContext.columnsArraySorted.forEach((x) => {
             if (x.show) {
@@ -269,7 +277,7 @@ export class vGridDragDropCol {
           });
         }
 
-        //if coltype and colno is diffent
+        // if coltype and colno is diffent
         if (result.colNo !== this.sharedContext.colNo && result.colType !== this.sharedContext.colType) {
           this.switchColumns(result);
 
@@ -281,36 +289,36 @@ export class vGridDragDropCol {
   }
 
 
-  onDragover(event) {
+  private onDragover(event: MouseEvent): void {
 
-    //setting position of out dragBlock
+    // setting position of out dragBlock
     if (this.dragColumnBlock) {
-      this.dragColumnBlock.style.top = event.clientY + "px";
-      this.dragColumnBlock.style.left = event.clientX + "px";
+      this.dragColumnBlock.style.top = event.clientY + 'px';
+      this.dragColumnBlock.style.left = event.clientX + 'px';
     }
 
   }
 
 
-  onDragend(event) {
+  private onDragend(event: MouseEvent): void {
 
-    //clear mosuemove timer
+    // clear mosuemove timer
     clearTimeout(this.mouseMoveTimer);
 
-    //set dragging to false
+    // set dragging to false
     this.sharedContext.dragging = false;
 
-    //remove out listneres
-    document.removeEventListener("mouseup", this.onDragendBinded);
-    document.removeEventListener("mousemove", this.onDragoverBinded);
-    this.vGridElement.removeEventListener("mouseleave", this.onDragOutSideBinded);
+    // remove out listneres
+    document.removeEventListener('mouseup', this.onDragendBinded);
+    document.removeEventListener('mousemove', this.onDragoverBinded);
+    this.vGridElement.removeEventListener('mouseleave', this.onDragOutSideBinded);
 
 
-    //reset blocks
+    // reset blocks
     this.sharedContext.lastTarget = null;
-    this.sharedContext.group = null;
+    //this.sharedContext.group = null;
 
-    //if drag column then remove
+    // if drag column then remove
     if (this.dragColumnBlock) {
       let parent = this.dragColumnBlock.parentNode;
       if (parent) {
@@ -322,37 +330,37 @@ export class vGridDragDropCol {
   }
 
 
-  switchColumns(result) {
+  private switchColumns(result: TargetData): void {
 
-    //get vars 
+    // get vars 
     let width;
     let newColType = result.colType;
     let oldColType = this.sharedContext.colType;
     let heightAndWidths = this.vGrid.htmlHeightWidth;
 
-    //chack type is one of the ones we handle
+    // chack type is one of the ones we handle
     switch (true) {
-      case newColType === "left" && oldColType === "main":
-      case newColType === "main" && oldColType === "left":
-      case newColType === "right" && oldColType === "main":
-      case newColType === "main" && oldColType === "right":
-      case newColType === "left" && oldColType === "right":
-      case newColType === "right" && oldColType === "left":
+      case newColType === 'left' && oldColType === 'main':
+      case newColType === 'main' && oldColType === 'left':
+      case newColType === 'right' && oldColType === 'main':
+      case newColType === 'main' && oldColType === 'right':
+      case newColType === 'left' && oldColType === 'right':
+      case newColType === 'right' && oldColType === 'left':
 
 
-        //hide column
+        // hide column
         this.sharedContext.columnsArray[this.sharedContext.colNo].show = false;
 
-        //get to width of the column we have
+        // get to width of the column we have
         width = this.sharedContext.columnsArray[this.sharedContext.colNo].width;
 
-        //sort array (I prb can remove?)
+        // sort array (I prb can remove?)
         this.sharedContext.columnsArraySorted.sort(
-          function (a, b) {
+          (a, b) => {
             return a.left - b.left;
           });
 
-        //loop and set left/right  
+        // loop and set left/right  
         let appendValue = 0;
         this.sharedContext.columnsArraySorted.forEach((x) => {
           if (x.show) {
@@ -362,26 +370,26 @@ export class vGridDragDropCol {
         });
 
 
-        //set new col type
+        // set new col type
         this.sharedContext.colType = result.colType;
-        this.sharedContext.columnsArray = this.vGrid.columnBindingContext["setup" + result.colType];
+        this.sharedContext.columnsArray = this.vGrid.columnBindingContext['setup' + result.colType];
 
-        //show column
+        // show column
         this.sharedContext.columnsArray[this.sharedContext.colNo].show = true;
 
-        //set new shared column context
+        // set new shared column context
         this.sharedContext.columnsArraySorted = [];
         this.sharedContext.columnsArray.forEach((x) => {
           this.sharedContext.columnsArraySorted.push(x);
         });
 
-        //sort array (I prb can remove?)
+        // sort array (I prb can remove?)
         this.sharedContext.columnsArraySorted.sort(
-          function (a, b) {
+          (a, b) => {
             return a.left - b.left;
           });
 
-        //loop and set left/right  
+        // loop and set left/right  
         appendValue = 0;
         this.sharedContext.columnsArraySorted.forEach((x) => {
           if (x.show) {
@@ -392,13 +400,13 @@ export class vGridDragDropCol {
 
         break;
       default:
-       // console.log("Todo: Move to :" + newColType + ", from:" + oldColType);
+        // console.log("Todo: Move to :" + newColType + ", from:" + oldColType);
         break;
     }
 
 
-    //a lot of repeated code... throw this in htmlHeightWidths class, so I can call it from somewhere else too?
-    if (newColType === "left" && oldColType === "main") {
+    // a lot of repeated code... throw this in htmlHeightWidths class, so I can call it from somewhere else too?
+    if (newColType === 'left' && oldColType === 'main') {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
       heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width - width;
 
@@ -411,7 +419,7 @@ export class vGridDragDropCol {
     }
 
 
-    if (newColType === "main" && oldColType === "left") {
+    if (newColType === 'main' && oldColType === 'left') {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
       heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
 
@@ -424,7 +432,7 @@ export class vGridDragDropCol {
     }
 
 
-    if (newColType === "right" && oldColType === "main") {
+    if (newColType === 'right' && oldColType === 'main') {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
       heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width - width;
 
@@ -437,7 +445,7 @@ export class vGridDragDropCol {
     }
 
 
-    if (newColType === "main" && oldColType === "right") {
+    if (newColType === 'main' && oldColType === 'right') {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
       heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
 
@@ -450,7 +458,7 @@ export class vGridDragDropCol {
     }
 
 
-    if (newColType === "left" && oldColType === "right") {
+    if (newColType === 'left' && oldColType === 'right') {
 
       heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width - width;
       heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgHeaderRight_Width - width;
@@ -468,7 +476,7 @@ export class vGridDragDropCol {
     }
 
 
-    if (newColType === "right" && oldColType === "left") {
+    if (newColType === 'right' && oldColType === 'left') {
 
       heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width + width;
       heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgHeaderRight_Width + width;
@@ -489,79 +497,79 @@ export class vGridDragDropCol {
   }
 
 
-  getTargetData(target) {
+  private getTargetData(curTarget: Element): TargetData {
 
-    //set variables
-    let draggable = null;
+    // set variables
+    let draggableTarget = null;
     let count = 0;
     let exit = true;
-    let ok = false;
+    let isOk = false;
 
 
     while (exit) {
-      //have count, so we dont end up locking browser if anything goes really bad
+      // have count, so we dont end up locking browser if anything goes really bad
       count++;
 
-      //if we dont have any target, fail!
-      if (!target.parentNode) {
+      // if we dont have target, fail!
+      if (!curTarget.parentNode) {
         exit = false;
       } else {
 
-        //if draggable, and not set, then we set it
-        if (target.draggable === true && draggable === null) {
-          draggable = target;
+        // if draggable, and not set, then we set it
+        if ((curTarget as HTMLElement).draggable === true && draggableTarget === null) {
+          draggableTarget = curTarget;
         }
 
-        //check if it contains our elements, or continue to next parentNode
+        // check if it contains our elements, or continue to next parentNode
         switch (true) {
-          case target.nodeName === "AVG-COL":
-          case target.nodeName === "AVG-TOP-PANEL":
-            ok = true;
+          case curTarget.nodeName === 'AVG-COL':
+          case curTarget.nodeName === 'AVG-TOP-PANEL':
+            isOk = true;
             exit = false;
             break;
           default:
-            target = target.parentNode;
+            curTarget = (curTarget.parentNode as Element);
             break;
         }
       }
 
-      //20 times, we failed!
+      // 20 times, we failed!
       if (count > 10) {
         exit = false;
       }
 
     }
 
-    let colType = null;
-    let colNo = null;
-    let context = null;
-    let columnsArray = null;
-    let panel = false;
+    let curColType = null;
+    let curColNo = null;
+    let curContext = null;
+    let curColumnsArray = null;
+    let isPanel = false;
 
 
-    //if ok, get variables we need
-    if (ok && target.nodeName === "AVG-COL") {
-      colType = target.attributes.getNamedItem("avg-type").value;
-      colNo = target.attributes.getNamedItem("avg-config-col").value * 1;
-      context = this.vGrid.columnBindingContext["setup" + colType][colNo];
-      columnsArray = this.vGrid.columnBindingContext["setup" + colType];
+    // if ok, get variables we need
+    if (isOk && curTarget.nodeName === 'AVG-COL') {
+      curColType = curTarget.attributes.getNamedItem('avg-type').value;
+      curColNo = parseInt(curTarget.attributes.getNamedItem('avg-config-col').value, 10);
+      curContext = this.vGrid.columnBindingContext['setup' + curColType][curColNo];
+      curColumnsArray = this.vGrid.columnBindingContext['setup' + curColType];
     }
 
-    if (ok && target.nodeName === "AVG-TOP-PANEL") {
-      panel = true;
+    if (isOk && curTarget.nodeName === 'AVG-TOP-PANEL') {
+      isPanel = true;
     }
 
-    //return super object :-)
-    return {
-      draggable: draggable,
-      ok: ok,
-      target: target,
-      colType: colType,
-      colNo: colNo,
-      context: context,
-      columnsArray: columnsArray,
-      panel: panel
-    };
+    // return super object :-)
+    return ({
+      draggable: draggableTarget,
+      ok: isOk,
+      target: curTarget,
+      colType: curColType,
+      colNo: curColNo,
+      context: curContext,
+      columnsArray: curColumnsArray,
+      panel: isPanel
+    } as TargetData);
 
   }
 

@@ -1,61 +1,61 @@
-import {FilterOperators} from './filterOperators';//todo make a interface
+import {FilterOperators, FilterObject, Entity} from '../interfaces'; // todo make a interface
 
 export class ArrayFilter {
-  filterOperators:FilterOperators;
-  lastFilter:Array<any>;
+  private filterOperators: FilterOperators;
+  private lastFilter: Array<FilterObject>;
 
-  constructor(filterOperators:FilterOperators) {
+  constructor(filterOperators: FilterOperators) {
     this.filterOperators = filterOperators;
     this.lastFilter = [];
 
   }
 
 
-  getLastFilter() {
+  public getLastFilter() {
     return this.lastFilter;
   }
 
 
-  runQueryOn(objArray, ObjFilter) {
+  public runQueryOn(objArray: Array<Entity>, ObjFilter: Array<FilterObject>) {
 
-    //my operators
-    let filterOperatorTable = this.filterOperators.getFilterNumbers();
-
-
-    var resultArray = objArray.filter(function (data) {
+    // my operators
+   // let filterOperatorTable = this.filterOperators.getOperatorNo();
 
 
-      //lets have true as default, so all that should not be there we set false..
-      var result = true;
-      ObjFilter.forEach(function (x) {
+    let resultArray = objArray.filter((data) => {
 
 
-        //vars
-        var rowValue;
-        var filterValue;
-        var filterOperator = filterOperatorTable[x.operator];
-        var newFilterOperator;
+      // lets have true as default, so all that should not be there we set false..
+      let result = true;
+      ObjFilter.forEach((x: FilterObject) => {
 
 
-        //helper for boolean
-        var typeBool = {
-          "true": true,
-          "false": false
+        // vars
+        let rowValue;
+        let filterValue;
+        let filterOperator = this.filterOperators.getOperatorNo(x.operator);
+        let newFilterOperator;
+
+
+        // helper for boolean
+        let typeBool = {
+          'true': true,
+          'false': false
         };
 
 
-        //set defult type
-        var type;
+        // set defult type
+        let type;
         try {
           type = typeof(data[x.attribute]);
         } catch (e) {
-          type = "string";
+          type = 'string';
         }
 
 
-        //lets set som defaults
+        // lets set som defaults
         switch (type) {
-          case "number":
+          case 'number':
             rowValue = data[x.attribute];
             filterValue = Number(x.value);
             filterOperator = filterOperator || 1;
@@ -64,66 +64,67 @@ export class ArrayFilter {
             }
 
             break;
-          case "string":
+          case 'string':
             rowValue = data[x.attribute].toLowerCase();
             filterValue = x.value.toLowerCase();
             filterOperator = filterOperator || 9;
             newFilterOperator = filterOperator;
 
-            //todo: add more options here and replace with a switch.., also
+            // todo: add more options here and replace with a switch.., also
 
-            //if filter operator is BEGIN WITH
-            if (x.value.charAt(0) === "*" && filterOperator === 9) {
+            // if filter operator is BEGIN WITH
+            if (x.value.charAt(0) === '*' && filterOperator === 9) {
               newFilterOperator = 6;
               filterValue = filterValue.substr(1, filterValue.length);
             }
 
 
-            //if filter operator is EQUAL TO
-            //wildcard first = end with
-            if (x.value.charAt(0) === "*" && filterOperator === 1) {
+            // if filter operator is EQUAL TO
+            // wildcard first = end with
+            if (x.value.charAt(0) === '*' && filterOperator === 1) {
               newFilterOperator = 10;
               filterValue = filterValue.substr(1, filterValue.length);
             }
 
 
-            //wildcard end and first = contains
-            if (x.value.charAt(x.value.length - 1) === "*" && filterOperator === 1 && newFilterOperator === 10) {
+            // wildcard end and first = contains
+            if (x.value.charAt(x.value.length - 1) === '*' && filterOperator === 1 && newFilterOperator === 10) {
               newFilterOperator = 6;
               filterValue = filterValue.substr(0, filterValue.length - 1);
             }
 
 
-            //begin with since wildcard is in the end
-            if (x.value.charAt(x.value.length - 1) === "*" && filterOperator === 1 && newFilterOperator !== 10 && newFilterOperator !== 6) {
+            // begin with since wildcard is in the end
+            if (x.value.charAt(x.value.length - 1) === '*' && filterOperator === 1 && newFilterOperator !== 10 && newFilterOperator !== 6) {
               newFilterOperator = 9;
               filterValue = filterValue.substr(0, filterValue.length - 1);
             }
 
 
-            //set the filteroperator from new if changed
+            // set the filteroperator from new if changed
             if (filterOperator !== newFilterOperator) {
               filterOperator = newFilterOperator;
             }
             break;
 
 
-          case "boolean":
+          case 'boolean':
             rowValue = data[x.attribute];
             filterValue = typeBool[x.value];
             filterOperator = 1;
             break;
 
 
-          case "object":
+          case 'object':
             rowValue = data[x.attribute].toISOString();
-            filterValue = new Date(x.value).toISOString(); //todo, this needs to be better...
+            filterValue = new Date(x.value).toISOString(); // todo, this needs to be better...
             filterOperator = filterOperator || 2;
             break;
 
 
           default :
-            //todo: take the stuff under equal to and put in a function and also call i from here.. or just make it fail?
+            // todo: take the stuff under equal to and put in a function 
+            // and also call i from here.. or just make it fail?
             try {
               rowValue = data[x.attribute].toLowerCase();
             } catch (err) {
@@ -139,54 +140,54 @@ export class ArrayFilter {
         }
 
 
-        //filter from what operator used
+        // filter from what operator used
         switch (filterOperator) {
-          case 1: //equal
+          case 1: // equal
             if (rowValue !== filterValue) {
               result = false;
             }
             break;
-          case 2: //less or equal
+          case 2: // less or equal
             if (!(rowValue <= filterValue)) {
               result = false;
             }
             break;
-          case 3: //greater or equal
+          case 3: // greater or equal
             if (!(rowValue >= filterValue)) {
               result = false;
             }
             break;
-          case 4://greate
+          case 4: // greate
             if (!(rowValue < filterValue)) {
               result = false;
             }
             break;
-          case 5: //greater
+          case 5: // greater
             if (!(rowValue > filterValue)) {
               result = false;
             }
             break;
-          case 6: //contains
+          case 6: // contains
             if (rowValue.indexOf(filterValue) === -1) {
               result = false;
             }
             break;
-          case 7: //not equal to
+          case 7: // not equal to
             if (rowValue === filterValue) {
               result = false;
             }
             break;
-          case 8: //does not contain
+          case 8: // does not contain
             if (rowValue.indexOf(filterValue) !== -1) {
               result = false;
             }
             break;
-          case 9: //begin with
+          case 9: // begin with
             if (rowValue.substring(0, filterValue.length) !== filterValue) {
               result = false;
             }
             break;
-          case 10: //end with
+          case 10: // end with
             if (rowValue.substring(rowValue.length - filterValue.length, rowValue.length) !== filterValue) {
               result = false;
             }
@@ -196,14 +197,14 @@ export class ArrayFilter {
               result = false;
             }
         }
-        if (type === "string") {
-          if (x.value.charAt(0) === "*" && x.value.length === 1) {
+        if (type === 'string') {
+          if (x.value.charAt(0) === '*' && x.value.length === 1) {
             result = true;
           }
         }
 
 
-      });//end foreach obj
+      }); // end foreach obj
       return result;
 
     });

@@ -1,29 +1,30 @@
 import {inject, customAttribute} from 'aurelia-framework';
 import {VGrid} from '../v-grid';
+import {BindingContext, OverrideContext } from '../../interfaces';
 
 
 @customAttribute('v-image-fix')
 @inject(Element, VGrid)
-export class vGridAttributesImageFix {
-  vGrid:VGrid;
-  element:any;
-  value:any;
+export class VGridAttributesImageFix {
+  private vGrid: VGrid;
+  private element: HTMLImageElement;
+  private value: string;
 
-  constructor(element, vGrid) {
+  constructor(element: HTMLImageElement, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
   }
 
 
-  valueChanged(newValue, oldValue) {
-    this.element.src = "";
+  public valueChanged(newValue: string, oldValue: string): void {
+    this.element.src = '';
     this.element.src = this.value || newValue;
   }
 
 
-  bind(bindingContext, overrideContext) {
-    this.element.src = "";
-    this.element.src = this.value || "";
+  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+    this.element.src = '';
+    this.element.src = this.value || '';
   }
 
 

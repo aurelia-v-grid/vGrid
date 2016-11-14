@@ -1,102 +1,108 @@
-//for typings only
-import {ViewSlot} from 'aurelia-framework';
+import {
+  ViewSlot,
+  BindingContext,
+  HeaderCache,
+  RowCache,
+  OverrideContext,
+  HtmlCache,
+  ColumnBindingContext
+} from '../interfaces';
+
 
 export class ViewSlots {
-  leftRowViewSlots:Array<ViewSlot>;
-  mainRowViewSlots:Array<ViewSlot>;
-  rightRowViewSlots:Array<ViewSlot>;
-  groupRowViewSlots:Array<ViewSlot>;
-  leftHeaderViewSlot:ViewSlot;
-  mainHeaderViewSlot:ViewSlot;
-  rightHeaderViewSlot:ViewSlot;
-  mainViewSlot:ViewSlot;
-  loadingScreenViewSlot:ViewSlot;
-  contextMenu:ViewSlot;
-  groupingViewSlots:Array<ViewSlot>;
+  public leftRowViewSlots: Array<ViewSlot>;
+  public mainRowViewSlots: Array<ViewSlot>;
+  public rightRowViewSlots: Array<ViewSlot>;
+  public groupRowViewSlots: Array<ViewSlot>;
+  public leftHeaderViewSlot: ViewSlot;
+  public mainHeaderViewSlot: ViewSlot;
+  public rightHeaderViewSlot: ViewSlot;
+  public mainViewSlot: ViewSlot;
+  public loadingScreenViewSlot: ViewSlot;
+  public contextMenu: ViewSlot;
+  public groupingViewSlots: Array<ViewSlot>;
+  private rowCache: Array<RowCache>;
+  private headerCache: HeaderCache;
 
 
-  //plan was to keep all viewslots here so i can bind/unbind... but...
-  constructor() {
-
+  // plan was to keep all viewslots here so i can bind/unbind... but...
+  constructor(htmlCache: HtmlCache) {
+    this.rowCache = htmlCache.rowCache;
+    this.headerCache = htmlCache.headerCache;
     this.leftRowViewSlots = [];
     this.mainRowViewSlots = [];
     this.rightRowViewSlots = [];
     this.groupRowViewSlots = [];
 
-    this.leftHeaderViewSlot;
-    this.mainHeaderViewSlot;
-    this.rightHeaderViewSlot;
+    this.leftHeaderViewSlot = null;
+    this.mainHeaderViewSlot = null;
+    this.rightHeaderViewSlot = null;
 
-    this.mainViewSlot;
+    this.mainViewSlot = null;
 
-    this.loadingScreenViewSlot;
+    this.loadingScreenViewSlot = null;
 
     this.groupingViewSlots = [];
 
-    this.contextMenu;
+    this.contextMenu = null;
 
   }
 
-  bindAndAttachColumns(overrideContext, columnBindingContext) {
+  public bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext): void {
 
-    let context = {};
-    let parentOverrideContext = {
+    let context;
+
+    let newParentOverrideContext = {
       bindingContext: columnBindingContext,
       parentOverrideContext: overrideContext
     };
 
 
-    for (let i = 0; i < this.groupRowViewSlots.length; i++) {
-      //one for each row.
-      context = {};
+    for (let i = 0; i < this.rowCache.length; i++) {
+      // one for each row.
+      context = ({} as any);
 
-      this.leftRowViewSlots[i].bind(context, {
+      this.rowCache[i].bindingContext = context;
+      this.rowCache[i].parentOverrideContext = {
         bindingContext: context,
-        parentOverrideContext: parentOverrideContext
-      });
+        parentOverrideContext: newParentOverrideContext
+      };
+
+      this.leftRowViewSlots[i].bind(this.rowCache[i].bindingContext, this.rowCache[i].parentOverrideContext);
       this.leftRowViewSlots[i].attached();
 
-      this.mainRowViewSlots[i].bind(context, {
-        bindingContext: context,
-        parentOverrideContext: parentOverrideContext
-      });
+      this.mainRowViewSlots[i].bind(this.rowCache[i].bindingContext, this.rowCache[i].parentOverrideContext);
       this.mainRowViewSlots[i].attached();
 
-      this.rightRowViewSlots[i].bind(context, {
-        bindingContext: context,
-        parentOverrideContext: parentOverrideContext
-      });
+      this.rightRowViewSlots[i].bind(this.rowCache[i].bindingContext, this.rowCache[i].parentOverrideContext);
       this.rightRowViewSlots[i].attached();
 
-      this.groupRowViewSlots[i].bind(context, {
-        bindingContext: context,
-        parentOverrideContext: parentOverrideContext
-      });
+      this.groupRowViewSlots[i].bind(this.rowCache[i].bindingContext, this.rowCache[i].parentOverrideContext);
       this.groupRowViewSlots[i].attached();
     }
 
-    this.leftHeaderViewSlot.bind(context, {
+
+
+    context = {};
+    this.headerCache.bindingContext = context;
+    this.headerCache.parentOverrideContext = {
       bindingContext: context,
-      parentOverrideContext: parentOverrideContext
-    });
+      parentOverrideContext: newParentOverrideContext
+    };
+
+    this.leftHeaderViewSlot.bind(this.headerCache.bindingContext, this.headerCache.parentOverrideContext);
     this.leftHeaderViewSlot.attached();
 
-    this.mainHeaderViewSlot.bind(context, {
-      bindingContext: context,
-      parentOverrideContext: parentOverrideContext
-    });
+    this.mainHeaderViewSlot.bind(this.headerCache.bindingContext, this.headerCache.parentOverrideContext);
     this.mainHeaderViewSlot.attached();
 
-    this.rightHeaderViewSlot.bind(context, {
-      bindingContext: context,
-      parentOverrideContext: parentOverrideContext
-    });
+    this.rightHeaderViewSlot.bind(this.headerCache.bindingContext, this.headerCache.parentOverrideContext);
     this.rightHeaderViewSlot.attached();
 
   }
 
 
-  unbindAndDetachColumns() {
+  public unbindAndDetachColumns(): void {
     for (let i = 0; i < this.groupRowViewSlots.length; i++) {
 
       this.leftRowViewSlots[i].unbind();

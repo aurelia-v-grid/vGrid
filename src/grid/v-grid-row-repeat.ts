@@ -1,26 +1,30 @@
-
-import {inject, noView, customElement, processContent, TargetInstruction,bindable} from 'aurelia-framework';
-import {VGrid} from './v-grid';
+import { inject, noView, customElement, processContent, TargetInstruction } from 'aurelia-framework';
+import { VGrid } from './v-grid';
+import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
 
 @noView()
 @customElement('v-grid-row-repeat')
-@processContent((compiler, resources, element, instruction) => {
+@processContent((
+  compiler: ViewCompiler,
+  resources: ViewResources,
+  element: Element,
+  instruction: CustomBehaviorInstruction) => {
 
-  var headerTemplateElement = element.getElementsByTagName("V-HEADER-TEMPLATE")[0];
-  let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML:null;
+  let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
+  let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
   if (headerTemplateHtml !== '') {
     instruction.headerTemplate = headerTemplateHtml;
   }
 
-  var rowTemplateElement = element.getElementsByTagName("V-ROW-TEMPLATE")[0];
-  let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML:null;
+  let rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
+  let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
   if (rowTemplateHtml !== '') {
     instruction.rowTemplate = rowTemplateHtml;
   }
 
-  //if we didnt get anything we use it all
-  if(!rowTemplateHtml){
+  // if we didnt get anything we use it all
+  if (!rowTemplateHtml) {
     instruction.rowTemplate = element.innerHTML;
   }
 
@@ -29,12 +33,12 @@ import {VGrid} from './v-grid';
 })
 @inject(Element, VGrid, TargetInstruction)
 export class VGridElementRowRepeat {
-  element:Element;
-  vGrid:VGrid;
-  rowTemplate:string;
-  headerTemplate:string;
+  private element: Element;
+  private vGrid: VGrid;
+  private rowTemplate: string;
+  private headerTemplate: string;
 
-  constructor(element, vGrid, targetInstruction) {
+  constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
     this.element = element;
     this.vGrid = vGrid;
     this.rowTemplate = targetInstruction.elementInstruction.rowTemplate;
@@ -43,13 +47,11 @@ export class VGridElementRowRepeat {
   }
 
 
-  bind() {
+  public bind(): void {
     this.vGrid.colRepeater = true;
     this.vGrid.colRepeatRowTemplate = this.rowTemplate;
     this.vGrid.colRepeatRowHeaderTemplate = this.headerTemplate;
   }
-
-
 
 
 }

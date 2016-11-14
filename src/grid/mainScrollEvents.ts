@@ -1,24 +1,24 @@
-import {HtmlCache} from './htmlCache';
+import { HtmlCache } from './htmlCache';
 
 
 export class MainScrollEvents {
-  element:Element;
-  timerLeft:any;
-  timerMain:any;
-  timerRight:any;
-  timerVhandle:any;
-  timerWheel:any;
-  timerHhandle:any;
-  lastTopPosition:number;
-  htmlCache:HtmlCache;
-  left:Element;
-  main:Element;
-  right:Element;
-  mainHead:Element;
-  vhandle:Element;
-  hhandle:Element;
-  group:Element;
-  scroll:Element;
+  private element: Element;
+  private timerLeft: number;
+  private timerMain: number;
+  private timerRight: number;
+  private timerVhandle: number;
+  private timerWheel: number;
+  private timerHhandle: number;
+  private lastTopPosition: number;
+  private htmlCache: HtmlCache;
+  private left: Element;
+  private main: Element;
+  private right: Element;
+  private mainHead: Element;
+  private vhandle: Element;
+  private hhandle: Element;
+  private group: Element;
+
 
 
   constructor(element, htmlCache) {
@@ -33,14 +33,14 @@ export class MainScrollEvents {
     this.lastTopPosition = 0;
   }
 
-  init() {
+  public init(): void {
 
     this.updateInternalHtmlCache();
-    this.addScrollEvents("all");
+    this.addScrollEvents('all');
 
   }
 
-  updateInternalHtmlCache() {
+  private updateInternalHtmlCache(): void {
 
     this.left = this.htmlCache.avg_content_left;
     this.main = this.htmlCache.avg_content_main;
@@ -49,19 +49,20 @@ export class MainScrollEvents {
     this.vhandle = this.htmlCache.avg_content_vhandle;
     this.hhandle = this.htmlCache.avg_content_hhandle;
     this.group = this.htmlCache.avg_content_group;
-    //this.scroll = this.htmlCache.avg_content_scroll;
+    // this.scroll = this.htmlCache.avg_content_scroll;
 
   }
 
 
-  onWeel(event) {
+  private onWeel(event: MouseWheelEvent): boolean {
 
     if (this.vhandle.scrollHeight === (this.vhandle.parentNode as HTMLElement).clientHeight) {
       return false;
     }
 
     requestAnimationFrame(() => {
-      //todo: do I bother to support IE11 for smooth scrolling with synced left/right/group?, if so I need to listen for onmousewheel and other event data...
+      // todo: do I bother to support IE11 for smooth scrolling with synced left/right/group?, 
+      // if so I need to listen for onmousewheel and other event data...
       let deltaY = event.deltaY;
       if (event.deltaMode) {
         deltaY = deltaY * 40;
@@ -73,10 +74,10 @@ export class MainScrollEvents {
   }
 
 
-  addScrollEvents(type) {
+  private addScrollEvents(type: string): void {
 
     switch (type) {
-      case "all":
+      case 'all':
         (this.left as HTMLElement).onscroll = this.handleEventLeftScroll.bind(this);
         (this.main as HTMLElement).onscroll = this.handleEventMainScroll.bind(this);
         (this.right as HTMLElement).onscroll = this.handleEventRightScroll.bind(this);
@@ -87,87 +88,89 @@ export class MainScrollEvents {
         (this.vhandle as HTMLElement).onscroll = this.handleEventVhandle.bind(this);
         (this.hhandle as HTMLElement).onscroll = this.handleEventHhandle.bind(this);
         break;
-      case "left":
+      case 'left':
         (this.main as HTMLElement).onscroll = this.handleEventMainScroll.bind(this);
         (this.right as HTMLElement).onscroll = this.handleEventRightScroll.bind(this);
         (this.vhandle as HTMLElement).onscroll = this.handleEventVhandle.bind(this);
         break;
-      case "main":
+      case 'main':
         (this.left as HTMLElement).onscroll = this.handleEventLeftScroll.bind(this);
         (this.right as HTMLElement).onscroll = this.handleEventRightScroll.bind(this);
         (this.vhandle as HTMLElement).onscroll = this.handleEventVhandle.bind(this);
         break;
-      case "right":
+      case 'right':
         (this.left as HTMLElement).onscroll = this.handleEventLeftScroll.bind(this);
         (this.main as HTMLElement).onscroll = this.handleEventMainScroll.bind(this);
         (this.vhandle as HTMLElement).onscroll = this.handleEventVhandle.bind(this);
         break;
-      case "Vhandle":
+      case 'Vhandle':
         (this.left as HTMLElement).onscroll = this.handleEventLeftScroll.bind(this);
         (this.main as HTMLElement).onscroll = this.handleEventMainScroll.bind(this);
         (this.right as HTMLElement).onscroll = this.handleEventRightScroll.bind(this);
         break;
-      case "Hhandle":
+      case 'Hhandle':
         (this.main as HTMLElement).onscroll = this.handleEventMainScroll.bind(this);
         break;
-      case "wheel":
+      case 'wheel':
         (this.left as HTMLElement).onscroll = this.handleEventLeftScroll.bind(this);
         (this.main as HTMLElement).onscroll = this.handleEventMainScroll.bind(this);
         (this.right as HTMLElement).onscroll = this.handleEventRightScroll.bind(this);
         (this.vhandle as HTMLElement).onscroll = this.handleEventVhandle.bind(this);
         break;
+      default:
 
     }
   }
 
-  removeScrollEvents(type) {
+  private removeScrollEvents(type): void {
     switch (type) {
-      case "all":
+      case 'all':
         (this.left as HTMLElement).onscroll = null;
         (this.main as HTMLElement).onscroll = null;
         (this.right as HTMLElement).onscroll = null;
         (this.vhandle as HTMLElement).onscroll = null;
         (this.group as HTMLElement).onscroll = null;
         break;
-      case "left":
+      case 'left':
         (this.main as HTMLElement).onscroll = null;
         (this.right as HTMLElement).onscroll = null;
         (this.vhandle as HTMLElement).onscroll = null;
         (this.group as HTMLElement).onscroll = null;
         break;
-      case "main":
+      case 'main':
         (this.left as HTMLElement).onscroll = null;
         (this.right as HTMLElement).onscroll = null;
         (this.vhandle as HTMLElement).onscroll = null;
         (this.group as HTMLElement).onscroll = null;
         break;
-      case "right":
+      case 'right':
         (this.left as HTMLElement).onscroll = null;
         (this.main as HTMLElement).onscroll = null;
         (this.vhandle as HTMLElement).onscroll = null;
         (this.group as HTMLElement).onscroll = null;
         break;
-      case "Vhandle":
+      case 'Vhandle':
         (this.left as HTMLElement).onscroll = null;
         (this.main as HTMLElement).onscroll = null;
         (this.right as HTMLElement).onscroll = null;
         (this.group as HTMLElement).onscroll = null;
         break;
-      case "Hhandle":
+      case 'Hhandle':
         (this.main as HTMLElement).onscroll = null;
         break;
-      case "wheel":
+      case 'wheel':
         (this.left as HTMLElement).onscroll = null;
         (this.main as HTMLElement).onscroll = null;
         (this.right as HTMLElement).onscroll = null;
         (this.vhandle as HTMLElement).onscroll = null;
         (this.group as HTMLElement).onscroll = null;
         break;
+      default:
     }
   }
 
 
-  handleEventLeftScroll() {
+  private handleEventLeftScroll(): boolean {
 
     if (this.vhandle.scrollHeight === (this.vhandle.parentNode as HTMLElement).clientHeight) {
       return false;
@@ -177,7 +180,7 @@ export class MainScrollEvents {
 
       if (this.timerLeft) {
         clearTimeout(this.timerLeft);
-        this.removeScrollEvents("left");
+        this.removeScrollEvents('left');
       }
 
       requestAnimationFrame(() => {
@@ -190,7 +193,7 @@ export class MainScrollEvents {
         this.checkScroll(newTopPosition);
 
         this.timerLeft = setTimeout(() => {
-          this.addScrollEvents("left");
+          this.addScrollEvents('left');
           this.timerLeft = null;
         }, 30);
       });
@@ -198,11 +201,11 @@ export class MainScrollEvents {
 
   }
 
-  handleEventWheelScroll(newTopPosition) {
+  private handleEventWheelScroll(newTopPosition: number): void {
     requestAnimationFrame(() => {
       if (this.timerWheel) {
         clearTimeout(this.timerWheel);
-        this.removeScrollEvents("wheel");
+        this.removeScrollEvents('wheel');
       }
       requestAnimationFrame(() => {
         this.main.scrollTop = this.main.scrollTop + newTopPosition;
@@ -214,7 +217,7 @@ export class MainScrollEvents {
         this.checkScroll(this.main.scrollTop);
 
         this.timerWheel = setTimeout(() => {
-          this.addScrollEvents("wheel");
+          this.addScrollEvents('wheel');
           this.timerWheel = null;
         }, 30);
 
@@ -223,19 +226,19 @@ export class MainScrollEvents {
     });
   }
 
-  handleEventMainScroll() {
+  private handleEventMainScroll(): boolean {
 
     if (this.vhandle.scrollHeight === (this.vhandle.parentNode as HTMLElement).clientHeight) {
       this.main.scrollTop = 0;
-      var newLeftPosition = this.main.scrollLeft;
-      (this.mainHead as HTMLElement).style.left = -newLeftPosition + "px";
+      let newLeftPosition = this.main.scrollLeft;
+      (this.mainHead as HTMLElement).style.left = -newLeftPosition + 'px';
       return false;
     }
 
     requestAnimationFrame(() => {
       if (this.timerMain) {
         clearTimeout(this.timerMain);
-        this.removeScrollEvents("main");
+        this.removeScrollEvents('main');
       }
 
       requestAnimationFrame(() => {
@@ -245,13 +248,13 @@ export class MainScrollEvents {
         this.vhandle.scrollTop = newTopPosition;
         this.group.scrollTop = newTopPosition;
 
-        var newLeftPosition = this.main.scrollLeft;
-        (this.mainHead as HTMLElement).style.left = -newLeftPosition + "px";
+        let newLeftPosition = this.main.scrollLeft;
+        (this.mainHead as HTMLElement).style.left = -newLeftPosition + 'px';
 
         this.checkScroll(newTopPosition);
 
         this.timerMain = setTimeout(() => {
-          this.addScrollEvents("main");
+          this.addScrollEvents('main');
           this.timerMain = null;
         }, 30);
       });
@@ -260,7 +263,7 @@ export class MainScrollEvents {
 
   }
 
-  handleEventRightScroll() {
+  private handleEventRightScroll(): boolean {
 
     if (this.vhandle.scrollHeight === (this.vhandle.parentNode as HTMLElement).clientHeight) {
       return false;
@@ -269,7 +272,7 @@ export class MainScrollEvents {
     requestAnimationFrame(() => {
       if (this.timerRight) {
         clearTimeout(this.timerRight);
-        this.removeScrollEvents("right");
+        this.removeScrollEvents('right');
       }
 
       requestAnimationFrame(() => {
@@ -282,7 +285,7 @@ export class MainScrollEvents {
         this.checkScroll(newTopPosition);
 
         this.timerRight = setTimeout(() => {
-          this.addScrollEvents("right");
+          this.addScrollEvents('right');
           this.timerRight = null;
         }, 30);
       });
@@ -292,14 +295,14 @@ export class MainScrollEvents {
   }
 
 
-  handleEventVhandle() {
+  private handleEventVhandle(): void {
 
 
     requestAnimationFrame(() => {
 
       if (this.timerVhandle) {
         clearTimeout(this.timerVhandle);
-        this.removeScrollEvents("Vhandle");
+        this.removeScrollEvents('Vhandle');
       }
 
       requestAnimationFrame(() => {
@@ -312,7 +315,7 @@ export class MainScrollEvents {
         this.checkScroll(newTopPosition);
 
         this.timerVhandle = setTimeout(() => {
-          this.addScrollEvents("Vhandle");
+          this.addScrollEvents('Vhandle');
           this.timerVhandle = null;
         }, 30);
       });
@@ -321,24 +324,24 @@ export class MainScrollEvents {
 
   }
 
-  handleEventHhandle() {
+  private handleEventHhandle(): void {
 
 
     requestAnimationFrame(() => {
 
       if (this.timerHhandle) {
         clearTimeout(this.timerHhandle);
-        this.removeScrollEvents("Hhandle");
+        this.removeScrollEvents('Hhandle');
       }
 
       requestAnimationFrame(() => {
         let newLeftPosition = this.hhandle.scrollLeft;
         this.main.scrollLeft = newLeftPosition;
-        (this.mainHead as HTMLElement).style.left = -newLeftPosition + "px";
+        (this.mainHead as HTMLElement).style.left = -newLeftPosition + 'px';
 
-        //this.checkScroll(newTopPosition);
+        // this.checkScroll(newTopPosition);
         this.timerHhandle = setTimeout(() => {
-          this.addScrollEvents("Hhandle");
+          this.addScrollEvents('Hhandle');
           this.timerHhandle = null;
         }, 30);
 
@@ -350,37 +353,41 @@ export class MainScrollEvents {
   }
 
 
-  checkScroll(newTopPosition) {
+  private checkScroll(newTopPosition: number): void {
     if (this.lastTopPosition !== newTopPosition) {
 
-      //check is scroll bar scrolling
+      // check is scroll bar scrolling
       let offset = Math.abs(this.lastTopPosition - newTopPosition);
       let isScrollBarScrolling = false;
       if (offset > 200) {
         isScrollBarScrolling = true;
       }
 
-      //check is up or down
+      // check is up or down
       let isDown = true;
       if (this.lastTopPosition > newTopPosition) {
         isDown = false;
       }
 
-      //set last position
+      // set last position
       this.lastTopPosition = newTopPosition;
 
-      //trigger scroll
+      // trigger scroll
       this.triggerGridScrollEvent(isScrollBarScrolling, isDown, newTopPosition);
     }
   }
 
 
-  triggerGridScrollEvent(isScrollBarScrolling, isDown, newTopPosition) {
-    let event = new CustomEvent("avg-scroll", {
+  private triggerGridScrollEvent(
+    scrollbarScrolling: boolean,
+    down: boolean,
+    topPosition: number): void {
+
+    let event = new CustomEvent('avg-scroll', {
       detail: {
-        isScrollBarScrolling: isScrollBarScrolling,
-        isDown: isDown,
-        newTopPosition: newTopPosition
+        isScrollBarScrolling: scrollbarScrolling,
+        isDown: down,
+        newTopPosition: topPosition
       },
       bubbles: false
     });

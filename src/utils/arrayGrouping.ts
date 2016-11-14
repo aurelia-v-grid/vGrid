@@ -1,11 +1,13 @@
+import {Entity} from '../interfaces'; // todo make a interface
+
+
 export class ArrayGrouping {
-  gID:any;
-  groups:any;
-  grouping:any;
-  expanded:Set<any>;
+  private groups: Array<Array<Entity>>;
+  private grouping: Array<string>;
+  private expanded: Set<string>;
 
   constructor() {
-    this.gID = 0;
+
     this.grouping = [];
     this.expanded = new Set([]);
 
@@ -13,13 +15,13 @@ export class ArrayGrouping {
   }
 
 
-  //@params grouping : ["attribute", "attribute2"  etc etc ])
-  group(arrayToGroup, grouping, keepExpanded) {
+  // @params grouping : ["attribute", "attribute2"  etc etc ])
+  public group(arrayToGroup: Array<Entity>, grouping: Array<string>, keepExpanded?: boolean) {
 
     if (grouping.length > 0) {
 
 
-      //temp holder for groups as we create them
+      // temp holder for groups as we create them
       if (!keepExpanded) {
         this.expanded = new Set([]);
       }
@@ -30,13 +32,13 @@ export class ArrayGrouping {
 
         if (groupNo === 0) {
 
-          //create main group and add to groups array
+          // create main group and add to groups array
           let mainGroup = this.groupMain(arrayToGroup, groupBy, groupNo);
           groups.push(mainGroup);
 
         } else {
 
-          //get last group created, and group children
+          // get last group created, and group children
           let childGroupArray = groups[groups.length - 1];
           let newSubGroup = this.groupChildren(childGroupArray, groupBy, groupNo);
           groups.push(newSubGroup);
@@ -53,7 +55,7 @@ export class ArrayGrouping {
         return this.expand(null, this.expanded);
       }
     } else {
-      arrayToGroup.forEach((row)=> {
+      arrayToGroup.forEach((row) => {
         row.__groupLvl = 0;
       });
       this.grouping = [];
@@ -63,90 +65,13 @@ export class ArrayGrouping {
   }
 
 
-  groupMain(array, groupBy, groupNo) {
-    let tempGroupArray = [];
-    let curGroup:any = {};
-    let tempValue = null;
-
-    //first level, here we use array
-    array.forEach((element, i) => {
-      this.gID++;
-      if (element[groupBy] !== tempValue) {
-        curGroup = {
-          __groupName: element[groupBy] || "blank",
-          __group: true,
-          __groupID: element[groupBy],
-          __groupLvl: groupNo,
-          __groupChildren: [element],
-          __groupTotal: 1,
-          __groupExpanded: false
-        };
-        element.__groupLvl = groupNo + 1;
-        tempValue = element[groupBy];
-        tempGroupArray.push(curGroup);
-      } else {
-        element.__groupLvl = groupNo + 1;
-        curGroup.__groupChildren.push(element);
-        curGroup.__groupTotal++;
-      }
-    });
-
-    return tempGroupArray;
-  }
-
-
-  groupChildren(childGroupArray, groupBy, groupNo) {
-    let tempGroupArray = [];
-
-    let curGroup:any = {};
-
-    //loop groups
-    childGroupArray.forEach((element, i) => {
-      let tempValue = null;
-      //loop children
-      let rebuiltChildrenArray = [];
-      element.__groupChildren.forEach((child) => {
-        this.gID++;
-        if (child[groupBy] !== tempValue) {
-          let gidm = child[groupBy] || "blank";
-          let gidc = element.__groupID || "blank";
-          curGroup = {
-            __groupName: child[groupBy],
-            __groupID: gidm + "-" + gidc,
-            __group: true,
-            __groupLvl: groupNo,
-            __groupChildren: [child],
-            __groupTotal: 1,
-            __groupExpanded: false
-          };
-          child.__groupLvl = groupNo + 1;
-
-          tempValue = child[groupBy];
-          rebuiltChildrenArray.push(curGroup);
-          tempGroupArray.push(curGroup);
-        } else {
-          child.__groupLvl = groupNo + 1;
-          curGroup.__groupChildren.push(child);
-          curGroup.__groupTotal++;
-
-        }
-      });
-
-      //replace children with new groups
-      element.__groupChildren = rebuiltChildrenArray;
-    });
-
-    return tempGroupArray;
-  }
-
-
-  getGrouping() {
+  public getGrouping() {
     return this.grouping;
   }
 
 
-  expand(id, array?:Set<any>) {
-    let all = id ? false : true; //if no id, then all
+  public expand(id: string, array?: Set<string>) {
+    let all = id ? false : true; // if no id, then all
     if (!id) {
       if (array) {
         all = false;
@@ -160,9 +85,9 @@ export class ArrayGrouping {
     let collection = [];
     let mainGroups = this.groups[0];
 
-    //lopp children
-    subGroup = (g) => {
-      g.__groupChildren.forEach((sg) => {
+    // lopp children
+    subGroup = (g: Entity) => {
+      g.__groupChildren.forEach((sg: Entity) => {
         collection.push(sg);
         switch (true) {
           case all:
@@ -175,13 +100,16 @@ export class ArrayGrouping {
               subGroup(sg);
             }
             break;
+            default:
+            // need anything here ?
+          break;
         }
 
       });
     };
 
-    //loop main groups
-    mainGroups.forEach((g) => {
+    // loop main groups
+    mainGroups.forEach((g: Entity) => {
       collection.push(g);
       switch (true) {
         case all:
@@ -194,6 +122,9 @@ export class ArrayGrouping {
             subGroup(g);
           }
           break;
+          default:
+            // need anything here ?
+          break;
       }
     });
 
@@ -201,16 +132,16 @@ export class ArrayGrouping {
   }
 
 
-  collapse(id) {
-    let all = id ? false : true; //if no id, then all
+  public collapse(id: string) {
+    let all = id ? false : true; // if no id, then all
     id = id === undefined ? null : id;
     let subGroup;
     let collection = [];
     let mainGroups = this.groups[0];
 
-    //lopp children
-    subGroup = (g) => {
-      g.__groupChildren.forEach((sg) => {
+    // lopp children
+    subGroup = (g: Entity) => {
+      g.__groupChildren.forEach((sg: Entity) => {
 
         switch (true) {
           case all:
@@ -235,8 +166,8 @@ export class ArrayGrouping {
       });
     };
 
-    //loop main groups
-    mainGroups.forEach((g) => {
+    // loop main groups
+    mainGroups.forEach((g: Entity) => {
       collection.push(g);
       switch (true) {
         case all:
@@ -259,6 +190,82 @@ export class ArrayGrouping {
     });
 
     return collection;
+  }
+
+    private groupMain(array: Array<Entity>, groupBy: string, groupNo: number) {
+    let tempGroupArray = [];
+    let curGroup: Entity = ({} as Entity);
+    let tempValue = null;
+
+    // first level, here we use array
+    array.forEach((element, i) => {
+
+      if (element[groupBy] !== tempValue) {
+        curGroup = {
+          __groupName: element[groupBy] || 'blank',
+          __group: true,
+          __groupID: element[groupBy],
+          __groupLvl: groupNo,
+          __groupChildren: [element],
+          __groupTotal: 1,
+          __groupExpanded: false
+        };
+        element.__groupLvl = groupNo + 1;
+        tempValue = element[groupBy];
+        tempGroupArray.push(curGroup);
+      } else {
+        element.__groupLvl = groupNo + 1;
+        curGroup.__groupChildren.push(element);
+        curGroup.__groupTotal++;
+      }
+    });
+
+    return tempGroupArray;
+  }
+
+
+  private groupChildren(childGroupArray: Array<Entity>, groupBy: string, groupNo: number) {
+    let tempGroupArray = [];
+
+    let curGroup: Entity = ({} as Entity);
+
+    // loop groups
+    childGroupArray.forEach((element: Entity, i: number) => {
+      let tempValue = null;
+      // loop children
+      let rebuiltChildrenArray = [];
+      element.__groupChildren.forEach((child: Entity) => {
+
+        if (child[groupBy] !== tempValue) {
+          let gidm = child[groupBy] || 'blank';
+          let gidc = element.__groupID || 'blank';
+          curGroup = {
+            __groupName: child[groupBy],
+            __groupID: gidm + '-' + gidc,
+            __group: true,
+            __groupLvl: groupNo,
+            __groupChildren: [child],
+            __groupTotal: 1,
+            __groupExpanded: false
+          };
+          child.__groupLvl = groupNo + 1;
+
+          tempValue = child[groupBy];
+          rebuiltChildrenArray.push(curGroup);
+          tempGroupArray.push(curGroup);
+        } else {
+          child.__groupLvl = groupNo + 1;
+          curGroup.__groupChildren.push(child);
+          curGroup.__groupTotal++;
+
+        }
+      });
+
+      // replace children with new groups
+      element.__groupChildren = rebuiltChildrenArray;
+    });
+
+    return tempGroupArray;
   }
 
 }

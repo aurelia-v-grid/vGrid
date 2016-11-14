@@ -1,6 +1,8 @@
+import { SortObject, Entity } from '../interfaces';
+
 export class ArraySort {
-  private lastSort: Array<any>;
-  private curSort: Array<any>;
+  private lastSort: Array<SortObject>;
+  private curSort: Array<SortObject>;
 
 
   constructor() {
@@ -14,40 +16,40 @@ export class ArraySort {
     this.curSort = [];
   }
 
-  setLastSort(array) {
+  public setLastSort(array: Array<SortObject>): void {
     this.lastSort = array;
     this.curSort = array;
   }
 
-
-  setOrderBy(attribute, add) {
+  // any = "string"
+  public setOrderBy(param: SortObject | any, add): void {
     let sort;
     let useSetValue = false;
-    if (attribute.asc === undefined) {
+    if (param.asc === undefined) {
       sort = {
-        attribute: attribute,
+        attribute: param,
         asc: true
       };
     } else {
       sort = {
-        attribute: attribute.attribute,
-        asc: attribute.asc
+        attribute: param.attribute,
+        asc: param.asc
       };
       useSetValue = true;
     }
 
 
-    //do we add or is it the first one
+    // do we add or is it the first one
     if (add && this.lastSort.length > 0) {
 
 
-      //its adding, so lets get last one
+      // its adding, so lets get last one
       this.curSort = this.lastSort;
-      var exist = false;
+      let exist = false;
 
 
-      //loop to se if it exist from before
-      this.curSort.forEach(function (x) {
+      // loop to se if it exist from before
+      this.curSort.forEach((x) => {
         if (!useSetValue) {
           if (x.attribute === sort.attribute) {
             exist = true;
@@ -58,7 +60,7 @@ export class ArraySort {
       });
 
 
-      //if it dont exist we add it, else there isnt anythin else to do for now
+      // if it dont exist we add it, else there isnt anythin else to do for now
       if (!exist) {
         this.curSort.push(sort);
         this.curSort[this.curSort.length - 1].no = this.curSort.length;
@@ -68,7 +70,7 @@ export class ArraySort {
 
     } else {
 
-      //if not adding, just set it
+      // if not adding, just set it
       this.curSort = [sort];
       this.curSort[0].no = 1;
       if (this.lastSort[0]) {
@@ -85,44 +87,43 @@ export class ArraySort {
   }
 
 
-  getOrderBy() {
+  public getOrderBy(): Array<SortObject> {
     return this.curSort;
   }
 
 
-  /***************************************************************************************
-   * run the sort
-   ***************************************************************************************/
-  runOrderbyOn(array) {
+
+  public runOrderbyOn(array: Array<Entity>): void {
 
 
-    //super simple for now.. atleast I have som form for sort
-    var thisSort = this.getOrderBy();
+    // super simple for now.. atleast I have som form for sort
+    let thisSort = this.getOrderBy();
 
-    //this is mix from different sources... from what I can tell it works now
-    let cool = array.sort(function (obj1, obj2) {
-      var result = 0;
+    // this is mix from different sources... from what I can tell it works now
+    array.sort((obj1: Entity, obj2: Entity) => {
+      let result = 0;
 
-      for (var i = 0; i < thisSort.length && result == 0; ++i) {
-        //loop until all are sorted
-        var currentObj = thisSort[i];
-        var v1 = obj1[currentObj.attribute];
-        var v2 = obj2[currentObj.attribute];
+      for (let i = 0; i < thisSort.length && result === 0; ++i) {
+        // loop until all are sorted
+        let currentObj = thisSort[i];
+        let v1 = obj1[currentObj.attribute];
+        let v2 = obj2[currentObj.attribute];
 
         if (v1 !== v2) {
           if (currentObj.asc) {
-            //ASC
-            if (v1 < v2)
+            // ASC
+            if (v1 < v2) {
               result = -1;
-            else
+            } else {
               result = 1;
+            }
           } else {
-            //DESC
-            if (v1 < v2)
+            // DESC
+            if (v1 < v2) {
               result = 1;
-            else
+            } else {
               result = -1;
-
+            }
           }
         }
       }

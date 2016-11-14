@@ -1,18 +1,17 @@
-import {ViewSlot} from 'aurelia-framework';
-//for typings only
-import {ViewCompiler, Container, ViewResources} from 'aurelia-framework';
-import {ViewSlots} from './viewSlots';
+import { ViewSlot } from 'aurelia-framework';
+import { ViewCompiler, Container, ViewResources, ViewSlots } from '../interfaces';
+import {OverrideContext} from '../interfaces';
 
 
 export class LoadingScreen {
-  element:any;
-  viewSlots:ViewSlots;
-  viewCompiler:ViewCompiler;
-  container:Container;
-  viewResources:ViewResources;
-  loading:boolean;
-  loadingMessage:string;
-  overrideContext:any;
+  private element: Element;
+  private viewSlots: ViewSlots;
+  private viewCompiler: ViewCompiler;
+  private container: Container;
+  private viewResources: ViewResources;
+  private loading: boolean;
+  private loadingMessage: string;
+  private overrideContext: OverrideContext;
 
 
   constructor(element, viewCompiler, container, viewResources, viewSlots) {
@@ -20,15 +19,15 @@ export class LoadingScreen {
     this.viewSlots = viewSlots;
     this.viewCompiler = viewCompiler;
     this.container = container;
-    
+
     this.viewResources = viewResources;
     this.loading = false;
-    this.loadingMessage = "Loading";
+    this.loadingMessage = 'Loading';
   }
 
-  init(overrideContext) {
+  public init(overrideContext: OverrideContext): void {
     this.overrideContext = overrideContext;
-    var loadingScreentHtml = [
+    let loadingScreentHtml = [
       '<div class="avg-overlay" if.bind="loading">',
       '</div>',
       '<div if.two-way="loading" class="avg-progress-indicator">',
@@ -38,12 +37,18 @@ export class LoadingScreen {
       '</div>'
     ];
 
-    var viewFactory = this.viewCompiler.compile('<template>' + loadingScreentHtml.join("") + '</template>', this.viewResources);
-    var view = viewFactory.create(this.container);
+    let viewFactory = this.viewCompiler.compile(
+      '<template>' +
+      loadingScreentHtml.join('') +
+      '</template>',
+      this.viewResources);
+
+
+    let view = viewFactory.create(this.container);
     let loadingScreenViewSlot = new ViewSlot(this.element, true);
     loadingScreenViewSlot.add(view);
 
-    //bind
+    // bind
     loadingScreenViewSlot.bind(this, {
       bindingContext: this,
       parentOverrideContext: this.overrideContext
@@ -54,19 +59,18 @@ export class LoadingScreen {
   }
 
 
-  enable(msg, collectionLength) {
+  public enable(msg, collectionLength): Promise<void> {
     return new Promise((resolve, reject) => {
       this.loading = collectionLength ? collectionLength > 10000 ? true : false : false;
-      this.loadingMessage = msg || "Loading";
+      this.loadingMessage = msg || 'Loading';
       setTimeout(() => {
         resolve();
       });
     });
-
   }
 
 
-  disable() {
+  public disable(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.loading = false;
       setTimeout(() => {

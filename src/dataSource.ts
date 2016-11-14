@@ -1,196 +1,191 @@
-import {Selection} from "./selection";
-import {Collection} from './collection';
-import {ArrayHelper} from './utils/arrayHelper';
+import { Selection } from './selection';
+import { Collection } from './collection';
+import { ArrayHelper } from './utils/arrayHelper';
+import {Entity, DatasourceConfig, SortObject, FilterObject} from './interfaces';
 
 export class DataSource {
-  public selection:Selection;
-  private arrayHelper:ArrayHelper;
-  public key:string;
-  private mainArray:Array<any>;
-  private config:any;
-  private eventIdCount:number;
-  private eventCallBacks:Array<any>;
-  public entity:any;
-  private collection:Collection;
-
-  constructor(selection:Selection, config:any) {
-
-    //selection
-    this.selection = selection || new Selection("single");
+  public entity: Entity;
+  private selection: Selection;
+  private key: string;
+  private arrayHelper: ArrayHelper;
+  private mainArray: Array<Entity>;
+  private config: DatasourceConfig;
+  private eventIdCount: number;
+  private eventCallBacks: Array<Function>;
+  private collection: Collection;
 
 
-    //overide selection get row/key from row
-    //why not in selection ? because I might need rowbased selection only
+  constructor(selection: Selection, config: DatasourceConfig) {
+
+    // selection
+    this.selection = selection || new Selection('single');
+
+    // overide selection get row/key from row
+    // why not in selection ? because I might need rowbased selection only
     this.selection.overrideGetRowKey(this.getRowKey.bind(this));
     this.selection.overrideGetRowFromKey(this.getRowFromKey.bind(this));
 
-    //array helper helps with grouping/sorting and filtering
+    // array helper helps with grouping/sorting and filtering
     this.arrayHelper = new ArrayHelper();
 
-    //key if you dont want grid to add
+    // key if you dont want grid to add
     this.key = null;
 
-    //main array fill contain all the data set to grid
+    // main array fill contain all the data set to grid
     this.mainArray = null;
 
-    //configuration
+    // configuration
     this.config = config;
     if (config) {
-      this.key = config.key || "__avgKey";
+      this.key = config.key || '__avgKey';
     } else {
-      this.key = "__avgKey";
+      this.key = '__avgKey';
     }
-    //todo, give option to override arrayhelper, or and option to set params you pass into array helper to override some of its functionality
+    // todo, give option to override arrayhelper, 
+    // or and option to set params you pass into array helper to override some of its functionality
 
 
-    //events, gridConnector will add event lister to datasource set to it
+    // events, gridConnector will add event lister to datasource set to it
     this.eventIdCount = -1;
     this.eventCallBacks = [];
 
-    //current entity, this is what users need to link inputs etc too
+    // current entity, this is what users need to link inputs etc too
     this.entity = null;
 
-    //create a collection
+    // create a collection
     this.collection = new Collection(this);
 
   }
 
-  length(){
-    return this.collection.length
+
+  public getSelection() {
+    return this.selection;
   }
 
 
-  triggerEvent(event) {
-    //call all event listeners
-    this.eventCallBacks.forEach((FN)=> {
+  public getKey(): string {
+    return this.key;
+  }
+
+
+  public get length(): number {
+    return this.collection.length;
+  }
+
+
+  public triggerEvent(event: string): void {
+    // call all event listeners
+    this.eventCallBacks.forEach((FN) => {
       FN(event);
     });
   }
 
 
-  addEventListener(callback) {
+  public addEventListener(callback: Function): number {
 
-    //add key
+    // add key
     this.eventIdCount++;
 
-    //add to callback queue
+    // add to callback queue
     this.eventCallBacks.push(callback);
 
-    //return ID, so they can remove listnener
+    // return ID, so they can remove listnener
     return this.eventIdCount;
   }
 
 
 
-  removeEventListener(id:number):void {
-    //remove listtener from id
+  public removeEventListener(id: number): void {
+    // remove listtener from id
     this.eventCallBacks.splice(id, 1);
   }
 
 
-  getRowKey(row) {
+  public setArray(array: Array<Entity>): void {
 
-    //if collection, then get row key
-    if (this.collection) {
-      return this.collection.getRowKey(row);
-    } else {
-      return -1;
-    }
-
-  }
-
-
-  getRowFromKey(key) {
-
-    //if collection then get row from key
-    if (this.collection) {
-      return this.collection.getRowFromKey(key);
-    } else {
-      return -1;
-    }
-  }
-
-
-  setArray(array) {
-
-    //new collection
+    // new collection
     this.collection = new Collection(this);
 
-    //todo, clear stuff set in arrayHelper or just create new?
+    // todo, clear stuff set in arrayHelper or just create new?
     // ???????
 
-    //set data to collection
+    // set data to collection
     this.collection.setData(array);
 
-    //set our main collection, we will use this for later
+    // set our main collection, we will use this for later
     this.mainArray = this.collection.getEntities();
 
-    this.triggerEvent("collection_changed");
+    this.triggerEvent('collection_changed');
   }
 
 
-  select(row) {
-    //get row and set as current entity "entity" of datasource
+  public select(row: number): void {
+    // get row and set as current entity "entity" of datasource
     this.entity = this.collection.getRow(row);
   }
 
 
-  query(options) {
+  public query(options: Array<FilterObject>): void {
     if (options) {
-      //query data (using main here, so we query all data set)
+      // query data (using main here, so we query all data set)
       let newArray = this.arrayHelper.query(this.mainArray, options);
 
-      //set data to our collection
+      // set data to our collection
       this.collection.setData(newArray);
     } else {
       this.collection.setData(this.mainArray);
     }
 
-    //run orderby (that will fix grouping if set)
+    // run orderby (that will fix grouping if set)
     this.orderBy(null, true);
 
-    //trigger event so grid updates
-    this.triggerEvent("collection_filtered");
+    // trigger event so grid updates
+    this.triggerEvent('collection_filtered');
 
   }
 
 
-  orderBy(attribute, addToCurrentSort) {
+  public orderBy(attribute: string|SortObject, addToCurrentSort?: boolean): void {
 
-    //get collection (cant use main,,, might be filtered)
+    // get collection (cant use main,,, might be filtered)
     let collection = this.collection.getEntities();
 
-    //use array helper to sort (takes care of the grouping if set)
+    // use array helper to sort (takes care of the grouping if set)
     let result = this.arrayHelper.orderBy(collection, attribute, addToCurrentSort);
 
-    //set data, need both incase we have grouping
+    // set data, need both incase we have grouping
     this.collection.setData(result.fixed, result.full);
 
-    //trigger event to update grid
-    this.triggerEvent("collection_sorted");
+    // trigger event to update grid
+    this.triggerEvent('collection_sorted');
 
   }
 
 
-  getCurrentOrderBy() {
-    //get
+  public getCurrentOrderBy(): Array<SortObject> {
+    // get
     return this.arrayHelper.getOrderBy();
   }
 
 
-  getCurrentFilter() {
+  public getCurrentFilter(): Array<FilterObject> {
     return this.arrayHelper.getCurrentFilter();
   }
 
 
-  getElement(row) {
-    return this.collection.getRow(row);
+  public getElement(row: number): Entity {
+    if (row === undefined || row === null) {
+      throw new Error('row missing');
+    } else {
+      return this.collection.getRow(row);
+    }
   }
 
 
-  group(grouping, keepExpanded) {
+  public group(grouping: Array<string>, keepExpanded?: boolean): void {
+
     this.arrayHelper.resetSort();
-    grouping.forEach((groupName, i)=> {
+    grouping.forEach((groupName: string, i: number) => {
       this.arrayHelper.setOrderBy(groupName, true);
     });
 
@@ -200,51 +195,50 @@ export class DataSource {
 
     this.collection.setData(groupedArray, untouchedgrouped);
 
-    this.triggerEvent("collection_grouped");
+    this.triggerEvent('collection_grouped');
 
   }
 
 
-  groupCollapse(id) {
+  public groupCollapse(id: string): void {
     let newArray = this.arrayHelper.groupCollapse(id);
     let oldArray = this.collection.getEntities();
     this.collection.setData(newArray, oldArray);
     if (id) {
-      this.triggerEvent("collection_collapsed");
+      this.triggerEvent('collection_collapsed');
     } else {
-      this.triggerEvent("collection_collapsed_all");
+      this.triggerEvent('collection_collapsed_all');
     }
-
   }
 
 
-  groupExpand(id) {
+  public groupExpand(id: string): void {
     let newArray = this.arrayHelper.groupExpand(id);
     let oldArray = this.collection.getEntities();
     this.collection.setData(newArray, oldArray);
     if (id) {
-      this.triggerEvent("collection_expanded");
+      this.triggerEvent('collection_expanded');
     } else {
-      this.triggerEvent("collection_expanded_all");
+      this.triggerEvent('collection_expanded_all');
     }
   }
 
 
-  getFilterOperatorName(operator) {
+  public getFilterOperatorName(operator: string): string {
     return this.arrayHelper.getFilterOperatorName(operator);
   }
 
 
-  getGrouping() {
+  public getGrouping(): Array<string> {
     return this.arrayHelper.getGrouping();
   }
 
 
-  addElement(data) {
+  public addElement(data: Entity): void {
     if (data) {
-      //todo
+      // todo
     } else {
-      let newElement = {};
+      let newElement = ({} as Entity);
       this.mainArray.unshift(newElement);
       let oldArray = this.collection.getEntities();
       let oldMaybeGroupedArray = this.collection.getCurrentEntities();
@@ -254,7 +248,29 @@ export class DataSource {
       }
       oldMaybeGroupedArray.unshift(newElement);
       this.collection.setData(oldMaybeGroupedArray, oldArray);
-      this.triggerEvent("collection_filtered");
+      this.triggerEvent('collection_filtered');
+    }
+  }
+
+  private getRowKey(row: number): string {
+
+    // if collection, then get row key
+    if (this.collection) {
+      return this.collection.getRowKey(row);
+    } else {
+      return null;
+    }
+
+  }
+
+
+  private getRowFromKey(key: string): number {
+
+    // if collection then get row from key
+    if (this.collection) {
+      return this.collection.getRowFromKey(key);
+    } else {
+      return -1;
     }
   }
 

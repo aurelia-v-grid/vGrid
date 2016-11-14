@@ -1,47 +1,49 @@
+import {ColConfig, ColumnBindingContext} from '../interfaces';
+
 export class HtmlHeightWidth {
-  avgScrollBarWidth:any;
-  avgPanel_Height:any;
-  avgHeader_Height:any;
-  avgHeader_Top:any;
-  avgContent_Top:any;
-  avgContent_Bottom:any;
-  avgHeaderLeft_Width:any;
-  avgHeaderMain_Left:any;
-  avgHeaderMain_Right:any;
-  avgHeaderMainScroll_Width:any;
-  avgHeaderMainScroll_Height:any;
-  avgHeaderRight_Right:any;
-  avgHeaderRight_Width:any;
-  avgContentLeft_Width:any;
-  avgContentLeftScroll_Width:any;
-  avgContentLeftScroll_Height:any;
-  avgContentMain_Left:any;
-  avgContentMain_Right:any;
-  avgContentMainScroll_Width:any;
-  avgContentMainScroll_Height:any;
-  avgContentRight_Right:any;
-  avgContentRight_Width:any;
-  avgContentRightScroll_Width:any;
-  avgContentRightScroll_Height:any;
-  avgContentGroup_Width:any;
-  avgContentGroup_Height:any;
-  avgContentGroup_Top:any;
-  avgContentGroup_Bottom:any;
-  avgContentVhandle_Width:any;
-  avgContentVhandle_Height:any;
-  avgContentVhandle_Top:any;
-  avgContentVhandleScroll_Height:any;
-  avgContentVhandle_Bottom:any;
-  avgContentHhandle_Bottom:any;
-  avgContentHhandle_Right:any;
-  avgContentHhandle_Left:any;
-  avgContentHhandle_Height:any;
-  avgContentHhandleScroll_Width:any;
-  avgFooter_Height:any;
-  attHeaderHeight:number;
-  attRowHeight:number;
-  attFooterHeight:number;
-  attPanelHeight:number;
+  public avgScrollBarWidth: number;
+  public avgPanel_Height: number;
+  public avgHeader_Height: number;
+  public avgHeader_Top: number;
+  public avgContent_Top: number;
+  public avgContent_Bottom: number;
+  public avgHeaderLeft_Width: number;
+  public avgHeaderMain_Left: number;
+  public avgHeaderMain_Right: number;
+  public avgHeaderMainScroll_Width: number;
+  public avgHeaderMainScroll_Height: number;
+  public avgHeaderRight_Right: number;
+  public avgHeaderRight_Width: number;
+  public avgContentLeft_Width: number;
+  public avgContentLeftScroll_Width: string;
+  public avgContentLeftScroll_Height: number;
+  public avgContentMain_Left: number;
+  public avgContentMain_Right: number;
+  public avgContentMainScroll_Width: number;
+  public avgContentMainScroll_Height: number;
+  public avgContentRight_Right: number;
+  public avgContentRight_Width: number;
+  public avgContentRightScroll_Width: string;
+  public avgContentRightScroll_Height: number;
+  public avgContentGroup_Width: number;
+  public avgContentGroup_Height: number;
+  public avgContentGroup_Top: number;
+  public avgContentGroup_Bottom: number;
+  public avgContentVhandle_Width: number;
+  public avgContentVhandle_Height: number;
+  public avgContentVhandle_Top: number;
+  public avgContentVhandleScroll_Height: number;
+  public avgContentVhandle_Bottom: number;
+  public avgContentHhandle_Bottom: number;
+  public avgContentHhandle_Right: number;
+  public avgContentHhandle_Left: number;
+  public avgContentHhandle_Height: number;
+  public avgContentHhandleScroll_Width: number;
+  public avgFooter_Height: number;
+  public attHeaderHeight: number;
+  public attRowHeight: number;
+  public attFooterHeight: number;
+  public attPanelHeight: number;
 
 
   constructor() {
@@ -70,7 +72,7 @@ export class HtmlHeightWidth {
 
     this.avgContentLeft_Width = 200 + this.avgScrollBarWidth;
 
-    this.avgContentLeftScroll_Width = "100%";
+    this.avgContentLeftScroll_Width = '100%';
     this.avgContentLeftScroll_Height = 0 + this.avgScrollBarWidth;
 
     this.avgContentMain_Left = 200;
@@ -82,7 +84,7 @@ export class HtmlHeightWidth {
     this.avgContentRight_Right = 0;
     this.avgContentRight_Width = 150;
 
-    this.avgContentRightScroll_Width = "100%";
+    this.avgContentRightScroll_Width = '100%';
     this.avgContentRightScroll_Height = 0 + this.avgScrollBarWidth;
 
     this.avgContentGroup_Width = 150;
@@ -107,7 +109,7 @@ export class HtmlHeightWidth {
   }
 
 
-  setCollectionLength(length) {
+  public setCollectionLength(length): void {
     let total = length * this.attRowHeight;
     this.avgContentRightScroll_Height = total + this.avgScrollBarWidth;
     this.avgContentGroup_Height = total;
@@ -117,13 +119,19 @@ export class HtmlHeightWidth {
   }
 
 
-  addDefaultsAttributes(attHeaderHeight:number, attRowHeight:number, attFooterHeight:number, attPanelHeight:number) {
+  public addDefaultsAttributes(
+    attHeaderHeight: number,
+    attRowHeight: number,
+    attFooterHeight: number,
+    attPanelHeight: number): void {
+
+
     this.attHeaderHeight = attHeaderHeight;
     this.attRowHeight = attRowHeight;
     this.attFooterHeight = attFooterHeight;
     this.attPanelHeight = attPanelHeight;
 
-    //set main body parts
+    // set main body parts
     this.avgPanel_Height = attPanelHeight;
     this.avgHeader_Top = attPanelHeight;
     this.avgHeader_Height = attHeaderHeight;
@@ -142,7 +150,7 @@ export class HtmlHeightWidth {
   }
 
 
-  adjustWidthsColumns(columnBindingContext, groupsLength) {
+  public adjustWidthsColumns(columnBindingContext: ColumnBindingContext, groupsLength: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
     let main = 0;
     let right = 0;
@@ -180,7 +188,7 @@ export class HtmlHeightWidth {
   }
 
 
-  setWidthFromColumnConfig(colConfig:Array<any>, groupsLength?:number) {
+  public setWidthFromColumnConfig(colConfig: Array<ColConfig>, groupsLength?: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
     let main = 0;
     let right = 0;
@@ -200,6 +208,7 @@ export class HtmlHeightWidth {
         case !colConfig[i].colPinLeft && !colConfig[i].colPinRight:
           main = main + colConfig[i].colWidth;
           break;
+        default:
       }
     }
 
@@ -223,22 +232,22 @@ export class HtmlHeightWidth {
   }
 
 
-  getScrollbarWidth() {
-    var outer = document.createElement("div");
-    outer.style.visibility = "hidden";
-    outer.style.width = "100px";
+  public getScrollbarWidth(): number {
+    let outer = document.createElement('div');
+    outer.style.visibility = 'hidden';
+    outer.style.width = '100px';
     document.body.appendChild(outer);
 
-    var widthNoScroll = outer.offsetWidth;
+    let widthNoScroll = outer.offsetWidth;
     // force scrollbars
-    outer.style.overflow = "scroll";
+    outer.style.overflow = 'scroll';
 
     // add innerdiv
-    var inner = document.createElement("div");
-    inner.style.width = "100%";
+    let inner = document.createElement('div');
+    inner.style.width = '100%';
     outer.appendChild(inner);
 
-    var widthWithScroll = inner.offsetWidth;
+    let widthWithScroll = inner.offsetWidth;
 
     // remove divs
     outer.parentNode.removeChild(outer);

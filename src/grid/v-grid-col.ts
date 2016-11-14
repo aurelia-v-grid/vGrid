@@ -1,17 +1,31 @@
-import {inject, noView, customElement, bindable, processContent, TargetInstruction} from 'aurelia-framework';
-import {VGrid} from './v-grid';
+import { inject, noView, customElement, bindable, processContent, TargetInstruction } from 'aurelia-framework';
+import { VGrid } from './v-grid';
+import {
+  ViewCompiler,
+  ViewResources,
+  ColConfig,
+  BindingContext,
+  CustomTargetInstruction,
+  CustomBehaviorInstruction,
+  OverrideContext
+} from '../interfaces';
+
 
 @noView()
-@processContent((compiler, resources, element, instruction) => {
+@processContent((
+  compiler: ViewCompiler,
+  resources: ViewResources,
+  element: HTMLElement,
+  instruction: CustomBehaviorInstruction) => {
 
 
-  var headerTemplateElement = element.getElementsByTagName("V-HEADER-TEMPLATE")[0];
+  let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
   let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
   if (headerTemplateHtml !== '') {
     instruction.colHeaderTemplate = headerTemplateHtml;
   }
 
-  var rowTemplateElement = element.getElementsByTagName("V-ROW-TEMPLATE")[0];
+  let rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
   let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
   if (rowTemplateHtml !== '') {
     instruction.colRowTemplate = rowTemplateHtml;
@@ -19,10 +33,10 @@ import {VGrid} from './v-grid';
 
   element.innerHTML = '';
 
-  //we want to get this css attribute and use if later
-  var css = element.getAttribute("col-css");
+  // we want to get this css attribute and use if later
+  let css = element.getAttribute('col-css');
   if (css) {
-    instruction.colCss = css;
+   instruction.colCss = css;
   }
 
 
@@ -30,29 +44,30 @@ import {VGrid} from './v-grid';
 @customElement('v-grid-col')
 @inject(Element, VGrid, TargetInstruction)
 export class VGridElementColConfig {
-  vGrid:VGrid;
-  element:Element;
-  colRowTemplate:string;
-  colHeaderTemplate:string;
-  colCss:string;
+  private vGrid: VGrid;
+  private element: Element;
+  private colRowTemplate: string;
+  private colHeaderTemplate: string;
+  private colCss: string;
 
 
 
-  @bindable({attribute: "col-width"}) colWidth;
-  @bindable({attribute: "col-field"}) colField;
-  @bindable({attribute: "col-header-name"}) colHeaderName;
-  @bindable({attribute: "col-sort"}) colSort;
-  @bindable({attribute: "col-pin-left"}) colPinLeft;
-  @bindable({attribute: "col-pin-right"}) colPinRight;
-  @bindable({attribute: "col-filter"}) colFilter;
-  @bindable({attribute: "col-filter-top"}) colFilterTop;
-  @bindable({attribute: "col-add-label-attributes"}) colAddLabelAttributes;
-  @bindable({attribute: "col-add-filter-attributes"}) colAddFilterAttributes;
-  @bindable({attribute: "col-add-row-attributes"}) colAddRowAttributes;
-  @bindable({attribute: "col-type"}) colType;
+
+  @bindable({ attribute: 'col-width' }) private colWidth: number;
+  @bindable({ attribute: 'col-field' }) private colField: string;
+  @bindable({ attribute: 'col-header-name' }) private colHeaderName: string;
+  @bindable({ attribute: 'col-sort' }) private colSort: string;
+  @bindable({ attribute: 'col-pin-left' }) private colPinLeft: boolean;
+  @bindable({ attribute: 'col-pin-right' }) private colPinRight: boolean;
+  @bindable({ attribute: 'col-filter' }) private colFilter: string;
+  @bindable({ attribute: 'col-filter-top' }) private colFilterTop: boolean;
+  @bindable({ attribute: 'col-add-label-attributes' }) private colAddLabelAttributes: string;
+  @bindable({ attribute: 'col-add-filter-attributes' }) private colAddFilterAttributes: string;
+  @bindable({ attribute: 'col-add-row-attributes' }) private colAddRowAttributes: string;
+  @bindable({ attribute: 'col-type' }) private colType: string;
 
 
-  constructor(element, vGrid, targetInstruction) {
+  constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
     this.vGrid = vGrid;
     this.element = element;
     this.colRowTemplate = targetInstruction.elementInstruction.colRowTemplate;
@@ -61,26 +76,46 @@ export class VGridElementColConfig {
   }
 
 
-  bind(bindingContext, overrideContext) {
-    this.vGrid.colConfig.push({
+  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+    this.vGrid.colConfig.push(({
       colWidth: this.colWidth ? this.colWidth * 1 : 100,
       colRowTemplate: this.colRowTemplate,
       colHeaderTemplate: this.colHeaderTemplate,
       colField: this.colField,
-      colPinLeft: this.colPinLeft === "true" ? true : false,
-      colPinRight: this.colPinRight === "true" ? true : false,
+      colPinLeft: this.checkBool(this.colPinLeft),
+      colPinRight: this.checkBool(this.colPinRight),
       colHeaderName: this.colHeaderName,
       colAddLabelAttributes: this.colAddLabelAttributes,
       colAddFilterAttributes: this.colAddFilterAttributes,
       colAddRowAttributes: this.colAddRowAttributes,
       colSort: this.colSort,
       colFilter: this.colFilter,
-      colFilterTop: this.colFilterTop === "true" ? true : false,
+      colFilterTop: this.checkBool(this.colFilterTop),
       colCss: this.colCss,
-      colType: this.colType || "text"
-    });
+      colType: this.colType || 'text'
+    } as ColConfig));
 
+  }
 
+  private checkBool(value: string | boolean): boolean {
+    if (typeof value === 'string') {
+      value = value.toLowerCase();
+    }
+
+    switch (true) {
+      case value === 'true':
+      case value === true:
+        value = true;
+        break;
+      case value === 'false':
+      case value === false:
+        value = false;
+        break;
+      default:
+        value = false;
+        break;
+    }
+    return value;
   }
 
 

@@ -1,87 +1,98 @@
-//for typings only
-import {bindable, ViewCompiler, Container, ViewResources, TaskQueue} from 'aurelia-framework';
-import {MainMarkup} from './mainMarkup';
-import {MainScrollEvents} from './mainScrollEvents';
-import {RowMarkup} from './rowMarkup';
-import {RowScrollEvents} from './rowScrollEvents';
-import {ColumnMarkup} from './columnMarkup';
-import {HtmlCache} from './htmlCache';
-import {HtmlHeightWidth} from './htmlHeightWidth';
-import {ViewSlots} from './viewSlots';
-import {ColumnBindingContext} from './columnBindingContext';
-import {RowDataBinder} from './rowDataBinder';
-import {RowClickHandler} from './rowClickHandler';
-import {GroupingElements} from './groupingElements';
-import {LoadingScreen} from './loadingScreen';
-import {ContextMenu} from './contextMenu';
-import {VGrid} from './v-grid';
+import {
+  ViewCompiler,
+  ViewResources,
+  Container,
+  TaskQueue,
+  MainMarkup,
+  MainScrollEvents,
+  ColumnMarkup,
+  HtmlHeightWidth,
+  ViewSlots,
+  ColumnBindingContext,
+  HtmlCache,
+  RowDataBinder,
+  RowClickHandler,
+  GroupingElements,
+  RowMarkup,
+  LoadingScreen,
+  ContextMenu,
+  VGrid,
+  GridConnector,
+  Selection,
+  RowScrollEvents,
+  ColConfig,
+  BindingContext,
+  OverrideContext,
+  DragDropShardContext,
+  ResizeShardContext
+} from '../interfaces';
 
 
 
 export class Controller {
-    vGrid:VGrid;
-    htmlCache:HtmlCache;
-    htmlHeightWidth:HtmlHeightWidth;
-    viewSlots:ViewSlots;
-    columnBindingContext:ColumnBindingContext;
-    rowDataBinder:RowDataBinder;
-    mainMarkup:MainMarkup;
-    mainScrollEvents:MainScrollEvents;
-    rowMarkup:RowMarkup;
-    rowScrollEvents:RowScrollEvents;
-    rowClickHandler:RowClickHandler;
-    columnMarkup:ColumnMarkup;
-    groupingElements:GroupingElements;
-    loadingScreen:LoadingScreen;
-    contextMenu:ContextMenu;
-    htmlcolumnMarkupCache:ColumnMarkup
-    element:any;
-    viewCompiler:ViewCompiler;
-    container:Container;
-    viewResources:ViewResources;
-    taskQueue:TaskQueue;
-    dragDropAttributeSharedContext:any;
-    resizeAttributeSharedContext:any;
-    colConfig:Array<any>;
-    colRepeater:boolean;
-    colRepeatRowTemplate:string;
-    colRepeatRowHeaderTemplate:string;
-    bindingContext:any;
-    overrideContext:any;
-    attRowHeight:any;
-    attHeaderHeight:any;
-    attFooterHeight:any;
-    attPanelHeight:any;
-    attMultiSelect:any;
-    attManualSelection:any;
-    attGridConnector:any;
+  public vGrid: VGrid;
+  public htmlCache: HtmlCache;
+  public htmlHeightWidth: HtmlHeightWidth;
+  public viewSlots: ViewSlots;
+  public columnBindingContext: ColumnBindingContext;
+  public rowDataBinder: RowDataBinder;
+  public mainMarkup: MainMarkup;
+  public mainScrollEvents: MainScrollEvents;
+  public rowMarkup: RowMarkup;
+  public rowScrollEvents: RowScrollEvents;
+  public rowClickHandler: RowClickHandler;
+  public columnMarkup: ColumnMarkup;
+  public groupingElements: GroupingElements;
+  public loadingScreen: LoadingScreen;
+  public contextMenu: ContextMenu;
+  public htmlcolumnMarkupCache: ColumnMarkup;
+  public element: Element;
+  public viewCompiler: ViewCompiler;
+  public container: Container;
+  public viewResources: ViewResources;
+  public taskQueue: TaskQueue;
+  public dragDropAttributeSharedContext: DragDropShardContext;
+  public resizeAttributeSharedContext: ResizeShardContext;
+  public colConfig: Array<ColConfig>;
+  public colRepeater: boolean;
+  public colRepeatRowTemplate: string;
+  public colRepeatRowHeaderTemplate: string;
+  public bindingContext: BindingContext;
+  public overrideContext: OverrideContext;
+  public attRowHeight: number;
+  public attHeaderHeight: number;
+  public attFooterHeight: number;
+  public attPanelHeight: number;
+  public attMultiSelect: boolean;
+  public attManualSelection: boolean;
+  public attGridConnector: GridConnector;
 
 
   constructor(vGrid) {
-    //main context
+    // main context
     this.vGrid = vGrid;
 
-    //main element
+    // main element
     this.element = vGrid.element;
   }
 
 
-  getContext() {
+  public getContext() {
 
     let c = this.vGrid;
-    //column configuration
+    // column configuration
     this.colConfig = c.colConfig;
     this.colRepeater = c.colRepeater;
     this.colRepeatRowTemplate = c.colRepeatRowTemplate;
     this.colRepeatRowHeaderTemplate = c.colRepeatRowHeaderTemplate;
 
-    //aurelia classes
+    // aurelia classes
     this.viewCompiler = c.viewCompiler;
     this.container = c.container;
     this.viewResources = c.viewResources;
     this.taskQueue = c.taskQueue;
 
-    //classes
+    // classes
     this.htmlCache = c.htmlCache;
     this.htmlHeightWidth = c.htmlHeightWidth;
     this.viewSlots = c.viewSlots;
@@ -98,7 +109,7 @@ export class Controller {
     this.loadingScreen = c.loadingScreen;
     this.contextMenu = c.contextMenu;
 
-    //attributes
+    // attributes
     this.bindingContext = c.bindingContext;
     this.overrideContext = c.overrideContext;
     this.attRowHeight = c.attRowHeight;
@@ -111,105 +122,119 @@ export class Controller {
   }
 
 
-  createGrid() {
-    //sets default height and widths of the grid
-    this.htmlHeightWidth.addDefaultsAttributes(this.attHeaderHeight, this.attRowHeight, this.attFooterHeight, this.attPanelHeight);
+  public createGrid(): void {
+    // sets default height and widths of the grid
+    this.htmlHeightWidth.addDefaultsAttributes(
+      this.attHeaderHeight,
+      this.attRowHeight,
+      this.attFooterHeight,
+      this.attPanelHeight);
 
-    //generate main markup and updates our cache
+    // generate main markup and updates our cache
     this.mainMarkup.generateMainMarkup();
     this.htmlCache.updateMainMarkup();
 
     this.rowDataBinder.init();
-    //starts the scroll events on main html markup (left/main/right)
+    // starts the scroll events on main html markup (left/main/right)
     this.mainScrollEvents.init();
 
-    //creates main row markup and attaches them, then we chache this html also
+    // creates main row markup and attaches them, then we chache this html also
     this.rowMarkup.init(this.attRowHeight);
     this.htmlCache.updateRowsMarkup();
 
-    //add scroll events (the one that moves the actual rows when scroling)
+    // add scroll events (the one that moves the actual rows when scroling)
     this.rowScrollEvents.init(this.attRowHeight);
 
-    //creates the views/viewports we need
-    this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate);
+    // creates the views/viewports we need
+    this.columnMarkup.init(
+      this.colConfig,
+      this.overrideContext,
+      this.colRepeater,
+      this.colRepeatRowTemplate,
+      this.colRepeatRowHeaderTemplate);
 
 
-    //more updates to main markup
+    // more updates to main markup
     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
 
-    //register the rowClick handler (when clicking on rows)
+    // register the rowClick handler (when clicking on rows)
     this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);
 
-    //create grouping elements helper... pretty much just creates view when dragging to group box
+    // create grouping elements helper... pretty much just creates view when dragging to group box
     this.groupingElements.init(this);
 
-    //loading screen view
+    // loading screen view
     this.loadingScreen.init(this.overrideContext);
 
-    //add context menu
+    // add context menu
     this.contextMenu.init();
 
 
   }
 
 
-  //misc function, all calls to/from gridconnector will go in functions here, mostly.. I think...
+  // misc function, all calls to/from gridconnector will go in functions here, mostly.. I think...
 
-  getElement(row, isDown, callback) {
+  public getElement(rowNumber: number, isDownScroll: boolean, callbackFN: Function): void {
     this.attGridConnector.getElement({
-      row: row,
-      isDown: isDown,
-      callback: callback
+      row: rowNumber,
+      isDown: isDownScroll,
+      callback: callbackFN
     });
   }
 
-  getOperatorName(name) {
+  public getOperatorName(name): string {
     return this.attGridConnector.getFilterOperatorName(name);
   }
 
-  expandGroup(id) {
+  public expandGroup(id): void {
     this.attGridConnector.expandGroup(id);
   }
 
-  collapseGroup(id) {
+  public collapseGroup(id): void {
     this.attGridConnector.collapseGroup(id);
   }
 
-  select(row) {
+  public select(row: number): void {
     this.attGridConnector.select(row);
   }
 
 
-  addToGrouping(attribute) {
+  public addToGrouping(attribute: string): void {
     let currentGrouping = this.attGridConnector.getGrouping();
-    currentGrouping.push(attribute);
-    this.attGridConnector.group(currentGrouping, true);
+    if (currentGrouping.indexOf(attribute) === -1) {
+      currentGrouping.push(attribute);
+      this.attGridConnector.group(currentGrouping, true);
+    }
+
   }
 
-  removeFromGrouping(attribute) {
+
+
+  public removeFromGrouping(attribute: string) {
     let currentGrouping = this.attGridConnector.getGrouping();
     let index = currentGrouping.indexOf(attribute);
     if (index !== -1) {
       currentGrouping.splice(index, 1);
       this.attGridConnector.group(currentGrouping, true);
     }
-
   }
 
-  getSelectionContext() {
-    return this.attGridConnector.selection;
+
+  public getSelectionContext(): Selection {
+    let sel: Selection = this.attGridConnector.getSelection();
+    return sel;
   }
 
-  raiseEvent(name, data = {}) {
+  public raiseEvent(name, data = {}): void {
     let event = new CustomEvent(name, {
       detail: data,
       bubbles: true
     });
     this.element.dispatchEvent(event);
-    return event;
   }
 
-  setLoadingScreen(value, msg, collectionLength) {
+  public setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<void> {
 
     if (value) {
       return this.loadingScreen.enable(msg, collectionLength);
@@ -219,29 +244,29 @@ export class Controller {
   }
 
 
-  updateHeights() {
-    this.rowScrollEvents.setCollectionLength(this.attGridConnector.length());
-    this.htmlHeightWidth.setCollectionLength(this.attGridConnector.length());
+  public updateHeights(): void {
+    this.rowScrollEvents.setCollectionLength(this.attGridConnector.getDatasourceLength());
+    this.htmlHeightWidth.setCollectionLength(this.attGridConnector.getDatasourceLength());
   }
 
-  updateHeaderGrouping(groups) {
+  public updateHeaderGrouping(groups: Array<string>): void {
     let length = groups.length;
     this.columnBindingContext.setupgrouping = length;
     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
   }
 
-  collectionLength() {
-    return this.attGridConnector.length();
+  public collectionLength(): number {
+    return this.attGridConnector.getDatasourceLength();
   }
 
-  triggerScroll(position) {
+  public triggerScroll(position: number): void {
     if (position === null || position === undefined) {
       position = this.htmlCache.avg_content_main.scrollTop;
     } else {
       this.htmlCache.avg_content_main.scrollTop = position;
     }
 
-    this.raiseEvent("avg-scroll", {
+    this.raiseEvent('avg-scroll', {
       isScrollBarScrolling: true,
       isDown: true,
       newTopPosition: position
@@ -249,16 +274,16 @@ export class Controller {
   }
 
 
-  rebindAllRows() {
-    this.raiseEvent("avg-rebind-all-rows", {
+  public rebindAllRows(): void {
+    this.raiseEvent('avg-rebind-all-rows', {
       rowCache: this.htmlCache.rowCache,
       downScroll: true
     });
   }
 
 
-  addEventListeners() {
-    this.element.addEventListener("getElement", (event) => {
+  public addEventListeners(): void {
+    this.element.addEventListener('getElement', (event: CustomEvent) => {
       this.attGridConnector.getElement(event.detail);
     });
   }

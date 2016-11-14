@@ -1,14 +1,14 @@
-import {FilterOperators} from './filterOperators';
-import {ArrayFilter} from './arrayFilter';
-import {ArraySort} from './arraySort';
-import {ArrayGrouping} from './arrayGrouping';
-
+import { FilterOperators } from './filterOperators';
+import { ArrayFilter } from './arrayFilter';
+import { ArraySort } from './arraySort';
+import { ArrayGrouping } from './arrayGrouping';
+import {SortObject, FilterObject, Entity} from '../interfaces';
 
 export class ArrayHelper {
-  filterOperators:FilterOperators;
-  arrayFilter:ArrayFilter;
-  arraySort:ArraySort;
-  arrayGrouping:ArrayGrouping;
+  public filterOperators: FilterOperators;
+  public arrayFilter: ArrayFilter;
+  public arraySort: ArraySort;
+  public arrayGrouping: ArrayGrouping;
 
   constructor() {
     this.filterOperators = new FilterOperators();
@@ -18,7 +18,11 @@ export class ArrayHelper {
 
   }
 
-  orderBy(collection, attribute, addToCurrentSort) {
+  public orderBy(
+    collection: Array<Entity>,
+    attribute: string | SortObject,
+    addToCurrentSort?: boolean
+    ): {fixed: Array<Entity>, full: Array<Entity>} {
 
 
     let grouping = this.getGrouping();
@@ -29,20 +33,20 @@ export class ArrayHelper {
 
     if (grouping.length > 0) {
 
-      //get last sort
+      // get last sort
       let lastSort = this.getOrderBy();
 
-      //reset sort
+      // reset sort
       this.resetSort();
 
-      //loop
+      // loop
       let exist = false;
 
-      //if not adding, create new sort array
+      // if not adding, create new sort array
       let newSort = [];
 
       let count = 0;
-      //loop existing
+      // loop existing
       lastSort.forEach((sort) => {
         count++;
         if (grouping.indexOf(sort.attribute) !== -1 || addToCurrentSort) {
@@ -63,27 +67,27 @@ export class ArrayHelper {
 
       });
 
-      //set last sort
+      // set last sort
       this.setLastSort(newSort);
 
-      //if it does not exist, then add
+      // if it does not exist, then add
       if (!exist && attribute) {
         this.setOrderBy(attribute, true);
       }
 
-      //run orderby
+      // run orderby
       this.runOrderbyOn(collection);
 
-      //regroup
+      // regroup
       let groupedArray = this.group(collection, grouping, true);
-      //set result
+      // set result
       result = {
         fixed: groupedArray,
         full: collection
       };
     } else {
       if (!attribute) {
-        //no attribute, just reset last sort...
+        // no attribute, just reset last sort...
         let lastSort = this.getOrderBy();
         this.resetSort();
         this.setLastSort(lastSort);
@@ -105,51 +109,51 @@ export class ArrayHelper {
     return result;
   }
 
-  group(array, grouping, keepExpanded) {
-    return this.arrayGrouping.group(array, grouping, keepExpanded)
+  public group(array: Array<Entity>, grouping: Array<string>, keepExpanded: boolean): Array<Entity> {
+    return this.arrayGrouping.group(array, grouping, keepExpanded);
   }
 
-  getGrouping() {
+  public getGrouping(): Array<string> {
     return this.arrayGrouping.getGrouping();
   }
 
-  groupCollapse(id) {
+  public groupCollapse(id: string): Array<Entity> {
     return this.arrayGrouping.collapse(id);
   }
 
-  groupExpand(id) {
+  public groupExpand(id: string): Array<Entity> {
     return this.arrayGrouping.expand(id);
   }
 
-  getOrderBy() {
+  public getOrderBy(): Array<SortObject> {
     return this.arraySort.getOrderBy();
   }
 
-  setLastSort(array) {
+  public setLastSort(array: Array<SortObject>): void {
     this.arraySort.setLastSort(array);
   }
 
-  setOrderBy(attribute, addToCurrentSort) {
+  public setOrderBy(attribute: string| SortObject, addToCurrentSort?: boolean): void {
     this.arraySort.setOrderBy(attribute, addToCurrentSort);
   }
 
-  runOrderbyOn(array) {
+  public runOrderbyOn(array: Array<Entity>): void {
     this.arraySort.runOrderbyOn(array);
   }
 
-  resetSort() {
+  public resetSort(): void {
     this.arraySort.reset();
   }
 
-  getFilterOperatorName(operator) {
+  public getFilterOperatorName(operator: string): string {
     return this.filterOperators.getName(operator);
   }
 
-  getCurrentFilter() {
+  public getCurrentFilter(): Array<FilterObject> {
     return this.arrayFilter.getLastFilter();
   }
 
-  query(array, params) {
+  public query(array: Array<Entity>, params: Array<FilterObject>): Array<Entity> {
     return this.arrayFilter.runQueryOn(array, params);
   }
 

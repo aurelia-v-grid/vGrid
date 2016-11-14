@@ -1,27 +1,41 @@
-import {ViewSlot} from 'aurelia-framework';
-//for typings:
-import {bindable, ViewCompiler, Container, ViewResources} from 'aurelia-framework';
-import {HtmlCache} from './htmlCache';
-import {ColumnBindingContext} from './columnBindingContext';
-import {ViewSlots} from './viewSlots';
-import {Controller} from './controller';
+import { ViewSlot } from 'aurelia-framework';
+import {
+  ViewCompiler,
+  Container,
+  ViewResources,
+  HtmlCache,
+  ColumnBindingContext,
+  ViewSlots,
+  Controller,
+  GroupingContext
+} from '../interfaces';
+
 
 
 export class GroupingElements {
-  element:any;
-  htmlCache:HtmlCache;
-  viewSlots:ViewSlots;
-  viewCompiler:ViewCompiler;
-  container:Container
-  viewResources:ViewResources
-  groupContext:any;
-  lastAdded:any;
-  controller:Controller
-  avgTopPanel:any;
+  private element: Element;
+  private htmlCache: HtmlCache;
+  private viewSlots: ViewSlots;
+  private viewCompiler: ViewCompiler;
+  private container: Container;
+  private viewResources: ViewResources;
+  private groupContext: GroupingContext;
+  private lastAdded: string;
+  private controller: Controller;
+  private avgTopPanel: Element;
 
 
-  constructor(element, viewCompiler, container, viewResources, htmlCache, viewSlots, columnBindingContext) {
-    //basic stuff
+  constructor(
+    element: Element,
+    viewCompiler: ViewCompiler,
+    container: Container,
+    viewResources: ViewResources,
+    htmlCache: HtmlCache,
+    viewSlots: ViewSlots,
+    columnBindingContext: ColumnBindingContext) {
+
+
+    // basic stuff
     this.element = element;
     this.htmlCache = htmlCache;
     this.viewSlots = viewSlots;
@@ -29,23 +43,24 @@ export class GroupingElements {
     this.container = container;
     this.viewResources = viewResources;
 
-    //group context
-    this.groupContext = {};
+    // group context
+    this.groupContext = ({} as GroupingContext);
     this.lastAdded = null;
   }
 
 
-  init(controller) {
+  public init(controller: Controller) {
     this.controller = controller;
     this.avgTopPanel = this.htmlCache.avg_top_panel;
   }
 
 
-  addGroup(name, field) {
+  public addGroup(name: string, field: string): void {
 
-    this.lastAdded = name;
+
     if (!this.groupContext[name]) {
-      this.groupContext[name] = {};
+      this.lastAdded = name;
+      this.groupContext[name] = ({} as GroupingContext);
       this.groupContext[name].name = name;
       this.groupContext[name].ctx = this;
       this.groupContext[name].field = field;
@@ -54,7 +69,7 @@ export class GroupingElements {
         this.ctx.removeFromGrouping(this.field);
       };
 
-      //view-viewslot
+      // view-viewslot
       let viewMarkup =
         `<div class="avg-grouping">
                     <p v-sort="${field}">${name}</p>
@@ -74,37 +89,40 @@ export class GroupingElements {
     this.groupContext[name].viewSlot.bind(this.groupContext[name]);
     this.groupContext[name].viewSlot.attached();
 
-    //set out viewPort class...not happy with all Im doing here
+    // set out viewPort class...not happy with all Im doing here
 
 
   }
 
 
-  removeGroup(name) {
+  public removeGroup(name?: string): void {
     if (name) {
       this.groupContext[name].viewSlot.unbind();
       this.groupContext[name].viewSlot.detached();
       this.groupContext[name].viewSlot.removeAll();
-      this.groupContext[name] = null; //<-- I could prb reuse them...
+      this.groupContext[name] = null; // <-- I could prb reuse them...
     } else {
       if (this.lastAdded) {
         this.groupContext[this.lastAdded].viewSlot.unbind();
         this.groupContext[this.lastAdded].viewSlot.detached();
         this.groupContext[this.lastAdded].viewSlot.removeAll();
+        this.groupContext[this.lastAdded] = null;
         this.lastAdded = null;
       }
     }
   }
 
 
-  addToGrouping() {
-    let toAdd = this.groupContext[this.lastAdded].field;
-    this.controller.addToGrouping(toAdd);
-    this.lastAdded = null;
+  public addToGrouping(): void {
+    if (this.lastAdded) {
+      let toAdd = this.groupContext[this.lastAdded].field;
+      this.controller.addToGrouping(toAdd);
+      this.lastAdded = null;
+    }
   }
 
 
-  removeFromGrouping(field) {
+  public removeFromGrouping(field: string): void {
     this.controller.removeFromGrouping(field);
   }
 

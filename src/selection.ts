@@ -1,9 +1,11 @@
+import {Entity} from './interfaces';
+
 export class Selection {
-  private mode:string;
-  private selectedRows:number;
-  private selection:Set<any>;
-  private lastRowSelected:number;
-  private lastKeyKodeUsed:string;
+  private mode: string;
+  private selectedRows: number;
+  private selection: Set<number>;
+  private lastRowSelected: number;
+  private lastKeyKodeUsed: string;
 
   constructor(mode) {
     this.mode = mode;
@@ -11,33 +13,33 @@ export class Selection {
     this.selection = new Set([]);
   }
 
-  getMode() {
+  public getMode(): string {
     return this.mode;
   }
 
-  setMode() {
-    //todo
+  public setMode(): void {
+    // todo
   }
 
-  getRowKey(row) {
+  public getRowKey(row: number): number {
     return row;
   }
 
-  getRowFromKey(row) {
+  public getRowFromKey(row: number): number {
     return row;
   }
 
-  overrideGetRowKey(fn) {
+  public overrideGetRowKey(fn: (row: number) => number): void {
     this.getRowKey = fn;
   }
 
-  overrideGetRowFromKey(fn) {
+  public overrideGetRowFromKey(fn: (row: number) => number): void {
     this.getRowFromKey = fn;
   }
 
 
-  isSelected(row) {
-    var result = false;
+  public isSelected(row: number): boolean {
+    let result = false;
     if (this.selectedRows > 0) {
       result = this.selection.has(this.getRowKey(row));
     }
@@ -45,28 +47,28 @@ export class Selection {
 
   }
 
-  deSelectAll() {
+  public deSelectAll(): void {
     this.selection.clear();
     this.selectedRows = this.selection.size;
   }
 
-  deSelect(row) {
+  public deSelect(row: number): void {
     this.selection.delete(this.getRowKey(row));
     this.selectedRows = this.selection.size;
   }
 
-  select(row, add) {
+  public select(row: number, add?: boolean): void {
     switch (this.mode) {
-      case "none":
+      case 'none':
       case null:
       case undefined:
         break;
-      case "single":
+      case 'single':
         this.selection.clear();
         this.selection.add(this.getRowKey(row));
         this.selectedRows = this.selection.size;
         break;
-      case "multiple":
+      case 'multiple':
         if (!add) {
           this.selection.clear();
           this.selection.add(this.getRowKey(row));
@@ -77,23 +79,23 @@ export class Selection {
         }
         break;
       default:
-      //nothing-> warn ?
+      // nothing-> warn ?
     }
   }
 
 
-  selectRange(start, end) {
-    if (this.mode === "multiple") {
+  public selectRange(start: number, end: number): void {
+    if (this.mode === 'multiple') {
       this.selection.clear();
-      for (var i = start; i < end + 1; i++) {
+      for (let i = start; i < end + 1; i++) {
         this.selection.add(this.getRowKey(i));
       }
       this.selectedRows = this.selection.size;
     }
   }
 
-  getSelectedRows() {
-    var array = [];
+  public getSelectedRows(): Array<number> {
+    let array = [];
     if (this.selectedRows > 0) {
       this.selection.forEach((value) => {
         array.push(this.getRowFromKey(value));
@@ -102,23 +104,23 @@ export class Selection {
     return array;
   }
 
-  setSelectedRows(newRows) {
+  public setSelectedRows(newRows: Array<number>): void {
     if (this.selectedRows > 0) {
       this.selection.clear();
     }
-    for (var i = 0; i < newRows.length; i++) {
+    for (let i = 0; i < newRows.length; i++) {
       this.selection.add(this.getRowKey(newRows[i]));
     }
     this.selectedRows = this.selection.size;
   }
 
 
-  reset() {
+  public reset(): void {
     if (this.selectedRows > 0) {
       this.selection.clear();
     }
     this.lastRowSelected = -1;
-    this.lastKeyKodeUsed = "none";
+    this.lastKeyKodeUsed = 'none';
     this.selectedRows = this.selection.size;
   }
 

@@ -1,53 +1,62 @@
-//for typings only
-import {HtmlCache} from './htmlCache';
+import { HtmlCache } from '../interfaces';
 
 export class RowMarkup {
-  element:Element;
-  htmlCache:HtmlCache
-  left:any;
-  main:any;
-  right:any;
-  full:any;
-  rowHeight:number;
-  
+  private element: Element;
+  private htmlCache: HtmlCache;
+  private left: Element;
+  private main: Element;
+  private right: Element;
+  private group: Element;
+  private rowHeight: number;
 
 
 
-  constructor(element:Element, htmlCache:HtmlCache) {
+
+  constructor(element: Element, htmlCache: HtmlCache) {
     this.element = element;
     this.htmlCache = htmlCache;
   }
 
 
-  updateInternalHtmlCache():void {
-    this.left = this.htmlCache.avg_content_left_scroll;
-    this.main = this.htmlCache.avg_content_main_scroll;
-    this.right = this.htmlCache.avg_content_right_scroll;
-    this.full = this.htmlCache.avg_content_group_scroll;
-  }
 
 
-  init(rowHeight):void {
+
+  public init(rowHeight: number): void {
     this.rowHeight = rowHeight;
     this.updateInternalHtmlCache();
     this.generateRows();
   }
 
 
-  generateRows():void {
+  private generateRows(): void {
 
-    let markupLeft = "";
-    let markupMain = "";
-    let markupRight = "";
-    let markupGroup = "";
+    let markupLeft = '';
+    let markupMain = '';
+    let markupRight = '';
+    let markupGroup = '';
 
 
-    for (var i = 0; i < 40; i++) { //<- rows here will impact creation time
+    for (let i = 0; i < 40; i++) { // <- rows here will impact creation time
 
       let translateY = this.rowHeight * i;
 
-      let avgRowMarkup = `<avg-row class="avg-row" style="height:${this.rowHeight}px; transform:translate3d(0px, ${translateY}px, 0px);z-index:5;" row="${i}"></avg-row>`;
-      let avgRowMarkupGroup = `<avg-row class="avg-row-helper" style="height:${this.rowHeight}px; transform:translate3d(0px, ${translateY}px, 0px);z-index:5;" row="${i}"></avg-row>`;
+      let avgRowMarkup = `
+        <avg-row 
+          class="avg-row" 
+          style="height:${this.rowHeight}px; 
+            transform:translate3d(0px, ${translateY}px, 0px);
+            z-index:5;" 
+          row="${i}">
+        </avg-row>`;
+
+      let avgRowMarkupGroup = `
+        <avg-row 
+          class="avg-row-helper" 
+          style="height:${this.rowHeight}px; 
+            transform:translate3d(0px, ${translateY}px, 0px);
+            z-index:5;" 
+          row="${i}">
+        </avg-row>`;
 
 
       markupLeft = markupLeft + avgRowMarkup;
@@ -59,9 +68,16 @@ export class RowMarkup {
     this.left.innerHTML = markupLeft;
     this.main.innerHTML = markupLeft;
     this.right.innerHTML = markupLeft;
-    this.full.innerHTML = markupGroup;
+    this.group.innerHTML = markupGroup;
 
   }
 
+
+  private updateInternalHtmlCache(): void {
+    this.left = this.htmlCache.avg_content_left_scroll;
+    this.main = this.htmlCache.avg_content_main_scroll;
+    this.right = this.htmlCache.avg_content_right_scroll;
+    this.group = this.htmlCache.avg_content_group_scroll;
+  }
 
 }
