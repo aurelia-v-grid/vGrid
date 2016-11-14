@@ -1,56 +1,21 @@
 var gulp = require('gulp');
+var path = require('path');
 var browserSync = require('browser-sync');
+var paths = require('../pathsSample');
 
-// this task utilizes the browsersync plugin
-// to create a dev server instance
-// at http://localhost:9000
-gulp.task('serve', ['build'], function(done) {
-  browserSync({
-    online: false,
-    open: false,
-    port: 9000,
+gulp.task('serve', ['dev-build', 'sample-build'], function(done) {
+  var bs = browserSync.create('Sample server');
+
+  var options = {
     server: {
-      baseDir: ['.'],
-      middleware: function(req, res, next) {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        next();
+      baseDir: ['./sample'],
+      routes: {
+        '/root/': './'
       }
     }
-  }, done);
-});
+  };
 
-// this task utilizes the browsersync plugin
-// to create a dev server instance
-// at http://localhost:9000
-gulp.task('serve-bundle', ['bundle'], function(done) {
-  browserSync({
-    online: false,
-    open: false,
-    port: 9000,
-    server: {
-      baseDir: ['.'],
-      middleware: function(req, res, next) {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        next();
-      }
-    }
-  }, done);
-});
-
-// this task utilizes the browsersync plugin
-// to create a dev server instance
-// at http://localhost:9000
-gulp.task('serve-export', ['export'], function(done) {
-  browserSync({
-    online: false,
-    open: false,
-    port: 9000,
-    server: {
-      baseDir: ['./export'],
-      middleware: function(req, res, next) {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        next();
-      }
-    }
-  }, done);
+  // Create a route to the build output directory so we can load the plugin from the subdir
+  options.server.routes['/dist/' + paths.packageName] = paths.plugin;
+  bs.init(options, done);
 });

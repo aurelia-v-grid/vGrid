@@ -1,5 +1,6 @@
 {
-  "name": "aurelia-skeleton-navigation-typescript",
+  "name": "aurelia-v-grid",
+  "main": "dist/amd/index.d.ts",
   "dependencies": {
     "aurelia-binding": "github:aurelia/binding",
     "aurelia-bootstrapper": "github:aurelia/bootstrapper",
@@ -26,10 +27,7 @@
     "aurelia-templating-router": "github:aurelia/templating-router"
   },
   "globalDevDependencies": {
-    "angular-protractor": "registry:dt/angular-protractor#1.5.0+20160425143459",
-    "aurelia-protractor": "github:aurelia/typings/dist/aurelia-protractor.d.ts",
-    "jasmine": "registry:dt/jasmine#2.2.0+20160505161446",
-    "selenium-webdriver": "registry:dt/selenium-webdriver#2.44.0+20160317120654"
+    
   },
   "globalDependencies": {
     "url": "github:aurelia/fetch-client/doc/url.d.ts#bbe0777ef710d889a05759a65fa2c9c3865fc618",

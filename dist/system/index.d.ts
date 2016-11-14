@@ -1,0 +1,9 @@
+import * as gridConnector from './gridConnector';
+import * as selection from './selection';
+import * as datasource from './dataSource';
+import * as collection from './collection';
+export declare function configure(config: any): void;
+export declare const GridConnector: typeof gridConnector.GridConnector;
+export declare const Selection: typeof selection.Selection;
+export declare const DataSource: typeof datasource.DataSource;
+export declare const Collection: typeof collection.Collection;

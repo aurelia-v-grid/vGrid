@@ -1,0 +1,31 @@
+export declare class HtmlCache {
+    element: Element;
+    avg_top_panel: Element;
+    avg_header_left: Element;
+    avg_header: Element;
+    avg_header_main: Element;
+    avg_header_main_scroll: Element;
+    avg_header_right: Element;
+    avg_content: Element;
+    avg_content_left: Element;
+    avg_content_left_scroll: Element;
+    avg_content_main: Element;
+    avg_content_main_scroll: Element;
+    avg_content_right: Element;
+    avg_content_right_scroll: Element;
+    avg_footer: Element;
+    avg_content_group: Element;
+    avg_content_group_scroll: Element;
+    avg_content_vhandle: Element;
+    avg_content_vhandle_scroll: Element;
+    avg_content_hhandle: Element;
+    avg_content_hhandle_scroll: Element;
+    avg_left_rows: NodeListOf<any>;
+    avg_main_rows: NodeListOf<any>;
+    avg_right_rows: NodeListOf<any>;
+    avg_group_rows: NodeListOf<any>;
+    rowCache: Array<any>;
+    constructor(element: any);
+    updateRowsMarkup(): void;
+    updateMainMarkup(): void;
+}

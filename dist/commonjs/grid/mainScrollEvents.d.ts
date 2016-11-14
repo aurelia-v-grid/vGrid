@@ -1,0 +1,34 @@
+import { HtmlCache } from './htmlCache';
+export declare class MainScrollEvents {
+    element: Element;
+    timerLeft: any;
+    timerMain: any;
+    timerRight: any;
+    timerVhandle: any;
+    timerWheel: any;
+    timerHhandle: any;
+    lastTopPosition: number;
+    htmlCache: HtmlCache;
+    left: Element;
+    main: Element;
+    right: Element;
+    mainHead: Element;
+    vhandle: Element;
+    hhandle: Element;
+    group: Element;
+    scroll: Element;
+    constructor(element: any, htmlCache: any);
+    init(): void;
+    updateInternalHtmlCache(): void;
+    onWeel(event: any): boolean;
+    addScrollEvents(type: any): void;
+    removeScrollEvents(type: any): void;
+    handleEventLeftScroll(): boolean;
+    handleEventWheelScroll(newTopPosition: any): void;
+    handleEventMainScroll(): boolean;
+    handleEventRightScroll(): boolean;
+    handleEventVhandle(): void;
+    handleEventHhandle(): void;
+    checkScroll(newTopPosition: any): void;
+    triggerGridScrollEvent(isScrollBarScrolling: any, isDown: any, newTopPosition: any): void;
+}

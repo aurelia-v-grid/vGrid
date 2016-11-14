@@ -1,0 +1,76 @@
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('./fontawesome-webfont.woff2?v=4.6.3') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.avg-default .avg-fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.avg-default.avg-fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.avg-default .avg-fa-sort-number[data-vgridsort]:after {
+  font: x-small FontAwesome;
+  content: attr(data-vgridsort);
+}
+
+.avg-default .avg-fa-sort:after {
+  content: "\f0dc";
+}
+
+.avg-default .avg-fa-sort-desc:after {
+  content: "\f0dd";
+}
+
+.avg-default .avg-fa-sort-asc:after {
+  content: "\f0de";
+}
+
+.avg-default .avg-fa-minus-square:before {
+  content: "\f146";
+}
+
+.avg-default .avg-fa-minus-square-o:before {
+  content: "\f147";
+}
+
+.avg-default .avg-fa-plus-square-o:before {
+  content: "\f196";
+}
+
+
+.avg-default .avg-fa-times-circle-o:after {
+  content: "\f014";
+}
+
+.avg-default .avg-fa-spinner:before {
+  content: "\f110";
+}
+
+
+.avg-default .avg-fa-thumb-tack:before {
+    content: "\f08d";
+}
+
+.avg-default .avg-fa-filter:before {
+  content: "\f0b0";
+}
+
+.avg-default .avg-fa-arrow-left:before {
+  content: "\f060";
+}
