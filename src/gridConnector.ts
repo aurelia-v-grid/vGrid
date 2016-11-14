@@ -14,11 +14,11 @@ export class GridConnector {
   private eventID: number;
 
 
-  constructor(datasource: DataSource, selection: Selection, errorHandler?: Function) {
+  constructor(datasource: DataSource, selection?: Selection, errorHandler?: Function) {
     this.controller = null;
     this.datasource = datasource;
     this.key = datasource.getKey();
-    this.selection = datasource.getSelection();
+    this.selection = selection || datasource.getSelection();
     this.errorhandler = errorHandler || null;
   }
 
