@@ -3,7 +3,7 @@ import {HtmlCache, RowCache} from '../interfaces';
 export class RowScrollEvents {
   private htmlCache: HtmlCache;
   private element: Element;
-  private timer: number;
+  private timer: NodeJS.Timer;
   private largeScroll: boolean;
   private collectionLength: number;
   private largeScrollUpdateDelay: number;

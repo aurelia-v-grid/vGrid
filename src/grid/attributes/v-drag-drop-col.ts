@@ -36,7 +36,7 @@ export class VGridDragDropCol {
   private columnsArray: Array<ColumBindingContextObject>;
   private isPanel: boolean;
   private dragColumnBlock: HTMLElement;
-  private mouseMoveTimer: number;
+  private mouseMoveTimer: NodeJS.Timer;
 
   constructor(element, vGrid) {
     // get contexts

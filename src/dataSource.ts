@@ -15,7 +15,7 @@ export class DataSource {
   private collection: Collection;
 
 
-  constructor(selection: Selection, config: DatasourceConfig) {
+  constructor(selection: Selection, config?: DatasourceConfig) {
 
     // selection
     this.selection = selection || new Selection('single');
