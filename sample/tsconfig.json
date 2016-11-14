@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": "../",
     "outDir": "dist",
     "sourceMap": true,
     "target": "es5",
