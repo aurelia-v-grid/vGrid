@@ -21,7 +21,7 @@ export class MainScrollEvents {
 
 
 
-  constructor(element, htmlCache) {
+  constructor(element: Element, htmlCache: HtmlCache) {
     this.element = element;
     this.htmlCache = htmlCache;
     this.timerLeft = null;
@@ -122,7 +122,7 @@ export class MainScrollEvents {
     }
   }
 
-  private removeScrollEvents(type): void {
+  private removeScrollEvents(type: string): void {
     switch (type) {
       case 'all':
         (this.left as HTMLElement).onscroll = null;

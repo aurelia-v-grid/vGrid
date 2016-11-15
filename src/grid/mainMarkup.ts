@@ -21,7 +21,13 @@ export class MainMarkup {
   private viewFactory: ViewFactory;
   private view: View;
 
-  constructor(element, viewCompiler, container, viewResources, htmlHeightWidth, viewSlots) {
+  constructor(
+    element: Element,
+    viewCompiler: ViewCompiler,
+    container: Container,
+    viewResources: ViewResources,
+    htmlHeightWidth: HtmlHeightWidth,
+    viewSlots: ViewSlots) {
 
     this.element = element;
 

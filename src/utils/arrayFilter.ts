@@ -38,9 +38,9 @@ export class ArrayFilter {
 
 
         // helper for boolean
-        let typeBool = {
-          'true': true,
-          'false': false
+        let typeBool: {true: boolean, false: boolean, [key: string]: any} = {
+          true: true,
+          false: false
         };
 
 

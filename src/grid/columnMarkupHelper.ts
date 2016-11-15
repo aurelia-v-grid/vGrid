@@ -178,7 +178,7 @@ export class ColumnMarkupHelper {
   }
 
 
-  private createImageRowMarkup(col): void {
+  private createImageRowMarkup(col: ColConfig): void {
 
     // get the values/settings
     let classNames = 'class="avg-image-round"';
@@ -197,7 +197,7 @@ export class ColumnMarkupHelper {
   }
 
 
-  private createInputRowMarkup(col): void {
+  private createInputRowMarkup(col: ColConfig): void {
 
     // get the values/settings
     let colClass = `class="${col.colType === 'checkbox' ? 'avg-row-checkbox-100' : 'avg-row-input'}"`;
@@ -234,7 +234,7 @@ export class ColumnMarkupHelper {
 
 
 
-  private createInputHeaderMarkup(col): string {
+  private createInputHeaderMarkup(col: ColConfig): string {
 
     // is it filter ?
     let markup;
@@ -270,7 +270,7 @@ export class ColumnMarkupHelper {
 
 
 
-  private createLabelMarkup(col): string {
+  private createLabelMarkup(col: ColConfig): string {
     // get the values/settings
     let filterClass = col.colFilter ? `${col.colFilterTop ? 'avg-label-bottom' : 'avg-label-top'}` : 'avg-label-full';
 

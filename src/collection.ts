@@ -65,7 +65,7 @@ export class Collection {
     return this.keys.indexOf(key);
   }
 
-  public getRow(row): Entity {
+  public getRow(row: number): Entity {
     return this.entities[row];
   }
 

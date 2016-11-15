@@ -1,4 +1,4 @@
-import {Entity} from './interfaces';
+
 
 export class Selection {
   private mode: string;
@@ -7,7 +7,7 @@ export class Selection {
   private lastRowSelected: number;
   private lastKeyKodeUsed: string;
 
-  constructor(mode) {
+  constructor(mode: string) {
     this.mode = mode;
     this.selectedRows = 0;
     this.selection = new Set([]);
@@ -95,7 +95,7 @@ export class Selection {
   }
 
   public getSelectedRows(): Array<number> {
-    let array = [];
+    let array: Array<number> = [];
     if (this.selectedRows > 0) {
       this.selection.forEach((value) => {
         array.push(this.getRowFromKey(value));

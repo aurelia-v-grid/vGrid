@@ -1,6 +1,6 @@
 import { inject, customAttribute } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-import {BindingContext, OverrideContext} from '../../interfaces';
+import {BindingContext, OverrideContext, FilterObject} from '../../interfaces';
 
 
 @customAttribute('v-filter')
@@ -184,11 +184,11 @@ export class VGridAttributesFilter {
   }
 
 
-  private updateFilter(curFilter): void {
+  private updateFilter(curFilter: Array<FilterObject>): void {
     let filterIndex = -1;
 
     // get index of filter
-    curFilter.forEach((filter, index) => {
+    curFilter.forEach((filter: FilterObject, index: number) => {
       if (filter.attribute === this.attribute) {
         filterIndex = index;
       }

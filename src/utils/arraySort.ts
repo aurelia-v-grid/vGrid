@@ -22,8 +22,8 @@ export class ArraySort {
   }
 
   // any = "string"
-  public setOrderBy(param: SortObject | any, add): void {
-    let sort;
+  public setOrderBy(param: SortObject | any, add?: boolean): void {
+    let sort: any;
     let useSetValue = false;
     if (param.asc === undefined) {
       sort = {

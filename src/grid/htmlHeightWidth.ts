@@ -109,7 +109,7 @@ export class HtmlHeightWidth {
   }
 
 
-  public setCollectionLength(length): void {
+  public setCollectionLength(length: number): void {
     let total = length * this.attRowHeight;
     this.avgContentRightScroll_Height = total + this.avgScrollBarWidth;
     this.avgContentGroup_Height = total;

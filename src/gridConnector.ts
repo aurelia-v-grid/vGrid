@@ -1,5 +1,5 @@
 // for typing only
-import { DataSource, Selection, SortObject, FilterObject, Entity, Controller } from './interfaces';
+import { DataSource, Selection, SortObject, FilterObject, Controller } from './interfaces';
 
 
 

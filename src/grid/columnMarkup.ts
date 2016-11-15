@@ -9,8 +9,7 @@ import {
   ColumnBindingContext,
   ViewSlots,
   ColConfig,
-  OverrideContext,
-  BindingContext
+  OverrideContext
 } from '../interfaces';
 
 
@@ -68,7 +67,7 @@ export class ColumnMarkup {
 
 
   public init(
-    colConfig,
+    colConfig: Array<ColConfig>,
     overrideContext: OverrideContext,
     colRepeater: boolean,
     colRepeatRowTemplate: string,

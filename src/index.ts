@@ -1,6 +1,6 @@
 export * from './interfaces';
 const prefix = './grid';
-export function configure(config) {
+export function configure(config: any) {
   config.globalResources(
     prefix + '/attributes/v-filter',
     prefix + '/attributes/v-sort',

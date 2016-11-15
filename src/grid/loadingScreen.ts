@@ -1,6 +1,6 @@
 import { ViewSlot } from 'aurelia-framework';
 import { ViewCompiler, Container, ViewResources, ViewSlots } from '../interfaces';
-import {OverrideContext} from '../interfaces';
+import { OverrideContext } from '../interfaces';
 
 
 export class LoadingScreen {
@@ -14,7 +14,13 @@ export class LoadingScreen {
   private overrideContext: OverrideContext;
 
 
-  constructor(element, viewCompiler, container, viewResources, viewSlots) {
+  constructor(
+    element: Element,
+    viewCompiler: ViewCompiler,
+    container: Container,
+    viewResources: ViewResources,
+    viewSlots: ViewSlots
+  ) {
     this.element = element;
     this.viewSlots = viewSlots;
     this.viewCompiler = viewCompiler;
@@ -59,7 +65,7 @@ export class LoadingScreen {
   }
 
 
-  public enable(msg, collectionLength): Promise<any> {
+  public enable(msg?: string, collectionLength?: number): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
       this.loading = collectionLength ? collectionLength > 10000 ? true : false : false;
       this.loadingMessage = msg || 'Loading';

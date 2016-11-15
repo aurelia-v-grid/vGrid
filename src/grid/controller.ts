@@ -68,7 +68,7 @@ export class Controller {
   public attGridConnector: GridConnector;
 
 
-  constructor(vGrid) {
+  constructor(vGrid: VGrid) {
     // main context
     this.vGrid = vGrid;
 
@@ -183,15 +183,15 @@ export class Controller {
     });
   }
 
-  public getOperatorName(name): string {
+  public getOperatorName(name: string): string {
     return this.attGridConnector.getFilterOperatorName(name);
   }
 
-  public expandGroup(id): void {
+  public expandGroup(id: string): void {
     this.attGridConnector.expandGroup(id);
   }
 
-  public collapseGroup(id): void {
+  public collapseGroup(id: string): void {
     this.attGridConnector.collapseGroup(id);
   }
 
@@ -226,7 +226,7 @@ export class Controller {
     return sel;
   }
 
-  public raiseEvent(name, data = {}): void {
+  public raiseEvent(name: string, data = {}): void {
     let event = new CustomEvent(name, {
       detail: data,
       bubbles: true

@@ -1,6 +1,6 @@
 
 interface Operators {
-// no point...
+  [key: string]: any;
 }
 
 

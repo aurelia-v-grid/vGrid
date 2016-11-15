@@ -32,7 +32,7 @@ export class HtmlCache {
     public headerCache: HeaderCache;
 
 
-    constructor(element) {
+    constructor(element: Element) {
 
         this.element = element;
         this.avg_top_panel = null;

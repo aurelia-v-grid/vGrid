@@ -19,7 +19,7 @@ export class VGridAttributeMenu {
   @bindable private sort: string ;
   @bindable private pinned: string;
   @bindable private groupby: string;
-  @bindable private copypaste: string; //todo
+  // @bindable private copypaste: string; //todo
 
 
   constructor(element: Element, vGrid: VGrid) {

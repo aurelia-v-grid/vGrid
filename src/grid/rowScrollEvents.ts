@@ -251,9 +251,10 @@ export class RowScrollEvents {
   }
 
 
-  private removeEventListener(): void {
+/*  unused for now
+    private removeEventListener(): void {
     this.element.removeEventListener('avg-scroll', this.onScrollBinded);
-  }
+  }*/
 
 
   private triggerRebindRowEvent(curRow: number, curRowCache: RowCache, isDownScroll: boolean): void {

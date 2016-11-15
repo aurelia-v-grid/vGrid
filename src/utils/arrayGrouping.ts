@@ -26,7 +26,7 @@ export class ArrayGrouping {
         this.expanded = new Set([]);
       }
 
-      let groups = [];
+      let groups: Array<Array<Entity>> = [];
 
       grouping.forEach((groupBy, groupNo) => {
 
@@ -81,8 +81,8 @@ export class ArrayGrouping {
     if (!array) {
       array = new Set([]);
     }
-    let subGroup;
-    let collection = [];
+    let subGroup: Function;
+    let collection: Array<Entity> = [];
     let mainGroups = this.groups[0];
 
     // lopp children
@@ -135,8 +135,8 @@ export class ArrayGrouping {
   public collapse(id: string) {
     let all = id ? false : true; // if no id, then all
     id = id === undefined ? null : id;
-    let subGroup;
-    let collection = [];
+    let subGroup: Function;
+    let collection: Array<Entity> = [];
     let mainGroups = this.groups[0];
 
     // lopp children
@@ -193,9 +193,9 @@ export class ArrayGrouping {
   }
 
     private groupMain(array: Array<Entity>, groupBy: string, groupNo: number) {
-    let tempGroupArray = [];
+    let tempGroupArray: Array<Entity> = [];
     let curGroup: Entity = ({} as Entity);
-    let tempValue = null;
+    let tempValue: string = null;
 
     // first level, here we use array
     array.forEach((element, i) => {
@@ -225,15 +225,15 @@ export class ArrayGrouping {
 
 
   private groupChildren(childGroupArray: Array<Entity>, groupBy: string, groupNo: number) {
-    let tempGroupArray = [];
+    let tempGroupArray: Array<Entity> = [];
 
     let curGroup: Entity = ({} as Entity);
 
     // loop groups
     childGroupArray.forEach((element: Entity, i: number) => {
-      let tempValue = null;
+      let tempValue: string = null;
       // loop children
-      let rebuiltChildrenArray = [];
+      let rebuiltChildrenArray: Array<Entity> = [];
       element.__groupChildren.forEach((child: Entity) => {
 
         if (child[groupBy] !== tempValue) {

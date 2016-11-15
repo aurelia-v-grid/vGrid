@@ -106,7 +106,7 @@ export class RowClickHandler {
   }
 
 
-  private getCache(target): RowCache {
+  private getCache(target: Element): RowCache {
     let no = -1;
     this.htmlCache.rowCache.forEach((row, i) => {
       if (row.left === target) {
@@ -132,7 +132,7 @@ export class RowClickHandler {
 
 
   private singleClick(event: MouseEvent): void {
-    let cache = this.getCache(event.currentTarget) || ({} as RowCache);
+    let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCache);
     if (!cache.isGroup) {
       this.highlightRow(event, cache.row);
       this.controller.select(cache.row);
@@ -149,7 +149,7 @@ export class RowClickHandler {
 
 
   private doubleClick(event: MouseEvent): void {
-    let cache = this.getCache(event.currentTarget) || ({} as RowCache);
+    let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCache);
     this.controller.raiseEvent('v-row-ondblclick', {
       evt: event,
       data: null, // todo, row data ?

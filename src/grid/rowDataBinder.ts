@@ -1,4 +1,4 @@
-import {Controller, RowCache} from '../interfaces';
+import {Controller, RowCache, BindingContext} from '../interfaces';
 
 export class RowDataBinder {
   private element: Element;
@@ -24,10 +24,11 @@ export class RowDataBinder {
     this.element.addEventListener('avg-rebind-all-rows', this.rebindAllRowsBinded);
   }
 
-  private removeEventListener(): void {
+/*  unused for now
+    private removeEventListener(): void {
     this.element.removeEventListener('avg-rebind-row', this.rebindRowBinded);
     this.element.removeEventListener('avg-rebind-all-rows', this.rebindAllRowsBinded);
-  }
+  }*/
 
 
   private rebindRow(event: CustomEvent): void {
@@ -38,7 +39,7 @@ export class RowDataBinder {
     let bindingContext = rowCache.bindingContext;
 
 
-    this.controller.getElement(currentRow, downScroll, (data) => {
+    this.controller.getElement(currentRow, downScroll, (data: BindingContext) => {
 
       if (data.rowRef) {
         if (data.rowRef.__group) {
@@ -66,7 +67,7 @@ export class RowDataBinder {
         }
       }
 
-      if (data.rowRef === undefined || data.rowRef === '' || data.rowRef === null) {
+      if (data.rowRef === undefined || data.rowRef === null) {
         rowCache.left.style.display = 'none';
         rowCache.main.style.display = 'none';
         rowCache.right.style.display = 'none';
@@ -101,7 +102,7 @@ export class RowDataBinder {
 
     for (let i = 0; i < rowCache.length; i++) {
 
-      this.controller.getElement(rowCache[i].row, downScroll, (data) => {
+      this.controller.getElement(rowCache[i].row, downScroll, (data: BindingContext) => {
 
         let bindingContext = rowCache[i].bindingContext;
 
@@ -133,7 +134,7 @@ export class RowDataBinder {
           }
         }
 
-        if (data.rowRef === undefined || data.rowRef === '' || data.rowRef === null) {
+        if (data.rowRef === undefined || data.rowRef === null) {
           rowCache[i].left.style.display = 'none';
           rowCache[i].main.style.display = 'none';
           rowCache[i].right.style.display = 'none';

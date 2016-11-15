@@ -1,4 +1,4 @@
-import { Controller, ColumBindingContextObject } from '../interfaces';
+import { Controller, ColumBindingContextObject, Entity } from '../interfaces';
 
 
 export class ColumnBindingContext {
@@ -9,6 +9,7 @@ export class ColumnBindingContext {
   public setupgrouping: number;
   public changeGrouping: Function;
   private controller: Controller;
+  [key: string]: any;
 
 
   constructor(controller: Controller) {
@@ -18,7 +19,7 @@ export class ColumnBindingContext {
     this.setupright = [];
     this.setupgroup = [];
     this.setupgrouping = 0;
-    this.changeGrouping = (x) => {
+    this.changeGrouping = (x: Entity) => {
       if (x) {
         if (x.__groupExpanded) {
           this.controller.collapseGroup(x.__groupID);

@@ -27,6 +27,7 @@ export { ArraySort } from './utils/arraySort';
 export { ArrayGrouping } from './utils/arrayGrouping';
 
 export interface RowCache {
+  [key: string]: any;
   left: HTMLElement;
   main: HTMLElement;
   right: HTMLElement;
@@ -45,6 +46,7 @@ export interface RowCache {
 }
 
 export interface HeaderCache {
+  [key: string]: any;
   left: HTMLElement;
   main: HTMLElement;
   right: HTMLElement;
@@ -59,6 +61,7 @@ export interface HeaderCache {
 }
 
 export interface ColConfig {
+  [key: string]: any;
   colWidth: number;
   colRowTemplate: string;
   colHeaderTemplate: string;
@@ -79,6 +82,7 @@ export interface ColConfig {
 // the properties will mostly only be on group entities..
 // want to rename these to .__avgXXX so we cant crash with someone else
 export interface Entity {
+  [key: string]: any;
   __group: boolean;
   __groupID: string;
   __groupName: string;
@@ -89,6 +93,7 @@ export interface Entity {
 }
 
 export interface TargetData {
+  [key: string]: any;
   draggable: HTMLElement;
   ok: boolean;
   target: HTMLElement;
@@ -101,12 +106,14 @@ export interface TargetData {
 
 
 export interface FilterObject {
+  [key: string]: any;
   operator: string;
   value: any;
   attribute: string;
 }
 
 export interface SortObject {
+  [key: string]: any;
   attribute: string;
   asc: boolean;
   no?: number;
@@ -114,10 +121,12 @@ export interface SortObject {
 
 
 export interface DatasourceConfig {
+  [key: string]: any;
   key: string;
 }
 
 export interface CustomTargetInstruction extends TargetInstruction {
+  [key: string]: any;
   colHeaderTemplate: string;
   colRowTemplate: string;
   colCss: string;
@@ -127,6 +136,7 @@ export interface CustomTargetInstruction extends TargetInstruction {
 }
 
 export interface CustomBehaviorInstruction extends BehaviorInstruction {
+  [key: string]: any;
   colHeaderTemplate: string;
   colRowTemplate: string;
   colCss: string;
@@ -135,18 +145,21 @@ export interface CustomBehaviorInstruction extends BehaviorInstruction {
 }
 
 export interface BindingContext {
+  [key: string]: any;
   rowRef: Entity;
   selection: Selection;
-  row; number;
+  row: number;
   selected: boolean;
 }
 
 export interface OverrideContext {
+  [key: string]: any;
   bindContext: any;
   parentOverrideContext: any;
 }
 
 export interface DragDropShardContext {
+  [key: string]: any;
   dragging: boolean;
   panel: Element;
   lastTarget: Element;
@@ -159,10 +172,12 @@ export interface DragDropShardContext {
 }
 
 export interface ResizeShardContext {
+  [key: string]: any;
   resizing: boolean;
 }
 
 export interface ColumBindingContextObject {
+  [key: string]: any;
   show: boolean;
   left: number;
   width: number;
@@ -170,6 +185,7 @@ export interface ColumBindingContextObject {
 }
 
 export interface GroupingContext {
+  [key: string]: any;
   viewSlot: ViewSlot;
   name: string;
   field: string;

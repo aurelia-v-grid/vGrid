@@ -26,7 +26,7 @@ export class ArrayHelper {
 
 
     let grouping = this.getGrouping();
-    let result = {
+    let result: {fixed: Array<Entity>, full: Array<Entity>} = {
       fixed: null,
       full: null
     };
@@ -43,11 +43,11 @@ export class ArrayHelper {
       let exist = false;
 
       // if not adding, create new sort array
-      let newSort = [];
+      let newSort: Array<SortObject> = [];
 
       let count = 0;
       // loop existing
-      lastSort.forEach((sort) => {
+      lastSort.forEach((sort: SortObject) => {
         count++;
         if (grouping.indexOf(sort.attribute) !== -1 || addToCurrentSort) {
           newSort.push(sort);
