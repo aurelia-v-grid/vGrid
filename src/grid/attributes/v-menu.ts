@@ -98,6 +98,8 @@ export class VGridAttributeMenu {
       document.removeEventListener('click', this.checkBinded);
       return true;
     }
+
+    return false;
   }
 
 

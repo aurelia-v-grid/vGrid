@@ -29,6 +29,8 @@ export class VGridAttributesFilter {
     if (this.vGrid) {
       let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
       return valueConverter;
+    } else {
+      return {fromView: () => {/* nothing */ }, toView: () => {/* nothing */ } };
     }
   }
 

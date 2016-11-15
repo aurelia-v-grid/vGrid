@@ -8,7 +8,7 @@
     "module": "amd",
     "declaration": true,
     "noImplicitAny": true,
-    "noImplicitReturns": false, //todo, set to true
+    "noImplicitReturns": true,
     "noImplicitUseStrict": true,
     "noUnusedParameters": true,
     "suppressImplicitAnyIndexErrors": false,

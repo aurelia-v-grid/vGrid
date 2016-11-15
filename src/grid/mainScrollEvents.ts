@@ -199,6 +199,8 @@ export class MainScrollEvents {
       });
     });
 
+    return true;
+
   }
 
   private handleEventWheelScroll(newTopPosition: number): void {
@@ -261,6 +263,8 @@ export class MainScrollEvents {
 
     });
 
+    return true;
+
   }
 
   private handleEventRightScroll(): boolean {
@@ -291,6 +295,8 @@ export class MainScrollEvents {
       });
 
     });
+
+    return true;
 
   }
 
