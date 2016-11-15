@@ -60,5 +60,31 @@
   },
   "dependencies": {
     
-  }
+  },
+  "aurelia": {
+    "usedBy": [],
+    "build": {
+      "resources": [
+        "aurelia-v-grid",
+        "aurelia-v-grid/index",
+        "aurelia-v-grid/vGrid/v-grid-row-repeat",
+        "aurelia-v-grid/vGrid/v-grid-col",
+        "aurelia-v-grid/vGrid/v-grid",
+        "aurelia-v-grid/vGrid/attributes/v-filter",
+        "aurelia-v-grid/vGrid/attributes/v-sort",
+        "aurelia-v-grid/vGrid/attributes/v-selection",
+        "aurelia-v-grid/vGrid/attributes/v-image",
+        "aurelia-v-grid/vGrid/attributes/v-menu",
+        "aurelia-v-grid/vGrid/attributes/v-drag-drop-col",
+        "aurelia-v-grid/vGrid/attributes/v-resize-col",
+        "aurelia-v-grid/vGrid/attributes/styles/v-grid.css",
+        "aurelia-v-grid/grid/styles/cellsAndLabels.css",
+        "aurelia-v-grid/grid/styles/contextmenu.css",
+        "aurelia-v-grid/grid/styles/dragAndResize.css",
+        "aurelia-v-grid/grid/styles/grouping.css",
+        "aurelia-v-grid/grid/styles/icons.css",
+        "aurelia-v-grid/grid/styles/main-element-tags.css",
+        "aurelia-v-grid/grid/styles/main-elements.css"
+      ]
+    }
 }
