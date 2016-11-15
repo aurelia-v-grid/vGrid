@@ -37,7 +37,7 @@ export class VGridAttributesSelection {
     this.element.checked = this.selected;
     this.element.onclick = () => {
 
-      //todo, check... think ff had something weird here
+      // todo, check... think ff had something weird here
       let status = (this.element.checked as any) === 'true' || this.element.checked === true ? true : false;
 
       if (status) {

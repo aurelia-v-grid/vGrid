@@ -22,7 +22,7 @@ export class VGridAttributeMenu {
   @bindable private copypaste: string; //todo
 
 
-  constructor(element, vGrid) {
+  constructor(element: Element, vGrid: VGrid) {
     this.element = element;
     this.controller = vGrid.controller;
     this.raiseEvent = vGrid.controller.raiseEvent;

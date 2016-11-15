@@ -38,7 +38,7 @@ export class VGridDragDropCol {
   private dragColumnBlock: HTMLElement;
   private mouseMoveTimer: NodeJS.Timer;
 
-  constructor(element, vGrid) {
+  constructor(element: Element, vGrid: VGrid) {
     // get contexts
     this.vGrid = vGrid;
     this.vGridElement = vGrid.element;
@@ -316,7 +316,7 @@ export class VGridDragDropCol {
 
     // reset blocks
     this.sharedContext.lastTarget = null;
-    //this.sharedContext.group = null;
+    // this.sharedContext.group = null;
 
     // if drag column then remove
     if (this.dragColumnBlock) {

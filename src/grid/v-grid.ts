@@ -70,7 +70,12 @@ export class VGrid {
 
 
 
-  constructor(element, viewCompiler, container, viewResources, taskQueue) {
+  constructor(
+    element: Element,
+    viewCompiler: ViewCompiler,
+    container: Container,
+    viewResources: ViewResources,
+    taskQueue: TaskQueue) {
 
 
     this.element = element;
