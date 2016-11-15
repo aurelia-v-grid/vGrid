@@ -1,4 +1,4 @@
-.avg-default .avg-grouping{
+.avg-default .avg-grouping {
   background-color: rgb(240, 240, 240);
   position: relative;
   margin: 3px;
@@ -9,8 +9,7 @@
   border: 1px solid rgb(230, 230, 230);
 }
 
-
-.avg-default .avg-colunHelper{
+.avg-default .avg-colunHelper {
   top: 0;
   width: 2px;
   left: 0;
@@ -18,17 +17,17 @@
   position: absolute;
 }
 
-.avg-default .avg-group-full{
+.avg-default .avg-group-full {
   border: 1px solid rgb(230, 230, 230);
   box-sizing: border-box;
   box-shadow: initial;
-  line-height:50%;
+  line-height: 50%;
   background-color: rgb(240, 240, 240);
-  margin:3px;
+  margin: 3px;
   height: 80%;
   min-width: 100px;
   position: relative;
-  float:left;
+  float: left;
   padding-top: 5px;
   text-align: center;
 }

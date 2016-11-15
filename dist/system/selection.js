@@ -1,10 +1,9 @@
-System.register([], function(exports_1, context_1) {
-    "use strict";
+System.register([], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
     var Selection;
     return {
-        setters:[],
-        execute: function() {
+        setters: [],
+        execute: function () {
             Selection = (function () {
                 function Selection(mode) {
                     this.mode = mode;
@@ -45,16 +44,16 @@ System.register([], function(exports_1, context_1) {
                 };
                 Selection.prototype.select = function (row, add) {
                     switch (this.mode) {
-                        case "none":
+                        case 'none':
                         case null:
                         case undefined:
                             break;
-                        case "single":
+                        case 'single':
                             this.selection.clear();
                             this.selection.add(this.getRowKey(row));
                             this.selectedRows = this.selection.size;
                             break;
-                        case "multiple":
+                        case 'multiple':
                             if (!add) {
                                 this.selection.clear();
                                 this.selection.add(this.getRowKey(row));
@@ -69,7 +68,7 @@ System.register([], function(exports_1, context_1) {
                     }
                 };
                 Selection.prototype.selectRange = function (start, end) {
-                    if (this.mode === "multiple") {
+                    if (this.mode === 'multiple') {
                         this.selection.clear();
                         for (var i = start; i < end + 1; i++) {
                             this.selection.add(this.getRowKey(i));
@@ -101,14 +100,14 @@ System.register([], function(exports_1, context_1) {
                         this.selection.clear();
                     }
                     this.lastRowSelected = -1;
-                    this.lastKeyKodeUsed = "none";
+                    this.lastKeyKodeUsed = 'none';
                     this.selectedRows = this.selection.size;
                 };
                 return Selection;
             }());
             exports_1("Selection", Selection);
         }
-    }
+    };
 });
 
 //# sourceMappingURL=selection.js.map

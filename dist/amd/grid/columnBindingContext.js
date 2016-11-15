@@ -1,5 +1,4 @@
 define(["require", "exports"], function (require, exports) {
-    "use strict";
     var ColumnBindingContext = (function () {
         function ColumnBindingContext(controller) {
             var _this = this;

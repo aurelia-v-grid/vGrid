@@ -1,15 +1,15 @@
 import { VGrid } from '../v-grid';
-import { Controller } from '../controller';
-export declare class vGridAttributesSelection {
-    element: any;
-    vGrid: VGrid;
-    controller: Controller;
-    bindingContext: any;
-    overrideContext: any;
-    selected: any;
-    type: any;
-    selectedChanged(newValue: any, oldValue: any): void;
-    constructor(element: any, vGrid: any);
-    bind(bindingContext: any, overrideContext: any): void;
+import { BindingContext, OverrideContext } from '../../interfaces';
+export declare class VGridAttributesSelection {
+    private element;
+    private vGrid;
+    private controller;
+    private bindingContext;
+    private overrideContext;
+    private selected;
+    private type;
+    constructor(element: HTMLInputElement, vGrid: VGrid);
+    selectedChanged(newValue: boolean, oldValue: boolean): void;
+    bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
     attached(): void;
 }

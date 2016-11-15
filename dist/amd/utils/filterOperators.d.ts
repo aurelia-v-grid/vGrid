@@ -1,8 +1,7 @@
 export declare class FilterOperators {
-    filterOperatorsNumbers: any;
-    filterOperatorNames: any;
+    private filterOperatorsNumbers;
+    private filterOperatorNames;
     constructor();
-    getFilterNumbers(): any;
-    getName(operator: any): any;
-    getOperatorNo(operator: any): any;
+    getName(operator: string): string;
+    getOperatorNo(operator: string): number;
 }

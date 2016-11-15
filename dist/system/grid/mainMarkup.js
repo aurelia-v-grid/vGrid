@@ -1,17 +1,16 @@
-System.register(['aurelia-framework', './mainMarkupHtmlString'], function(exports_1, context_1) {
-    "use strict";
+System.register(["aurelia-framework", "./mainMarkupHtmlString"], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
-    var aurelia_framework_1, mainMarkupHtmlString_1;
-    var MainMarkup;
+    var aurelia_framework_1, mainMarkupHtmlString_1, MainMarkup;
     return {
-        setters:[
+        setters: [
             function (aurelia_framework_1_1) {
                 aurelia_framework_1 = aurelia_framework_1_1;
             },
             function (mainMarkupHtmlString_1_1) {
                 mainMarkupHtmlString_1 = mainMarkupHtmlString_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             MainMarkup = (function () {
                 function MainMarkup(element, viewCompiler, container, viewResources, htmlHeightWidth, viewSlots) {
                     this.element = element;
@@ -36,7 +35,7 @@ System.register(['aurelia-framework', './mainMarkupHtmlString'], function(export
             }());
             exports_1("MainMarkup", MainMarkup);
         }
-    }
+    };
 });
 
 //# sourceMappingURL=mainMarkup.js.map

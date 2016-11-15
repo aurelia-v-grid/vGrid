@@ -1,22 +1,19 @@
-import { ViewCompiler, Container, ViewResources } from 'aurelia-framework';
-import { HtmlCache } from './htmlCache';
-import { ViewSlots } from './viewSlots';
-import { Controller } from './controller';
+import { ViewCompiler, Container, ViewResources, HtmlCache, ColumnBindingContext, ViewSlots, Controller } from '../interfaces';
 export declare class GroupingElements {
-    element: any;
-    htmlCache: HtmlCache;
-    viewSlots: ViewSlots;
-    viewCompiler: ViewCompiler;
-    container: Container;
-    viewResources: ViewResources;
-    groupContext: any;
-    lastAdded: any;
-    controller: Controller;
-    avgTopPanel: any;
-    constructor(element: any, viewCompiler: any, container: any, viewResources: any, htmlCache: any, viewSlots: any, columnBindingContext: any);
-    init(controller: any): void;
-    addGroup(name: any, field: any): void;
-    removeGroup(name: any): void;
+    private element;
+    private htmlCache;
+    private viewSlots;
+    private viewCompiler;
+    private container;
+    private viewResources;
+    private groupContext;
+    private lastAdded;
+    private controller;
+    private avgTopPanel;
+    constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, htmlCache: HtmlCache, viewSlots: ViewSlots, columnBindingContext: ColumnBindingContext);
+    init(controller: Controller): void;
+    addGroup(name: string, field: string): void;
+    removeGroup(name?: string): void;
     addToGrouping(): void;
-    removeFromGrouping(field: any): void;
+    removeFromGrouping(field: string): void;
 }

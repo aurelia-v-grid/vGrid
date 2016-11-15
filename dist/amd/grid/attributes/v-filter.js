@@ -7,14 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define(["require", "exports", 'aurelia-framework', '../v-grid'], function (require, exports, aurelia_framework_1, v_grid_1) {
-    "use strict";
-    var vGridAttributesFilter = (function () {
-        function vGridAttributesFilter(element, vGrid) {
+define(["require", "exports", "aurelia-framework", "../v-grid"], function (require, exports, aurelia_framework_1, v_grid_1) {
+    var VGridAttributesFilter = (function () {
+        function VGridAttributesFilter(element, vGrid) {
             this.vGrid = vGrid;
             this.element = element;
         }
-        Object.defineProperty(vGridAttributesFilter.prototype, "valueConverters", {
+        Object.defineProperty(VGridAttributesFilter.prototype, "valueConverters", {
             get: function () {
                 if (this.vGrid) {
                     var valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
@@ -24,11 +23,71 @@ define(["require", "exports", 'aurelia-framework', '../v-grid'], function (requi
             enumerable: true,
             configurable: true
         });
-        vGridAttributesFilter.prototype.bind = function (bindingContext, overrideContext) {
+        VGridAttributesFilter.prototype.attached = function () {
+            var _this = this;
+            if (this.attribute) {
+                this.vGrid.element.addEventListener('filterUpdate', function (e) {
+                    if (e.detail.attribute === _this.attribute) {
+                        _this.filterOperator = e.detail.operator;
+                        _this.element.placeholder =
+                            _this.vGrid.attGridConnector.getFilterOperatorName(_this.filterOperator);
+                        _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
+                    }
+                });
+                this.vGrid.element.addEventListener('filterClearCell', function (e) {
+                    if (e.detail.attribute === _this.attribute) {
+                        _this.resetValue();
+                        _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
+                    }
+                });
+                this.vGrid.element.addEventListener('filterClearAll', function () {
+                    _this.resetValue();
+                    _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
+                });
+                if (this.type !== 'checkbox') {
+                    this.element.placeholder =
+                        this.vGrid.attGridConnector.getFilterOperatorName(this.filterOperator);
+                    this.element.onkeyup = function (e) {
+                        if (e.keyCode === 13) {
+                            _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
+                            _this.vGrid.attGridConnector.query(_this.vGrid.attGridConnector.getCurrentFilter());
+                        }
+                        else {
+                            _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
+                            if (_this.filterOn === 'onKeyDown') {
+                                _this.vGrid.attGridConnector.query(_this.vGrid.attGridConnector.getCurrentFilter());
+                            }
+                        }
+                    };
+                }
+                else {
+                    this.element.style.opacity = '0.3';
+                    this.element.onclick = function (e) {
+                        switch (_this.state) {
+                            case 0:
+                                _this.state = 2;
+                                _this.element.style.opacity = '1';
+                                break;
+                            case 2:
+                                _this.state = 3;
+                                _this.element.style.opacity = '1';
+                                break;
+                            default:
+                                _this.element.checked = false;
+                                _this.state = 0;
+                                _this.element.style.opacity = '0.3';
+                        }
+                        _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
+                        _this.vGrid.attGridConnector.query(_this.vGrid.attGridConnector.getCurrentFilter());
+                    };
+                }
+            }
+        };
+        VGridAttributesFilter.prototype.bind = function (bindingContext, overrideContext) {
             var _this = this;
             this.bindingContext = bindingContext;
             this.overrideContext = overrideContext;
-            var values = this.value.split("|");
+            var values = this.value.split('|');
             this.attribute = values[0].trim();
             if (values.length > 1) {
                 values.forEach(function (value, i) {
@@ -37,17 +96,17 @@ define(["require", "exports", 'aurelia-framework', '../v-grid'], function (requi
                     }
                 });
             }
-            this.filterOn = this.filterOn || "onEnterKey";
-            this.filterOperator = this.filterOperator || "=";
+            this.filterOn = this.filterOn || 'onEnterKey';
+            this.filterOperator = this.filterOperator || '=';
             this.valueFormater = this.valueFormater || null;
             this.type = this.element.type;
             this.state = 0;
         };
-        vGridAttributesFilter.prototype.checkParams = function (value) {
+        VGridAttributesFilter.prototype.checkParams = function (value) {
             if (value !== undefined && value !== null) {
                 value = value.trim();
             }
-            var valueConverter = this.valueConverters(value);
+            var valueConverter = this.valueConverters;
             if (valueConverter) {
                 this.valueFormater = valueConverter;
             }
@@ -55,37 +114,37 @@ define(["require", "exports", 'aurelia-framework', '../v-grid'], function (requi
             if (filterOperator) {
                 this.filterOperator = value;
             }
-            if (value === "onKeyDown") {
+            if (value === 'onKeyDown') {
                 this.filterOn = value;
             }
         };
-        vGridAttributesFilter.prototype.getValue = function () {
-            if (this.type !== "checkbox") {
+        VGridAttributesFilter.prototype.getValue = function () {
+            if (this.type !== 'checkbox') {
                 return this.valueFormater ? this.valueFormater.fromView(this.element.value) : this.element.value;
             }
             else {
-                return this.state ? this.state === 2 ? true : false : "";
+                return this.state ? this.state === 2 ? true : false : '';
             }
         };
-        vGridAttributesFilter.prototype.resetValue = function () {
-            if (this.type !== "checkbox") {
-                this.element.value = "";
+        VGridAttributesFilter.prototype.resetValue = function () {
+            if (this.type !== 'checkbox') {
+                this.element.value = '';
             }
             else {
                 this.state = 0;
                 this.element.checked = false;
             }
         };
-        vGridAttributesFilter.prototype.updateFilter = function (curFilter) {
+        VGridAttributesFilter.prototype.updateFilter = function (curFilter) {
             var _this = this;
-            var filterIndex = null;
+            var filterIndex = -1;
             curFilter.forEach(function (filter, index) {
                 if (filter.attribute === _this.attribute) {
                     filterIndex = index;
                 }
             });
-            if (filterIndex !== null) {
-                if (this.getValue() === "") {
+            if (filterIndex !== -1) {
+                if (this.getValue() === '') {
                     curFilter.splice(filterIndex, 1);
                 }
                 else {
@@ -94,7 +153,7 @@ define(["require", "exports", 'aurelia-framework', '../v-grid'], function (requi
                 }
             }
             else {
-                if (this.getValue() !== "") {
+                if (this.getValue() !== '') {
                     curFilter.push({
                         attribute: this.attribute,
                         operator: this.filterOperator,
@@ -103,72 +162,14 @@ define(["require", "exports", 'aurelia-framework', '../v-grid'], function (requi
                 }
             }
         };
-        vGridAttributesFilter.prototype.attached = function () {
-            var _this = this;
-            if (this.attribute) {
-                this.vGrid.element.addEventListener("filterUpdate", function (e) {
-                    if (e.detail.attribute === _this.attribute) {
-                        _this.filterOperator = e.detail.operator;
-                        _this.element.placeholder = _this.vGrid.attGridConnector.getFilterOperatorName(_this.filterOperator);
-                        _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
-                    }
-                });
-                this.vGrid.element.addEventListener("filterClearCell", function (e) {
-                    if (e.detail.attribute === _this.attribute) {
-                        _this.resetValue();
-                        _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
-                    }
-                });
-                this.vGrid.element.addEventListener("filterClearAll", function () {
-                    _this.resetValue();
-                    _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
-                });
-                if (this.type !== "checkbox") {
-                    this.element.placeholder = this.vGrid.attGridConnector.getFilterOperatorName(this.filterOperator);
-                    this.element.onkeyup = function (e) {
-                        if (e.keyCode === 13) {
-                            _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
-                            _this.vGrid.attGridConnector.query(_this.vGrid.attGridConnector.getCurrentFilter());
-                        }
-                        else {
-                            _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
-                            if (_this.filterOn === "onKeyDown") {
-                                _this.vGrid.attGridConnector.query(_this.vGrid.attGridConnector.getCurrentFilter());
-                            }
-                        }
-                    };
-                }
-                else {
-                    this.element.style.opacity = 0.3;
-                    this.element.onclick = function (e) {
-                        switch (_this.state) {
-                            case 0:
-                                _this.state = 2;
-                                _this.element.style.opacity = 1;
-                                break;
-                            case 2:
-                                _this.state = 3;
-                                _this.element.style.opacity = 1;
-                                break;
-                            default:
-                                _this.element.checked = false;
-                                _this.state = 0;
-                                _this.element.style.opacity = 0.3;
-                        }
-                        _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
-                        _this.vGrid.attGridConnector.query(_this.vGrid.attGridConnector.getCurrentFilter());
-                    };
-                }
-            }
-        };
-        vGridAttributesFilter = __decorate([
-            aurelia_framework_1.customAttribute('v-filter'),
-            aurelia_framework_1.inject(Element, v_grid_1.VGrid), 
-            __metadata('design:paramtypes', [Object, Object])
-        ], vGridAttributesFilter);
-        return vGridAttributesFilter;
+        return VGridAttributesFilter;
     }());
-    exports.vGridAttributesFilter = vGridAttributesFilter;
+    VGridAttributesFilter = __decorate([
+        aurelia_framework_1.customAttribute('v-filter'),
+        aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+        __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
+    ], VGridAttributesFilter);
+    exports.VGridAttributesFilter = VGridAttributesFilter;
 });
 
 //# sourceMappingURL=v-filter.js.map

@@ -1,16 +1,16 @@
-import { ViewCompiler, Container, ViewResources } from 'aurelia-framework';
-import { ViewSlots } from './viewSlots';
+import { ViewCompiler, Container, ViewResources, ViewSlots } from '../interfaces';
+import { OverrideContext } from '../interfaces';
 export declare class LoadingScreen {
-    element: any;
-    viewSlots: ViewSlots;
-    viewCompiler: ViewCompiler;
-    container: Container;
-    viewResources: ViewResources;
-    loading: boolean;
-    loadingMessage: string;
-    overrideContext: any;
-    constructor(element: any, viewCompiler: any, container: any, viewResources: any, viewSlots: any);
-    init(overrideContext: any): void;
-    enable(msg: any, collectionLength: any): Promise<{}>;
-    disable(): Promise<{}>;
+    private element;
+    private viewSlots;
+    private viewCompiler;
+    private container;
+    private viewResources;
+    private loading;
+    private loadingMessage;
+    private overrideContext;
+    constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots);
+    init(overrideContext: OverrideContext): void;
+    enable(msg?: string, collectionLength?: number): Promise<any>;
+    disable(): Promise<any>;
 }

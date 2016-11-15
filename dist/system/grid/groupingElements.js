@@ -1,14 +1,13 @@
-System.register(['aurelia-framework'], function(exports_1, context_1) {
-    "use strict";
+System.register(["aurelia-framework"], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
-    var aurelia_framework_1;
-    var GroupingElements;
+    var aurelia_framework_1, GroupingElements;
     return {
-        setters:[
+        setters: [
             function (aurelia_framework_1_1) {
                 aurelia_framework_1 = aurelia_framework_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             GroupingElements = (function () {
                 function GroupingElements(element, viewCompiler, container, viewResources, htmlCache, viewSlots, columnBindingContext) {
                     this.element = element;
@@ -25,8 +24,8 @@ System.register(['aurelia-framework'], function(exports_1, context_1) {
                     this.avgTopPanel = this.htmlCache.avg_top_panel;
                 };
                 GroupingElements.prototype.addGroup = function (name, field) {
-                    this.lastAdded = name;
                     if (!this.groupContext[name]) {
+                        this.lastAdded = name;
                         this.groupContext[name] = {};
                         this.groupContext[name].name = name;
                         this.groupContext[name].ctx = this;
@@ -58,14 +57,17 @@ System.register(['aurelia-framework'], function(exports_1, context_1) {
                             this.groupContext[this.lastAdded].viewSlot.unbind();
                             this.groupContext[this.lastAdded].viewSlot.detached();
                             this.groupContext[this.lastAdded].viewSlot.removeAll();
+                            this.groupContext[this.lastAdded] = null;
                             this.lastAdded = null;
                         }
                     }
                 };
                 GroupingElements.prototype.addToGrouping = function () {
-                    var toAdd = this.groupContext[this.lastAdded].field;
-                    this.controller.addToGrouping(toAdd);
-                    this.lastAdded = null;
+                    if (this.lastAdded) {
+                        var toAdd = this.groupContext[this.lastAdded].field;
+                        this.controller.addToGrouping(toAdd);
+                        this.lastAdded = null;
+                    }
                 };
                 GroupingElements.prototype.removeFromGrouping = function (field) {
                     this.controller.removeFromGrouping(field);
@@ -74,7 +76,7 @@ System.register(['aurelia-framework'], function(exports_1, context_1) {
             }());
             exports_1("GroupingElements", GroupingElements);
         }
-    }
+    };
 });
 
 //# sourceMappingURL=groupingElements.js.map

@@ -1,10 +1,9 @@
-System.register([], function(exports_1, context_1) {
-    "use strict";
+System.register([], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
     var ColumnBindingContext;
     return {
-        setters:[],
-        execute: function() {
+        setters: [],
+        execute: function () {
             ColumnBindingContext = (function () {
                 function ColumnBindingContext(controller) {
                     var _this = this;
@@ -29,7 +28,7 @@ System.register([], function(exports_1, context_1) {
             }());
             exports_1("ColumnBindingContext", ColumnBindingContext);
         }
-    }
+    };
 });
 
 //# sourceMappingURL=columnBindingContext.js.map

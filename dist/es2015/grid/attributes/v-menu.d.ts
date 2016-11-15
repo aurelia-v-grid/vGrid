@@ -1,23 +1,21 @@
-import { Controller } from '../controller';
-export declare class vMenu {
-    element: any;
-    controller: Controller;
-    raiseEvent: any;
-    openBinded: any;
-    checkBinded: any;
-    callbackBinded: any;
-    filter: any;
-    sort: any;
-    pinned: any;
-    copypaste: any;
-    constructor(element: any, vGrid: any);
-    unbind(): void;
-    check(e: any): void;
-    callback(type: any, option: any, event: any): boolean;
-    open(e: any): void;
+import { VGrid } from '../v-grid';
+export declare class VGridAttributeMenu {
+    private element;
+    private controller;
+    private raiseEvent;
+    private openBinded;
+    private checkBinded;
+    private callbackBinded;
+    private groupingElements;
+    private filter;
+    private sort;
+    private pinned;
+    private groupby;
+    constructor(element: Element, vGrid: VGrid);
     attached(): void;
-    getPosition(e: any): {
-        x: number;
-        y: number;
-    };
+    unbind(): void;
+    private check(e);
+    private callback(type, option, event);
+    private open(e);
+    private getPosition(e);
 }

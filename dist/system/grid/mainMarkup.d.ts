@@ -1,15 +1,13 @@
-import { ViewCompiler, Container, ViewResources, ViewFactory, View } from 'aurelia-framework';
-import { ViewSlots } from './viewSlots';
-import { HtmlHeightWidth } from './htmlHeightWidth';
+import { ViewCompiler, Container, ViewResources, ViewSlots, HtmlHeightWidth } from '../interfaces';
 export declare class MainMarkup {
-    element: any;
-    viewCompiler: ViewCompiler;
-    container: Container;
-    viewResources: ViewResources;
-    htmlHeightWidth: HtmlHeightWidth;
-    viewSlots: ViewSlots;
-    viewFactory: ViewFactory;
-    view: View;
-    constructor(element: any, viewCompiler: any, container: any, viewResources: any, htmlHeightWidth: any, viewSlots: any);
+    private element;
+    private viewCompiler;
+    private container;
+    private viewResources;
+    private htmlHeightWidth;
+    private viewSlots;
+    private viewFactory;
+    private view;
+    constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, htmlHeightWidth: HtmlHeightWidth, viewSlots: ViewSlots);
     generateMainMarkup(): void;
 }

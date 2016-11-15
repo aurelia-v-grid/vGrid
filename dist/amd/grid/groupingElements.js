@@ -1,5 +1,4 @@
-define(["require", "exports", 'aurelia-framework'], function (require, exports, aurelia_framework_1) {
-    "use strict";
+define(["require", "exports", "aurelia-framework"], function (require, exports, aurelia_framework_1) {
     var GroupingElements = (function () {
         function GroupingElements(element, viewCompiler, container, viewResources, htmlCache, viewSlots, columnBindingContext) {
             this.element = element;
@@ -16,8 +15,8 @@ define(["require", "exports", 'aurelia-framework'], function (require, exports, 
             this.avgTopPanel = this.htmlCache.avg_top_panel;
         };
         GroupingElements.prototype.addGroup = function (name, field) {
-            this.lastAdded = name;
             if (!this.groupContext[name]) {
+                this.lastAdded = name;
                 this.groupContext[name] = {};
                 this.groupContext[name].name = name;
                 this.groupContext[name].ctx = this;
@@ -49,14 +48,17 @@ define(["require", "exports", 'aurelia-framework'], function (require, exports, 
                     this.groupContext[this.lastAdded].viewSlot.unbind();
                     this.groupContext[this.lastAdded].viewSlot.detached();
                     this.groupContext[this.lastAdded].viewSlot.removeAll();
+                    this.groupContext[this.lastAdded] = null;
                     this.lastAdded = null;
                 }
             }
         };
         GroupingElements.prototype.addToGrouping = function () {
-            var toAdd = this.groupContext[this.lastAdded].field;
-            this.controller.addToGrouping(toAdd);
-            this.lastAdded = null;
+            if (this.lastAdded) {
+                var toAdd = this.groupContext[this.lastAdded].field;
+                this.controller.addToGrouping(toAdd);
+                this.lastAdded = null;
+            }
         };
         GroupingElements.prototype.removeFromGrouping = function (field) {
             this.controller.removeFromGrouping(field);

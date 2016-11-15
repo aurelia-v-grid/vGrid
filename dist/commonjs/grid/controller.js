@@ -1,4 +1,3 @@
-"use strict";
 var Controller = (function () {
     function Controller(vGrid) {
         this.vGrid = vGrid;
@@ -55,11 +54,11 @@ var Controller = (function () {
         this.loadingScreen.init(this.overrideContext);
         this.contextMenu.init();
     };
-    Controller.prototype.getElement = function (row, isDown, callback) {
+    Controller.prototype.getElement = function (rowNumber, isDownScroll, callbackFN) {
         this.attGridConnector.getElement({
-            row: row,
-            isDown: isDown,
-            callback: callback
+            row: rowNumber,
+            isDown: isDownScroll,
+            callback: callbackFN
         });
     };
     Controller.prototype.getOperatorName = function (name) {
@@ -76,8 +75,10 @@ var Controller = (function () {
     };
     Controller.prototype.addToGrouping = function (attribute) {
         var currentGrouping = this.attGridConnector.getGrouping();
-        currentGrouping.push(attribute);
-        this.attGridConnector.group(currentGrouping, true);
+        if (currentGrouping.indexOf(attribute) === -1) {
+            currentGrouping.push(attribute);
+            this.attGridConnector.group(currentGrouping, true);
+        }
     };
     Controller.prototype.removeFromGrouping = function (attribute) {
         var currentGrouping = this.attGridConnector.getGrouping();
@@ -88,7 +89,8 @@ var Controller = (function () {
         }
     };
     Controller.prototype.getSelectionContext = function () {
-        return this.attGridConnector.selection;
+        var sel = this.attGridConnector.getSelection();
+        return sel;
     };
     Controller.prototype.raiseEvent = function (name, data) {
         if (data === void 0) { data = {}; }
@@ -97,7 +99,6 @@ var Controller = (function () {
             bubbles: true
         });
         this.element.dispatchEvent(event);
-        return event;
     };
     Controller.prototype.setLoadingScreen = function (value, msg, collectionLength) {
         if (value) {
@@ -108,8 +109,8 @@ var Controller = (function () {
         }
     };
     Controller.prototype.updateHeights = function () {
-        this.rowScrollEvents.setCollectionLength(this.attGridConnector.length());
-        this.htmlHeightWidth.setCollectionLength(this.attGridConnector.length());
+        this.rowScrollEvents.setCollectionLength(this.attGridConnector.getDatasourceLength());
+        this.htmlHeightWidth.setCollectionLength(this.attGridConnector.getDatasourceLength());
     };
     Controller.prototype.updateHeaderGrouping = function (groups) {
         var length = groups.length;
@@ -117,7 +118,7 @@ var Controller = (function () {
         this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
     };
     Controller.prototype.collectionLength = function () {
-        return this.attGridConnector.length();
+        return this.attGridConnector.getDatasourceLength();
     };
     Controller.prototype.triggerScroll = function (position) {
         if (position === null || position === undefined) {
@@ -126,21 +127,21 @@ var Controller = (function () {
         else {
             this.htmlCache.avg_content_main.scrollTop = position;
         }
-        this.raiseEvent("avg-scroll", {
+        this.raiseEvent('avg-scroll', {
             isScrollBarScrolling: true,
             isDown: true,
             newTopPosition: position
         });
     };
     Controller.prototype.rebindAllRows = function () {
-        this.raiseEvent("avg-rebind-all-rows", {
+        this.raiseEvent('avg-rebind-all-rows', {
             rowCache: this.htmlCache.rowCache,
             downScroll: true
         });
     };
     Controller.prototype.addEventListeners = function () {
         var _this = this;
-        this.element.addEventListener("getElement", function (event) {
+        this.element.addEventListener('getElement', function (event) {
             _this.attGridConnector.getElement(event.detail);
         });
     };

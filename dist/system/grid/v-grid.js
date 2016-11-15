@@ -1,6 +1,4 @@
-System.register(['aurelia-framework', './mainMarkup', './mainScrollEvents', './rowMarkup', './rowScrollEvents', './columnMarkup', './htmlCache', './htmlHeightWidth', './viewSlots', './columnBindingContext', './rowDataBinder', './rowClickHandler', './groupingElements', './controller', './loadingScreen', './contextMenu'], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
+System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./rowMarkup", "./rowScrollEvents", "./columnMarkup", "./htmlCache", "./htmlHeightWidth", "./viewSlots", "./columnBindingContext", "./rowDataBinder", "./rowClickHandler", "./groupingElements", "./controller", "./loadingScreen", "./contextMenu", "../interfaces"], function (exports_1, context_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,10 +8,10 @@ System.register(['aurelia-framework', './mainMarkup', './mainScrollEvents', './r
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var aurelia_framework_1, mainMarkup_1, mainScrollEvents_1, rowMarkup_1, rowScrollEvents_1, columnMarkup_1, htmlCache_1, htmlHeightWidth_1, viewSlots_1, columnBindingContext_1, rowDataBinder_1, rowClickHandler_1, groupingElements_1, controller_1, loadingScreen_1, contextMenu_1;
-    var VGrid;
+    var __moduleName = context_1 && context_1.id;
+    var aurelia_framework_1, mainMarkup_1, mainScrollEvents_1, rowMarkup_1, rowScrollEvents_1, columnMarkup_1, htmlCache_1, htmlHeightWidth_1, viewSlots_1, columnBindingContext_1, rowDataBinder_1, rowClickHandler_1, groupingElements_1, controller_1, loadingScreen_1, contextMenu_1, interfaces_1, VGrid;
     return {
-        setters:[
+        setters: [
             function (aurelia_framework_1_1) {
                 aurelia_framework_1 = aurelia_framework_1_1;
             },
@@ -61,8 +59,12 @@ System.register(['aurelia-framework', './mainMarkup', './mainScrollEvents', './r
             },
             function (contextMenu_1_1) {
                 contextMenu_1 = contextMenu_1_1;
-            }],
-        execute: function() {
+            },
+            function (interfaces_1_1) {
+                interfaces_1 = interfaces_1_1;
+            }
+        ],
+        execute: function () {
             VGrid = (function () {
                 function VGrid(element, viewCompiler, container, viewResources, taskQueue) {
                     this.element = element;
@@ -80,7 +82,7 @@ System.register(['aurelia-framework', './mainMarkup', './mainScrollEvents', './r
                     this.controller = new controller_1.Controller(this);
                     this.htmlCache = new htmlCache_1.HtmlCache(element);
                     this.htmlHeightWidth = new htmlHeightWidth_1.HtmlHeightWidth();
-                    this.viewSlots = new viewSlots_1.ViewSlots();
+                    this.viewSlots = new viewSlots_1.ViewSlots(this.htmlCache);
                     this.columnBindingContext = new columnBindingContext_1.ColumnBindingContext(this.controller);
                     this.rowDataBinder = new rowDataBinder_1.RowDataBinder(element, this.controller);
                     this.mainMarkup = new mainMarkup_1.MainMarkup(element, viewCompiler, container, viewResources, this.htmlHeightWidth, this.viewSlots);
@@ -100,10 +102,9 @@ System.register(['aurelia-framework', './mainMarkup', './mainScrollEvents', './r
                     this.attHeaderHeight = this.attHeaderHeight ? this.attHeaderHeight * 1 : 25;
                     this.attFooterHeight = this.attFooterHeight ? this.attFooterHeight * 1 : 25;
                     this.attPanelHeight = this.attPanelHeight ? this.attPanelHeight * 1 : 25;
-                    this.attMultiSelect = this.attMultiSelect ? this.attMultiSelect === "true" ? true : false : null;
-                    this.attManualSelection = this.attManualSelection ? this.attManualSelection === "true" ? true : false : null;
-                    this.attGridConnector.vGrid = this;
-                    this.attTheme = this.attTheme || "avg-default";
+                    this.attMultiSelect = this.checkBool(this.attMultiSelect);
+                    this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
+                    this.attTheme = this.attTheme || 'avg-default';
                     this.element.classList.add(this.attTheme);
                 };
                 VGrid.prototype.unbind = function () {
@@ -119,44 +120,63 @@ System.register(['aurelia-framework', './mainMarkup', './mainScrollEvents', './r
                     this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
                     this.attGridConnector.gridCreated(this.controller);
                 };
-                VGrid.inject = [Element, aurelia_framework_1.ViewCompiler, aurelia_framework_1.Container, aurelia_framework_1.ViewResources, aurelia_framework_1.TaskQueue];
-                __decorate([
-                    aurelia_framework_1.bindable({ attribute: "v-row-height" }), 
-                    __metadata('design:type', Object)
-                ], VGrid.prototype, "attRowHeight", void 0);
-                __decorate([
-                    aurelia_framework_1.bindable({ attribute: "v-header-height" }), 
-                    __metadata('design:type', Object)
-                ], VGrid.prototype, "attHeaderHeight", void 0);
-                __decorate([
-                    aurelia_framework_1.bindable({ attribute: "v-footer-height" }), 
-                    __metadata('design:type', Object)
-                ], VGrid.prototype, "attFooterHeight", void 0);
-                __decorate([
-                    aurelia_framework_1.bindable({ attribute: "v-panel-height" }), 
-                    __metadata('design:type', Object)
-                ], VGrid.prototype, "attPanelHeight", void 0);
-                __decorate([
-                    aurelia_framework_1.bindable({ attribute: "v-grid-connector" }), 
-                    __metadata('design:type', Object)
-                ], VGrid.prototype, "attGridConnector", void 0);
-                __decorate([
-                    aurelia_framework_1.bindable({ attribute: "v-multi-select" }), 
-                    __metadata('design:type', Object)
-                ], VGrid.prototype, "attMultiSelect", void 0);
-                __decorate([
-                    aurelia_framework_1.bindable({ attribute: "v-manual-sel" }), 
-                    __metadata('design:type', Object)
-                ], VGrid.prototype, "attManualSelection", void 0);
-                __decorate([
-                    aurelia_framework_1.bindable({ attribute: "v-theme" }), 
-                    __metadata('design:type', Object)
-                ], VGrid.prototype, "attTheme", void 0);
+                VGrid.prototype.checkBool = function (value) {
+                    if (typeof value === 'string') {
+                        value = value.toLowerCase();
+                    }
+                    switch (true) {
+                        case value === 'true':
+                        case value === true:
+                            value = true;
+                            break;
+                        case value === 'false':
+                        case value === false:
+                            value = false;
+                            break;
+                        default:
+                            value = false;
+                            break;
+                    }
+                    return value;
+                };
                 return VGrid;
             }());
             exports_1("VGrid", VGrid);
+            VGrid.inject = [Element, aurelia_framework_1.ViewCompiler, aurelia_framework_1.Container, aurelia_framework_1.ViewResources, aurelia_framework_1.TaskQueue];
+            __decorate([
+                aurelia_framework_1.bindable({ attribute: 'v-row-height' }),
+                __metadata("design:type", Number)
+            ], VGrid.prototype, "attRowHeight", void 0);
+            __decorate([
+                aurelia_framework_1.bindable({ attribute: 'v-header-height' }),
+                __metadata("design:type", Number)
+            ], VGrid.prototype, "attHeaderHeight", void 0);
+            __decorate([
+                aurelia_framework_1.bindable({ attribute: 'v-footer-height' }),
+                __metadata("design:type", Number)
+            ], VGrid.prototype, "attFooterHeight", void 0);
+            __decorate([
+                aurelia_framework_1.bindable({ attribute: 'v-panel-height' }),
+                __metadata("design:type", Number)
+            ], VGrid.prototype, "attPanelHeight", void 0);
+            __decorate([
+                aurelia_framework_1.bindable({ attribute: 'v-grid-connector' }),
+                __metadata("design:type", interfaces_1.GridConnector)
+            ], VGrid.prototype, "attGridConnector", void 0);
+            __decorate([
+                aurelia_framework_1.bindable({ attribute: 'v-multi-select' }),
+                __metadata("design:type", Boolean)
+            ], VGrid.prototype, "attMultiSelect", void 0);
+            __decorate([
+                aurelia_framework_1.bindable({ attribute: 'v-manual-sel' }),
+                __metadata("design:type", Boolean)
+            ], VGrid.prototype, "attManualSelection", void 0);
+            __decorate([
+                aurelia_framework_1.bindable({ attribute: 'v-theme' }),
+                __metadata("design:type", String)
+            ], VGrid.prototype, "attTheme", void 0);
         }
-    }
+    };
 });
 
 //# sourceMappingURL=v-grid.js.map

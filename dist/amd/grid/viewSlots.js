@@ -1,62 +1,53 @@
 define(["require", "exports"], function (require, exports) {
-    "use strict";
     var ViewSlots = (function () {
-        function ViewSlots() {
+        function ViewSlots(htmlCache) {
+            this.rowCache = htmlCache.rowCache;
+            this.headerCache = htmlCache.headerCache;
             this.leftRowViewSlots = [];
             this.mainRowViewSlots = [];
             this.rightRowViewSlots = [];
             this.groupRowViewSlots = [];
-            this.leftHeaderViewSlot;
-            this.mainHeaderViewSlot;
-            this.rightHeaderViewSlot;
-            this.mainViewSlot;
-            this.loadingScreenViewSlot;
+            this.leftHeaderViewSlot = null;
+            this.mainHeaderViewSlot = null;
+            this.rightHeaderViewSlot = null;
+            this.mainViewSlot = null;
+            this.loadingScreenViewSlot = null;
             this.groupingViewSlots = [];
-            this.contextMenu;
+            this.contextMenu = null;
         }
         ViewSlots.prototype.bindAndAttachColumns = function (overrideContext, columnBindingContext) {
-            var context = {};
-            var parentOverrideContext = {
+            var context;
+            var newParentOverrideContext = {
                 bindingContext: columnBindingContext,
                 parentOverrideContext: overrideContext
             };
-            for (var i = 0; i < this.groupRowViewSlots.length; i++) {
+            for (var i = 0; i < this.rowCache.length; i++) {
                 context = {};
-                this.leftRowViewSlots[i].bind(context, {
+                this.rowCache[i].bindingContext = context;
+                this.rowCache[i].parentOverrideContext = {
                     bindingContext: context,
-                    parentOverrideContext: parentOverrideContext
-                });
+                    parentOverrideContext: newParentOverrideContext
+                };
+                this.leftRowViewSlots[i].bind(this.rowCache[i].bindingContext, this.rowCache[i].parentOverrideContext);
                 this.leftRowViewSlots[i].attached();
-                this.mainRowViewSlots[i].bind(context, {
-                    bindingContext: context,
-                    parentOverrideContext: parentOverrideContext
-                });
+                this.mainRowViewSlots[i].bind(this.rowCache[i].bindingContext, this.rowCache[i].parentOverrideContext);
                 this.mainRowViewSlots[i].attached();
-                this.rightRowViewSlots[i].bind(context, {
-                    bindingContext: context,
-                    parentOverrideContext: parentOverrideContext
-                });
+                this.rightRowViewSlots[i].bind(this.rowCache[i].bindingContext, this.rowCache[i].parentOverrideContext);
                 this.rightRowViewSlots[i].attached();
-                this.groupRowViewSlots[i].bind(context, {
-                    bindingContext: context,
-                    parentOverrideContext: parentOverrideContext
-                });
+                this.groupRowViewSlots[i].bind(this.rowCache[i].bindingContext, this.rowCache[i].parentOverrideContext);
                 this.groupRowViewSlots[i].attached();
             }
-            this.leftHeaderViewSlot.bind(context, {
+            context = {};
+            this.headerCache.bindingContext = context;
+            this.headerCache.parentOverrideContext = {
                 bindingContext: context,
-                parentOverrideContext: parentOverrideContext
-            });
+                parentOverrideContext: newParentOverrideContext
+            };
+            this.leftHeaderViewSlot.bind(this.headerCache.bindingContext, this.headerCache.parentOverrideContext);
             this.leftHeaderViewSlot.attached();
-            this.mainHeaderViewSlot.bind(context, {
-                bindingContext: context,
-                parentOverrideContext: parentOverrideContext
-            });
+            this.mainHeaderViewSlot.bind(this.headerCache.bindingContext, this.headerCache.parentOverrideContext);
             this.mainHeaderViewSlot.attached();
-            this.rightHeaderViewSlot.bind(context, {
-                bindingContext: context,
-                parentOverrideContext: parentOverrideContext
-            });
+            this.rightHeaderViewSlot.bind(this.headerCache.bindingContext, this.headerCache.parentOverrideContext);
             this.rightHeaderViewSlot.attached();
         };
         ViewSlots.prototype.unbindAndDetachColumns = function () {

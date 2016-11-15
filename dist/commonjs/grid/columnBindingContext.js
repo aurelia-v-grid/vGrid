@@ -1,4 +1,3 @@
-"use strict";
 var ColumnBindingContext = (function () {
     function ColumnBindingContext(controller) {
         var _this = this;

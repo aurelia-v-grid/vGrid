@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,28 +7,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var aurelia_framework_1 = require('aurelia-framework');
-var v_grid_1 = require('../v-grid');
-var vGridAttributesImageFix = (function () {
-    function vGridAttributesImageFix(element, vGrid) {
+var aurelia_framework_1 = require("aurelia-framework");
+var v_grid_1 = require("../v-grid");
+var VGridAttributesImageFix = (function () {
+    function VGridAttributesImageFix(element, vGrid) {
         this.vGrid = vGrid;
         this.element = element;
     }
-    vGridAttributesImageFix.prototype.valueChanged = function (newValue, oldValue) {
-        this.element.src = "";
+    VGridAttributesImageFix.prototype.valueChanged = function (newValue, oldValue) {
+        this.element.src = '';
         this.element.src = this.value || newValue;
     };
-    vGridAttributesImageFix.prototype.bind = function (bindingContext, overrideContext) {
-        this.element.src = "";
-        this.element.src = this.value || "";
+    VGridAttributesImageFix.prototype.bind = function (bindingContext, overrideContext) {
+        this.element.src = '';
+        this.element.src = this.value || '';
     };
-    vGridAttributesImageFix = __decorate([
-        aurelia_framework_1.customAttribute('v-image-fix'),
-        aurelia_framework_1.inject(Element, v_grid_1.VGrid), 
-        __metadata('design:paramtypes', [Object, Object])
-    ], vGridAttributesImageFix);
-    return vGridAttributesImageFix;
+    return VGridAttributesImageFix;
 }());
-exports.vGridAttributesImageFix = vGridAttributesImageFix;
+VGridAttributesImageFix = __decorate([
+    aurelia_framework_1.customAttribute('v-image-fix'),
+    aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+    __metadata("design:paramtypes", [HTMLImageElement, v_grid_1.VGrid])
+], VGridAttributesImageFix);
+exports.VGridAttributesImageFix = VGridAttributesImageFix;
 
 //# sourceMappingURL=v-image.js.map

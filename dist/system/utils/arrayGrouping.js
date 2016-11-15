@@ -1,13 +1,11 @@
-System.register([], function(exports_1, context_1) {
-    "use strict";
+System.register([], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
     var ArrayGrouping;
     return {
-        setters:[],
-        execute: function() {
+        setters: [],
+        execute: function () {
             ArrayGrouping = (function () {
                 function ArrayGrouping() {
-                    this.gID = 0;
                     this.grouping = [];
                     this.expanded = new Set([]);
                 }
@@ -46,71 +44,6 @@ System.register([], function(exports_1, context_1) {
                         return arrayToGroup;
                     }
                 };
-                ArrayGrouping.prototype.groupMain = function (array, groupBy, groupNo) {
-                    var _this = this;
-                    var tempGroupArray = [];
-                    var curGroup = {};
-                    var tempValue = null;
-                    array.forEach(function (element, i) {
-                        _this.gID++;
-                        if (element[groupBy] !== tempValue) {
-                            curGroup = {
-                                __groupName: element[groupBy] || "blank",
-                                __group: true,
-                                __groupID: element[groupBy],
-                                __groupLvl: groupNo,
-                                __groupChildren: [element],
-                                __groupTotal: 1,
-                                __groupExpanded: false
-                            };
-                            element.__groupLvl = groupNo + 1;
-                            tempValue = element[groupBy];
-                            tempGroupArray.push(curGroup);
-                        }
-                        else {
-                            element.__groupLvl = groupNo + 1;
-                            curGroup.__groupChildren.push(element);
-                            curGroup.__groupTotal++;
-                        }
-                    });
-                    return tempGroupArray;
-                };
-                ArrayGrouping.prototype.groupChildren = function (childGroupArray, groupBy, groupNo) {
-                    var _this = this;
-                    var tempGroupArray = [];
-                    var curGroup = {};
-                    childGroupArray.forEach(function (element, i) {
-                        var tempValue = null;
-                        var rebuiltChildrenArray = [];
-                        element.__groupChildren.forEach(function (child) {
-                            _this.gID++;
-                            if (child[groupBy] !== tempValue) {
-                                var gidm = child[groupBy] || "blank";
-                                var gidc = element.__groupID || "blank";
-                                curGroup = {
-                                    __groupName: child[groupBy],
-                                    __groupID: gidm + "-" + gidc,
-                                    __group: true,
-                                    __groupLvl: groupNo,
-                                    __groupChildren: [child],
-                                    __groupTotal: 1,
-                                    __groupExpanded: false
-                                };
-                                child.__groupLvl = groupNo + 1;
-                                tempValue = child[groupBy];
-                                rebuiltChildrenArray.push(curGroup);
-                                tempGroupArray.push(curGroup);
-                            }
-                            else {
-                                child.__groupLvl = groupNo + 1;
-                                curGroup.__groupChildren.push(child);
-                                curGroup.__groupTotal++;
-                            }
-                        });
-                        element.__groupChildren = rebuiltChildrenArray;
-                    });
-                    return tempGroupArray;
-                };
                 ArrayGrouping.prototype.getGrouping = function () {
                     return this.grouping;
                 };
@@ -142,6 +75,8 @@ System.register([], function(exports_1, context_1) {
                                         subGroup(sg);
                                     }
                                     break;
+                                default:
+                                    break;
                             }
                         });
                     };
@@ -157,6 +92,8 @@ System.register([], function(exports_1, context_1) {
                                 if (g.__groupChildren) {
                                     subGroup(g);
                                 }
+                                break;
+                            default:
                                 break;
                         }
                     });
@@ -216,11 +153,72 @@ System.register([], function(exports_1, context_1) {
                     });
                     return collection;
                 };
+                ArrayGrouping.prototype.groupMain = function (array, groupBy, groupNo) {
+                    var tempGroupArray = [];
+                    var curGroup = {};
+                    var tempValue = null;
+                    array.forEach(function (element, i) {
+                        if (element[groupBy] !== tempValue) {
+                            curGroup = {
+                                __groupName: element[groupBy] || 'blank',
+                                __group: true,
+                                __groupID: element[groupBy],
+                                __groupLvl: groupNo,
+                                __groupChildren: [element],
+                                __groupTotal: 1,
+                                __groupExpanded: false
+                            };
+                            element.__groupLvl = groupNo + 1;
+                            tempValue = element[groupBy];
+                            tempGroupArray.push(curGroup);
+                        }
+                        else {
+                            element.__groupLvl = groupNo + 1;
+                            curGroup.__groupChildren.push(element);
+                            curGroup.__groupTotal++;
+                        }
+                    });
+                    return tempGroupArray;
+                };
+                ArrayGrouping.prototype.groupChildren = function (childGroupArray, groupBy, groupNo) {
+                    var tempGroupArray = [];
+                    var curGroup = {};
+                    childGroupArray.forEach(function (element, i) {
+                        var tempValue = null;
+                        var rebuiltChildrenArray = [];
+                        element.__groupChildren.forEach(function (child) {
+                            if (child[groupBy] !== tempValue) {
+                                var gidm = child[groupBy] || 'blank';
+                                var gidc = element.__groupID || 'blank';
+                                curGroup = {
+                                    __groupName: child[groupBy],
+                                    __groupID: gidm + '-' + gidc,
+                                    __group: true,
+                                    __groupLvl: groupNo,
+                                    __groupChildren: [child],
+                                    __groupTotal: 1,
+                                    __groupExpanded: false
+                                };
+                                child.__groupLvl = groupNo + 1;
+                                tempValue = child[groupBy];
+                                rebuiltChildrenArray.push(curGroup);
+                                tempGroupArray.push(curGroup);
+                            }
+                            else {
+                                child.__groupLvl = groupNo + 1;
+                                curGroup.__groupChildren.push(child);
+                                curGroup.__groupTotal++;
+                            }
+                        });
+                        element.__groupChildren = rebuiltChildrenArray;
+                    });
+                    return tempGroupArray;
+                };
                 return ArrayGrouping;
             }());
             exports_1("ArrayGrouping", ArrayGrouping);
         }
-    }
+    };
 });
 
 //# sourceMappingURL=arrayGrouping.js.map

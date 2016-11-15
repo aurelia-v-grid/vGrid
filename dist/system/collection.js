@@ -1,14 +1,13 @@
-System.register([], function(exports_1, context_1) {
-    "use strict";
+System.register([], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
     var Collection;
     return {
-        setters:[],
-        execute: function() {
+        setters: [],
+        execute: function () {
             Collection = (function () {
                 function Collection(datasource) {
                     this.datasource = datasource;
-                    this.key = datasource.key;
+                    this.key = datasource.getKey();
                     this.entities = [];
                     this.keys = [];
                     this.count = 0;
@@ -24,7 +23,7 @@ System.register([], function(exports_1, context_1) {
                     array.forEach(function (rowData, i) {
                         if (!rowData[_this.key]) {
                             _this.count++;
-                            rowData[_this.key] = "key" + _this.count;
+                            rowData[_this.key] = 'key' + _this.count;
                         }
                         if (!rowData.__group) {
                             _this.keys.push(rowData[_this.key]);
@@ -57,7 +56,7 @@ System.register([], function(exports_1, context_1) {
             }());
             exports_1("Collection", Collection);
         }
-    }
+    };
 });
 
 //# sourceMappingURL=collection.js.map

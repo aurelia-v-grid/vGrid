@@ -1,5 +1,4 @@
-"use strict";
-var aurelia_framework_1 = require('aurelia-framework');
+var aurelia_framework_1 = require("aurelia-framework");
 var LoadingScreen = (function () {
     function LoadingScreen(element, viewCompiler, container, viewResources, viewSlots) {
         this.element = element;
@@ -8,7 +7,7 @@ var LoadingScreen = (function () {
         this.container = container;
         this.viewResources = viewResources;
         this.loading = false;
-        this.loadingMessage = "Loading";
+        this.loadingMessage = 'Loading';
     }
     LoadingScreen.prototype.init = function (overrideContext) {
         this.overrideContext = overrideContext;
@@ -21,7 +20,9 @@ var LoadingScreen = (function () {
             '</div>',
             '</div>'
         ];
-        var viewFactory = this.viewCompiler.compile('<template>' + loadingScreentHtml.join("") + '</template>', this.viewResources);
+        var viewFactory = this.viewCompiler.compile('<template>' +
+            loadingScreentHtml.join('') +
+            '</template>', this.viewResources);
         var view = viewFactory.create(this.container);
         var loadingScreenViewSlot = new aurelia_framework_1.ViewSlot(this.element, true);
         loadingScreenViewSlot.add(view);
@@ -36,9 +37,9 @@ var LoadingScreen = (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             _this.loading = collectionLength ? collectionLength > 10000 ? true : false : false;
-            _this.loadingMessage = msg || "Loading";
+            _this.loadingMessage = msg || 'Loading';
             setTimeout(function () {
-                resolve();
+                resolve(null);
             });
         });
     };

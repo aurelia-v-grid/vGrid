@@ -1,9 +1,8 @@
 define(["require", "exports"], function (require, exports) {
-    "use strict";
     var Collection = (function () {
         function Collection(datasource) {
             this.datasource = datasource;
-            this.key = datasource.key;
+            this.key = datasource.getKey();
             this.entities = [];
             this.keys = [];
             this.count = 0;
@@ -19,7 +18,7 @@ define(["require", "exports"], function (require, exports) {
             array.forEach(function (rowData, i) {
                 if (!rowData[_this.key]) {
                     _this.count++;
-                    rowData[_this.key] = "key" + _this.count;
+                    rowData[_this.key] = 'key' + _this.count;
                 }
                 if (!rowData.__group) {
                     _this.keys.push(rowData[_this.key]);

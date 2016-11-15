@@ -1,5 +1,4 @@
 define(["require", "exports"], function (require, exports) {
-    "use strict";
     var RowScrollEvents = (function () {
         function RowScrollEvents(element, htmlCache) {
             this.htmlCache = htmlCache;
@@ -16,6 +15,9 @@ define(["require", "exports"], function (require, exports) {
             this.createRowCache();
             this.addEventListener();
         };
+        RowScrollEvents.prototype.setCollectionLength = function (length) {
+            this.collectionLength = length;
+        };
         RowScrollEvents.prototype.createRowCache = function () {
             for (var i = 0; i < this.cacheLength; i++) {
                 this.rowCache.push({
@@ -26,10 +28,6 @@ define(["require", "exports"], function (require, exports) {
                     top: this.rowHeight * i,
                     row: i
                 });
-                this.leftRows[i].avgRow = i;
-                this.mainRows[i].avgRow = i;
-                this.rightRows[i].avgRow = i;
-                this.groupRows[i].avgRow = i;
             }
         };
         RowScrollEvents.prototype.updateInternalHtmlCache = function () {
@@ -76,6 +74,7 @@ define(["require", "exports"], function (require, exports) {
                     case !isDown && !isScrollBarScrolling:
                         this.scrollNormal(newTopPosition, false);
                         break;
+                    default:
                 }
             }
         };
@@ -84,10 +83,6 @@ define(["require", "exports"], function (require, exports) {
             cache.main.style.transform = "translate3d(0px," + top + "px, 0px)";
             cache.right.style.transform = "translate3d(0px," + top + "px, 0px)";
             cache.group.style.transform = "translate3d(0px," + top + "px, 0px)";
-            cache.left.avgRow = Math.floor(top / this.rowHeight);
-            cache.main.avgRow = Math.floor(top / this.rowHeight);
-            cache.right.avgRow = Math.floor(top / this.rowHeight);
-            cache.group.avgRow = Math.floor(top / this.rowHeight);
             cache.top = top;
             cache.row = Math.floor(top / this.rowHeight);
         };
@@ -120,7 +115,7 @@ define(["require", "exports"], function (require, exports) {
                 }
             }
             this.rowCache.sort(function (a, b) {
-                return parseInt(a.top) - parseInt(b.top);
+                return a.top - b.top;
             });
         };
         RowScrollEvents.prototype.scrollScrollBar = function (newTopPosition, downScroll) {
@@ -160,6 +155,7 @@ define(["require", "exports"], function (require, exports) {
                         setBefore(i);
                         moved = true;
                         break;
+                    default:
                 }
                 if (!moved) {
                     if (currentRow >= collectionLength && (currentRowTop - rowHeight) >= bodyHeight) {
@@ -174,36 +170,30 @@ define(["require", "exports"], function (require, exports) {
                 currentRow++;
             }
             this.rowCache.sort(function (a, b) {
-                return parseInt(a.top) - parseInt(b.top);
+                return a.top - b.top;
             });
             this.triggerRebindAllRowsEvent(downScroll, this.rowCache);
         };
         RowScrollEvents.prototype.addEventListener = function () {
             this.onScrollBinded = this.onScroll.bind(this);
-            this.element.addEventListener("avg-scroll", this.onScrollBinded);
+            this.element.addEventListener('avg-scroll', this.onScrollBinded);
         };
-        RowScrollEvents.prototype.removeEventListener = function () {
-            this.element.removeEventListener("avg-scroll", this.onScrollBinded);
-        };
-        RowScrollEvents.prototype.setCollectionLength = function (length) {
-            this.collectionLength = length;
-        };
-        RowScrollEvents.prototype.triggerRebindRowEvent = function (currentRow, rowCache, downScroll) {
-            var event = new CustomEvent("avg-rebind-row", {
+        RowScrollEvents.prototype.triggerRebindRowEvent = function (curRow, curRowCache, isDownScroll) {
+            var event = new CustomEvent('avg-rebind-row', {
                 detail: {
-                    currentRow: currentRow,
-                    rowCache: rowCache,
-                    downScroll: downScroll
+                    currentRow: curRow,
+                    rowCache: curRowCache,
+                    downScroll: isDownScroll
                 },
                 bubbles: false
             });
             this.element.dispatchEvent(event);
         };
-        RowScrollEvents.prototype.triggerRebindAllRowsEvent = function (downScroll, rowCache) {
-            var event = new CustomEvent("avg-rebind-all-rows", {
+        RowScrollEvents.prototype.triggerRebindAllRowsEvent = function (isDownScroll, curRowCache) {
+            var event = new CustomEvent('avg-rebind-all-rows', {
                 detail: {
-                    downScroll: downScroll,
-                    rowCache: rowCache
+                    downScroll: isDownScroll,
+                    rowCache: curRowCache
                 },
                 bubbles: false
             });

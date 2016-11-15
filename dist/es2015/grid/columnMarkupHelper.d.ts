@@ -1,15 +1,14 @@
+import { ColConfig } from '../interfaces';
 export declare class ColumnMarkupHelper {
-    useCustomOnly: boolean;
-    colConfig: Array<any>;
-    constructor();
-    generate(colConfig: Array<any>): void;
-    processColumns(array: any): void;
-    createHeaderTemplate(col: any): void;
-    createRowTemplate(col: any): void;
-    getAttribute: (value: any, capitalize: any) => any;
-    checkAttribute(attribute: any): any;
-    createImageRowMarkup(col: any): void;
-    createInputRowMarkup(col: any): void;
-    createInputHeaderMarkup(col: any): any;
-    createLabelMarkup(col: any): string;
+    private useCustomOnly;
+    generate(colConfig: Array<ColConfig>): void;
+    private processColumns(array);
+    private createHeaderTemplate(col);
+    private createRowTemplate(col);
+    private getAttribute(value, capitalize);
+    private checkAttribute(attribute);
+    private createImageRowMarkup(col);
+    private createInputRowMarkup(col);
+    private createInputHeaderMarkup(col);
+    private createLabelMarkup(col);
 }

@@ -2,26 +2,27 @@ import { FilterOperators } from './filterOperators';
 import { ArrayFilter } from './arrayFilter';
 import { ArraySort } from './arraySort';
 import { ArrayGrouping } from './arrayGrouping';
+import { SortObject, FilterObject, Entity } from '../interfaces';
 export declare class ArrayHelper {
     filterOperators: FilterOperators;
     arrayFilter: ArrayFilter;
     arraySort: ArraySort;
     arrayGrouping: ArrayGrouping;
     constructor();
-    orderBy(collection: any, attribute: any, addToCurrentSort: any): {
-        fixed: any;
-        full: any;
+    orderBy(collection: Array<Entity>, attribute: string | SortObject, addToCurrentSort?: boolean): {
+        fixed: Array<Entity>;
+        full: Array<Entity>;
     };
-    group(array: any, grouping: any, keepExpanded: any): any;
-    getGrouping(): any;
-    groupCollapse(id: any): any[];
-    groupExpand(id: any): any[];
-    getOrderBy(): any[];
-    setLastSort(array: any): void;
-    setOrderBy(attribute: any, addToCurrentSort: any): void;
-    runOrderbyOn(array: any): void;
+    group(array: Array<Entity>, grouping: Array<string>, keepExpanded: boolean): Array<Entity>;
+    getGrouping(): Array<string>;
+    groupCollapse(id: string): Array<Entity>;
+    groupExpand(id: string): Array<Entity>;
+    getOrderBy(): Array<SortObject>;
+    setLastSort(array: Array<SortObject>): void;
+    setOrderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
+    runOrderbyOn(array: Array<Entity>): void;
     resetSort(): void;
-    getFilterOperatorName(operator: any): any;
-    getCurrentFilter(): any[];
-    query(array: any, params: any): any;
+    getFilterOperatorName(operator: string): string;
+    getCurrentFilter(): Array<FilterObject>;
+    query(array: Array<Entity>, params: Array<FilterObject>): Array<Entity>;
 }

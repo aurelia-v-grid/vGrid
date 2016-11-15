@@ -1,5 +1,4 @@
 define(["require", "exports"], function (require, exports) {
-    "use strict";
     var ArrayFilter = (function () {
         function ArrayFilter(filterOperators) {
             this.filterOperators = filterOperators;
@@ -9,27 +8,27 @@ define(["require", "exports"], function (require, exports) {
             return this.lastFilter;
         };
         ArrayFilter.prototype.runQueryOn = function (objArray, ObjFilter) {
-            var filterOperatorTable = this.filterOperators.getFilterNumbers();
+            var _this = this;
             var resultArray = objArray.filter(function (data) {
                 var result = true;
                 ObjFilter.forEach(function (x) {
                     var rowValue;
                     var filterValue;
-                    var filterOperator = filterOperatorTable[x.operator];
+                    var filterOperator = _this.filterOperators.getOperatorNo(x.operator);
                     var newFilterOperator;
                     var typeBool = {
-                        "true": true,
-                        "false": false
+                        true: true,
+                        false: false
                     };
                     var type;
                     try {
                         type = typeof (data[x.attribute]);
                     }
                     catch (e) {
-                        type = "string";
+                        type = 'string';
                     }
                     switch (type) {
-                        case "number":
+                        case 'number':
                             rowValue = data[x.attribute];
                             filterValue = Number(x.value);
                             filterOperator = filterOperator || 1;
@@ -37,24 +36,24 @@ define(["require", "exports"], function (require, exports) {
                                 filterOperator = 1;
                             }
                             break;
-                        case "string":
+                        case 'string':
                             rowValue = data[x.attribute].toLowerCase();
                             filterValue = x.value.toLowerCase();
                             filterOperator = filterOperator || 9;
                             newFilterOperator = filterOperator;
-                            if (x.value.charAt(0) === "*" && filterOperator === 9) {
+                            if (x.value.charAt(0) === '*' && filterOperator === 9) {
                                 newFilterOperator = 6;
                                 filterValue = filterValue.substr(1, filterValue.length);
                             }
-                            if (x.value.charAt(0) === "*" && filterOperator === 1) {
+                            if (x.value.charAt(0) === '*' && filterOperator === 1) {
                                 newFilterOperator = 10;
                                 filterValue = filterValue.substr(1, filterValue.length);
                             }
-                            if (x.value.charAt(x.value.length - 1) === "*" && filterOperator === 1 && newFilterOperator === 10) {
+                            if (x.value.charAt(x.value.length - 1) === '*' && filterOperator === 1 && newFilterOperator === 10) {
                                 newFilterOperator = 6;
                                 filterValue = filterValue.substr(0, filterValue.length - 1);
                             }
-                            if (x.value.charAt(x.value.length - 1) === "*" && filterOperator === 1 && newFilterOperator !== 10 && newFilterOperator !== 6) {
+                            if (x.value.charAt(x.value.length - 1) === '*' && filterOperator === 1 && newFilterOperator !== 10 && newFilterOperator !== 6) {
                                 newFilterOperator = 9;
                                 filterValue = filterValue.substr(0, filterValue.length - 1);
                             }
@@ -62,12 +61,12 @@ define(["require", "exports"], function (require, exports) {
                                 filterOperator = newFilterOperator;
                             }
                             break;
-                        case "boolean":
+                        case 'boolean':
                             rowValue = data[x.attribute];
                             filterValue = typeBool[x.value];
                             filterOperator = 1;
                             break;
-                        case "object":
+                        case 'object':
                             rowValue = data[x.attribute].toISOString();
                             filterValue = new Date(x.value).toISOString();
                             filterOperator = filterOperator || 2;
@@ -144,8 +143,8 @@ define(["require", "exports"], function (require, exports) {
                                 result = false;
                             }
                     }
-                    if (type === "string") {
-                        if (x.value.charAt(0) === "*" && x.value.length === 1) {
+                    if (type === 'string') {
+                        if (x.value.charAt(0) === '*' && x.value.length === 1) {
                             result = true;
                         }
                     }

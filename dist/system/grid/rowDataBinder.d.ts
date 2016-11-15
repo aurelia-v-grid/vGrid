@@ -1,13 +1,12 @@
-import { Controller } from './controller';
+import { Controller } from '../interfaces';
 export declare class RowDataBinder {
-    element: Element;
-    controller: Controller;
-    rebindRowBinded: any;
-    rebindAllRowsBinded: any;
+    private element;
+    private controller;
+    private rebindRowBinded;
+    private rebindAllRowsBinded;
     constructor(element: Element, controller: Controller);
     init(): void;
-    addEventListener(): void;
-    removeEventListener(): void;
-    rebindRow(event: any): void;
-    rebindAllRows(event: any): void;
+    private addEventListener();
+    private rebindRow(event);
+    private rebindAllRows(event);
 }

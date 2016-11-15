@@ -1,11 +1,10 @@
-"use strict";
 var RowClickHandler = (function () {
     function RowClickHandler(element, htmlCache) {
         this.element = element;
         this.htmlCache = htmlCache;
-        this.selectionMode = "none";
+        this.selectionMode = 'none';
         this.lastRowSelected = -1;
-        this.lastKeyKodeUsed = "none";
+        this.lastKeyKodeUsed = 'none';
         this.selectedRows = 0;
     }
     RowClickHandler.prototype.init = function (mode, manualSelection, controller) {
@@ -13,59 +12,110 @@ var RowClickHandler = (function () {
         this.selection = controller.getSelectionContext();
         this.manualSelection = manualSelection;
         if (mode === false) {
-            this.selectionMode = "single";
+            this.selectionMode = 'single';
         }
         if (mode === true) {
-            this.selectionMode = "multiple";
+            this.selectionMode = 'multiple';
         }
         this.addEventlistener();
     };
-    RowClickHandler.prototype.addEventlistener = function () {
-        var avg_left_rows = this.htmlCache.avg_left_rows;
-        var avg_main_rows = this.htmlCache.avg_main_rows;
-        var avg_right_rows = this.htmlCache.avg_right_rows;
-        for (var i = 0; i < avg_left_rows.length; i++) {
-            avg_left_rows[i].onclick = this.singleClick.bind(this);
-            avg_left_rows[i].ondblclick = this.doubleClick.bind(this);
-            avg_main_rows[i].onclick = this.singleClick.bind(this);
-            avg_main_rows[i].ondblclick = this.doubleClick.bind(this);
-            avg_right_rows[i].onclick = this.singleClick.bind(this);
-            avg_right_rows[i].ondblclick = this.doubleClick.bind(this);
+    RowClickHandler.prototype.updateSelectionOnAllRows = function () {
+        var rowCache = this.htmlCache.rowCache;
+        for (var i = 0; i < rowCache.length; i++) {
+            var isSelected = this.selection.isSelected(rowCache[i].row);
+            rowCache[i].bindingContext.selected = isSelected;
+            rowCache[i].bindingContext.selected = isSelected;
+            rowCache[i].bindingContext.selected = isSelected;
+            if (isSelected) {
+                if (!rowCache[i].selected) {
+                    rowCache[i].selected = true;
+                    rowCache[i].left.classList.add('avg-selected-row');
+                    rowCache[i].main.classList.add('avg-selected-row');
+                    rowCache[i].right.classList.add('avg-selected-row');
+                }
+            }
+            else {
+                if (rowCache[i].selected) {
+                    rowCache[i].selected = false;
+                    rowCache[i].left.classList.remove('avg-selected-row');
+                    rowCache[i].main.classList.remove('avg-selected-row');
+                    rowCache[i].right.classList.remove('avg-selected-row');
+                }
+            }
         }
     };
+    RowClickHandler.prototype.getSelectionMode = function () {
+        return this.selection.getMode();
+    };
     RowClickHandler.prototype.removeEventlistener = function () {
-        var avg_left_rows = this.htmlCache.avg_left_rows;
-        var avg_main_rows = this.htmlCache.avg_main_rows;
-        var avg_right_rows = this.htmlCache.avg_right_rows;
-        for (var i = 0; i < avg_left_rows.length; i++) {
-            avg_left_rows[i].onclick = null;
-            avg_left_rows[i].ondblclick = null;
-            avg_main_rows[i].onclick = null;
-            avg_main_rows[i].ondblclick = null;
-            avg_right_rows[i].onclick = null;
-            avg_right_rows[i].ondblclick = null;
+        var avgLeftRows = this.htmlCache.avg_left_rows;
+        var avgMainRows = this.htmlCache.avg_main_rows;
+        var avgRightRows = this.htmlCache.avg_right_rows;
+        for (var i = 0; i < avgLeftRows.length; i++) {
+            avgLeftRows[i].onclick = null;
+            avgLeftRows[i].ondblclick = null;
+            avgMainRows[i].onclick = null;
+            avgMainRows[i].ondblclick = null;
+            avgRightRows[i].onclick = null;
+            avgRightRows[i].ondblclick = null;
+        }
+    };
+    RowClickHandler.prototype.addEventlistener = function () {
+        var avgLeftRows = this.htmlCache.avg_left_rows;
+        var avgMainRows = this.htmlCache.avg_main_rows;
+        var avgRightRows = this.htmlCache.avg_right_rows;
+        for (var i = 0; i < avgLeftRows.length; i++) {
+            avgLeftRows[i].onclick = this.singleClick.bind(this);
+            avgLeftRows[i].ondblclick = this.doubleClick.bind(this);
+            avgMainRows[i].onclick = this.singleClick.bind(this);
+            avgMainRows[i].ondblclick = this.doubleClick.bind(this);
+            avgRightRows[i].onclick = this.singleClick.bind(this);
+            avgRightRows[i].ondblclick = this.doubleClick.bind(this);
+        }
+    };
+    RowClickHandler.prototype.getCache = function (target) {
+        var no = -1;
+        this.htmlCache.rowCache.forEach(function (row, i) {
+            if (row.left === target) {
+                no = i;
+            }
+            if (row.main === target) {
+                no = i;
+            }
+            if (row.right === target) {
+                no = i;
+            }
+            if (row.group === target) {
+                no = i;
+            }
+        });
+        if (no !== -1) {
+            return this.htmlCache.rowCache[no];
+        }
+        else {
+            return null;
         }
     };
     RowClickHandler.prototype.singleClick = function (event) {
-        if (!event.currentTarget.avgGroup) {
-            this.highlightRow(event, event.currentTarget.avgRow);
-            this.controller.select(event.currentTarget.avgRow);
+        var cache = this.getCache(event.currentTarget) || {};
+        if (!cache.isGroup) {
+            this.highlightRow(event, cache.row);
+            this.controller.select(cache.row);
         }
         if (!this.manualSelection) {
-            this.controller.raiseEvent("v-row-onclick", {
+            this.controller.raiseEvent('v-row-onclick', {
                 evt: event,
                 data: null,
-                row: event.currentTarget.avgRow
+                row: cache.row
             });
         }
     };
-    RowClickHandler.prototype.isNormalRow = function () {
-    };
     RowClickHandler.prototype.doubleClick = function (event) {
-        this.controller.raiseEvent("v-row-ondblclick", {
+        var cache = this.getCache(event.currentTarget) || {};
+        this.controller.raiseEvent('v-row-ondblclick', {
             evt: event,
             data: null,
-            row: event.currentTarget.avgRow
+            row: cache.row
         });
     };
     RowClickHandler.prototype.isSelected = function (row) {
@@ -86,62 +136,34 @@ var RowClickHandler = (function () {
     RowClickHandler.prototype.setSelectedRows = function (newRows) {
         this.selection.setSelectedRows(newRows);
     };
-    RowClickHandler.prototype.getSelectionMode = function () {
-        return this.selection.getMode();
-    };
-    RowClickHandler.prototype.updateSelectionOnAllRows = function () {
-        var rowCache = this.htmlCache.rowCache;
-        for (var i = 0; i < rowCache.length; i++) {
-            var isSelected = this.selection.isSelected(rowCache[i].row);
-            rowCache[i].mainRowViewSlot.bindingContext.selected = isSelected;
-            rowCache[i].leftRowViewSlot.bindingContext.selected = isSelected;
-            rowCache[i].rightRowViewSlot.bindingContext.selected = isSelected;
-            if (isSelected) {
-                if (!rowCache[i].main.avgSelected) {
-                    rowCache[i].main.avgSelected = true;
-                    rowCache[i].left.classList.add("avg-selected-row");
-                    rowCache[i].main.classList.add("avg-selected-row");
-                    rowCache[i].right.classList.add("avg-selected-row");
-                }
-            }
-            else {
-                if (rowCache[i].main.avgSelected) {
-                    rowCache[i].main.avgSelected = false;
-                    rowCache[i].left.classList.remove("avg-selected-row");
-                    rowCache[i].main.classList.remove("avg-selected-row");
-                    rowCache[i].right.classList.remove("avg-selected-row");
-                }
-            }
-        }
-    };
     RowClickHandler.prototype.highlightRow = function (e, currentRow) {
         var isSel;
         var manualSel = this.manualSelection;
         if (!manualSel) {
             var currentselectedRows = this.getSelectedRows();
-            var currentKeyKode = "";
+            var currentKeyKode = '';
             if (currentRow !== this.lastRowSelected || currentselectedRows[0] !== currentRow) {
                 if (currentRow <= (this.controller.collectionLength() - 1)) {
-                    if (this.selectionMode === "multiple") {
+                    if (this.selectionMode === 'multiple') {
                         if (e.shiftKey) {
-                            currentKeyKode = "shift";
+                            currentKeyKode = 'shift';
                             currentselectedRows = this.getSelectedRows();
-                            if (currentselectedRows.length > 0 && this.lastKeyKodeUsed === "none") {
+                            if (currentselectedRows.length > 0 && this.lastKeyKodeUsed === 'none') {
                                 this.lastRowSelected = currentselectedRows[0];
-                                this.lastKeyKodeUsed = "shift";
+                                this.lastKeyKodeUsed = 'shift';
                             }
                         }
                         if (e.ctrlKey) {
-                            currentKeyKode = "ctrl";
+                            currentKeyKode = 'ctrl';
                         }
                         if (!e.ctrlKey && !e.shiftKey) {
-                            currentKeyKode = "none";
+                            currentKeyKode = 'none';
                         }
                         switch (true) {
-                            case currentKeyKode === "none":
+                            case currentKeyKode === 'none':
                                 this.select(currentRow, false);
                                 break;
-                            case this.lastKeyKodeUsed === "shift" && currentKeyKode === "ctrl":
+                            case this.lastKeyKodeUsed === 'shift' && currentKeyKode === 'ctrl':
                                 isSel = this.isSelected(currentRow);
                                 if (isSel === true) {
                                     this.deSelect(currentRow);
@@ -151,13 +173,13 @@ var RowClickHandler = (function () {
                                 }
                                 this.lastRowSelected = currentRow;
                                 break;
-                            case this.lastKeyKodeUsed === "ctrl" && currentKeyKode === "shift":
+                            case this.lastKeyKodeUsed === 'ctrl' && currentKeyKode === 'shift':
                                 var oldSel = this.getSelectedRows();
                                 this.selectRange(this.lastRowSelected, currentRow);
                                 var newSel = this.getSelectedRows();
                                 this.setSelectedRows(oldSel.concat(newSel));
                                 break;
-                            case this.lastKeyKodeUsed === "ctrl" && currentKeyKode === "ctrl":
+                            case this.lastKeyKodeUsed === 'ctrl' && currentKeyKode === 'ctrl':
                                 isSel = this.isSelected(currentRow);
                                 if (isSel === true) {
                                     this.deSelect(currentRow);
@@ -167,7 +189,7 @@ var RowClickHandler = (function () {
                                 }
                                 this.lastRowSelected = currentRow;
                                 break;
-                            case this.lastKeyKodeUsed === "none" && currentKeyKode === "ctrl":
+                            case this.lastKeyKodeUsed === 'none' && currentKeyKode === 'ctrl':
                                 isSel = this.isSelected(currentRow);
                                 if (isSel === true) {
                                     this.deSelect(currentRow);
@@ -177,7 +199,7 @@ var RowClickHandler = (function () {
                                 }
                                 this.lastRowSelected = currentRow;
                                 break;
-                            case this.lastKeyKodeUsed === "shift" && currentKeyKode === "shift":
+                            case this.lastKeyKodeUsed === 'shift' && currentKeyKode === 'shift':
                                 if (this.lastRowSelected > currentRow) {
                                     this.selectRange(currentRow, this.lastRowSelected);
                                 }
@@ -185,7 +207,7 @@ var RowClickHandler = (function () {
                                     this.selectRange(this.lastRowSelected, currentRow);
                                 }
                                 break;
-                            case this.lastKeyKodeUsed === "none" && currentKeyKode === "shift":
+                            case this.lastKeyKodeUsed === 'none' && currentKeyKode === 'shift':
                                 if (this.lastRowSelected !== -1) {
                                     if (this.lastRowSelected > currentRow) {
                                         this.selectRange(currentRow, this.lastRowSelected);
@@ -200,7 +222,7 @@ var RowClickHandler = (function () {
                                 }
                                 break;
                             default:
-                                console.error("error, this should not happen, debug selection");
+                                console.error('error, this should not happen, debug selection');
                         }
                     }
                     else {
@@ -212,9 +234,9 @@ var RowClickHandler = (function () {
             }
             else {
                 if (e.ctrlKey) {
-                    currentKeyKode = "ctrl";
+                    currentKeyKode = 'ctrl';
                 }
-                if (currentKeyKode === "ctrl") {
+                if (currentKeyKode === 'ctrl') {
                     this.lastKeyKodeUsed = currentKeyKode;
                     isSel = this.isSelected(currentRow);
                     if (isSel === true) {

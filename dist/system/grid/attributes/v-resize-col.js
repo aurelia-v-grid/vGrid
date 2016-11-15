@@ -1,6 +1,4 @@
-System.register(['aurelia-framework', '../v-grid'], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
+System.register(["aurelia-framework", "../v-grid"], function (exports_1, context_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,42 +8,43 @@ System.register(['aurelia-framework', '../v-grid'], function(exports_1, context_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var aurelia_framework_1, v_grid_1;
-    var vGridAttributesResizeCol;
+    var __moduleName = context_1 && context_1.id;
+    var aurelia_framework_1, v_grid_1, VGridAttributesResizeCol;
     return {
-        setters:[
+        setters: [
             function (aurelia_framework_1_1) {
                 aurelia_framework_1 = aurelia_framework_1_1;
             },
             function (v_grid_1_1) {
                 v_grid_1 = v_grid_1_1;
-            }],
-        execute: function() {
-            vGridAttributesResizeCol = (function () {
-                function vGridAttributesResizeCol(element, vGrid) {
+            }
+        ],
+        execute: function () {
+            VGridAttributesResizeCol = (function () {
+                function VGridAttributesResizeCol(element, vGrid) {
                     this.vGrid = vGrid;
                     this.ctx = vGrid.resizeAttributeSharedContext;
                     this.element = element;
-                    this.screenX;
-                    this.originalWidth;
+                    this.screenX = 0;
+                    this.originalWidth = 0;
                     this.column = this.element;
                     while (this.column.nodeName !== 'AVG-COL') {
                         this.column = this.column.parentNode;
                     }
-                    this.colType = this.column.attributes.getNamedItem("avg-type").value;
-                    this.colNo = this.column.attributes.getNamedItem("avg-config-col").value * 1;
-                    this.context = vGrid.columnBindingContext["setup" + this.colType][this.colNo];
-                    this.columnsArray = vGrid.columnBindingContext["setup" + this.colType];
+                    this.colType = this.column.attributes.getNamedItem('avg-type').value;
+                    this.colNo = parseInt(this.column.attributes.getNamedItem('avg-config-col').value, 10);
+                    this.context = vGrid.columnBindingContext['setup' + this.colType][this.colNo];
+                    this.columnsArray = vGrid.columnBindingContext['setup' + this.colType];
                     this.columnBindingContext = vGrid.columnBindingContext;
                 }
-                vGridAttributesResizeCol.prototype.bind = function (bindingContext, overrideContext) {
+                VGridAttributesResizeCol.prototype.bind = function (bindingContext, overrideContext) {
                     this.bindingContext = bindingContext;
                     this.overrideContext = overrideContext;
                 };
-                vGridAttributesResizeCol.prototype.attached = function () {
+                VGridAttributesResizeCol.prototype.attached = function () {
                     var _this = this;
-                    var resizeHandle = document.createElement("DIV");
-                    resizeHandle.classList.add("avg-draggable-handler");
+                    var resizeHandle = document.createElement('DIV');
+                    resizeHandle.classList.add('avg-draggable-handler');
                     this.onmousedownBinded = this.onmousedown.bind(this);
                     this.onmousemoveBinded = this.onmousemove.bind(this);
                     this.onmouseupBinded = this.onmouseup.bind(this);
@@ -55,23 +54,23 @@ System.register(['aurelia-framework', '../v-grid'], function(exports_1, context_
                     };
                     this.column.appendChild(resizeHandle);
                 };
-                vGridAttributesResizeCol.prototype.onmouseup = function () {
-                    document.removeEventListener("mousemove", this.onmousemoveBinded);
-                    document.removeEventListener("mouseup", this.onmouseupBinded);
+                VGridAttributesResizeCol.prototype.onmouseup = function () {
+                    document.removeEventListener('mousemove', this.onmousemoveBinded);
+                    document.removeEventListener('mouseup', this.onmouseupBinded);
                     this.ctx.resizing = false;
                 };
-                vGridAttributesResizeCol.prototype.onmousemove = function (e) {
+                VGridAttributesResizeCol.prototype.onmousemove = function (e) {
                     this.updateHeader(e);
                 };
-                vGridAttributesResizeCol.prototype.updateHeader = function (e) {
+                VGridAttributesResizeCol.prototype.updateHeader = function (e) {
                     var _this = this;
                     var w = Math.abs(this.screenX - e.screenX);
                     if (w % 2 === 0) {
                         requestAnimationFrame(function () {
-                            var movementX = parseInt(_this.originalWidth) - ((_this.screenX - e.screenX)) + "px";
-                            var appendValue = parseInt(_this.originalWidth) - parseInt(movementX);
-                            if (_this.colType === "main") {
-                                _this.columnsArray[_this.colNo].width = parseInt(movementX);
+                            var movementX = _this.originalWidth - (_this.screenX - e.screenX);
+                            var appendValue = _this.originalWidth - movementX;
+                            if (_this.colType === 'main') {
+                                _this.columnsArray[_this.colNo].width = movementX;
                                 _this.vGrid.colConfig[_this.colNo].colWidth = _this.columnsArray[_this.colNo].width;
                                 for (var i = 0; i < _this.columnsArray.length; i++) {
                                     if (_this.columnsArray[_this.colNo].left < _this.columnsArray[i].left) {
@@ -81,8 +80,8 @@ System.register(['aurelia-framework', '../v-grid'], function(exports_1, context_
                                 _this.vGrid.htmlHeightWidth.avgContentMainScroll_Width = _this.avgContentMainScroll_Width - appendValue;
                                 _this.vGrid.htmlHeightWidth.avgContentHhandleScroll_Width = _this.avgContentHhandleScroll_Width - appendValue;
                             }
-                            if (_this.colType === "right") {
-                                _this.columnsArray[_this.colNo].width = parseInt(movementX);
+                            if (_this.colType === 'right') {
+                                _this.columnsArray[_this.colNo].width = movementX;
                                 _this.vGrid.colConfig[_this.colNo].colWidth = _this.columnsArray[_this.colNo].width;
                                 for (var i = 0; i < _this.columnsArray.length; i++) {
                                     if (_this.columnsArray[_this.colNo].left < _this.columnsArray[i].left) {
@@ -95,8 +94,8 @@ System.register(['aurelia-framework', '../v-grid'], function(exports_1, context_
                                 _this.vGrid.htmlHeightWidth.avgHeaderMain_Right = _this.avgHeaderMain_Right - appendValue;
                                 _this.vGrid.htmlHeightWidth.avgContentHhandle_Right = _this.avgContentHhandle_Right - appendValue;
                             }
-                            if (_this.colType === "left") {
-                                _this.columnsArray[_this.colNo].width = parseInt(movementX);
+                            if (_this.colType === 'left') {
+                                _this.columnsArray[_this.colNo].width = movementX;
                                 _this.vGrid.colConfig[_this.colNo].colWidth = _this.columnsArray[_this.colNo].width;
                                 for (var i = 0; i < _this.columnsArray.length; i++) {
                                     if (_this.columnsArray[_this.colNo].left < _this.columnsArray[i].left) {
@@ -112,7 +111,7 @@ System.register(['aurelia-framework', '../v-grid'], function(exports_1, context_
                         });
                     }
                 };
-                vGridAttributesResizeCol.prototype.onmousedown = function (e) {
+                VGridAttributesResizeCol.prototype.onmousedown = function (e) {
                     var _this = this;
                     this.screenX = e.screenX;
                     this.originalWidth = this.context.width;
@@ -133,37 +132,40 @@ System.register(['aurelia-framework', '../v-grid'], function(exports_1, context_
                     this.avgContentHhandle_Left = this.vGrid.htmlHeightWidth.avgContentHhandle_Left;
                     this.avgContentHhandleScroll_Width = this.vGrid.htmlHeightWidth.avgContentHhandleScroll_Width;
                     this.avgContentMainScrollLeft = this.vGrid.htmlCache.avg_content_main.scrollLeft;
-                    if (this.colType === "main") {
+                    if (this.colType === 'main') {
                         this.isLast = this.vGrid.htmlHeightWidth.avgContentMainScroll_Width === (this.context.left + this.context.width);
                     }
-                    if (this.colType === "left") {
-                        this.isLast = this.vGrid.htmlHeightWidth.avgContentLeft_Width === (this.context.left + this.context.width + this.vGrid.htmlHeightWidth.avgScrollBarWidth) + this.columnBindingContext.setupgrouping * 15;
+                    if (this.colType === 'left') {
+                        var sumContext = this.context.left + this.context.width + this.vGrid.htmlHeightWidth.avgScrollBarWidth;
+                        var sumGrouping = this.columnBindingContext.setupgrouping * 15;
+                        this.isLast = this.vGrid.htmlHeightWidth.avgContentLeft_Width === (sumContext + sumGrouping);
                     }
-                    if (this.colType === "right") {
-                        this.isLast = this.vGrid.htmlHeightWidth.avgContentRight_Width === (this.context.left + this.context.width + this.vGrid.htmlHeightWidth.avgScrollBarWidth);
+                    if (this.colType === 'right') {
+                        var sum = this.context.left + this.context.width + this.vGrid.htmlHeightWidth.avgScrollBarWidth;
+                        this.isLast = this.vGrid.htmlHeightWidth.avgContentRight_Width === sum;
                     }
                     var setupRight = this.vGrid.columnBindingContext.setupright;
-                    this.rightColNo;
-                    this.rightColNoWidth;
+                    this.rightColNo = 0;
+                    this.rightColNoWidth = 0;
                     setupRight.forEach(function (col, i) {
                         if (col.left === 0) {
                             _this.rightColNo = i;
                             _this.rightColNoWidth = col.width;
                         }
                     });
-                    document.addEventListener("mousemove", this.onmousemoveBinded);
-                    document.addEventListener("mouseup", this.onmouseupBinded);
+                    document.addEventListener('mousemove', this.onmousemoveBinded);
+                    document.addEventListener('mouseup', this.onmouseupBinded);
                 };
-                vGridAttributesResizeCol = __decorate([
-                    aurelia_framework_1.customAttribute('v-resize-col'),
-                    aurelia_framework_1.inject(Element, v_grid_1.VGrid), 
-                    __metadata('design:paramtypes', [Object, Object])
-                ], vGridAttributesResizeCol);
-                return vGridAttributesResizeCol;
+                return VGridAttributesResizeCol;
             }());
-            exports_1("vGridAttributesResizeCol", vGridAttributesResizeCol);
+            VGridAttributesResizeCol = __decorate([
+                aurelia_framework_1.customAttribute('v-resize-col'),
+                aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+                __metadata("design:paramtypes", [Element, v_grid_1.VGrid])
+            ], VGridAttributesResizeCol);
+            exports_1("VGridAttributesResizeCol", VGridAttributesResizeCol);
         }
-    }
+    };
 });
 
 //# sourceMappingURL=v-resize-col.js.map

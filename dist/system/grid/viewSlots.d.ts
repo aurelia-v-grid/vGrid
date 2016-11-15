@@ -1,4 +1,4 @@
-import { ViewSlot } from 'aurelia-framework';
+import { ViewSlot, OverrideContext, HtmlCache, ColumnBindingContext } from '../interfaces';
 export declare class ViewSlots {
     leftRowViewSlots: Array<ViewSlot>;
     mainRowViewSlots: Array<ViewSlot>;
@@ -11,7 +11,9 @@ export declare class ViewSlots {
     loadingScreenViewSlot: ViewSlot;
     contextMenu: ViewSlot;
     groupingViewSlots: Array<ViewSlot>;
-    constructor();
-    bindAndAttachColumns(overrideContext: any, columnBindingContext: any): void;
+    private rowCache;
+    private headerCache;
+    constructor(htmlCache: HtmlCache);
+    bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext): void;
     unbindAndDetachColumns(): void;
 }

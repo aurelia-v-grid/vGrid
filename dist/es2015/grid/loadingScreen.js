@@ -1,5 +1,4 @@
-define(["require", "exports", 'aurelia-framework'], function (require, exports, aurelia_framework_1) {
-    "use strict";
+define(["require", "exports", "aurelia-framework"], function (require, exports, aurelia_framework_1) {
     var LoadingScreen = (function () {
         function LoadingScreen(element, viewCompiler, container, viewResources, viewSlots) {
             this.element = element;
@@ -8,7 +7,7 @@ define(["require", "exports", 'aurelia-framework'], function (require, exports, 
             this.container = container;
             this.viewResources = viewResources;
             this.loading = false;
-            this.loadingMessage = "Loading";
+            this.loadingMessage = 'Loading';
         }
         LoadingScreen.prototype.init = function (overrideContext) {
             this.overrideContext = overrideContext;
@@ -21,7 +20,9 @@ define(["require", "exports", 'aurelia-framework'], function (require, exports, 
                 '</div>',
                 '</div>'
             ];
-            var viewFactory = this.viewCompiler.compile('<template>' + loadingScreentHtml.join("") + '</template>', this.viewResources);
+            var viewFactory = this.viewCompiler.compile('<template>' +
+                loadingScreentHtml.join('') +
+                '</template>', this.viewResources);
             var view = viewFactory.create(this.container);
             var loadingScreenViewSlot = new aurelia_framework_1.ViewSlot(this.element, true);
             loadingScreenViewSlot.add(view);
@@ -36,9 +37,9 @@ define(["require", "exports", 'aurelia-framework'], function (require, exports, 
             var _this = this;
             return new Promise(function (resolve, reject) {
                 _this.loading = collectionLength ? collectionLength > 10000 ? true : false : false;
-                _this.loadingMessage = msg || "Loading";
+                _this.loadingMessage = msg || 'Loading';
                 setTimeout(function () {
-                    resolve();
+                    resolve(null);
                 });
             });
         };

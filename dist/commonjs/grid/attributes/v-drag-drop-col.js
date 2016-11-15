@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var aurelia_framework_1 = require('aurelia-framework');
-var v_grid_1 = require('../v-grid');
-var vGridDragDropCol = (function () {
-    function vGridDragDropCol(element, vGrid) {
+var aurelia_framework_1 = require("aurelia-framework");
+var v_grid_1 = require("../v-grid");
+var VGridDragDropCol = (function () {
+    function VGridDragDropCol(element, vGrid) {
         this.vGrid = vGrid;
         this.vGridElement = vGrid.element;
         this.controller = vGrid.controller;
@@ -22,7 +21,7 @@ var vGridDragDropCol = (function () {
         this.entered = null;
         this.curColNo = null;
     }
-    vGridDragDropCol.prototype.bind = function (bindingContext, overrideContext) {
+    VGridDragDropCol.prototype.bind = function (bindingContext, overrideContext) {
         this.bindingContext = bindingContext;
         this.overrideContext = overrideContext;
         this.onDragstartBinded = this.onDragstart.bind(this);
@@ -31,32 +30,34 @@ var vGridDragDropCol = (function () {
         this.onDragendBinded = this.onDragend.bind(this);
         this.onDragOutSideBinded = this.onDragOutSide.bind(this);
     };
-    vGridDragDropCol.prototype.unbind = function () {
+    VGridDragDropCol.prototype.unbind = function () {
     };
-    vGridDragDropCol.prototype.attached = function () {
+    VGridDragDropCol.prototype.detached = function () {
+    };
+    VGridDragDropCol.prototype.attached = function () {
         var _this = this;
         var result = this.getTargetData(this.column);
         if (result.ok && !result.panel) {
             this.column = result.target;
-            this.colType = this.column.attributes.getNamedItem("avg-type").value;
-            this.colNo = this.column.attributes.getNamedItem("avg-config-col").value * 1;
-            this.context = this.vGrid.columnBindingContext["setup" + this.colType][this.colNo];
-            this.columnsArray = this.vGrid.columnBindingContext["setup" + this.colType];
-            this.element.addEventListener("mousedown", this.onDragstartBinded);
-            result.target.addEventListener("mouseenter", this.onDragenterBinded);
+            this.colType = this.column.attributes.getNamedItem('avg-type').value;
+            this.colNo = parseInt(this.column.attributes.getNamedItem('avg-config-col').value, 10);
+            this.context = this.vGrid.columnBindingContext['setup' + this.colType][this.colNo];
+            this.columnsArray = this.vGrid.columnBindingContext['setup' + this.colType];
+            this.element.addEventListener('mousedown', this.onDragstartBinded);
+            result.target.addEventListener('mouseenter', this.onDragenterBinded);
         }
         if (result.ok && result.target.nodeName === 'AVG-TOP-PANEL') {
             this.isPanel = true;
             this.sharedContext.panel = result.target;
             result.target.onmouseleave = function (event) {
                 if (_this.sharedContext.dragging) {
-                    _this.groupingElements.removeGroup("");
+                    _this.groupingElements.removeGroup('');
                 }
             };
             result.target.onmouseenter = function (event) {
                 if (_this.sharedContext.dragging) {
                     var name_1 = _this.vGrid.colConfig[_this.sharedContext.colNo].colHeaderName;
-                    var field = _this.vGrid.colConfig[_this.sharedContext.colNo].colField.replace("rowRef.", "");
+                    var field = _this.vGrid.colConfig[_this.sharedContext.colNo].colField.replace('rowRef.', '');
                     _this.groupingElements.addGroup(name_1, field);
                     _this.sharedContext.lastTarget = result.target;
                 }
@@ -68,22 +69,22 @@ var vGridDragDropCol = (function () {
             };
         }
     };
-    vGridDragDropCol.prototype.createDragElement = function () {
-        this.dragColumnBlock = document.createElement("div");
+    VGridDragDropCol.prototype.createDragElement = function () {
+        this.dragColumnBlock = document.createElement('div');
         this.dragColumnBlock.classList.add(this.vGrid.attTheme);
-        this.dragColumnBlock.classList.add("avg-drag");
-        this.dragColumnBlock.style.top = -1200 + "px";
-        this.dragColumnBlock.style.left = -1200 + "px";
+        this.dragColumnBlock.classList.add('avg-drag');
+        this.dragColumnBlock.style.top = -1200 + 'px';
+        this.dragColumnBlock.style.left = -1200 + 'px';
         document.body.appendChild(this.dragColumnBlock);
         this.dragColumnBlock.innerHTML = this.vGrid.colConfig[this.colNo].colHeaderName;
     };
-    vGridDragDropCol.prototype.onDragstart = function (event) {
+    VGridDragDropCol.prototype.onDragstart = function (event) {
         var _this = this;
-        document.addEventListener("mouseup", this.onDragendBinded);
-        this.vGridElement.addEventListener("mouseleave", this.onDragOutSideBinded);
+        document.addEventListener('mouseup', this.onDragendBinded);
+        this.vGridElement.addEventListener('mouseleave', this.onDragOutSideBinded);
         this.createDragElement();
         this.mouseMoveTimer = setTimeout(function () {
-            document.addEventListener("mousemove", _this.onDragoverBinded, false);
+            document.addEventListener('mousemove', _this.onDragoverBinded, false);
         }, 300);
         this.sharedContext.dragging = true;
         this.sharedContext.colType = this.colType;
@@ -96,9 +97,7 @@ var vGridDragDropCol = (function () {
             _this.sharedContext.columnsArraySorted.push(x);
         });
     };
-    vGridDragDropCol.prototype.detached = function () {
-    };
-    vGridDragDropCol.prototype.onDragOutSide = function (event) {
+    VGridDragDropCol.prototype.onDragOutSide = function (event) {
         if (this.sharedContext.dragging) {
             if (event.layerX < 0) {
                 var left_1 = false;
@@ -109,7 +108,7 @@ var vGridDragDropCol = (function () {
                 });
                 if (!left_1) {
                     this.switchColumns({
-                        colType: "left"
+                        colType: 'left'
                     });
                 }
             }
@@ -122,13 +121,13 @@ var vGridDragDropCol = (function () {
                 });
                 if (!right_1) {
                     this.switchColumns({
-                        colType: "right"
+                        colType: 'right'
                     });
                 }
             }
         }
     };
-    vGridDragDropCol.prototype.onDragenter = function (event) {
+    VGridDragDropCol.prototype.onDragenter = function (event) {
         if (this.sharedContext.dragging) {
             var result = this.getTargetData(event.target);
             if (result.target.nodeName === 'AVG-COL' && result.ok && this.sharedContext.lastTarget !== result.target) {
@@ -161,20 +160,19 @@ var vGridDragDropCol = (function () {
             }
         }
     };
-    vGridDragDropCol.prototype.onDragover = function (event) {
+    VGridDragDropCol.prototype.onDragover = function (event) {
         if (this.dragColumnBlock) {
-            this.dragColumnBlock.style.top = event.clientY + "px";
-            this.dragColumnBlock.style.left = event.clientX + "px";
+            this.dragColumnBlock.style.top = event.clientY + 'px';
+            this.dragColumnBlock.style.left = event.clientX + 'px';
         }
     };
-    vGridDragDropCol.prototype.onDragend = function (event) {
+    VGridDragDropCol.prototype.onDragend = function (event) {
         clearTimeout(this.mouseMoveTimer);
         this.sharedContext.dragging = false;
-        document.removeEventListener("mouseup", this.onDragendBinded);
-        document.removeEventListener("mousemove", this.onDragoverBinded);
-        this.vGridElement.removeEventListener("mouseleave", this.onDragOutSideBinded);
+        document.removeEventListener('mouseup', this.onDragendBinded);
+        document.removeEventListener('mousemove', this.onDragoverBinded);
+        this.vGridElement.removeEventListener('mouseleave', this.onDragOutSideBinded);
         this.sharedContext.lastTarget = null;
-        this.sharedContext.group = null;
         if (this.dragColumnBlock) {
             var parent_1 = this.dragColumnBlock.parentNode;
             if (parent_1) {
@@ -183,19 +181,19 @@ var vGridDragDropCol = (function () {
             }
         }
     };
-    vGridDragDropCol.prototype.switchColumns = function (result) {
+    VGridDragDropCol.prototype.switchColumns = function (result) {
         var _this = this;
         var width;
         var newColType = result.colType;
         var oldColType = this.sharedContext.colType;
         var heightAndWidths = this.vGrid.htmlHeightWidth;
         switch (true) {
-            case newColType === "left" && oldColType === "main":
-            case newColType === "main" && oldColType === "left":
-            case newColType === "right" && oldColType === "main":
-            case newColType === "main" && oldColType === "right":
-            case newColType === "left" && oldColType === "right":
-            case newColType === "right" && oldColType === "left":
+            case newColType === 'left' && oldColType === 'main':
+            case newColType === 'main' && oldColType === 'left':
+            case newColType === 'right' && oldColType === 'main':
+            case newColType === 'main' && oldColType === 'right':
+            case newColType === 'left' && oldColType === 'right':
+            case newColType === 'right' && oldColType === 'left':
                 this.sharedContext.columnsArray[this.sharedContext.colNo].show = false;
                 width = this.sharedContext.columnsArray[this.sharedContext.colNo].width;
                 this.sharedContext.columnsArraySorted.sort(function (a, b) {
@@ -209,7 +207,7 @@ var vGridDragDropCol = (function () {
                     }
                 });
                 this.sharedContext.colType = result.colType;
-                this.sharedContext.columnsArray = this.vGrid.columnBindingContext["setup" + result.colType];
+                this.sharedContext.columnsArray = this.vGrid.columnBindingContext['setup' + result.colType];
                 this.sharedContext.columnsArray[this.sharedContext.colNo].show = true;
                 this.sharedContext.columnsArraySorted = [];
                 this.sharedContext.columnsArray.forEach(function (x) {
@@ -229,7 +227,7 @@ var vGridDragDropCol = (function () {
             default:
                 break;
         }
-        if (newColType === "left" && oldColType === "main") {
+        if (newColType === 'left' && oldColType === 'main') {
             heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
             heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width - width;
             heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentLeft_Width + width;
@@ -238,7 +236,7 @@ var vGridDragDropCol = (function () {
             heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left + width;
             heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left + width;
         }
-        if (newColType === "main" && oldColType === "left") {
+        if (newColType === 'main' && oldColType === 'left') {
             heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
             heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
             heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentLeft_Width - width;
@@ -247,7 +245,7 @@ var vGridDragDropCol = (function () {
             heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left - width;
             heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left - width;
         }
-        if (newColType === "right" && oldColType === "main") {
+        if (newColType === 'right' && oldColType === 'main') {
             heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
             heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width - width;
             heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width + width;
@@ -256,7 +254,7 @@ var vGridDragDropCol = (function () {
             heightAndWidths.avgHeaderMain_Right = heightAndWidths.avgHeaderMain_Right + width;
             heightAndWidths.avgContentHhandle_Right = heightAndWidths.avgContentHhandle_Right + width;
         }
-        if (newColType === "main" && oldColType === "right") {
+        if (newColType === 'main' && oldColType === 'right') {
             heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
             heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
             heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width - width;
@@ -265,7 +263,7 @@ var vGridDragDropCol = (function () {
             heightAndWidths.avgHeaderMain_Right = heightAndWidths.avgHeaderMain_Right - width;
             heightAndWidths.avgContentHhandle_Right = heightAndWidths.avgContentHhandle_Right - width;
         }
-        if (newColType === "left" && oldColType === "right") {
+        if (newColType === 'left' && oldColType === 'right') {
             heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width - width;
             heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgHeaderRight_Width - width;
             heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentLeft_Width + width;
@@ -277,7 +275,7 @@ var vGridDragDropCol = (function () {
             heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left + width;
             heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left + width;
         }
-        if (newColType === "right" && oldColType === "left") {
+        if (newColType === 'right' && oldColType === 'left') {
             heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width + width;
             heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgHeaderRight_Width + width;
             heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentLeft_Width - width;
@@ -290,28 +288,28 @@ var vGridDragDropCol = (function () {
             heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left - width;
         }
     };
-    vGridDragDropCol.prototype.getTargetData = function (target) {
-        var draggable = null;
+    VGridDragDropCol.prototype.getTargetData = function (curTarget) {
+        var draggableTarget = null;
         var count = 0;
         var exit = true;
-        var ok = false;
+        var isOk = false;
         while (exit) {
             count++;
-            if (!target.parentNode) {
+            if (!curTarget.parentNode) {
                 exit = false;
             }
             else {
-                if (target.draggable === true && draggable === null) {
-                    draggable = target;
+                if (curTarget.draggable === true && draggableTarget === null) {
+                    draggableTarget = curTarget;
                 }
                 switch (true) {
-                    case target.nodeName === "AVG-COL":
-                    case target.nodeName === "AVG-TOP-PANEL":
-                        ok = true;
+                    case curTarget.nodeName === 'AVG-COL':
+                    case curTarget.nodeName === 'AVG-TOP-PANEL':
+                        isOk = true;
                         exit = false;
                         break;
                     default:
-                        target = target.parentNode;
+                        curTarget = curTarget.parentNode;
                         break;
                 }
             }
@@ -319,38 +317,38 @@ var vGridDragDropCol = (function () {
                 exit = false;
             }
         }
-        var colType = null;
-        var colNo = null;
-        var context = null;
-        var columnsArray = null;
-        var panel = false;
-        if (ok && target.nodeName === "AVG-COL") {
-            colType = target.attributes.getNamedItem("avg-type").value;
-            colNo = target.attributes.getNamedItem("avg-config-col").value * 1;
-            context = this.vGrid.columnBindingContext["setup" + colType][colNo];
-            columnsArray = this.vGrid.columnBindingContext["setup" + colType];
+        var curColType = null;
+        var curColNo = null;
+        var curContext = null;
+        var curColumnsArray = null;
+        var isPanel = false;
+        if (isOk && curTarget.nodeName === 'AVG-COL') {
+            curColType = curTarget.attributes.getNamedItem('avg-type').value;
+            curColNo = parseInt(curTarget.attributes.getNamedItem('avg-config-col').value, 10);
+            curContext = this.vGrid.columnBindingContext['setup' + curColType][curColNo];
+            curColumnsArray = this.vGrid.columnBindingContext['setup' + curColType];
         }
-        if (ok && target.nodeName === "AVG-TOP-PANEL") {
-            panel = true;
+        if (isOk && curTarget.nodeName === 'AVG-TOP-PANEL') {
+            isPanel = true;
         }
         return {
-            draggable: draggable,
-            ok: ok,
-            target: target,
-            colType: colType,
-            colNo: colNo,
-            context: context,
-            columnsArray: columnsArray,
-            panel: panel
+            draggable: draggableTarget,
+            ok: isOk,
+            target: curTarget,
+            colType: curColType,
+            colNo: curColNo,
+            context: curContext,
+            columnsArray: curColumnsArray,
+            panel: isPanel
         };
     };
-    vGridDragDropCol = __decorate([
-        aurelia_framework_1.customAttribute('v-drag-drop-col'),
-        aurelia_framework_1.inject(Element, v_grid_1.VGrid), 
-        __metadata('design:paramtypes', [Object, Object])
-    ], vGridDragDropCol);
-    return vGridDragDropCol;
+    return VGridDragDropCol;
 }());
-exports.vGridDragDropCol = vGridDragDropCol;
+VGridDragDropCol = __decorate([
+    aurelia_framework_1.customAttribute('v-drag-drop-col'),
+    aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+    __metadata("design:paramtypes", [Element, v_grid_1.VGrid])
+], VGridDragDropCol);
+exports.VGridDragDropCol = VGridDragDropCol;
 
 //# sourceMappingURL=v-drag-drop-col.js.map

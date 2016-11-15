@@ -1,10 +1,9 @@
-System.register([], function(exports_1, context_1) {
-    "use strict";
+System.register([], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
     var MainScrollEvents;
     return {
-        setters:[],
-        execute: function() {
+        setters: [],
+        execute: function () {
             MainScrollEvents = (function () {
                 function MainScrollEvents(element, htmlCache) {
                     this.element = element;
@@ -19,7 +18,7 @@ System.register([], function(exports_1, context_1) {
                 }
                 MainScrollEvents.prototype.init = function () {
                     this.updateInternalHtmlCache();
-                    this.addScrollEvents("all");
+                    this.addScrollEvents('all');
                 };
                 MainScrollEvents.prototype.updateInternalHtmlCache = function () {
                     this.left = this.htmlCache.avg_content_left;
@@ -47,7 +46,7 @@ System.register([], function(exports_1, context_1) {
                 };
                 MainScrollEvents.prototype.addScrollEvents = function (type) {
                     switch (type) {
-                        case "all":
+                        case 'all':
                             this.left.onscroll = this.handleEventLeftScroll.bind(this);
                             this.main.onscroll = this.handleEventMainScroll.bind(this);
                             this.right.onscroll = this.handleEventRightScroll.bind(this);
@@ -58,80 +57,82 @@ System.register([], function(exports_1, context_1) {
                             this.vhandle.onscroll = this.handleEventVhandle.bind(this);
                             this.hhandle.onscroll = this.handleEventHhandle.bind(this);
                             break;
-                        case "left":
+                        case 'left':
                             this.main.onscroll = this.handleEventMainScroll.bind(this);
                             this.right.onscroll = this.handleEventRightScroll.bind(this);
                             this.vhandle.onscroll = this.handleEventVhandle.bind(this);
                             break;
-                        case "main":
+                        case 'main':
                             this.left.onscroll = this.handleEventLeftScroll.bind(this);
                             this.right.onscroll = this.handleEventRightScroll.bind(this);
                             this.vhandle.onscroll = this.handleEventVhandle.bind(this);
                             break;
-                        case "right":
+                        case 'right':
                             this.left.onscroll = this.handleEventLeftScroll.bind(this);
                             this.main.onscroll = this.handleEventMainScroll.bind(this);
                             this.vhandle.onscroll = this.handleEventVhandle.bind(this);
                             break;
-                        case "Vhandle":
+                        case 'Vhandle':
                             this.left.onscroll = this.handleEventLeftScroll.bind(this);
                             this.main.onscroll = this.handleEventMainScroll.bind(this);
                             this.right.onscroll = this.handleEventRightScroll.bind(this);
                             break;
-                        case "Hhandle":
+                        case 'Hhandle':
                             this.main.onscroll = this.handleEventMainScroll.bind(this);
                             break;
-                        case "wheel":
+                        case 'wheel':
                             this.left.onscroll = this.handleEventLeftScroll.bind(this);
                             this.main.onscroll = this.handleEventMainScroll.bind(this);
                             this.right.onscroll = this.handleEventRightScroll.bind(this);
                             this.vhandle.onscroll = this.handleEventVhandle.bind(this);
                             break;
+                        default:
                     }
                 };
                 MainScrollEvents.prototype.removeScrollEvents = function (type) {
                     switch (type) {
-                        case "all":
+                        case 'all':
                             this.left.onscroll = null;
                             this.main.onscroll = null;
                             this.right.onscroll = null;
                             this.vhandle.onscroll = null;
                             this.group.onscroll = null;
                             break;
-                        case "left":
+                        case 'left':
                             this.main.onscroll = null;
                             this.right.onscroll = null;
                             this.vhandle.onscroll = null;
                             this.group.onscroll = null;
                             break;
-                        case "main":
+                        case 'main':
                             this.left.onscroll = null;
                             this.right.onscroll = null;
                             this.vhandle.onscroll = null;
                             this.group.onscroll = null;
                             break;
-                        case "right":
+                        case 'right':
                             this.left.onscroll = null;
                             this.main.onscroll = null;
                             this.vhandle.onscroll = null;
                             this.group.onscroll = null;
                             break;
-                        case "Vhandle":
+                        case 'Vhandle':
                             this.left.onscroll = null;
                             this.main.onscroll = null;
                             this.right.onscroll = null;
                             this.group.onscroll = null;
                             break;
-                        case "Hhandle":
+                        case 'Hhandle':
                             this.main.onscroll = null;
                             break;
-                        case "wheel":
+                        case 'wheel':
                             this.left.onscroll = null;
                             this.main.onscroll = null;
                             this.right.onscroll = null;
                             this.vhandle.onscroll = null;
                             this.group.onscroll = null;
                             break;
+                        default:
                     }
                 };
                 MainScrollEvents.prototype.handleEventLeftScroll = function () {
@@ -142,7 +143,7 @@ System.register([], function(exports_1, context_1) {
                     requestAnimationFrame(function () {
                         if (_this.timerLeft) {
                             clearTimeout(_this.timerLeft);
-                            _this.removeScrollEvents("left");
+                            _this.removeScrollEvents('left');
                         }
                         requestAnimationFrame(function () {
                             var newTopPosition = _this.left.scrollTop;
@@ -152,7 +153,7 @@ System.register([], function(exports_1, context_1) {
                             _this.group.scrollTop = newTopPosition;
                             _this.checkScroll(newTopPosition);
                             _this.timerLeft = setTimeout(function () {
-                                _this.addScrollEvents("left");
+                                _this.addScrollEvents('left');
                                 _this.timerLeft = null;
                             }, 30);
                         });
@@ -163,7 +164,7 @@ System.register([], function(exports_1, context_1) {
                     requestAnimationFrame(function () {
                         if (_this.timerWheel) {
                             clearTimeout(_this.timerWheel);
-                            _this.removeScrollEvents("wheel");
+                            _this.removeScrollEvents('wheel');
                         }
                         requestAnimationFrame(function () {
                             _this.main.scrollTop = _this.main.scrollTop + newTopPosition;
@@ -173,7 +174,7 @@ System.register([], function(exports_1, context_1) {
                             _this.group.scrollTop = _this.group.scrollTop + newTopPosition;
                             _this.checkScroll(_this.main.scrollTop);
                             _this.timerWheel = setTimeout(function () {
-                                _this.addScrollEvents("wheel");
+                                _this.addScrollEvents('wheel');
                                 _this.timerWheel = null;
                             }, 30);
                         });
@@ -184,13 +185,13 @@ System.register([], function(exports_1, context_1) {
                     if (this.vhandle.scrollHeight === this.vhandle.parentNode.clientHeight) {
                         this.main.scrollTop = 0;
                         var newLeftPosition = this.main.scrollLeft;
-                        this.mainHead.style.left = -newLeftPosition + "px";
+                        this.mainHead.style.left = -newLeftPosition + 'px';
                         return false;
                     }
                     requestAnimationFrame(function () {
                         if (_this.timerMain) {
                             clearTimeout(_this.timerMain);
-                            _this.removeScrollEvents("main");
+                            _this.removeScrollEvents('main');
                         }
                         requestAnimationFrame(function () {
                             var newTopPosition = _this.main.scrollTop;
@@ -199,10 +200,10 @@ System.register([], function(exports_1, context_1) {
                             _this.vhandle.scrollTop = newTopPosition;
                             _this.group.scrollTop = newTopPosition;
                             var newLeftPosition = _this.main.scrollLeft;
-                            _this.mainHead.style.left = -newLeftPosition + "px";
+                            _this.mainHead.style.left = -newLeftPosition + 'px';
                             _this.checkScroll(newTopPosition);
                             _this.timerMain = setTimeout(function () {
-                                _this.addScrollEvents("main");
+                                _this.addScrollEvents('main');
                                 _this.timerMain = null;
                             }, 30);
                         });
@@ -216,7 +217,7 @@ System.register([], function(exports_1, context_1) {
                     requestAnimationFrame(function () {
                         if (_this.timerRight) {
                             clearTimeout(_this.timerRight);
-                            _this.removeScrollEvents("right");
+                            _this.removeScrollEvents('right');
                         }
                         requestAnimationFrame(function () {
                             var newTopPosition = _this.right.scrollTop;
@@ -226,7 +227,7 @@ System.register([], function(exports_1, context_1) {
                             _this.group.scrollTop = newTopPosition;
                             _this.checkScroll(newTopPosition);
                             _this.timerRight = setTimeout(function () {
-                                _this.addScrollEvents("right");
+                                _this.addScrollEvents('right');
                                 _this.timerRight = null;
                             }, 30);
                         });
@@ -237,7 +238,7 @@ System.register([], function(exports_1, context_1) {
                     requestAnimationFrame(function () {
                         if (_this.timerVhandle) {
                             clearTimeout(_this.timerVhandle);
-                            _this.removeScrollEvents("Vhandle");
+                            _this.removeScrollEvents('Vhandle');
                         }
                         requestAnimationFrame(function () {
                             var newTopPosition = _this.vhandle.scrollTop;
@@ -247,7 +248,7 @@ System.register([], function(exports_1, context_1) {
                             _this.group.scrollTop = newTopPosition;
                             _this.checkScroll(newTopPosition);
                             _this.timerVhandle = setTimeout(function () {
-                                _this.addScrollEvents("Vhandle");
+                                _this.addScrollEvents('Vhandle');
                                 _this.timerVhandle = null;
                             }, 30);
                         });
@@ -258,14 +259,14 @@ System.register([], function(exports_1, context_1) {
                     requestAnimationFrame(function () {
                         if (_this.timerHhandle) {
                             clearTimeout(_this.timerHhandle);
-                            _this.removeScrollEvents("Hhandle");
+                            _this.removeScrollEvents('Hhandle');
                         }
                         requestAnimationFrame(function () {
                             var newLeftPosition = _this.hhandle.scrollLeft;
                             _this.main.scrollLeft = newLeftPosition;
-                            _this.mainHead.style.left = -newLeftPosition + "px";
+                            _this.mainHead.style.left = -newLeftPosition + 'px';
                             _this.timerHhandle = setTimeout(function () {
-                                _this.addScrollEvents("Hhandle");
+                                _this.addScrollEvents('Hhandle');
                                 _this.timerHhandle = null;
                             }, 30);
                         });
@@ -286,12 +287,12 @@ System.register([], function(exports_1, context_1) {
                         this.triggerGridScrollEvent(isScrollBarScrolling, isDown, newTopPosition);
                     }
                 };
-                MainScrollEvents.prototype.triggerGridScrollEvent = function (isScrollBarScrolling, isDown, newTopPosition) {
-                    var event = new CustomEvent("avg-scroll", {
+                MainScrollEvents.prototype.triggerGridScrollEvent = function (scrollbarScrolling, down, topPosition) {
+                    var event = new CustomEvent('avg-scroll', {
                         detail: {
-                            isScrollBarScrolling: isScrollBarScrolling,
-                            isDown: isDown,
-                            newTopPosition: newTopPosition
+                            isScrollBarScrolling: scrollbarScrolling,
+                            isDown: down,
+                            newTopPosition: topPosition
                         },
                         bubbles: false
                     });
@@ -301,7 +302,7 @@ System.register([], function(exports_1, context_1) {
             }());
             exports_1("MainScrollEvents", MainScrollEvents);
         }
-    }
+    };
 });
 
 //# sourceMappingURL=mainScrollEvents.js.map

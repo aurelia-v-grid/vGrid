@@ -1,5 +1,4 @@
 define(["require", "exports"], function (require, exports) {
-    "use strict";
     var HtmlHeightWidth = (function () {
         function HtmlHeightWidth() {
             this.avgScrollBarWidth = this.getScrollbarWidth() || 17;
@@ -16,7 +15,7 @@ define(["require", "exports"], function (require, exports) {
             this.avgHeaderRight_Right = 0;
             this.avgHeaderRight_Width = 150;
             this.avgContentLeft_Width = 200 + this.avgScrollBarWidth;
-            this.avgContentLeftScroll_Width = "100%";
+            this.avgContentLeftScroll_Width = '100%';
             this.avgContentLeftScroll_Height = 0 + this.avgScrollBarWidth;
             this.avgContentMain_Left = 200;
             this.avgContentMain_Right = 150 - this.avgScrollBarWidth;
@@ -24,7 +23,7 @@ define(["require", "exports"], function (require, exports) {
             this.avgContentMainScroll_Height = 0;
             this.avgContentRight_Right = 0;
             this.avgContentRight_Width = 150;
-            this.avgContentRightScroll_Width = "100%";
+            this.avgContentRightScroll_Width = '100%';
             this.avgContentRightScroll_Height = 0 + this.avgScrollBarWidth;
             this.avgContentGroup_Width = 150;
             this.avgContentGroup_Height = 0;
@@ -119,6 +118,7 @@ define(["require", "exports"], function (require, exports) {
                     case !colConfig[i].colPinLeft && !colConfig[i].colPinRight:
                         main = main + colConfig[i].colWidth;
                         break;
+                    default:
                 }
             }
             this.avgContentLeft_Width = left + this.avgScrollBarWidth;
@@ -136,14 +136,14 @@ define(["require", "exports"], function (require, exports) {
             this.avgContentHhandleScroll_Width = main;
         };
         HtmlHeightWidth.prototype.getScrollbarWidth = function () {
-            var outer = document.createElement("div");
-            outer.style.visibility = "hidden";
-            outer.style.width = "100px";
+            var outer = document.createElement('div');
+            outer.style.visibility = 'hidden';
+            outer.style.width = '100px';
             document.body.appendChild(outer);
             var widthNoScroll = outer.offsetWidth;
-            outer.style.overflow = "scroll";
-            var inner = document.createElement("div");
-            inner.style.width = "100%";
+            outer.style.overflow = 'scroll';
+            var inner = document.createElement('div');
+            inner.style.width = '100%';
             outer.appendChild(inner);
             var widthWithScroll = inner.offsetWidth;
             outer.parentNode.removeChild(outer);

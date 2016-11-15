@@ -1,10 +1,9 @@
-System.register([], function(exports_1, context_1) {
-    "use strict";
+System.register([], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
     var Controller;
     return {
-        setters:[],
-        execute: function() {
+        setters: [],
+        execute: function () {
             Controller = (function () {
                 function Controller(vGrid) {
                     this.vGrid = vGrid;
@@ -61,11 +60,11 @@ System.register([], function(exports_1, context_1) {
                     this.loadingScreen.init(this.overrideContext);
                     this.contextMenu.init();
                 };
-                Controller.prototype.getElement = function (row, isDown, callback) {
+                Controller.prototype.getElement = function (rowNumber, isDownScroll, callbackFN) {
                     this.attGridConnector.getElement({
-                        row: row,
-                        isDown: isDown,
-                        callback: callback
+                        row: rowNumber,
+                        isDown: isDownScroll,
+                        callback: callbackFN
                     });
                 };
                 Controller.prototype.getOperatorName = function (name) {
@@ -82,8 +81,10 @@ System.register([], function(exports_1, context_1) {
                 };
                 Controller.prototype.addToGrouping = function (attribute) {
                     var currentGrouping = this.attGridConnector.getGrouping();
-                    currentGrouping.push(attribute);
-                    this.attGridConnector.group(currentGrouping, true);
+                    if (currentGrouping.indexOf(attribute) === -1) {
+                        currentGrouping.push(attribute);
+                        this.attGridConnector.group(currentGrouping, true);
+                    }
                 };
                 Controller.prototype.removeFromGrouping = function (attribute) {
                     var currentGrouping = this.attGridConnector.getGrouping();
@@ -94,7 +95,8 @@ System.register([], function(exports_1, context_1) {
                     }
                 };
                 Controller.prototype.getSelectionContext = function () {
-                    return this.attGridConnector.selection;
+                    var sel = this.attGridConnector.getSelection();
+                    return sel;
                 };
                 Controller.prototype.raiseEvent = function (name, data) {
                     if (data === void 0) { data = {}; }
@@ -103,7 +105,6 @@ System.register([], function(exports_1, context_1) {
                         bubbles: true
                     });
                     this.element.dispatchEvent(event);
-                    return event;
                 };
                 Controller.prototype.setLoadingScreen = function (value, msg, collectionLength) {
                     if (value) {
@@ -114,8 +115,8 @@ System.register([], function(exports_1, context_1) {
                     }
                 };
                 Controller.prototype.updateHeights = function () {
-                    this.rowScrollEvents.setCollectionLength(this.attGridConnector.length());
-                    this.htmlHeightWidth.setCollectionLength(this.attGridConnector.length());
+                    this.rowScrollEvents.setCollectionLength(this.attGridConnector.getDatasourceLength());
+                    this.htmlHeightWidth.setCollectionLength(this.attGridConnector.getDatasourceLength());
                 };
                 Controller.prototype.updateHeaderGrouping = function (groups) {
                     var length = groups.length;
@@ -123,7 +124,7 @@ System.register([], function(exports_1, context_1) {
                     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
                 };
                 Controller.prototype.collectionLength = function () {
-                    return this.attGridConnector.length();
+                    return this.attGridConnector.getDatasourceLength();
                 };
                 Controller.prototype.triggerScroll = function (position) {
                     if (position === null || position === undefined) {
@@ -132,21 +133,21 @@ System.register([], function(exports_1, context_1) {
                     else {
                         this.htmlCache.avg_content_main.scrollTop = position;
                     }
-                    this.raiseEvent("avg-scroll", {
+                    this.raiseEvent('avg-scroll', {
                         isScrollBarScrolling: true,
                         isDown: true,
                         newTopPosition: position
                     });
                 };
                 Controller.prototype.rebindAllRows = function () {
-                    this.raiseEvent("avg-rebind-all-rows", {
+                    this.raiseEvent('avg-rebind-all-rows', {
                         rowCache: this.htmlCache.rowCache,
                         downScroll: true
                     });
                 };
                 Controller.prototype.addEventListeners = function () {
                     var _this = this;
-                    this.element.addEventListener("getElement", function (event) {
+                    this.element.addEventListener('getElement', function (event) {
                         _this.attGridConnector.getElement(event.detail);
                     });
                 };
@@ -154,7 +155,7 @@ System.register([], function(exports_1, context_1) {
             }());
             exports_1("Controller", Controller);
         }
-    }
+    };
 });
 
 //# sourceMappingURL=controller.js.map

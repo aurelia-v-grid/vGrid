@@ -1,10 +1,8 @@
-System.register(['./filterOperators', './arrayFilter', './arraySort', './arrayGrouping'], function(exports_1, context_1) {
-    "use strict";
+System.register(["./filterOperators", "./arrayFilter", "./arraySort", "./arrayGrouping"], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
-    var filterOperators_1, arrayFilter_1, arraySort_1, arrayGrouping_1;
-    var ArrayHelper;
+    var filterOperators_1, arrayFilter_1, arraySort_1, arrayGrouping_1, ArrayHelper;
     return {
-        setters:[
+        setters: [
             function (filterOperators_1_1) {
                 filterOperators_1 = filterOperators_1_1;
             },
@@ -16,8 +14,9 @@ System.register(['./filterOperators', './arrayFilter', './arraySort', './arrayGr
             },
             function (arrayGrouping_1_1) {
                 arrayGrouping_1 = arrayGrouping_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             ArrayHelper = (function () {
                 function ArrayHelper() {
                     this.filterOperators = new filterOperators_1.FilterOperators();
@@ -129,7 +128,7 @@ System.register(['./filterOperators', './arrayFilter', './arraySort', './arrayGr
             }());
             exports_1("ArrayHelper", ArrayHelper);
         }
-    }
+    };
 });
 
 //# sourceMappingURL=arrayHelper.js.map

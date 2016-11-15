@@ -1,5 +1,4 @@
-define(["require", "exports", './filterOperators', './arrayFilter', './arraySort', './arrayGrouping'], function (require, exports, filterOperators_1, arrayFilter_1, arraySort_1, arrayGrouping_1) {
-    "use strict";
+define(["require", "exports", "./filterOperators", "./arrayFilter", "./arraySort", "./arrayGrouping"], function (require, exports, filterOperators_1, arrayFilter_1, arraySort_1, arrayGrouping_1) {
     var ArrayHelper = (function () {
         function ArrayHelper() {
             this.filterOperators = new filterOperators_1.FilterOperators();

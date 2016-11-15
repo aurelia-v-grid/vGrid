@@ -1,14 +1,14 @@
-import { HtmlCache } from './htmlCache';
+import { HtmlCache } from '../interfaces';
 export declare class RowMarkup {
-    element: Element;
-    htmlCache: HtmlCache;
-    left: any;
-    main: any;
-    right: any;
-    full: any;
-    rowHeight: number;
+    private element;
+    private htmlCache;
+    private left;
+    private main;
+    private right;
+    private group;
+    private rowHeight;
     constructor(element: Element, htmlCache: HtmlCache);
-    updateInternalHtmlCache(): void;
-    init(rowHeight: any): void;
-    generateRows(): void;
+    init(rowHeight: number): void;
+    private generateRows();
+    private updateInternalHtmlCache();
 }

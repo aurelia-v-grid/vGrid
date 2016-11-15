@@ -1,8 +1,8 @@
-import { FilterOperators } from './filterOperators';
+import { FilterOperators, FilterObject, Entity } from '../interfaces';
 export declare class ArrayFilter {
-    filterOperators: FilterOperators;
-    lastFilter: Array<any>;
+    private filterOperators;
+    private lastFilter;
     constructor(filterOperators: FilterOperators);
-    getLastFilter(): any[];
-    runQueryOn(objArray: any, ObjFilter: any): any;
+    getLastFilter(): FilterObject[];
+    runQueryOn(objArray: Array<Entity>, ObjFilter: Array<FilterObject>): Entity[];
 }

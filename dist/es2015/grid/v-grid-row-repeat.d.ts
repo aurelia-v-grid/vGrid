@@ -1,9 +1,10 @@
 import { VGrid } from './v-grid';
+import { CustomTargetInstruction } from '../interfaces';
 export declare class VGridElementRowRepeat {
-    element: Element;
-    vGrid: VGrid;
-    rowTemplate: string;
-    headerTemplate: string;
-    constructor(element: any, vGrid: any, targetInstruction: any);
+    private element;
+    private vGrid;
+    private rowTemplate;
+    private headerTemplate;
+    constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction);
     bind(): void;
 }

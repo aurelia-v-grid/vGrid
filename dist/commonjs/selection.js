@@ -1,4 +1,3 @@
-"use strict";
 var Selection = (function () {
     function Selection(mode) {
         this.mode = mode;
@@ -39,16 +38,16 @@ var Selection = (function () {
     };
     Selection.prototype.select = function (row, add) {
         switch (this.mode) {
-            case "none":
+            case 'none':
             case null:
             case undefined:
                 break;
-            case "single":
+            case 'single':
                 this.selection.clear();
                 this.selection.add(this.getRowKey(row));
                 this.selectedRows = this.selection.size;
                 break;
-            case "multiple":
+            case 'multiple':
                 if (!add) {
                     this.selection.clear();
                     this.selection.add(this.getRowKey(row));
@@ -63,7 +62,7 @@ var Selection = (function () {
         }
     };
     Selection.prototype.selectRange = function (start, end) {
-        if (this.mode === "multiple") {
+        if (this.mode === 'multiple') {
             this.selection.clear();
             for (var i = start; i < end + 1; i++) {
                 this.selection.add(this.getRowKey(i));
@@ -95,7 +94,7 @@ var Selection = (function () {
             this.selection.clear();
         }
         this.lastRowSelected = -1;
-        this.lastKeyKodeUsed = "none";
+        this.lastKeyKodeUsed = 'none';
         this.selectedRows = this.selection.size;
     };
     return Selection;

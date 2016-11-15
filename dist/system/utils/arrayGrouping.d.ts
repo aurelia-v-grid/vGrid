@@ -1,13 +1,13 @@
+import { Entity } from '../interfaces';
 export declare class ArrayGrouping {
-    gID: any;
-    groups: any;
-    grouping: any;
-    expanded: Set<any>;
+    private groups;
+    private grouping;
+    private expanded;
     constructor();
-    group(arrayToGroup: any, grouping: any, keepExpanded: any): any;
-    groupMain(array: any, groupBy: any, groupNo: any): any[];
-    groupChildren(childGroupArray: any, groupBy: any, groupNo: any): any[];
-    getGrouping(): any;
-    expand(id: any, array?: Set<any>): any[];
-    collapse(id: any): any[];
+    group(arrayToGroup: Array<Entity>, grouping: Array<string>, keepExpanded?: boolean): Entity[];
+    getGrouping(): string[];
+    expand(id: string, array?: Set<string>): Entity[];
+    collapse(id: string): Entity[];
+    private groupMain(array, groupBy, groupNo);
+    private groupChildren(childGroupArray, groupBy, groupNo);
 }

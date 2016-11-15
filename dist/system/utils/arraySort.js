@@ -1,10 +1,9 @@
-System.register([], function(exports_1, context_1) {
-    "use strict";
+System.register([], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
     var ArraySort;
     return {
-        setters:[],
-        execute: function() {
+        setters: [],
+        execute: function () {
             ArraySort = (function () {
                 function ArraySort() {
                     this.lastSort = [];
@@ -18,34 +17,34 @@ System.register([], function(exports_1, context_1) {
                     this.lastSort = array;
                     this.curSort = array;
                 };
-                ArraySort.prototype.setOrderBy = function (attribute, add) {
+                ArraySort.prototype.setOrderBy = function (param, add) {
                     var sort;
                     var useSetValue = false;
-                    if (attribute.asc === undefined) {
+                    if (param.asc === undefined) {
                         sort = {
-                            attribute: attribute,
+                            attribute: param,
                             asc: true
                         };
                     }
                     else {
                         sort = {
-                            attribute: attribute.attribute,
-                            asc: attribute.asc
+                            attribute: param.attribute,
+                            asc: param.asc
                         };
                         useSetValue = true;
                     }
                     if (add && this.lastSort.length > 0) {
                         this.curSort = this.lastSort;
-                        var exist = false;
+                        var exist_1 = false;
                         this.curSort.forEach(function (x) {
                             if (!useSetValue) {
                                 if (x.attribute === sort.attribute) {
-                                    exist = true;
+                                    exist_1 = true;
                                     x.asc = x.asc === true ? false : true;
                                 }
                             }
                         });
-                        if (!exist) {
+                        if (!exist_1) {
                             this.curSort.push(sort);
                             this.curSort[this.curSort.length - 1].no = this.curSort.length;
                         }
@@ -71,24 +70,28 @@ System.register([], function(exports_1, context_1) {
                 };
                 ArraySort.prototype.runOrderbyOn = function (array) {
                     var thisSort = this.getOrderBy();
-                    var cool = array.sort(function (obj1, obj2) {
+                    array.sort(function (obj1, obj2) {
                         var result = 0;
-                        for (var i = 0; i < thisSort.length && result == 0; ++i) {
+                        for (var i = 0; i < thisSort.length && result === 0; ++i) {
                             var currentObj = thisSort[i];
                             var v1 = obj1[currentObj.attribute];
                             var v2 = obj2[currentObj.attribute];
                             if (v1 !== v2) {
                                 if (currentObj.asc) {
-                                    if (v1 < v2)
+                                    if (v1 < v2) {
                                         result = -1;
-                                    else
+                                    }
+                                    else {
                                         result = 1;
+                                    }
                                 }
                                 else {
-                                    if (v1 < v2)
+                                    if (v1 < v2) {
                                         result = 1;
-                                    else
+                                    }
+                                    else {
                                         result = -1;
+                                    }
                                 }
                             }
                         }
@@ -100,7 +103,7 @@ System.register([], function(exports_1, context_1) {
             }());
             exports_1("ArraySort", ArraySort);
         }
-    }
+    };
 });
 
 //# sourceMappingURL=arraySort.js.map

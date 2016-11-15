@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,22 +7,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var aurelia_framework_1 = require('aurelia-framework');
-var v_grid_1 = require('../v-grid');
-var vGridAttributesSort = (function () {
-    function vGridAttributesSort(element, vGrid) {
+var aurelia_framework_1 = require("aurelia-framework");
+var v_grid_1 = require("../v-grid");
+var VGridAttributesSort = (function () {
+    function VGridAttributesSort(element, vGrid) {
         this.vGrid = vGrid;
         this.element = element;
     }
-    vGridAttributesSort.prototype.bind = function (bindingContext, overrideContext) {
+    VGridAttributesSort.prototype.bind = function (bindingContext, overrideContext) {
         this.bindingContext = bindingContext;
         this.overrideContext = overrideContext;
-        var values = this.value.split("|");
+        var values = this.value.split('|');
         this.attribute = values[0];
     };
-    vGridAttributesSort.prototype.attached = function () {
+    VGridAttributesSort.prototype.attached = function () {
         var _this = this;
-        this.sortIcon = document.createElement("i");
+        this.sortIcon = document.createElement('i');
         this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
         this.element.appendChild(this.sortIcon);
         this.element.onmousedown = function (e) {
@@ -36,35 +35,34 @@ var vGridAttributesSort = (function () {
                 _this.element.onmouseup = null;
             }, 300);
         };
-        this.vGrid.element.addEventListener("sortIconUpdate", function () {
+        this.vGrid.element.addEventListener('sortIconUpdate', function () {
             _this.sortIcon.innerHTML = _this.getSortIconMarkup(_this.attribute);
         });
     };
-    vGridAttributesSort.prototype.detached = function () {
+    VGridAttributesSort.prototype.detached = function () {
         this.element.removeChild(this.sortIcon);
     };
-    vGridAttributesSort.prototype.getSortIconMarkup = function (attribute) {
+    VGridAttributesSort.prototype.getSortIconMarkup = function (attribute) {
         var _this = this;
-        var markup = "&nbsp;<i  class=\"" + "avg-fa avg-fa-sort" + "\"></i>";
-        var isAscHtml = "&nbsp;<i  class=\"" + "avg-fa avg-fa-sort-asc" + "\"></i>";
-        var isDescHtml = "&nbsp;<i  class=\"" + "avg-fa avg-fa-sort-desc" + "\"></i>";
-        var sortNo = this.vGrid.attGridConnector.getCurrentOrderBy();
+        var markup = "&nbsp;<i  class=\"" + 'avg-fa avg-fa-sort' + "\"></i>";
+        var isAscHtml = "&nbsp;<i  class=\"" + 'avg-fa avg-fa-sort-asc' + "\"></i>";
+        var isDescHtml = "&nbsp;<i  class=\"" + 'avg-fa avg-fa-sort-desc' + "\"></i>";
         this.vGrid.attGridConnector.getCurrentOrderBy().forEach(function (x) {
             if (x.attribute === _this.attribute) {
                 var block = x.asc === true ? isAscHtml : isDescHtml;
-                var main = "<i class=\"" + "avg-fa-sort-number" + "\" data-vgridsort=\"" + x.no + "\"></i>";
+                var main = "<i class=\"" + 'avg-fa-sort-number' + "\" data-vgridsort=\"" + x.no + "\"></i>";
                 markup = block + main;
             }
         });
         return markup;
     };
-    vGridAttributesSort = __decorate([
-        aurelia_framework_1.customAttribute('v-sort'),
-        aurelia_framework_1.inject(Element, v_grid_1.VGrid), 
-        __metadata('design:paramtypes', [Object, Object])
-    ], vGridAttributesSort);
-    return vGridAttributesSort;
+    return VGridAttributesSort;
 }());
-exports.vGridAttributesSort = vGridAttributesSort;
+VGridAttributesSort = __decorate([
+    aurelia_framework_1.customAttribute('v-sort'),
+    aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+    __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
+], VGridAttributesSort);
+exports.VGridAttributesSort = VGridAttributesSort;
 
 //# sourceMappingURL=v-sort.js.map

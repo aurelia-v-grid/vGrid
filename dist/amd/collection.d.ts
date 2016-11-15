@@ -1,18 +1,18 @@
-import { DataSource } from './dataSource';
+import { DataSource, Entity } from './interfaces';
 export declare class Collection {
+    length: number;
     private entities;
     private keys;
     private key;
     private count;
-    length: number;
     private datasource;
     private ungroupedArray;
     constructor(datasource: DataSource);
-    setData(array: Array<any>, ungroupedArray?: Array<any>): void;
-    getEntities(): any[];
-    getCurrentEntities(): any[];
-    getRowKey(row: any): any;
-    getRowFromKey(key: any): number;
-    getRow(row: any): any;
-    getRowFromEntity(entity: any): number;
+    setData(array: Array<Entity>, ungroupedArray?: Array<Entity>): void;
+    getEntities(): Array<Entity>;
+    getCurrentEntities(): Array<Entity>;
+    getRowKey(row: number): string;
+    getRowFromKey(key: string): number;
+    getRow(row: number): Entity;
+    getRowFromEntity(entity: Entity): number;
 }

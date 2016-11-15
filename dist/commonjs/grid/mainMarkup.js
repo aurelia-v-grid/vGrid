@@ -1,6 +1,5 @@
-"use strict";
-var aurelia_framework_1 = require('aurelia-framework');
-var mainMarkupHtmlString_1 = require('./mainMarkupHtmlString');
+var aurelia_framework_1 = require("aurelia-framework");
+var mainMarkupHtmlString_1 = require("./mainMarkupHtmlString");
 var MainMarkup = (function () {
     function MainMarkup(element, viewCompiler, container, viewResources, htmlHeightWidth, viewSlots) {
         this.element = element;
