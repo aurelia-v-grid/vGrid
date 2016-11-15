@@ -4,7 +4,9 @@ export declare class VGridAttributesImageFix {
     private vGrid;
     private element;
     private value;
+    private bindingContext;
+    private overrideContext;
     constructor(element: HTMLImageElement, vGrid: VGrid);
-    valueChanged(newValue: string, oldValue: string): void;
+    valueChanged(newValue: string): void;
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
 }

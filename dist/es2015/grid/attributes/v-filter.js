@@ -62,7 +62,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
                 }
                 else {
                     this.element.style.opacity = '0.3';
-                    this.element.onclick = function (e) {
+                    this.element.onclick = function () {
                         switch (_this.state) {
                             case 0:
                                 _this.state = 2;

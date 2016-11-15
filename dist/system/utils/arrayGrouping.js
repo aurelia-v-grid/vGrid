@@ -157,7 +157,7 @@ System.register([], function (exports_1, context_1) {
                     var tempGroupArray = [];
                     var curGroup = {};
                     var tempValue = null;
-                    array.forEach(function (element, i) {
+                    array.forEach(function (element) {
                         if (element[groupBy] !== tempValue) {
                             curGroup = {
                                 __groupName: element[groupBy] || 'blank',
@@ -183,7 +183,7 @@ System.register([], function (exports_1, context_1) {
                 ArrayGrouping.prototype.groupChildren = function (childGroupArray, groupBy, groupNo) {
                     var tempGroupArray = [];
                     var curGroup = {};
-                    childGroupArray.forEach(function (element, i) {
+                    childGroupArray.forEach(function (element) {
                         var tempValue = null;
                         var rebuiltChildrenArray = [];
                         element.__groupChildren.forEach(function (child) {

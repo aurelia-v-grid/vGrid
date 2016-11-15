@@ -49,12 +49,12 @@ var VGridDragDropCol = (function () {
         if (result.ok && result.target.nodeName === 'AVG-TOP-PANEL') {
             this.isPanel = true;
             this.sharedContext.panel = result.target;
-            result.target.onmouseleave = function (event) {
+            result.target.onmouseleave = function () {
                 if (_this.sharedContext.dragging) {
                     _this.groupingElements.removeGroup('');
                 }
             };
-            result.target.onmouseenter = function (event) {
+            result.target.onmouseenter = function () {
                 if (_this.sharedContext.dragging) {
                     var name_1 = _this.vGrid.colConfig[_this.sharedContext.colNo].colHeaderName;
                     var field = _this.vGrid.colConfig[_this.sharedContext.colNo].colField.replace('rowRef.', '');
@@ -62,7 +62,7 @@ var VGridDragDropCol = (function () {
                     _this.sharedContext.lastTarget = result.target;
                 }
             };
-            result.target.onmouseup = function (event) {
+            result.target.onmouseup = function () {
                 if (_this.sharedContext.dragging) {
                     _this.groupingElements.addToGrouping();
                 }
@@ -78,7 +78,7 @@ var VGridDragDropCol = (function () {
         document.body.appendChild(this.dragColumnBlock);
         this.dragColumnBlock.innerHTML = this.vGrid.colConfig[this.colNo].colHeaderName;
     };
-    VGridDragDropCol.prototype.onDragstart = function (event) {
+    VGridDragDropCol.prototype.onDragstart = function () {
         var _this = this;
         document.addEventListener('mouseup', this.onDragendBinded);
         this.vGridElement.addEventListener('mouseleave', this.onDragOutSideBinded);
@@ -166,7 +166,7 @@ var VGridDragDropCol = (function () {
             this.dragColumnBlock.style.left = event.clientX + 'px';
         }
     };
-    VGridDragDropCol.prototype.onDragend = function (event) {
+    VGridDragDropCol.prototype.onDragend = function () {
         clearTimeout(this.mouseMoveTimer);
         this.sharedContext.dragging = false;
         document.removeEventListener('mouseup', this.onDragendBinded);

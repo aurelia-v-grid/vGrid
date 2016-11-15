@@ -14,7 +14,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             this.controller = vGrid.controller;
             this.element = element;
         }
-        VGridAttributesSelection.prototype.selectedChanged = function (newValue, oldValue) {
+        VGridAttributesSelection.prototype.selectedChanged = function (newValue) {
             if (this.type === 'row') {
                 this.element.checked = newValue;
             }

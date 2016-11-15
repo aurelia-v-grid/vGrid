@@ -35,7 +35,7 @@ var LoadingScreen = (function () {
     };
     LoadingScreen.prototype.enable = function (msg, collectionLength) {
         var _this = this;
-        return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve) {
             _this.loading = collectionLength ? collectionLength > 10000 ? true : false : false;
             _this.loadingMessage = msg || 'Loading';
             setTimeout(function () {
@@ -45,7 +45,7 @@ var LoadingScreen = (function () {
     };
     LoadingScreen.prototype.disable = function () {
         var _this = this;
-        return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve) {
             _this.loading = false;
             setTimeout(function () {
                 resolve();

@@ -28,4 +28,5 @@ export declare class GridConnector {
     collapseGroup(id: string): void;
     private eventHandler(event);
     private raiseEvent(name, data?);
+    private getRowProperties(obj);
 }

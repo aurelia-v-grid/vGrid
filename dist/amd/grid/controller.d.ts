@@ -36,6 +36,7 @@ export declare class Controller {
     attMultiSelect: boolean;
     attManualSelection: boolean;
     attGridConnector: GridConnector;
+    attOnRowDraw: Function;
     constructor(vGrid: VGrid);
     getContext(): void;
     createGrid(): void;
@@ -54,5 +55,4 @@ export declare class Controller {
     collectionLength(): number;
     triggerScroll(position: number): void;
     rebindAllRows(): void;
-    addEventListeners(): void;
 }

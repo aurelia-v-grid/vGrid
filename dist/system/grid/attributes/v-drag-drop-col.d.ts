@@ -30,11 +30,11 @@ export declare class VGridDragDropCol {
     detached(): void;
     attached(): void;
     private createDragElement();
-    private onDragstart(event);
+    private onDragstart();
     private onDragOutSide(event);
     private onDragenter(event);
     private onDragover(event);
-    private onDragend(event);
+    private onDragend();
     private switchColumns(result);
     private getTargetData(curTarget);
 }

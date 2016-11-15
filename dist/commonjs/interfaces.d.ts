@@ -135,6 +135,7 @@ export interface BindingContext {
     selection: Selection;
     row: number;
     selected: boolean;
+    tempRef: Entity;
 }
 export interface OverrideContext {
     [key: string]: any;

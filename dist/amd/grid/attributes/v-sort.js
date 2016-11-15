@@ -22,9 +22,9 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
         VGridAttributesSort.prototype.attached = function () {
             var _this = this;
             this.sortIcon = document.createElement('i');
-            this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
+            this.sortIcon.innerHTML = this.getSortIconMarkup();
             this.element.appendChild(this.sortIcon);
-            this.element.onmousedown = function (e) {
+            this.element.onmousedown = function () {
                 _this.element.onmouseup = function (e) {
                     if (e.button === 0) {
                         _this.vGrid.attGridConnector.orderBy(_this.attribute, e.shiftKey);
@@ -35,13 +35,13 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
                 }, 300);
             };
             this.vGrid.element.addEventListener('sortIconUpdate', function () {
-                _this.sortIcon.innerHTML = _this.getSortIconMarkup(_this.attribute);
+                _this.sortIcon.innerHTML = _this.getSortIconMarkup();
             });
         };
         VGridAttributesSort.prototype.detached = function () {
             this.element.removeChild(this.sortIcon);
         };
-        VGridAttributesSort.prototype.getSortIconMarkup = function (attribute) {
+        VGridAttributesSort.prototype.getSortIconMarkup = function () {
             var _this = this;
             var markup = "&nbsp;<i  class=\"" + 'avg-fa avg-fa-sort' + "\"></i>";
             var isAscHtml = "&nbsp;<i  class=\"" + 'avg-fa avg-fa-sort-asc' + "\"></i>";

@@ -14,7 +14,7 @@ var Collection = (function () {
         this.keys = [];
         this.ungroupedArray = ungroupedArray || array;
         this.length = array.length;
-        array.forEach(function (rowData, i) {
+        array.forEach(function (rowData) {
             if (!rowData[_this.key]) {
                 _this.count++;
                 rowData[_this.key] = 'key' + _this.count;

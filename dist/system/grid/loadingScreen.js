@@ -44,7 +44,7 @@ System.register(["aurelia-framework"], function (exports_1, context_1) {
                 };
                 LoadingScreen.prototype.enable = function (msg, collectionLength) {
                     var _this = this;
-                    return new Promise(function (resolve, reject) {
+                    return new Promise(function (resolve) {
                         _this.loading = collectionLength ? collectionLength > 10000 ? true : false : false;
                         _this.loadingMessage = msg || 'Loading';
                         setTimeout(function () {
@@ -54,7 +54,7 @@ System.register(["aurelia-framework"], function (exports_1, context_1) {
                 };
                 LoadingScreen.prototype.disable = function () {
                     var _this = this;
-                    return new Promise(function (resolve, reject) {
+                    return new Promise(function (resolve) {
                         _this.loading = false;
                         setTimeout(function () {
                             resolve();

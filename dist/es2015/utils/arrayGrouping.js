@@ -152,7 +152,7 @@ define(["require", "exports"], function (require, exports) {
             var tempGroupArray = [];
             var curGroup = {};
             var tempValue = null;
-            array.forEach(function (element, i) {
+            array.forEach(function (element) {
                 if (element[groupBy] !== tempValue) {
                     curGroup = {
                         __groupName: element[groupBy] || 'blank',
@@ -178,7 +178,7 @@ define(["require", "exports"], function (require, exports) {
         ArrayGrouping.prototype.groupChildren = function (childGroupArray, groupBy, groupNo) {
             var tempGroupArray = [];
             var curGroup = {};
-            childGroupArray.forEach(function (element, i) {
+            childGroupArray.forEach(function (element) {
                 var tempValue = null;
                 var rebuiltChildrenArray = [];
                 element.__groupChildren.forEach(function (child) {

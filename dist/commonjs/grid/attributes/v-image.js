@@ -14,11 +14,13 @@ var VGridAttributesImageFix = (function () {
         this.vGrid = vGrid;
         this.element = element;
     }
-    VGridAttributesImageFix.prototype.valueChanged = function (newValue, oldValue) {
+    VGridAttributesImageFix.prototype.valueChanged = function (newValue) {
         this.element.src = '';
         this.element.src = this.value || newValue;
     };
     VGridAttributesImageFix.prototype.bind = function (bindingContext, overrideContext) {
+        this.bindingContext = bindingContext;
+        this.overrideContext = overrideContext;
         this.element.src = '';
         this.element.src = this.value || '';
     };

@@ -12,5 +12,5 @@ export declare class VGridAttributesSort {
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
     attached(): void;
     detached(): void;
-    private getSortIconMarkup(attribute);
+    private getSortIconMarkup();
 }

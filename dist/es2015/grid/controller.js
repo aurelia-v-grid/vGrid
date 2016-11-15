@@ -38,6 +38,7 @@ define(["require", "exports"], function (require, exports) {
             this.attMultiSelect = c.attMultiSelect;
             this.attManualSelection = c.attManualSelection;
             this.attGridConnector = c.attGridConnector;
+            this.attOnRowDraw = c.attOnRowDraw;
         };
         Controller.prototype.createGrid = function () {
             this.htmlHeightWidth.addDefaultsAttributes(this.attHeaderHeight, this.attRowHeight, this.attFooterHeight, this.attPanelHeight);
@@ -56,10 +57,16 @@ define(["require", "exports"], function (require, exports) {
             this.contextMenu.init();
         };
         Controller.prototype.getElement = function (rowNumber, isDownScroll, callbackFN) {
+            var _this = this;
             this.attGridConnector.getElement({
                 row: rowNumber,
                 isDown: isDownScroll,
-                callback: callbackFN
+                callback: function (rowContext) {
+                    if (_this.attOnRowDraw) {
+                        _this.attOnRowDraw(rowContext);
+                    }
+                    callbackFN(rowContext);
+                }
             });
         };
         Controller.prototype.getOperatorName = function (name) {
@@ -138,12 +145,6 @@ define(["require", "exports"], function (require, exports) {
             this.raiseEvent('avg-rebind-all-rows', {
                 rowCache: this.htmlCache.rowCache,
                 downScroll: true
-            });
-        };
-        Controller.prototype.addEventListeners = function () {
-            var _this = this;
-            this.element.addEventListener('getElement', function (event) {
-                _this.attGridConnector.getElement(event.detail);
             });
         };
         return Controller;

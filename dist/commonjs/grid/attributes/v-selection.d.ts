@@ -9,7 +9,7 @@ export declare class VGridAttributesSelection {
     private selected;
     private type;
     constructor(element: HTMLInputElement, vGrid: VGrid);
-    selectedChanged(newValue: boolean, oldValue: boolean): void;
+    selectedChanged(newValue: boolean): void;
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
     attached(): void;
 }

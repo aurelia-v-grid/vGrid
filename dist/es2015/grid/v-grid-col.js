@@ -17,6 +17,8 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
             this.colCss = targetInstruction.elementInstruction.colCss;
         }
         VGridElementColConfig.prototype.bind = function (bindingContext, overrideContext) {
+            this.bindingContext = bindingContext;
+            this.overrideContext = overrideContext;
             this.vGrid.colConfig.push({
                 colWidth: this.colWidth ? this.colWidth * 1 : 100,
                 colRowTemplate: this.colRowTemplate,
@@ -107,6 +109,8 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
     VGridElementColConfig = __decorate([
         aurelia_framework_1.noView(),
         aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
+            compiler = null;
+            resources = null;
             var headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
             var headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
             if (headerTemplateHtml !== '') {

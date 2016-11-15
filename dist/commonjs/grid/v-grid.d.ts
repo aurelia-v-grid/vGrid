@@ -57,6 +57,7 @@ export declare class VGrid {
     attMultiSelect: boolean;
     attManualSelection: boolean;
     attTheme: string;
+    attOnRowDraw: Function;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, taskQueue: TaskQueue);
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
     unbind(): void;

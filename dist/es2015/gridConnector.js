@@ -34,10 +34,12 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         GridConnector.prototype.getElement = function (options) {
+            var rowData = this.datasource.getElement(options.row);
             var rowContext = {
                 row: options.row,
                 selection: this.selection,
-                rowRef: this.datasource.getElement(options.row)
+                rowRef: rowData,
+                tempRef: this.getRowProperties(rowData)
             };
             options.callback(rowContext);
         };
@@ -122,6 +124,20 @@ define(["require", "exports"], function (require, exports) {
             if (this.controller) {
                 this.controller.element.dispatchEvent(event);
             }
+        };
+        GridConnector.prototype.getRowProperties = function (obj) {
+            var x = {};
+            if (obj) {
+                var k = void 0;
+                for (k in obj) {
+                    if (obj.hasOwnProperty(k)) {
+                        if (x[k] !== obj[k]) {
+                            x[k] = obj[k];
+                        }
+                    }
+                }
+            }
+            return x;
         };
         return GridConnector;
     }());

@@ -48,6 +48,8 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
             this.attMultiSelect = this.checkBool(this.attMultiSelect);
             this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
             this.attTheme = this.attTheme || 'avg-default';
+            this.attOnRowDraw('wow');
+            this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
             this.element.classList.add(this.attTheme);
         };
         VGrid.prototype.unbind = function () {
@@ -58,7 +60,6 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
             if (this.newGrid) {
                 this.controller.getContext();
                 this.controller.createGrid();
-                this.controller.addEventListeners();
             }
             this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
             this.attGridConnector.gridCreated(this.controller);
@@ -118,6 +119,10 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
         aurelia_framework_1.bindable({ attribute: 'v-theme' }),
         __metadata("design:type", String)
     ], VGrid.prototype, "attTheme", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ attribute: 'v-row-on-draw' }),
+        __metadata("design:type", Function)
+    ], VGrid.prototype, "attOnRowDraw", void 0);
 });
 
 //# sourceMappingURL=v-grid.js.map

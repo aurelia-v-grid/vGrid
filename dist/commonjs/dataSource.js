@@ -90,7 +90,7 @@ var DataSource = (function () {
     DataSource.prototype.group = function (grouping, keepExpanded) {
         var _this = this;
         this.arrayHelper.resetSort();
-        grouping.forEach(function (groupName, i) {
+        grouping.forEach(function (groupName) {
             _this.arrayHelper.setOrderBy(groupName, true);
         });
         this.arrayHelper.runOrderbyOn(this.collection.getEntities());

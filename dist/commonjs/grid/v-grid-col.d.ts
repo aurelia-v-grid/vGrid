@@ -6,6 +6,8 @@ export declare class VGridElementColConfig {
     private colRowTemplate;
     private colHeaderTemplate;
     private colCss;
+    private bindingContext;
+    private overrideContext;
     private colWidth;
     private colField;
     private colHeaderName;

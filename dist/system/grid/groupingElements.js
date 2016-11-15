@@ -16,6 +16,7 @@ System.register(["aurelia-framework"], function (exports_1, context_1) {
                     this.viewCompiler = viewCompiler;
                     this.container = container;
                     this.viewResources = viewResources;
+                    this.columnBindingContext = columnBindingContext;
                     this.groupContext = {};
                     this.lastAdded = null;
                 }

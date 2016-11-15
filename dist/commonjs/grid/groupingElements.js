@@ -7,6 +7,7 @@ var GroupingElements = (function () {
         this.viewCompiler = viewCompiler;
         this.container = container;
         this.viewResources = viewResources;
+        this.columnBindingContext = columnBindingContext;
         this.groupContext = {};
         this.lastAdded = null;
     }

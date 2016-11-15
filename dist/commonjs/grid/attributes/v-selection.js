@@ -15,7 +15,7 @@ var VGridAttributesSelection = (function () {
         this.controller = vGrid.controller;
         this.element = element;
     }
-    VGridAttributesSelection.prototype.selectedChanged = function (newValue, oldValue) {
+    VGridAttributesSelection.prototype.selectedChanged = function (newValue) {
         if (this.type === 'row') {
             this.element.checked = newValue;
         }
