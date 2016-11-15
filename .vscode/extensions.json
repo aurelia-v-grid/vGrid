@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "eg2.tslint",
-    "HookyQR.beautify"
+    "HookyQR.beautify",
+    "joelday.docthis"
   ]
 }
