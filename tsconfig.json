@@ -8,10 +8,13 @@
     "module": "amd",
     "declaration": true,
     "noImplicitAny": true,
-    "noImplicitReturns": false,
+    "noImplicitReturns": false, //todo, set to true
     "noImplicitUseStrict": true,
-    "noUnusedParameters":true,
-    "noUnusedLocals":true,
+    "noUnusedParameters": true,
+    "suppressImplicitAnyIndexErrors": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitThis": false, //todo set to true
+    "noUnusedLocals": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
