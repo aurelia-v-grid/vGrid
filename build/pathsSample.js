@@ -1,6 +1,6 @@
 var appRoot = './sample/src/';
 var outputRoot = './sample/dist/';
-var plugin = "./dist/system"
+var plugin = "./dev/"
 var fs = require('fs');
 var pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 

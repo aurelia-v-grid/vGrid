@@ -5,6 +5,7 @@ var plumber = require('gulp-plumber');
 var assign = Object.assign || require('object.assign');
 var merge = require('merge2');
 var paths = require('../pathsBuild');
+var pathsSample = require('../pathsSample');
 var changed = require('gulp-changed');
 var runSequence = require('run-sequence');
 
@@ -33,7 +34,7 @@ function build(tsProject, outputPath) {
       tsResult.js.pipe(gulp.dest(outputPath))
     ])
     .pipe(sourcemaps.write('.', {
-      includeContent: false,
+      includeContent: true,
       sourceRoot: paths.root
     }))
     .pipe(gulp.dest(outputPath))
