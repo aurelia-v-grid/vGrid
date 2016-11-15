@@ -66,7 +66,7 @@ export class LoadingScreen {
 
 
   public enable(msg?: string, collectionLength?: number): Promise<any> {
-    return new Promise((resolve: Function, reject: Function) => {
+    return new Promise((resolve: Function) => {
       this.loading = collectionLength ? collectionLength > 10000 ? true : false : false;
       this.loadingMessage = msg || 'Loading';
       setTimeout(() => {
@@ -77,7 +77,7 @@ export class LoadingScreen {
 
 
   public disable(): Promise<any> {
-    return new Promise((resolve: Function, reject: Function) => {
+    return new Promise((resolve: Function) => {
       this.loading = false;
       setTimeout(() => {
         resolve();

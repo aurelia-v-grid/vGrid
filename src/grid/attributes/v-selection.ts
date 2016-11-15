@@ -19,7 +19,7 @@ export class VGridAttributesSelection {
     this.element = element;
   }
 
-  public selectedChanged(newValue: boolean, oldValue: boolean): void {
+  public selectedChanged(newValue: boolean): void {
     if (this.type === 'row') {
       (this.element as HTMLInputElement).checked = newValue;
     }

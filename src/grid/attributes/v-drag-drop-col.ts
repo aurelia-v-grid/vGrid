@@ -107,14 +107,14 @@ export class VGridDragDropCol {
       this.sharedContext.panel = result.target;
 
       // if we leave, remve group
-      result.target.onmouseleave = (event: MouseEvent) => {
+      result.target.onmouseleave = () => {
         if (this.sharedContext.dragging) {
           this.groupingElements.removeGroup('');
         }
       };
 
       // if enter and dragging, add grouping
-      result.target.onmouseenter = (event: MouseEvent) => {
+      result.target.onmouseenter = () => {
         if (this.sharedContext.dragging) {
           let name = this.vGrid.colConfig[this.sharedContext.colNo].colHeaderName;
           let field = this.vGrid.colConfig[this.sharedContext.colNo].colField.replace('rowRef.', '');
@@ -124,7 +124,7 @@ export class VGridDragDropCol {
       };
 
       // if mouse up during dragging we grop, if group ios added
-      result.target.onmouseup = (event: MouseEvent) => {
+      result.target.onmouseup = () => {
         if (this.sharedContext.dragging) {
           this.groupingElements.addToGrouping();
         }
@@ -154,7 +154,7 @@ export class VGridDragDropCol {
   }
 
 
-  private onDragstart(event: MouseEvent): void {
+  private onDragstart(): void {
 
     // register mouseup, so we can exit
     document.addEventListener('mouseup', this.onDragendBinded);
@@ -300,7 +300,7 @@ export class VGridDragDropCol {
   }
 
 
-  private onDragend(event: MouseEvent): void {
+  private onDragend(): void {
 
     // clear mosuemove timer
     clearTimeout(this.mouseMoveTimer);

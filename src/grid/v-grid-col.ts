@@ -18,6 +18,9 @@ import {
   element: HTMLElement,
   instruction: CustomBehaviorInstruction) => {
 
+  // dont use  
+  compiler = null;
+  resources = null;
 
   let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
   let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
@@ -49,6 +52,8 @@ export class VGridElementColConfig {
   private colRowTemplate: string;
   private colHeaderTemplate: string;
   private colCss: string;
+  private bindingContext: BindingContext;
+  private overrideContext: OverrideContext;
 
 
 
@@ -77,6 +82,8 @@ export class VGridElementColConfig {
 
 
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+    this.bindingContext = bindingContext;
+    this.overrideContext = overrideContext;
     this.vGrid.colConfig.push(({
       colWidth: this.colWidth ? this.colWidth * 1 : 100,
       colRowTemplate: this.colRowTemplate,

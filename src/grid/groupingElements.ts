@@ -23,6 +23,7 @@ export class GroupingElements {
   private lastAdded: string;
   private controller: Controller;
   private avgTopPanel: Element;
+  private columnBindingContext: ColumnBindingContext;
 
 
   constructor(
@@ -42,6 +43,7 @@ export class GroupingElements {
     this.viewCompiler = viewCompiler;
     this.container = container;
     this.viewResources = viewResources;
+    this.columnBindingContext = columnBindingContext;
 
     // group context
     this.groupContext = ({} as GroupingContext);

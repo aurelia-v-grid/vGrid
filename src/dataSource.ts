@@ -185,7 +185,7 @@ export class DataSource {
   public group(grouping: Array<string>, keepExpanded?: boolean): void {
 
     this.arrayHelper.resetSort();
-    grouping.forEach((groupName: string, i: number) => {
+    grouping.forEach((groupName: string) => {
       this.arrayHelper.setOrderBy(groupName, true);
     });
 

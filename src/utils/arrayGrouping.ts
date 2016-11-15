@@ -198,7 +198,7 @@ export class ArrayGrouping {
     let tempValue: string = null;
 
     // first level, here we use array
-    array.forEach((element, i) => {
+    array.forEach((element) => {
 
       if (element[groupBy] !== tempValue) {
         curGroup = {
@@ -230,7 +230,7 @@ export class ArrayGrouping {
     let curGroup: Entity = ({} as Entity);
 
     // loop groups
-    childGroupArray.forEach((element: Entity, i: number) => {
+    childGroupArray.forEach((element: Entity) => {
       let tempValue: string = null;
       // loop children
       let rebuiltChildrenArray: Array<Entity> = [];

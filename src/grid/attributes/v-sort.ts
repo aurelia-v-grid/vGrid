@@ -32,9 +32,9 @@ export class VGridAttributesSort {
 
   public attached(): void {
     this.sortIcon = document.createElement('i');
-    this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
+    this.sortIcon.innerHTML = this.getSortIconMarkup();
     this.element.appendChild(this.sortIcon);
-    this.element.onmousedown = (e) => {
+    this.element.onmousedown = () => {
       this.element.onmouseup = (e) => {
         if (e.button === 0) {
           this.vGrid.attGridConnector.orderBy(this.attribute, e.shiftKey);
@@ -47,7 +47,7 @@ export class VGridAttributesSort {
     };
 
     this.vGrid.element.addEventListener('sortIconUpdate', () => {
-      this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
+      this.sortIcon.innerHTML = this.getSortIconMarkup();
     });
   }
 
@@ -57,7 +57,7 @@ export class VGridAttributesSort {
   }
 
 
-  private getSortIconMarkup(attribute: string): string {
+  private getSortIconMarkup(): string {
 
     let markup = `&nbsp;<i  class="${'avg-fa avg-fa-sort'}"></i>`;
     let isAscHtml = `&nbsp;<i  class="${'avg-fa avg-fa-sort-asc'}"></i>`;

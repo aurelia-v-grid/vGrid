@@ -9,6 +9,8 @@ export class VGridAttributesImageFix {
   private vGrid: VGrid;
   private element: HTMLImageElement;
   private value: string;
+  private bindingContext: BindingContext;
+  private overrideContext: OverrideContext;
 
   constructor(element: HTMLImageElement, vGrid: VGrid) {
     this.vGrid = vGrid;
@@ -16,13 +18,15 @@ export class VGridAttributesImageFix {
   }
 
 
-  public valueChanged(newValue: string, oldValue: string): void {
+  public valueChanged(newValue: string): void {
     this.element.src = '';
     this.element.src = this.value || newValue;
   }
 
 
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+    this.bindingContext = bindingContext;
+    this.overrideContext = overrideContext;
     this.element.src = '';
     this.element.src = this.value || '';
   }

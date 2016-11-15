@@ -32,7 +32,7 @@ export class Collection {
     this.length = array.length;
 
     // create entities
-    array.forEach((rowData, i) => {
+    array.forEach((rowData) => {
       if (!rowData[this.key]) {
         this.count++;
         rowData[this.key] = 'key' + this.count;

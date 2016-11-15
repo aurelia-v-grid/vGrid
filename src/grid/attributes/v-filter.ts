@@ -88,7 +88,7 @@ export class VGridAttributesFilter {
         // set default!
         (this.element as HTMLElement).style.opacity = '0.3';
         // is checkbox
-        this.element.onclick = (e: MouseEvent) => {
+        this.element.onclick = () => {
           switch (this.state) {
             case 0:
               this.state = 2;

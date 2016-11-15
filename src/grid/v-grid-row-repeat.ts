@@ -11,6 +11,10 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
   element: Element,
   instruction: CustomBehaviorInstruction) => {
 
+  // dont use  
+  compiler = null;
+  resources = null;
+
   let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
   let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
   if (headerTemplateHtml !== '') {
