@@ -15,215 +15,218 @@ import { Controller } from './controller';
 import { LoadingScreen } from './loadingScreen';
 import { ContextMenu } from './contextMenu';
 import {
-  ResizeShardContext,
-  GridConnector,
-  DragDropShardContext,
-  ColConfig,
-  BindingContext,
-  OverrideContext
+    ResizeShardContext,
+    GridConnector,
+    DragDropShardContext,
+    ColConfig,
+    BindingContext,
+    OverrideContext
 } from '../interfaces';
 
 
 export class VGrid {
-  public static inject = [Element, ViewCompiler, Container, ViewResources, TaskQueue];
-  public element: Element;
-  public viewCompiler: ViewCompiler;
-  public container: Container;
-  public viewResources: ViewResources;
-  public taskQueue: TaskQueue;
-  public dragDropAttributeSharedContext: DragDropShardContext;
-  public resizeAttributeSharedContext: ResizeShardContext;
-  public colConfig: Array<ColConfig>;
-  public colRepeater: boolean;
-  public colRepeatRowTemplate: string;
-  public colRepeatRowHeaderTemplate: string;
-  public newGrid: boolean;
-  public controller: Controller;
-  public htmlCache: HtmlCache;
-  public htmlHeightWidth: HtmlHeightWidth;
-  public viewSlots: ViewSlots;
-  public columnBindingContext: ColumnBindingContext;
-  public rowDataBinder: RowDataBinder;
-  public mainMarkup: MainMarkup;
-  public mainScrollEvents: MainScrollEvents;
-  public rowMarkup: RowMarkup;
-  public rowScrollEvents: RowScrollEvents;
-  public rowClickHandler: RowClickHandler;
-  public columnMarkup: ColumnMarkup;
-  public groupingElements: GroupingElements;
-  public loadingScreen: LoadingScreen;
-  public contextMenu: ContextMenu;
-  public bindingContext: BindingContext;
-  public overrideContext: OverrideContext;
+    public static inject = [Element, ViewCompiler, Container, ViewResources, TaskQueue];
+    public element: Element;
+    public viewCompiler: ViewCompiler;
+    public container: Container;
+    public viewResources: ViewResources;
+    public taskQueue: TaskQueue;
+    public dragDropAttributeSharedContext: DragDropShardContext;
+    public resizeAttributeSharedContext: ResizeShardContext;
+    public colConfig: Array<ColConfig>;
+    public colRepeater: boolean;
+    public colRepeatRowTemplate: string;
+    public colRepeatRowHeaderTemplate: string;
+    public newGrid: boolean;
+    public controller: Controller;
+    public htmlCache: HtmlCache;
+    public htmlHeightWidth: HtmlHeightWidth;
+    public viewSlots: ViewSlots;
+    public columnBindingContext: ColumnBindingContext;
+    public rowDataBinder: RowDataBinder;
+    public mainMarkup: MainMarkup;
+    public mainScrollEvents: MainScrollEvents;
+    public rowMarkup: RowMarkup;
+    public rowScrollEvents: RowScrollEvents;
+    public rowClickHandler: RowClickHandler;
+    public columnMarkup: ColumnMarkup;
+    public groupingElements: GroupingElements;
+    public loadingScreen: LoadingScreen;
+    public contextMenu: ContextMenu;
+    public bindingContext: BindingContext;
+    public overrideContext: OverrideContext;
 
 
 
-  @bindable({ attribute: 'v-row-height' }) public attRowHeight: number;
-  @bindable({ attribute: 'v-header-height' }) public attHeaderHeight: number;
-  @bindable({ attribute: 'v-footer-height' }) public attFooterHeight: number;
-  @bindable({ attribute: 'v-panel-height' }) public attPanelHeight: number;
-  @bindable({ attribute: 'v-grid-connector' }) public attGridConnector: GridConnector;
-  @bindable({ attribute: 'v-multi-select' }) public attMultiSelect: boolean;
-  @bindable({ attribute: 'v-manual-sel' }) public attManualSelection: boolean;
-  @bindable({ attribute: 'v-theme' }) public attTheme: string;
-  // @bindable({attribute: "v-columns"}) vGridColumns; TODO...
+    @bindable({ attribute: 'v-row-height' }) public attRowHeight: number;
+    @bindable({ attribute: 'v-header-height' }) public attHeaderHeight: number;
+    @bindable({ attribute: 'v-footer-height' }) public attFooterHeight: number;
+    @bindable({ attribute: 'v-panel-height' }) public attPanelHeight: number;
+    @bindable({ attribute: 'v-grid-connector' }) public attGridConnector: GridConnector;
+    @bindable({ attribute: 'v-multi-select' }) public attMultiSelect: boolean;
+    @bindable({ attribute: 'v-manual-sel' }) public attManualSelection: boolean;
+    @bindable({ attribute: 'v-theme' }) public attTheme: string;
+    @bindable({ attribute: 'v-row-on-draw' }) public attOnRowDraw: Function;
+    // @bindable({attribute: "v-columns"}) vGridColumns; TODO...
 
 
 
-  constructor(
-    element: Element,
-    viewCompiler: ViewCompiler,
-    container: Container,
-    viewResources: ViewResources,
-    taskQueue: TaskQueue) {
+    constructor(
+        element: Element,
+        viewCompiler: ViewCompiler,
+        container: Container,
+        viewResources: ViewResources,
+        taskQueue: TaskQueue) {
 
 
-    this.element = element;
-    this.viewCompiler = viewCompiler;
-    this.container = container;
-    this.viewResources = viewResources;
-    this.taskQueue = taskQueue;
+        this.element = element;
+        this.viewCompiler = viewCompiler;
+        this.container = container;
+        this.viewResources = viewResources;
+        this.taskQueue = taskQueue;
 
-    // used by attributes for holding data
-    this.dragDropAttributeSharedContext = ({} as DragDropShardContext);
-    this.resizeAttributeSharedContext = ({} as ResizeShardContext);
+        // used by attributes for holding data
+        this.dragDropAttributeSharedContext = ({} as DragDropShardContext);
+        this.resizeAttributeSharedContext = ({} as ResizeShardContext);
 
-    // use by v-grid-col element, that takes the data it gets and puts it in here
-    this.colConfig = [];
-    this.colRepeater = false;
-    this.colRepeatRowTemplate = null;
-    this.colRepeatRowHeaderTemplate = null;
+        // use by v-grid-col element, that takes the data it gets and puts it in here
+        this.colConfig = [];
+        this.colRepeater = false;
+        this.colRepeatRowTemplate = null;
+        this.colRepeatRowHeaderTemplate = null;
 
-    // to know if new or hidden by "if"
-    this.newGrid = true;
-
-
-
-    // create our classes
-    this.controller = new Controller(this);
-    this.htmlCache = new HtmlCache(element);
-
-    this.htmlHeightWidth = new HtmlHeightWidth();
-    this.viewSlots = new ViewSlots(this.htmlCache);
-    this.columnBindingContext = new ColumnBindingContext(this.controller);
-    this.rowDataBinder = new RowDataBinder(element, this.controller);
-    this.mainMarkup = new MainMarkup(
-      element,
-      viewCompiler,
-      container,
-      viewResources,
-      this.htmlHeightWidth,
-      this.viewSlots);
-
-    this.mainScrollEvents = new MainScrollEvents(element, this.htmlCache);
-    this.rowMarkup = new RowMarkup(element, this.htmlCache);
-    this.rowScrollEvents = new RowScrollEvents(element, this.htmlCache);
-    this.rowClickHandler = new RowClickHandler(element, this.htmlCache);
-    this.columnMarkup = new ColumnMarkup(
-      element,
-      viewCompiler,
-      container,
-      viewResources,
-      this.htmlCache,
-      this.viewSlots,
-      this.columnBindingContext);
-
-    this.groupingElements = new GroupingElements(
-      element,
-      viewCompiler,
-      container,
-      viewResources,
-      this.htmlCache,
-      this.viewSlots,
-      this.columnBindingContext);
-
-    this.loadingScreen = new LoadingScreen(element,
-      viewCompiler,
-      container,
-      viewResources,
-      this.viewSlots);
-
-    this.contextMenu = new ContextMenu(
-      viewCompiler,
-      container,
-      viewResources,
-      this.viewSlots);
-  }
+        // to know if new or hidden by "if"
+        this.newGrid = true;
 
 
-  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
 
-    // binding contexts, will need some for the views we create
-    this.bindingContext = bindingContext;
-    this.overrideContext = overrideContext;
+        // create our classes
+        this.controller = new Controller(this);
+        this.htmlCache = new HtmlCache(element);
 
-    // convert main attributes
-    this.attRowHeight = this.attRowHeight ? this.attRowHeight * 1 : 25;
-    this.attHeaderHeight = this.attHeaderHeight ? this.attHeaderHeight * 1 : 25;
-    this.attFooterHeight = this.attFooterHeight ? this.attFooterHeight * 1 : 25;
-    this.attPanelHeight = this.attPanelHeight ? this.attPanelHeight * 1 : 25;
-    this.attMultiSelect = this.checkBool(this.attMultiSelect);
-    this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
-    this.attTheme = this.attTheme || 'avg-default';
+        this.htmlHeightWidth = new HtmlHeightWidth();
+        this.viewSlots = new ViewSlots(this.htmlCache);
+        this.columnBindingContext = new ColumnBindingContext(this.controller);
+        this.rowDataBinder = new RowDataBinder(element, this.controller);
+        this.mainMarkup = new MainMarkup(
+            element,
+            viewCompiler,
+            container,
+            viewResources,
+            this.htmlHeightWidth,
+            this.viewSlots);
 
-    // todo... use for theming
-    this.element.classList.add(this.attTheme);
+        this.mainScrollEvents = new MainScrollEvents(element, this.htmlCache);
+        this.rowMarkup = new RowMarkup(element, this.htmlCache);
+        this.rowScrollEvents = new RowScrollEvents(element, this.htmlCache);
+        this.rowClickHandler = new RowClickHandler(element, this.htmlCache);
+        this.columnMarkup = new ColumnMarkup(
+            element,
+            viewCompiler,
+            container,
+            viewResources,
+            this.htmlCache,
+            this.viewSlots,
+            this.columnBindingContext);
 
-  }
+        this.groupingElements = new GroupingElements(
+            element,
+            viewCompiler,
+            container,
+            viewResources,
+            this.htmlCache,
+            this.viewSlots,
+            this.columnBindingContext);
 
+        this.loadingScreen = new LoadingScreen(element,
+            viewCompiler,
+            container,
+            viewResources,
+            this.viewSlots);
 
-  public unbind(): void {
-
-    // if unbined we want to know if its new time ( I prb should have more code in created event... to late...)
-    this.newGrid = false;
-
-    // unbind all the columns
-    this.viewSlots.unbindAndDetachColumns();
-
-    // todo: should I bind the main, grouping and loading screen here?
-    // not unless I let users put custom html into those I can see why to bother atm
-
-  }
-
-
-  public attached(): void {
-
-    // if not new, and just hidden by if.bind, then lets just skip creating the grid and just bind the columns    
-    if (this.newGrid) {
-      this.controller.getContext();
-      this.controller.createGrid();
-      this.controller.addEventListeners();
+        this.contextMenu = new ContextMenu(
+            viewCompiler,
+            container,
+            viewResources,
+            this.viewSlots);
     }
 
-    // bind columns
-    this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
 
-    // todo: should I bind the main, grouping and loading screen here?
+    public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
 
-    // connect gridConnector to this controler
-    this.attGridConnector.gridCreated(this.controller);
-  }
+        // binding contexts, will need some for the views we create
+        this.bindingContext = bindingContext;
+        this.overrideContext = overrideContext;
 
-  private checkBool(value: string | boolean): boolean {
-    if (typeof value === 'string') {
-      value = value.toLowerCase();
+        // convert main attributes
+        this.attRowHeight = this.attRowHeight ? this.attRowHeight * 1 : 25;
+        this.attHeaderHeight = this.attHeaderHeight ? this.attHeaderHeight * 1 : 25;
+        this.attFooterHeight = this.attFooterHeight ? this.attFooterHeight * 1 : 25;
+        this.attPanelHeight = this.attPanelHeight ? this.attPanelHeight * 1 : 25;
+        this.attMultiSelect = this.checkBool(this.attMultiSelect);
+        this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
+        this.attTheme = this.attTheme || 'avg-default';
+
+        this.attOnRowDraw('wow');
+        this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
+        
+        // todo... use for theming
+        this.element.classList.add(this.attTheme);
+
     }
 
-    switch (true) {
-      case value === 'true':
-      case value === true:
-        value = true;
-        break;
-      case value === 'false':
-      case value === false:
-        value = false;
-        break;
-      default:
-        value = false;
-        break;
+
+    public unbind(): void {
+
+        // if unbined we want to know if its new time ( I prb should have more code in created event... to late...)
+        this.newGrid = false;
+
+        // unbind all the columns
+        this.viewSlots.unbindAndDetachColumns();
+
+        // todo: should I bind the main, grouping and loading screen here?
+        // not unless I let users put custom html into those I can see why to bother atm
+
     }
-    return value;
-  }
+
+
+    public attached(): void {
+
+        // if not new, and just hidden by if.bind, then lets just skip creating the grid and just bind the columns    
+        if (this.newGrid) {
+            this.controller.getContext();
+            this.controller.createGrid();
+        }
+
+        // bind columns
+        this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
+
+        // todo: should I bind the main, grouping and loading screen here?
+
+        // connect gridConnector to this controler
+        this.attGridConnector.gridCreated(this.controller);
+    }
+
+    private checkBool(value: string | boolean): boolean {
+        if (typeof value === 'string') {
+            value = value.toLowerCase();
+        }
+
+        switch (true) {
+            case value === 'true':
+            case value === true:
+                value = true;
+                break;
+            case value === 'false':
+            case value === false:
+                value = false;
+                break;
+            default:
+                value = false;
+                break;
+        }
+        return value;
+    }
 
 
 }

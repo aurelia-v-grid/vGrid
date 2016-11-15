@@ -1,5 +1,5 @@
 // for typing only
-import { DataSource, Selection, SortObject, FilterObject, Controller } from './interfaces';
+import { DataSource, Selection, SortObject, FilterObject, Controller, Entity } from './interfaces';
 
 
 
@@ -63,10 +63,13 @@ export class GridConnector {
 
   public getElement(options: { row: number, isDown: boolean, callback: Function }): void {
 
+    let rowData: Entity = this.datasource.getElement(options.row);
+
     let rowContext = {
       row: options.row,
       selection: this.selection,
-      rowRef: this.datasource.getElement(options.row)
+      rowRef: rowData,
+      tempRef: this.getRowProperties(rowData)
     };
 
     options.callback(rowContext);
@@ -171,6 +174,21 @@ export class GridConnector {
     if (this.controller) {
       this.controller.element.dispatchEvent(event);
     }
+  }
+
+  private getRowProperties(obj: {[key: string]: any}): {} {
+    let x: {[key: string]: any} = {};
+    if (obj) {
+      let k: any;
+      for (k in obj) {
+        if (obj.hasOwnProperty(k)) {
+          if (x[k] !== obj[k]) {
+            x[k] = obj[k];
+          }
+        }
+      }
+    }
+    return x;
   }
 
 }

@@ -66,6 +66,7 @@ export class Controller {
   public attMultiSelect: boolean;
   public attManualSelection: boolean;
   public attGridConnector: GridConnector;
+  public attOnRowDraw: Function;
 
 
   constructor(vGrid: VGrid) {
@@ -119,6 +120,7 @@ export class Controller {
     this.attMultiSelect = c.attMultiSelect;
     this.attManualSelection = c.attManualSelection;
     this.attGridConnector = c.attGridConnector;
+    this.attOnRowDraw = c.attOnRowDraw;
   }
 
 
@@ -179,9 +181,15 @@ export class Controller {
     this.attGridConnector.getElement({
       row: rowNumber,
       isDown: isDownScroll,
-      callback: callbackFN
+      callback: (rowContext: BindingContext) => {
+          if (this.attOnRowDraw) {
+            this.attOnRowDraw(rowContext);
+          }
+          callbackFN(rowContext);
+        }
     });
   }
+
 
   public getOperatorName(name: string): string {
     return this.attGridConnector.getFilterOperatorName(name);
@@ -282,11 +290,7 @@ export class Controller {
   }
 
 
-  public addEventListeners(): void {
-    this.element.addEventListener('getElement', (event: CustomEvent) => {
-      this.attGridConnector.getElement(event.detail);
-    });
-  }
+
 
 
 }
