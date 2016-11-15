@@ -185,7 +185,7 @@ export class VGridAttributesFilter {
 
 
   private updateFilter(curFilter): void {
-    let filterIndex = null;
+    let filterIndex = -1;
 
     // get index of filter
     curFilter.forEach((filter, index) => {
@@ -194,7 +194,7 @@ export class VGridAttributesFilter {
       }
     });
 
-    if (filterIndex !== null) {
+    if (filterIndex !== -1) {
 
       // we found a filter, lets update
       if (this.getValue() === '') {

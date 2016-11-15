@@ -89,13 +89,13 @@ export interface Entity {
 }
 
 export interface TargetData {
-  draggable: boolean;
+  draggable: HTMLElement;
   ok: boolean;
   target: HTMLElement;
   colType: string;
   colNo: number;
-  context: boolean;
-  columnsArray: Array<any>;
+  context: ColumBindingContextObject;
+  columnsArray: Array<ColumBindingContextObject>;
   panel: boolean;
 }
 

@@ -60,7 +60,7 @@ export class ViewSlots {
 
     for (let i = 0; i < this.rowCache.length; i++) {
       // one for each row.
-      context = ({} as any);
+      context = ({} as BindingContext);
 
       this.rowCache[i].bindingContext = context;
       this.rowCache[i].parentOverrideContext = {
@@ -83,7 +83,7 @@ export class ViewSlots {
 
 
 
-    context = {};
+    context = ({} as BindingContext);
     this.headerCache.bindingContext = context;
     this.headerCache.parentOverrideContext = {
       bindingContext: context,
