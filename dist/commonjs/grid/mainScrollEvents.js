@@ -152,6 +152,7 @@ var MainScrollEvents = (function () {
                 }, 30);
             });
         });
+        return true;
     };
     MainScrollEvents.prototype.handleEventWheelScroll = function (newTopPosition) {
         var _this = this;
@@ -202,6 +203,7 @@ var MainScrollEvents = (function () {
                 }, 30);
             });
         });
+        return true;
     };
     MainScrollEvents.prototype.handleEventRightScroll = function () {
         var _this = this;
@@ -226,6 +228,7 @@ var MainScrollEvents = (function () {
                 }, 30);
             });
         });
+        return true;
     };
     MainScrollEvents.prototype.handleEventVhandle = function () {
         var _this = this;

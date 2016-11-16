@@ -105,9 +105,8 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                     this.attMultiSelect = this.checkBool(this.attMultiSelect);
                     this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
                     this.attTheme = this.attTheme || 'avg-default';
-                    this.attOnRowDraw('wow');
-                    this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
                     this.element.classList.add(this.attTheme);
+                    this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
                 };
                 VGrid.prototype.unbind = function () {
                     this.newGrid = false;

@@ -158,6 +158,7 @@ System.register([], function (exports_1, context_1) {
                             }, 30);
                         });
                     });
+                    return true;
                 };
                 MainScrollEvents.prototype.handleEventWheelScroll = function (newTopPosition) {
                     var _this = this;
@@ -208,6 +209,7 @@ System.register([], function (exports_1, context_1) {
                             }, 30);
                         });
                     });
+                    return true;
                 };
                 MainScrollEvents.prototype.handleEventRightScroll = function () {
                     var _this = this;
@@ -232,6 +234,7 @@ System.register([], function (exports_1, context_1) {
                             }, 30);
                         });
                     });
+                    return true;
                 };
                 MainScrollEvents.prototype.handleEventVhandle = function () {
                     var _this = this;

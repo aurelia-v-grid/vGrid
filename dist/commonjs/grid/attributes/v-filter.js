@@ -14,16 +14,6 @@ var VGridAttributesFilter = (function () {
         this.vGrid = vGrid;
         this.element = element;
     }
-    Object.defineProperty(VGridAttributesFilter.prototype, "valueConverters", {
-        get: function () {
-            if (this.vGrid) {
-                var valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
-                return valueConverter;
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
     VGridAttributesFilter.prototype.attached = function () {
         var _this = this;
         if (this.attribute) {
@@ -107,7 +97,7 @@ var VGridAttributesFilter = (function () {
         if (value !== undefined && value !== null) {
             value = value.trim();
         }
-        var valueConverter = this.valueConverters;
+        var valueConverter = this.valueConverters(value);
         if (valueConverter) {
             this.valueFormater = valueConverter;
         }
@@ -162,6 +152,10 @@ var VGridAttributesFilter = (function () {
                 });
             }
         }
+    };
+    VGridAttributesFilter.prototype.valueConverters = function (value) {
+        var valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
+        return valueConverter(value);
     };
     return VGridAttributesFilter;
 }());

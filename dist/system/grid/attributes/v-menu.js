@@ -82,6 +82,7 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                         document.removeEventListener('click', this.checkBinded);
                         return true;
                     }
+                    return false;
                 };
                 VGridAttributeMenu.prototype.open = function (e) {
                     this.check(e);

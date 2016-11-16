@@ -13,14 +13,11 @@ export declare class VGridAttributesFilter {
     private type;
     private state;
     constructor(element: HTMLElement, vGrid: VGrid);
-    readonly valueConverters: {
-        fromView: Function;
-        toView: Function;
-    };
     attached(): void;
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
     private checkParams(value);
     private getValue();
     private resetValue();
     private updateFilter(curFilter);
+    private valueConverters(value);
 }
