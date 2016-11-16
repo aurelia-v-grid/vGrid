@@ -25,15 +25,6 @@ export class VGridAttributesFilter {
   }
 
 
-  get valueConverters(): {fromView: Function; toView: Function} {
-    if (this.vGrid) {
-      let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
-      return valueConverter;
-    } else {
-      return {fromView: () => {/* nothing */ }, toView: () => {/* nothing */ } };
-    }
-  }
-
   public attached(): void {
 
     if (this.attribute) { // if no attibute we do not want to do anything
@@ -148,7 +139,7 @@ export class VGridAttributesFilter {
       value = value.trim();
     }
 
-    let valueConverter = this.valueConverters;//(value);
+    let valueConverter = this.valueConverters(value);
     if (valueConverter) {
       this.valueFormater = valueConverter;
     }
@@ -220,6 +211,9 @@ export class VGridAttributesFilter {
     }
   }
 
-
+  private valueConverters(value: string): {fromView: Function; toView: Function} {
+      let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
+      return valueConverter(value);
+  }
 
 }
