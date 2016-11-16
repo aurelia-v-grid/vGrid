@@ -1,4 +1,4 @@
-export class NumberValueConverter {
+export class NumberFormatterValueConverter {
   public toView(value) {
     if (value) {
       return value;
@@ -22,7 +22,7 @@ export class NumberValueConverter {
   }
 }
 
-export class BooleanValueConverter {
+export class BooleanFormatterValueConverter {
   public toView(value) {
     if (value) {
       return value;

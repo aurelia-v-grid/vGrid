@@ -6,13 +6,13 @@
         v-footer-height="25" style="height:400px">
         <v-grid-col col-width="100" col-sort="country" col-filter="country" col-field="country"></v-grid-col>
         <v-grid-col col-sort="gender" col-filter="gender" col-field="gender"></v-grid-col>
-        <v-grid-col col-sort="index" col-filter="index" col-field="index | number & updateTrigger:'blur':'paste'"></v-grid-col>
+        <v-grid-col col-sort="index" col-filter="index" col-field="index | numberFormatter"></v-grid-col>
         <v-grid-col col-sort="high" col-filter="high" col-field="high"></v-grid-col>
-        <v-grid-col col-sort="bool" col-type="checkbox" col-filter="bool" col-field="bool | boolean"></v-grid-col>
+        <v-grid-col col-sort="bool" col-type="checkbox" col-filter="bool" col-field="bool | booleanFormatter"></v-grid-col>
         <v-grid-col col-width="100" col-sort="guid" col-filter="guid" col-field="guid"></v-grid-col>
         <v-grid-col col-sort="name" col-type="image" image-fix col-field="images"></v-grid-col>
         <v-grid-col col-width="160" col-sort="name" col-pin-left="true" col-filter="name|*" col-field="name"></v-grid-col>
-        <v-grid-col col-sort="number" col-filter="number" col-pin-right="true" col-field="number | number & updateTrigger:'blur':'paste'"></v-grid-col>
+        <v-grid-col col-sort="number" col-filter="number" col-pin-right="true" col-field="number | numberFormatter"></v-grid-col>
       </v-grid>
     </div>
   </section>
