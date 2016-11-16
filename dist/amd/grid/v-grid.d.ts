@@ -58,6 +58,7 @@ export declare class VGrid {
     attManualSelection: boolean;
     attTheme: string;
     attOnRowDraw: Function;
+    attColConfig: Array<ColConfig>;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, taskQueue: TaskQueue);
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
     unbind(): void;

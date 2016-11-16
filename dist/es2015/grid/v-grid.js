@@ -50,6 +50,7 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
             this.attTheme = this.attTheme || 'avg-default';
             this.element.classList.add(this.attTheme);
             this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
+            this.colConfig = this.attColConfig.length > 0 ? this.attColConfig : this.colConfig;
         };
         VGrid.prototype.unbind = function () {
             this.newGrid = false;
@@ -122,6 +123,10 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
         aurelia_framework_1.bindable({ attribute: 'v-row-on-draw' }),
         __metadata("design:type", Function)
     ], VGrid.prototype, "attOnRowDraw", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ attribute: 'v-columns' }),
+        __metadata("design:type", Array)
+    ], VGrid.prototype, "attColConfig", void 0);
 });
 
 //# sourceMappingURL=v-grid.js.map

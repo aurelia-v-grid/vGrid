@@ -4,10 +4,8 @@ define(["require", "exports"], function (require, exports) {
         }
         ColumnMarkupHelper.prototype.generate = function (colConfig) {
             this.useCustomOnly = false;
-            var columnsToUse = [];
             var type = null;
             if (colConfig && colConfig.length > 0) {
-                columnsToUse = colConfig;
                 type = 'typeHtml';
             }
             if (!type) {
