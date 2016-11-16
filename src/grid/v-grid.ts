@@ -166,12 +166,9 @@ export class VGrid {
         this.attMultiSelect = this.checkBool(this.attMultiSelect);
         this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
         this.attTheme = this.attTheme || 'avg-default';
-
-        this.attOnRowDraw('wow');
-        this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
-        
-        // todo... use for theming
         this.element.classList.add(this.attTheme);
+        this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
+
 
     }
 
