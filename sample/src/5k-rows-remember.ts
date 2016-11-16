@@ -3,6 +3,7 @@ import { GridConnector } from 'aurelia-v-grid';
 import { DataSource } from 'aurelia-v-grid';
 import { Selection, ColConfig } from 'aurelia-v-grid';
 import { DummyDataGenerator } from './utils/dummyDataGenerator';
+import { Remember} from './utils/remember';
 
 @autoinject()
 export class Welcome {
@@ -11,7 +12,7 @@ export class Welcome {
   public gridConnector: GridConnector;
   private myCollection: any;
   private myColumns: Array<ColConfig>;
-  constructor(public dummyDataGenerator: DummyDataGenerator) {
+  constructor(public dummyDataGenerator: DummyDataGenerator, public remember: Remember) {
     this.dummyDataGenerator.generateData(5000, (data) => {
       this.myCollection = data;
     });
@@ -20,22 +21,16 @@ export class Welcome {
 
     this.ds.setArray(this.myCollection);
 
-    this.myColumns = ([
-      {
-        colWidth: 100,
-        colField: 'name',
-        colPinLeft: true
-      },
-      {
-        colWidth: 100,
-        colField: 'index'
-      }
-
-    ] as Array<ColConfig>);
-
+    this.myColumns = remember.columns;
   }
 
 
+  public saveColConfig() {
+    this.remember.columns = this.gridConnector.getColConfig();
+  }
 
+  public resetToDefault() {
+    this.remember.columns = null;
+  }
 
 }

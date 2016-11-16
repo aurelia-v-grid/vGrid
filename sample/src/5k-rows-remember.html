@@ -3,7 +3,7 @@
     <require from="./utils/valueConverter"></require>
     <div class="col-md-6" style="top:50px">
       <v-grid v-multi-select="true" v-grid-connector.bind="gridConnector" v-row-height="25" v-header-height="50" v-panel-height="25"
-        v-footer-height="25" style="height:400px">
+        v-footer-height="25" v-columns.bind="myColumns" style="height:400px">
         <v-grid-col col-width="100" col-sort="country" col-filter="country" col-field="country"></v-grid-col>
         <v-grid-col col-sort="gender" col-filter="gender" col-field="gender"></v-grid-col>
         <v-grid-col col-sort="index" col-filter="index" col-field="index | numberFormatter"></v-grid-col>
@@ -15,6 +15,7 @@
         <v-grid-col col-sort="number" col-filter="number" col-pin-right="true" col-field="number | numberFormatter"></v-grid-col>
       </v-grid>
     </div>
-    <button click.delegate="clickme()">clickme</button>
+    <button class="btn-primary" click.delegate="saveColConfig()">saveColConfig</button>
+    <button class="btn-primary" click.delegate="resetToDefault()">reset to default</button>
   </section>
 </template>
