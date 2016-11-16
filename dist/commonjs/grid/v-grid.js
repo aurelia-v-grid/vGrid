@@ -66,7 +66,6 @@ var VGrid = (function () {
         this.attTheme = this.attTheme || 'avg-default';
         this.element.classList.add(this.attTheme);
         this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
-        this.colConfig = this.attColConfig.length > 0 ? this.attColConfig : this.colConfig;
     };
     VGrid.prototype.unbind = function () {
         this.newGrid = false;
@@ -74,6 +73,9 @@ var VGrid = (function () {
     };
     VGrid.prototype.attached = function () {
         if (this.newGrid) {
+            if (this.attColConfig) {
+                this.colConfig = this.attColConfig.length > 0 ? this.attColConfig : this.colConfig;
+            }
             this.controller.getContext();
             this.controller.createGrid();
         }

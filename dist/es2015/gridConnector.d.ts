@@ -1,4 +1,4 @@
-import { DataSource, Selection, SortObject, FilterObject, Controller } from './interfaces';
+import { DataSource, Selection, SortObject, FilterObject, Controller, ColConfig } from './interfaces';
 export declare class GridConnector {
     private selection;
     private controller;
@@ -11,6 +11,7 @@ export declare class GridConnector {
     gridCreated(controller: Controller): void;
     select(row: number): void;
     getDatasourceLength(): number;
+    getColConfig(): Array<ColConfig>;
     getGrouping(): Array<string>;
     group(grouping: Array<string>, keepExpanded?: boolean): void;
     getElement(options: {

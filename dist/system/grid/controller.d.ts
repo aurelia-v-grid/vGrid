@@ -55,4 +55,5 @@ export declare class Controller {
     collectionLength(): number;
     triggerScroll(position: number): void;
     rebindAllRows(): void;
+    getColumnConfig(): Array<ColConfig>;
 }

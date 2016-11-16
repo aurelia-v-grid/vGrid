@@ -147,6 +147,71 @@ define(["require", "exports"], function (require, exports) {
                 downScroll: true
             });
         };
+        Controller.prototype.getColumnConfig = function () {
+            var colContext = this.columnBindingContext;
+            var tempArray = [];
+            for (var i = 0; i < this.colConfig.length; i++) {
+                switch (true) {
+                    case colContext.setupleft[i].show:
+                        tempArray.push({
+                            no: i,
+                            set: 1,
+                            colPinLeft: true,
+                            colPinRight: false,
+                            left: colContext.setupleft[i].left - 10000,
+                            width: colContext.setupleft[i].width
+                        });
+                        break;
+                    case colContext.setupmain[i].show:
+                        tempArray.push({
+                            no: i,
+                            set: 2,
+                            colPinLeft: false,
+                            colPinRight: false,
+                            left: colContext.setupmain[i].left,
+                            width: colContext.setupmain[i].width
+                        });
+                        break;
+                    case colContext.setupright[i].show:
+                        tempArray.push({
+                            no: i,
+                            set: 3,
+                            colPinLeft: false,
+                            colPinRight: true,
+                            left: colContext.setupright[i].left + 10000,
+                            width: colContext.setupright[i].width
+                        });
+                        break;
+                    default:
+                }
+            }
+            var newColConfig = [];
+            this.colConfig.forEach(function (col, i) {
+                var temp = {
+                    colWidth: tempArray[i].width,
+                    colRowTemplate: col.colRowTemplate,
+                    colHeaderTemplate: col.colHeaderTemplate,
+                    colField: col.colField ? col.colField.replace('rowRef.', '') : col.colField,
+                    colPinLeft: tempArray[i].colPinLeft,
+                    colPinRight: tempArray[i].colPinRight,
+                    colHeaderName: col.colHeaderName,
+                    colAddLabelAttributes: col.colAddLabelAttributes,
+                    colAddFilterAttributes: col.colAddFilterAttributes,
+                    colAddRowAttributes: col.colAddRowAttributes,
+                    colSort: col.colSort,
+                    colFilter: col.colFilter,
+                    colFilterTop: col.colFilterTop,
+                    colCss: col.colCss,
+                    colType: col.colType,
+                    __colSortHelper: tempArray[i].left,
+                };
+                newColConfig.push(temp);
+            });
+            newColConfig.sort(function (a, b) {
+                return a.__colSortHelper - b.__colSortHelper;
+            });
+            return newColConfig;
+        };
         return Controller;
     }());
     exports.Controller = Controller;

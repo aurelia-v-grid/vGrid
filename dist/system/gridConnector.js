@@ -29,6 +29,9 @@ System.register([], function (exports_1, context_1) {
                 GridConnector.prototype.getDatasourceLength = function () {
                     return this.datasource.length;
                 };
+                GridConnector.prototype.getColConfig = function () {
+                    return this.controller.getColumnConfig();
+                };
                 GridConnector.prototype.getGrouping = function () {
                     return this.datasource.getGrouping();
                 };

@@ -74,6 +74,7 @@ export interface ColConfig {
     colFilterTop: boolean;
     colCss: string;
     colType: string;
+    __colSortHelper?: number;
 }
 export interface Entity {
     [key: string]: any;

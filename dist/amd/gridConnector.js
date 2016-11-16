@@ -24,6 +24,9 @@ define(["require", "exports"], function (require, exports) {
         GridConnector.prototype.getDatasourceLength = function () {
             return this.datasource.length;
         };
+        GridConnector.prototype.getColConfig = function () {
+            return this.controller.getColumnConfig();
+        };
         GridConnector.prototype.getGrouping = function () {
             return this.datasource.getGrouping();
         };
