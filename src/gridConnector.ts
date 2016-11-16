@@ -1,5 +1,5 @@
 // for typing only
-import { DataSource, Selection, SortObject, FilterObject, Controller, Entity } from './interfaces';
+import { DataSource, Selection, SortObject, FilterObject, Controller, Entity, ColConfig } from './interfaces';
 
 
 
@@ -46,6 +46,10 @@ export class GridConnector {
 
   public getDatasourceLength(): number {
     return this.datasource.length;
+  }
+
+  public getColConfig(): Array<ColConfig> {
+    return this.controller.getColumnConfig();
   }
 
 

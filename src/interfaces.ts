@@ -77,6 +77,7 @@ export interface ColConfig {
   colFilterTop: boolean;
   colCss: string;
   colType: string;
+  __colSortHelper?: number;
 }
 
 // the properties will mostly only be on group entities..

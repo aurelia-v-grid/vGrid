@@ -168,7 +168,6 @@ export class VGrid {
         this.attTheme = this.attTheme || 'avg-default';
         this.element.classList.add(this.attTheme);
         this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
-        this.colConfig = this.attColConfig.length > 0 ? this.attColConfig : this.colConfig;
 
 
     }
@@ -192,6 +191,10 @@ export class VGrid {
 
         // if not new, and just hidden by if.bind, then lets just skip creating the grid and just bind the columns    
         if (this.newGrid) {
+            // override colconfig if binded
+            if (this.attColConfig) {
+                this.colConfig = this.attColConfig.length > 0 ? this.attColConfig : this.colConfig;
+            }
             this.controller.getContext();
             this.controller.createGrid();
         }
