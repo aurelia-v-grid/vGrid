@@ -67,7 +67,7 @@ export class VGrid {
     @bindable({ attribute: 'v-manual-sel' }) public attManualSelection: boolean;
     @bindable({ attribute: 'v-theme' }) public attTheme: string;
     @bindable({ attribute: 'v-row-on-draw' }) public attOnRowDraw: Function;
-    // @bindable({attribute: "v-columns"}) vGridColumns; TODO...
+    @bindable({attribute: 'v-columns'}) public attColConfig: Array<ColConfig>;
 
 
 
@@ -168,6 +168,7 @@ export class VGrid {
         this.attTheme = this.attTheme || 'avg-default';
         this.element.classList.add(this.attTheme);
         this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
+        this.colConfig = this.attColConfig.length > 0 ? this.attColConfig : this.colConfig;
 
 
     }

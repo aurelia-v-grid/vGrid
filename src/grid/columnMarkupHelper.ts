@@ -6,13 +6,12 @@ export class ColumnMarkupHelper {
   // todo use same if column setup is just json binded to grid
   public generate(colConfig: Array<ColConfig>): void {
     this.useCustomOnly = false;
-    let columnsToUse = [];
     let type = null;
 
     if (colConfig && colConfig.length > 0) {
-      columnsToUse = colConfig;
       type = 'typeHtml';
     }
+
 
     if (!type) {
       throw new Error('column setup missing');
@@ -25,7 +24,7 @@ export class ColumnMarkupHelper {
 
 
 
-  private processColumns(array: Array<any>): void {
+  private processColumns(array: Array<ColConfig>): void {
 
     array.forEach((col, index) => {
 
