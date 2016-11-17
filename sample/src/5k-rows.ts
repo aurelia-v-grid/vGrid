@@ -20,9 +20,13 @@ export class Welcome {
     this.ds.setArray(this.myCollection);
   }
 
-  clickme(){
+  clickme() {
     console.log(this.gridConnector.getColConfig());
 
   }
+
+
+
+
 
 }

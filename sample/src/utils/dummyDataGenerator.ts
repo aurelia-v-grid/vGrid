@@ -73,7 +73,7 @@ export class DummyDataGenerator {
             this.expanded.push(this.internalDataArray[i].expanded);
             this.date.push(new Date(this.internalDataArray[i].date));
             this.shortText.push(this.internalDataArray[i].shortText);
-            this.mediumText.push(this.internalDataArray[i].mediumText);
+            this.mediumText.push(this.internalDataArray[i]);
             this.longText.push(this.internalDataArray[i].longText);
             this.address.push(this.internalDataArray[i].address);
             this.guid.push(this.internalDataArray[i].guid);
