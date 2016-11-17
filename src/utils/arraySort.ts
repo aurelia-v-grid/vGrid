@@ -92,6 +92,22 @@ export class ArraySort {
   }
 
 
+  public getValue(attribute: string, obj: any): any {
+    let arr: Array<any> = attribute.split('.');
+    let tempValue: any = Infinity;
+    if (arr.length > 1) {
+      try {
+        tempValue = obj[arr[0]][arr[1]];
+      } catch (e) { /* nothing*/}
+    }
+    if (arr.length === 1) {
+      try {
+        tempValue = obj[attribute];
+      } catch (e) { /* nothing*/}
+    }
+    return tempValue;
+  }
+
 
   public runOrderbyOn(array: Array<Entity>): void {
 
@@ -106,8 +122,8 @@ export class ArraySort {
       for (let i = 0; i < thisSort.length && result === 0; ++i) {
         // loop until all are sorted
         let currentObj = thisSort[i];
-        let v1 = obj1[currentObj.attribute];
-        let v2 = obj2[currentObj.attribute];
+        let v1 = this.getValue(currentObj.attribute, obj1);
+        let v2 = this.getValue(currentObj.attribute, obj2);
 
         if (v1 !== v2) {
           if (currentObj.asc) {
