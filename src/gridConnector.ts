@@ -52,6 +52,10 @@ export class GridConnector {
     return this.controller.getColumnConfig();
   }
 
+  public setColConfig(colconfig: Array<ColConfig>): void {
+    this.controller.setColumnConfig(colconfig);
+  }
+
 
   public getGrouping(): Array<string> {
     return this.datasource.getGrouping();

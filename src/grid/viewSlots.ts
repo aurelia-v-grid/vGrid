@@ -129,5 +129,31 @@ export class ViewSlots {
 
   }
 
+  public clear(): void {
+    for (let i = 0; i < this.groupRowViewSlots.length; i++) {
+      this.leftRowViewSlots[i].removeAll();
+      this.mainRowViewSlots[i].removeAll();
+      this.rightRowViewSlots[i].removeAll();
+      this.groupRowViewSlots[i].removeAll();
+    }
+
+    this.leftHeaderViewSlot.removeAll();
+    this.mainHeaderViewSlot.removeAll();
+    this.rightHeaderViewSlot.removeAll();
+
+    this.leftRowViewSlots = null;
+    this.mainRowViewSlots = null;
+    this.rightRowViewSlots = null;
+    this.groupRowViewSlots = null;
+    this.leftRowViewSlots = [];
+    this.mainRowViewSlots = [];
+    this.rightRowViewSlots = [];
+    this.groupRowViewSlots = [];
+
+    this.leftHeaderViewSlot = null;
+    this.mainHeaderViewSlot = null;
+    this.rightHeaderViewSlot = null;
+  }
+
 
 }

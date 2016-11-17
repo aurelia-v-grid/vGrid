@@ -174,7 +174,6 @@ export class Controller {
 
   }
 
-
   // misc function, all calls to/from gridconnector will go in functions here, mostly.. I think...
 
   public getElement(rowNumber: number, isDownScroll: boolean, callbackFN: Function): void {
@@ -182,11 +181,11 @@ export class Controller {
       row: rowNumber,
       isDown: isDownScroll,
       callback: (rowContext: BindingContext) => {
-          if (this.attOnRowDraw) {
-            this.attOnRowDraw(rowContext);
-          }
-          callbackFN(rowContext);
+        if (this.attOnRowDraw) {
+          this.attOnRowDraw(rowContext);
         }
+        callbackFN(rowContext);
+      }
     });
   }
 
@@ -300,40 +299,40 @@ export class Controller {
 
     // loop and find out whats what..
     for (let i = 0; i < this.colConfig.length; i++) {
-        switch (true) {
-          case colContext.setupleft[i].show:
-            tempArray.push({
-              no: i,
-              set: 1,
-              colPinLeft: true,
-              colPinRight: false,
-              left: colContext.setupleft[i].left - 10000,
-              width: colContext.setupleft[i].width
-            });
+      switch (true) {
+        case colContext.setupleft[i].show:
+          tempArray.push({
+            no: i,
+            set: 1,
+            colPinLeft: true,
+            colPinRight: false,
+            left: colContext.setupleft[i].left - 10000,
+            width: colContext.setupleft[i].width
+          });
           break;
-          case colContext.setupmain[i].show:
-            tempArray.push({
-              no: i,
-              set: 2,
-              colPinLeft: false,
-              colPinRight: false,
-              left: colContext.setupmain[i].left,
-              width: colContext.setupmain[i].width
-            });
+        case colContext.setupmain[i].show:
+          tempArray.push({
+            no: i,
+            set: 2,
+            colPinLeft: false,
+            colPinRight: false,
+            left: colContext.setupmain[i].left,
+            width: colContext.setupmain[i].width
+          });
           break;
-          case colContext.setupright[i].show:
-            tempArray.push({
-              no: i,
-              set: 3,
-              colPinLeft: false,
-              colPinRight: true,
-              left: colContext.setupright[i].left + 10000,
-              width: colContext.setupright[i].width
-            });
+        case colContext.setupright[i].show:
+          tempArray.push({
+            no: i,
+            set: 3,
+            colPinLeft: false,
+            colPinRight: true,
+            left: colContext.setupright[i].left + 10000,
+            width: colContext.setupright[i].width
+          });
           break;
-          default:
-          // need to add option for hidden column, but that is created yet...
-        }
+        default:
+        // need to add option for hidden column, but that is created yet...
+      }
     }
 
     // temp colconf to return
@@ -341,26 +340,26 @@ export class Controller {
 
     // loop and set correct params
     this.colConfig.forEach((col: ColConfig, i: number) => {
-        let temp = ({
-          colWidth: tempArray[i].width,
-          colRowTemplate: col.colRowTemplate,
-          colHeaderTemplate: col.colHeaderTemplate,
-          colField: col.colField ? col.colField.replace('rowRef.', '') : col.colField,
-          colPinLeft: tempArray[i].colPinLeft,
-          colPinRight: tempArray[i].colPinRight,
-          colHeaderName: col.colHeaderName,
-          colAddLabelAttributes: col.colAddLabelAttributes,
-          colAddFilterAttributes: col.colAddFilterAttributes,
-          colAddRowAttributes: col.colAddRowAttributes,
-          colSort: col.colSort,
-          colFilter: col.colFilter,
-          colFilterTop: col.colFilterTop,
-          colCss: col.colCss,
-          colType: col.colType,
-          __colSortHelper : tempArray[i].left,
-        } as ColConfig);
+      let temp = ({
+        colWidth: tempArray[i].width,
+        colRowTemplate: col.colRowTemplate,
+        colHeaderTemplate: col.colHeaderTemplate,
+        colField: col.colField ? col.colField.replace('rowRef.', '') : col.colField,
+        colPinLeft: tempArray[i].colPinLeft,
+        colPinRight: tempArray[i].colPinRight,
+        colHeaderName: col.colHeaderName,
+        colAddLabelAttributes: col.colAddLabelAttributes,
+        colAddFilterAttributes: col.colAddFilterAttributes,
+        colAddRowAttributes: col.colAddRowAttributes,
+        colSort: col.colSort,
+        colFilter: col.colFilter,
+        colFilterTop: col.colFilterTop,
+        colCss: col.colCss,
+        colType: col.colType,
+        __colSortHelper: tempArray[i].left,
+      } as ColConfig);
 
-        newColConfig.push(temp);
+      newColConfig.push(temp);
     });
 
     // sort array
@@ -371,6 +370,29 @@ export class Controller {
 
     // return current config   
     return newColConfig;
+  }
+
+
+  public setColumnConfig(colConfig: Array<ColConfig>): void {
+    let length = this.columnBindingContext.setupgrouping;
+    this.viewSlots.unbindAndDetachColumns();
+    this.columnBindingContext.clear();
+    this.viewSlots.clear();
+    this.colConfig = colConfig;
+    this.columnMarkup.init(
+      this.colConfig,
+      this.overrideContext,
+      this.colRepeater,
+      this.colRepeatRowTemplate,
+      this.colRepeatRowHeaderTemplate);
+    this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
+    this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
+    this.columnBindingContext.setupgrouping = length;
+    this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
+    
+    this.rebindAllRows();
+
+
   }
 
 
