@@ -1,4 +1,4 @@
-import { inject, customAttribute } from 'aurelia-framework';
+import { inject, customAttribute, bindable } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
 import {
   ColumBindingContextObject,
@@ -37,6 +37,9 @@ export class VGridDragDropCol {
   private isPanel: boolean;
   private dragColumnBlock: HTMLElement;
   private mouseMoveTimer: NodeJS.Timer;
+  @bindable private title: string;
+  @bindable private field: string;
+
 
   constructor(element: Element, vGrid: VGrid) {
     // get contexts
@@ -108,24 +111,22 @@ export class VGridDragDropCol {
 
       // if we leave, remve group
       result.target.onmouseleave = () => {
-        if (this.sharedContext.dragging) {
+        if (this.sharedContext.dragging && this.sharedContext.title && this.sharedContext.field) {
           this.groupingElements.removeGroup('');
         }
       };
 
       // if enter and dragging, add grouping
       result.target.onmouseenter = () => {
-        if (this.sharedContext.dragging) {
-          let name = this.vGrid.colConfig[this.sharedContext.colNo].colHeaderName;
-          let field = this.vGrid.colConfig[this.sharedContext.colNo].colField.replace('rowRef.', '');
-          this.groupingElements.addGroup(name, field);
+        if (this.sharedContext.dragging && this.sharedContext.title && this.sharedContext.field) {
+          this.groupingElements.addGroup(this.sharedContext.title, this.sharedContext.field);
           this.sharedContext.lastTarget = result.target;
         }
       };
 
       // if mouse up during dragging we grop, if group ios added
       result.target.onmouseup = () => {
-        if (this.sharedContext.dragging) {
+        if (this.sharedContext.dragging && this.sharedContext.title && this.sharedContext.field) {
           this.groupingElements.addToGrouping();
         }
       };
@@ -148,7 +149,7 @@ export class VGridDragDropCol {
     document.body.appendChild(this.dragColumnBlock);
 
     // <- maybe do something here, use value for custom html?
-    this.dragColumnBlock.innerHTML = this.vGrid.colConfig[this.colNo].colHeaderName;
+    this.dragColumnBlock.innerHTML = this.title || this.vGrid.colConfig[this.colNo].colHeaderName;
 
 
   }
@@ -176,6 +177,8 @@ export class VGridDragDropCol {
     this.sharedContext.colNo = this.colNo;
     this.sharedContext.curColNo = this.colNo;
     this.sharedContext.columnsArray = this.columnsArray;
+    this.sharedContext.title = this.title;
+    this.sharedContext.field = this.field;
 
     // build up new array we will use for setting new left
     this.sharedContext.columnsArraySorted = [];

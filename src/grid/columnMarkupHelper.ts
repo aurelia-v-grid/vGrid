@@ -281,20 +281,21 @@ export class ColumnMarkupHelper {
 
     let sort = col.colSort ? `v-sort="${col.colSort}"` : '';
 
+    let tempFieldSplit = col.colField.split(' ');
+    let headerName = col.colHeaderName.replace('rowRef.', '');
+    let field = tempFieldSplit[0].replace('rowRef.', '');
 
-    let extraAttributes = 'v-drag-drop-col v-resize-col';
+    let extraAttributes = `v-drag-drop-col="title:${headerName};field:${field}" v-resize-col`;
     if (this.useCustomOnly) {
       extraAttributes = '';
     }
 
-    let tempFieldSplit = col.colField.split(' ');
-    let groupby = tempFieldSplit[0].replace('rowRef.', '');
 
 
     // apply magic
     // todo, atm Im adding resize columns and dragdrop columns, should this be a choice?
     return `<p 
-      v-menu="sort:${col.colSort};groupby:${groupby}" 
+      v-menu="sort:${col.colSort};groupby:${field}" 
       ${extraAttributes} 
       ${classname} 
       ${sort} 
