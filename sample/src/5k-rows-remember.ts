@@ -33,4 +33,8 @@ export class Welcome {
     this.remember.columns = null;
   }
 
+  public setSaved() {
+    this.gridConnector.setColConfig(this.remember.columns);
+  }
+
 }
