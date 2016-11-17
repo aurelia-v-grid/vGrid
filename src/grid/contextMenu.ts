@@ -233,52 +233,52 @@ export class ContextMenu {
             <ul if.bind="filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','=', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-text"">&#x2261</i> ${this.menuStrings.equals}
+                    <i class="avg-fa avg-text""></i> ${this.menuStrings.equals}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','<=', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-text">&#x2264</i> ${this.menuStrings.lessThanOrEqual}
+                    <i class="avg-fa avg-text"></i> ${this.menuStrings.lessThanOrEqual}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','>=', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-text"">&#x2265</i> ${this.menuStrings.greaterThanOrEqual}
+                    <i class="avg-fa avg-text""></i> ${this.menuStrings.greaterThanOrEqual}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','<', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-text"">&#x22D6</i> ${this.menuStrings.lessThan}
+                    <i class="avg-fa avg-text""></i> ${this.menuStrings.lessThan}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','>', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-text"">&#x22D7</i> ${this.menuStrings.greaterThan}
+                    <i class="avg-fa avg-text""></i> ${this.menuStrings.greaterThan}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','*', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-text"">*</i> ${this.menuStrings.contains}
+                    <i class="avg-fa avg-text""></i> ${this.menuStrings.contains}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','!=', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-text"">&#x2262</i> ${this.menuStrings.notEqualTo}
+                    <i class="avg-fa avg-text""></i> ${this.menuStrings.notEqualTo}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','!*', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-text"">&#x2223&#x22C6</i> ${this.menuStrings.doesNotContain}
+                    <i class="avg-fa avg-text""></i> ${this.menuStrings.doesNotContain}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','*=', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-text"">&#x2261&#x22C6</i> ${this.menuStrings.beginsWith}
+                    <i class="avg-fa avg-text""></i> ${this.menuStrings.beginsWith}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','=*', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-text"">&#x22C6&#x2261</i> ${this.menuStrings.endsWith}
+                    <i class="avg-fa avg-text""></i> ${this.menuStrings.endsWith}
                 </p>
                 </li>
             </ul>
