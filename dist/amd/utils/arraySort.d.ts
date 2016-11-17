@@ -7,5 +7,6 @@ export declare class ArraySort {
     setLastSort(array: Array<SortObject>): void;
     setOrderBy(param: SortObject | any, add?: boolean): void;
     getOrderBy(): Array<SortObject>;
+    getValue(attribute: string, obj: any): any;
     runOrderbyOn(array: Array<Entity>): void;
 }

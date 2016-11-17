@@ -63,14 +63,32 @@ define(["require", "exports"], function (require, exports) {
         ArraySort.prototype.getOrderBy = function () {
             return this.curSort;
         };
+        ArraySort.prototype.getValue = function (attribute, obj) {
+            var arr = attribute.split('.');
+            var tempValue = Infinity;
+            if (arr.length > 1) {
+                try {
+                    tempValue = obj[arr[0]][arr[1]];
+                }
+                catch (e) { }
+            }
+            if (arr.length === 1) {
+                try {
+                    tempValue = obj[attribute];
+                }
+                catch (e) { }
+            }
+            return tempValue;
+        };
         ArraySort.prototype.runOrderbyOn = function (array) {
+            var _this = this;
             var thisSort = this.getOrderBy();
             array.sort(function (obj1, obj2) {
                 var result = 0;
                 for (var i = 0; i < thisSort.length && result === 0; ++i) {
                     var currentObj = thisSort[i];
-                    var v1 = obj1[currentObj.attribute];
-                    var v2 = obj2[currentObj.attribute];
+                    var v1 = _this.getValue(currentObj.attribute, obj1);
+                    var v2 = _this.getValue(currentObj.attribute, obj2);
                     if (v1 !== v2) {
                         if (currentObj.asc) {
                             if (v1 < v2) {
