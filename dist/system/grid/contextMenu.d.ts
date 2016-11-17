@@ -13,6 +13,7 @@ export declare class ContextMenu {
     private filterOptionsMenu;
     private groupbyMenu;
     private callback;
+    private menuStrings;
     constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots);
     setDefaults(): void;
     init(): void;

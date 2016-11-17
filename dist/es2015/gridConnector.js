@@ -27,6 +27,9 @@ define(["require", "exports"], function (require, exports) {
         GridConnector.prototype.getColConfig = function () {
             return this.controller.getColumnConfig();
         };
+        GridConnector.prototype.setColConfig = function (colconfig) {
+            this.controller.setColumnConfig(colconfig);
+        };
         GridConnector.prototype.getGrouping = function () {
             return this.datasource.getGrouping();
         };

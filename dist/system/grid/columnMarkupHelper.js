@@ -163,13 +163,14 @@ System.register([], function (exports_1, context_1) {
                     var classname = "class=\"" + dragDropClass + " " + filterClass + "\"";
                     var colAddLabelAttributes = col.colAddLabelAttributes ? col.colAddLabelAttributes : '';
                     var sort = col.colSort ? "v-sort=\"" + col.colSort + "\"" : '';
-                    var extraAttributes = 'v-drag-drop-col v-resize-col';
+                    var tempFieldSplit = col.colField.split(' ');
+                    var headerName = col.colHeaderName.replace('rowRef.', '');
+                    var field = tempFieldSplit[0].replace('rowRef.', '');
+                    var extraAttributes = "v-drag-drop-col=\"title:" + headerName + ";field:" + field + "\" v-resize-col";
                     if (this.useCustomOnly) {
                         extraAttributes = '';
                     }
-                    var tempFieldSplit = col.colField.split(' ');
-                    var groupby = tempFieldSplit[0].replace('rowRef.', '');
-                    return "<p \n      v-menu=\"sort:" + col.colSort + ";groupby:" + groupby + "\" \n      " + extraAttributes + " \n      " + classname + " \n      " + sort + " \n      " + colAddLabelAttributes + ">\n      " + col.colHeaderName + "\n      </p>";
+                    return "<p \n      v-menu=\"sort:" + col.colSort + ";groupby:" + field + "\" \n      " + extraAttributes + " \n      " + classname + " \n      " + sort + " \n      " + colAddLabelAttributes + ">\n      " + col.colHeaderName + "\n      </p>";
                 };
                 return ColumnMarkupHelper;
             }());

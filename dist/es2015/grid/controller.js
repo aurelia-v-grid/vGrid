@@ -212,6 +212,19 @@ define(["require", "exports"], function (require, exports) {
             });
             return newColConfig;
         };
+        Controller.prototype.setColumnConfig = function (colConfig) {
+            var length = this.columnBindingContext.setupgrouping;
+            this.viewSlots.unbindAndDetachColumns();
+            this.columnBindingContext.clear();
+            this.viewSlots.clear();
+            this.colConfig = colConfig;
+            this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate);
+            this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
+            this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
+            this.columnBindingContext.setupgrouping = length;
+            this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
+            this.rebindAllRows();
+        };
         return Controller;
     }());
     exports.Controller = Controller;

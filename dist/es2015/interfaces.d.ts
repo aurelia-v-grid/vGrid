@@ -154,6 +154,8 @@ export interface DragDropShardContext {
     columnsArray: Array<ColumBindingContextObject>;
     columnsArraySorted: Array<ColumBindingContextObject>;
     context: ColumBindingContextObject;
+    field: string;
+    title: string;
 }
 export interface ResizeShardContext {
     [key: string]: any;

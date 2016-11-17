@@ -9,4 +9,5 @@ export declare class ColumnBindingContext {
     private controller;
     [key: string]: any;
     constructor(controller: Controller);
+    clear(): void;
 }

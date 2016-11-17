@@ -12,6 +12,7 @@ export declare class GridConnector {
     select(row: number): void;
     getDatasourceLength(): number;
     getColConfig(): Array<ColConfig>;
+    setColConfig(colconfig: Array<ColConfig>): void;
     getGrouping(): Array<string>;
     group(grouping: Array<string>, keepExpanded?: boolean): void;
     getElement(options: {

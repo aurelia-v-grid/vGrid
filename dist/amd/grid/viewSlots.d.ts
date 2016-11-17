@@ -16,4 +16,5 @@ export declare class ViewSlots {
     constructor(htmlCache: HtmlCache);
     bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext): void;
     unbindAndDetachColumns(): void;
+    clear(): void;
 }

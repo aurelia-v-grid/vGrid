@@ -24,6 +24,8 @@ export declare class VGridDragDropCol {
     private isPanel;
     private dragColumnBlock;
     private mouseMoveTimer;
+    private title;
+    private field;
     constructor(element: Element, vGrid: VGrid);
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
     unbind(): void;

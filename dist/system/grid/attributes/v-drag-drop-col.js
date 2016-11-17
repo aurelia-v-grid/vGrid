@@ -61,20 +61,18 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                         this.isPanel = true;
                         this.sharedContext.panel = result.target;
                         result.target.onmouseleave = function () {
-                            if (_this.sharedContext.dragging) {
+                            if (_this.sharedContext.dragging && _this.sharedContext.title && _this.sharedContext.field) {
                                 _this.groupingElements.removeGroup('');
                             }
                         };
                         result.target.onmouseenter = function () {
-                            if (_this.sharedContext.dragging) {
-                                var name_1 = _this.vGrid.colConfig[_this.sharedContext.colNo].colHeaderName;
-                                var field = _this.vGrid.colConfig[_this.sharedContext.colNo].colField.replace('rowRef.', '');
-                                _this.groupingElements.addGroup(name_1, field);
+                            if (_this.sharedContext.dragging && _this.sharedContext.title && _this.sharedContext.field) {
+                                _this.groupingElements.addGroup(_this.sharedContext.title, _this.sharedContext.field);
                                 _this.sharedContext.lastTarget = result.target;
                             }
                         };
                         result.target.onmouseup = function () {
-                            if (_this.sharedContext.dragging) {
+                            if (_this.sharedContext.dragging && _this.sharedContext.title && _this.sharedContext.field) {
                                 _this.groupingElements.addToGrouping();
                             }
                         };
@@ -87,7 +85,7 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                     this.dragColumnBlock.style.top = -1200 + 'px';
                     this.dragColumnBlock.style.left = -1200 + 'px';
                     document.body.appendChild(this.dragColumnBlock);
-                    this.dragColumnBlock.innerHTML = this.vGrid.colConfig[this.colNo].colHeaderName;
+                    this.dragColumnBlock.innerHTML = this.title || this.vGrid.colConfig[this.colNo].colHeaderName;
                 };
                 VGridDragDropCol.prototype.onDragstart = function () {
                     var _this = this;
@@ -103,6 +101,8 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                     this.sharedContext.colNo = this.colNo;
                     this.sharedContext.curColNo = this.colNo;
                     this.sharedContext.columnsArray = this.columnsArray;
+                    this.sharedContext.title = this.title;
+                    this.sharedContext.field = this.field;
                     this.sharedContext.columnsArraySorted = [];
                     this.sharedContext.columnsArray.forEach(function (x) {
                         _this.sharedContext.columnsArraySorted.push(x);
@@ -355,6 +355,14 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                 };
                 return VGridDragDropCol;
             }());
+            __decorate([
+                aurelia_framework_1.bindable,
+                __metadata("design:type", String)
+            ], VGridDragDropCol.prototype, "title", void 0);
+            __decorate([
+                aurelia_framework_1.bindable,
+                __metadata("design:type", String)
+            ], VGridDragDropCol.prototype, "field", void 0);
             VGridDragDropCol = __decorate([
                 aurelia_framework_1.customAttribute('v-drag-drop-col'),
                 aurelia_framework_1.inject(Element, v_grid_1.VGrid),
