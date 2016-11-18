@@ -113,7 +113,7 @@ export class VGridAttributesFilter {
     this.overrideContext = overrideContext;
 
     let valueConverter = this.valueConverters(this.converter);
-    this.filterOn = this.keydown ? 'onKeyDown' : 'onEnterKey';
+    this.filterOn = this.keydown === 'true' ? 'onKeyDown' : 'onEnterKey';
     this.filterOperator = this.operator || '=';
     this.attribute = this.field;
     this.valueFormater = valueConverter || null;
