@@ -50,7 +50,7 @@ export class ViewSlots {
 
   public bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext): void {
 
-    let context;
+    let context: BindingContext;
 
     let newParentOverrideContext = {
       bindingContext: columnBindingContext,

@@ -134,7 +134,7 @@ export class RowScrollEvents {
       let cache = this.rowCache[i];
       let top = this.rowCache[i].top;
       let update = false;
-      let newTop;
+      let newTop: number;
 
       if (!downScroll) {
         if (top > (newTopPosition + this.contentHeight)) {

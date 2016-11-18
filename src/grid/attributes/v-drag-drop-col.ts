@@ -336,7 +336,7 @@ export class VGridDragDropCol {
   private switchColumns(result: TargetData): void {
 
     // get vars 
-    let width;
+    let width: number;
     let newColType = result.colType;
     let oldColType = this.sharedContext.colType;
     let heightAndWidths = this.vGrid.htmlHeightWidth;
@@ -503,7 +503,7 @@ export class VGridDragDropCol {
   private getTargetData(curTarget: Element): TargetData {
 
     // set variables
-    let draggableTarget = null;
+    let draggableTarget: Element = null;
     let count = 0;
     let exit = true;
     let isOk = false;
@@ -543,10 +543,10 @@ export class VGridDragDropCol {
 
     }
 
-    let curColType = null;
-    let curColNo = null;
-    let curContext = null;
-    let curColumnsArray = null;
+    let curColType: string = null;
+    let curColNo: number = null;
+    let curContext: ColumBindingContextObject = null;
+    let curColumnsArray: Array<ColumBindingContextObject> = null;
     let isPanel = false;
 
 

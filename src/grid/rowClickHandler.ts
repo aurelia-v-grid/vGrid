@@ -196,7 +196,7 @@ export class RowClickHandler {
 
   private highlightRow(e: MouseEvent, currentRow: number): void {
 
-    let isSel;
+    let isSel: boolean;
     let manualSel = this.manualSelection;
     if (!manualSel) {
       let currentselectedRows = this.getSelectedRows();

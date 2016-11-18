@@ -31,10 +31,10 @@ export class ArrayFilter {
 
 
         // vars
-        let rowValue;
-        let filterValue;
+        let rowValue: any;
+        let filterValue: any;
         let filterOperator = this.filterOperators.getOperatorNo(x.operator);
-        let newFilterOperator;
+        let newFilterOperator: any;
 
 
         // helper for boolean
@@ -45,7 +45,7 @@ export class ArrayFilter {
 
 
         // set defult type
-        let type;
+        let type: string;
         try {
           type = typeof(data[x.attribute]);
         } catch (e) {

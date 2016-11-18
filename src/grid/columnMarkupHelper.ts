@@ -6,7 +6,7 @@ export class ColumnMarkupHelper {
   // todo use same if column setup is just json binded to grid
   public generate(colConfig: Array<ColConfig>): void {
     this.useCustomOnly = false;
-    let type = null;
+    let type: string = null;
 
     if (colConfig && colConfig.length > 0) {
       type = 'typeHtml';
@@ -56,8 +56,8 @@ export class ColumnMarkupHelper {
 
     // if header template does not exist then lets create it
     if (!col.colHeaderTemplate) {
-      let inputHeader;
-      let labelHeader;
+      let inputHeader: string;
+      let labelHeader: string;
       switch (col.colType) {
 
         case 'selection':
@@ -236,7 +236,7 @@ export class ColumnMarkupHelper {
   private createInputHeaderMarkup(col: ColConfig): string {
 
     // is it filter ?
-    let markup;
+    let markup: string;
     if (col.colFilter) {
 
       // type

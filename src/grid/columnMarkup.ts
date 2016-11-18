@@ -93,7 +93,7 @@ export class ColumnMarkup {
 
   private getRowViews(type: string): ViewFactory {
     let viewMarkup = '';
-    let markupArray = [];
+    let markupArray: Array<string> = [];
 
     // group column
     if (type === 'group') {
@@ -121,7 +121,7 @@ export class ColumnMarkup {
       } else {
         for (let i = 0; i < this.configLength; i++) {
 
-          let style;
+          let style: string;
           switch (type) {
             case 'left':
               style = 'css="width:${setupleft[' + i + '].width}px;\
@@ -207,7 +207,7 @@ export class ColumnMarkup {
       viewMarkup = `<div class="avg-col" ${style}>${this.colRepeatHeaderTemplate}</div>`;
     } else {
       for (let i = 0; i < this.configLength; i++) {
-        let style;
+        let style: string;
         switch (type) {
           case 'left':
             style = 'css="width:${setupleft[' + i + '].width}px;\
