@@ -75,39 +75,15 @@ var VGridAttributesFilter = (function () {
         }
     };
     VGridAttributesFilter.prototype.bind = function (bindingContext, overrideContext) {
-        var _this = this;
         this.bindingContext = bindingContext;
         this.overrideContext = overrideContext;
-        var values = this.value.split('|');
-        this.attribute = values[0].trim();
-        if (values.length > 1) {
-            values.forEach(function (value, i) {
-                if (i !== 0) {
-                    _this.checkParams(value);
-                }
-            });
-        }
-        this.filterOn = this.filterOn || 'onEnterKey';
-        this.filterOperator = this.filterOperator || '=';
-        this.valueFormater = this.valueFormater || null;
+        var valueConverter = this.valueConverters(this.converter);
+        this.filterOn = this.keydown === 'true' ? 'onKeyDown' : 'onEnterKey';
+        this.filterOperator = this.operator || '=';
+        this.attribute = this.field;
+        this.valueFormater = valueConverter || null;
         this.type = this.element.type;
         this.state = 0;
-    };
-    VGridAttributesFilter.prototype.checkParams = function (value) {
-        if (value !== undefined && value !== null) {
-            value = value.trim();
-        }
-        var valueConverter = this.valueConverters(value);
-        if (valueConverter) {
-            this.valueFormater = valueConverter;
-        }
-        var filterOperator = this.vGrid.controller.getOperatorName(value);
-        if (filterOperator) {
-            this.filterOperator = value;
-        }
-        if (value === 'onKeyDown') {
-            this.filterOn = value;
-        }
     };
     VGridAttributesFilter.prototype.getValue = function () {
         if (this.type !== 'checkbox') {
@@ -159,6 +135,22 @@ var VGridAttributesFilter = (function () {
     };
     return VGridAttributesFilter;
 }());
+__decorate([
+    aurelia_framework_1.bindable,
+    __metadata("design:type", String)
+], VGridAttributesFilter.prototype, "field", void 0);
+__decorate([
+    aurelia_framework_1.bindable,
+    __metadata("design:type", String)
+], VGridAttributesFilter.prototype, "operator", void 0);
+__decorate([
+    aurelia_framework_1.bindable,
+    __metadata("design:type", String)
+], VGridAttributesFilter.prototype, "converter", void 0);
+__decorate([
+    aurelia_framework_1.bindable,
+    __metadata("design:type", String)
+], VGridAttributesFilter.prototype, "keydown", void 0);
 VGridAttributesFilter = __decorate([
     aurelia_framework_1.customAttribute('v-filter'),
     aurelia_framework_1.inject(Element, v_grid_1.VGrid),

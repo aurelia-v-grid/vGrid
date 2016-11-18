@@ -11,14 +11,14 @@ var aurelia_framework_1 = require("aurelia-framework");
 var v_grid_1 = require("../v-grid");
 var VGridAttributesSort = (function () {
     function VGridAttributesSort(element, vGrid) {
+        this.firstTime = true;
         this.vGrid = vGrid;
         this.element = element;
     }
     VGridAttributesSort.prototype.bind = function (bindingContext, overrideContext) {
         this.bindingContext = bindingContext;
         this.overrideContext = overrideContext;
-        var values = this.value.split('|');
-        this.attribute = values[0];
+        this.attribute = this.field;
     };
     VGridAttributesSort.prototype.attached = function () {
         var _this = this;
@@ -28,7 +28,12 @@ var VGridAttributesSort = (function () {
         this.element.onmousedown = function () {
             _this.element.onmouseup = function (e) {
                 if (e.button === 0) {
-                    _this.vGrid.attGridConnector.orderBy(_this.attribute, e.shiftKey);
+                    if (_this.firstTime && _this.asc === 'false') {
+                        _this.vGrid.attGridConnector.orderBy({ attribute: _this.attribute, asc: false }, e.shiftKey);
+                    }
+                    else {
+                        _this.vGrid.attGridConnector.orderBy(_this.attribute, e.shiftKey);
+                    }
                 }
             };
             setTimeout(function () {
@@ -49,6 +54,7 @@ var VGridAttributesSort = (function () {
         var isDescHtml = "&nbsp;<i  class=\"" + 'avg-fa avg-fa-sort-desc' + "\"></i>";
         this.vGrid.attGridConnector.getCurrentOrderBy().forEach(function (x) {
             if (x.attribute === _this.attribute) {
+                _this.firstTime = false;
                 var block = x.asc === true ? isAscHtml : isDescHtml;
                 var main = "<i class=\"" + 'avg-fa-sort-number' + "\" data-vgridsort=\"" + x.no + "\"></i>";
                 markup = block + main;
@@ -58,6 +64,14 @@ var VGridAttributesSort = (function () {
     };
     return VGridAttributesSort;
 }());
+__decorate([
+    aurelia_framework_1.bindable,
+    __metadata("design:type", String)
+], VGridAttributesSort.prototype, "field", void 0);
+__decorate([
+    aurelia_framework_1.bindable,
+    __metadata("design:type", String)
+], VGridAttributesSort.prototype, "asc", void 0);
 VGridAttributesSort = __decorate([
     aurelia_framework_1.customAttribute('v-sort'),
     aurelia_framework_1.inject(Element, v_grid_1.VGrid),

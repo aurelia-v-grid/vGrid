@@ -10,14 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 define(["require", "exports", "aurelia-framework", "../v-grid"], function (require, exports, aurelia_framework_1, v_grid_1) {
     var VGridAttributesSort = (function () {
         function VGridAttributesSort(element, vGrid) {
+            this.firstTime = true;
             this.vGrid = vGrid;
             this.element = element;
         }
         VGridAttributesSort.prototype.bind = function (bindingContext, overrideContext) {
             this.bindingContext = bindingContext;
             this.overrideContext = overrideContext;
-            var values = this.value.split('|');
-            this.attribute = values[0];
+            this.attribute = this.field;
         };
         VGridAttributesSort.prototype.attached = function () {
             var _this = this;
@@ -27,7 +27,12 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             this.element.onmousedown = function () {
                 _this.element.onmouseup = function (e) {
                     if (e.button === 0) {
-                        _this.vGrid.attGridConnector.orderBy(_this.attribute, e.shiftKey);
+                        if (_this.firstTime && _this.asc === 'false') {
+                            _this.vGrid.attGridConnector.orderBy({ attribute: _this.attribute, asc: false }, e.shiftKey);
+                        }
+                        else {
+                            _this.vGrid.attGridConnector.orderBy(_this.attribute, e.shiftKey);
+                        }
                     }
                 };
                 setTimeout(function () {
@@ -48,6 +53,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             var isDescHtml = "&nbsp;<i  class=\"" + 'avg-fa avg-fa-sort-desc' + "\"></i>";
             this.vGrid.attGridConnector.getCurrentOrderBy().forEach(function (x) {
                 if (x.attribute === _this.attribute) {
+                    _this.firstTime = false;
                     var block = x.asc === true ? isAscHtml : isDescHtml;
                     var main = "<i class=\"" + 'avg-fa-sort-number' + "\" data-vgridsort=\"" + x.no + "\"></i>";
                     markup = block + main;
@@ -57,6 +63,14 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
         };
         return VGridAttributesSort;
     }());
+    __decorate([
+        aurelia_framework_1.bindable,
+        __metadata("design:type", String)
+    ], VGridAttributesSort.prototype, "field", void 0);
+    __decorate([
+        aurelia_framework_1.bindable,
+        __metadata("design:type", String)
+    ], VGridAttributesSort.prototype, "asc", void 0);
     VGridAttributesSort = __decorate([
         aurelia_framework_1.customAttribute('v-sort'),
         aurelia_framework_1.inject(Element, v_grid_1.VGrid),
