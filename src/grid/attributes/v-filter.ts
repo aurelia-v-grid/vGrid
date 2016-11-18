@@ -1,20 +1,23 @@
-import { inject, customAttribute } from 'aurelia-framework';
+import { inject, customAttribute, bindable } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-import {BindingContext, OverrideContext, FilterObject} from '../../interfaces';
+import { BindingContext, OverrideContext, FilterObject } from '../../interfaces';
 
 
 @customAttribute('v-filter')
 @inject(Element, VGrid)
 export class VGridAttributesFilter {
+  @bindable private field: string;
+  @bindable private operator: string;
+  @bindable private converter: string;
+  @bindable private keydown: string;
   private vGrid: VGrid;
   private element: HTMLElement;
-  private value: string;
   private bindingContext: BindingContext;
   private overrideContext: OverrideContext;
   private attribute: string;
   private filterOn: string;
   private filterOperator: string;
-  private valueFormater: {fromView: Function; toView: Function};
+  private valueFormater: { fromView: Function; toView: Function };
   private type: string;
   private state: number;
 
@@ -109,53 +112,14 @@ export class VGridAttributesFilter {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
-    // splitt options
-    let values = this.value.split('|');
-
-    // get attribute
-    this.attribute = values[0].trim();
-
-    // loop values and find out what options are
-    if (values.length > 1) {
-      values.forEach((value, i) => {
-        if (i !== 0) {
-          this.checkParams(value);
-        }
-      });
-    }
-
-    this.filterOn = this.filterOn || 'onEnterKey';
-    this.filterOperator = this.filterOperator || '=';
-    this.valueFormater = this.valueFormater || null;
+    let valueConverter = this.valueConverters(this.converter);
+    this.filterOn = this.keydown ? 'onKeyDown' : 'onEnterKey';
+    this.filterOperator = this.operator || '=';
+    this.attribute = this.field;
+    this.valueFormater = valueConverter || null;
     this.type = (this.element as HTMLInputElement).type;
     this.state = 0;
-
   }
-
-
-  private checkParams(value: string): void {
-
-    if (value !== undefined && value !== null) {
-      value = value.trim();
-    }
-
-    let valueConverter = this.valueConverters(value);
-    if (valueConverter) {
-      this.valueFormater = valueConverter;
-    }
-
-    let filterOperator = this.vGrid.controller.getOperatorName(value);
-    if (filterOperator) {
-      this.filterOperator = value;
-    }
-
-    if (value === 'onKeyDown') {
-      this.filterOn = value;
-    }
-
-
-  }
-
 
   private getValue(): any {
     if (this.type !== 'checkbox') {
@@ -211,9 +175,9 @@ export class VGridAttributesFilter {
     }
   }
 
-  private valueConverters(value: string): {fromView: Function; toView: Function} {
-      let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
-      return valueConverter(value);
+  private valueConverters(value: string): { fromView: Function; toView: Function } {
+    let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
+    return valueConverter(value);
   }
 
 }

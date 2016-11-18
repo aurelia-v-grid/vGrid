@@ -1,17 +1,20 @@
-import {inject, customAttribute} from 'aurelia-framework';
+import {inject, customAttribute, bindable} from 'aurelia-framework';
 import {VGrid} from '../v-grid';
 import {BindingContext, OverrideContext} from '../../interfaces';
 
 @customAttribute('v-sort')
 @inject(Element, VGrid)
 export class VGridAttributesSort {
+  @bindable private field: string;
+  @bindable private asc: string;
   private vGrid: VGrid;
   private element: HTMLElement;
   private bindingContext: BindingContext;
   private overrideContext: OverrideContext;
   private attribute: string;
   private sortIcon: HTMLElement;
-  private value: string;
+  private firstTime: boolean = true;
+
 
   constructor(element: HTMLElement, vGrid: VGrid) {
     this.vGrid = vGrid;
@@ -22,11 +25,7 @@ export class VGridAttributesSort {
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
-
-    // get values
-    let values = this.value.split('|');
-    this.attribute = values[0];
-
+    this.attribute = this.field;
   }
 
 
@@ -37,7 +36,11 @@ export class VGridAttributesSort {
     this.element.onmousedown = () => {
       this.element.onmouseup = (e) => {
         if (e.button === 0) {
-          this.vGrid.attGridConnector.orderBy(this.attribute, e.shiftKey);
+          if (this.firstTime && this.asc === 'false') {
+            this.vGrid.attGridConnector.orderBy({attribute: this.attribute, asc: false}, e.shiftKey);
+          } else {
+            this.vGrid.attGridConnector.orderBy(this.attribute, e.shiftKey);
+          }
         }
       };
       setTimeout(() => {
@@ -66,6 +69,7 @@ export class VGridAttributesSort {
 
     this.vGrid.attGridConnector.getCurrentOrderBy().forEach((x) => {
       if (x.attribute === this.attribute) {
+        this.firstTime = false;
         let block = x.asc === true ? isAscHtml : isDescHtml;
         let main = `<i class="${'avg-fa-sort-number'}" data-vgridsort="${x.no}"></i>`;
         markup = block + main;
