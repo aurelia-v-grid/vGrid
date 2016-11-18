@@ -118,6 +118,9 @@ export class GridConnector {
     return this.datasource.getFilterOperatorName(operator);
   }
 
+  public setFilterOperatorName(key: string, name: string) {
+    this.datasource.setFilterOperatorName(key, name);
+  }
 
   public expandGroup(id: string): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {

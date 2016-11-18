@@ -46,6 +46,42 @@ export class FilterOperators {
     return this.filterOperatorNames[operator];
   }
 
+  public setName(key: string, name: string) {
+    switch (true) {
+      case key === 'equals':
+        this.filterOperatorNames['='] = name;
+        break;
+      case key === 'lessThanOrEqual':
+        this.filterOperatorNames['<='] = name;
+        break;
+      case key === 'greaterThanOrEqual':
+        this.filterOperatorNames['>='] = name;
+        break;
+      case key === 'lessThan':
+        this.filterOperatorNames['<'] = name;
+        break;
+      case key === 'greaterThan':
+        this.filterOperatorNames['>'] = name;
+        break;
+      case key === 'contains':
+        this.filterOperatorNames['*'] = name;
+        break;
+      case key === 'notEqualTo':
+        this.filterOperatorNames['!='] = name;
+        break;
+      case key === 'doesNotContain':
+        this.filterOperatorNames['!*'] = name;
+        break;
+      case key === 'beginsWith':
+        this.filterOperatorNames['*='] = name;
+        break;
+      case key === 'endsWith':
+        this.filterOperatorNames['=*'] = name;
+        break;
+      default:
+    }
+  }
+
 
   public getOperatorNo(operator: string): number {
     return this.filterOperatorsNumbers[operator];

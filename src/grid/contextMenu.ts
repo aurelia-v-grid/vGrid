@@ -19,15 +19,15 @@ export class ContextMenu {
     private menuStrings: any = {
         close: 'Close',
         pinLeft: 'Pin left',
-        pinRight : 'Pin Right',
-        groupBy : 'Group By',
-        sortAscending : 'Sort Ascending',
-        sortDescending : 'Sort Descending',
-        showAll : 'Show All',
-        clearCurrent : 'Clear Current',
-        clearAll : 'Clear All',
-        chooseOperator : 'Choose Operator',
-        back: 'back',
+        pinRight: 'Pin Right',
+        groupBy: 'Group By',
+        sortAscending: 'Sort Ascending',
+        sortDescending: 'Sort Descending',
+        showAll: 'Show All',
+        clearCurrent: 'Clear Current',
+        clearAll: 'Clear All',
+        chooseOperator: 'Choose Operator',
+        back: 'Back',
         equals: 'Equals',
         lessThanOrEqual: 'Less than or equal',
         greaterThanOrEqual: 'Greater than or equal',
@@ -84,7 +84,7 @@ export class ContextMenu {
         this.top = options.top;
         this.pinnedMenu = options.pinned ? true : false;
         this.sortMenu = options.sort ? true : false;
-        this.groupbyMenu =  options.groupby ? true : false;
+        this.groupbyMenu = options.groupby ? true : false;
         this.filterMainMenu = options.filter ? true : false;
         this.show = true;
         this.callback = options.callback;
@@ -114,7 +114,15 @@ export class ContextMenu {
         }
     }
 
+    public updateMenuStrings(stringObj: any) {
 
+        let keys: Array<string> = Object.keys(this.menuStrings);
+        keys.forEach((key: string) => {
+            if (stringObj[key]) {
+                this.menuStrings[key] = stringObj[key];
+            }
+        });
+    }
 
     private showFilterOptions(): void {
         this.filterOptionsMenu = true;
@@ -150,11 +158,12 @@ export class ContextMenu {
         }
       }*/
 
-     
+
 
 
     // not the best way of doing, but easy... not very userfiendly for other languages atm
-    private menuHtml(): string{ return `
+    private menuHtml(): string {
+        return `
         <nav css="top:` + '${top}px;left:${left}px' + `" if.bind="show" class="avg-default avg-menu">
             <ul if.bind="show" class="avg-menu__items">
                 <li class="avg-menu__item">

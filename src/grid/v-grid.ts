@@ -68,6 +68,7 @@ export class VGrid {
     @bindable({ attribute: 'v-theme' }) public attTheme: string;
     @bindable({ attribute: 'v-row-on-draw' }) public attOnRowDraw: Function;
     @bindable({attribute: 'v-columns'}) public attColConfig: Array<ColConfig>;
+    @bindable({ attribute: 'v-language' }) public attLanguage: any;
 
 
 

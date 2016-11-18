@@ -149,6 +149,10 @@ export class ArrayHelper {
     return this.filterOperators.getName(operator);
   }
 
+  public setFilterOperatorName(key: string, name: string) {
+    this.filterOperators.setName(key, name);
+  }
+
   public getCurrentFilter(): Array<FilterObject> {
     return this.arrayFilter.getLastFilter();
   }

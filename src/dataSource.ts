@@ -228,6 +228,9 @@ export class DataSource {
     return this.arrayHelper.getFilterOperatorName(operator);
   }
 
+  public setFilterOperatorName(key: string, name: string) {
+    this.arrayHelper.setFilterOperatorName(key, name);
+  }
 
   public getGrouping(): Array<string> {
     return this.arrayHelper.getGrouping();

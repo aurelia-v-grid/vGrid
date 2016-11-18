@@ -67,6 +67,7 @@ export class Controller {
   public attManualSelection: boolean;
   public attGridConnector: GridConnector;
   public attOnRowDraw: Function;
+  public attLanguage: any;
 
 
   constructor(vGrid: VGrid) {
@@ -121,6 +122,7 @@ export class Controller {
     this.attManualSelection = c.attManualSelection;
     this.attGridConnector = c.attGridConnector;
     this.attOnRowDraw = c.attOnRowDraw;
+    this.attLanguage = c.attLanguage;
   }
 
 
@@ -135,6 +137,20 @@ export class Controller {
     // generate main markup and updates our cache
     this.mainMarkup.generateMainMarkup();
     this.htmlCache.updateMainMarkup();
+
+    // update translation
+    if (Object.keys(this.attLanguage).length > 0) {
+
+      // update for inputs
+      let keys: Array<string> = Object.keys(this.attLanguage);
+      keys.forEach((key: string) => {
+        this.setOperatorName(key, this.attLanguage[key])
+      });
+
+      // update for menu
+      this.contextMenu.updateMenuStrings(this.attLanguage);
+
+    }
 
     this.rowDataBinder.init();
     // starts the scroll events on main html markup (left/main/right)
@@ -193,6 +209,12 @@ export class Controller {
   public getOperatorName(name: string): string {
     return this.attGridConnector.getFilterOperatorName(name);
   }
+
+  public setOperatorName(key: string, name: string) {
+    this.attGridConnector.setFilterOperatorName(key, name);
+  }
+
+
 
   public expandGroup(id: string): void {
     this.attGridConnector.expandGroup(id);
@@ -389,7 +411,7 @@ export class Controller {
     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
     this.columnBindingContext.setupgrouping = length;
     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
-    
+
     this.rebindAllRows();
 
 
