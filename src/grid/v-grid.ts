@@ -169,6 +169,7 @@ export class VGrid {
         this.attTheme = this.attTheme || 'avg-default';
         this.element.classList.add(this.attTheme);
         this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
+        this.attLanguage = typeof this.attLanguage === 'object' ? this.attLanguage : {};
 
 
     }
