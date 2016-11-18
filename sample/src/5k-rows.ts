@@ -9,6 +9,7 @@ export class Welcome {
 
   public ds: DataSource;
   public gridConnector: GridConnector;
+  public translate: any = { equals: 'er lik', greaterThan: 'større enn' };
   private myCollection: any;
   constructor(public dummyDataGenerator: DummyDataGenerator) {
     this.dummyDataGenerator.generateData(5000, (data) => {
@@ -19,6 +20,8 @@ export class Welcome {
 
     this.ds.setArray(this.myCollection);
   }
+
+  
 
   clickme() {
     console.log(this.gridConnector.getColConfig());
