@@ -55,6 +55,7 @@ export class VGrid {
     public contextMenu: ContextMenu;
     public bindingContext: BindingContext;
     public overrideContext: OverrideContext;
+    public backupColConfig: Array<ColConfig>;
 
 
 
@@ -92,6 +93,7 @@ export class VGrid {
 
         // use by v-grid-col element, that takes the data it gets and puts it in here
         this.colConfig = [];
+        this.backupColConfig = [];
         this.colRepeater = false;
         this.colRepeatRowTemplate = null;
         this.colRepeatRowHeaderTemplate = null;
@@ -193,6 +195,7 @@ export class VGrid {
 
         // if not new, and just hidden by if.bind, then lets just skip creating the grid and just bind the columns    
         if (this.newGrid) {
+            this.backupColConfig = this.colConfig.slice(0);
             // override colconfig if binded
             if (this.attColConfig) {
                 this.colConfig = this.attColConfig.length > 0 ? this.attColConfig : this.colConfig;

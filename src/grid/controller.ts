@@ -54,6 +54,7 @@ export class Controller {
   public dragDropAttributeSharedContext: DragDropShardContext;
   public resizeAttributeSharedContext: ResizeShardContext;
   public colConfig: Array<ColConfig>;
+  public backupColConfig: Array<ColConfig>;
   public colRepeater: boolean;
   public colRepeatRowTemplate: string;
   public colRepeatRowHeaderTemplate: string;
@@ -84,6 +85,7 @@ export class Controller {
     let c = this.vGrid;
     // column configuration
     this.colConfig = c.colConfig;
+    this.backupColConfig = c.backupColConfig;
     this.colRepeater = c.colRepeater;
     this.colRepeatRowTemplate = c.colRepeatRowTemplate;
     this.colRepeatRowHeaderTemplate = c.colRepeatRowHeaderTemplate;
@@ -400,7 +402,7 @@ export class Controller {
     this.viewSlots.unbindAndDetachColumns();
     this.columnBindingContext.clear();
     this.viewSlots.clear();
-    this.colConfig = colConfig;
+    this.colConfig = colConfig || this.backupColConfig;
     this.columnMarkup.init(
       this.colConfig,
       this.overrideContext,
