@@ -168,7 +168,7 @@ export class ContextMenu {
             <ul if.bind="show" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('close','true')" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-times-circle-o"></i> ${this.menuStrings.close}
+                    <i class="avg-fa avg-text"></i> ${this.menuStrings.close}
                 </p>
                 </li>
             </ul>
@@ -176,12 +176,12 @@ export class ContextMenu {
             <ul if.bind="pinnedMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('pinned','left', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-thumb-tack"></i> ${this.menuStrings.pinLeft}
+                    <i class="avg-fa avg-text"></i> ${this.menuStrings.pinLeft}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('pinned','right', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-thumb-tack"></i> ${this.menuStrings.pinRight}
+                    <i class="avg-fa avg-text"></i> ${this.menuStrings.pinRight}
                 </p>
                 </li>
             </ul>
@@ -189,7 +189,7 @@ export class ContextMenu {
            <ul if.bind="groupbyMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('groupby','groupby', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-sitemap"></i> ${this.menuStrings.groupBy}
+                    <i class="avg-fa avg-text"></i> ${this.menuStrings.groupBy}
                 </p>
                 </li>
             </ul>
@@ -197,12 +197,12 @@ export class ContextMenu {
             <ul if.bind="sortMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('sort','asc', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-sort"></i> ${this.menuStrings.sortAscending}
+                    <i class="avg-fa avg-text"></i> ${this.menuStrings.sortAscending}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('sort','desc', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-sort"></i> ${this.menuStrings.sortDescending}
+                    <i class="avg-fa avg-text"></i> ${this.menuStrings.sortDescending}
                 </p>
                 </li>
             </ul>
@@ -210,22 +210,22 @@ export class ContextMenu {
             <ul if.bind="filterMainMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filter','showall', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-globe"></i> ${this.menuStrings.showAll}
+                    <i class="avg-fa avg-text"></i> ${this.menuStrings.showAll}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filter','clear', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-eraser"></i> ${this.menuStrings.clearCurrent}
+                    <i class="avg-fa avg-text"></i> ${this.menuStrings.clearCurrent}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filter','clearall', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-eraser"></i> ${this.menuStrings.clearAll}
+                    <i class="avg-fa avg-text"></i> ${this.menuStrings.clearAll}
                 </p>
                 </li>
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filter','options', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-filter"></i> ${this.menuStrings.chooseOperator}
+                    <i class="avg-fa avg-text"></i> ${this.menuStrings.chooseOperator}
                 </p>
                 </li>
             </ul>
@@ -234,7 +234,7 @@ export class ContextMenu {
             <ul if.bind="filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','Back', $event)" class="avg-menu__link">
-                    <i class="avg-fa avg-fa-arrow-left"></i> ${this.menuStrings.back}
+                    <i class="avg-fa avg-text"></i> ${this.menuStrings.back}
                 </p>
                 </li>
             </ul>
