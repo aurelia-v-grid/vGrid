@@ -26,6 +26,7 @@ export declare class GridConnector {
     getCurrentOrderBy(): Array<SortObject>;
     getCurrentFilter(): Array<FilterObject>;
     getFilterOperatorName(operator: string): string;
+    setFilterOperatorName(key: string, name: string): void;
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
     private eventHandler(event);

@@ -122,6 +122,9 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayHelpe
         DataSource.prototype.getFilterOperatorName = function (operator) {
             return this.arrayHelper.getFilterOperatorName(operator);
         };
+        DataSource.prototype.setFilterOperatorName = function (key, name) {
+            this.arrayHelper.setFilterOperatorName(key, name);
+        };
         DataSource.prototype.getGrouping = function () {
             return this.arrayHelper.getGrouping();
         };

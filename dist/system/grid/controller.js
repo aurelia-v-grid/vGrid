@@ -12,6 +12,7 @@ System.register([], function (exports_1, context_1) {
                 Controller.prototype.getContext = function () {
                     var c = this.vGrid;
                     this.colConfig = c.colConfig;
+                    this.backupColConfig = c.backupColConfig;
                     this.colRepeater = c.colRepeater;
                     this.colRepeatRowTemplate = c.colRepeatRowTemplate;
                     this.colRepeatRowHeaderTemplate = c.colRepeatRowHeaderTemplate;
@@ -44,11 +45,20 @@ System.register([], function (exports_1, context_1) {
                     this.attManualSelection = c.attManualSelection;
                     this.attGridConnector = c.attGridConnector;
                     this.attOnRowDraw = c.attOnRowDraw;
+                    this.attLanguage = c.attLanguage;
                 };
                 Controller.prototype.createGrid = function () {
+                    var _this = this;
                     this.htmlHeightWidth.addDefaultsAttributes(this.attHeaderHeight, this.attRowHeight, this.attFooterHeight, this.attPanelHeight);
                     this.mainMarkup.generateMainMarkup();
                     this.htmlCache.updateMainMarkup();
+                    if (Object.keys(this.attLanguage).length > 0) {
+                        var keys = Object.keys(this.attLanguage);
+                        keys.forEach(function (key) {
+                            _this.setOperatorName(key, _this.attLanguage[key]);
+                        });
+                        this.contextMenu.updateMenuStrings(this.attLanguage);
+                    }
                     this.rowDataBinder.init();
                     this.mainScrollEvents.init();
                     this.rowMarkup.init(this.attRowHeight);
@@ -76,6 +86,9 @@ System.register([], function (exports_1, context_1) {
                 };
                 Controller.prototype.getOperatorName = function (name) {
                     return this.attGridConnector.getFilterOperatorName(name);
+                };
+                Controller.prototype.setOperatorName = function (key, name) {
+                    this.attGridConnector.setFilterOperatorName(key, name);
                 };
                 Controller.prototype.expandGroup = function (id) {
                     this.attGridConnector.expandGroup(id);
@@ -222,7 +235,7 @@ System.register([], function (exports_1, context_1) {
                     this.viewSlots.unbindAndDetachColumns();
                     this.columnBindingContext.clear();
                     this.viewSlots.clear();
-                    this.colConfig = colConfig;
+                    this.colConfig = colConfig || this.backupColConfig;
                     this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate);
                     this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
                     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);

@@ -23,6 +23,7 @@ export declare class ArrayHelper {
     runOrderbyOn(array: Array<Entity>): void;
     resetSort(): void;
     getFilterOperatorName(operator: string): string;
+    setFilterOperatorName(key: string, name: string): void;
     getCurrentFilter(): Array<FilterObject>;
     query(array: Array<Entity>, params: Array<FilterObject>): Array<Entity>;
 }

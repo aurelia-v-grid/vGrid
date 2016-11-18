@@ -73,6 +73,9 @@ define(["require", "exports"], function (require, exports) {
         GridConnector.prototype.getFilterOperatorName = function (operator) {
             return this.datasource.getFilterOperatorName(operator);
         };
+        GridConnector.prototype.setFilterOperatorName = function (key, name) {
+            this.datasource.setFilterOperatorName(key, name);
+        };
         GridConnector.prototype.expandGroup = function (id) {
             var _this = this;
             this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(function () {

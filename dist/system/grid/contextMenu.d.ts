@@ -27,6 +27,7 @@ export declare class ContextMenu {
         callback?: Function;
     }): void;
     menuClick(type: string, option: string, event: Event): void;
+    updateMenuStrings(stringObj: any): void;
     private showFilterOptions();
     private hideFilterOptions();
     private menuHtml();

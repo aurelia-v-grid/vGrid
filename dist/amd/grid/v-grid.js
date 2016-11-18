@@ -18,6 +18,7 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
             this.dragDropAttributeSharedContext = {};
             this.resizeAttributeSharedContext = {};
             this.colConfig = [];
+            this.backupColConfig = [];
             this.colRepeater = false;
             this.colRepeatRowTemplate = null;
             this.colRepeatRowHeaderTemplate = null;
@@ -50,6 +51,7 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
             this.attTheme = this.attTheme || 'avg-default';
             this.element.classList.add(this.attTheme);
             this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
+            this.attLanguage = typeof this.attLanguage === 'object' ? this.attLanguage : {};
         };
         VGrid.prototype.unbind = function () {
             this.newGrid = false;
@@ -57,6 +59,7 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
         };
         VGrid.prototype.attached = function () {
             if (this.newGrid) {
+                this.backupColConfig = this.colConfig.slice(0);
                 if (this.attColConfig) {
                     this.colConfig = this.attColConfig.length > 0 ? this.attColConfig : this.colConfig;
                 }
@@ -129,6 +132,10 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
         aurelia_framework_1.bindable({ attribute: 'v-columns' }),
         __metadata("design:type", Array)
     ], VGrid.prototype, "attColConfig", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ attribute: 'v-language' }),
+        __metadata("design:type", Object)
+    ], VGrid.prototype, "attLanguage", void 0);
 });
 
 //# sourceMappingURL=v-grid.js.map

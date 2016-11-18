@@ -24,6 +24,7 @@ export declare class Controller {
     dragDropAttributeSharedContext: DragDropShardContext;
     resizeAttributeSharedContext: ResizeShardContext;
     colConfig: Array<ColConfig>;
+    backupColConfig: Array<ColConfig>;
     colRepeater: boolean;
     colRepeatRowTemplate: string;
     colRepeatRowHeaderTemplate: string;
@@ -37,11 +38,13 @@ export declare class Controller {
     attManualSelection: boolean;
     attGridConnector: GridConnector;
     attOnRowDraw: Function;
+    attLanguage: any;
     constructor(vGrid: VGrid);
     getContext(): void;
     createGrid(): void;
     getElement(rowNumber: number, isDownScroll: boolean, callbackFN: Function): void;
     getOperatorName(name: string): string;
+    setOperatorName(key: string, name: string): void;
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
     select(row: number): void;
