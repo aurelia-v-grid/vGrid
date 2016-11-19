@@ -5,20 +5,28 @@
       <v-grid v-multi-select="true" v-grid-connector.bind="gridConnector" v-row-height="25" v-header-height="50" v-panel-height="25"
         v-footer-height="25" v-language.bind="translate" style="height:400px">
         <v-grid-col col-width="100" col-sort="field:country" col-filter="field:country" col-field="country"></v-grid-col>
-        <v-grid-col col-width="100" col-sort="field:index;asc:false"   col-filter="field:index" col-field="index | numberFormatter"></v-grid-col>
-        <v-grid-col col-width="100" col-sort="field:high"    col-filter="field:high" col-field="high"></v-grid-col>
-        <v-grid-col col-width="100" col-sort="field:bool"    col-filter="field:bool" col-field="bool | booleanFormatter" col-type="checkbox"></v-grid-col>
-        <v-grid-col col-width="100" col-sort="field:guid"    col-filter="field:guid" col-field="guid"></v-grid-col>
-        <v-grid-col col-width="100" col-sort="field:name"    col-type="image"  col-field="images" image-fix></v-grid-col>
-        <v-grid-col col-width="160" col-sort="field:name"    col-filter="field:name;operator:*"  col-field="name" col-pin-left="true"></v-grid-col>
+        <v-grid-col col-width="100" col-sort="field:index;asc:false" col-filter="field:index" col-field="index | numberFormatter"></v-grid-col>
+        <v-grid-col col-width="100" col-sort="field:high" col-filter="field:high" col-field="high"></v-grid-col>
+        <v-grid-col col-width="100" col-sort="field:bool" col-filter="field:bool" col-field="bool | booleanFormatter" col-type="checkbox"></v-grid-col>
+        <v-grid-col col-width="100" col-sort="field:guid" col-filter="field:guid" col-field="guid"></v-grid-col>
+        <v-grid-col col-width="100" col-sort="field:name" col-type="image" col-field="images" image-fix></v-grid-col>
+        <v-grid-col col-width="160" col-sort="field:name" col-filter="field:name;operator:*" col-field="name" col-pin-left="true"></v-grid-col>
         <v-grid-col col-width="100" col-sort="field:number" col-filter="field:number" col-field="number | numberFormatter" col-pin-right="true"></v-grid-col>
+        
         <v-grid-group-row>
-          <i click.delegate="changeGrouping(rowRef)"
-            class="avg-fa avg-fa-${rowRef.__groupExpanded ? 'minus':'plus'}-square-o"
-            aria-hidden="true">
-          </i>
-          &nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})
+          <i click.delegate="changeGrouping(rowRef)" class="avg-fa avg-fa-${rowRef.__groupExpanded ? 'minus':'plus'}-square-o" aria-hidden="true">
+          </i> &nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})
         </v-grid-group-row>
+        
+        <v-grid-group-element>
+          <div class="avg-grouping">
+            <p v-sort="field:${field}">${name}</p>
+            <p>&nbsp;&nbsp;
+              <i click.delegate="remove()" class="avg-fa avg-fa-times-circle-o" aria-hidden="true"></i>
+            </p>
+          </div>
+        </v-grid-group-element>
+
       </v-grid>
     </div>
     <button click.delegate="clickme()">clickme</button>
