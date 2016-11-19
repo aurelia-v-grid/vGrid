@@ -194,7 +194,7 @@ export class Controller {
     this.loadingScreen.init(this.overrideContext);
 
     // add context menu
-    this.contextMenu.init(this.customMenuTemplates);
+    this.contextMenu.init(this.customMenuTemplates, this.overrideContext);
 
 
   }

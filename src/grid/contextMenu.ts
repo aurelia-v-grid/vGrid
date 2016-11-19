@@ -1,5 +1,5 @@
 import { ViewSlot } from 'aurelia-framework';
-import { ViewCompiler, Container, ViewResources, ViewSlots } from '../interfaces';
+import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContext } from '../interfaces';
 
 
 export class ContextMenu {
@@ -8,6 +8,7 @@ export class ContextMenu {
     private container: Container;
     private viewResources: ViewResources;
     private viewSlots: ViewSlots;
+    private overrideContext: OverrideContext;
     private top: number;
     private left: number;
     private pinnedMenu: boolean;
@@ -60,13 +61,14 @@ export class ContextMenu {
     }
 
 
-    public init(customMenuTemplates: any): void {
+    public init(customMenuTemplates: any, overrideContext: OverrideContext): void {
+        this.overrideContext = overrideContext;
         let viewFactory = this.viewCompiler.compile(`<template>${this.menuHtml(customMenuTemplates)}</template>`, this.viewResources);
         let view = viewFactory.create(this.container);
         let viewSlot: ViewSlot = new ViewSlot(document.body, true);
         viewSlot.add(view);
         this.viewSlots.contextMenu = viewSlot;
-        viewSlot.bind(this, null);
+        viewSlot.bind(this, {bindingContext: this, parentOverrideContext: this.overrideContext});
         viewSlot.attached();
     }
 
