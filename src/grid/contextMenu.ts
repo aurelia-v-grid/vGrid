@@ -60,8 +60,8 @@ export class ContextMenu {
     }
 
 
-    public init(): void {
-        let viewFactory = this.viewCompiler.compile(`<template>${this.menuHtml()}</template>`, this.viewResources);
+    public init(customMenuTemplates: any): void {
+        let viewFactory = this.viewCompiler.compile(`<template>${this.menuHtml(customMenuTemplates)}</template>`, this.viewResources);
         let view = viewFactory.create(this.container);
         let viewSlot: ViewSlot = new ViewSlot(document.body, true);
         viewSlot.add(view);
@@ -162,12 +162,12 @@ export class ContextMenu {
 
 
     // not the best way of doing, but easy... not very userfiendly for other languages atm
-    private menuHtml(): string {
+    private menuHtml(customMenuTemplates: any): string {
 
             let menuTop: string =
             `<nav css="top:` + '${top}px;left:${left}px' + `" if.bind="show" class="avg-default avg-menu">`
 
-            let menuClose: string =
+            let menuClose: string = customMenuTemplates.close ||
             `<ul if.bind="show" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('close','true')" class="avg-menu__link">
@@ -176,7 +176,7 @@ export class ContextMenu {
                 </li>
             </ul>`;
 
-            let menuPinned: string =
+            let menuPinned: string = customMenuTemplates.pinned ||
             `<ul if.bind="pinnedMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('pinned','left', $event)" class="avg-menu__link">
@@ -190,7 +190,7 @@ export class ContextMenu {
                 </li>
             </ul>`;
 
-            let menuGroupby: string =
+            let menuGroupby: string = customMenuTemplates.groupby ||
             `<ul if.bind="groupbyMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('groupby','groupby', $event)" class="avg-menu__link">
@@ -199,7 +199,7 @@ export class ContextMenu {
                 </li>
             </ul>`;
 
-            let menuSort: string =
+            let menuSort: string = customMenuTemplates.sort ||
             `<ul if.bind="sortMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('sort','asc', $event)" class="avg-menu__link">
@@ -213,7 +213,7 @@ export class ContextMenu {
                 </li>
             </ul>`;
 
-            let menuFilter: string =
+            let menuFilter: string = customMenuTemplates.filter ||
             `<ul if.bind="filterMainMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filter','showall', $event)" class="avg-menu__link">
@@ -237,7 +237,7 @@ export class ContextMenu {
                 </li>
             </ul>`;
 
-            let menuFilterOptions: string =
+            let menuFilterOptions: string = customMenuTemplates.filterOptions ||
             `<ul if.bind="filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','Back', $event)" class="avg-menu__link">
@@ -301,7 +301,7 @@ export class ContextMenu {
             let menuBottom: string =
             `</nav>`;
 
-            let menuAll: string =  [
+            let menuAll: string =  customMenuTemplates.all || [
                 menuTop,
                 menuClose,
                 menuPinned,

@@ -38,6 +38,7 @@ export class VGrid {
     public colRepeatRowTemplate: string;
     public colRepeatRowHeaderTemplate: string;
     public colGroupRow: string;
+    public customMenuTemplates: any;
     public colGroupElement: string;
     public newGrid: boolean;
     public controller: Controller;
@@ -101,6 +102,7 @@ export class VGrid {
         this.colRepeatRowHeaderTemplate = null;
         this.colGroupRow = null;
         this.colGroupElement = null;
+        this.customMenuTemplates = {};
 
         // to know if new or hidden by "if"
         this.newGrid = true;

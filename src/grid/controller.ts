@@ -60,6 +60,7 @@ export class Controller {
   public colRepeatRowHeaderTemplate: string;
   public colGroupRow: string;
   public colGroupElement: string;
+  public customMenuTemplates: any;
   public bindingContext: BindingContext;
   public overrideContext: OverrideContext;
   public attRowHeight: number;
@@ -93,6 +94,7 @@ export class Controller {
     this.colGroupElement = c.colGroupElement;
     this.colRepeatRowTemplate = c.colRepeatRowTemplate;
     this.colRepeatRowHeaderTemplate = c.colRepeatRowHeaderTemplate;
+    this.customMenuTemplates = c.customMenuTemplates;
 
     // aurelia classes
     this.viewCompiler = c.viewCompiler;
@@ -150,7 +152,7 @@ export class Controller {
       // update for inputs
       let keys: Array<string> = Object.keys(this.attLanguage);
       keys.forEach((key: string) => {
-        this.setOperatorName(key, this.attLanguage[key])
+        this.setOperatorName(key, this.attLanguage[key]);
       });
 
       // update for menu
@@ -192,7 +194,7 @@ export class Controller {
     this.loadingScreen.init(this.overrideContext);
 
     // add context menu
-    this.contextMenu.init();
+    this.contextMenu.init(this.customMenuTemplates);
 
 
   }
