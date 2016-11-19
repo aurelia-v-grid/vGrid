@@ -4,8 +4,8 @@ export class ColumnMarkupHelper {
   private useCustomOnly: boolean;
 
   // todo use same if column setup is just json binded to grid
-  public generate(colConfig: Array<ColConfig>): void {
-    this.useCustomOnly = false;
+  public generate(colConfig: Array<ColConfig>, useCustomOnly: boolean): void {
+    this.useCustomOnly = useCustomOnly;
     let type: string = null;
 
     if (colConfig && colConfig.length > 0) {
@@ -257,7 +257,11 @@ export class ColumnMarkupHelper {
       }
 
       // apply magic
-      markup = `<input v-menu="filter:${col.colFilter}" ${classNames} ${colAddFilterAttributes} ${type} ${filter}">`;
+      let vmenu = `v-menu="filter:${col.colFilter}"`;
+      if (this.useCustomOnly) {
+        vmenu = '';
+      }
+      markup = `<input ${vmenu} ${classNames} ${colAddFilterAttributes} ${type} ${filter}">`;
     } else {
       markup = '';
     }
@@ -285,7 +289,7 @@ export class ColumnMarkupHelper {
     let headerName = col.colHeaderName.replace('rowRef.', '');
     let field = tempFieldSplit[0].replace('rowRef.', '');
 
-    let extraAttributes = `v-drag-drop-col="title:${headerName};field:${field}" v-resize-col`;
+    let extraAttributes = `v-drag-drop-col="title:${headerName};field:${field}" v-resize-col v-menu="sort:${col.colSort};groupby:${field}"`;
     if (this.useCustomOnly) {
       extraAttributes = '';
     }
@@ -295,7 +299,6 @@ export class ColumnMarkupHelper {
     // apply magic
     // todo, atm Im adding resize columns and dragdrop columns, should this be a choice?
     return `<p 
-      v-menu="sort:${col.colSort};groupby:${field}" 
       ${extraAttributes} 
       ${classname} 
       ${sort} 

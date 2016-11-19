@@ -72,6 +72,7 @@ export class Controller {
   public attGridConnector: GridConnector;
   public attOnRowDraw: Function;
   public attLanguage: any;
+  public attOnlyCustomAttributes: boolean;
 
 
   constructor(vGrid: VGrid) {
@@ -131,6 +132,7 @@ export class Controller {
     this.attGridConnector = c.attGridConnector;
     this.attOnRowDraw = c.attOnRowDraw;
     this.attLanguage = c.attLanguage;
+    this.attOnlyCustomAttributes = c.attOnlyCustomAttributes;
   }
 
 
@@ -178,7 +180,8 @@ export class Controller {
       this.colRepeater,
       this.colRepeatRowTemplate,
       this.colRepeatRowHeaderTemplate,
-      this.colGroupRow);
+      this.colGroupRow,
+      this.attOnlyCustomAttributes);
 
 
     // more updates to main markup
@@ -416,7 +419,8 @@ export class Controller {
       this.colRepeater,
       this.colRepeatRowTemplate,
       this.colRepeatRowHeaderTemplate,
-      this.colGroupRow);
+      this.colGroupRow,
+      this.attOnlyCustomAttributes);
     this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
     this.columnBindingContext.setupgrouping = length;
