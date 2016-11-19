@@ -79,6 +79,7 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                     this.colRepeater = false;
                     this.colRepeatRowTemplate = null;
                     this.colRepeatRowHeaderTemplate = null;
+                    this.colGroup = null;
                     this.newGrid = true;
                     this.controller = new controller_1.Controller(this);
                     this.htmlCache = new htmlCache_1.HtmlCache(element);

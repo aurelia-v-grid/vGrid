@@ -28,6 +28,7 @@ export declare class Controller {
     colRepeater: boolean;
     colRepeatRowTemplate: string;
     colRepeatRowHeaderTemplate: string;
+    colGroup: string;
     bindingContext: BindingContext;
     overrideContext: OverrideContext;
     attRowHeight: number;

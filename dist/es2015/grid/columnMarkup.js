@@ -10,13 +10,14 @@ define(["require", "exports", "aurelia-framework", "./columnMarkupHelper"], func
             this.container = container;
             this.viewResources = viewResources;
         }
-        ColumnMarkup.prototype.init = function (colConfig, overrideContext, colRepeater, colRepeatRowTemplate, colRepeatRowHeaderTemplate) {
+        ColumnMarkup.prototype.init = function (colConfig, overrideContext, colRepeater, colRepeatRowTemplate, colRepeatRowHeaderTemplate, colGroup) {
             this.overrideContext = overrideContext;
             this.colConfig = colConfig;
             this.configLength = colConfig.length;
             this.colRepeater = colRepeater;
             this.colRepeatRowTemplate = colRepeatRowTemplate;
             this.colRepeatHeaderTemplate = colRepeatRowHeaderTemplate;
+            this.colGroup = colGroup;
             this.updateInternalHtmlCache();
             if (this.colConfig.length > 0) {
                 this.markupHelper.generate(this.colConfig);
@@ -27,15 +28,19 @@ define(["require", "exports", "aurelia-framework", "./columnMarkupHelper"], func
             var viewMarkup = '';
             var markupArray = [];
             if (type === 'group') {
+                var defaultMarkup = [
+                    '<i click.delegate="changeGrouping(rowRef)"',
+                    'class="avg-fa avg-fa-${rowRef.__groupExpanded ? ' + "'minus':'plus'" + '}-square-o"',
+                    'aria-hidden="true">',
+                    '</i>&nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})',
+                ];
+                var gTemplate = this.colGroup || defaultMarkup.join('');
                 markupArray = [
                     '<avg-col ',
                     'class="avg-col-group"',
                     'if.bind="rowRef.__group ===true"',
                     'css="left:${rowRef.__groupLvl ? rowRef.__groupLvl *15:0}px;right:0">',
-                    '<i click.delegate="changeGrouping(rowRef)"',
-                    'class="avg-fa avg-fa-${rowRef.__groupExpanded ? ' + "'minus':'plus'" + '}-square-o"',
-                    'aria-hidden="true">',
-                    '</i>&nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})',
+                    gTemplate,
                     '</avg-col>'
                 ];
                 viewMarkup = markupArray.join('');

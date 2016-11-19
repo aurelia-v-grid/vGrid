@@ -8,6 +8,7 @@ var Controller = (function () {
         this.colConfig = c.colConfig;
         this.backupColConfig = c.backupColConfig;
         this.colRepeater = c.colRepeater;
+        this.colGroup = c.colGroup;
         this.colRepeatRowTemplate = c.colRepeatRowTemplate;
         this.colRepeatRowHeaderTemplate = c.colRepeatRowHeaderTemplate;
         this.viewCompiler = c.viewCompiler;
@@ -58,7 +59,7 @@ var Controller = (function () {
         this.rowMarkup.init(this.attRowHeight);
         this.htmlCache.updateRowsMarkup();
         this.rowScrollEvents.init(this.attRowHeight);
-        this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate);
+        this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroup);
         this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
         this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);
         this.groupingElements.init(this);
@@ -230,7 +231,7 @@ var Controller = (function () {
         this.columnBindingContext.clear();
         this.viewSlots.clear();
         this.colConfig = colConfig || this.backupColConfig;
-        this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate);
+        this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroup);
         this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
         this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
         this.columnBindingContext.setupgrouping = length;

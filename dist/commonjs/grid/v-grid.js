@@ -38,6 +38,7 @@ var VGrid = (function () {
         this.colRepeater = false;
         this.colRepeatRowTemplate = null;
         this.colRepeatRowHeaderTemplate = null;
+        this.colGroup = null;
         this.newGrid = true;
         this.controller = new controller_1.Controller(this);
         this.htmlCache = new htmlCache_1.HtmlCache(element);

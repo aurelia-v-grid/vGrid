@@ -31,6 +31,7 @@ export declare class VGrid {
     colRepeater: boolean;
     colRepeatRowTemplate: string;
     colRepeatRowHeaderTemplate: string;
+    colGroup: string;
     newGrid: boolean;
     controller: Controller;
     htmlCache: HtmlCache;
