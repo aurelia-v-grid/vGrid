@@ -129,6 +129,7 @@ export interface CustomBehaviorInstruction extends BehaviorInstruction {
     colCss: string;
     headerTemplate: string;
     rowTemplate: string;
+    menuTemplates: any;
 }
 export interface BindingContext {
     [key: string]: any;

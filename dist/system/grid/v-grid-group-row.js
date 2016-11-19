@@ -9,7 +9,7 @@ System.register(["aurelia-framework", "./v-grid"], function (exports_1, context_
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var aurelia_framework_1, v_grid_1, VGridElementGroup;
+    var aurelia_framework_1, v_grid_1, VGridGroupRow;
     return {
         setters: [
             function (aurelia_framework_1_1) {
@@ -20,20 +20,20 @@ System.register(["aurelia-framework", "./v-grid"], function (exports_1, context_
             }
         ],
         execute: function () {
-            VGridElementGroup = (function () {
-                function VGridElementGroup(element, vGrid, targetInstruction) {
+            VGridGroupRow = (function () {
+                function VGridGroupRow(element, vGrid, targetInstruction) {
                     this.element = element;
                     this.vGrid = vGrid;
                     this.rowTemplate = targetInstruction.elementInstruction.rowTemplate;
                 }
-                VGridElementGroup.prototype.bind = function () {
-                    this.vGrid.colGroup = this.rowTemplate;
+                VGridGroupRow.prototype.bind = function () {
+                    this.vGrid.colGroupRow = this.rowTemplate;
                 };
-                return VGridElementGroup;
+                return VGridGroupRow;
             }());
-            VGridElementGroup = __decorate([
+            VGridGroupRow = __decorate([
                 aurelia_framework_1.noView(),
-                aurelia_framework_1.customElement('v-grid-group'),
+                aurelia_framework_1.customElement('v-grid-group-row'),
                 aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
                     compiler = null;
                     resources = null;
@@ -42,8 +42,8 @@ System.register(["aurelia-framework", "./v-grid"], function (exports_1, context_
                 }),
                 aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
                 __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
-            ], VGridElementGroup);
-            exports_1("VGridElementGroup", VGridElementGroup);
+            ], VGridGroupRow);
+            exports_1("VGridGroupRow", VGridGroupRow);
         }
     };
 });

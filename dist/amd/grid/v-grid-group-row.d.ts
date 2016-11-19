@@ -1,6 +1,6 @@
 import { VGrid } from './v-grid';
 import { CustomTargetInstruction } from '../interfaces';
-export declare class VGridElementGroup {
+export declare class VGridGroupRow {
     private element;
     private vGrid;
     private rowTemplate;

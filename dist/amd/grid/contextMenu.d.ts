@@ -16,7 +16,7 @@ export declare class ContextMenu {
     private menuStrings;
     constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots);
     setDefaults(): void;
-    init(): void;
+    init(customMenuTemplates: any): void;
     openMenu(options: {
         left: number;
         top: number;
@@ -30,5 +30,5 @@ export declare class ContextMenu {
     updateMenuStrings(stringObj: any): void;
     private showFilterOptions();
     private hideFilterOptions();
-    private menuHtml();
+    private menuHtml(customMenuTemplates);
 }

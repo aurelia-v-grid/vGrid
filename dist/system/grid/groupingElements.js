@@ -1,6 +1,6 @@
 System.register(["aurelia-framework"], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
-    var aurelia_framework_1, GroupingElements;
+    var aurelia_framework_1, GroupContext, GroupingElements;
     return {
         setters: [
             function (aurelia_framework_1_1) {
@@ -8,6 +8,18 @@ System.register(["aurelia-framework"], function (exports_1, context_1) {
             }
         ],
         execute: function () {
+            GroupContext = (function () {
+                function GroupContext(name, field, groupingElements) {
+                    this.name = name;
+                    this.field = field;
+                    this.groupingElements = groupingElements;
+                }
+                GroupContext.prototype.remove = function () {
+                    this.groupingElements.removeGroup(this.name);
+                    this.groupingElements.removeFromGrouping(this.field);
+                };
+                return GroupContext;
+            }());
             GroupingElements = (function () {
                 function GroupingElements(element, viewCompiler, container, viewResources, htmlCache, viewSlots, columnBindingContext) {
                     this.element = element;
@@ -20,22 +32,17 @@ System.register(["aurelia-framework"], function (exports_1, context_1) {
                     this.groupContext = {};
                     this.lastAdded = null;
                 }
-                GroupingElements.prototype.init = function (controller) {
+                GroupingElements.prototype.init = function (controller, colGroupElement) {
                     this.controller = controller;
                     this.avgTopPanel = this.htmlCache.avg_top_panel;
+                    this.colGroupElement = colGroupElement;
                 };
                 GroupingElements.prototype.addGroup = function (name, field) {
                     if (!this.groupContext[name]) {
                         this.lastAdded = name;
-                        this.groupContext[name] = {};
-                        this.groupContext[name].name = name;
-                        this.groupContext[name].ctx = this;
-                        this.groupContext[name].field = field;
-                        this.groupContext[name].remove = function () {
-                            this.ctx.removeGroup(this.name);
-                            this.ctx.removeFromGrouping(this.field);
-                        };
-                        var viewMarkup = "<div class=\"avg-grouping\">\n                    <p v-sort=\"" + field + "\">" + name + "</p>\n                    <p>&nbsp;&nbsp;\n                        <i click.delegate=\"remove()\" class=\"avg-fa avg-fa-times-circle-o\" aria-hidden=\"true\"></i>\n                    </p>\n                </div>";
+                        this.groupContext[name] = new GroupContext(name, field, this);
+                        var viewMarkup = this.colGroupElement ||
+                            "<div class=\"avg-grouping\">\n                    <p v-sort=\"field:" + field + "\">" + name + "</p>\n                    <p>&nbsp;&nbsp;\n                        <i click.delegate=\"remove()\" class=\"avg-fa avg-fa-times-circle-o\" aria-hidden=\"true\"></i>\n                    </p>\n                </div>";
                         var viewFactory = this.viewCompiler.compile("<template>" + viewMarkup + "</template>", this.viewResources);
                         var view = viewFactory.create(this.container);
                         var viewSlot = new aurelia_framework_1.ViewSlot(this.avgTopPanel, true);

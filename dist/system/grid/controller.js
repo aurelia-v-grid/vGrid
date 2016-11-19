@@ -14,9 +14,11 @@ System.register([], function (exports_1, context_1) {
                     this.colConfig = c.colConfig;
                     this.backupColConfig = c.backupColConfig;
                     this.colRepeater = c.colRepeater;
-                    this.colGroup = c.colGroup;
+                    this.colGroupRow = c.colGroupRow;
+                    this.colGroupElement = c.colGroupElement;
                     this.colRepeatRowTemplate = c.colRepeatRowTemplate;
                     this.colRepeatRowHeaderTemplate = c.colRepeatRowHeaderTemplate;
+                    this.customMenuTemplates = c.customMenuTemplates;
                     this.viewCompiler = c.viewCompiler;
                     this.container = c.container;
                     this.viewResources = c.viewResources;
@@ -65,12 +67,12 @@ System.register([], function (exports_1, context_1) {
                     this.rowMarkup.init(this.attRowHeight);
                     this.htmlCache.updateRowsMarkup();
                     this.rowScrollEvents.init(this.attRowHeight);
-                    this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroup);
+                    this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroupRow);
                     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
                     this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);
-                    this.groupingElements.init(this);
+                    this.groupingElements.init(this, this.colGroupElement);
                     this.loadingScreen.init(this.overrideContext);
-                    this.contextMenu.init();
+                    this.contextMenu.init(this.customMenuTemplates);
                 };
                 Controller.prototype.getElement = function (rowNumber, isDownScroll, callbackFN) {
                     var _this = this;
@@ -237,7 +239,7 @@ System.register([], function (exports_1, context_1) {
                     this.columnBindingContext.clear();
                     this.viewSlots.clear();
                     this.colConfig = colConfig || this.backupColConfig;
-                    this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroup);
+                    this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroupRow);
                     this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
                     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
                     this.columnBindingContext.setupgrouping = length;

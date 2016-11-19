@@ -28,7 +28,9 @@ export declare class Controller {
     colRepeater: boolean;
     colRepeatRowTemplate: string;
     colRepeatRowHeaderTemplate: string;
-    colGroup: string;
+    colGroupRow: string;
+    colGroupElement: string;
+    customMenuTemplates: any;
     bindingContext: BindingContext;
     overrideContext: OverrideContext;
     attRowHeight: number;

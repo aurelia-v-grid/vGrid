@@ -8,20 +8,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 define(["require", "exports", "aurelia-framework", "./v-grid"], function (require, exports, aurelia_framework_1, v_grid_1) {
-    var VGridElementGroup = (function () {
-        function VGridElementGroup(element, vGrid, targetInstruction) {
+    var VGridGroupRow = (function () {
+        function VGridGroupRow(element, vGrid, targetInstruction) {
             this.element = element;
             this.vGrid = vGrid;
             this.rowTemplate = targetInstruction.elementInstruction.rowTemplate;
         }
-        VGridElementGroup.prototype.bind = function () {
-            this.vGrid.colGroup = this.rowTemplate;
+        VGridGroupRow.prototype.bind = function () {
+            this.vGrid.colGroupRow = this.rowTemplate;
         };
-        return VGridElementGroup;
+        return VGridGroupRow;
     }());
-    VGridElementGroup = __decorate([
+    VGridGroupRow = __decorate([
         aurelia_framework_1.noView(),
-        aurelia_framework_1.customElement('v-grid-group'),
+        aurelia_framework_1.customElement('v-grid-group-row'),
         aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
             compiler = null;
             resources = null;
@@ -30,8 +30,8 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
         }),
         aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
         __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
-    ], VGridElementGroup);
-    exports.VGridElementGroup = VGridElementGroup;
+    ], VGridGroupRow);
+    exports.VGridGroupRow = VGridGroupRow;
 });
 
 //# sourceMappingURL=v-grid-group-row.js.map
