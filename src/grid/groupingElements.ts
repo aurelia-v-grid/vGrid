@@ -41,6 +41,7 @@ export class GroupingElements {
   private viewResources: ViewResources;
   private groupContext: GroupingContext;
   private lastAdded: string;
+  private colGroupElement: string;
   private controller: Controller;
   private avgTopPanel: Element;
   private columnBindingContext: ColumnBindingContext;
@@ -71,9 +72,10 @@ export class GroupingElements {
   }
 
 
-  public init(controller: Controller) {
+  public init(controller: Controller, colGroupElement: string) {
     this.controller = controller;
     this.avgTopPanel = this.htmlCache.avg_top_panel;
+    this.colGroupElement = colGroupElement;
   }
 
 
@@ -85,7 +87,7 @@ export class GroupingElements {
       this.groupContext[name] = new GroupContext(name, field, this);
 
       // view-viewslot
-      let viewMarkup =
+      let viewMarkup = this.colGroupElement ||
         `<div class="avg-grouping">
                     <p v-sort="field:${field}">${name}</p>
                     <p>&nbsp;&nbsp;

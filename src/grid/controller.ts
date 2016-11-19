@@ -58,7 +58,8 @@ export class Controller {
   public colRepeater: boolean;
   public colRepeatRowTemplate: string;
   public colRepeatRowHeaderTemplate: string;
-  public colGroup: string;
+  public colGroupRow: string;
+  public colGroupElement: string;
   public bindingContext: BindingContext;
   public overrideContext: OverrideContext;
   public attRowHeight: number;
@@ -88,7 +89,8 @@ export class Controller {
     this.colConfig = c.colConfig;
     this.backupColConfig = c.backupColConfig;
     this.colRepeater = c.colRepeater;
-    this.colGroup = c.colGroupRow;
+    this.colGroupRow = c.colGroupRow;
+    this.colGroupElement = c.colGroupElement;
     this.colRepeatRowTemplate = c.colRepeatRowTemplate;
     this.colRepeatRowHeaderTemplate = c.colRepeatRowHeaderTemplate;
 
@@ -174,7 +176,7 @@ export class Controller {
       this.colRepeater,
       this.colRepeatRowTemplate,
       this.colRepeatRowHeaderTemplate,
-      this.colGroup);
+      this.colGroupRow);
 
 
     // more updates to main markup
@@ -184,7 +186,7 @@ export class Controller {
     this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);
 
     // create grouping elements helper... pretty much just creates view when dragging to group box
-    this.groupingElements.init(this);
+    this.groupingElements.init(this, this.colGroupElement);
 
     // loading screen view
     this.loadingScreen.init(this.overrideContext);
@@ -412,7 +414,7 @@ export class Controller {
       this.colRepeater,
       this.colRepeatRowTemplate,
       this.colRepeatRowHeaderTemplate,
-      this.colGroup);
+      this.colGroupRow);
     this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
     this.columnBindingContext.setupgrouping = length;

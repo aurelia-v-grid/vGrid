@@ -38,6 +38,7 @@ export class VGrid {
     public colRepeatRowTemplate: string;
     public colRepeatRowHeaderTemplate: string;
     public colGroupRow: string;
+    public colGroupElement: string;
     public newGrid: boolean;
     public controller: Controller;
     public htmlCache: HtmlCache;
@@ -99,6 +100,7 @@ export class VGrid {
         this.colRepeatRowTemplate = null;
         this.colRepeatRowHeaderTemplate = null;
         this.colGroupRow = null;
+        this.colGroupElement = null;
 
         // to know if new or hidden by "if"
         this.newGrid = true;
