@@ -76,8 +76,16 @@ export class VGridAttributeMenu {
 
     if (type === 'sort') {
 
+      let field: string = this.sort;
+      let arr: Array<string> = this.sort.split(';');
+      arr.forEach((x: string) => {
+          if (x.indexOf('field') !== -1) {
+            field = x.replace('field:', '');
+          }
+      });
+
       this.controller.attGridConnector.orderBy({
-        attribute: this.sort.replace('rowRef.', ''),
+        attribute: field,
         asc: option === 'desc' ? false : true
       }, event.shiftKey);
       document.removeEventListener('click', this.checkBinded);
@@ -91,8 +99,18 @@ export class VGridAttributeMenu {
     }
 
     if (type === 'filterOption') {
+
+      let field: string = this.filter;
+      let arr: Array<string> = this.filter.split(';');
+      arr.forEach((x: string) => {
+          if (x.indexOf('field') !== -1) {
+            field = x.replace('field:', '');
+          }
+      });
+
+
       this.raiseEvent('filterUpdate', {
-        attribute: this.filter.replace('rowRef.', ''),
+        attribute: field,
         operator: option
       });
       document.removeEventListener('click', this.checkBinded);
