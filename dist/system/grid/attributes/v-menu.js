@@ -62,8 +62,15 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                         }
                     }
                     if (type === 'sort') {
+                        var field_1 = this.sort;
+                        var arr = this.sort.split(';');
+                        arr.forEach(function (x) {
+                            if (x.indexOf('field') !== -1) {
+                                field_1 = x.replace('field:', '');
+                            }
+                        });
                         this.controller.attGridConnector.orderBy({
-                            attribute: this.sort.replace('rowRef.', ''),
+                            attribute: field_1,
                             asc: option === 'desc' ? false : true
                         }, event.shiftKey);
                         document.removeEventListener('click', this.checkBinded);
@@ -75,8 +82,15 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                         return true;
                     }
                     if (type === 'filterOption') {
+                        var field_2 = this.filter;
+                        var arr = this.filter.split(';');
+                        arr.forEach(function (x) {
+                            if (x.indexOf('field') !== -1) {
+                                field_2 = x.replace('field:', '');
+                            }
+                        });
                         this.raiseEvent('filterUpdate', {
-                            attribute: this.filter.replace('rowRef.', ''),
+                            attribute: field_2,
                             operator: option
                         });
                         document.removeEventListener('click', this.checkBinded);

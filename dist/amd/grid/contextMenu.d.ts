@@ -1,10 +1,11 @@
-import { ViewCompiler, Container, ViewResources, ViewSlots } from '../interfaces';
+import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContext } from '../interfaces';
 export declare class ContextMenu {
     show: boolean;
     private viewCompiler;
     private container;
     private viewResources;
     private viewSlots;
+    private overrideContext;
     private top;
     private left;
     private pinnedMenu;
@@ -16,7 +17,7 @@ export declare class ContextMenu {
     private menuStrings;
     constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots);
     setDefaults(): void;
-    init(customMenuTemplates: any): void;
+    init(customMenuTemplates: any, overrideContext: OverrideContext): void;
     openMenu(options: {
         left: number;
         top: number;

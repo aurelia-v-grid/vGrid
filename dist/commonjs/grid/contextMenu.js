@@ -39,13 +39,14 @@ var ContextMenu = (function () {
         this.filterMainMenu = false;
         this.filterOptionsMenu = false;
     };
-    ContextMenu.prototype.init = function (customMenuTemplates) {
+    ContextMenu.prototype.init = function (customMenuTemplates, overrideContext) {
+        this.overrideContext = overrideContext;
         var viewFactory = this.viewCompiler.compile("<template>" + this.menuHtml(customMenuTemplates) + "</template>", this.viewResources);
         var view = viewFactory.create(this.container);
         var viewSlot = new aurelia_framework_1.ViewSlot(document.body, true);
         viewSlot.add(view);
         this.viewSlots.contextMenu = viewSlot;
-        viewSlot.bind(this, null);
+        viewSlot.bind(this, { bindingContext: this, parentOverrideContext: this.overrideContext });
         viewSlot.attached();
     };
     ContextMenu.prototype.openMenu = function (options) {

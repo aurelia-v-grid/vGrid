@@ -66,7 +66,7 @@ var Controller = (function () {
         this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);
         this.groupingElements.init(this, this.colGroupElement);
         this.loadingScreen.init(this.overrideContext);
-        this.contextMenu.init(this.customMenuTemplates);
+        this.contextMenu.init(this.customMenuTemplates, this.overrideContext);
     };
     Controller.prototype.getElement = function (rowNumber, isDownScroll, callbackFN) {
         var _this = this;
