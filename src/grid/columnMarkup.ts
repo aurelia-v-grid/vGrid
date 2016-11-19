@@ -29,6 +29,7 @@ export class ColumnMarkup {
   private colRepeater: boolean;
   private colRepeatRowTemplate: string;
   private colRepeatHeaderTemplate: string;
+  private colGroup: string;
   private leftScroll: Element;
   private mainScroll: Element;
   private rightScroll: Element;
@@ -71,7 +72,8 @@ export class ColumnMarkup {
     overrideContext: OverrideContext,
     colRepeater: boolean,
     colRepeatRowTemplate: string,
-    colRepeatRowHeaderTemplate: string
+    colRepeatRowHeaderTemplate: string,
+    colGroup: string
   ): void {
     this.overrideContext = overrideContext;
     this.colConfig = colConfig;
@@ -79,6 +81,7 @@ export class ColumnMarkup {
     this.colRepeater = colRepeater;
     this.colRepeatRowTemplate = colRepeatRowTemplate;
     this.colRepeatHeaderTemplate = colRepeatRowHeaderTemplate;
+    this.colGroup = colGroup;
     this.updateInternalHtmlCache();
     if (this.colConfig.length > 0) {
       this.markupHelper.generate(this.colConfig);
@@ -97,16 +100,25 @@ export class ColumnMarkup {
 
     // group column
     if (type === 'group') {
-      // todo: allow template here too ?
+
+      // default markup
+      let defaultMarkup: Array<string> = [
+         '<i click.delegate="changeGrouping(rowRef)"',
+        'class="avg-fa avg-fa-${rowRef.__groupExpanded ? ' + `'minus':'plus'` + '}-square-o"',
+        'aria-hidden="true">',
+        '</i>&nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})',
+      ];
+
+      // if user supplied markup we use that, else default 
+      let gTemplate: string = this.colGroup || defaultMarkup.join('');
+
+      // all markup 
       markupArray = [
         '<avg-col ',
         'class="avg-col-group"',
         'if.bind="rowRef.__group ===true"',
         'css="left:${rowRef.__groupLvl ? rowRef.__groupLvl *15:0}px;right:0">',
-        '<i click.delegate="changeGrouping(rowRef)"',
-        'class="avg-fa avg-fa-${rowRef.__groupExpanded ? ' + `'minus':'plus'` + '}-square-o"',
-        'aria-hidden="true">',
-        '</i>&nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})',
+        gTemplate,
         '</avg-col>'
       ];
 

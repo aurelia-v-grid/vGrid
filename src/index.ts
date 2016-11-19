@@ -10,6 +10,7 @@ export function configure(config: any) {
     prefix + '/attributes/v-menu',
     prefix + '/attributes/v-selection',
     prefix + '/v-grid-row-repeat',
+    prefix + '/v-grid-group-row',
     prefix + '/v-grid-col',
     prefix + '/v-grid'
   );

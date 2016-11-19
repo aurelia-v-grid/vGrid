@@ -58,6 +58,7 @@ export class Controller {
   public colRepeater: boolean;
   public colRepeatRowTemplate: string;
   public colRepeatRowHeaderTemplate: string;
+  public colGroup: string;
   public bindingContext: BindingContext;
   public overrideContext: OverrideContext;
   public attRowHeight: number;
@@ -87,6 +88,7 @@ export class Controller {
     this.colConfig = c.colConfig;
     this.backupColConfig = c.backupColConfig;
     this.colRepeater = c.colRepeater;
+    this.colGroup = c.colGroup;
     this.colRepeatRowTemplate = c.colRepeatRowTemplate;
     this.colRepeatRowHeaderTemplate = c.colRepeatRowHeaderTemplate;
 
@@ -171,7 +173,8 @@ export class Controller {
       this.overrideContext,
       this.colRepeater,
       this.colRepeatRowTemplate,
-      this.colRepeatRowHeaderTemplate);
+      this.colRepeatRowHeaderTemplate,
+      this.colGroup);
 
 
     // more updates to main markup
@@ -408,7 +411,8 @@ export class Controller {
       this.overrideContext,
       this.colRepeater,
       this.colRepeatRowTemplate,
-      this.colRepeatRowHeaderTemplate);
+      this.colRepeatRowHeaderTemplate,
+      this.colGroup);
     this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
     this.columnBindingContext.setupgrouping = length;
