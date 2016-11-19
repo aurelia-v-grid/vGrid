@@ -163,17 +163,21 @@ export class ContextMenu {
 
     // not the best way of doing, but easy... not very userfiendly for other languages atm
     private menuHtml(): string {
-        return `
-        <nav css="top:` + '${top}px;left:${left}px' + `" if.bind="show" class="avg-default avg-menu">
-            <ul if.bind="show" class="avg-menu__items">
+
+            let menuTop: string =
+            `<nav css="top:` + '${top}px;left:${left}px' + `" if.bind="show" class="avg-default avg-menu">`
+
+            let menuClose: string =
+            `<ul if.bind="show" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('close','true')" class="avg-menu__link">
                     <i class="avg-fa avg-text"></i> ${this.menuStrings.close}
                 </p>
                 </li>
-            </ul>
+            </ul>`;
 
-            <ul if.bind="pinnedMenu && !filterOptionsMenu" class="avg-menu__items">
+            let menuPinned: string =
+            `<ul if.bind="pinnedMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('pinned','left', $event)" class="avg-menu__link">
                     <i class="avg-fa avg-text"></i> ${this.menuStrings.pinLeft}
@@ -184,17 +188,19 @@ export class ContextMenu {
                     <i class="avg-fa avg-text"></i> ${this.menuStrings.pinRight}
                 </p>
                 </li>
-            </ul>
+            </ul>`;
 
-           <ul if.bind="groupbyMenu && !filterOptionsMenu" class="avg-menu__items">
+            let menuGroupby: string =
+            `<ul if.bind="groupbyMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('groupby','groupby', $event)" class="avg-menu__link">
                     <i class="avg-fa avg-text"></i> ${this.menuStrings.groupBy}
                 </p>
                 </li>
-            </ul>
+            </ul>`;
 
-            <ul if.bind="sortMenu && !filterOptionsMenu" class="avg-menu__items">
+            let menuSort: string =
+            `<ul if.bind="sortMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('sort','asc', $event)" class="avg-menu__link">
                     <i class="avg-fa avg-text"></i> ${this.menuStrings.sortAscending}
@@ -205,9 +211,10 @@ export class ContextMenu {
                     <i class="avg-fa avg-text"></i> ${this.menuStrings.sortDescending}
                 </p>
                 </li>
-            </ul>
+            </ul>`;
 
-            <ul if.bind="filterMainMenu && !filterOptionsMenu" class="avg-menu__items">
+            let menuFilter: string =
+            `<ul if.bind="filterMainMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filter','showall', $event)" class="avg-menu__link">
                     <i class="avg-fa avg-text"></i> ${this.menuStrings.showAll}
@@ -228,17 +235,16 @@ export class ContextMenu {
                     <i class="avg-fa avg-text"></i> ${this.menuStrings.chooseOperator}
                 </p>
                 </li>
-            </ul>
+            </ul>`;
 
-
-            <ul if.bind="filterOptionsMenu" class="avg-menu__items">
+            let menuFilterOptions: string =
+            `<ul if.bind="filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','Back', $event)" class="avg-menu__link">
                     <i class="avg-fa avg-text"></i> ${this.menuStrings.back}
                 </p>
                 </li>
             </ul>
-
             <ul if.bind="filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','=', $event)" class="avg-menu__link">
@@ -290,8 +296,23 @@ export class ContextMenu {
                     <i class="avg-fa avg-text""></i> ${this.menuStrings.endsWith}
                 </p>
                 </li>
-            </ul>
+            </ul>`;
 
-        </nav>`
+            let menuBottom: string =
+            `</nav>`;
+
+            let menuAll: string =  [
+                menuTop,
+                menuClose,
+                menuPinned,
+                menuGroupby,
+                menuSort,
+                menuFilter,
+                menuFilterOptions,
+                menuBottom,
+            ].join('');
+
+            return menuAll;
+
     }
 }
