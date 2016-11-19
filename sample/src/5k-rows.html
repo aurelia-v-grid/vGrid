@@ -27,6 +27,18 @@
           </div>
         </v-grid-group-element>
 
+        <v-grid-contextmenu>
+            <v-menu-close>
+              <ul if.bind="show" class="avg-menu__items">
+                  <li class="avg-menu__item">
+                  <p click.delegate="menuClick('close','true')" class="avg-menu__link">
+                      <i class="avg-fa avg-text"></i> Kick ass : ${menuStrings.close}
+                  </p>
+                  </li>
+              </ul>
+            </v-menu-close>
+        </v-grid-contextmenu>
+
       </v-grid>
     </div>
     <button click.delegate="clickme()">clickme</button>
