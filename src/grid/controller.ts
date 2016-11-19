@@ -88,7 +88,7 @@ export class Controller {
     this.colConfig = c.colConfig;
     this.backupColConfig = c.backupColConfig;
     this.colRepeater = c.colRepeater;
-    this.colGroup = c.colGroup;
+    this.colGroup = c.colGroupRow;
     this.colRepeatRowTemplate = c.colRepeatRowTemplate;
     this.colRepeatRowHeaderTemplate = c.colRepeatRowHeaderTemplate;
 

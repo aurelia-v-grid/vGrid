@@ -10,6 +10,26 @@ import {
   GroupingContext
 } from '../interfaces';
 
+// private class
+class GroupContext {
+  private name: string;
+  private field: string;
+  public viewSlot: ViewSlot;
+  private groupingElements: GroupingElements;
+
+  constructor(name: string, field: string, groupingElements: GroupingElements) {
+    this.name = name;
+    this.field = field;
+    this.groupingElements = groupingElements;
+  }
+
+  public remove(): void {
+    this.groupingElements.removeGroup(this.name);
+    this.groupingElements.removeFromGrouping(this.field);
+  }
+}
+
+
 
 
 export class GroupingElements {
@@ -62,19 +82,12 @@ export class GroupingElements {
 
     if (!this.groupContext[name]) {
       this.lastAdded = name;
-      this.groupContext[name] = ({} as GroupingContext);
-      this.groupContext[name].name = name;
-      this.groupContext[name].ctx = this;
-      this.groupContext[name].field = field;
-      this.groupContext[name].remove = function () {
-        this.ctx.removeGroup(this.name);
-        this.ctx.removeFromGrouping(this.field);
-      };
+      this.groupContext[name] = new GroupContext(name, field, this);
 
       // view-viewslot
       let viewMarkup =
         `<div class="avg-grouping">
-                    <p v-sort="${field}">${name}</p>
+                    <p v-sort="field:${field}">${name}</p>
                     <p>&nbsp;&nbsp;
                         <i click.delegate="remove()" class="avg-fa avg-fa-times-circle-o" aria-hidden="true"></i>
                     </p>

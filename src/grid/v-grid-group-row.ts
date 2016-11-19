@@ -4,7 +4,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
 
 
 @noView()
-@customElement('v-grid-group')
+@customElement('v-grid-group-row')
 @processContent((
   compiler: ViewCompiler,
   resources: ViewResources,
@@ -20,7 +20,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
 
 })
 @inject(Element, VGrid, TargetInstruction)
-export class VGridElementGroup {
+export class VGridGroupRow {
   private element: Element;
   private vGrid: VGrid;
   private rowTemplate: string;
@@ -34,7 +34,7 @@ export class VGridElementGroup {
 
 
   public bind(): void {
-    this.vGrid.colGroup = this.rowTemplate;
+    this.vGrid.colGroupRow = this.rowTemplate;
   }
 
 
