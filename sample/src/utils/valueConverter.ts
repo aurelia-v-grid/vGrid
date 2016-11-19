@@ -1,5 +1,5 @@
 export class NumberFormatterValueConverter {
-  public toView(value) {
+  public toView(value: any) {
     if (value) {
       return value;
     } else {
@@ -7,7 +7,7 @@ export class NumberFormatterValueConverter {
     }
   }
 
-  public fromView(value) {
+  public fromView(value: any) {
     if (value) {
       let check = value * 1;
       if (isNaN(check)) {
@@ -23,7 +23,7 @@ export class NumberFormatterValueConverter {
 }
 
 export class BooleanFormatterValueConverter {
-  public toView(value) {
+  public toView(value: any) {
     if (value) {
       return value;
     } else {
@@ -31,23 +31,23 @@ export class BooleanFormatterValueConverter {
     }
   }
 
-  public fromView(value) {
+  public fromView(value: any) {
 
     if (typeof value === 'string') {
       value = value.toLowerCase();
+      switch (value) {
+        case 'true':
+          value = true;
+          break;
+        case 'false':
+          value = true;
+          break;
+        default:
+          value = false;
+      }
     }
-    switch (value) {
-      case true:
-      case 'true':
-        value = true;
-        break;
-      case false:
-      case 'false':
-        value = true;
-        break;
-      default:
-        value = false;
-    }
+
+
     return value;
   }
 }
