@@ -1,8 +1,8 @@
 var ColumnMarkupHelper = (function () {
     function ColumnMarkupHelper() {
     }
-    ColumnMarkupHelper.prototype.generate = function (colConfig) {
-        this.useCustomOnly = false;
+    ColumnMarkupHelper.prototype.generate = function (colConfig, useCustomOnly) {
+        this.useCustomOnly = useCustomOnly;
         var type = null;
         if (colConfig && colConfig.length > 0) {
             type = 'typeHtml';
@@ -144,7 +144,11 @@ var ColumnMarkupHelper = (function () {
             else {
                 classNames = "class=\"" + (col.colFilterTop ? 'avg-header-input-top' : 'avg-header-input-bottom') + "\"";
             }
-            markup = "<input v-menu=\"filter:" + col.colFilter + "\" " + classNames + " " + colAddFilterAttributes + " " + type + " " + filter + "\">";
+            var vmenu = "v-menu=\"filter:" + col.colFilter + "\"";
+            if (this.useCustomOnly) {
+                vmenu = '';
+            }
+            markup = "<input " + vmenu + " " + classNames + " " + colAddFilterAttributes + " " + type + " " + filter + "\">";
         }
         else {
             markup = '';
@@ -160,11 +164,11 @@ var ColumnMarkupHelper = (function () {
         var tempFieldSplit = col.colField.split(' ');
         var headerName = col.colHeaderName.replace('rowRef.', '');
         var field = tempFieldSplit[0].replace('rowRef.', '');
-        var extraAttributes = "v-drag-drop-col=\"title:" + headerName + ";field:" + field + "\" v-resize-col";
+        var extraAttributes = "v-drag-drop-col=\"title:" + headerName + ";field:" + field + "\" v-resize-col v-menu=\"sort:" + col.colSort + ";groupby:" + field + "\"";
         if (this.useCustomOnly) {
             extraAttributes = '';
         }
-        return "<p \n      v-menu=\"sort:" + col.colSort + ";groupby:" + field + "\" \n      " + extraAttributes + " \n      " + classname + " \n      " + sort + " \n      " + colAddLabelAttributes + ">\n      " + col.colHeaderName + "\n      </p>";
+        return "<p \n      " + extraAttributes + " \n      " + classname + " \n      " + sort + " \n      " + colAddLabelAttributes + ">\n      " + col.colHeaderName + "\n      </p>";
     };
     return ColumnMarkupHelper;
 }());

@@ -10,7 +10,7 @@ define(["require", "exports", "aurelia-framework", "./columnMarkupHelper"], func
             this.container = container;
             this.viewResources = viewResources;
         }
-        ColumnMarkup.prototype.init = function (colConfig, overrideContext, colRepeater, colRepeatRowTemplate, colRepeatRowHeaderTemplate, colGroup) {
+        ColumnMarkup.prototype.init = function (colConfig, overrideContext, colRepeater, colRepeatRowTemplate, colRepeatRowHeaderTemplate, colGroup, attOnlyCustomAttributes) {
             this.overrideContext = overrideContext;
             this.colConfig = colConfig;
             this.configLength = colConfig.length;
@@ -18,9 +18,10 @@ define(["require", "exports", "aurelia-framework", "./columnMarkupHelper"], func
             this.colRepeatRowTemplate = colRepeatRowTemplate;
             this.colRepeatHeaderTemplate = colRepeatRowHeaderTemplate;
             this.colGroup = colGroup;
+            this.attOnlyCustomAttributes = attOnlyCustomAttributes;
             this.updateInternalHtmlCache();
             if (this.colConfig.length > 0) {
-                this.markupHelper.generate(this.colConfig);
+                this.markupHelper.generate(this.colConfig, this.attOnlyCustomAttributes);
             }
             this.generateColumns();
         };

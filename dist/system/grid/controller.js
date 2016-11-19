@@ -49,6 +49,7 @@ System.register([], function (exports_1, context_1) {
                     this.attGridConnector = c.attGridConnector;
                     this.attOnRowDraw = c.attOnRowDraw;
                     this.attLanguage = c.attLanguage;
+                    this.attOnlyCustomAttributes = c.attOnlyCustomAttributes;
                 };
                 Controller.prototype.createGrid = function () {
                     var _this = this;
@@ -67,7 +68,7 @@ System.register([], function (exports_1, context_1) {
                     this.rowMarkup.init(this.attRowHeight);
                     this.htmlCache.updateRowsMarkup();
                     this.rowScrollEvents.init(this.attRowHeight);
-                    this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroupRow);
+                    this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroupRow, this.attOnlyCustomAttributes);
                     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
                     this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);
                     this.groupingElements.init(this, this.colGroupElement);
@@ -239,7 +240,7 @@ System.register([], function (exports_1, context_1) {
                     this.columnBindingContext.clear();
                     this.viewSlots.clear();
                     this.colConfig = colConfig || this.backupColConfig;
-                    this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroupRow);
+                    this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroupRow, this.attOnlyCustomAttributes);
                     this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
                     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
                     this.columnBindingContext.setupgrouping = length;

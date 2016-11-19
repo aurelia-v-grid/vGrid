@@ -71,6 +71,7 @@ var VGrid = (function () {
         this.element.classList.add(this.attTheme);
         this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
         this.attLanguage = typeof this.attLanguage === 'object' ? this.attLanguage : {};
+        this.attOnlyCustomAttributes = this.attOnlyCustomAttributes ? this.checkBool(this.attOnlyCustomAttributes) : null;
     };
     VGrid.prototype.unbind = function () {
         this.newGrid = false;
@@ -155,5 +156,9 @@ __decorate([
     aurelia_framework_1.bindable({ attribute: 'v-language' }),
     __metadata("design:type", Object)
 ], VGrid.prototype, "attLanguage", void 0);
+__decorate([
+    aurelia_framework_1.bindable({ attribute: 'v-only-custom-attributes' }),
+    __metadata("design:type", Boolean)
+], VGrid.prototype, "attOnlyCustomAttributes", void 0);
 
 //# sourceMappingURL=v-grid.js.map

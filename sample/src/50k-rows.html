@@ -3,7 +3,7 @@
     <require from="./utils/valueConverter"></require>
     <div class="col-md-6" style="top:50px">
       <v-grid v-multi-select="true" v-grid-connector.bind="gridConnector" v-row-height="25" v-header-height="50" v-panel-height="25"
-        v-footer-height="25" style="height:400px">
+        v-footer-height="25" v-only-custom-attributes="true" style="height:400px">
         <v-grid-col col-width="100" col-sort="field:country" col-filter="field:country" col-field="country"></v-grid-col>
         <v-grid-col col-width="100" col-sort="field:index;asc:false"   col-filter="field:index" col-field="index | numberFormatter"></v-grid-col>
         <v-grid-col col-width="100" col-sort="field:high"    col-filter="field:high" col-field="high"></v-grid-col>

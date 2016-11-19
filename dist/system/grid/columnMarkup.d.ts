@@ -27,8 +27,9 @@ export declare class ColumnMarkup {
     private rightRows;
     private groupRows;
     private rowLength;
+    private attOnlyCustomAttributes;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, htmlCache: HtmlCache, viewSlots: ViewSlots, columnBindingContext: ColumnBindingContext);
-    init(colConfig: Array<ColConfig>, overrideContext: OverrideContext, colRepeater: boolean, colRepeatRowTemplate: string, colRepeatRowHeaderTemplate: string, colGroup: string): void;
+    init(colConfig: Array<ColConfig>, overrideContext: OverrideContext, colRepeater: boolean, colRepeatRowTemplate: string, colRepeatRowHeaderTemplate: string, colGroup: string, attOnlyCustomAttributes: boolean): void;
     private getRowViews(type);
     private createColSetupContext(type);
     private getHeaderViews(type);
