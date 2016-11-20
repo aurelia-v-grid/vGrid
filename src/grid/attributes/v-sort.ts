@@ -64,10 +64,10 @@ export class VGridAttributesSort {
 
     let markup = ``;
     let isAscHtml = `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                        <path d="M7.006 15.086l1.997.004 5.993-7.068H.926z"/>
+                        <path d="M7.006.948L9.003.944l5.993 7.067H.926z"/>
                       </svg>`;
     let isDescHtml = `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                        <path d="M7.006.948L9.003.944l5.993 7.067H.926z"/>
+                        <path d="M7.006 15.086l1.997.004 5.993-7.068H.926z"/>
                       </svg>`;
 
 
