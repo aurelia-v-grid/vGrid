@@ -42,9 +42,11 @@ System.register(["aurelia-framework", "./columnMarkupHelper"], function (exports
                     var markupArray = [];
                     if (type === 'group') {
                         var defaultMarkup = [
-                            '<i click.delegate="changeGrouping(rowRef)"',
-                            'class="avg-fa avg-fa-${rowRef.__groupExpanded ? ' + "'minus':'plus'" + '}-square-o"',
-                            'aria-hidden="true">',
+                            '<i click.delegate="changeGrouping(rowRef)">',
+                            '<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">',
+                            '<path show.bind="rowRef.__groupExpanded" d="M1.0186697 9.0670326l-.00603066-2.0937399 13.9999409-.04032434.00603065 2.0937399z"/>',
+                            '<path show.bind="!rowRef.__groupExpanded" d="M6.96875 1v5.9550781l-5.9570312.0175781.0078124 2.09375 5.9492188-.015625V15H9.0625V9.0449219l5.957031-.0175781-.007812-2.09375-5.949219.015625V1H6.96875z"/>',
+                            '</svg>',
                             '</i>&nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})',
                         ];
                         var gTemplate = this.colGroup || defaultMarkup.join('');
