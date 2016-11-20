@@ -1,6 +1,6 @@
-import {inject, customAttribute, bindable} from 'aurelia-framework';
-import {VGrid} from '../v-grid';
-import {BindingContext, OverrideContext} from '../../interfaces';
+import { inject, customAttribute, bindable } from 'aurelia-framework';
+import { VGrid } from '../v-grid';
+import { BindingContext, OverrideContext } from '../../interfaces';
 
 @customAttribute('v-sort')
 @inject(Element, VGrid)
@@ -37,7 +37,7 @@ export class VGridAttributesSort {
       this.element.onmouseup = (e) => {
         if (e.button === 0) {
           if (this.firstTime && this.asc === 'false') {
-            this.vGrid.attGridConnector.orderBy({attribute: this.attribute, asc: false}, e.shiftKey);
+            this.vGrid.attGridConnector.orderBy({ attribute: this.attribute, asc: false }, e.shiftKey);
           } else {
             this.vGrid.attGridConnector.orderBy(this.attribute, e.shiftKey);
           }
@@ -62,9 +62,13 @@ export class VGridAttributesSort {
 
   private getSortIconMarkup(): string {
 
-    let markup = `&nbsp;<i  class="${'avg-fa avg-fa-sort'}"></i>`;
-    let isAscHtml = `&nbsp;<i  class="${'avg-fa avg-fa-sort-asc'}"></i>`;
-    let isDescHtml = `&nbsp;<i  class="${'avg-fa avg-fa-sort-desc'}"></i>`;
+    let markup = ``;
+    let isAscHtml = `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                        <path d="M7.006 15.086l1.997.004 5.993-7.068H.926z"/>
+                      </svg>`;
+    let isDescHtml = `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                        <path d="M7.006.948L9.003.944l5.993 7.067H.926z"/>
+                      </svg>`;
 
 
     this.vGrid.attGridConnector.getCurrentOrderBy().forEach((x) => {
