@@ -49,8 +49,8 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
         VGridAttributesSort.prototype.getSortIconMarkup = function () {
             var _this = this;
             var markup = "";
-            var isAscHtml = "<svg class=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\">\n                        <path d=\"M7.006 15.086l1.997.004 5.993-7.068H.926z\"/>\n                      </svg>";
-            var isDescHtml = "<svg class=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\">\n                        <path d=\"M7.006.948L9.003.944l5.993 7.067H.926z\"/>\n                      </svg>";
+            var isAscHtml = "<svg class=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\">\n                        <path d=\"M7.006.948L9.003.944l5.993 7.067H.926z\"/>\n                      </svg>";
+            var isDescHtml = "<svg class=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\">\n                        <path d=\"M7.006 15.086l1.997.004 5.993-7.068H.926z\"/>\n                      </svg>";
             this.vGrid.attGridConnector.getCurrentOrderBy().forEach(function (x) {
                 if (x.attribute === _this.attribute) {
                     _this.firstTime = false;
