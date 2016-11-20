@@ -218,7 +218,7 @@ export class ContextMenu {
                 <p click.delegate="menuClick('sort','desc', $event)" class="avg-menu__link">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                         <path d="M1 14.986328V1.0039062h14.009766V14.986328H1zm7.0273438-3.951172l6.1171872-5.9746098-.03906-.039062H2.0683614l5.9589844 6.0136718z"/>
-                      </svg> ${this.menuStrings.sortDescending}
+                    </svg> ${this.menuStrings.sortDescending}
                 </p>
                 </li>
             </ul>`;
