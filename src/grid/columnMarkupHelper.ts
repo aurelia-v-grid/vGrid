@@ -258,8 +258,8 @@ export class ColumnMarkupHelper {
 
       let vmenu: string = '';
       if (filter) {
-        let field: string = filter;
-        let arr: Array<string> = filter.split(';');
+        let field: string = col.colFilter;
+        let arr: Array<string> = col.colFilter.split(';');
         arr.forEach((x: string) => {
           if (x.indexOf('field') !== -1) {
             field = x.replace('field:', '');
@@ -302,15 +302,15 @@ export class ColumnMarkupHelper {
 
     let vmenu: string = '';
     if (sort) {
-      let fieldMenu: string = sort;
-      let arr: Array<string> = sort.split(';');
+      let fieldMenu: string = col.colSort;
+      let arr: Array<string> = col.colSort.split(';');
       arr.forEach((x: string) => {
         if (x.indexOf('field') !== -1) {
           fieldMenu = x.replace('field:', '');
         }
       });
       // apply magic
-      vmenu = `v-menu="filter:${fieldMenu}"`;
+      vmenu = `v-menu="sort:${fieldMenu}"`;
     }
 
     vmenu = vmenu + `groupby:${field}`;
