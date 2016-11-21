@@ -300,7 +300,7 @@ export class ColumnMarkupHelper {
     let headerName = col.colHeaderName.replace('rowRef.', '');
     let field = tempFieldSplit[0].replace('rowRef.', '');
 
-    let vmenu: string = '';
+    let vmenu: string = `v-menu="groupby:${field}"`;
     if (sort) {
       let fieldMenu: string = col.colSort;
       let arr: Array<string> = col.colSort.split(';');
@@ -310,10 +310,10 @@ export class ColumnMarkupHelper {
         }
       });
       // apply magic
-      vmenu = `v-menu="sort:${fieldMenu}"`;
-    }
+      vmenu = `v-menu="sort:${fieldMenu};groupby:${field}"`;
+    } 
 
-    vmenu = vmenu + `groupby:${field}`;
+
 
 
 
