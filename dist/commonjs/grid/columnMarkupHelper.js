@@ -146,8 +146,8 @@ var ColumnMarkupHelper = (function () {
             }
             var vmenu = '';
             if (filter) {
-                var field_1 = filter;
-                var arr = filter.split(';');
+                var field_1 = col.colFilter;
+                var arr = col.colFilter.split(';');
                 arr.forEach(function (x) {
                     if (x.indexOf('field') !== -1) {
                         field_1 = x.replace('field:', '');
@@ -176,14 +176,14 @@ var ColumnMarkupHelper = (function () {
         var field = tempFieldSplit[0].replace('rowRef.', '');
         var vmenu = '';
         if (sort) {
-            var fieldMenu_1 = sort;
-            var arr = sort.split(';');
+            var fieldMenu_1 = col.colSort;
+            var arr = col.colSort.split(';');
             arr.forEach(function (x) {
                 if (x.indexOf('field') !== -1) {
                     fieldMenu_1 = x.replace('field:', '');
                 }
             });
-            vmenu = "v-menu=\"filter:" + fieldMenu_1 + "\"";
+            vmenu = "v-menu=\"sort:" + fieldMenu_1 + "\"";
         }
         vmenu = vmenu + ("groupby:" + field);
         var extraAttributes = "v-drag-drop-col=\"title:" + headerName + ";field:" + field + "\" v-resize-col " + vmenu;
