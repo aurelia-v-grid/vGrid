@@ -1,4 +1,4 @@
-import {ColConfig} from '../interfaces';
+import { ColConfig } from '../interfaces';
 
 export class ColumnMarkupHelper {
   private useCustomOnly: boolean;
@@ -256,8 +256,19 @@ export class ColumnMarkupHelper {
         classNames = `class="${col.colFilterTop ? 'avg-header-input-top' : 'avg-header-input-bottom'}"`;
       }
 
-      // apply magic
-      let vmenu = `v-menu="filter:${col.colFilter}"`;
+      let vmenu: string = '';
+      if (filter) {
+        let field: string = filter;
+        let arr: Array<string> = filter.split(';');
+        arr.forEach((x: string) => {
+          if (x.indexOf('field') !== -1) {
+            field = x.replace('field:', '');
+          }
+        });
+        // apply magic
+        vmenu = `v-menu="filter:${field}"`;
+      }
+
       if (this.useCustomOnly) {
         vmenu = '';
       }
@@ -289,7 +300,24 @@ export class ColumnMarkupHelper {
     let headerName = col.colHeaderName.replace('rowRef.', '');
     let field = tempFieldSplit[0].replace('rowRef.', '');
 
-    let extraAttributes = `v-drag-drop-col="title:${headerName};field:${field}" v-resize-col v-menu="sort:${col.colSort};groupby:${field}"`;
+    let vmenu: string = '';
+    if (sort) {
+      let fieldMenu: string = sort;
+      let arr: Array<string> = sort.split(';');
+      arr.forEach((x: string) => {
+        if (x.indexOf('field') !== -1) {
+          fieldMenu = x.replace('field:', '');
+        }
+      });
+      // apply magic
+      vmenu = `v-menu="filter:${fieldMenu}"`;
+    }
+
+    vmenu = vmenu + `groupby:${field}`;
+
+
+
+    let extraAttributes = `v-drag-drop-col="title:${headerName};field:${field}" v-resize-col ${vmenu}`;
     if (this.useCustomOnly) {
       extraAttributes = '';
     }
