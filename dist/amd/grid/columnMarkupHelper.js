@@ -145,7 +145,17 @@ define(["require", "exports"], function (require, exports) {
                 else {
                     classNames = "class=\"" + (col.colFilterTop ? 'avg-header-input-top' : 'avg-header-input-bottom') + "\"";
                 }
-                var vmenu = "v-menu=\"filter:" + col.colFilter + "\"";
+                var vmenu = '';
+                if (filter) {
+                    var field_1 = filter;
+                    var arr = filter.split(';');
+                    arr.forEach(function (x) {
+                        if (x.indexOf('field') !== -1) {
+                            field_1 = x.replace('field:', '');
+                        }
+                    });
+                    vmenu = "v-menu=\"filter:" + field_1 + "\"";
+                }
                 if (this.useCustomOnly) {
                     vmenu = '';
                 }
@@ -165,7 +175,19 @@ define(["require", "exports"], function (require, exports) {
             var tempFieldSplit = col.colField.split(' ');
             var headerName = col.colHeaderName.replace('rowRef.', '');
             var field = tempFieldSplit[0].replace('rowRef.', '');
-            var extraAttributes = "v-drag-drop-col=\"title:" + headerName + ";field:" + field + "\" v-resize-col v-menu=\"sort:" + col.colSort + ";groupby:" + field + "\"";
+            var vmenu = '';
+            if (sort) {
+                var fieldMenu_1 = sort;
+                var arr = sort.split(';');
+                arr.forEach(function (x) {
+                    if (x.indexOf('field') !== -1) {
+                        fieldMenu_1 = x.replace('field:', '');
+                    }
+                });
+                vmenu = "v-menu=\"filter:" + fieldMenu_1 + "\"";
+            }
+            vmenu = vmenu + ("groupby:" + field);
+            var extraAttributes = "v-drag-drop-col=\"title:" + headerName + ";field:" + field + "\" v-resize-col " + vmenu;
             if (this.useCustomOnly) {
                 extraAttributes = '';
             }
