@@ -33,8 +33,8 @@ var ColumnMarkup = (function () {
             var defaultMarkup = [
                 '<i click.delegate="changeGrouping(rowRef)">',
                 '<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">',
-                '<path show.bind="rowRef.__groupExpanded" d="M1.0186697 9.0670326l-.00603066-2.0937399 13.9999409-.04032434.00603065 2.0937399z"/>',
-                '<path show.bind="!rowRef.__groupExpanded" d="M6.96875 1v5.9550781l-5.9570312.0175781.0078124 2.09375 5.9492188-.015625V15H9.0625V9.0449219l5.957031-.0175781-.007812-2.09375-5.949219.015625V1H6.96875z"/>',
+                '<path show.bind="rowRef.__groupExpanded" d="M3.5117202 7.2148452h8.9687468v1.5312476H3.5117202z"/>',
+                '<path show.bind="!rowRef.__groupExpanded" d="M7.2617188 3.5429688v3.671875h-3.75v1.53125h3.75v3.7656252h1.53125V8.7460938h3.6875002v-1.53125H8.7929688v-3.671875h-1.53125z"/>',
                 '</svg>',
                 '</i>&nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})',
             ];

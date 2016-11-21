@@ -174,7 +174,7 @@ var ColumnMarkupHelper = (function () {
         var tempFieldSplit = col.colField.split(' ');
         var headerName = col.colHeaderName.replace('rowRef.', '');
         var field = tempFieldSplit[0].replace('rowRef.', '');
-        var vmenu = '';
+        var vmenu = "v-menu=\"groupby:" + field + "\"";
         if (sort) {
             var fieldMenu_1 = col.colSort;
             var arr = col.colSort.split(';');
@@ -183,9 +183,8 @@ var ColumnMarkupHelper = (function () {
                     fieldMenu_1 = x.replace('field:', '');
                 }
             });
-            vmenu = "v-menu=\"sort:" + fieldMenu_1 + "\"";
+            vmenu = "v-menu=\"sort:" + fieldMenu_1 + ";groupby:" + field + "\"";
         }
-        vmenu = vmenu + ("groupby:" + field);
         var extraAttributes = "v-drag-drop-col=\"title:" + headerName + ";field:" + field + "\" v-resize-col " + vmenu;
         if (this.useCustomOnly) {
             extraAttributes = '';

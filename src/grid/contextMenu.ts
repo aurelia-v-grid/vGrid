@@ -209,7 +209,7 @@ export class ContextMenu {
             `<ul if.bind="sortMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('sort','asc', $event)" class="avg-menu__link">
-                       <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                       <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8">
                         <path d="M7.2393106 1.00117874C5.1581979 3.33755754 3.0770851 5.6739366.99597235 8.0103152H3.1866173c1.6024163-1.84237835 3.2048325-3.6847569 4.8072488-5.52713536 1.6024163 1.84237846 3.2048329 3.684757 4.8072489 5.52713537h2.190645c-2.081113-2.3363786-4.162226-4.67275766-6.2433384-7.00913646h-1.509111z"/>
                       </svg> ${this.menuStrings.sortAscending}
                 </p>

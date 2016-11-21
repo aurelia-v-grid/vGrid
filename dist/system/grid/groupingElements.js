@@ -42,7 +42,7 @@ System.register(["aurelia-framework"], function (exports_1, context_1) {
                         this.lastAdded = name;
                         this.groupContext[name] = new GroupContext(name, field, this);
                         var viewMarkup = this.colGroupElement ||
-                            "<div class=\"avg-grouping\">\n          <p v-sort=\"field:" + field + "\">" + name + "</p>\n          <p>\n            <svg click.delegate=\"remove()\" class=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\">\n              <path d=\"M1.00047418 13.4679717l12.8276448-12.45678394 1.23390682 1.55209136L2.23438102 15.02006306z\"/>\n              <path d=\"M15.06202587 13.49922255L2.23438107 1.0424386 1.00047426 2.59452998 13.82811903 15.0513139z\"/>\n            </svg>\n          </p>\n         </div>";
+                            "<div class=\"avg-grouping\">\n          <p v-sort=\"field:" + field + "\">" + name + "</p>\n          <p>\n            <svg click.delegate=\"remove()\" class=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\">\n              <path d=\"M.95507812 1.0351562l6.00976568 6.984375L.95507812 15.005859H2.9550781l5.0097657-5.8222652 5.0117182 5.8222652h2L8.9648438 8.0195312l6.0117182-6.984375h-2L7.9648438 6.8574219 2.9550781 1.0351562H.95507812z\"/>\n            </svg>\n          </p>\n         </div>";
                         var viewFactory = this.viewCompiler.compile("<template>" + viewMarkup + "</template>", this.viewResources);
                         var view = viewFactory.create(this.container);
                         var viewSlot = new aurelia_framework_1.ViewSlot(this.avgTopPanel, true);

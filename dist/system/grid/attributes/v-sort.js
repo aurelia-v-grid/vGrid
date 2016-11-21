@@ -61,8 +61,8 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                 VGridAttributesSort.prototype.getSortIconMarkup = function () {
                     var _this = this;
                     var markup = "";
-                    var isAscHtml = "<svg class=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\">\n                        <path d=\"M7.006.948L9.003.944l5.993 7.067H.926z\"/>\n                      </svg>";
-                    var isDescHtml = "<svg class=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\">\n                        <path d=\"M7.006 15.086l1.997.004 5.993-7.068H.926z\"/>\n                      </svg>";
+                    var isAscHtml = "<svg class=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\">\n                        <path d=\"M7.2393106 1.00117874C5.1581979 3.33755754 3.0770851 5.6739366.99597235 8.0103152H3.1866173c1.6024163-1.84237835 3.2048325-3.6847569 4.8072488-5.52713536 1.6024163 1.84237846 3.2048329 3.684757 4.8072489 5.52713537h2.190645c-2.081113-2.3363786-4.162226-4.67275766-6.2433384-7.00913646h-1.509111z\"/>\n                      </svg>";
+                    var isDescHtml = "<svg class=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\">\n                        <path d=\"M7.2393106 15.0272644C5.1581979 12.6908856 3.0770851 10.35450654.99597235 8.01812793H3.1866173c1.6024163 1.84237836 3.2048325 3.6847569 4.8072488 5.52713537 1.6024163-1.84237846 3.2048329-3.684757 4.8072489-5.52713537h2.190645c-2.081113 2.3363786-4.162226 4.67275767-6.2433384 7.00913647h-1.509111z\"/>\n                      </svg>";
                     this.vGrid.attGridConnector.getCurrentOrderBy().forEach(function (x) {
                         if (x.attribute === _this.attribute) {
                             _this.firstTime = false;
