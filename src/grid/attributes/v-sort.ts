@@ -70,12 +70,16 @@ export class VGridAttributesSort {
                         <path d="M7.4 10L3 6h1.5L8 9.2 11.3 6H13l-4.5 4h-1z"/>
                       </svg>`;
 
-
+    let sortlength: number = this.vGrid.attGridConnector.getCurrentOrderBy().length;
     this.vGrid.attGridConnector.getCurrentOrderBy().forEach((x) => {
       if (x.attribute === this.attribute) {
         this.firstTime = false;
         let block = x.asc === true ? isAscHtml : isDescHtml;
-        let main = `<i class="${'avg-fa-sort-number'}" data-vgridsort="${x.no}"></i>`;
+        let main = '';
+        if (sortlength > 1) {
+          main = `<i class="${'avg-fa-sort-number'}" data-vgridsort="${x.no}"></i>`;
+        }
+
         markup = block + main;
       }
     });
