@@ -28,7 +28,11 @@
   overflow: hidden;
 }
 
+.avg-default .iconhidden{
+  display:none
+}
 
+.avg-grouping:hover .iconhidden { display:block; }
     
 
  

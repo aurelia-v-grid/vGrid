@@ -5,7 +5,8 @@
   height: 80%;
   padding-left: 10px;
   padding-right: 10px;
-  display: inline-flex;
+  display: block;
+  float: left;
   border: 1px solid rgb(230, 230, 230);
 }
 
@@ -25,9 +26,20 @@
   background-color: rgb(240, 240, 240);
   margin: 3px;
   height: 80%;
-  min-width: 100px;
   position: relative;
   float: left;
   padding-top: 5px;
+}
+
+.avg-default .avg-grouping-element {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: initial;
+  box-shadow: initial;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  margin: 0 !important;
+  display: flex;
   text-align: center;
 }
