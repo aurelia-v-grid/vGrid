@@ -90,12 +90,12 @@ export class GroupingElements {
       // view-viewslot
       let viewMarkup = this.colGroupElement ||
         `<div class="avg-grouping">
-          <p v-sort="field:${field}">${name}</p>
-          <p>
-            <svg click.delegate="remove()" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-              <path d="M.95507812 1.0351562l6.00976568 6.984375L.95507812 15.005859H2.9550781l5.0097657-5.8222652 5.0117182 5.8222652h2L8.9648438 8.0195312l6.0117182-6.984375h-2L7.9648438 6.8574219 2.9550781 1.0351562H.95507812z"/>
-            </svg>
-          </p>
+          <p v-sort="field:${field}">${name}<svg click.delegate="remove()" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M3 4l4.3 4L3 12h1.4L8 8.7l3.5 3.3H13L8.6 8 13 4h-1.5L8 7.3 4.4 4H3z"/>
+            </svg></p>
+
+            
+
          </div>`;
 
 
