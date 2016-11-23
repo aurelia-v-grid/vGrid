@@ -39,7 +39,7 @@ System.register(["aurelia-framework", "./v-grid"], function (exports_1, context_
                         colPinLeft: this.checkBool(this.colPinLeft),
                         colPinRight: this.checkBool(this.colPinRight),
                         colHeaderName: this.colHeaderName,
-                        colHeaderMenu: this.colFilterMenu,
+                        colFilterMenu: this.colFilterMenu,
                         colLabelMenu: this.colLabelMenu,
                         colRowMenu: this.colRowMenu,
                         colHidden: this.checkBool(this.colHidden),

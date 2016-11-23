@@ -27,7 +27,7 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
                 colPinLeft: this.checkBool(this.colPinLeft),
                 colPinRight: this.checkBool(this.colPinRight),
                 colHeaderName: this.colHeaderName,
-                colHeaderMenu: this.colFilterMenu,
+                colFilterMenu: this.colFilterMenu,
                 colLabelMenu: this.colLabelMenu,
                 colRowMenu: this.colRowMenu,
                 colHidden: this.checkBool(this.colHidden),
