@@ -98,7 +98,7 @@ export class VGridElementColConfig {
       colPinLeft: this.checkBool(this.colPinLeft),
       colPinRight: this.checkBool(this.colPinRight),
       colHeaderName: this.colHeaderName,
-      colHeaderMenu: this.colFilterMenu,
+      colFilterMenu: this.colFilterMenu,
       colLabelMenu: this.colLabelMenu,
       colRowMenu: this.colRowMenu,
       colHidden: this.checkBool(this.colHidden),
