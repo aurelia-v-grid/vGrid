@@ -1,11 +1,11 @@
 import { ColConfig } from '../interfaces';
 
 export class ColumnMarkupHelper {
-  private useCustomOnly: boolean;
+
 
   // todo use same if column setup is just json binded to grid
-  public generate(colConfig: Array<ColConfig>, useCustomOnly: boolean): void {
-    this.useCustomOnly = useCustomOnly;
+  public generate(colConfig: Array<ColConfig>): void {
+
     let type: string = null;
 
     if (colConfig && colConfig.length > 0) {
@@ -18,7 +18,6 @@ export class ColumnMarkupHelper {
     }
 
     this.processColumns(colConfig);
-
 
   }
 
@@ -47,6 +46,13 @@ export class ColumnMarkupHelper {
       this.createHeaderTemplate(col);
       this.createRowTemplate(col);
 
+      if (col.colRowTemplate) {
+        col.__colRowTemplateGenerated = col.colRowTemplate;
+      }
+
+      if (col.colHeaderTemplate) {
+        col.__colHeaderTemplateGenerated = col.colHeaderTemplate;
+      }
 
     });
   }
@@ -61,8 +67,6 @@ export class ColumnMarkupHelper {
       switch (col.colType) {
 
         case 'selection':
-          // override to manual selection
-          // this.vGrid.vGridConfig.attManualSelection = true;
           // set template
           labelHeader = '';
           inputHeader = `<input 
@@ -88,9 +92,9 @@ export class ColumnMarkupHelper {
 
       // set correctly to where is is suppoed to be
       if (col.colFilterTop) {
-        col.colHeaderTemplate = inputHeader + labelHeader;
+        col.__colHeaderTemplateGenerated = inputHeader + labelHeader;
       } else {
-        col.colHeaderTemplate = labelHeader + inputHeader;
+        col.__colHeaderTemplateGenerated = labelHeader + inputHeader;
       }
     }
   }
@@ -104,8 +108,6 @@ export class ColumnMarkupHelper {
       switch (col.colType) {
 
         case 'selection':
-          // override to manual selection
-          // this.vGrid.vGridConfig.attManualSelection = true;
           // set template
           col.colRowTemplate = `<input 
             v-key-move 
@@ -185,13 +187,9 @@ export class ColumnMarkupHelper {
     let css = col.colCss ? `css="${col.colCss}"` : '';
 
     let imageFix = `v-image-fix.bind="${col.colField}"`;
-    if (this.useCustomOnly) {
-      imageFix = '';
-    }
-
 
     // insert the markup
-    col.colRowTemplate = `<image ${css} ${classNames} ${imageFix} ${attributeRow}>`;
+    col.__colRowTemplateGenerated = `<image ${css} ${classNames} ${imageFix} ${attributeRow}>`;
 
   }
 
@@ -207,24 +205,28 @@ export class ColumnMarkupHelper {
     // get attributes row
     let colAddRowAttributes = col.colAddRowAttributes ? col.colAddRowAttributes : '';
 
+    // menu ?
+    let colRowMenu = col.colRowMenu ? `v-menu="${col.colRowMenu}"` : '';
     // get css
     let colCss = col.colCss ? `css="${col.colCss}"` : '';
 
     // is it a checkbox?
     // todo: adding the observer part without choice, maybe param for that?
     if (col.colType === 'checkbox') {
-      col.colRowTemplate = `<input 
+      col.__colRowTemplateGenerated = `<input 
         ${colCss} 
         ${colClass} 
         ${colType} 
-        ${colAddRowAttributes}  
+        ${colAddRowAttributes} 
+        ${colRowMenu}  
         checked.bind="${col.colField}">`;
 
     } else {
-      col.colRowTemplate = `<input 
+      col.__colRowTemplateGenerated = `<input 
         ${colCss} 
         ${colClass} 
         ${colType} 
+        ${colRowMenu}  
         ${colAddRowAttributes}  
         value.bind="${col.colField}">`;
     }
@@ -256,23 +258,9 @@ export class ColumnMarkupHelper {
         classNames = `class="${col.colFilterTop ? 'avg-header-input-top' : 'avg-header-input-bottom'}"`;
       }
 
-      let vmenu: string = '';
-      if (filter) {
-        let field: string = col.colFilter;
-        let arr: Array<string> = col.colFilter.split(';');
-        arr.forEach((x: string) => {
-          if (x.indexOf('field') !== -1) {
-            field = x.replace('field:', '');
-          }
-        });
-        // apply magic
-        vmenu = `v-menu="filter:${field}"`;
-      }
+      let colRowMenu = col.colFilterMenu ? `v-menu="${col.colFilterMenu}"` : '';
 
-      if (this.useCustomOnly) {
-        vmenu = '';
-      }
-      markup = `<input ${vmenu} ${classNames} ${colAddFilterAttributes} ${type} ${filter}">`;
+      markup = `<input ${colRowMenu} ${classNames} ${colAddFilterAttributes} ${type} ${filter}">`;
     } else {
       markup = '';
     }
@@ -288,7 +276,7 @@ export class ColumnMarkupHelper {
     // get the values/settings
     let filterClass = col.colFilter ? `${col.colFilterTop ? 'avg-label-bottom' : 'avg-label-top'}` : 'avg-label-full';
 
-    let dragDropClass = true ? 'avg-vGridDragHandle' : '';
+    let dragDropClass = col.colDragDrop ? 'avg-vGridDragHandle' : '';
 
     let classname = `class="${dragDropClass} ${filterClass}"`;
 
@@ -296,33 +284,12 @@ export class ColumnMarkupHelper {
 
     let sort = col.colSort ? `v-sort="${col.colSort}"` : '';
 
-    let tempFieldSplit = col.colField.split(' ');
-    let headerName = col.colHeaderName.replace('rowRef.', '');
-    let field = tempFieldSplit[0].replace('rowRef.', '');
+    let colLabelMenu = col.colLabelMenu ? `v-menu="${col.colLabelMenu}"` : '';
 
-    let vmenu: string = `v-menu="groupby:${field}"`;
-    if (sort) {
-      let fieldMenu: string = col.colSort;
-      let arr: Array<string> = col.colSort.split(';');
-      arr.forEach((x: string) => {
-        if (x.indexOf('field') !== -1) {
-          fieldMenu = x.replace('field:', '');
-        }
-      });
-      // apply magic
-      vmenu = `v-menu="sort:${fieldMenu};groupby:${field}"`;
-    } 
+    let colDragDrop = col.colDragDrop !== 'false' ? `v-drag-drop-col="${col.colDragDrop}"` : '';
+    let colResizeable = col.colResizeable !== 'false' ? `v-resize-col` : '';
 
-
-
-
-
-    let extraAttributes = `v-drag-drop-col="title:${headerName};field:${field}" v-resize-col ${vmenu}`;
-    if (this.useCustomOnly) {
-      extraAttributes = '';
-    }
-
-
+    let extraAttributes = `${colDragDrop} ${colResizeable} ${colLabelMenu}`;
 
     // apply magic
     // todo, atm Im adding resize columns and dragdrop columns, should this be a choice?

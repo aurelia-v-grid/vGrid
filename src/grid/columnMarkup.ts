@@ -42,7 +42,7 @@ export class ColumnMarkup {
   private rightRows: NodeListOf<Element>;
   private groupRows: NodeListOf<Element>;
   private rowLength: number;
-  private attOnlyCustomAttributes: boolean;
+
 
 
 
@@ -75,7 +75,6 @@ export class ColumnMarkup {
     colRepeatRowTemplate: string,
     colRepeatRowHeaderTemplate: string,
     colGroup: string,
-    attOnlyCustomAttributes: boolean
   ): void {
     this.overrideContext = overrideContext;
     this.colConfig = colConfig;
@@ -84,10 +83,9 @@ export class ColumnMarkup {
     this.colRepeatRowTemplate = colRepeatRowTemplate;
     this.colRepeatHeaderTemplate = colRepeatRowHeaderTemplate;
     this.colGroup = colGroup;
-    this.attOnlyCustomAttributes = attOnlyCustomAttributes;
     this.updateInternalHtmlCache();
     if (this.colConfig.length > 0) {
-      this.markupHelper.generate(this.colConfig, this.attOnlyCustomAttributes);
+      this.markupHelper.generate(this.colConfig);
     }
 
     this.generateColumns();
@@ -155,7 +153,7 @@ export class ColumnMarkup {
             default:
           }
 
-          let template = this.colConfig[i].colRowTemplate;
+          let template = this.colConfig[i].__colRowTemplateGenerated;
           let colMarkup = `<avg-col \
                               class="avg-col" \
                               if.bind="setup${type}[${i}].show && rowRef.__group !== true" ${style}>${template}\
@@ -242,7 +240,7 @@ export class ColumnMarkup {
         }
 
 
-        let template = this.colConfig[i].colHeaderTemplate;
+        let template = this.colConfig[i].__colHeaderTemplateGenerated;
         let colMarkup = `<avg-col \
                             avg-type="${type}" \
                             avg-config-col="${i}" \

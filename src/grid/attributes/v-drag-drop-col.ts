@@ -380,6 +380,9 @@ export class VGridDragDropCol {
         // show column
         this.sharedContext.columnsArray[this.sharedContext.colNo].show = true;
 
+        // set correct width
+        this.sharedContext.columnsArray[this.sharedContext.colNo].width = width;
+
         // set new shared column context
         this.sharedContext.columnsArraySorted = [];
         this.sharedContext.columnsArray.forEach((x) => {

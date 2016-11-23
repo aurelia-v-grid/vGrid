@@ -73,7 +73,7 @@ export class VGrid {
     @bindable({ attribute: 'v-row-on-draw' }) public attOnRowDraw: Function;
     @bindable({attribute: 'v-columns'}) public attColConfig: Array<ColConfig>;
     @bindable({ attribute: 'v-language' }) public attLanguage: any;
-    @bindable({ attribute: 'v-only-custom-attributes' }) public attOnlyCustomAttributes: boolean;
+
 
 
 
@@ -179,7 +179,6 @@ export class VGrid {
         this.element.classList.add(this.attTheme);
         this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
         this.attLanguage = typeof this.attLanguage === 'object' ? this.attLanguage : {};
-        this.attOnlyCustomAttributes = this.attOnlyCustomAttributes ? this.checkBool(this.attOnlyCustomAttributes) : null;
 
     }
 

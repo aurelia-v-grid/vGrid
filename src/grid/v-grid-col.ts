@@ -70,6 +70,12 @@ export class VGridElementColConfig {
   @bindable({ attribute: 'col-add-filter-attributes' }) private colAddFilterAttributes: string;
   @bindable({ attribute: 'col-add-row-attributes' }) private colAddRowAttributes: string;
   @bindable({ attribute: 'col-type' }) private colType: string;
+  @bindable({ attribute: 'col-filter-menu' }) private colFilterMenu: string;
+  @bindable({ attribute: 'col-label-menu' }) private colLabelMenu: string;
+  @bindable({ attribute: 'col-row-menu' }) private colRowMenu: string;
+  @bindable({ attribute: 'col-hidden' }) private colHidden: boolean;
+  @bindable({ attribute: 'col-drag-drop' }) private colDragDrop: string;
+  @bindable({ attribute: 'col-resizeable' }) private colResizeable: string;
 
 
   constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
@@ -92,6 +98,12 @@ export class VGridElementColConfig {
       colPinLeft: this.checkBool(this.colPinLeft),
       colPinRight: this.checkBool(this.colPinRight),
       colHeaderName: this.colHeaderName,
+      colHeaderMenu: this.colFilterMenu,
+      colLabelMenu: this.colLabelMenu,
+      colRowMenu: this.colRowMenu,
+      colHidden: this.checkBool(this.colHidden),
+      colDragDrop: this.colDragDrop,
+      colResizeable: this.colResizeable,
       colAddLabelAttributes: this.colAddLabelAttributes,
       colAddFilterAttributes: this.colAddFilterAttributes,
       colAddRowAttributes: this.colAddRowAttributes,
