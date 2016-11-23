@@ -12,7 +12,9 @@ gulp.task('serve', ['dev-build', 'sample-build'], function(done) {
       routes: {
         '/root/': './'
       }
-    }
+    },
+    ghostMode:false,
+    open:false
   };
 
   // Create a route to the build output directory so we can load the plugin from the subdir
