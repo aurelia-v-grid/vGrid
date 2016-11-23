@@ -33,7 +33,7 @@ var GroupingElements = (function () {
             this.lastAdded = name;
             this.groupContext[name] = new GroupContext(name, field, this);
             var viewMarkup = this.colGroupElement ||
-                "<div class=\"avg-grouping\">  \n          <p class=\"avg-grouping-element\" v-sort=\"field:" + field + "\">" + name + " \n            <i><svg click.delegate=\"remove()\" class=\"icon iconhidden\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\">\n              <path d=\"M3 4l4.3 4L3 12h1.4L8 8.7l3.5 3.3H13L8.6 8 13 4h-1.5L8 7.3 4.4 4H3z\"/>\n            </svg></i>\n          </p>\n         </div>";
+                "<div class=\"avg-grouping\">  \n          <p class=\"avg-grouping-element\" v-sort=\"field.bind:field\">" + name + " \n            <i><svg click.delegate=\"remove()\" class=\"icon iconhidden\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\">\n              <path d=\"M3 4l4.3 4L3 12h1.4L8 8.7l3.5 3.3H13L8.6 8 13 4h-1.5L8 7.3 4.4 4H3z\"/>\n            </svg></i>\n          </p>\n         </div>";
             var viewFactory = this.viewCompiler.compile("<template>" + viewMarkup + "</template>", this.viewResources);
             var view = viewFactory.create(this.container);
             var viewSlot = new aurelia_framework_1.ViewSlot(this.avgTopPanel, true);

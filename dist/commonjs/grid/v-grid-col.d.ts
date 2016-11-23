@@ -20,6 +20,12 @@ export declare class VGridElementColConfig {
     private colAddFilterAttributes;
     private colAddRowAttributes;
     private colType;
+    private colFilterMenu;
+    private colLabelMenu;
+    private colRowMenu;
+    private colHidden;
+    private colDragDrop;
+    private colResizeable;
     constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction);
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
     private checkBool(value);

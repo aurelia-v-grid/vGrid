@@ -28,6 +28,12 @@ var VGridElementColConfig = (function () {
             colPinLeft: this.checkBool(this.colPinLeft),
             colPinRight: this.checkBool(this.colPinRight),
             colHeaderName: this.colHeaderName,
+            colHeaderMenu: this.colFilterMenu,
+            colLabelMenu: this.colLabelMenu,
+            colRowMenu: this.colRowMenu,
+            colHidden: this.checkBool(this.colHidden),
+            colDragDrop: this.colDragDrop,
+            colResizeable: this.colResizeable,
             colAddLabelAttributes: this.colAddLabelAttributes,
             colAddFilterAttributes: this.colAddFilterAttributes,
             colAddRowAttributes: this.colAddRowAttributes,
@@ -107,6 +113,30 @@ __decorate([
     aurelia_framework_1.bindable({ attribute: 'col-type' }),
     __metadata("design:type", String)
 ], VGridElementColConfig.prototype, "colType", void 0);
+__decorate([
+    aurelia_framework_1.bindable({ attribute: 'col-filter-menu' }),
+    __metadata("design:type", String)
+], VGridElementColConfig.prototype, "colFilterMenu", void 0);
+__decorate([
+    aurelia_framework_1.bindable({ attribute: 'col-label-menu' }),
+    __metadata("design:type", String)
+], VGridElementColConfig.prototype, "colLabelMenu", void 0);
+__decorate([
+    aurelia_framework_1.bindable({ attribute: 'col-row-menu' }),
+    __metadata("design:type", String)
+], VGridElementColConfig.prototype, "colRowMenu", void 0);
+__decorate([
+    aurelia_framework_1.bindable({ attribute: 'col-hidden' }),
+    __metadata("design:type", Boolean)
+], VGridElementColConfig.prototype, "colHidden", void 0);
+__decorate([
+    aurelia_framework_1.bindable({ attribute: 'col-drag-drop' }),
+    __metadata("design:type", String)
+], VGridElementColConfig.prototype, "colDragDrop", void 0);
+__decorate([
+    aurelia_framework_1.bindable({ attribute: 'col-resizeable' }),
+    __metadata("design:type", String)
+], VGridElementColConfig.prototype, "colResizeable", void 0);
 VGridElementColConfig = __decorate([
     aurelia_framework_1.noView(),
     aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {

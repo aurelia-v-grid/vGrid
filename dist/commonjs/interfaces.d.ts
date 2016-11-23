@@ -59,22 +59,30 @@ export interface HeaderCache {
 }
 export interface ColConfig {
     [key: string]: any;
-    colWidth: number;
-    colRowTemplate: string;
-    colHeaderTemplate: string;
+    colWidth?: number;
+    colRowTemplate?: string;
+    colHeaderTemplate?: string;
     colField: string;
-    colPinLeft: boolean;
-    colPinRight: boolean;
-    colHeaderName: string;
-    colAddLabelAttributes: string;
-    colAddFilterAttributes: string;
-    colAddRowAttributes: string;
-    colSort: string;
-    colFilter: string;
-    colFilterTop: boolean;
-    colCss: string;
-    colType: string;
+    colPinLeft?: boolean;
+    colPinRight?: boolean;
+    colHeaderName?: string;
+    colAddLabelAttributes?: string;
+    colAddFilterAttributes?: string;
+    colAddRowAttributes?: string;
+    colFilterMenu?: string;
+    colLabelMenu?: string;
+    colRowMenu?: string;
+    colHidden?: boolean;
+    colDragDrop?: string;
+    colResizeable?: string;
+    colSort?: string;
+    colFilter?: string;
+    colFilterTop?: boolean;
+    colCss?: string;
+    colType?: string;
     __colSortHelper?: number;
+    __colHeaderTemplateGenerated?: string;
+    __colRowTemplateGenerated?: string;
 }
 export interface Entity {
     [key: string]: any;

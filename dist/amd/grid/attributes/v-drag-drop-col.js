@@ -208,6 +208,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
                     this.sharedContext.colType = result.colType;
                     this.sharedContext.columnsArray = this.vGrid.columnBindingContext['setup' + result.colType];
                     this.sharedContext.columnsArray[this.sharedContext.colNo].show = true;
+                    this.sharedContext.columnsArray[this.sharedContext.colNo].width = width;
                     this.sharedContext.columnsArraySorted = [];
                     this.sharedContext.columnsArray.forEach(function (x) {
                         _this.sharedContext.columnsArraySorted.push(x);

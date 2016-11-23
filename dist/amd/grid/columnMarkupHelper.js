@@ -2,8 +2,7 @@ define(["require", "exports"], function (require, exports) {
     var ColumnMarkupHelper = (function () {
         function ColumnMarkupHelper() {
         }
-        ColumnMarkupHelper.prototype.generate = function (colConfig, useCustomOnly) {
-            this.useCustomOnly = useCustomOnly;
+        ColumnMarkupHelper.prototype.generate = function (colConfig) {
             var type = null;
             if (colConfig && colConfig.length > 0) {
                 type = 'typeHtml';
@@ -29,6 +28,12 @@ define(["require", "exports"], function (require, exports) {
                 col.colField = _this.checkAttribute(col.colField);
                 _this.createHeaderTemplate(col);
                 _this.createRowTemplate(col);
+                if (col.colRowTemplate) {
+                    col.__colRowTemplateGenerated = col.colRowTemplate;
+                }
+                if (col.colHeaderTemplate) {
+                    col.__colHeaderTemplateGenerated = col.colHeaderTemplate;
+                }
             });
         };
         ColumnMarkupHelper.prototype.createHeaderTemplate = function (col) {
@@ -53,10 +58,10 @@ define(["require", "exports"], function (require, exports) {
                         break;
                 }
                 if (col.colFilterTop) {
-                    col.colHeaderTemplate = inputHeader + labelHeader;
+                    col.__colHeaderTemplateGenerated = inputHeader + labelHeader;
                 }
                 else {
-                    col.colHeaderTemplate = labelHeader + inputHeader;
+                    col.__colHeaderTemplateGenerated = labelHeader + inputHeader;
                 }
             }
         };
@@ -115,21 +120,19 @@ define(["require", "exports"], function (require, exports) {
             var attributeRow = col.colAddRowAttributes ? col.colAddRowAttributes : '';
             var css = col.colCss ? "css=\"" + col.colCss + "\"" : '';
             var imageFix = "v-image-fix.bind=\"" + col.colField + "\"";
-            if (this.useCustomOnly) {
-                imageFix = '';
-            }
-            col.colRowTemplate = "<image " + css + " " + classNames + " " + imageFix + " " + attributeRow + ">";
+            col.__colRowTemplateGenerated = "<image " + css + " " + classNames + " " + imageFix + " " + attributeRow + ">";
         };
         ColumnMarkupHelper.prototype.createInputRowMarkup = function (col) {
             var colClass = "class=\"" + (col.colType === 'checkbox' ? 'avg-row-checkbox-100' : 'avg-row-input') + "\"";
             var colType = "type=\"" + col.colType + "\"";
             var colAddRowAttributes = col.colAddRowAttributes ? col.colAddRowAttributes : '';
+            var colRowMenu = col.colRowMenu ? "v-menu=\"" + col.colRowMenu + "\"" : '';
             var colCss = col.colCss ? "css=\"" + col.colCss + "\"" : '';
             if (col.colType === 'checkbox') {
-                col.colRowTemplate = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colAddRowAttributes + "  \n        checked.bind=\"" + col.colField + "\">";
+                col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colAddRowAttributes + " \n        " + colRowMenu + "  \n        checked.bind=\"" + col.colField + "\">";
             }
             else {
-                col.colRowTemplate = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colAddRowAttributes + "  \n        value.bind=\"" + col.colField + "\">";
+                col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colRowMenu + "  \n        " + colAddRowAttributes + "  \n        value.bind=\"" + col.colField + "\">";
             }
         };
         ColumnMarkupHelper.prototype.createInputHeaderMarkup = function (col) {
@@ -145,21 +148,8 @@ define(["require", "exports"], function (require, exports) {
                 else {
                     classNames = "class=\"" + (col.colFilterTop ? 'avg-header-input-top' : 'avg-header-input-bottom') + "\"";
                 }
-                var vmenu = '';
-                if (filter) {
-                    var field_1 = col.colFilter;
-                    var arr = col.colFilter.split(';');
-                    arr.forEach(function (x) {
-                        if (x.indexOf('field') !== -1) {
-                            field_1 = x.replace('field:', '');
-                        }
-                    });
-                    vmenu = "v-menu=\"filter:" + field_1 + "\"";
-                }
-                if (this.useCustomOnly) {
-                    vmenu = '';
-                }
-                markup = "<input " + vmenu + " " + classNames + " " + colAddFilterAttributes + " " + type + " " + filter + "\">";
+                var colRowMenu = col.colFilterMenu ? "v-menu=\"" + col.colFilterMenu + "\"" : '';
+                markup = "<input " + colRowMenu + " " + classNames + " " + colAddFilterAttributes + " " + type + " " + filter + "\">";
             }
             else {
                 markup = '';
@@ -168,28 +158,14 @@ define(["require", "exports"], function (require, exports) {
         };
         ColumnMarkupHelper.prototype.createLabelMarkup = function (col) {
             var filterClass = col.colFilter ? "" + (col.colFilterTop ? 'avg-label-bottom' : 'avg-label-top') : 'avg-label-full';
-            var dragDropClass = true ? 'avg-vGridDragHandle' : '';
+            var dragDropClass = col.colDragDrop ? 'avg-vGridDragHandle' : '';
             var classname = "class=\"" + dragDropClass + " " + filterClass + "\"";
             var colAddLabelAttributes = col.colAddLabelAttributes ? col.colAddLabelAttributes : '';
             var sort = col.colSort ? "v-sort=\"" + col.colSort + "\"" : '';
-            var tempFieldSplit = col.colField.split(' ');
-            var headerName = col.colHeaderName.replace('rowRef.', '');
-            var field = tempFieldSplit[0].replace('rowRef.', '');
-            var vmenu = "v-menu=\"groupby:" + field + "\"";
-            if (sort) {
-                var fieldMenu_1 = col.colSort;
-                var arr = col.colSort.split(';');
-                arr.forEach(function (x) {
-                    if (x.indexOf('field') !== -1) {
-                        fieldMenu_1 = x.replace('field:', '');
-                    }
-                });
-                vmenu = "v-menu=\"sort:" + fieldMenu_1 + ";groupby:" + field + "\"";
-            }
-            var extraAttributes = "v-drag-drop-col=\"title:" + headerName + ";field:" + field + "\" v-resize-col " + vmenu;
-            if (this.useCustomOnly) {
-                extraAttributes = '';
-            }
+            var colLabelMenu = col.colLabelMenu ? "v-menu=\"" + col.colLabelMenu + "\"" : '';
+            var colDragDrop = col.colDragDrop !== 'false' ? "v-drag-drop-col=\"" + col.colDragDrop + "\"" : '';
+            var colResizeable = col.colResizeable !== 'false' ? "v-resize-col" : '';
+            var extraAttributes = colDragDrop + " " + colResizeable + " " + colLabelMenu;
             return "<p \n      " + extraAttributes + " \n      " + classname + " \n      " + sort + " \n      " + colAddLabelAttributes + ">\n      " + col.colHeaderName + "\n      </p>";
         };
         return ColumnMarkupHelper;

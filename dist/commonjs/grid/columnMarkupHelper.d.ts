@@ -1,7 +1,6 @@
 import { ColConfig } from '../interfaces';
 export declare class ColumnMarkupHelper {
-    private useCustomOnly;
-    generate(colConfig: Array<ColConfig>, useCustomOnly: boolean): void;
+    generate(colConfig: Array<ColConfig>): void;
     private processColumns(array);
     private createHeaderTemplate(col);
     private createRowTemplate(col);

@@ -42,7 +42,6 @@ export declare class Controller {
     attGridConnector: GridConnector;
     attOnRowDraw: Function;
     attLanguage: any;
-    attOnlyCustomAttributes: boolean;
     constructor(vGrid: VGrid);
     getContext(): void;
     createGrid(): void;

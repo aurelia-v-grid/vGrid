@@ -64,7 +64,6 @@ export declare class VGrid {
     attOnRowDraw: Function;
     attColConfig: Array<ColConfig>;
     attLanguage: any;
-    attOnlyCustomAttributes: boolean;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, taskQueue: TaskQueue);
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
     unbind(): void;

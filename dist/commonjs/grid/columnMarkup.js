@@ -11,7 +11,7 @@ var ColumnMarkup = (function () {
         this.container = container;
         this.viewResources = viewResources;
     }
-    ColumnMarkup.prototype.init = function (colConfig, overrideContext, colRepeater, colRepeatRowTemplate, colRepeatRowHeaderTemplate, colGroup, attOnlyCustomAttributes) {
+    ColumnMarkup.prototype.init = function (colConfig, overrideContext, colRepeater, colRepeatRowTemplate, colRepeatRowHeaderTemplate, colGroup) {
         this.overrideContext = overrideContext;
         this.colConfig = colConfig;
         this.configLength = colConfig.length;
@@ -19,10 +19,9 @@ var ColumnMarkup = (function () {
         this.colRepeatRowTemplate = colRepeatRowTemplate;
         this.colRepeatHeaderTemplate = colRepeatRowHeaderTemplate;
         this.colGroup = colGroup;
-        this.attOnlyCustomAttributes = attOnlyCustomAttributes;
         this.updateInternalHtmlCache();
         if (this.colConfig.length > 0) {
-            this.markupHelper.generate(this.colConfig, this.attOnlyCustomAttributes);
+            this.markupHelper.generate(this.colConfig);
         }
         this.generateColumns();
     };
@@ -72,7 +71,7 @@ var ColumnMarkup = (function () {
                             break;
                         default:
                     }
-                    var template = this.colConfig[i].colRowTemplate;
+                    var template = this.colConfig[i].__colRowTemplateGenerated;
                     var colMarkup = "<avg-col                               class=\"avg-col\"                               if.bind=\"setup" + type + "[" + i + "].show && rowRef.__group !== true\" " + style + ">" + template + "                          </avg-col>";
                     viewMarkup = viewMarkup + colMarkup;
                 }
@@ -137,7 +136,7 @@ var ColumnMarkup = (function () {
                         break;
                     default:
                 }
-                var template = this.colConfig[i].colHeaderTemplate;
+                var template = this.colConfig[i].__colHeaderTemplateGenerated;
                 var colMarkup = "<avg-col                             avg-type=\"" + type + "\"                             avg-config-col=\"" + i + "\"                             class=\"avg-col\"                             if.bind=\"setup" + type + "[" + i + "].show\"                             " + style + ">" + template + "                          </avg-col>";
                 viewMarkup = viewMarkup + colMarkup;
             }
