@@ -211,10 +211,9 @@ export class VGrid {
         }
 
         // bind columns
-        this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
+        this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext, this.attGridConnector.getSelection());
 
         // todo: should I bind the main, grouping and loading screen here?
-
         // connect gridConnector to this controler
         this.attGridConnector.gridCreated(this.controller);
     }

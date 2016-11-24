@@ -419,7 +419,7 @@ export class Controller {
       this.colRepeatRowTemplate,
       this.colRepeatRowHeaderTemplate,
       this.colGroupRow);
-    this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
+    this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext, this.attGridConnector.getSelection());
     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
     this.columnBindingContext.setupgrouping = length;
     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);

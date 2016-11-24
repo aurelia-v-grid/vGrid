@@ -5,7 +5,8 @@ import {
   RowCache,
   OverrideContext,
   HtmlCache,
-  ColumnBindingContext
+  ColumnBindingContext,
+  Selection
 } from '../interfaces';
 
 
@@ -48,7 +49,7 @@ export class ViewSlots {
 
   }
 
-  public bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext): void {
+  public bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext; curSelection: Selection): void {
 
     let context: BindingContext;
 
@@ -83,7 +84,7 @@ export class ViewSlots {
 
 
 
-    context = ({} as BindingContext);
+    context = ({selection: curSelection} as BindingContext);
     this.headerCache.bindingContext = context;
     this.headerCache.parentOverrideContext = {
       bindingContext: context,
