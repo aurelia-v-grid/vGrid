@@ -1,3 +1,7 @@
+###Scroll down to bottom to see latest updates...
+
+---
+
 9 June- 2016
 ####[New home under aurelia toolkit](https://github.com/aurelia-ui-toolkits/aurelia-v-grid)
 
@@ -27,3 +31,10 @@
 * ```gulp build``` to build plugin
 * ```gulp watch``` to run sample
 
+---
+
+25 November 2016:
+
+* removed fonts
+* fix a few bugs, and added more features
+* Created a gitbook to start showing how to use while I keep developing it [gitbook](https://www.gitbook.com/book/vegarringdal/dev-rebuild/details)
