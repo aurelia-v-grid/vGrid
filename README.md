@@ -27,3 +27,10 @@
 * ```gulp build``` to build plugin
 * ```gulp watch``` to run sample
 
+---
+
+25 November 2016:
+
+* removed fonts
+* fix a few bugs, and added more features
+* Created a gitbook to start showing how to use while I keep developing it [gitbook](https://www.gitbook.com/book/vegarringdal/dev-rebuild/details)
