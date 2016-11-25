@@ -1,3 +1,7 @@
+###Scroll down to bottom to see latest updates...
+
+---
+
 9 June- 2016
 ####[New home under aurelia toolkit](https://github.com/aurelia-ui-toolkits/aurelia-v-grid)
 
