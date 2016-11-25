@@ -49,7 +49,7 @@ export class ViewSlots {
 
   }
 
-  public bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext; curSelection: Selection): void {
+  public bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext, curSelection: Selection): void {
 
     let context: BindingContext;
 
