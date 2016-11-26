@@ -4,8 +4,8 @@ export class Selection {
   private mode: string;
   private selectedRows: number;
   private selection: Set<number>;
-  private lastRowSelected: number;
-  private lastKeyKodeUsed: string;
+  // private lastRowSelected: number;
+  // private lastKeyKodeUsed: string;
 
   constructor(mode: string) {
     this.mode = mode;
@@ -17,9 +17,6 @@ export class Selection {
     return this.mode;
   }
 
-  public setMode(): void {
-    // todo
-  }
 
   public getRowKey(row: number): number {
     return row;
@@ -119,8 +116,8 @@ export class Selection {
     if (this.selectedRows > 0) {
       this.selection.clear();
     }
-    this.lastRowSelected = -1;
-    this.lastKeyKodeUsed = 'none';
+    // this.lastRowSelected = -1;
+    // this.lastKeyKodeUsed = 'none';
     this.selectedRows = this.selection.size;
   }
 

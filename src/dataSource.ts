@@ -68,7 +68,7 @@ export class DataSource {
   }
 
 
-  public get length(): number {
+  public length(): number {
     return this.collection.length;
   }
 

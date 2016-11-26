@@ -45,7 +45,7 @@ export class GridConnector {
 
 
   public getDatasourceLength(): number {
-    return this.datasource.length;
+    return this.datasource.length();
   }
 
   public getColConfig(): Array<ColConfig> {
