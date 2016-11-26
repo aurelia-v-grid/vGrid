@@ -1,4 +1,5 @@
 export * from './interfaces';
+export * from './wakdb/wakinterfaces';
 const prefix = './grid';
 export function configure(config: any) {
   config.globalResources(
