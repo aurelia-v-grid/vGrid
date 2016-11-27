@@ -25,8 +25,6 @@ export class WakEntity {
     }
 
 
-
-
     public __setGetterSetters() {
         let attributeArray = [];
         for (let k in this.__attributes) {
@@ -242,6 +240,7 @@ export class WakEntity {
         });
     }
 
+
     public bindWithKey(attributeName: any, key: any) {
         // now it should be possible to just set a object to it as long as it contains __KEY
         // this will be deleted...
@@ -276,8 +275,6 @@ export class WakEntity {
         }
         return value;
     }
-
-
 
 
     public __convert(attributeName: any, value: any) {
@@ -339,8 +336,6 @@ export class WakEntity {
     }
 
 
-
-
     public __setDefaults(data: any) {
 
         this.__KEY = data.__KEY;
@@ -386,8 +381,6 @@ export class WakEntity {
     }
 
 
-
-
     public __getUnsaved(returnKey: any) {
         let changeObject: any = {};
 
@@ -410,9 +403,6 @@ export class WakEntity {
 
         return changeObject;
     }
-
-
-
 
 
     public __update(data: any) {

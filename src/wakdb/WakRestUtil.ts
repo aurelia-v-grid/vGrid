@@ -44,12 +44,12 @@ export class WakRestUtil {
         }
         // $filter
         if (options.filter) {
-            queryString += (!addAmpersand ? '$filter=' : '&$filter=') + encodeURIComponent('"' + options.filter + '"');
+            queryString += (!addAmpersand ? '$filter=' : '&$filter=') + encodeURIComponent("'" + options.filter + "'");
             addAmpersand = true;
         }
         // $params
         if (options.params) {
-            queryString += (!addAmpersand ? '$params=' : '&$params=') + encodeURIComponent('"' + JSON.stringify(options.params) + '"');
+            queryString += (!addAmpersand ? '$params=' : '&$params=') + encodeURIComponent("'" + JSON.stringify(options.params) + "'");
             addAmpersand = true;
         }
         // $method
@@ -90,7 +90,7 @@ export class WakRestUtil {
             addAmpersand = true;
         }
         if (options.savedQueryString) {
-            queryString += (!addAmpersand ? '$savedfilter=' : '&$savedfilter=') + encodeURIComponent('"' + options.savedQueryString + '"');
+            queryString += (!addAmpersand ? '$savedfilter=' : '&$savedfilter=') + encodeURIComponent("'" + options.savedQueryString + "'");
             addAmpersand = true;
         }
         if (options.savedOrderby) {
@@ -128,17 +128,17 @@ export class WakRestUtil {
         }
         // $addToSet
         if (options.addToSet != null) {
-            queryString += (!addAmpersand ? '$addToSet=' : '&$addToSet=') + encodeURIComponent('"' + JSON.stringify(options.addToSet) + '"');
+            queryString += (!addAmpersand ? '$addToSet=' : '&$addToSet=') + encodeURIComponent("'" + JSON.stringify(options.addToSet) + "'");
             addAmpersand = true;
         }
         // $fromSel
         if (options.fromSelection != null) {
-            queryString += (!addAmpersand ? '$fromSel=' : '&$fromSel=') + encodeURIComponent('"' + JSON.stringify(options.fromSelection) + '"');
+            queryString += (!addAmpersand ? '$fromSel=' : '&$fromSel=') + encodeURIComponent("'" + JSON.stringify(options.fromSelection) + "'");
             addAmpersand = true;
         }
         // $keepSel <-- need to use for keeping selection
         if (options.keepSelection != null) {
-            queryString += (!addAmpersand ? '$keepSel=' : '&$keepSel=') + encodeURIComponent('"' + JSON.stringify(options.keepSelection) + '"');
+            queryString += (!addAmpersand ? '$keepSel=' : '&$keepSel=') + encodeURIComponent("'" + JSON.stringify(options.keepSelection) + "'");
             addAmpersand = true;
         }
         // $orderby
@@ -200,7 +200,7 @@ export class WakRestUtil {
 
         // Adds queryString to url
         if (queryString !== '') {
-            if (needToAddQuaestionMark){
+            if (needToAddQuaestionMark) {
                 url += '?';
             }
             url += queryString;

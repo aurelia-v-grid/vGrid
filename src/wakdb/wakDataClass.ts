@@ -59,7 +59,6 @@ export class WakDataClass {
     }
 
 
-
     public query(queryString: any, options: any) {
         return new Promise((resolve, reject) => {
 
@@ -88,7 +87,6 @@ export class WakDataClass {
             });
         });
     }
-
 
 
     public save(data: any, options: any) {

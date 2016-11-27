@@ -34,8 +34,6 @@ export class WakDirectory {
     public currentUser() {
         return new Promise((resolve, reject) => {
 
-
-
             let dataURI = '/rest/$directory/currentUser';
 
             let requestOptions: RequestOptions = {
@@ -53,8 +51,6 @@ export class WakDirectory {
 
 
     }
-
-
 
 
     public currentUserBelongsTo(groups: any) {
@@ -76,9 +72,6 @@ export class WakDirectory {
         });
 
     }
-
-
-
 
 
     public login(username: any, password: any, duration: any) {
@@ -104,8 +97,6 @@ export class WakDirectory {
     }
 
 
-
-
     public logout() {
         return new Promise((resolve, reject) => {
 
@@ -126,17 +117,6 @@ export class WakDirectory {
 
         });
     }
-
-
-
-    /*public loginByKey(name: any, key: any) {
-        /// todo
-    }
-
-    public loginByPassword(name: any, key: any) {
-        /// todo
-    }*/
-
 
 
 }

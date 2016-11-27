@@ -1,6 +1,6 @@
 export class WakClassMethod {
-    public source: any;
-    public name: any;
+    private source: any;
+    private name: any;
 
     constructor(source: any, name: any) {
         this.source = source;
@@ -29,7 +29,6 @@ export class WakClassMethod {
             }).catch((err: any) => {
                 reject(err);
             });
-
 
         });
     }

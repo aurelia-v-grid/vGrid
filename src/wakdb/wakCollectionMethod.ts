@@ -8,7 +8,6 @@ export class WakCollectionMethod {
     }
 
 
-
     public execute(params: any, options: any) {
         return new Promise((resolve, reject) => {
             this.source.__queueRequest((done: any) => {

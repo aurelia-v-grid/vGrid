@@ -1,4 +1,4 @@
-import { HttpClient} from 'aurelia-fetch-client';
+import { HttpClient } from 'aurelia-fetch-client';
 import { WakDataClass } from './wakDataClass';
 import { WakDataSource } from './wakDataSource';
 import { WakRestUtil } from './wakRestUtil';
@@ -25,13 +25,9 @@ export class WakRestApi {
     }
 
 
-
-
     public generateRestString(url: any, options: any) {
         return this.rest.generateRestString(url, options);
     }
-
-
 
 
     public loaded() {
@@ -60,8 +56,6 @@ export class WakRestApi {
 
         });
     }
-
-
 
 
     public callServer(url: any, options: any) {
@@ -97,8 +91,6 @@ export class WakRestApi {
                 });
         });
     }
-
-
 
 
     public configure(config: any) {
@@ -148,8 +140,6 @@ export class WakRestApi {
     }
 
 
-
-
     public configureHttp() {
         this.httpClient.configure((config: any) => {
             config
@@ -160,8 +150,6 @@ export class WakRestApi {
                 });
         });
     }
-
-
 
 
     public createDataSources(sources: any) {
@@ -182,9 +170,6 @@ export class WakRestApi {
     }
 
 
-
-
-
     public localCatalog(data: any) {
         return new Promise((resolve, reject) => {
             let restAPI = this;
@@ -199,8 +184,6 @@ export class WakRestApi {
             }
         });
     }
-
-
 
 
     public fetchCatalog() {
@@ -227,7 +210,6 @@ export class WakRestApi {
                 });
         });
     }
-
 
 
 }

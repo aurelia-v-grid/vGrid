@@ -1,5 +1,6 @@
+import { SelectionInterface } from '../interfaces';
 
-export class WakSelection  {
+export class WakSelection implements SelectionInterface {
     private mode: string;
     private selectedRows: number;
     private selection: Set<number>;
@@ -24,7 +25,7 @@ export class WakSelection  {
     }
 
 
-    public isSelected(row: any) {
+    public isSelected(row: number): boolean {
         let result = false;
         if (this.selectedRows > 0) {
             result = this.selection.has(row);
@@ -33,19 +34,19 @@ export class WakSelection  {
     }
 
 
-    public deSelect(row: any) {
+    public deSelect(row: number): void {
         this.selection.delete(row);
         this.selectedRows = this.selection.size;
     }
 
 
-    public deSelectAll() {
+    public deSelectAll(): void {
         this.selection.clear();
         this.selectedRows = this.selection.size;
     }
 
 
-    public select(row: any, addToSelection?: any) {
+    public select(row: number, addToSelection?: boolean): void {
         switch (this.mode) {
             case 'none':
             case null:
@@ -68,7 +69,7 @@ export class WakSelection  {
     }
 
 
-    public selectRange(start: any, end: any) {
+    public selectRange(start: number, end: number): void {
         if (this.mode === 'multiple') {
             this.selection.clear();
             for (let i = start; i < end + 1; i++) {
@@ -79,8 +80,8 @@ export class WakSelection  {
     }
 
 
-    public getSelectedRows(): any {
-        let array: Array<any> = [];
+    public getSelectedRows(): Array<number> {
+        let array: Array<number> = [];
         if (this.selectedRows > 0) {
             this.selection.forEach((value: any) => {
                 array.push(value);
@@ -90,7 +91,7 @@ export class WakSelection  {
     }
 
 
-    public setSelectedRows(newRows: any) {
+    public setSelectedRows(newRows: Array<number>): void {
         if (this.selectedRows > 0) {
             this.selection.clear();
         }
@@ -101,12 +102,12 @@ export class WakSelection  {
     }
 
 
-    public getmode() {
+    public getmode(): string {
         return this.mode;
     }
 
 
-    public reset() {
+    public reset(): void {
         if (this.selectedRows > 0) {
             this.selection.clear();
         }
@@ -116,12 +117,12 @@ export class WakSelection  {
     }
 
 
-    public trigger() {
+    public trigger(): void {
         this.source.__triggerEvent('selection_changed');
     }
 
 
-    public toggle() {
+    public toggle(): void {
         let length = this.source.collection.length;
         let sel = this.getSelectedRows();
         this.reset();
@@ -132,7 +133,6 @@ export class WakSelection  {
         }
         this.selectedRows = this.selection.size;
         this.trigger();
-
     }
 
 

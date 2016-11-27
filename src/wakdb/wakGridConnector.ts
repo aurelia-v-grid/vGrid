@@ -1,40 +1,77 @@
-// this is just for connecting the modified aurleia-v-grid to the datasource
-import {Controller} from '../interfaces';
+import {
+    Controller,
+    GridConnectorInterface,
+    SelectionInterface,
+    ColConfig,
+    FilterObject,
+    SortObject,
+    BindingContext
+} from '../interfaces';
 
-export class WakGridConnector {
-    public datasource: any;
-    public errorHandler: any;
-    public eventListenerID: any;
-    public filterOperatorNames: any;
-    public controller: any;
-    public createGrid: any;
+export class WakGridConnector implements GridConnectorInterface {
+    private datasource: any;
+    private errorHandler: any;
+    private eventListenerID: any;
+    private controller: any;
+    private createGrid: any;
+    private lastSort: Array<any> = [];
+    private curSort: Array<any> = [];
+    private lastFilter: Array<any> = [];
 
 
     constructor(datasource?: any) {
         // depending on source you can add on creation if datasource is there, else use set datasource
         this.datasource = datasource;
-
     }
 
-    public getSelection(): Selection {
+
+    public getSelection(): SelectionInterface {
         return this.datasource.selection;
     }
 
+
     public getCurrentOrderBy(): Array<any> {
-        return this.datasource.getCurrentOrderBy();
+        return this.curSort;
     }
+
+
+    public getCurrentFilter(): Array<FilterObject> {
+        return this.lastFilter;
+    }
+
 
     public getFilterOperatorName(name: string) {
         return this.datasource.getFilterOperatorName(name);
     }
 
+
+    public expandGroup(id: string): void {
+        console.warn('not usable in wak datasource');
+        // not usable in wak datasource
+        id = null;
+    }
+
+
+    public collapseGroup(id: string): void {
+        console.warn('not usable in wak datasource');
+        // not usable in wak datasource
+        id = null;
+    }
+
+
+    public setFilterOperatorName(key: string, name: string): void {
+        this.datasource.setFilterOperatorName(key, name);
+    }
+
+
     public getDatasourceLength() {
         if (this.datasource) {
-            return this.datasource.length();
+            return this.datasource.collection.length;
         } else {
             return 0;
         }
     }
+
 
     public connect(controller: Controller, create: Function): void {
         this.controller = controller;
@@ -54,15 +91,11 @@ export class WakGridConnector {
     }
 
 
-
-
-
-
     public setDatasource(datasource: any, errorHandler: any, setHeight: any, setSort: any) {
-        //fix later, do this to get ts to stop complaining
-        setHeight =  null;
+        // fix later, do this to get ts to stop complaining
+        setHeight = null;
         setSort = null;
-        
+
         this.datasource = datasource;
         let alt = () => { /*nothing?*/ };
         this.errorHandler = errorHandler || alt;
@@ -80,23 +113,28 @@ export class WakGridConnector {
     }
 
 
-
-    /************************************************************
-     *   All function below is called by the grid
-     */
-
-
-
-
-    public length() {
-        let length = 0;
-        if (this.datasource) {
-            length = this.datasource.collection.length;
-        }
-        return length;
+    public getColConfig(): Array<ColConfig> {
+        return this.controller.getColumnConfig();
     }
 
 
+    public setColConfig(colconfig: Array<ColConfig>): void {
+        this.controller.setColumnConfig(colconfig);
+    }
+
+
+    public getGrouping(): Array<string> {
+        // not implemeted in wak datasource
+        return []; // this.datasource.getGrouping();
+    }
+
+
+    public group(grouping: Array<string>, keepExpanded?: boolean): void {
+        console.warn('not usable in wak datasource');
+        // not implemeted in wak datasource
+        grouping = null;
+        keepExpanded = false;
+    }
 
 
     public select(row: any) {
@@ -106,27 +144,22 @@ export class WakGridConnector {
     }
 
 
-
     public getElement(options: { row: number, isDown: boolean, callback: Function }) {
         // send back emty object so we clear cell.
 
-        let rowContext = {
+        let rowContext = ({
             row: options.row,
             selection: this.datasource.selection,
             rowRef: {},
-            tempRef: {} //this.getRowProperties(rowData)
-        };
+            tempRef: {},
+        } as BindingContext);
 
         if (this.datasource) {
-            options.callback(rowContext);
-
             // is the row within the collection length =
             if (this.datasource.collection.length > options.row && options.row >= 0) {
+                options.callback(rowContext);
                 this.datasource.getElement(options.row)
                     .then((data: any) => {
-                        /* if (options.row === options.div.top / options.rowHeight) {
-                             options.callback(rowContext);
-                         }*/
                         rowContext.tempRef = this.getRowProperties(data);
                         rowContext.rowRef = data;
                         options.callback(rowContext);
@@ -134,6 +167,9 @@ export class WakGridConnector {
                         options.callback();
                         this.errorHandler('getElement', err);
                     });
+            } else {
+                rowContext.rowRef = null;
+                options.callback(rowContext);
             }
         } else {
             options.callback(rowContext);
@@ -141,41 +177,48 @@ export class WakGridConnector {
     }
 
 
+    public query(filterObj: Array<FilterObject>): void {
 
+        // set last filter for later usage
+        this.lastFilter = filterObj;
 
-    public filter(e: any) {
-        e.activateLoadingScreen();
-        let filter = this.createQueryString(e.filter);
-        let sort = this.createOrderByString(e.sort);
-        this.datasource.query(filter, {
-            orderby: sort,
-            releaseEntitySet: true // null = false...
-        })
-            .then(() => {
-                e.callback();
-            }).catch((err: any) => {
-                e.callback();
-                this.errorHandler('filter', err);
-            });
+        // set loading screen
+        this.controller.setLoadingScreen(true, 'Running query, please wait', 100000).then(() => {
+            let filter = this.createQueryString(this.lastFilter);
+            let sort = this.createOrderByString(this.lastSort);
+
+            // run query
+            this.datasource.query(filter, {
+                orderby: sort,
+                releaseEntitySet: true
+            })
+                .then(() => {
+                    // nothing atm
+                }).catch((err: any) => {
+                    this.errorHandler('filter', err);
+                });
+        });
     }
 
 
+    public orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
 
+        // get last sort
+        this.setOrderBy(attribute, addToCurrentSort);
 
-    public sort(e: any) {
-        e.activateLoadingScreen();
-        // let filter = this.createQueryString(e.filter);
-        let sort = this.createOrderByString(e.sort);
-        this.datasource.orderby(sort, true)
-            .then(() => {
-                e.callback();
-            }).catch((err: any) => {
-                e.callback();
-                this.errorHandler('sort', err);
-            });
+        // set loading screen
+        this.controller.setLoadingScreen(true, 'Running sort, please wait', 100000).then(() => {
+            let sort = this.createOrderByString(this.lastSort);
+
+            // run sort
+            this.datasource.orderby(sort, true)
+                .then(() => {
+                    // nothing atm
+                }).catch((err: any) => {
+                    this.errorHandler('sort', err);
+                });
+        });
     }
-
-
 
 
     public setValueToRow(attribute: any, value: any, row: any) {
@@ -185,24 +228,12 @@ export class WakGridConnector {
     }
 
 
-    public eventHandler(event: string): void {
+    private eventHandler(event: string): void {
         switch (event) {
             case 'collectionChange':
-            case 'collection_grouped':
-            case 'collection_collapsed_all':
-            case 'collection_expanded_all':
                 this.raiseEvent('sortIconUpdate');
                 this.controller.updateHeights();
                 this.controller.triggerScroll(0);
-                //this.controller.updateHeaderGrouping(this.datasource.getGrouping());
-                this.controller.setLoadingScreen(false);
-                break;
-            case 'collection_collapsed':
-            case 'collection_expanded':
-                this.raiseEvent('sortIconUpdate');
-                this.controller.updateHeights();
-                this.controller.triggerScroll(null);
-                //this.controller.updateHeaderGrouping(this.datasource.getGrouping());
                 this.controller.setLoadingScreen(false);
                 break;
             case 'collection_sorted':
@@ -213,20 +244,22 @@ export class WakGridConnector {
             case 'collection_filtered':
                 this.raiseEvent('sortIconUpdate');
                 this.controller.updateHeights();
-                this.controller.triggerScroll(null);
+                this.controller.triggerScroll(0);
                 this.controller.setLoadingScreen(false);
                 break;
-
+            case 'collection_update':
+                this.controller.updateHeights();
+                this.controller.rebindAllRows();
+                this.controller.setLoadingScreen(false);
+                break;
             default:
                 console.log('unknown event');
                 console.log(event);
-
         }
-
     }
 
 
-    public raiseEvent(name: string, data = {}): void {
+    private raiseEvent(name: string, data = {}): void {
         let event = new CustomEvent(name, {
             detail: data,
             bubbles: true
@@ -236,7 +269,8 @@ export class WakGridConnector {
         }
     }
 
-    public getRowProperties(obj: { [key: string]: any }): {} {
+
+    private getRowProperties(obj: { [key: string]: any }): {} {
         let x: { [key: string]: any } = {};
         if (obj) {
             let k: any;
@@ -257,7 +291,7 @@ export class WakGridConnector {
      */
 
 
-    public createOrderByString(orderByArray: any) {
+    private createOrderByString(orderByArray: any) {
         let sortArray: Array<any> = [];
         if (orderByArray) {
             orderByArray.forEach((param: any) => {
@@ -273,9 +307,7 @@ export class WakGridConnector {
     }
 
 
-
-
-    public createQueryString(queryArray: any) {
+    private createQueryString(queryArray: any) {
         if (queryArray) {
             let queryString = '';
             queryArray.forEach((param: any, index: any) => {
@@ -322,6 +354,71 @@ export class WakGridConnector {
             return queryString;
         } else {
             return null;
+        }
+    }
+
+
+    private setOrderBy(param: SortObject | any, add?: boolean): void {
+        let sort: any;
+        let useSetValue = false;
+        if (param.asc === undefined) {
+            sort = {
+                attribute: param,
+                asc: true
+            };
+        } else {
+            sort = {
+                attribute: param.attribute,
+                asc: param.asc
+            };
+            useSetValue = true;
+        }
+
+
+        // do we add or is it the first one
+        if (add && this.lastSort.length > 0) {
+
+
+            // its adding, so lets get last one
+            this.curSort = this.lastSort;
+            let exist = false;
+
+
+            // loop to se if it exist from before
+            this.curSort.forEach((x) => {
+                if (!useSetValue) {
+                    if (x.attribute === sort.attribute) {
+                        exist = true;
+                        x.asc = x.asc === true ? false : true;
+                    }
+                }
+
+            });
+
+
+            // if it dont exist we add it, else there isnt anythin else to do for now
+            if (!exist) {
+                this.curSort.push(sort);
+                this.curSort[this.curSort.length - 1].no = this.curSort.length;
+            }
+            this.lastSort = this.curSort;
+
+
+        } else {
+
+            // if not adding, just set it
+            this.curSort = [sort];
+            this.curSort[0].no = 1;
+            if (this.lastSort[0]) {
+                if (this.lastSort[0].attribute === this.curSort[0].attribute) {
+                    if (this.lastSort[0].asc === this.curSort[0].asc) {
+                        if (!useSetValue) {
+                            this.curSort[0].asc = this.curSort[0].asc === true ? false : true;
+                        }
+                    }
+                }
+            }
+            this.lastSort = this.curSort;
         }
     }
 

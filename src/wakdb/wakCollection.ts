@@ -23,9 +23,6 @@ export class WakCollection {
     }
 
 
-
-
-
     public setDefaults() {
         this.rowno = [];
         this.keys = [];
@@ -40,8 +37,6 @@ export class WakCollection {
         this.pagesFetching = [];
 
     }
-
-
 
 
     public clearCache() {
@@ -101,11 +96,7 @@ export class WakCollection {
             this.length++;
         });
 
-
     }
-
-
-
 
 
     public getRow(row: any) {
@@ -119,15 +110,9 @@ export class WakCollection {
     }
 
 
-
-
-
     public getKey(key: any) {
         this.getRow(key);
     }
-
-
-
 
 
     public getRowFromKey(key: any) {
@@ -135,12 +120,11 @@ export class WakCollection {
         return this.rowno[index];
     }
 
+
     public getRowFromEntity(entity: any) {
         let index = this.data.indexOf(entity);
         return this.rowno[index];
     }
-
-
 
 
     public getModified() {
@@ -152,9 +136,6 @@ export class WakCollection {
         });
         return modified;
     }
-
-
-
 
 
     public addRow() {
@@ -172,7 +153,6 @@ export class WakCollection {
     }
 
 
-
     public removeUnsavedRow(row: any) {
         let index = this.rowno.indexOf(row);
         this.rowno.splice(index, 1);
@@ -188,17 +168,12 @@ export class WakCollection {
     }
 
 
-
-
-
     public getClosestPage(row: any, pageSize: any) {
         // we do not want weird requests, lets stick within page size all the time
         // else we will just get holes in cache
         let page = Math.floor(row / pageSize);
         return page * pageSize;
     }
-
-
 
 
     public add(data: any) {
@@ -210,16 +185,12 @@ export class WakCollection {
     }
 
 
-
-
     public setValueToRow(attribute: any, value: any, row: any) {
         let index = this.rowno.indexOf(row);
         if (index !== -1) {
             this.data[index][attribute] = value;
         }
     }
-
-
 
 
     public insertData(data: any) {

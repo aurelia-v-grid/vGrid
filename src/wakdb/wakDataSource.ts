@@ -3,7 +3,6 @@ import { WakSelection } from './wakSelection';
 import { WakCollectionMethod } from './wakCollectionMethod';
 import { WakClassMethod } from './wakClassMethod';
 import { WakEntityMethod } from './wakEntityMethod';
-import { FilterObject, SortObject } from '../interfaces';
 import { ArrayHelper } from '../utils/arrayHelper';
 
 
@@ -103,7 +102,6 @@ export class WakDataSource {
     }
 
 
-
     // queues the rest of the datasource calls so we dont hammer the server
     public __queueRequest(callBack: any, atOnce?: any) {
         if (atOnce) {
@@ -144,7 +142,6 @@ export class WakDataSource {
     }
 
 
-
     public __stopAllRequest() {
         this.requests = [];
     }
@@ -159,7 +156,7 @@ export class WakDataSource {
     }
 
 
-    public length(): number{
+    public length(): number {
         return this.collection.length;
     }
 
@@ -170,8 +167,6 @@ export class WakDataSource {
         this.eventListenerID.push(this.eventListenerCount);
         return this.eventListenerCount;
     }
-
-
 
 
     public removeEventListener(id: any) {
@@ -231,7 +226,6 @@ export class WakDataSource {
     }
 
 
-
     public releaseEntitySet(entitySetUrl: any, options?: any) {
 
         options = options === undefined ? {} : options;
@@ -244,15 +238,14 @@ export class WakDataSource {
         this.restApi.callServer(restString).then(() => {
             this.__triggerEvent('entitysetRelease');
         }).catch(() => {
-           /* reject({
-                error: err
-            });*/
+            /* reject({
+                 error: err
+             });*/
         });
     }
 
 
-
-    public query(queryString: Array<FilterObject>, options?: any) {
+    public query(queryString: string, options?: any) {
         return new Promise((resolve, reject) => {
             this.__stopAllRequest();
             this.resetCurrentEntity();
@@ -285,7 +278,7 @@ export class WakDataSource {
 
                     this.collection.replace(data);
 
-                    this.__triggerEvent('collectionChange');
+                    this.__triggerEvent('collection_filtered');
 
                     if (entitySet) {
                         this.releaseEntitySet(entitySet);
@@ -306,8 +299,6 @@ export class WakDataSource {
     }
 
 
-
-
     public replaceCollection(collection: any, releaseOldEntityset: any) {
 
         let entitySet;
@@ -319,8 +310,6 @@ export class WakDataSource {
         this.selection = new WakSelection(this.multiSelect, this);
         this.__triggerEvent('collectionChange');
     }
-
-
 
 
     public buildFromSelection(sel: any, options: any) {
@@ -387,8 +376,6 @@ export class WakDataSource {
     }
 
 
-
-
     public select(row: any) {
         return new Promise((resolve, reject) => {
             this.getElement(row).then((entity: any) => {
@@ -401,8 +388,6 @@ export class WakDataSource {
     }
 
 
-
-
     public getElement(row: any, options?: any, overrideCache?: any) {
         return new Promise((resolve, reject) => {
 
@@ -411,7 +396,7 @@ export class WakDataSource {
             } else {
 
                 let data = this.collection.getRow(row);
-               // let prioOne = false;
+                // let prioOne = false;
                 let rowToGet = this.collection.getClosestPage(row, this.pageSize);
 
                 if (data) {
@@ -478,9 +463,6 @@ export class WakDataSource {
     }
 
 
-
-
-
     public orderby(orderByArray: any, options: any) {
         return new Promise((resolve, reject) => {
             this.__stopAllRequest();
@@ -523,7 +505,7 @@ export class WakDataSource {
                         this.selection.setSelectionFromServer(data.__transformedSelection);
                     }
 
-                    this.__triggerEvent('collectionChange');
+                    this.__triggerEvent('collection_sorted');
 
                     if (entitySet) {
                         this.releaseEntitySet(entitySet);
@@ -575,7 +557,6 @@ export class WakDataSource {
     }
 
 
-
     public addNewElement() {
         this.collection.addRow().then(() => {
             this.selection.select(this.collection.length - 1, false);
@@ -583,8 +564,6 @@ export class WakDataSource {
             this.select(this.collection.length - 1);
         });
     }
-
-
 
 
     public __guid() {
@@ -596,8 +575,6 @@ export class WakDataSource {
         let uuid = '' + s4() + '' + s4() + '' + s4() + '' + s4() + '' + s4() + '' + s4() + '' + s4() + '' + s4();
         return uuid.toUpperCase();
     }
-
-
 
 
     public saveCurrent(entityObject: any, options: any) {
@@ -688,7 +665,6 @@ export class WakDataSource {
     }
 
 
-
     public refreshCurrent(entityObject: any, options: any) {
         return new Promise((resolve, reject) => {
             this.__stopAllRequest();
@@ -766,7 +742,6 @@ export class WakDataSource {
     }
 
 
-
     public resetCollection() {
         this.__stopAllRequest();
         this.resetCurrentEntity();
@@ -774,7 +749,6 @@ export class WakDataSource {
         this.selection = new WakSelection(this.multiSelect, this);
         this.__triggerEvent('collectionChange');
     }
-
 
 
     public saveAll(options: any) {
@@ -832,7 +806,7 @@ export class WakDataSource {
                             let updatedData = err.__ENTITIES[i];
                             if (updatedData.__ERROR) {
                                 if (!ent.__isNew) {
-                                     // do I want to save anyway, need to have this as a option?
+                                    // do I want to save anyway, need to have this as a option?
                                     ent.__update(updatedData);
                                 }
                             } else {
@@ -861,6 +835,7 @@ export class WakDataSource {
         });
 
     }
+
 
     public deleteCurrent(options: any) {
         return new Promise((resolve, reject) => {
@@ -947,44 +922,17 @@ export class WakDataSource {
         });
     }
 
-    //stuff I need to make it work
 
-    public getCurrentOrderBy(): Array<SortObject> {
-        // get
-        return this.arrayHelper.getOrderBy();
-    }
-
-
-    public getCurrentFilter(): Array<FilterObject> {
-        return this.arrayHelper.getCurrentFilter();
-    }
-
-    public group(grouping: Array<string>, keepExpanded?: boolean): void {
-        // dunno if I can have this..
-        grouping = null;
-        keepExpanded = null;
-    }
-
-    public groupCollapse(id: string): void {
-        // dunno if I can have this..
-        id = null;
-    }
-
-    public groupExpand(id: string): void {
-        // dunno if I can have this..
-        id = null;
-    }
+    // todo: consider moving the filteroperator names inside the grid code, so we dont haveto go out here to get it
 
     public getFilterOperatorName(operator: string): string {
         return this.arrayHelper.getFilterOperatorName(operator);
     }
 
+
     public setFilterOperatorName(key: string, name: string) {
         this.arrayHelper.setFilterOperatorName(key, name);
     }
 
-    public getGrouping(): Array<string> {
-        return this.arrayHelper.getGrouping();
-    }
 
 }
