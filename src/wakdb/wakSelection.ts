@@ -5,16 +5,16 @@ export class WakSelection  {
     private selection: Set<number>;
     private source: any;
 
-    constructor(mode: string, source: any) {
+    constructor(mode: any, source: any) {
         this.source = source;
         this.mode = mode;
         this.selectedRows = 0;
-        /*if (mode === false) {
+        if (mode === false) {
             this.mode = 'single';
-        }*/
-       /* if (mode === true) {
+        }
+        if (mode === true) {
             this.mode = 'multiple';
-        }*/
+        }
         this.selection = new Set([]);
     }
 

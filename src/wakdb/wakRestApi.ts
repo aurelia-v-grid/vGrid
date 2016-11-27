@@ -206,7 +206,9 @@ export class WakRestApi {
     public fetchCatalog() {
         return new Promise((resolve: Function, reject: any) => {
             this.httpClient.fetch(this.catalogURL)
-                .then((response: any) => {response.json()})
+                .then((response: any) => {
+                    return response.json();
+                })
                 .then((data: any) => {
                     let restAPI = this;
                     let dataClasses = data.dataClasses;

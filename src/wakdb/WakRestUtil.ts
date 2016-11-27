@@ -153,12 +153,12 @@ export class WakRestUtil {
             }
         }
         // $subOrderby
-        if (options.subOrderby !== null) {
+        if (options.subOrderby != null) {
             queryString += (!addAmpersand ? '$subOrderby=' : '&$subOrderby=') + encodeURIComponent(options.subOrderby);
             addAmpersand = true;
         }
         // $expand
-        if (options.attributesExpanded !== undefined) {
+        if (options.attributesExpanded != undefined) {
             if (options.attributesExpanded.length > 0) {
                 let expandString = '';
                 if (!addAmpersand) {
@@ -178,7 +178,7 @@ export class WakRestUtil {
             }
         }
 
-        if (options.autoExpand !== null && options.autoExpand !== '') {
+        if (options.autoExpand != null && options.autoExpand !== '') {
             if (!addAmpersand) {
                 queryString += '$expand=';
             } else {
@@ -188,7 +188,7 @@ export class WakRestUtil {
             queryString += options.autoExpand;
         }
 
-        if (options.autoSubExpand !== null && options.autoSubExpand !== '') {
+        if (options.autoSubExpand != null && options.autoSubExpand !== '') {
             if (!addAmpersand) {
                 queryString += '$subExpand=';
             } else {

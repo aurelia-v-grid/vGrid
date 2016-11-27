@@ -1,67 +1,76 @@
 // this is just for connecting the modified aurleia-v-grid to the datasource
-
+import {Controller} from '../interfaces';
 
 export class WakGridConnector {
-    public datasource: any ;
-    public vGrid: any;
+    public datasource: any;
     public errorHandler: any;
     public eventListenerID: any;
+    public filterOperatorNames: any;
+    public controller: any;
+    public createGrid: any;
 
 
-    constructor(datasource: any) {
+    constructor(datasource?: any) {
         // depending on source you can add on creation if datasource is there, else use set datasource
         this.datasource = datasource;
 
-        // object grid will add its context too
-        this.vGrid = {};
     }
 
+    public getSelection(): Selection {
+        return this.datasource.selection;
+    }
 
+    public getCurrentOrderBy(): Array<any> {
+        return this.datasource.getCurrentOrderBy();
+    }
 
+    public getFilterOperatorName(name: string) {
+        return this.datasource.getFilterOperatorName(name);
+    }
 
-    public datasourceEvents(event: any) {
-
-        switch (event) {
-            case 'collectionChange':
-                this.vGrid.vGridGenerator.collectionChange(true);
-                break;
-            case 'collectionChange_newAdded':
-                this.vGrid.vGridGenerator.collectionChange(false, true);
-                break;
-            case 'collectionChange_update':
-            case 'collectionChange_oneRemoved':
-                this.vGrid.vGridGenerator.collectionChange(false);
-                break;
-            case 'selection_changed':
-                this.vGrid.vGridGenerator.updateSelectionOnAllRows();
-                break;
-            default:
-                console.log('unknown event');
-                console.log(event);
+    public getDatasourceLength() {
+        if (this.datasource) {
+            return this.datasource.length();
+        } else {
+            return 0;
         }
-
     }
+
+    public connect(controller: Controller, create: Function): void {
+        this.controller = controller;
+        this.createGrid = create;
+        if (this.datasource) {
+            this.createGrid();
+        }
+    }
+
+
+    public gridCreated(): void {
+        if (this.datasource) {
+            this.controller.updateHeights();
+            this.controller.triggerScroll(0);
+            this.eventHandler('collectionChange');
+        }
+    }
+
+
 
 
 
 
     public setDatasource(datasource: any, errorHandler: any, setHeight: any, setSort: any) {
+        //fix later, do this to get ts to stop complaining
+        setHeight =  null;
+        setSort = null;
+        
         this.datasource = datasource;
         let alt = () => { /*nothing?*/ };
         this.errorHandler = errorHandler || alt;
-        this.eventListenerID = this.datasource.addEventListener(this.datasourceEvents.bind(this));
+        this.eventListenerID = this.datasource.addEventListener(this.eventHandler.bind(this));
 
-        if (Array.isArray(setSort)) {
-            this.vGrid.vGridClientCtx.setSort(setSort);
+        if (this.createGrid) {
+            this.createGrid();
         }
-
-        let resetScroll = setHeight ? false : true;
-        let scrollToBottom = setHeight ? false : false;
-
-
-
-        this.vGrid.vGridGenerator.collectionChange(resetScroll, scrollToBottom, setHeight);
-
 
     }
 
@@ -90,35 +99,44 @@ export class WakGridConnector {
 
 
 
-    public rowClick(e: any) {
+    public select(row: any) {
         if (this.datasource) {
-            this.datasource.select(e.row);
+            this.datasource.select(row);
         }
     }
 
 
 
-
-   public getElement(e: any) {
+    public getElement(options: { row: number, isDown: boolean, callback: Function }) {
         // send back emty object so we clear cell.
 
+        let rowContext = {
+            row: options.row,
+            selection: this.datasource.selection,
+            rowRef: {},
+            tempRef: {} //this.getRowProperties(rowData)
+        };
+
         if (this.datasource) {
-            e.callback();
+            options.callback(rowContext);
 
             // is the row within the collection length =
-            if (this.datasource.collection.length > e.row && e.row >= 0) {
-                this.datasource.getElement(e.row)
+            if (this.datasource.collection.length > options.row && options.row >= 0) {
+                this.datasource.getElement(options.row)
                     .then((data: any) => {
-                        if (e.row === e.div.top / e.rowHeight) {
-                            e.callback(data, e.row);
-                        }
+                        /* if (options.row === options.div.top / options.rowHeight) {
+                             options.callback(rowContext);
+                         }*/
+                        rowContext.tempRef = this.getRowProperties(data);
+                        rowContext.rowRef = data;
+                        options.callback(rowContext);
                     }).catch((err: any) => {
-                        e.callback();
+                        options.callback();
                         this.errorHandler('getElement', err);
                     });
             }
         } else {
-            e.callback();
+            options.callback(rowContext);
         }
     }
 
@@ -130,9 +148,9 @@ export class WakGridConnector {
         let filter = this.createQueryString(e.filter);
         let sort = this.createOrderByString(e.sort);
         this.datasource.query(filter, {
-                orderby: sort,
-                releaseEntitySet: true // null = false...
-            })
+            orderby: sort,
+            releaseEntitySet: true // null = false...
+        })
             .then(() => {
                 e.callback();
             }).catch((err: any) => {
@@ -167,62 +185,70 @@ export class WakGridConnector {
     }
 
 
+    public eventHandler(event: string): void {
+        switch (event) {
+            case 'collectionChange':
+            case 'collection_grouped':
+            case 'collection_collapsed_all':
+            case 'collection_expanded_all':
+                this.raiseEvent('sortIconUpdate');
+                this.controller.updateHeights();
+                this.controller.triggerScroll(0);
+                //this.controller.updateHeaderGrouping(this.datasource.getGrouping());
+                this.controller.setLoadingScreen(false);
+                break;
+            case 'collection_collapsed':
+            case 'collection_expanded':
+                this.raiseEvent('sortIconUpdate');
+                this.controller.updateHeights();
+                this.controller.triggerScroll(null);
+                //this.controller.updateHeaderGrouping(this.datasource.getGrouping());
+                this.controller.setLoadingScreen(false);
+                break;
+            case 'collection_sorted':
+                this.raiseEvent('sortIconUpdate');
+                this.controller.rebindAllRows();
+                this.controller.setLoadingScreen(false);
+                break;
+            case 'collection_filtered':
+                this.raiseEvent('sortIconUpdate');
+                this.controller.updateHeights();
+                this.controller.triggerScroll(null);
+                this.controller.setLoadingScreen(false);
+                break;
 
+            default:
+                console.log('unknown event');
+                console.log(event);
 
-
-
-    /************************************************************
-     *   All function below is called by the grid  (only selection)
-     */
-
-    public isRowSelected(row: any) {
-        let result = false;
-        if (this.datasource) {
-            result = this.datasource.selection.isRowSelected(row);
         }
-        return result;
+
     }
 
 
-
-
-    public deSelectRow(row: any) {
-        this.datasource.selection.deSelectRow(row);
+    public raiseEvent(name: string, data = {}): void {
+        let event = new CustomEvent(name, {
+            detail: data,
+            bubbles: true
+        });
+        if (this.controller) {
+            this.controller.element.dispatchEvent(event);
+        }
     }
 
-
-
-
-    public addRowToSelection(row: any, addToSelection: any) {
-        this.datasource.selection.addRowToSelection(row, addToSelection);
-    }
-
-
-
-
-    public setSelectionRange(start: any, end: any) {
-        this.datasource.selection.setSelectionRange(start, end);
-    }
-
-
-
-
-    public getSelectedRows() {
-        return this.datasource.selection.getSelectedRows();
-    }
-
-
-
-
-    public setSelectedRows(newRows: any) {
-        this.datasource.selection.setSelectedRows(newRows);
-    }
-
-
-
-
-    public getSelectionMode() {
-        return 'multiple';
+    public getRowProperties(obj: { [key: string]: any }): {} {
+        let x: { [key: string]: any } = {};
+        if (obj) {
+            let k: any;
+            for (k in obj) {
+                if (obj.hasOwnProperty(k)) {
+                    if (x[k] !== obj[k]) {
+                        x[k] = obj[k];
+                    }
+                }
+            }
+        }
+        return x;
     }
 
 

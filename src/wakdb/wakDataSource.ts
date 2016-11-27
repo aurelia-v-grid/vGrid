@@ -1,10 +1,10 @@
 import { WakCollection } from './WakCollection';
-// import { Entity } from './entity';
 import { WakSelection } from './wakSelection';
 import { WakCollectionMethod } from './wakCollectionMethod';
 import { WakClassMethod } from './wakClassMethod';
 import { WakEntityMethod } from './wakEntityMethod';
-import { FilterObject } from '../interfaces';
+import { FilterObject, SortObject } from '../interfaces';
+import { ArrayHelper } from '../utils/arrayHelper';
 
 
 export class WakDataSource {
@@ -32,6 +32,7 @@ export class WakDataSource {
     public collectionMethods: any;
     public entityMethods: any;
     public classMethods: any;
+    public arrayHelper: any;
 
 
     constructor(restApi: any, sourceConfig: any) {
@@ -51,6 +52,7 @@ export class WakDataSource {
         this.eventListener = [];
         this.eventListenerID = [];
         this.eventListenerCount = 0;
+        this.arrayHelper = new ArrayHelper();
 
 
         // request queue
@@ -126,7 +128,8 @@ export class WakDataSource {
                 let runner: any;
                 runner = () => {
                     setTimeout(() => {
-                        // let old = this.requests.shift();
+                        let old = this.requests.shift();
+                        old = null;
                         let run = this.requests[0];
                         if (run) {
                             run(runner);
@@ -205,8 +208,8 @@ export class WakDataSource {
                     top: options.override_pageSize || this.pageSize,
                     method: options.override_method || 'entityset',
                     timeout: options.override_timeout || this.timeout,
-                    asArray: options.override_asArray,
-                    autoExpand: options.override_autoExpand,
+                    asArray: options.override_asArray || null,
+                    autoExpand: options.override_autoExpand || null,
                     filterAttributes: options.override_filterAttributes || this.filterAttributes,
                 });
 
@@ -944,5 +947,44 @@ export class WakDataSource {
         });
     }
 
+    //stuff I need to make it work
+
+    public getCurrentOrderBy(): Array<SortObject> {
+        // get
+        return this.arrayHelper.getOrderBy();
+    }
+
+
+    public getCurrentFilter(): Array<FilterObject> {
+        return this.arrayHelper.getCurrentFilter();
+    }
+
+    public group(grouping: Array<string>, keepExpanded?: boolean): void {
+        // dunno if I can have this..
+        grouping = null;
+        keepExpanded = null;
+    }
+
+    public groupCollapse(id: string): void {
+        // dunno if I can have this..
+        id = null;
+    }
+
+    public groupExpand(id: string): void {
+        // dunno if I can have this..
+        id = null;
+    }
+
+    public getFilterOperatorName(operator: string): string {
+        return this.arrayHelper.getFilterOperatorName(operator);
+    }
+
+    public setFilterOperatorName(key: string, name: string) {
+        this.arrayHelper.setFilterOperatorName(key, name);
+    }
+
+    public getGrouping(): Array<string> {
+        return this.arrayHelper.getGrouping();
+    }
 
 }
