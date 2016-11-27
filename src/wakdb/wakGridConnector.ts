@@ -91,7 +91,7 @@ export class WakGridConnector implements GridConnectorInterface {
     }
 
 
-    public setDatasource(datasource: any, errorHandler: any, setHeight: any, setSort: any) {
+    public setDatasource(datasource: any, errorHandler?: any, setHeight?: any, setSort?: any) {
         // fix later, do this to get ts to stop complaining
         setHeight = null;
         setSort = null;
@@ -234,6 +234,7 @@ export class WakGridConnector implements GridConnectorInterface {
                 this.raiseEvent('sortIconUpdate');
                 this.controller.updateHeights();
                 this.controller.triggerScroll(0);
+                this.controller.rebindAllRows();
                 this.controller.setLoadingScreen(false);
                 break;
             case 'collection_sorted':
@@ -247,9 +248,27 @@ export class WakGridConnector implements GridConnectorInterface {
                 this.controller.triggerScroll(0);
                 this.controller.setLoadingScreen(false);
                 break;
+            case 'collectionChange_update':
+                this.raiseEvent('sortIconUpdate');
+                this.controller.rebindAllRows();
+                this.controller.setLoadingScreen(false);
+                break;
             case 'collection_update':
                 this.controller.updateHeights();
                 this.controller.rebindAllRows();
+                this.controller.setLoadingScreen(false);
+                break;
+            case 'collectionChange_oneRemoved':
+                this.controller.updateHeights();
+                this.controller.rebindAllRows();
+                this.controller.setLoadingScreen(false);
+                break;
+            case 'collectionChange_newAdded':
+                this.controller.updateHeights();
+                setTimeout(() => {
+                     this.controller.triggerScroll(1000000000);
+                     this.controller.rebindAllRows();
+                });
                 this.controller.setLoadingScreen(false);
                 break;
             default:
