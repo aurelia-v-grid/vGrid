@@ -58,7 +58,7 @@ export class DataSource {
   }
 
 
-  public getSelection() {
+  public getSelection(): Selection {
     return this.selection;
   }
 
@@ -228,7 +228,7 @@ export class DataSource {
     return this.arrayHelper.getFilterOperatorName(operator);
   }
 
-  public setFilterOperatorName(key: string, name: string) {
+  public setFilterOperatorName(key: string, name: string): void {
     this.arrayHelper.setFilterOperatorName(key, name);
   }
 

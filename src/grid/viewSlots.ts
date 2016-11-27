@@ -6,7 +6,7 @@ import {
   OverrideContext,
   HtmlCache,
   ColumnBindingContext,
-  Selection
+  SelectionInterface
 } from '../interfaces';
 
 
@@ -49,7 +49,7 @@ export class ViewSlots {
 
   }
 
-  public bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext, curSelection: Selection): void {
+  public bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext, curSelection: SelectionInterface): void {
 
     let context: BindingContext;
 

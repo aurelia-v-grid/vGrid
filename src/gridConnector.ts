@@ -1,11 +1,21 @@
 // for typing only
-import { DataSource, Selection, SortObject, FilterObject, Controller, Entity, ColConfig } from './interfaces';
+import {
+  SelectionInterface,
+  GridConnectorInterface,
+  DataSource,
+  Selection,
+  SortObject,
+  FilterObject,
+  Controller,
+  Entity,
+  ColConfig,
+  BindingContext } from './interfaces';
 
 
 
 
 
-export class GridConnector {
+export class GridConnector implements GridConnectorInterface {
   private selection: Selection;
   private controller: Controller;
   private datasource: DataSource;
@@ -23,7 +33,7 @@ export class GridConnector {
   }
 
 
-  public getSelection(): Selection {
+  public getSelection(): SelectionInterface {
     return this.selection;
   }
 
@@ -67,7 +77,7 @@ export class GridConnector {
   }
 
 
-  public group(grouping: Array<string>, keepExpanded?: boolean) {
+  public group(grouping: Array<string>, keepExpanded?: boolean): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.group(grouping, keepExpanded);
     });
@@ -78,12 +88,12 @@ export class GridConnector {
 
     let rowData: Entity = this.datasource.getElement(options.row);
 
-    let rowContext = {
+    let rowContext = ({
       row: options.row,
       selection: this.selection,
       rowRef: rowData,
       tempRef: this.getRowProperties(rowData)
-    };
+    } as BindingContext);
 
     options.callback(rowContext);
 
@@ -123,7 +133,7 @@ export class GridConnector {
     return this.datasource.getFilterOperatorName(operator);
   }
 
-  public setFilterOperatorName(key: string, name: string) {
+  public setFilterOperatorName(key: string, name: string): void {
     this.datasource.setFilterOperatorName(key, name);
   }
 

@@ -16,7 +16,7 @@ import { LoadingScreen } from './loadingScreen';
 import { ContextMenu } from './contextMenu';
 import {
     ResizeShardContext,
-    GridConnector,
+    GridConnectorInterface,
     DragDropShardContext,
     ColConfig,
     BindingContext,
@@ -67,7 +67,7 @@ export class VGrid {
     @bindable({ attribute: 'v-header-height' }) public attHeaderHeight: number;
     @bindable({ attribute: 'v-footer-height' }) public attFooterHeight: number;
     @bindable({ attribute: 'v-panel-height' }) public attPanelHeight: number;
-    @bindable({ attribute: 'v-grid-connector' }) public attGridConnector: GridConnector;
+    @bindable({ attribute: 'v-grid-connector' }) public attGridConnector: GridConnectorInterface;
     @bindable({ attribute: 'v-multi-select' }) public attMultiSelect: boolean;
     @bindable({ attribute: 'v-manual-sel' }) public attManualSelection: boolean;
     @bindable({ attribute: 'v-theme' }) public attTheme: string;

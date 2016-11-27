@@ -17,14 +17,14 @@ import {
   LoadingScreen,
   ContextMenu,
   VGrid,
-  GridConnector,
-  Selection,
+  GridConnectorInterface,
   RowScrollEvents,
   ColConfig,
   BindingContext,
   OverrideContext,
   DragDropShardContext,
-  ResizeShardContext
+  ResizeShardContext,
+  SelectionInterface
 } from '../interfaces';
 
 
@@ -69,7 +69,7 @@ export class Controller {
   public attPanelHeight: number;
   public attMultiSelect: boolean;
   public attManualSelection: boolean;
-  public attGridConnector: GridConnector;
+  public attGridConnector: GridConnectorInterface;
   public attOnRowDraw: Function;
   public attLanguage: any;
   public attDataDelay: number;
@@ -263,8 +263,8 @@ export class Controller {
   }
 
 
-  public getSelectionContext(): Selection {
-    let sel: Selection = this.attGridConnector.getSelection();
+  public getSelectionContext(): SelectionInterface {
+    let sel: SelectionInterface = this.attGridConnector.getSelection();
     return sel;
   }
 

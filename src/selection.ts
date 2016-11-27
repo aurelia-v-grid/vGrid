@@ -1,6 +1,6 @@
+import { SelectionInterface } from './interfaces';
 
-
-export class Selection {
+export class Selection implements SelectionInterface {
   private mode: string;
   private selectedRows: number;
   private selection: Set<number>;
