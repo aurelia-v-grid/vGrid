@@ -74,6 +74,7 @@ export class VGrid {
     @bindable({ attribute: 'v-row-on-draw' }) public attOnRowDraw: Function;
     @bindable({ attribute: 'v-columns' }) public attColConfig: Array<ColConfig>;
     @bindable({ attribute: 'v-language' }) public attLanguage: any;
+    @bindable({ attribute: 'v-data-delay' }) public attDataDelay: number;
 
 
 
@@ -174,6 +175,7 @@ export class VGrid {
         this.attHeaderHeight = this.attHeaderHeight ? this.attHeaderHeight * 1 : 25;
         this.attFooterHeight = this.attFooterHeight ? this.attFooterHeight * 1 : 25;
         this.attPanelHeight = this.attPanelHeight ? this.attPanelHeight * 1 : 25;
+        this.attDataDelay = this.attDataDelay ? this.attDataDelay * 1 : 0;
         this.attMultiSelect = this.checkBool(this.attMultiSelect);
         this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
         this.attTheme = this.attTheme || 'avg-default';

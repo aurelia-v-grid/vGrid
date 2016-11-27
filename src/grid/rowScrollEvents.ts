@@ -30,8 +30,9 @@ export class RowScrollEvents {
   }
 
 
-  public init(rowHeight: number): void {
+  public init(rowHeight: number, attDataDelay: number): void {
     this.rowCache = this.htmlCache.rowCache;
+    this.largeScrollUpdateDelay = attDataDelay;
     this.rowHeight = rowHeight;
     this.updateInternalHtmlCache();
     this.createRowCache();

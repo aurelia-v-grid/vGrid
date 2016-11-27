@@ -72,6 +72,7 @@ export class Controller {
   public attGridConnector: GridConnector;
   public attOnRowDraw: Function;
   public attLanguage: any;
+  public attDataDelay: number;
 
 
 
@@ -132,6 +133,7 @@ export class Controller {
     this.attGridConnector = c.attGridConnector;
     this.attOnRowDraw = c.attOnRowDraw;
     this.attLanguage = c.attLanguage;
+    this.attDataDelay = c.attDataDelay;
 
   }
 
@@ -171,7 +173,7 @@ export class Controller {
     this.htmlCache.updateRowsMarkup();
 
     // add scroll events (the one that moves the actual rows when scroling)
-    this.rowScrollEvents.init(this.attRowHeight);
+    this.rowScrollEvents.init(this.attRowHeight, this.attDataDelay);
 
     // creates the views/viewports we need
     this.columnMarkup.init(
