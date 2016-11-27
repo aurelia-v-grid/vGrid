@@ -11,6 +11,7 @@ export class App {
       { route: '5k-rows-columnbind', name: '5k-rows-columnbind', moduleId: './5k-rows-columnbind', nav: true, title: '5k-rows-columnbind' },
       { route: '50k-rows', name: '50k-rows', moduleId: './50k-rows', nav: true, title: '50k-rows' },
       { route: '800k-rows', name: '800k-rows(use chrome)', moduleId: './800k-rows', nav: true, title: '800k-rows(use chrome)' },
+      { route: 'wakdb', name: 'wakdb( need wakdb running)', moduleId: './wakdb', nav: true, title: 'wakdb( need wakdb running)' },
       { route: 'child-router', name: 'child-router', moduleId: './child-router', nav: true, title: 'Child Router' }
     ]);
 
