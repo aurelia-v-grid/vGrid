@@ -31,6 +31,11 @@ export class Welcome {
 
   public resetToDefault() {
     this.remember.columns = null;
+    this.gridConnector.setColConfig(this.remember.columns);
+  }
+
+  public useDefault(){
+    this.gridConnector.setColConfig(null);
   }
 
   public setSaved() {
