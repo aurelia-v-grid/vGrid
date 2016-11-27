@@ -28,9 +28,14 @@ export class GridConnector {
   }
 
 
-  public gridCreated(controller: Controller): void {
+  public connect(controller: Controller, create: Function): void {
     this.controller = controller;
     this.eventID = this.datasource.addEventListener(this.eventHandler.bind(this));
+    create();
+  }
+
+
+  public gridCreated(): void {
 
     // I want to be able to override this, so you could add/do more with datasource before displaying results
     this.raiseEvent('sortIconUpdate');

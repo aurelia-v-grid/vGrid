@@ -62,6 +62,7 @@ export class VGrid {
 
 
 
+
     @bindable({ attribute: 'v-row-height' }) public attRowHeight: number;
     @bindable({ attribute: 'v-header-height' }) public attHeaderHeight: number;
     @bindable({ attribute: 'v-footer-height' }) public attFooterHeight: number;
@@ -71,7 +72,7 @@ export class VGrid {
     @bindable({ attribute: 'v-manual-sel' }) public attManualSelection: boolean;
     @bindable({ attribute: 'v-theme' }) public attTheme: string;
     @bindable({ attribute: 'v-row-on-draw' }) public attOnRowDraw: Function;
-    @bindable({attribute: 'v-columns'}) public attColConfig: Array<ColConfig>;
+    @bindable({ attribute: 'v-columns' }) public attColConfig: Array<ColConfig>;
     @bindable({ attribute: 'v-language' }) public attLanguage: any;
 
 
@@ -199,23 +200,33 @@ export class VGrid {
 
     public attached(): void {
 
-        // if not new, and just hidden by if.bind, then lets just skip creating the grid and just bind the columns    
-        if (this.newGrid) {
-            this.backupColConfig = this.colConfig.slice(0);
-            // override colconfig if binded
-            if (this.attColConfig) {
-                this.colConfig = this.attColConfig.length > 0 ? this.attColConfig : this.colConfig;
+        // connect grid, and let gridConnector tell us if we can generate the grid or now
+        // this way we give the gridconnetor/datasource a chance to get ready before we start asking for stuff
+        this.attGridConnector.connect(this.controller, () => {
+
+            // if not new, and just hidden by if.bind, 
+            // then lets just skip creating the grid and just bind the columns    
+            if (this.newGrid) {
+                this.backupColConfig = this.colConfig.slice(0);
+                // override colconfig if binded
+                if (this.attColConfig) {
+                    this.colConfig = this.attColConfig.length > 0 ? this.attColConfig : this.colConfig;
+                }
+                this.controller.getContext();
+                this.controller.createGrid();
             }
-            this.controller.getContext();
-            this.controller.createGrid();
-        }
 
-        // bind columns
-        this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext, this.attGridConnector.getSelection());
+            // bind columns
+            this.viewSlots.bindAndAttachColumns(
+                this.overrideContext,
+                this.columnBindingContext,
+                this.attGridConnector.getSelection());
 
-        // todo: should I bind the main, grouping and loading screen here?
-        // connect gridConnector to this controler
-        this.attGridConnector.gridCreated(this.controller);
+            // todo: should I bind the main, grouping and loading screen here?
+            // connect gridConnector to this controler
+            this.attGridConnector.gridCreated();
+
+        });
     }
 
     private checkBool(value: string | boolean): boolean {
