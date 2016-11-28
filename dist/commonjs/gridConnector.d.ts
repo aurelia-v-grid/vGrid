@@ -1,5 +1,5 @@
-import { DataSource, Selection, SortObject, FilterObject, Controller, ColConfig } from './interfaces';
-export declare class GridConnector {
+import { SelectionInterface, GridConnectorInterface, DataSource, Selection, SortObject, FilterObject, Controller, ColConfig } from './interfaces';
+export declare class GridConnector implements GridConnectorInterface {
     private selection;
     private controller;
     private datasource;
@@ -7,8 +7,9 @@ export declare class GridConnector {
     private errorhandler;
     private eventID;
     constructor(datasource: DataSource, selection?: Selection, errorHandler?: Function);
-    getSelection(): Selection;
-    gridCreated(controller: Controller): void;
+    getSelection(): SelectionInterface;
+    connect(controller: Controller, create: Function): void;
+    gridCreated(): void;
     select(row: number): void;
     getDatasourceLength(): number;
     getColConfig(): Array<ColConfig>;

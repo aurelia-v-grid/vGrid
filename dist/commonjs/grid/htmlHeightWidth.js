@@ -43,9 +43,9 @@ var HtmlHeightWidth = (function () {
     HtmlHeightWidth.prototype.setCollectionLength = function (length) {
         var total = length * this.attRowHeight;
         this.avgContentRightScroll_Height = total + this.avgScrollBarWidth;
-        this.avgContentGroup_Height = total;
+        this.avgContentGroup_Height = total + this.avgScrollBarWidth;
         this.avgContentVhandleScroll_Height = total + this.avgScrollBarWidth;
-        this.avgContentMainScroll_Height = total;
+        this.avgContentMainScroll_Height = total + this.avgScrollBarWidth;
         this.avgContentLeftScroll_Height = total + this.avgScrollBarWidth;
     };
     HtmlHeightWidth.prototype.addDefaultsAttributes = function (attHeaderHeight, attRowHeight, attFooterHeight, attPanelHeight) {
@@ -84,7 +84,7 @@ var HtmlHeightWidth = (function () {
                 right = right + columnBindingContext.setupright[i].width;
             }
         }
-        this.avgContentLeft_Width = left + this.avgScrollBarWidth;
+        this.avgContentLeft_Width = left;
         this.avgHeaderLeft_Width = left;
         this.avgContentMain_Left = left;
         this.avgContentMain_Right = right;
@@ -92,9 +92,10 @@ var HtmlHeightWidth = (function () {
         this.avgHeaderMain_Right = right;
         this.avgHeaderMainScroll_Width = main;
         this.avgContentMainScroll_Width = main;
-        this.avgContentRight_Width = right + this.avgScrollBarWidth;
-        this.avgHeaderRight_Width = right + this.avgScrollBarWidth;
+        this.avgContentRight_Width = right;
+        this.avgHeaderRight_Width = right;
         this.avgContentHhandle_Right = right + this.avgScrollBarWidth;
+        ;
         this.avgContentHhandle_Left = left;
         this.avgContentHhandleScroll_Width = main;
     };
@@ -120,7 +121,7 @@ var HtmlHeightWidth = (function () {
                 default:
             }
         }
-        this.avgContentLeft_Width = left + this.avgScrollBarWidth;
+        this.avgContentLeft_Width = left;
         this.avgHeaderLeft_Width = left;
         this.avgContentMain_Left = left;
         this.avgContentMain_Right = right;
@@ -128,8 +129,8 @@ var HtmlHeightWidth = (function () {
         this.avgHeaderMain_Right = right;
         this.avgHeaderMainScroll_Width = main;
         this.avgContentMainScroll_Width = main;
-        this.avgContentRight_Width = right + this.avgScrollBarWidth;
-        this.avgHeaderRight_Width = right + this.avgScrollBarWidth;
+        this.avgContentRight_Width = right;
+        this.avgHeaderRight_Width = right;
         this.avgContentHhandle_Right = right + this.avgScrollBarWidth;
         this.avgContentHhandle_Left = left;
         this.avgContentHhandleScroll_Width = main;

@@ -13,7 +13,7 @@ export declare class DataSource {
     constructor(selection: Selection, config?: DatasourceConfig);
     getSelection(): Selection;
     getKey(): string;
-    readonly length: number;
+    length(): number;
     triggerEvent(event: string): void;
     addEventListener(callback: Function): number;
     removeEventListener(id: number): void;

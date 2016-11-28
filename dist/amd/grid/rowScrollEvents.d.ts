@@ -19,7 +19,7 @@ export declare class RowScrollEvents {
     private right;
     private scroller;
     constructor(element: Element, htmlCache: HtmlCache);
-    init(rowHeight: number): void;
+    init(rowHeight: number, attDataDelay: number): void;
     setCollectionLength(length: number): void;
     private createRowCache();
     private updateInternalHtmlCache();

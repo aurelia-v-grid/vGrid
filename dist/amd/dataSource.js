@@ -25,13 +25,9 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayHelpe
         DataSource.prototype.getKey = function () {
             return this.key;
         };
-        Object.defineProperty(DataSource.prototype, "length", {
-            get: function () {
-                return this.collection.length;
-            },
-            enumerable: true,
-            configurable: true
-        });
+        DataSource.prototype.length = function () {
+            return this.collection.length;
+        };
         DataSource.prototype.triggerEvent = function (event) {
             this.eventCallBacks.forEach(function (FN) {
                 FN(event);

@@ -7,8 +7,9 @@ var RowScrollEvents = (function () {
         this.collectionLength = 0;
         this.largeScrollUpdateDelay = 0;
     }
-    RowScrollEvents.prototype.init = function (rowHeight) {
+    RowScrollEvents.prototype.init = function (rowHeight, attDataDelay) {
         this.rowCache = this.htmlCache.rowCache;
+        this.largeScrollUpdateDelay = attDataDelay;
         this.rowHeight = rowHeight;
         this.updateInternalHtmlCache();
         this.createRowCache();

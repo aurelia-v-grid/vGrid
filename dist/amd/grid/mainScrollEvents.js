@@ -51,6 +51,8 @@ define(["require", "exports"], function (require, exports) {
                     this.group.onwheel = this.onWeel.bind(this);
                     this.vhandle.onscroll = this.handleEventVhandle.bind(this);
                     this.hhandle.onscroll = this.handleEventHhandle.bind(this);
+                    this.htmlCache.element.addEventListener('touchmove', this.touchMove.bind(this));
+                    this.htmlCache.element.addEventListener('touchstart', this.touchStart.bind(this));
                     break;
                 case 'left':
                     this.main.onscroll = this.handleEventMainScroll.bind(this);
@@ -129,6 +131,17 @@ define(["require", "exports"], function (require, exports) {
                     break;
                 default:
             }
+        };
+        MainScrollEvents.prototype.touchStart = function (e) {
+            var touchobj = e.changedTouches[0];
+            this.touchY = parseInt(touchobj.clientY, 10);
+            e.preventDefault();
+        };
+        MainScrollEvents.prototype.touchMove = function (e) {
+            var touchobj = e.changedTouches[0];
+            var dist = parseInt(touchobj.clientY, 10) - this.touchY;
+            this.handleEventWheelScroll(-dist);
+            e.preventDefault();
         };
         MainScrollEvents.prototype.handleEventLeftScroll = function () {
             var _this = this;

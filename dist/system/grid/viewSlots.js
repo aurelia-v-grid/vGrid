@@ -20,7 +20,7 @@ System.register([], function (exports_1, context_1) {
                     this.groupingViewSlots = [];
                     this.contextMenu = null;
                 }
-                ViewSlots.prototype.bindAndAttachColumns = function (overrideContext, columnBindingContext) {
+                ViewSlots.prototype.bindAndAttachColumns = function (overrideContext, columnBindingContext, curSelection) {
                     var context;
                     var newParentOverrideContext = {
                         bindingContext: columnBindingContext,
@@ -42,7 +42,7 @@ System.register([], function (exports_1, context_1) {
                         this.groupRowViewSlots[i].bind(this.rowCache[i].bindingContext, this.rowCache[i].parentOverrideContext);
                         this.groupRowViewSlots[i].attached();
                     }
-                    context = {};
+                    context = { selection: curSelection };
                     this.headerCache.bindingContext = context;
                     this.headerCache.parentOverrideContext = {
                         bindingContext: context,

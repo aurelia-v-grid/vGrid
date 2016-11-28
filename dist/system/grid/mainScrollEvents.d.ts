@@ -16,12 +16,15 @@ export declare class MainScrollEvents {
     private vhandle;
     private hhandle;
     private group;
+    private touchY;
     constructor(element: Element, htmlCache: HtmlCache);
     init(): void;
     private updateInternalHtmlCache();
     private onWeel(event);
     private addScrollEvents(type);
     private removeScrollEvents(type);
+    private touchStart(e);
+    private touchMove(e);
     private handleEventLeftScroll();
     private handleEventWheelScroll(newTopPosition);
     private handleEventMainScroll();

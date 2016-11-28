@@ -1,6 +1,7 @@
 import { ViewSlot, TargetInstruction, BehaviorInstruction } from 'aurelia-framework';
 import { Selection } from './selection';
 import { GroupingElements } from './grid/groupingElements';
+import { Controller } from './grid/controller';
 export * from 'aurelia-framework';
 export { HtmlCache } from './grid/htmlCache';
 export { Controller } from './grid/controller';
@@ -86,13 +87,13 @@ export interface ColConfig {
 }
 export interface Entity {
     [key: string]: any;
-    __group: boolean;
-    __groupID: string;
-    __groupName: string;
-    __groupLvl: number;
-    __groupTotal: number;
-    __groupChildren: Array<Entity>;
-    __groupExpanded: boolean;
+    __group?: boolean;
+    __groupID?: string;
+    __groupName?: string;
+    __groupLvl?: number;
+    __groupTotal?: number;
+    __groupChildren?: Array<Entity>;
+    __groupExpanded?: boolean;
 }
 export interface TargetData {
     [key: string]: any;
@@ -183,4 +184,39 @@ export interface GroupingContext {
     field: string;
     remove: Function;
     ctx: GroupingElements;
+}
+export interface SelectionInterface {
+    getMode(): string;
+    isSelected(row: number): boolean;
+    deSelectAll(): void;
+    deSelect(row: number): void;
+    select(row: number, add?: boolean): void;
+    selectRange(start: number, end: number): void;
+    getSelectedRows(): Array<number>;
+    setSelectedRows(newRows: Array<number>): void;
+    reset(): void;
+}
+export interface GridConnectorInterface {
+    getSelection(): SelectionInterface;
+    connect(controller: Controller, create: Function): void;
+    gridCreated(): void;
+    select(row: number): void;
+    getDatasourceLength(): number;
+    getColConfig(): Array<ColConfig>;
+    setColConfig(colconfig: Array<ColConfig>): void;
+    getGrouping(): Array<string>;
+    group(grouping: Array<string>, keepExpanded?: boolean): void;
+    getElement(options: {
+        row: number;
+        isDown: boolean;
+        callback: Function;
+    }): void;
+    query(a: Array<FilterObject>): void;
+    orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
+    getCurrentOrderBy(): Array<SortObject>;
+    getCurrentFilter(): Array<FilterObject>;
+    getFilterOperatorName(operator: string): string;
+    setFilterOperatorName(key: string, name: string): void;
+    expandGroup(id: string): void;
+    collapseGroup(id: string): void;
 }

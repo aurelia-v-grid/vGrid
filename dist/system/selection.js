@@ -13,8 +13,6 @@ System.register([], function (exports_1, context_1) {
                 Selection.prototype.getMode = function () {
                     return this.mode;
                 };
-                Selection.prototype.setMode = function () {
-                };
                 Selection.prototype.getRowKey = function (row) {
                     return row;
                 };
@@ -99,8 +97,6 @@ System.register([], function (exports_1, context_1) {
                     if (this.selectedRows > 0) {
                         this.selection.clear();
                     }
-                    this.lastRowSelected = -1;
-                    this.lastKeyKodeUsed = 'none';
                     this.selectedRows = this.selection.size;
                 };
                 return Selection;

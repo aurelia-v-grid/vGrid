@@ -8,8 +8,6 @@ define(["require", "exports"], function (require, exports) {
         Selection.prototype.getMode = function () {
             return this.mode;
         };
-        Selection.prototype.setMode = function () {
-        };
         Selection.prototype.getRowKey = function (row) {
             return row;
         };
@@ -94,8 +92,6 @@ define(["require", "exports"], function (require, exports) {
             if (this.selectedRows > 0) {
                 this.selection.clear();
             }
-            this.lastRowSelected = -1;
-            this.lastKeyKodeUsed = 'none';
             this.selectedRows = this.selection.size;
         };
         return Selection;

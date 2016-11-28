@@ -23,7 +23,6 @@ var groupingElements_1 = require("./groupingElements");
 var controller_1 = require("./controller");
 var loadingScreen_1 = require("./loadingScreen");
 var contextMenu_1 = require("./contextMenu");
-var interfaces_1 = require("../interfaces");
 var VGrid = (function () {
     function VGrid(element, viewCompiler, container, viewResources, taskQueue) {
         this.element = element;
@@ -65,6 +64,7 @@ var VGrid = (function () {
         this.attHeaderHeight = this.attHeaderHeight ? this.attHeaderHeight * 1 : 25;
         this.attFooterHeight = this.attFooterHeight ? this.attFooterHeight * 1 : 25;
         this.attPanelHeight = this.attPanelHeight ? this.attPanelHeight * 1 : 25;
+        this.attDataDelay = this.attDataDelay ? this.attDataDelay * 1 : 0;
         this.attMultiSelect = this.checkBool(this.attMultiSelect);
         this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
         this.attTheme = this.attTheme || 'avg-default';
@@ -77,16 +77,19 @@ var VGrid = (function () {
         this.viewSlots.unbindAndDetachColumns();
     };
     VGrid.prototype.attached = function () {
-        if (this.newGrid) {
-            this.backupColConfig = this.colConfig.slice(0);
-            if (this.attColConfig) {
-                this.colConfig = this.attColConfig.length > 0 ? this.attColConfig : this.colConfig;
+        var _this = this;
+        this.attGridConnector.connect(this.controller, function () {
+            if (_this.newGrid) {
+                _this.backupColConfig = _this.colConfig.slice(0);
+                if (_this.attColConfig) {
+                    _this.colConfig = _this.attColConfig.length > 0 ? _this.attColConfig : _this.colConfig;
+                }
+                _this.controller.getContext();
+                _this.controller.createGrid();
             }
-            this.controller.getContext();
-            this.controller.createGrid();
-        }
-        this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
-        this.attGridConnector.gridCreated(this.controller);
+            _this.viewSlots.bindAndAttachColumns(_this.overrideContext, _this.columnBindingContext, _this.attGridConnector.getSelection());
+            _this.attGridConnector.gridCreated();
+        });
     };
     VGrid.prototype.checkBool = function (value) {
         if (typeof value === 'string') {
@@ -129,7 +132,7 @@ __decorate([
 ], VGrid.prototype, "attPanelHeight", void 0);
 __decorate([
     aurelia_framework_1.bindable({ attribute: 'v-grid-connector' }),
-    __metadata("design:type", interfaces_1.GridConnector)
+    __metadata("design:type", Object)
 ], VGrid.prototype, "attGridConnector", void 0);
 __decorate([
     aurelia_framework_1.bindable({ attribute: 'v-multi-select' }),
@@ -155,5 +158,9 @@ __decorate([
     aurelia_framework_1.bindable({ attribute: 'v-language' }),
     __metadata("design:type", Object)
 ], VGrid.prototype, "attLanguage", void 0);
+__decorate([
+    aurelia_framework_1.bindable({ attribute: 'v-data-delay' }),
+    __metadata("design:type", Number)
+], VGrid.prototype, "attDataDelay", void 0);
 
 //# sourceMappingURL=v-grid.js.map

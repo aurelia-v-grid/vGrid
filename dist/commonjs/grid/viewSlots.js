@@ -14,7 +14,7 @@ var ViewSlots = (function () {
         this.groupingViewSlots = [];
         this.contextMenu = null;
     }
-    ViewSlots.prototype.bindAndAttachColumns = function (overrideContext, columnBindingContext) {
+    ViewSlots.prototype.bindAndAttachColumns = function (overrideContext, columnBindingContext, curSelection) {
         var context;
         var newParentOverrideContext = {
             bindingContext: columnBindingContext,
@@ -36,7 +36,7 @@ var ViewSlots = (function () {
             this.groupRowViewSlots[i].bind(this.rowCache[i].bindingContext, this.rowCache[i].parentOverrideContext);
             this.groupRowViewSlots[i].attached();
         }
-        context = {};
+        context = { selection: curSelection };
         this.headerCache.bindingContext = context;
         this.headerCache.parentOverrideContext = {
             bindingContext: context,

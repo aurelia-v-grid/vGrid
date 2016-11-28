@@ -1,0 +1,43 @@
+import { Controller, GridConnectorInterface, SelectionInterface, ColConfig, FilterObject, SortObject } from '../interfaces';
+export declare class WakGridConnector implements GridConnectorInterface {
+    private datasource;
+    private errorHandler;
+    private eventListenerID;
+    private controller;
+    private createGrid;
+    private lastSort;
+    private curSort;
+    private lastFilter;
+    constructor(datasource?: any);
+    getSelection(): SelectionInterface;
+    getCurrentOrderBy(): Array<any>;
+    getCurrentFilter(): Array<FilterObject>;
+    getFilterOperatorName(name: string): any;
+    expandGroup(id: string): void;
+    collapseGroup(id: string): void;
+    setFilterOperatorName(key: string, name: string): void;
+    getDatasourceLength(): any;
+    connect(controller: Controller, create: Function): void;
+    gridCreated(): void;
+    setDatasource(datasource: any, errorHandler?: any, setHeight?: any, setSort?: any): void;
+    destroy(): void;
+    getColConfig(): Array<ColConfig>;
+    setColConfig(colconfig: Array<ColConfig>): void;
+    getGrouping(): Array<string>;
+    group(grouping: Array<string>, keepExpanded?: boolean): void;
+    select(row: any): void;
+    getElement(options: {
+        row: number;
+        isDown: boolean;
+        callback: Function;
+    }): void;
+    query(filterObj: Array<FilterObject>): void;
+    orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
+    setValueToRow(attribute: any, value: any, row: any): void;
+    private eventHandler(event);
+    private raiseEvent(name, data?);
+    private getRowProperties(obj);
+    private createOrderByString(orderByArray);
+    private createQueryString(queryArray);
+    private setOrderBy(param, add?);
+}

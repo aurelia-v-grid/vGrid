@@ -15,9 +15,12 @@ System.register([], function (exports_1, context_1) {
                 GridConnector.prototype.getSelection = function () {
                     return this.selection;
                 };
-                GridConnector.prototype.gridCreated = function (controller) {
+                GridConnector.prototype.connect = function (controller, create) {
                     this.controller = controller;
                     this.eventID = this.datasource.addEventListener(this.eventHandler.bind(this));
+                    create();
+                };
+                GridConnector.prototype.gridCreated = function () {
                     this.raiseEvent('sortIconUpdate');
                     this.controller.updateHeights();
                     this.controller.triggerScroll(0);
@@ -27,7 +30,7 @@ System.register([], function (exports_1, context_1) {
                     this.datasource.select(row);
                 };
                 GridConnector.prototype.getDatasourceLength = function () {
-                    return this.datasource.length;
+                    return this.datasource.length();
                 };
                 GridConnector.prototype.getColConfig = function () {
                     return this.controller.getColumnConfig();

@@ -1,4 +1,4 @@
-System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./rowMarkup", "./rowScrollEvents", "./columnMarkup", "./htmlCache", "./htmlHeightWidth", "./viewSlots", "./columnBindingContext", "./rowDataBinder", "./rowClickHandler", "./groupingElements", "./controller", "./loadingScreen", "./contextMenu", "../interfaces"], function (exports_1, context_1) {
+System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./rowMarkup", "./rowScrollEvents", "./columnMarkup", "./htmlCache", "./htmlHeightWidth", "./viewSlots", "./columnBindingContext", "./rowDataBinder", "./rowClickHandler", "./groupingElements", "./controller", "./loadingScreen", "./contextMenu"], function (exports_1, context_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,7 +9,7 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var aurelia_framework_1, mainMarkup_1, mainScrollEvents_1, rowMarkup_1, rowScrollEvents_1, columnMarkup_1, htmlCache_1, htmlHeightWidth_1, viewSlots_1, columnBindingContext_1, rowDataBinder_1, rowClickHandler_1, groupingElements_1, controller_1, loadingScreen_1, contextMenu_1, interfaces_1, VGrid;
+    var aurelia_framework_1, mainMarkup_1, mainScrollEvents_1, rowMarkup_1, rowScrollEvents_1, columnMarkup_1, htmlCache_1, htmlHeightWidth_1, viewSlots_1, columnBindingContext_1, rowDataBinder_1, rowClickHandler_1, groupingElements_1, controller_1, loadingScreen_1, contextMenu_1, VGrid;
     return {
         setters: [
             function (aurelia_framework_1_1) {
@@ -59,9 +59,6 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
             },
             function (contextMenu_1_1) {
                 contextMenu_1 = contextMenu_1_1;
-            },
-            function (interfaces_1_1) {
-                interfaces_1 = interfaces_1_1;
             }
         ],
         execute: function () {
@@ -106,6 +103,7 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                     this.attHeaderHeight = this.attHeaderHeight ? this.attHeaderHeight * 1 : 25;
                     this.attFooterHeight = this.attFooterHeight ? this.attFooterHeight * 1 : 25;
                     this.attPanelHeight = this.attPanelHeight ? this.attPanelHeight * 1 : 25;
+                    this.attDataDelay = this.attDataDelay ? this.attDataDelay * 1 : 0;
                     this.attMultiSelect = this.checkBool(this.attMultiSelect);
                     this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
                     this.attTheme = this.attTheme || 'avg-default';
@@ -118,16 +116,19 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                     this.viewSlots.unbindAndDetachColumns();
                 };
                 VGrid.prototype.attached = function () {
-                    if (this.newGrid) {
-                        this.backupColConfig = this.colConfig.slice(0);
-                        if (this.attColConfig) {
-                            this.colConfig = this.attColConfig.length > 0 ? this.attColConfig : this.colConfig;
+                    var _this = this;
+                    this.attGridConnector.connect(this.controller, function () {
+                        if (_this.newGrid) {
+                            _this.backupColConfig = _this.colConfig.slice(0);
+                            if (_this.attColConfig) {
+                                _this.colConfig = _this.attColConfig.length > 0 ? _this.attColConfig : _this.colConfig;
+                            }
+                            _this.controller.getContext();
+                            _this.controller.createGrid();
                         }
-                        this.controller.getContext();
-                        this.controller.createGrid();
-                    }
-                    this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
-                    this.attGridConnector.gridCreated(this.controller);
+                        _this.viewSlots.bindAndAttachColumns(_this.overrideContext, _this.columnBindingContext, _this.attGridConnector.getSelection());
+                        _this.attGridConnector.gridCreated();
+                    });
                 };
                 VGrid.prototype.checkBool = function (value) {
                     if (typeof value === 'string') {
@@ -170,7 +171,7 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
             ], VGrid.prototype, "attPanelHeight", void 0);
             __decorate([
                 aurelia_framework_1.bindable({ attribute: 'v-grid-connector' }),
-                __metadata("design:type", interfaces_1.GridConnector)
+                __metadata("design:type", Object)
             ], VGrid.prototype, "attGridConnector", void 0);
             __decorate([
                 aurelia_framework_1.bindable({ attribute: 'v-multi-select' }),
@@ -196,6 +197,10 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                 aurelia_framework_1.bindable({ attribute: 'v-language' }),
                 __metadata("design:type", Object)
             ], VGrid.prototype, "attLanguage", void 0);
+            __decorate([
+                aurelia_framework_1.bindable({ attribute: 'v-data-delay' }),
+                __metadata("design:type", Number)
+            ], VGrid.prototype, "attDataDelay", void 0);
         }
     };
 });

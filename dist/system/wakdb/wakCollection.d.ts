@@ -1,0 +1,32 @@
+export declare class WakCollection {
+    baseUrl: any;
+    attributes: any;
+    rowno: Array<any>;
+    keys: Array<any>;
+    created: Array<any>;
+    data: Array<any>;
+    length: any;
+    pages: Array<any>;
+    addToSet: Array<any>;
+    currentPage: any;
+    entityset: any;
+    options: any;
+    pagesFetching: Array<any>;
+    entityModel: any;
+    constructor(attributes: any, baseUrl: any);
+    setDefaults(): void;
+    clearCache(): Promise<{}>;
+    getUnsaved(): any[];
+    replace(data: any): void;
+    getRow(row: any): any;
+    getKey(key: any): void;
+    getRowFromKey(key: any): any;
+    getRowFromEntity(entity: any): any;
+    getModified(): any[];
+    addRow(): Promise<{}>;
+    removeUnsavedRow(row: any): void;
+    getClosestPage(row: any, pageSize: any): number;
+    add(data: any): void;
+    setValueToRow(attribute: any, value: any, row: any): void;
+    insertData(data: any): void;
+}

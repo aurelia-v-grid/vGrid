@@ -14,7 +14,7 @@ import { GroupingElements } from './groupingElements';
 import { Controller } from './controller';
 import { LoadingScreen } from './loadingScreen';
 import { ContextMenu } from './contextMenu';
-import { ResizeShardContext, GridConnector, DragDropShardContext, ColConfig, BindingContext, OverrideContext } from '../interfaces';
+import { ResizeShardContext, GridConnectorInterface, DragDropShardContext, ColConfig, BindingContext, OverrideContext } from '../interfaces';
 export declare class VGrid {
     static inject: ({
         new (): Element;
@@ -57,13 +57,14 @@ export declare class VGrid {
     attHeaderHeight: number;
     attFooterHeight: number;
     attPanelHeight: number;
-    attGridConnector: GridConnector;
+    attGridConnector: GridConnectorInterface;
     attMultiSelect: boolean;
     attManualSelection: boolean;
     attTheme: string;
     attOnRowDraw: Function;
     attColConfig: Array<ColConfig>;
     attLanguage: any;
+    attDataDelay: number;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, taskQueue: TaskQueue);
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
     unbind(): void;

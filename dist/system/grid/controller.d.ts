@@ -1,4 +1,4 @@
-import { ViewCompiler, ViewResources, Container, TaskQueue, MainMarkup, MainScrollEvents, ColumnMarkup, HtmlHeightWidth, ViewSlots, ColumnBindingContext, HtmlCache, RowDataBinder, RowClickHandler, GroupingElements, RowMarkup, LoadingScreen, ContextMenu, VGrid, GridConnector, Selection, RowScrollEvents, ColConfig, BindingContext, OverrideContext, DragDropShardContext, ResizeShardContext } from '../interfaces';
+import { ViewCompiler, ViewResources, Container, TaskQueue, MainMarkup, MainScrollEvents, ColumnMarkup, HtmlHeightWidth, ViewSlots, ColumnBindingContext, HtmlCache, RowDataBinder, RowClickHandler, GroupingElements, RowMarkup, LoadingScreen, ContextMenu, VGrid, GridConnectorInterface, RowScrollEvents, ColConfig, BindingContext, OverrideContext, DragDropShardContext, ResizeShardContext, SelectionInterface } from '../interfaces';
 export declare class Controller {
     vGrid: VGrid;
     htmlCache: HtmlCache;
@@ -39,9 +39,10 @@ export declare class Controller {
     attPanelHeight: number;
     attMultiSelect: boolean;
     attManualSelection: boolean;
-    attGridConnector: GridConnector;
+    attGridConnector: GridConnectorInterface;
     attOnRowDraw: Function;
     attLanguage: any;
+    attDataDelay: number;
     constructor(vGrid: VGrid);
     getContext(): void;
     createGrid(): void;
@@ -53,7 +54,7 @@ export declare class Controller {
     select(row: number): void;
     addToGrouping(attribute: string): void;
     removeFromGrouping(attribute: string): void;
-    getSelectionContext(): Selection;
+    getSelectionContext(): SelectionInterface;
     raiseEvent(name: string, data?: {}): void;
     setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<void>;
     updateHeights(): void;

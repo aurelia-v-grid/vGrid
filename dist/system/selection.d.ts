@@ -1,12 +1,10 @@
-export declare class Selection {
+import { SelectionInterface } from './interfaces';
+export declare class Selection implements SelectionInterface {
     private mode;
     private selectedRows;
     private selection;
-    private lastRowSelected;
-    private lastKeyKodeUsed;
     constructor(mode: string);
     getMode(): string;
-    setMode(): void;
     getRowKey(row: number): number;
     getRowFromKey(row: number): number;
     overrideGetRowKey(fn: (row: number) => number): void;

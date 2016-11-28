@@ -43,6 +43,7 @@ var Controller = (function () {
         this.attGridConnector = c.attGridConnector;
         this.attOnRowDraw = c.attOnRowDraw;
         this.attLanguage = c.attLanguage;
+        this.attDataDelay = c.attDataDelay;
     };
     Controller.prototype.createGrid = function () {
         var _this = this;
@@ -60,7 +61,7 @@ var Controller = (function () {
         this.mainScrollEvents.init();
         this.rowMarkup.init(this.attRowHeight);
         this.htmlCache.updateRowsMarkup();
-        this.rowScrollEvents.init(this.attRowHeight);
+        this.rowScrollEvents.init(this.attRowHeight, this.attDataDelay);
         this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroupRow);
         this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
         this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);
@@ -234,7 +235,7 @@ var Controller = (function () {
         this.viewSlots.clear();
         this.colConfig = colConfig || this.backupColConfig;
         this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroupRow);
-        this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext);
+        this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext, this.attGridConnector.getSelection());
         this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
         this.columnBindingContext.setupgrouping = length;
         this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
