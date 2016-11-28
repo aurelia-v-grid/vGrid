@@ -111,11 +111,11 @@ export class HtmlHeightWidth {
 
   public setCollectionLength(length: number): void {
     let total = length * this.attRowHeight;
-    this.avgContentRightScroll_Height = total + this.avgScrollBarWidth;
+    this.avgContentRightScroll_Height = total; // + this.avgScrollBarWidth;
     this.avgContentGroup_Height = total;
-    this.avgContentVhandleScroll_Height = total + this.avgScrollBarWidth;
+    this.avgContentVhandleScroll_Height = total; // + this.avgScrollBarWidth;
     this.avgContentMainScroll_Height = total;
-    this.avgContentLeftScroll_Height = total + this.avgScrollBarWidth;
+    this.avgContentLeftScroll_Height = total; // + this.avgScrollBarWidth;
   }
 
 
@@ -136,12 +136,12 @@ export class HtmlHeightWidth {
     this.avgHeader_Top = attPanelHeight;
     this.avgHeader_Height = attHeaderHeight;
     this.avgContent_Top = attHeaderHeight + attPanelHeight;
-    this.avgContent_Bottom = attFooterHeight;
+    this.avgContent_Bottom = attFooterHeight + this.avgScrollBarWidth;
     this.avgFooter_Height = attFooterHeight;
     this.avgHeaderMainScroll_Height = attHeaderHeight;
     this.avgContentGroup_Height = this.avgContentGroup_Height;
     this.avgContentGroup_Top = this.avgContent_Top;
-    this.avgContentGroup_Bottom = this.avgContent_Bottom + this.avgScrollBarWidth;
+    this.avgContentGroup_Bottom = this.avgContent_Bottom; // + this.avgScrollBarWidth;
     this.avgContentVhandle_Height = this.avgContentVhandle_Height;
     this.avgContentVhandle_Top = this.avgContent_Top;
     this.avgContentVhandle_Bottom = this.avgContent_Bottom;
@@ -168,7 +168,7 @@ export class HtmlHeightWidth {
       }
     }
 
-    this.avgContentLeft_Width = left + this.avgScrollBarWidth;
+    this.avgContentLeft_Width = left; // + this.avgScrollBarWidth;
     this.avgHeaderLeft_Width = left;
 
     this.avgContentMain_Left = left;
@@ -179,10 +179,10 @@ export class HtmlHeightWidth {
     this.avgHeaderMainScroll_Width = main;
     this.avgContentMainScroll_Width = main;
 
-    this.avgContentRight_Width = right + this.avgScrollBarWidth;
-    this.avgHeaderRight_Width = right + this.avgScrollBarWidth;
+    this.avgContentRight_Width = right; // + this.avgScrollBarWidth;
+    this.avgHeaderRight_Width = right; // + this.avgScrollBarWidth;
 
-    this.avgContentHhandle_Right = right + this.avgScrollBarWidth;
+    this.avgContentHhandle_Right = right; // + this.avgScrollBarWidth;
     this.avgContentHhandle_Left = left;
     this.avgContentHhandleScroll_Width = main;
   }
@@ -212,7 +212,7 @@ export class HtmlHeightWidth {
       }
     }
 
-    this.avgContentLeft_Width = left + this.avgScrollBarWidth;
+    this.avgContentLeft_Width = left; // + this.avgScrollBarWidth;
     this.avgHeaderLeft_Width = left;
 
     this.avgContentMain_Left = left;
@@ -223,8 +223,8 @@ export class HtmlHeightWidth {
     this.avgHeaderMainScroll_Width = main;
     this.avgContentMainScroll_Width = main;
 
-    this.avgContentRight_Width = right + this.avgScrollBarWidth;
-    this.avgHeaderRight_Width = right + this.avgScrollBarWidth;
+    this.avgContentRight_Width = right; // + this.avgScrollBarWidth;
+    this.avgHeaderRight_Width = right; // + this.avgScrollBarWidth;
 
     this.avgContentHhandle_Right = right + this.avgScrollBarWidth;
     this.avgContentHhandle_Left = left;

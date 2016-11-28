@@ -51,6 +51,7 @@ avg-header-main-scroll {
   height: 100%;
 }
 
+
 avg-header-right {
   position: absolute;
   box-sizing: border-box;
@@ -58,12 +59,14 @@ avg-header-right {
 }
 
 avg-content-left {
+  z-index:7;
   position: absolute;
   box-sizing: border-box;
   height: 100%;
   overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
+
 
 avg-content-left-scroll {
   position: absolute;
@@ -71,12 +74,13 @@ avg-content-left-scroll {
 }
 
 avg-content-main {
+  z-index:6;
   position: absolute;
   box-sizing: border-box;
   height: 100%;
   overflow: hidden;
-  overflow-x: scroll;
-  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 avg-content-main-scroll {
@@ -85,12 +89,15 @@ avg-content-main-scroll {
 }
 
 avg-content-right {
+  z-index:5;
   position: absolute;
   box-sizing: border-box;
   height: 100%;
   overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
+
+
 
 avg-content-right-scroll {
   position: absolute;
@@ -98,10 +105,11 @@ avg-content-right-scroll {
 }
 
 avg-content-group {
+  z-index: 9;
   position: absolute;
   box-sizing: border-box;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 avg-content-group-scroll {
@@ -111,6 +119,7 @@ avg-content-group-scroll {
 }
 
 avg-content-vhandle {
+  z-index: 10;
   position: absolute;
   box-sizing: border-box;
   overflow-x: hidden;
@@ -122,7 +131,10 @@ avg-content-vhandle-scroll {
   box-sizing: border-box;
 }
 
+
+
 avg-content-hhandle {
+  z-index:10;
   position: absolute;
   box-sizing: border-box;
   overflow-x: scroll;

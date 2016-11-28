@@ -18,6 +18,7 @@ export class MainScrollEvents {
   private vhandle: Element;
   private hhandle: Element;
   private group: Element;
+  private touchY: number;
 
 
 
@@ -49,8 +50,6 @@ export class MainScrollEvents {
     this.vhandle = this.htmlCache.avg_content_vhandle;
     this.hhandle = this.htmlCache.avg_content_hhandle;
     this.group = this.htmlCache.avg_content_group;
-    // this.scroll = this.htmlCache.avg_content_scroll;
-
   }
 
 
@@ -87,6 +86,8 @@ export class MainScrollEvents {
         (this.group as HTMLElement).onwheel = this.onWeel.bind(this);
         (this.vhandle as HTMLElement).onscroll = this.handleEventVhandle.bind(this);
         (this.hhandle as HTMLElement).onscroll = this.handleEventHhandle.bind(this);
+        this.htmlCache.element.addEventListener('touchmove', this.touchMove.bind(this));
+        this.htmlCache.element.addEventListener('touchstart', this.touchStart.bind(this));
         break;
       case 'left':
         (this.main as HTMLElement).onscroll = this.handleEventMainScroll.bind(this);
@@ -118,8 +119,10 @@ export class MainScrollEvents {
         (this.vhandle as HTMLElement).onscroll = this.handleEventVhandle.bind(this);
         break;
       default:
-
     }
+
+
+
   }
 
   private removeScrollEvents(type: string): void {
@@ -167,6 +170,21 @@ export class MainScrollEvents {
         break;
       default:
     }
+  }
+
+
+  private touchStart(e: any) {
+    let touchobj = e.changedTouches[0];
+    this.touchY = parseInt(touchobj.clientY, 10);
+    e.preventDefault();
+  }
+
+
+  private touchMove(e: any) {
+    let touchobj = e.changedTouches[0];
+    let dist = parseInt(touchobj.clientY, 10) - this.touchY;
+    this.handleEventWheelScroll(dist);
+    e.preventDefault();
   }
 
 
