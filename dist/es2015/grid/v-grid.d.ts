@@ -53,6 +53,8 @@ export declare class VGrid {
     bindingContext: BindingContext;
     overrideContext: OverrideContext;
     backupColConfig: Array<ColConfig>;
+    filterOperatorNames: any;
+    filterOperatorTranslationKeys: any;
     attRowHeight: number;
     attHeaderHeight: number;
     attFooterHeight: number;
@@ -63,7 +65,7 @@ export declare class VGrid {
     attTheme: string;
     attOnRowDraw: Function;
     attColConfig: Array<ColConfig>;
-    attLanguage: any;
+    attI18N: Function;
     attDataDelay: number;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, taskQueue: TaskQueue);
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;

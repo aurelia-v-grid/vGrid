@@ -42,21 +42,51 @@ var Controller = (function () {
         this.attManualSelection = c.attManualSelection;
         this.attGridConnector = c.attGridConnector;
         this.attOnRowDraw = c.attOnRowDraw;
-        this.attLanguage = c.attLanguage;
+        this.attI18N = c.attI18N;
         this.attDataDelay = c.attDataDelay;
     };
-    Controller.prototype.createGrid = function () {
+    Controller.prototype.triggerI18N = function () {
         var _this = this;
+        var keys = Object.keys({
+            close: 'Close',
+            pinLeft: 'Pin left',
+            pinRight: 'Pin Right',
+            groupBy: 'Group By',
+            sortAscending: 'Sort Ascending',
+            sortDescending: 'Sort Descending',
+            showAll: 'Show All',
+            clearCurrent: 'Clear Current',
+            clearAll: 'Clear All',
+            chooseOperator: 'Choose Operator',
+            back: 'Back',
+            equals: 'Equals',
+            lessThanOrEqual: 'Less than or equal',
+            greaterThanOrEqual: 'Greater than or equal',
+            lessThan: 'Less than',
+            greaterThan: 'Greater than',
+            contains: 'Contains',
+            notEqualTo: 'Not equal to',
+            doesNotContain: 'Does not contain',
+            beginsWith: 'Begins with',
+            endsWith: 'Ends with'
+        });
+        if (this.attI18N) {
+            keys.forEach(function (key) {
+                if (_this.vGrid.filterOperatorTranslationKeys[key]) {
+                    _this.vGrid.filterOperatorNames[_this.vGrid.filterOperatorTranslationKeys[key]] = _this.attI18N(key);
+                }
+                _this.contextMenu.updateMenuStrings(key, _this.attI18N(key));
+            });
+            this.raiseEvent('filterTranslation', {});
+        }
+    };
+    Controller.prototype.createGrid = function () {
+        if (this.attI18N) {
+            this.triggerI18N();
+        }
         this.htmlHeightWidth.addDefaultsAttributes(this.attHeaderHeight, this.attRowHeight, this.attFooterHeight, this.attPanelHeight);
         this.mainMarkup.generateMainMarkup();
         this.htmlCache.updateMainMarkup();
-        if (Object.keys(this.attLanguage).length > 0) {
-            var keys = Object.keys(this.attLanguage);
-            keys.forEach(function (key) {
-                _this.setOperatorName(key, _this.attLanguage[key]);
-            });
-            this.contextMenu.updateMenuStrings(this.attLanguage);
-        }
         this.rowDataBinder.init();
         this.mainScrollEvents.init();
         this.rowMarkup.init(this.attRowHeight);
@@ -81,12 +111,6 @@ var Controller = (function () {
                 callbackFN(rowContext);
             }
         });
-    };
-    Controller.prototype.getOperatorName = function (name) {
-        return this.attGridConnector.getFilterOperatorName(name);
-    };
-    Controller.prototype.setOperatorName = function (key, name) {
-        this.attGridConnector.setFilterOperatorName(key, name);
     };
     Controller.prototype.expandGroup = function (id) {
         this.attGridConnector.expandGroup(id);

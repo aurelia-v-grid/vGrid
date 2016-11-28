@@ -14,6 +14,9 @@ var VGridAttributesFilter = (function () {
         this.vGrid = vGrid;
         this.element = element;
     }
+    VGridAttributesFilter.prototype.getOperatorName = function (operator) {
+        return this.vGrid.filterOperatorNames[operator];
+    };
     VGridAttributesFilter.prototype.attached = function () {
         var _this = this;
         if (this.attribute) {
@@ -21,9 +24,14 @@ var VGridAttributesFilter = (function () {
                 if (e.detail.attribute === _this.attribute) {
                     _this.filterOperator = e.detail.operator;
                     _this.element.placeholder =
-                        _this.vGrid.attGridConnector.getFilterOperatorName(_this.filterOperator);
+                        _this.getOperatorName(_this.filterOperator);
                     _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
                 }
+            });
+            this.vGrid.element.addEventListener('filterTranslation', function () {
+                _this.element.placeholder =
+                    _this.getOperatorName(_this.filterOperator);
+                _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
             });
             this.vGrid.element.addEventListener('filterClearCell', function (e) {
                 if (e.detail.attribute === _this.attribute) {
@@ -37,7 +45,7 @@ var VGridAttributesFilter = (function () {
             });
             if (this.type !== 'checkbox') {
                 this.element.placeholder =
-                    this.vGrid.attGridConnector.getFilterOperatorName(this.filterOperator);
+                    this.getOperatorName(this.filterOperator);
                 this.element.onkeyup = function (e) {
                     if (e.keyCode === 13) {
                         _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());

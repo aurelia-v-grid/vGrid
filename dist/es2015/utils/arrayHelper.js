@@ -97,12 +97,6 @@ define(["require", "exports", "./filterOperators", "./arrayFilter", "./arraySort
         ArrayHelper.prototype.resetSort = function () {
             this.arraySort.reset();
         };
-        ArrayHelper.prototype.getFilterOperatorName = function (operator) {
-            return this.filterOperators.getName(operator);
-        };
-        ArrayHelper.prototype.setFilterOperatorName = function (key, name) {
-            this.filterOperators.setName(key, name);
-        };
         ArrayHelper.prototype.getCurrentFilter = function () {
             return this.arrayFilter.getLastFilter();
         };

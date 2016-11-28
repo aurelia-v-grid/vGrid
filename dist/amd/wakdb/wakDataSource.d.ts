@@ -50,6 +50,4 @@ export declare class WakDataSource {
     resetCollection(): void;
     saveAll(options: any): Promise<{}>;
     deleteCurrent(options: any): Promise<{}>;
-    getFilterOperatorName(operator: string): string;
-    setFilterOperatorName(key: string, name: string): void;
 }

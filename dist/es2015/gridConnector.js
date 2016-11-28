@@ -73,12 +73,6 @@ define(["require", "exports"], function (require, exports) {
         GridConnector.prototype.getCurrentFilter = function () {
             return this.datasource.getCurrentFilter();
         };
-        GridConnector.prototype.getFilterOperatorName = function (operator) {
-            return this.datasource.getFilterOperatorName(operator);
-        };
-        GridConnector.prototype.setFilterOperatorName = function (key, name) {
-            this.datasource.setFilterOperatorName(key, name);
-        };
         GridConnector.prototype.expandGroup = function (id) {
             var _this = this;
             this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(function () {
@@ -90,6 +84,9 @@ define(["require", "exports"], function (require, exports) {
             this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(function () {
                 _this.datasource.groupCollapse(id);
             });
+        };
+        GridConnector.prototype.triggerI18n = function () {
+            this.controller.triggerI18N();
         };
         GridConnector.prototype.eventHandler = function (event) {
             switch (event) {

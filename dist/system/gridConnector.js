@@ -78,12 +78,6 @@ System.register([], function (exports_1, context_1) {
                 GridConnector.prototype.getCurrentFilter = function () {
                     return this.datasource.getCurrentFilter();
                 };
-                GridConnector.prototype.getFilterOperatorName = function (operator) {
-                    return this.datasource.getFilterOperatorName(operator);
-                };
-                GridConnector.prototype.setFilterOperatorName = function (key, name) {
-                    this.datasource.setFilterOperatorName(key, name);
-                };
                 GridConnector.prototype.expandGroup = function (id) {
                     var _this = this;
                     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(function () {
@@ -95,6 +89,9 @@ System.register([], function (exports_1, context_1) {
                     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(function () {
                         _this.datasource.groupCollapse(id);
                     });
+                };
+                GridConnector.prototype.triggerI18n = function () {
+                    this.controller.triggerI18N();
                 };
                 GridConnector.prototype.eventHandler = function (event) {
                     switch (event) {

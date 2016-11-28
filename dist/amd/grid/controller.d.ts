@@ -41,14 +41,13 @@ export declare class Controller {
     attManualSelection: boolean;
     attGridConnector: GridConnectorInterface;
     attOnRowDraw: Function;
-    attLanguage: any;
+    attI18N: any;
     attDataDelay: number;
     constructor(vGrid: VGrid);
     getContext(): void;
+    triggerI18N(): void;
     createGrid(): void;
     getElement(rowNumber: number, isDownScroll: boolean, callbackFN: Function): void;
-    getOperatorName(name: string): string;
-    setOperatorName(key: string, name: string): void;
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
     select(row: number): void;

@@ -16,6 +16,7 @@ export declare class VGridAttributesFilter {
     private type;
     private state;
     constructor(element: HTMLElement, vGrid: VGrid);
+    getOperatorName(operator: string): string;
     attached(): void;
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
     private getValue();

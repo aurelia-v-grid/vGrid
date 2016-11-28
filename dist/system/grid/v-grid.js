@@ -95,6 +95,30 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                     this.groupingElements = new groupingElements_1.GroupingElements(element, viewCompiler, container, viewResources, this.htmlCache, this.viewSlots, this.columnBindingContext);
                     this.loadingScreen = new loadingScreen_1.LoadingScreen(element, viewCompiler, container, viewResources, this.viewSlots);
                     this.contextMenu = new contextMenu_1.ContextMenu(viewCompiler, container, viewResources, this.viewSlots);
+                    this.filterOperatorNames = {
+                        '=': 'equals',
+                        '<=': 'less than or eq',
+                        '>=': 'greater than or eq',
+                        '<': 'less than',
+                        '>': 'greater than',
+                        '*': 'contains',
+                        '!=': 'not equal to',
+                        '!*': 'does not contain',
+                        '*=': 'begins with',
+                        '=*': 'ends with'
+                    };
+                    this.filterOperatorTranslationKeys = {
+                        equals: '=',
+                        lessThanOrEqual: '<=',
+                        greaterThanOrEqual: '>=',
+                        lessThan: '<',
+                        greaterThan: '>',
+                        contains: '*',
+                        notEqualTo: '!=',
+                        doesNotContain: '!*',
+                        beginsWith: '*=',
+                        endsWith: '=*'
+                    };
                 }
                 VGrid.prototype.bind = function (bindingContext, overrideContext) {
                     this.bindingContext = bindingContext;
@@ -109,7 +133,7 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                     this.attTheme = this.attTheme || 'avg-default';
                     this.element.classList.add(this.attTheme);
                     this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
-                    this.attLanguage = typeof this.attLanguage === 'object' ? this.attLanguage : {};
+                    this.attI18N = typeof this.attI18N === 'function' ? this.attI18N : null;
                 };
                 VGrid.prototype.unbind = function () {
                     this.newGrid = false;
@@ -194,9 +218,9 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                 __metadata("design:type", Array)
             ], VGrid.prototype, "attColConfig", void 0);
             __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-language' }),
-                __metadata("design:type", Object)
-            ], VGrid.prototype, "attLanguage", void 0);
+                aurelia_framework_1.bindable({ attribute: 'v-i18n' }),
+                __metadata("design:type", Function)
+            ], VGrid.prototype, "attI18N", void 0);
             __decorate([
                 aurelia_framework_1.bindable({ attribute: 'v-data-delay' }),
                 __metadata("design:type", Number)

@@ -215,8 +215,6 @@ export interface GridConnectorInterface {
     orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
     getCurrentOrderBy(): Array<SortObject>;
     getCurrentFilter(): Array<FilterObject>;
-    getFilterOperatorName(operator: string): string;
-    setFilterOperatorName(key: string, name: string): void;
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
 }

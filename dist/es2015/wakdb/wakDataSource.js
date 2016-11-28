@@ -717,12 +717,6 @@ define(["require", "exports", "./WakCollection", "./wakSelection", "./wakCollect
                 }
             });
         };
-        WakDataSource.prototype.getFilterOperatorName = function (operator) {
-            return this.arrayHelper.getFilterOperatorName(operator);
-        };
-        WakDataSource.prototype.setFilterOperatorName = function (key, name) {
-            this.arrayHelper.setFilterOperatorName(key, name);
-        };
         return WakDataSource;
     }());
     exports.WakDataSource = WakDataSource;

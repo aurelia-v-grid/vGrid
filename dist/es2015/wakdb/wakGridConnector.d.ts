@@ -15,7 +15,6 @@ export declare class WakGridConnector implements GridConnectorInterface {
     getFilterOperatorName(name: string): any;
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
-    setFilterOperatorName(key: string, name: string): void;
     getDatasourceLength(): any;
     connect(controller: Controller, create: Function): void;
     gridCreated(): void;

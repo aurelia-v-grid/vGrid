@@ -27,8 +27,6 @@ export declare class DataSource {
     group(grouping: Array<string>, keepExpanded?: boolean): void;
     groupCollapse(id: string): void;
     groupExpand(id: string): void;
-    getFilterOperatorName(operator: string): string;
-    setFilterOperatorName(key: string, name: string): void;
     getGrouping(): Array<string>;
     addElement(data: Entity): void;
     private getRowKey(row);

@@ -26,10 +26,9 @@ export declare class GridConnector implements GridConnectorInterface {
     destroy(): void;
     getCurrentOrderBy(): Array<SortObject>;
     getCurrentFilter(): Array<FilterObject>;
-    getFilterOperatorName(operator: string): string;
-    setFilterOperatorName(key: string, name: string): void;
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
+    triggerI18n(): void;
     private eventHandler(event);
     private raiseEvent(name, data?);
     private getRowProperties(obj);

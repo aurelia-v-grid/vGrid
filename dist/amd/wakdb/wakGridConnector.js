@@ -26,9 +26,6 @@ define(["require", "exports"], function (require, exports) {
             console.warn('not usable in wak datasource');
             id = null;
         };
-        WakGridConnector.prototype.setFilterOperatorName = function (key, name) {
-            this.datasource.setFilterOperatorName(key, name);
-        };
         WakGridConnector.prototype.getDatasourceLength = function () {
             if (this.datasource) {
                 return this.datasource.collection.length;

@@ -15,6 +15,7 @@ export declare class ContextMenu {
     private groupbyMenu;
     private callback;
     private menuStrings;
+    private menuStringsBrackes;
     constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots);
     setDefaults(): void;
     init(customMenuTemplates: any, overrideContext: OverrideContext): void;
@@ -28,7 +29,7 @@ export declare class ContextMenu {
         callback?: Function;
     }): void;
     menuClick(type: string, option: string, event: Event): void;
-    updateMenuStrings(stringObj: any): void;
+    updateMenuStrings(key: string, text: string): void;
     private showFilterOptions();
     private hideFilterOptions();
     private menuHtml(customMenuTemplates);
