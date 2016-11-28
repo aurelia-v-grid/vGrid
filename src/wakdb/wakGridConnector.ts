@@ -59,11 +59,6 @@ export class WakGridConnector implements GridConnectorInterface {
     }
 
 
-    public setFilterOperatorName(key: string, name: string): void {
-        this.datasource.setFilterOperatorName(key, name);
-    }
-
-
     public getDatasourceLength() {
         if (this.datasource) {
             return this.datasource.collection.length;

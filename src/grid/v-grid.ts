@@ -59,6 +59,8 @@ export class VGrid {
     public bindingContext: BindingContext;
     public overrideContext: OverrideContext;
     public backupColConfig: Array<ColConfig>;
+    public filterOperatorNames: any;
+    public filterOperatorTranslationKeys: any;
 
 
 
@@ -73,7 +75,7 @@ export class VGrid {
     @bindable({ attribute: 'v-theme' }) public attTheme: string;
     @bindable({ attribute: 'v-row-on-draw' }) public attOnRowDraw: Function;
     @bindable({ attribute: 'v-columns' }) public attColConfig: Array<ColConfig>;
-    @bindable({ attribute: 'v-language' }) public attLanguage: any;
+    @bindable({ attribute: 'v-i18n' }) public attI18N: Function;
     @bindable({ attribute: 'v-data-delay' }) public attDataDelay: number;
 
 
@@ -161,6 +163,32 @@ export class VGrid {
             container,
             viewResources,
             this.viewSlots);
+
+        this.filterOperatorNames = {
+            '=': 'equals',              // 1
+            '<=': 'less than or eq',    // 2
+            '>=': 'greater than or eq', // 3
+            '<': 'less than',           // 4
+            '>': 'greater than',        // 5
+            '*': 'contains',            // 6
+            '!=': 'not equal to',       // 7
+            '!*': 'does not contain',   // 8
+            '*=': 'begins with',        // 9
+            '=*': 'ends with'           // 10
+            };
+
+        this.filterOperatorTranslationKeys = {
+             equals: '=',
+             lessThanOrEqual: '<=',
+             greaterThanOrEqual: '>=',
+             lessThan: '<',
+             greaterThan: '>',
+             contains: '*',
+             notEqualTo: '!=',
+             doesNotContain: '!*',
+             beginsWith: '*=',
+             endsWith: '=*'
+            };
     }
 
 
@@ -181,7 +209,7 @@ export class VGrid {
         this.attTheme = this.attTheme || 'avg-default';
         this.element.classList.add(this.attTheme);
         this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
-        this.attLanguage = typeof this.attLanguage === 'object' ? this.attLanguage : {};
+        this.attI18N = typeof this.attI18N === 'function' ? this.attI18N : null;
 
     }
 

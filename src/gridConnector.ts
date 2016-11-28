@@ -129,14 +129,6 @@ export class GridConnector implements GridConnectorInterface {
   }
 
 
-  public getFilterOperatorName(operator: string): string {
-    return this.datasource.getFilterOperatorName(operator);
-  }
-
-  public setFilterOperatorName(key: string, name: string): void {
-    this.datasource.setFilterOperatorName(key, name);
-  }
-
   public expandGroup(id: string): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.groupExpand(id);
@@ -148,6 +140,10 @@ export class GridConnector implements GridConnectorInterface {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.groupCollapse(id);
     });
+  }
+
+  public triggerI18n() {
+    this.controller.triggerI18N();
   }
 
 

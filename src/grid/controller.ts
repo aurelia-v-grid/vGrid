@@ -71,7 +71,7 @@ export class Controller {
   public attManualSelection: boolean;
   public attGridConnector: GridConnectorInterface;
   public attOnRowDraw: Function;
-  public attLanguage: any;
+  public attI18N: any;
   public attDataDelay: number;
 
 
@@ -132,13 +132,59 @@ export class Controller {
     this.attManualSelection = c.attManualSelection;
     this.attGridConnector = c.attGridConnector;
     this.attOnRowDraw = c.attOnRowDraw;
-    this.attLanguage = c.attLanguage;
+    this.attI18N = c.attI18N;
     this.attDataDelay = c.attDataDelay;
 
   }
 
 
+  public triggerI18N() {
+    let keys = Object.keys({
+      close: 'Close',
+      pinLeft: 'Pin left',
+      pinRight: 'Pin Right',
+      groupBy: 'Group By',
+      sortAscending: 'Sort Ascending',
+      sortDescending: 'Sort Descending',
+      showAll: 'Show All',
+      clearCurrent: 'Clear Current',
+      clearAll: 'Clear All',
+      chooseOperator: 'Choose Operator',
+      back: 'Back',
+      equals: 'Equals',
+      lessThanOrEqual: 'Less than or equal',
+      greaterThanOrEqual: 'Greater than or equal',
+      lessThan: 'Less than',
+      greaterThan: 'Greater than',
+      contains: 'Contains',
+      notEqualTo: 'Not equal to',
+      doesNotContain: 'Does not contain',
+      beginsWith: 'Begins with',
+      endsWith: 'Ends with'
+    });
+
+
+    if (this.attI18N) {
+      keys.forEach((key: string) => {
+        if (this.vGrid.filterOperatorTranslationKeys[key]) {
+          this.vGrid.filterOperatorNames[this.vGrid.filterOperatorTranslationKeys[key]] = this.attI18N(key);
+        }
+        this.contextMenu.updateMenuStrings(key, this.attI18N(key));
+      });
+
+      this.raiseEvent('filterTranslation', {});
+    }
+
+  }
+
+
   public createGrid(): void {
+
+    // translate ?
+    if (this.attI18N) {
+      this.triggerI18N();
+    }
+
     // sets default height and widths of the grid
     this.htmlHeightWidth.addDefaultsAttributes(
       this.attHeaderHeight,
@@ -150,19 +196,6 @@ export class Controller {
     this.mainMarkup.generateMainMarkup();
     this.htmlCache.updateMainMarkup();
 
-    // update translation
-    if (Object.keys(this.attLanguage).length > 0) {
-
-      // update for inputs
-      let keys: Array<string> = Object.keys(this.attLanguage);
-      keys.forEach((key: string) => {
-        this.setOperatorName(key, this.attLanguage[key]);
-      });
-
-      // update for menu
-      this.contextMenu.updateMenuStrings(this.attLanguage);
-
-    }
 
     this.rowDataBinder.init();
     // starts the scroll events on main html markup (left/main/right)
@@ -200,6 +233,7 @@ export class Controller {
     // add context menu
     this.contextMenu.init(this.customMenuTemplates, this.overrideContext);
 
+    
 
   }
 
@@ -216,15 +250,6 @@ export class Controller {
         callbackFN(rowContext);
       }
     });
-  }
-
-
-  public getOperatorName(name: string): string {
-    return this.attGridConnector.getFilterOperatorName(name);
-  }
-
-  public setOperatorName(key: string, name: string) {
-    this.attGridConnector.setFilterOperatorName(key, name);
   }
 
 

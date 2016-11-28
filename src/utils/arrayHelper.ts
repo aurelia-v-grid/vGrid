@@ -145,14 +145,6 @@ export class ArrayHelper {
     this.arraySort.reset();
   }
 
-  public getFilterOperatorName(operator: string): string {
-    return this.filterOperators.getName(operator);
-  }
-
-  public setFilterOperatorName(key: string, name: string) {
-    this.filterOperators.setName(key, name);
-  }
-
   public getCurrentFilter(): Array<FilterObject> {
     return this.arrayFilter.getLastFilter();
   }

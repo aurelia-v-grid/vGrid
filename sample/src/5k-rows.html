@@ -9,6 +9,7 @@
         v-header-height="50" 
         v-panel-height="25"
         v-footer-height="25" 
+        v-i18n.call="translateI18n($event)"
         style="height:400px">
         
         <v-grid-col 
@@ -17,7 +18,7 @@
           col-width="100" 
           col-drag-drop="title:Country;field:country" 
           col-sort="field:country"
-          col-filter="field:country" 
+          col-filter="field:country;i18n.call:translate()" 
           col-field="country">
         </v-grid-col>
         
@@ -27,7 +28,8 @@
           col-width="100" 
           col-sort="field:index;asc:false" 
           col-filter="field:index" 
-          col-field="index | numberFormatter">
+          col-field="index | numberFormatter"
+          col-pin-left="true">
         </v-grid-col>
         
         <v-grid-col
@@ -111,7 +113,7 @@
           </div>
         </v-grid-group-element>
         
-        <v-grid-contextmenu>
+<!--        <v-grid-contextmenu>
           <v-menu-close>
             <ul if.bind="show" class="avg-menu__items">
               <li class="avg-menu__item">
@@ -121,9 +123,10 @@
               </li>
             </ul>
           </v-menu-close>
-        </v-grid-contextmenu>
+        </v-grid-contextmenu>-->
 
       </v-grid>
     </div>
+    <button click.delegate="translate()">trigger translate</button>
   </section>
 </template>

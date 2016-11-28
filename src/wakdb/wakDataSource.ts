@@ -923,16 +923,4 @@ export class WakDataSource {
     }
 
 
-    // todo: consider moving the filteroperator names inside the grid code, so we dont haveto go out here to get it
-
-    public getFilterOperatorName(operator: string): string {
-        return this.arrayHelper.getFilterOperatorName(operator);
-    }
-
-
-    public setFilterOperatorName(key: string, name: string) {
-        this.arrayHelper.setFilterOperatorName(key, name);
-    }
-
-
 }

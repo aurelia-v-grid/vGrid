@@ -9,7 +9,8 @@ export class Welcome {
 
   public ds: DataSource;
   public gridConnector: GridConnector;
-  public translate: any = { equals: 'er lik', greaterThan: 'større enn' };
+  private testString: string = 'yay';
+  // public translate: any = { equals: 'er lik', greaterThan: 'større enn' };
   private myCollection: any;
   constructor(public dummyDataGenerator: DummyDataGenerator) {
     this.dummyDataGenerator.generateData(5000, (data) => {
@@ -21,8 +22,21 @@ export class Welcome {
     this.ds.setArray(this.myCollection);
   }
 
+  // this is the i18N translation
+  public translateI18n(key: string) {
+    return this.testString;
+  }
 
-
+  //this is called by my button... not very good
+  public translate() {
+    if (this.testString === 'cool') {
+      this.testString = 'yay';
+    } else {
+      this.testString = 'cool';
+    }
+    // this will trigger the grid to ask for every translation key
+    this.gridConnector.triggerI18n();
+  }
 
 
 

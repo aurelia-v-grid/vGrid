@@ -21,11 +21,16 @@ export class VGridAttributesFilter {
   private type: string;
   private state: number;
 
-
   constructor(element: HTMLElement, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
   }
+
+
+  public getOperatorName(operator: string): string {
+    return this.vGrid.filterOperatorNames[operator];
+  }
+
 
 
   public attached(): void {
@@ -36,9 +41,15 @@ export class VGridAttributesFilter {
         if (e.detail.attribute === this.attribute) {
           this.filterOperator = e.detail.operator;
           (this.element as HTMLInputElement).placeholder =
-            this.vGrid.attGridConnector.getFilterOperatorName(this.filterOperator);
+            this.getOperatorName(this.filterOperator);
           this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
         }
+      });
+
+      this.vGrid.element.addEventListener('filterTranslation', () => {
+          (this.element as HTMLInputElement).placeholder =
+            this.getOperatorName(this.filterOperator);
+          this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
       });
 
 
@@ -58,7 +69,7 @@ export class VGridAttributesFilter {
       if (this.type !== 'checkbox') {
 
         (this.element as HTMLInputElement).placeholder =
-          this.vGrid.attGridConnector.getFilterOperatorName(this.filterOperator);
+          this.getOperatorName(this.filterOperator);
 
 
         // add event listner
