@@ -59,7 +59,7 @@ avg-header-right {
 }
 
 avg-content-left {
-  z-index:7;
+  z-index:5;
   position: absolute;
   box-sizing: border-box;
   height: 100%;
@@ -89,7 +89,7 @@ avg-content-main-scroll {
 }
 
 avg-content-right {
-  z-index:5;
+  z-index:7;
   position: absolute;
   box-sizing: border-box;
   height: 100%;
