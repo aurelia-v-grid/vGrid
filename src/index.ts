@@ -1,5 +1,5 @@
 export * from './interfaces';
-export * from './wakdb/wakinterfaces';
+export {WakRestApi, WakDataSource, WakGridConnector, WakSelection} from './wakdb/wakinterfaces';
 const prefix = './grid';
 export function configure(config: any) {
   config.globalResources(
