@@ -23,7 +23,8 @@ export class DataSource {
     // overide selection get row/key from row
     // why not in selection ? because I might need rowbased selection only
     this.selection.overrideGetRowKey(this.getRowKey.bind(this));
-    this.selection.overrideGetRowFromKey(this.getRowFromKey.bind(this));
+    this.selection.overrideGetRowKeys(this.getRowKeys.bind(this));
+
 
     // array helper helps with grouping/sorting and filtering
     this.arrayHelper = new ArrayHelper();
@@ -259,13 +260,13 @@ export class DataSource {
   }
 
 
-  private getRowFromKey(key: string): number {
+  private getRowKeys(): Array<any> {
 
-    // if collection then get row from key
+    // if collection then get the keys
     if (this.collection) {
-      return this.collection.getRowFromKey(key);
+      return this.collection.getRowKeys();
     } else {
-      return -1;
+      return [];
     }
   }
 

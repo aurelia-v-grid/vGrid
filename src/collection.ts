@@ -61,8 +61,8 @@ export class Collection {
     return this.keys[row];
   }
 
-  public getRowFromKey(key: string): number {
-    return this.keys.indexOf(key);
+  public getRowKeys(): Array<any> {
+    return this.keys;
   }
 
   public getRow(row: number): Entity {

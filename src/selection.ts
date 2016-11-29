@@ -17,23 +17,21 @@ export class Selection implements SelectionInterface {
     return this.mode;
   }
 
-
   public getRowKey(row: number): number {
     return row;
   }
 
-  public getRowFromKey(row: number): number {
-    return row;
+  public getRowKeys(): Array<any> {
+    return [];
   }
 
   public overrideGetRowKey(fn: (row: number) => number): void {
     this.getRowKey = fn;
   }
 
-  public overrideGetRowFromKey(fn: (row: number) => number): void {
-    this.getRowFromKey = fn;
+  public overrideGetRowKeys(fn: () => Array<any>): void {
+    this.getRowKeys = fn;
   }
-
 
   public isSelected(row: number): boolean {
     let result = false;
@@ -91,11 +89,15 @@ export class Selection implements SelectionInterface {
     }
   }
 
+  // only uses visiable rows when getting selected rows, todo: add option for getting all when filtered
   public getSelectedRows(): Array<number> {
     let array: Array<number> = [];
+    let keys = this.getRowKeys();
     if (this.selectedRows > 0) {
-      this.selection.forEach((value) => {
-        array.push(this.getRowFromKey(value));
+      keys.forEach((key, index) => {
+        if (this.selection.has(key) === true) {
+          array.push(index);
+        }
       });
     }
     return array;
