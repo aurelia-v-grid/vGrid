@@ -105,7 +105,6 @@ avg-content-right-scroll {
 }
 
 avg-content-group {
-  z-index: 9;
   position: absolute;
   box-sizing: border-box;
   overflow-x: hidden;
@@ -113,6 +112,7 @@ avg-content-group {
 }
 
 avg-content-group-scroll {
+  z-index: 9;
   pointer-events: none;
   position: absolute;
   box-sizing: border-box;
