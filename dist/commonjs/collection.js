@@ -37,8 +37,8 @@ var Collection = (function () {
     Collection.prototype.getRowKey = function (row) {
         return this.keys[row];
     };
-    Collection.prototype.getRowFromKey = function (key) {
-        return this.keys.indexOf(key);
+    Collection.prototype.getRowKeys = function () {
+        return this.keys;
     };
     Collection.prototype.getRow = function (row) {
         return this.entities[row];

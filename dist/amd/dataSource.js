@@ -3,7 +3,7 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayHelpe
         function DataSource(selection, config) {
             this.selection = selection || new selection_1.Selection('single');
             this.selection.overrideGetRowKey(this.getRowKey.bind(this));
-            this.selection.overrideGetRowFromKey(this.getRowFromKey.bind(this));
+            this.selection.overrideGetRowKeys(this.getRowKeys.bind(this));
             this.arrayHelper = new arrayHelper_1.ArrayHelper();
             this.key = null;
             this.mainArray = null;
@@ -143,12 +143,12 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayHelpe
                 return null;
             }
         };
-        DataSource.prototype.getRowFromKey = function (key) {
+        DataSource.prototype.getRowKeys = function () {
             if (this.collection) {
-                return this.collection.getRowFromKey(key);
+                return this.collection.getRowKeys();
             }
             else {
-                return -1;
+                return [];
             }
         };
         return DataSource;

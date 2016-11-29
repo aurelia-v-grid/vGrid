@@ -6,7 +6,11 @@ System.register(["./interfaces", "./wakdb/wakinterfaces"], function (exports_1, 
     var prefix;
     exports_1("configure", configure);
     var exportedNames_1 = {
-        "configure": true
+        "configure": true,
+        "WakRestApi": true,
+        "WakDataSource": true,
+        "WakGridConnector": true,
+        "WakSelection": true
     };
     function exportStar_1(m) {
         var exports = {};
@@ -22,7 +26,12 @@ System.register(["./interfaces", "./wakdb/wakinterfaces"], function (exports_1, 
                 exportStar_1(interfaces_1_1);
             },
             function (wakinterfaces_1_1) {
-                exportStar_1(wakinterfaces_1_1);
+                exports_1({
+                    "WakRestApi": wakinterfaces_1_1["WakRestApi"],
+                    "WakDataSource": wakinterfaces_1_1["WakDataSource"],
+                    "WakGridConnector": wakinterfaces_1_1["WakGridConnector"],
+                    "WakSelection": wakinterfaces_1_1["WakSelection"]
+                });
             }
         ],
         execute: function () {

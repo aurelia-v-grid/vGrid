@@ -1,10 +1,11 @@
+import { WakRestApi } from './wakInterfaces';
 export declare class WakDirectory {
-    restApi: any;
+    restApi: WakRestApi;
     username: any;
-    constructor(restApi: any);
+    constructor(restApi: WakRestApi);
     getCookie(cname: any): string;
     currentUser(): Promise<{}>;
-    currentUserBelongsTo(groups: any): Promise<{}>;
-    login(username: any, password: any, duration: any): Promise<{}>;
+    currentUserBelongsTo(groups: Array<string>): Promise<{}>;
+    login(username: string, password: string, duration: number): Promise<{}>;
     logout(): Promise<{}>;
 }

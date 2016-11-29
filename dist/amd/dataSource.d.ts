@@ -30,5 +30,5 @@ export declare class DataSource {
     getGrouping(): Array<string>;
     addElement(data: Entity): void;
     private getRowKey(row);
-    private getRowFromKey(key);
+    private getRowKeys();
 }

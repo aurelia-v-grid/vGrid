@@ -6,9 +6,9 @@ export declare class Selection implements SelectionInterface {
     constructor(mode: string);
     getMode(): string;
     getRowKey(row: number): number;
-    getRowFromKey(row: number): number;
+    getRowKeys(): Array<any>;
     overrideGetRowKey(fn: (row: number) => number): void;
-    overrideGetRowFromKey(fn: (row: number) => number): void;
+    overrideGetRowKeys(fn: () => Array<any>): void;
     isSelected(row: number): boolean;
     deSelectAll(): void;
     deSelect(row: number): void;

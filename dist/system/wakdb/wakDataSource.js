@@ -1,6 +1,6 @@
-System.register(["./WakCollection", "./wakSelection", "./wakCollectionMethod", "./wakClassMethod", "./wakEntityMethod", "../utils/arrayHelper"], function (exports_1, context_1) {
+System.register(["./WakCollection", "./wakSelection", "./wakCollectionMethod", "./wakClassMethod", "./wakEntityMethod"], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
-    var WakCollection_1, wakSelection_1, wakCollectionMethod_1, wakClassMethod_1, wakEntityMethod_1, arrayHelper_1, WakDataSource;
+    var WakCollection_1, wakSelection_1, wakCollectionMethod_1, wakClassMethod_1, wakEntityMethod_1, WakDataSource;
     return {
         setters: [
             function (WakCollection_1_1) {
@@ -17,9 +17,6 @@ System.register(["./WakCollection", "./wakSelection", "./wakCollectionMethod", "
             },
             function (wakEntityMethod_1_1) {
                 wakEntityMethod_1 = wakEntityMethod_1_1;
-            },
-            function (arrayHelper_1_1) {
-                arrayHelper_1 = arrayHelper_1_1;
             }
         ],
         execute: function () {
@@ -41,7 +38,6 @@ System.register(["./WakCollection", "./wakSelection", "./wakCollectionMethod", "
                     this.eventListener = [];
                     this.eventListenerID = [];
                     this.eventListenerCount = 0;
-                    this.arrayHelper = new arrayHelper_1.ArrayHelper();
                     this.requests = [];
                     this.collection = new WakCollection_1.WakCollection(this.attributes, this.restApi.baseURL);
                     this.entity = null;

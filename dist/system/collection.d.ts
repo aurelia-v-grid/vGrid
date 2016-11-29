@@ -12,7 +12,7 @@ export declare class Collection {
     getEntities(): Array<Entity>;
     getCurrentEntities(): Array<Entity>;
     getRowKey(row: number): string;
-    getRowFromKey(key: string): number;
+    getRowKeys(): Array<any>;
     getRow(row: number): Entity;
     getRowFromEntity(entity: Entity): number;
 }

@@ -20,9 +20,6 @@ System.register([], function (exports_1, context_1) {
                 WakGridConnector.prototype.getCurrentFilter = function () {
                     return this.lastFilter;
                 };
-                WakGridConnector.prototype.getFilterOperatorName = function (name) {
-                    return this.datasource.getFilterOperatorName(name);
-                };
                 WakGridConnector.prototype.expandGroup = function (id) {
                     console.warn('not usable in wak datasource');
                     id = null;
@@ -92,7 +89,7 @@ System.register([], function (exports_1, context_1) {
                         row: options.row,
                         selection: this.datasource.selection,
                         rowRef: {},
-                        tempRef: {},
+                        tempRef: {}
                     };
                     if (this.datasource) {
                         if (this.datasource.collection.length > options.row && options.row >= 0) {

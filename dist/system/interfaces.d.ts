@@ -218,3 +218,13 @@ export interface GridConnectorInterface {
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
 }
+export interface ControllerInterface {
+    element: Element;
+    setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<void>;
+    updateHeights(): void;
+    collectionLength(): number;
+    triggerScroll(position: number): void;
+    rebindAllRows(): void;
+    getColumnConfig(): Array<ColConfig>;
+    setColumnConfig(colConfig: Array<ColConfig>): void;
+}

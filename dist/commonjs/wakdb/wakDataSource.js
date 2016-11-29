@@ -3,7 +3,6 @@ var wakSelection_1 = require("./wakSelection");
 var wakCollectionMethod_1 = require("./wakCollectionMethod");
 var wakClassMethod_1 = require("./wakClassMethod");
 var wakEntityMethod_1 = require("./wakEntityMethod");
-var arrayHelper_1 = require("../utils/arrayHelper");
 var WakDataSource = (function () {
     function WakDataSource(restApi, sourceConfig) {
         this.name = sourceConfig.dataClass;
@@ -22,7 +21,6 @@ var WakDataSource = (function () {
         this.eventListener = [];
         this.eventListenerID = [];
         this.eventListenerCount = 0;
-        this.arrayHelper = new arrayHelper_1.ArrayHelper();
         this.requests = [];
         this.collection = new WakCollection_1.WakCollection(this.attributes, this.restApi.baseURL);
         this.entity = null;

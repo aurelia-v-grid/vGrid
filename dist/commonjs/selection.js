@@ -10,14 +10,14 @@ var Selection = (function () {
     Selection.prototype.getRowKey = function (row) {
         return row;
     };
-    Selection.prototype.getRowFromKey = function (row) {
-        return row;
+    Selection.prototype.getRowKeys = function () {
+        return [];
     };
     Selection.prototype.overrideGetRowKey = function (fn) {
         this.getRowKey = fn;
     };
-    Selection.prototype.overrideGetRowFromKey = function (fn) {
-        this.getRowFromKey = fn;
+    Selection.prototype.overrideGetRowKeys = function (fn) {
+        this.getRowKeys = fn;
     };
     Selection.prototype.isSelected = function (row) {
         var result = false;
@@ -71,9 +71,12 @@ var Selection = (function () {
     Selection.prototype.getSelectedRows = function () {
         var _this = this;
         var array = [];
+        var keys = this.getRowKeys();
         if (this.selectedRows > 0) {
-            this.selection.forEach(function (value) {
-                array.push(_this.getRowFromKey(value));
+            keys.forEach(function (key, index) {
+                if (_this.selection.has(key) === true) {
+                    array.push(index);
+                }
             });
         }
         return array;

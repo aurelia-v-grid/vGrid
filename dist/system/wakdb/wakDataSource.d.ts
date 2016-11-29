@@ -24,7 +24,6 @@ export declare class WakDataSource {
     collectionMethods: any;
     entityMethods: any;
     classMethods: any;
-    arrayHelper: any;
     constructor(restApi: any, sourceConfig: any);
     __queueRequest(callBack: any, atOnce?: any): void;
     __stopAllRequest(): void;

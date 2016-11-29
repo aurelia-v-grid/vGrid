@@ -148,7 +148,7 @@ avg-content-hhandle-scroll {
 
 avg-row {
   width: 100%;
-  display: block;
+  min-width: 1px; /*without this left scrolltop will not be set when hidden*/
   position: absolute;
 }
 

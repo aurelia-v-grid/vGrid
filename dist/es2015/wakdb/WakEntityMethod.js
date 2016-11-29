@@ -15,7 +15,9 @@ define(["require", "exports"], function (require, exports) {
                     if (entity) {
                         options = options === undefined ? {} : options;
                         var asPost = true === options.asPost;
-                        var dataURI = _this.source.dataURI + '(' + _this.source.entity[_this.source.key] + ')' + '/' + _this.name;
+                        var dataURI = _this.source.dataURI +
+                            '(' + _this.source.entity[_this.source.key] + ')' + '/' +
+                            _this.name;
                         var restString = _this.source.restApi.generateRestString(dataURI, {
                             params: asPost ? null : params
                         });

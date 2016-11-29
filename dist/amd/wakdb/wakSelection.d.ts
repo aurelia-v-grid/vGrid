@@ -1,4 +1,4 @@
-import { SelectionInterface } from '../interfaces';
+import { SelectionInterface } from './wakInterfaces';
 export declare class WakSelection implements SelectionInterface {
     private mode;
     private selectedRows;

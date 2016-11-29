@@ -100,8 +100,7 @@ System.register([], function (exports_1, context_1) {
                     this.avgContentMainScroll_Width = main;
                     this.avgContentRight_Width = right;
                     this.avgHeaderRight_Width = right;
-                    this.avgContentHhandle_Right = right + this.avgScrollBarWidth;
-                    ;
+                    this.avgContentHhandle_Right = right;
                     this.avgContentHhandle_Left = left;
                     this.avgContentHhandleScroll_Width = main;
                 };
@@ -137,7 +136,7 @@ System.register([], function (exports_1, context_1) {
                     this.avgContentMainScroll_Width = main;
                     this.avgContentRight_Width = right;
                     this.avgHeaderRight_Width = right;
-                    this.avgContentHhandle_Right = right + this.avgScrollBarWidth;
+                    this.avgContentHhandle_Right = right;
                     this.avgContentHhandle_Left = left;
                     this.avgContentHhandleScroll_Width = main;
                 };

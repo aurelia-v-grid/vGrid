@@ -1,4 +1,4 @@
-define(["require", "exports", "./WakCollection", "./wakSelection", "./wakCollectionMethod", "./wakClassMethod", "./wakEntityMethod", "../utils/arrayHelper"], function (require, exports, WakCollection_1, wakSelection_1, wakCollectionMethod_1, wakClassMethod_1, wakEntityMethod_1, arrayHelper_1) {
+define(["require", "exports", "./WakCollection", "./wakSelection", "./wakCollectionMethod", "./wakClassMethod", "./wakEntityMethod"], function (require, exports, WakCollection_1, wakSelection_1, wakCollectionMethod_1, wakClassMethod_1, wakEntityMethod_1) {
     var WakDataSource = (function () {
         function WakDataSource(restApi, sourceConfig) {
             this.name = sourceConfig.dataClass;
@@ -17,7 +17,6 @@ define(["require", "exports", "./WakCollection", "./wakSelection", "./wakCollect
             this.eventListener = [];
             this.eventListenerID = [];
             this.eventListenerCount = 0;
-            this.arrayHelper = new arrayHelper_1.ArrayHelper();
             this.requests = [];
             this.collection = new WakCollection_1.WakCollection(this.attributes, this.restApi.baseURL);
             this.entity = null;

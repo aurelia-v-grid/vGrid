@@ -1,4 +1,4 @@
-import { Controller, GridConnectorInterface, SelectionInterface, ColConfig, FilterObject, SortObject } from '../interfaces';
+import { ControllerInterface, GridConnectorInterface, SelectionInterface, ColConfig, FilterObject, SortObject, WakDataSource } from './wakInterfaces';
 export declare class WakGridConnector implements GridConnectorInterface {
     private datasource;
     private errorHandler;
@@ -8,15 +8,14 @@ export declare class WakGridConnector implements GridConnectorInterface {
     private lastSort;
     private curSort;
     private lastFilter;
-    constructor(datasource?: any);
+    constructor(datasource?: WakDataSource);
     getSelection(): SelectionInterface;
     getCurrentOrderBy(): Array<any>;
     getCurrentFilter(): Array<FilterObject>;
-    getFilterOperatorName(name: string): any;
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
     getDatasourceLength(): any;
-    connect(controller: Controller, create: Function): void;
+    connect(controller: ControllerInterface, create: Function): void;
     gridCreated(): void;
     setDatasource(datasource: any, errorHandler?: any, setHeight?: any, setSort?: any): void;
     destroy(): void;

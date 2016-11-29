@@ -11,7 +11,10 @@ define(["require", "exports"], function (require, exports) {
                     if (_this.source.collection.entityset) {
                         options = options === undefined ? {} : options;
                         var asPost = true === options.asPost;
-                        var dataURI = _this.source.dataURI + '/' + _this.name + _this.source.collection.entityset.replace(_this.source.dataURI, '');
+                        var dataURI = _this.source.dataURI +
+                            '/' +
+                            _this.name +
+                            _this.source.collection.entityset.replace(_this.source.dataURI, '');
                         var restString = _this.source.restApi.generateRestString(dataURI, {
                             params: asPost ? null : params
                         });
