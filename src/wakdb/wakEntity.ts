@@ -2,19 +2,19 @@ import { WakDataSource } from './wakDataSource';
 
 export class WakEntity {
     public __attributes: any;
-    public baseUrl: any;
+    public baseUrl: string;
     public modifiedAttributes: any;
     public __modified: any;
-    public __isModified: any;
+    public __isModified: boolean;
     public __original: any;
     public __valuesOriginal: any;
     public __isNew: any;
     public __values: any;
     public __KEY: any;
-    public __STAMP: any;
-    public __isEntity: any;
+    public __STAMP: number;
+    public __isEntity: boolean;
 
-    constructor(data: any, attributes: any, baseUrl: any) {
+    constructor(data: any, attributes: any, baseUrl: string) {
         data = data === undefined || data === null ? {} : data;
         this.baseUrl = baseUrl;
         attributes = attributes === undefined || attributes === null ? {} : attributes;
@@ -241,7 +241,7 @@ export class WakEntity {
     }
 
 
-    public bindWithKey(attributeName: any, key: any) {
+    public bindWithKey(attributeName: string, key: any) {
         // now it should be possible to just set a object to it as long as it contains __KEY
         // this will be deleted...
         if (key) {
@@ -277,7 +277,7 @@ export class WakEntity {
     }
 
 
-    public __convert(attributeName: any, value: any) {
+    public __convert(attributeName: string, value: any) {
         let returnValue = value;
         try {
             switch (this.__attributes[attributeName].type) {

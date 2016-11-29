@@ -3,7 +3,7 @@ import { WakSelection } from './wakSelection';
 import { WakCollectionMethod } from './wakCollectionMethod';
 import { WakClassMethod } from './wakClassMethod';
 import { WakEntityMethod } from './wakEntityMethod';
-import { ArrayHelper } from '../utils/arrayHelper';
+
 
 
 export class WakDataSource {
@@ -31,7 +31,7 @@ export class WakDataSource {
     public collectionMethods: any;
     public entityMethods: any;
     public classMethods: any;
-    public arrayHelper: any;
+
 
 
     constructor(restApi: any, sourceConfig: any) {
@@ -51,7 +51,7 @@ export class WakDataSource {
         this.eventListener = [];
         this.eventListenerID = [];
         this.eventListenerCount = 0;
-        this.arrayHelper = new ArrayHelper();
+
 
 
         // request queue

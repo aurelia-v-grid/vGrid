@@ -4,17 +4,19 @@ import { WakDataSource } from './wakDataSource';
 import { WakRestUtil } from './wakRestUtil';
 import { WakDirectory } from './wakDirectory';
 
+
+
 export class WakRestApi {
-    public rest: any;
-    public ready: any;
-    public loadFailed: any;
-    public name: any;
-    public baseURL: any;
-    public catalogURL: any;
-    public httpClient: any;
-    public directory: any;
-    public pageSize: any;
-    public timeout: any;
+    public rest: WakRestUtil;
+    public ready: boolean;
+    public loadFailed: boolean;
+    public name: string;
+    public baseURL: string;
+    public catalogURL: string;
+    public httpClient: HttpClient;
+    public directory: WakDirectory;
+    public pageSize: number;
+    public timeout: number;
     public classes: any;
     public sources: any;
 
@@ -25,7 +27,7 @@ export class WakRestApi {
     }
 
 
-    public generateRestString(url: any, options: any) {
+    public generateRestString(url: string, options: any) {
         return this.rest.generateRestString(url, options);
     }
 
@@ -58,7 +60,7 @@ export class WakRestApi {
     }
 
 
-    public callServer(url: any, options: any) {
+    public callServer(url: string, options?: any) {
         if (!options) {
             options = {};
             options.method = 'get';

@@ -1,15 +1,11 @@
+import { WakRestApi, RequestOptions } from './wakInterfaces';
 
-
-interface RequestOptions {
-    body: any;
-    method: any;
-}
 
 export class WakDirectory {
-    public restApi: any;
+    public restApi: WakRestApi;
     public username: any;
 
-    constructor(restApi: any) {
+    constructor(restApi: WakRestApi) {
         this.restApi = restApi;
         this.username = this.getCookie('username');
     }
@@ -53,7 +49,7 @@ export class WakDirectory {
     }
 
 
-    public currentUserBelongsTo(groups: any) {
+    public currentUserBelongsTo(groups: Array<string>) {
         return new Promise((resolve, reject) => {
 
             let dataURI = '/rest/$directory/currentUserBelongsTo';
@@ -74,7 +70,7 @@ export class WakDirectory {
     }
 
 
-    public login(username: any, password: any, duration: any) {
+    public login(username: string, password: string, duration: number) {
         return new Promise((resolve, reject) => {
 
             let dataURI = '/rest/$directory/login';

@@ -1,25 +1,26 @@
 import {
-    Controller,
+    ControllerInterface,
     GridConnectorInterface,
     SelectionInterface,
     ColConfig,
     FilterObject,
     SortObject,
-    BindingContext
-} from '../interfaces';
+    BindingContext,
+    WakDataSource
+} from './wakInterfaces';
 
 export class WakGridConnector implements GridConnectorInterface {
-    private datasource: any;
+    private datasource: WakDataSource;
     private errorHandler: any;
     private eventListenerID: any;
-    private controller: any;
+    private controller: ControllerInterface;
     private createGrid: any;
     private lastSort: Array<any> = [];
     private curSort: Array<any> = [];
     private lastFilter: Array<any> = [];
 
 
-    constructor(datasource?: any) {
+    constructor(datasource?: WakDataSource) {
         // depending on source you can add on creation if datasource is there, else use set datasource
         this.datasource = datasource;
     }
@@ -37,11 +38,6 @@ export class WakGridConnector implements GridConnectorInterface {
 
     public getCurrentFilter(): Array<FilterObject> {
         return this.lastFilter;
-    }
-
-
-    public getFilterOperatorName(name: string) {
-        return this.datasource.getFilterOperatorName(name);
     }
 
 
@@ -68,7 +64,7 @@ export class WakGridConnector implements GridConnectorInterface {
     }
 
 
-    public connect(controller: Controller, create: Function): void {
+    public connect(controller: ControllerInterface, create: Function): void {
         this.controller = controller;
         this.createGrid = create;
         if (this.datasource) {
@@ -146,7 +142,7 @@ export class WakGridConnector implements GridConnectorInterface {
             row: options.row,
             selection: this.datasource.selection,
             rowRef: {},
-            tempRef: {},
+            tempRef: {}
         } as BindingContext);
 
         if (this.datasource) {

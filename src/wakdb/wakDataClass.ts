@@ -1,17 +1,19 @@
+import { WakRestApi } from './wakInterfaces';
+
 export class WakDataClass {
     public name: any;
-    public restApi: any;
-    public collectionName: any;
-    public dataURI: any;
-    public scope: any;
-    public key: any;
+    public restApi: WakRestApi;
+    public collectionName: string;
+    public dataURI: string;
+    public scope: string;
+    public key: string;
     public attributes: any;
     public entityCollectionMethods: any;
     public entityMethods: any;
     public dataClassMethods: any;
     [key: string]: any;
 
-    constructor(dataClass: any, restApi: any) {
+    constructor(dataClass: any, restApi: WakRestApi) {
         let c = dataClass;
         let attributes = c.attributes;
         let methods = c.methods;
@@ -59,7 +61,7 @@ export class WakDataClass {
     }
 
 
-    public query(queryString: any, options: any) {
+    public query(queryString: string, options: any) {
         return new Promise((resolve, reject) => {
 
             options = options === undefined ? {} : options;

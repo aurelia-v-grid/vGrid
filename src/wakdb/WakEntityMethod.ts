@@ -1,10 +1,10 @@
-
+import { WakDataSource } from './wakInterfaces';
 
 export class WakEntityMethod {
-    public source: any;
-    public name: any;
+    public source: WakDataSource;
+    public name: string;
 
-    constructor(source: any, name: any) {
+    constructor(source: WakDataSource, name: string) {
         this.source = source;
         this.name = name;
     }
@@ -24,7 +24,10 @@ export class WakEntityMethod {
 
                     options = options === undefined ? {} : options;
                     let asPost = true === options.asPost;
-                    let dataURI = this.source.dataURI + '(' + this.source.entity[this.source.key] + ')' + '/' + this.name;
+                    let dataURI =
+                        this.source.dataURI +
+                        '(' + this.source.entity[this.source.key] + ')' + '/' +
+                        this.name;
 
 
                     let restString = this.source.restApi.generateRestString(dataURI, {

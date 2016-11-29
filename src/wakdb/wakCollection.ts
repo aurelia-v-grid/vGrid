@@ -1,22 +1,22 @@
 import { WakEntity } from './wakEntity';
 
 export class WakCollection {
-    public baseUrl: any;
+    public baseUrl: string;
     public attributes: any;
-    public rowno: Array<any>;
+    public rowno: Array<number>;
     public keys: Array<any>;
-    public created: Array<any>;
+    public created: Array<Date>;
     public data: Array<any>;
-    public length: any;
-    public pages: Array<any>;
+    public length: number;
+    public pages: Array<number>;
     public addToSet: Array<any>;
-    public currentPage: any;
+    public currentPage: number;
     public entityset: any;
     public options: any;
     public pagesFetching: Array<any>;
     public entityModel: any;
 
-    constructor(attributes: any, baseUrl: any) {
+    constructor(attributes: Array<any>, baseUrl: string) {
         this.baseUrl = baseUrl;
         this.attributes = attributes;
         this.setDefaults();
@@ -99,7 +99,7 @@ export class WakCollection {
     }
 
 
-    public getRow(row: any) {
+    public getRow(row: number) {
         let index;
         index = this.rowno.indexOf(row);
         let result = null;
@@ -153,7 +153,7 @@ export class WakCollection {
     }
 
 
-    public removeUnsavedRow(row: any) {
+    public removeUnsavedRow(row: number) {
         let index = this.rowno.indexOf(row);
         this.rowno.splice(index, 1);
         this.created.splice(index, 1);
@@ -168,7 +168,7 @@ export class WakCollection {
     }
 
 
-    public getClosestPage(row: any, pageSize: any) {
+    public getClosestPage(row: number, pageSize: number) {
         // we do not want weird requests, lets stick within page size all the time
         // else we will just get holes in cache
         let page = Math.floor(row / pageSize);
@@ -185,7 +185,7 @@ export class WakCollection {
     }
 
 
-    public setValueToRow(attribute: any, value: any, row: any) {
+    public setValueToRow(attribute: string, value: any, row: number) {
         let index = this.rowno.indexOf(row);
         if (index !== -1) {
             this.data[index][attribute] = value;

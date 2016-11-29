@@ -1,8 +1,10 @@
-export class WakClassMethod {
-    private source: any;
-    private name: any;
+import { WakDataSource } from './wakInterfaces';
 
-    constructor(source: any, name: any) {
+export class WakClassMethod {
+    private source: WakDataSource;
+    private name: string;
+
+    constructor(source: WakDataSource, name: string) {
         this.source = source;
         this.name = name;
     }

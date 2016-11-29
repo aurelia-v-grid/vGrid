@@ -1,8 +1,10 @@
-export class WakCollectionMethod {
-    public source: any;
-    public name: any;
+import { WakDataSource } from './wakInterfaces';
 
-    constructor(source: any, name: any) {
+export class WakCollectionMethod {
+    public source: WakDataSource;
+    public name: string;
+
+    constructor(source: WakDataSource, name: string) {
         this.source = source;
         this.name = name;
     }
@@ -15,7 +17,13 @@ export class WakCollectionMethod {
 
                     options = options === undefined ? {} : options;
                     let asPost = true === options.asPost;
-                    let dataURI = this.source.dataURI + '/' + this.name + this.source.collection.entityset.replace(this.source.dataURI, '');
+                    let dataURI =
+                        this.source.dataURI +
+                        '/' +
+                        this.name +
+                        this.source.collection.entityset.replace(this.source.dataURI, '');
+
+
                     let restString = this.source.restApi.generateRestString(dataURI, {
                         params: asPost ? null : params
                     });
