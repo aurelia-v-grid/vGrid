@@ -4,8 +4,6 @@ export class Selection implements SelectionInterface {
   private mode: string;
   private selectedRows: number;
   private selection: Set<number>;
-  // private lastRowSelected: number;
-  // private lastKeyKodeUsed: string;
 
   constructor(mode: string) {
     this.mode = mode;
@@ -116,8 +114,6 @@ export class Selection implements SelectionInterface {
     if (this.selectedRows > 0) {
       this.selection.clear();
     }
-    // this.lastRowSelected = -1;
-    // this.lastKeyKodeUsed = 'none';
     this.selectedRows = this.selection.size;
   }
 

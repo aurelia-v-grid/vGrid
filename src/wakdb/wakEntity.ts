@@ -63,7 +63,7 @@ export class WakEntity {
                                         if (index !== -1) {
                                             this.modifiedAttributes.splice(index, 1);
                                         }
-                                        this.__isModified = this.modifiedAttributes.length > 0 || this.__isNew; ;
+                                        this.__isModified = this.modifiedAttributes.length > 0 || this.__isNew;
                                         this.__modified[attributeName] = undefined;
                                     }
 
@@ -83,7 +83,7 @@ export class WakEntity {
                                         if (index !== -1) {
                                             this.modifiedAttributes.splice(index, 1);
                                         }
-                                        this.__isModified = this.modifiedAttributes.length > 0 || this.__isNew; ;
+                                        this.__isModified = this.modifiedAttributes.length > 0 || this.__isNew;
                                         this.__modified[attributeName] = undefined;
                                     }
 
@@ -104,7 +104,7 @@ export class WakEntity {
                                             if (index !== -1) {
                                                 this.modifiedAttributes.splice(index, 1);
                                             }
-                                            this.__isModified = this.modifiedAttributes.length > 0 || this.__isNew; ;
+                                            this.__isModified = this.modifiedAttributes.length > 0 || this.__isNew;
                                             this.__modified[attributeName] = undefined;
                                         }
 
@@ -131,7 +131,7 @@ export class WakEntity {
                                                 if (index !== -1) {
                                                     this.modifiedAttributes.splice(index, 1);
                                                 }
-                                                this.__isModified = this.modifiedAttributes.length > 0 || this.__isNew; ;
+                                                this.__isModified = this.modifiedAttributes.length > 0 || this.__isNew;
                                                 this.__modified[attributeName] = undefined;
                                             }
                                         } catch (e) {
@@ -289,7 +289,10 @@ export class WakEntity {
                     if (returnValue !== null && returnValue !== undefined) {
                         if (this.__attributes[attributeName].simpleDate) {
                             let args = returnValue.split('!');
-                            returnValue = new Date(parseInt(args[2], 10), parseInt(args[1], 10) - 1, parseInt(args[0], 10));
+                            returnValue = new Date(
+                                parseInt(args[2], 10),
+                                parseInt(args[1], 10) - 1,
+                                parseInt(args[0], 10));
 
                         } else {
                             returnValue = new Date(returnValue);
@@ -321,7 +324,7 @@ export class WakEntity {
                     //
                     break;
                 default:
-                    // console.warn("storage type missing")
+                // console.warn("storage type missing")
             }
             return returnValue;
         } catch (err) {

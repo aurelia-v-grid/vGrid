@@ -1,21 +1,17 @@
-import { FilterOperators } from './filterOperators';
 import { ArrayFilter } from './arrayFilter';
 import { ArraySort } from './arraySort';
 import { ArrayGrouping } from './arrayGrouping';
 import {SortObject, FilterObject, Entity} from '../interfaces';
 
 export class ArrayHelper {
-  public filterOperators: FilterOperators;
   public arrayFilter: ArrayFilter;
   public arraySort: ArraySort;
   public arrayGrouping: ArrayGrouping;
 
   constructor() {
-    this.filterOperators = new FilterOperators();
-    this.arrayFilter = new ArrayFilter(this.filterOperators);
+    this.arrayFilter = new ArrayFilter();
     this.arraySort = new ArraySort();
     this.arrayGrouping = new ArrayGrouping();
-
   }
 
   public orderBy(

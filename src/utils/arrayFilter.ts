@@ -1,13 +1,26 @@
-import { FilterOperators, FilterObject, Entity } from '../interfaces'; // todo make a interface
+import { FilterObject, Entity } from '../interfaces'; // todo make a interface
 
 export class ArrayFilter {
-  private filterOperators: FilterOperators;
   private lastFilter: Array<FilterObject>;
+  private filterOperators: any = {
+      '=': 1,   // equal
+      '<=': 2,  // less than or equal to
+      '>=': 3,  // greater than or equal to
+      '<': 4,   // less than
+      '>': 5,   // greater than
+      '*': 6,   // contains
+      '!=': 7,  // not equal to
+      '!*': 8,  // does not contain
+      '*=': 9,  // begin with
+      '=*': 10  // end with
+    };
 
-  constructor(filterOperators: FilterOperators) {
-    this.filterOperators = filterOperators;
+  constructor() {
     this.lastFilter = [];
+  }
 
+  public getOperatorNo(val: string): number {
+    return this.filterOperators[val];
   }
 
   public getLastFilter() {
@@ -15,9 +28,6 @@ export class ArrayFilter {
   }
 
   public runQueryOn(objArray: Array<Entity>, ObjFilter: Array<FilterObject>) {
-
-    // my operators
-    // let filterOperatorTable = this.filterOperators.getOperatorNo();
 
     let resultArray = objArray.filter((data) => {
 
@@ -28,7 +38,7 @@ export class ArrayFilter {
         // vars
         let rowValue: any;
         let filterValue: any;
-        let filterOperator = this.filterOperators.getOperatorNo(x.operator);
+        let filterOperator = this.getOperatorNo(x.operator);
         let newFilterOperator: any;
 
         // helper for boolean
