@@ -28,7 +28,6 @@ export class WakDataClass {
         this.scope = c.scope;
         this.key = c.key[0].name;
 
-
         // get attributes
         this.attributes = {};
         if (attributes) {
@@ -41,7 +40,6 @@ export class WakDataClass {
                 }
             });
         }
-
 
         // get methods
         this.entityCollectionMethods = {};
@@ -60,7 +58,6 @@ export class WakDataClass {
 
     }
 
-
     public query(queryString: string, options: any) {
         return new Promise((resolve, reject) => {
 
@@ -77,7 +74,6 @@ export class WakDataClass {
                 method: options.method || null
             });
 
-
             this.restApi.callServer(restString).then((data: any) => {
 
                 resolve(data);
@@ -89,7 +85,6 @@ export class WakDataClass {
             });
         });
     }
-
 
     public save(data: any, options: any) {
         return new Promise((resolve, reject) => {
@@ -113,6 +108,5 @@ export class WakDataClass {
             });
         });
     }
-
 
 }

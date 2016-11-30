@@ -22,7 +22,6 @@ export class WakCollection {
         this.setDefaults();
     }
 
-
     public setDefaults() {
         this.rowno = [];
         this.keys = [];
@@ -37,7 +36,6 @@ export class WakCollection {
         this.pagesFetching = [];
 
     }
-
 
     public clearCache() {
         return new Promise((resolve: any) => {
@@ -66,7 +64,6 @@ export class WakCollection {
         });
     }
 
-
     public getUnsaved() {
         let unsaved: Array<any> = [];
         this.data.forEach((entity) => {
@@ -76,7 +73,6 @@ export class WakCollection {
         });
         return unsaved;
     }
-
 
     public replace(data: any) {
         data = data ? data : {};
@@ -98,7 +94,6 @@ export class WakCollection {
 
     }
 
-
     public getRow(row: number) {
         let index;
         index = this.rowno.indexOf(row);
@@ -109,23 +104,19 @@ export class WakCollection {
         return result;
     }
 
-
     public getKey(key: any) {
         this.getRow(key);
     }
-
 
     public getRowFromKey(key: any) {
         let index = this.keys.indexOf(key);
         return this.rowno[index];
     }
 
-
     public getRowFromEntity(entity: any) {
         let index = this.data.indexOf(entity);
         return this.rowno[index];
     }
-
 
     public getModified() {
         let modified: Array<any> = [];
@@ -136,7 +127,6 @@ export class WakCollection {
         });
         return modified;
     }
-
 
     public addRow() {
         return new Promise((resolve: any) => {
@@ -152,7 +142,6 @@ export class WakCollection {
         });
     }
 
-
     public removeUnsavedRow(row: number) {
         let index = this.rowno.indexOf(row);
         this.rowno.splice(index, 1);
@@ -167,14 +156,12 @@ export class WakCollection {
         this.length--;
     }
 
-
     public getClosestPage(row: number, pageSize: number) {
         // we do not want weird requests, lets stick within page size all the time
         // else we will just get holes in cache
         let page = Math.floor(row / pageSize);
         return page * pageSize;
     }
-
 
     public add(data: any) {
         let index = this.pages.indexOf(data.__FIRST);
@@ -184,14 +171,12 @@ export class WakCollection {
         this.insertData(data);
     }
 
-
     public setValueToRow(attribute: string, value: any, row: number) {
         let index = this.rowno.indexOf(row);
         if (index !== -1) {
             this.data[index][attribute] = value;
         }
     }
-
 
     public insertData(data: any) {
         // this.length = data.__COUNT;
@@ -230,6 +215,5 @@ export class WakCollection {
             this.length++;
         });
     }
-
 
 }

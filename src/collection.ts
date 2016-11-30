@@ -9,7 +9,6 @@ export class Collection {
   private datasource: DataSource;
   private ungroupedArray: Array<Entity>;
 
-
   constructor(datasource: DataSource) {
     this.datasource = datasource;
     this.key = datasource.getKey();
@@ -19,7 +18,6 @@ export class Collection {
     this.length = 0;
     this.ungroupedArray = [];
   }
-
 
   public setData(array: Array<Entity>, ungroupedArray?: Array<Entity>): void {
     this.entities = [];
@@ -48,7 +46,6 @@ export class Collection {
 
   }
 
-
   public getEntities(): Array<Entity> {
     return this.ungroupedArray;
   }
@@ -68,7 +65,6 @@ export class Collection {
   public getRow(row: number): Entity {
     return this.entities[row];
   }
-
 
   public getRowFromEntity(entity: Entity): number {
     return this.entities.indexOf(entity);

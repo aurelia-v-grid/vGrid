@@ -14,7 +14,6 @@ export class DataSource {
   private eventCallBacks: Array<Function>;
   private collection: Collection;
 
-
   constructor(selection: Selection, config?: DatasourceConfig) {
 
     // selection
@@ -24,7 +23,6 @@ export class DataSource {
     // why not in selection ? because I might need rowbased selection only
     this.selection.overrideGetRowKey(this.getRowKey.bind(this));
     this.selection.overrideGetRowKeys(this.getRowKeys.bind(this));
-
 
     // array helper helps with grouping/sorting and filtering
     this.arrayHelper = new ArrayHelper();
@@ -45,7 +43,6 @@ export class DataSource {
     // todo, give option to override arrayhelper, 
     // or and option to set params you pass into array helper to override some of its functionality
 
-
     // events, gridConnector will add event lister to datasource set to it
     this.eventIdCount = -1;
     this.eventCallBacks = [];
@@ -58,21 +55,17 @@ export class DataSource {
 
   }
 
-
   public getSelection(): Selection {
     return this.selection;
   }
-
 
   public getKey(): string {
     return this.key;
   }
 
-
   public length(): number {
     return this.collection.length;
   }
-
 
   public triggerEvent(event: string): void {
     // call all event listeners
@@ -80,7 +73,6 @@ export class DataSource {
       FN(event);
     });
   }
-
 
   public addEventListener(callback: Function): number {
 
@@ -94,13 +86,10 @@ export class DataSource {
     return this.eventIdCount;
   }
 
-
-
   public removeEventListener(id: number): void {
     // remove listtener from id
     this.eventCallBacks.splice(id, 1);
   }
-
 
   public setArray(array: Array<Entity>): void {
 
@@ -119,12 +108,10 @@ export class DataSource {
     this.triggerEvent('collection_changed');
   }
 
-
   public select(row: number): void {
     // get row and set as current entity "entity" of datasource
     this.entity = this.collection.getRow(row);
   }
-
 
   public query(options: Array<FilterObject>): void {
     if (options) {
@@ -145,7 +132,6 @@ export class DataSource {
 
   }
 
-
   public orderBy(attribute: string|SortObject, addToCurrentSort?: boolean): void {
 
     // get collection (cant use main,,, might be filtered)
@@ -162,17 +148,13 @@ export class DataSource {
 
   }
 
-
   public getCurrentOrderBy(): Array<SortObject> {
-    // get
     return this.arrayHelper.getOrderBy();
   }
-
 
   public getCurrentFilter(): Array<FilterObject> {
     return this.arrayHelper.getCurrentFilter();
   }
-
 
   public getElement(row: number): Entity {
     if (row === undefined || row === null) {
@@ -181,7 +163,6 @@ export class DataSource {
       return this.collection.getRow(row);
     }
   }
-
 
   public group(grouping: Array<string>, keepExpanded?: boolean): void {
 
@@ -200,7 +181,6 @@ export class DataSource {
 
   }
 
-
   public groupCollapse(id: string): void {
     let newArray = this.arrayHelper.groupCollapse(id);
     let oldArray = this.collection.getEntities();
@@ -211,7 +191,6 @@ export class DataSource {
       this.triggerEvent('collection_collapsed_all');
     }
   }
-
 
   public groupExpand(id: string): void {
     let newArray = this.arrayHelper.groupExpand(id);
@@ -224,11 +203,9 @@ export class DataSource {
     }
   }
 
-
   public getGrouping(): Array<string> {
     return this.arrayHelper.getGrouping();
   }
-
 
   public addElement(data: Entity): void {
     if (data) {
@@ -256,9 +233,7 @@ export class DataSource {
     } else {
       return null;
     }
-
   }
-
 
   private getRowKeys(): Array<any> {
 
@@ -269,10 +244,4 @@ export class DataSource {
       return [];
     }
   }
-
-
-
-
 }
-
-

@@ -9,7 +9,6 @@ export class WakClassMethod {
         this.name = name;
     }
 
-
     public execute(params: any, options: any) {
         return new Promise((resolve, reject) => {
 

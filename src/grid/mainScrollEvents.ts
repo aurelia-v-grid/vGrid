@@ -1,6 +1,5 @@
 import { HtmlCache } from './htmlCache';
 
-
 export class MainScrollEvents {
   private element: Element;
   private timerLeft: NodeJS.Timer;
@@ -20,8 +19,6 @@ export class MainScrollEvents {
   private group: Element;
   private touchY: number;
 
-
-
   constructor(element: Element, htmlCache: HtmlCache) {
     this.element = element;
     this.htmlCache = htmlCache;
@@ -35,10 +32,8 @@ export class MainScrollEvents {
   }
 
   public init(): void {
-
     this.updateInternalHtmlCache();
     this.addScrollEvents('all');
-
   }
 
   private updateInternalHtmlCache(): void {
@@ -51,7 +46,6 @@ export class MainScrollEvents {
     this.hhandle = this.htmlCache.avg_content_hhandle;
     this.group = this.htmlCache.avg_content_group;
   }
-
 
   private onWeel(event: MouseWheelEvent): boolean {
 
@@ -71,7 +65,6 @@ export class MainScrollEvents {
     event.preventDefault();
     return false;
   }
-
 
   private addScrollEvents(type: string): void {
 
@@ -120,8 +113,6 @@ export class MainScrollEvents {
         break;
       default:
     }
-
-
 
   }
 
@@ -172,13 +163,11 @@ export class MainScrollEvents {
     }
   }
 
-
   private touchStart(e: any) {
     let touchobj = e.changedTouches[0];
     this.touchY = parseInt(touchobj.clientY, 10);
     e.preventDefault();
   }
-
 
   private touchMove(e: any) {
     let touchobj = e.changedTouches[0];
@@ -186,7 +175,6 @@ export class MainScrollEvents {
     this.handleEventWheelScroll(-dist);
     e.preventDefault();
   }
-
 
   private handleEventLeftScroll(): boolean {
 
@@ -318,9 +306,7 @@ export class MainScrollEvents {
 
   }
 
-
   private handleEventVhandle(): void {
-
 
     requestAnimationFrame(() => {
 
@@ -350,7 +336,6 @@ export class MainScrollEvents {
 
   private handleEventHhandle(): void {
 
-
     requestAnimationFrame(() => {
 
       if (this.timerHhandle) {
@@ -373,9 +358,7 @@ export class MainScrollEvents {
 
     });
 
-
   }
-
 
   private checkScroll(newTopPosition: number): void {
     if (this.lastTopPosition !== newTopPosition) {
@@ -401,7 +384,6 @@ export class MainScrollEvents {
     }
   }
 
-
   private triggerGridScrollEvent(
     scrollbarScrolling: boolean,
     down: boolean,
@@ -417,6 +399,5 @@ export class MainScrollEvents {
     });
     this.element.dispatchEvent(event);
   }
-
 
 }

@@ -78,7 +78,6 @@ export class Selection implements SelectionInterface {
     }
   }
 
-
   public selectRange(start: number, end: number): void {
     if (this.mode === 'multiple') {
       this.selection.clear();
@@ -113,7 +112,6 @@ export class Selection implements SelectionInterface {
     this.selectedRows = this.selection.size;
   }
 
-
   public reset(): void {
     if (this.selectedRows > 0) {
       this.selection.clear();
@@ -122,6 +120,5 @@ export class Selection implements SelectionInterface {
     // this.lastKeyKodeUsed = 'none';
     this.selectedRows = this.selection.size;
   }
-
 
 }

@@ -9,7 +9,6 @@ export class WakCollectionMethod {
         this.name = name;
     }
 
-
     public execute(params: any, options: any) {
         return new Promise((resolve, reject) => {
             this.source.__queueRequest((done: any) => {
@@ -22,7 +21,6 @@ export class WakCollectionMethod {
                         '/' +
                         this.name +
                         this.source.collection.entityset.replace(this.source.dataURI, '');
-
 
                     let restString = this.source.restApi.generateRestString(dataURI, {
                         params: asPost ? null : params

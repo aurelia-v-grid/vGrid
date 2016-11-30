@@ -11,10 +11,6 @@ import {
   ColConfig,
   BindingContext } from './interfaces';
 
-
-
-
-
 export class GridConnector implements GridConnectorInterface {
   private selection: Selection;
   private controller: Controller;
@@ -22,7 +18,6 @@ export class GridConnector implements GridConnectorInterface {
   private key: string;
   private errorhandler: Function;
   private eventID: number;
-
 
   constructor(datasource: DataSource, selection?: Selection, errorHandler?: Function) {
     this.controller = null;
@@ -32,11 +27,9 @@ export class GridConnector implements GridConnectorInterface {
     this.errorhandler = errorHandler || null;
   }
 
-
   public getSelection(): SelectionInterface {
     return this.selection;
   }
-
 
   public connect(controller: Controller, create: Function): void {
     this.controller = controller;
@@ -44,9 +37,7 @@ export class GridConnector implements GridConnectorInterface {
     create();
   }
 
-
   public gridCreated(): void {
-
     // I want to be able to override this, so you could add/do more with datasource before displaying results
     this.raiseEvent('sortIconUpdate');
     this.controller.updateHeights();
@@ -57,7 +48,6 @@ export class GridConnector implements GridConnectorInterface {
   public select(row: number): void {
     this.datasource.select(row);
   }
-
 
   public getDatasourceLength(): number {
     return this.datasource.length();
@@ -71,11 +61,9 @@ export class GridConnector implements GridConnectorInterface {
     this.controller.setColumnConfig(colconfig);
   }
 
-
   public getGrouping(): Array<string> {
     return this.datasource.getGrouping();
   }
-
 
   public group(grouping: Array<string>, keepExpanded?: boolean): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
@@ -83,11 +71,8 @@ export class GridConnector implements GridConnectorInterface {
     });
   }
 
-
   public getElement(options: { row: number, isDown: boolean, callback: Function }): void {
-
     let rowData: Entity = this.datasource.getElement(options.row);
-
     let rowContext = ({
       row: options.row,
       selection: this.selection,
@@ -96,9 +81,7 @@ export class GridConnector implements GridConnectorInterface {
     } as BindingContext);
 
     options.callback(rowContext);
-
   }
-
 
   public query(a: Array<FilterObject>): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
@@ -106,35 +89,29 @@ export class GridConnector implements GridConnectorInterface {
     });
   }
 
-
   public orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.orderBy(attribute, addToCurrentSort);
     });
   }
 
-
   public destroy(): void {
     this.datasource.removeEventListener(this.eventID);
   }
-
 
   public getCurrentOrderBy(): Array<SortObject> {
     return this.datasource.getCurrentOrderBy();
   }
 
-
   public getCurrentFilter(): Array<FilterObject> {
     return this.datasource.getCurrentFilter();
   }
-
 
   public expandGroup(id: string): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.groupExpand(id);
     });
   }
-
 
   public collapseGroup(id: string): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
@@ -145,7 +122,6 @@ export class GridConnector implements GridConnectorInterface {
   public triggerI18n() {
     this.controller.triggerI18N();
   }
-
 
   private eventHandler(event: string): void {
     switch (event) {
@@ -180,13 +156,10 @@ export class GridConnector implements GridConnectorInterface {
         break;
 
       default:
-        console.log('unknown event');
-        console.log(event);
-
+        console.warn('unknown event');
+        console.warn(event);
     }
-
   }
-
 
   private raiseEvent(name: string, data = {}): void {
     let event = new CustomEvent(name, {

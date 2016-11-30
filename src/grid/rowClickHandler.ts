@@ -1,6 +1,5 @@
 import { HtmlCache, Controller, SelectionInterface, RowCache } from '../interfaces';
 
-
 export class RowClickHandler {
   private element: Element;
   private htmlCache: HtmlCache;
@@ -12,7 +11,6 @@ export class RowClickHandler {
   private selection: SelectionInterface;
   private manualSelection: boolean;
 
-
   constructor(element: Element, htmlCache: HtmlCache) {
     this.element = element;
     this.htmlCache = htmlCache;
@@ -21,7 +19,6 @@ export class RowClickHandler {
     this.lastKeyKodeUsed = 'none'; // this ned to be reset when filtering
     this.selectedRows = 0;
   }
-
 
   public init(mode: boolean, manualSelection: boolean, controller: Controller): void {
 
@@ -71,10 +68,6 @@ export class RowClickHandler {
     return this.selection.getMode();
   }
 
-
-
-
-
   public removeEventlistener(): void {
     let avgLeftRows = this.htmlCache.avg_left_rows;
     let avgMainRows = this.htmlCache.avg_main_rows;
@@ -105,7 +98,6 @@ export class RowClickHandler {
     }
   }
 
-
   private getCache(target: Element): RowCache {
     let no = -1;
     this.htmlCache.rowCache.forEach((row, i) => {
@@ -130,7 +122,6 @@ export class RowClickHandler {
 
   }
 
-
   private singleClick(event: MouseEvent): void {
     let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCache);
     if (!cache.isGroup) {
@@ -146,8 +137,6 @@ export class RowClickHandler {
     }
   }
 
-
-
   private doubleClick(event: MouseEvent): void {
     let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCache);
     this.controller.raiseEvent('v-row-ondblclick', {
@@ -157,42 +146,29 @@ export class RowClickHandler {
     });
   }
 
-
   private isSelected(row: number): boolean {
     return this.selection.isSelected(row);
   }
-
 
   private deSelect(row: number): void {
     this.selection.deSelect(row);
   }
 
-
   private select(row: number, addToSelection: boolean): void {
     this.selection.select(row, addToSelection);
   }
-
 
   private selectRange(start: number, end: number): void {
     this.selection.selectRange(start, end);
   }
 
-
   private getSelectedRows(): Array<number> {
     return this.selection.getSelectedRows();
   }
 
-
   private setSelectedRows(newRows: Array<number>): void {
     this.selection.setSelectedRows(newRows);
   }
-
-
-
-
-
-
-
 
   private highlightRow(e: MouseEvent, currentRow: number): void {
 
@@ -207,7 +183,6 @@ export class RowClickHandler {
         if (currentRow <= (this.controller.collectionLength() - 1)) { // do I need to check this?
 
           if (this.selectionMode === 'multiple') { // if multiselect duh!
-
 
             if (e.shiftKey) {
               currentKeyKode = 'shift';
@@ -330,6 +305,5 @@ export class RowClickHandler {
       }
     }
   }
-
 
 }
