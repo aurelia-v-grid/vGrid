@@ -41,7 +41,7 @@ define(["require", "exports"], function (require, exports) {
                     deltaY = deltaY * 40;
                 }
                 if (!event.deltaY && !event.deltaMode) {
-                    if (event.wheelDelta === -120) {
+                    if (event.wheelDelta < 0) {
                         deltaY = 100;
                     }
                     else {
