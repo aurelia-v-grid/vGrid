@@ -125,8 +125,8 @@ System.register([], function (exports_1, context_1) {
                             this.controller.setLoadingScreen(false);
                             break;
                         default:
-                            console.log('unknown event');
-                            console.log(event);
+                            console.warn('unknown event');
+                            console.warn(event);
                     }
                 };
                 GridConnector.prototype.raiseEvent = function (name, data) {

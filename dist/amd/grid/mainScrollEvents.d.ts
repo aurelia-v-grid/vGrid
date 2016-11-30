@@ -17,6 +17,8 @@ export declare class MainScrollEvents {
     private hhandle;
     private group;
     private touchY;
+    private isIE11;
+    private wheelEvent;
     constructor(element: Element, htmlCache: HtmlCache);
     init(): void;
     private updateInternalHtmlCache();
@@ -25,10 +27,7 @@ export declare class MainScrollEvents {
     private removeScrollEvents(type);
     private touchStart(e);
     private touchMove(e);
-    private handleEventLeftScroll();
     private handleEventWheelScroll(newTopPosition);
-    private handleEventMainScroll();
-    private handleEventRightScroll();
     private handleEventVhandle();
     private handleEventHhandle();
     private checkScroll(newTopPosition);

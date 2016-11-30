@@ -15,6 +15,12 @@ System.register([], function (exports_1, context_1) {
                     this.timerHhandle = null;
                     this.timerWheel = null;
                     this.lastTopPosition = 0;
+                    this.wheelEvent = 'onwheel';
+                    this.isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+                    if (this.isIE11) {
+                        this.wheelEvent = 'onmousewheel';
+                        console.warn('IE11, why!?!?!');
+                    }
                 }
                 MainScrollEvents.prototype.init = function () {
                     this.updateInternalHtmlCache();
@@ -39,6 +45,14 @@ System.register([], function (exports_1, context_1) {
                         if (event.deltaMode) {
                             deltaY = deltaY * 40;
                         }
+                        if (!event.deltaY && !event.deltaMode) {
+                            if (event.wheelDelta === -120) {
+                                deltaY = 100;
+                            }
+                            else {
+                                deltaY = -100;
+                            }
+                        }
                         _this.handleEventWheelScroll(deltaY);
                     });
                     event.preventDefault();
@@ -47,45 +61,16 @@ System.register([], function (exports_1, context_1) {
                 MainScrollEvents.prototype.addScrollEvents = function (type) {
                     switch (type) {
                         case 'all':
-                            this.left.onscroll = this.handleEventLeftScroll.bind(this);
-                            this.main.onscroll = this.handleEventMainScroll.bind(this);
-                            this.right.onscroll = this.handleEventRightScroll.bind(this);
-                            this.right.onwheel = this.onWeel.bind(this);
-                            this.main.onwheel = this.onWeel.bind(this);
-                            this.left.onwheel = this.onWeel.bind(this);
-                            this.group.onwheel = this.onWeel.bind(this);
+                            this.right[this.wheelEvent] = this.onWeel.bind(this);
+                            this.main[this.wheelEvent] = this.onWeel.bind(this);
+                            this.left[this.wheelEvent] = this.onWeel.bind(this);
+                            this.group[this.wheelEvent] = this.onWeel.bind(this);
                             this.vhandle.onscroll = this.handleEventVhandle.bind(this);
                             this.hhandle.onscroll = this.handleEventHhandle.bind(this);
                             this.htmlCache.element.addEventListener('touchmove', this.touchMove.bind(this));
                             this.htmlCache.element.addEventListener('touchstart', this.touchStart.bind(this));
                             break;
-                        case 'left':
-                            this.main.onscroll = this.handleEventMainScroll.bind(this);
-                            this.right.onscroll = this.handleEventRightScroll.bind(this);
-                            this.vhandle.onscroll = this.handleEventVhandle.bind(this);
-                            break;
-                        case 'main':
-                            this.left.onscroll = this.handleEventLeftScroll.bind(this);
-                            this.right.onscroll = this.handleEventRightScroll.bind(this);
-                            this.vhandle.onscroll = this.handleEventVhandle.bind(this);
-                            break;
-                        case 'right':
-                            this.left.onscroll = this.handleEventLeftScroll.bind(this);
-                            this.main.onscroll = this.handleEventMainScroll.bind(this);
-                            this.vhandle.onscroll = this.handleEventVhandle.bind(this);
-                            break;
-                        case 'Vhandle':
-                            this.left.onscroll = this.handleEventLeftScroll.bind(this);
-                            this.main.onscroll = this.handleEventMainScroll.bind(this);
-                            this.right.onscroll = this.handleEventRightScroll.bind(this);
-                            break;
-                        case 'Hhandle':
-                            this.main.onscroll = this.handleEventMainScroll.bind(this);
-                            break;
                         case 'wheel':
-                            this.left.onscroll = this.handleEventLeftScroll.bind(this);
-                            this.main.onscroll = this.handleEventMainScroll.bind(this);
-                            this.right.onscroll = this.handleEventRightScroll.bind(this);
                             this.vhandle.onscroll = this.handleEventVhandle.bind(this);
                             break;
                         default:
@@ -94,45 +79,10 @@ System.register([], function (exports_1, context_1) {
                 MainScrollEvents.prototype.removeScrollEvents = function (type) {
                     switch (type) {
                         case 'all':
-                            this.left.onscroll = null;
-                            this.main.onscroll = null;
-                            this.right.onscroll = null;
                             this.vhandle.onscroll = null;
-                            this.group.onscroll = null;
-                            break;
-                        case 'left':
-                            this.main.onscroll = null;
-                            this.right.onscroll = null;
-                            this.vhandle.onscroll = null;
-                            this.group.onscroll = null;
-                            break;
-                        case 'main':
-                            this.left.onscroll = null;
-                            this.right.onscroll = null;
-                            this.vhandle.onscroll = null;
-                            this.group.onscroll = null;
-                            break;
-                        case 'right':
-                            this.left.onscroll = null;
-                            this.main.onscroll = null;
-                            this.vhandle.onscroll = null;
-                            this.group.onscroll = null;
-                            break;
-                        case 'Vhandle':
-                            this.left.onscroll = null;
-                            this.main.onscroll = null;
-                            this.right.onscroll = null;
-                            this.group.onscroll = null;
-                            break;
-                        case 'Hhandle':
-                            this.main.onscroll = null;
                             break;
                         case 'wheel':
-                            this.left.onscroll = null;
-                            this.main.onscroll = null;
-                            this.right.onscroll = null;
                             this.vhandle.onscroll = null;
-                            this.group.onscroll = null;
                             break;
                         default:
                     }
@@ -147,31 +97,6 @@ System.register([], function (exports_1, context_1) {
                     var dist = parseInt(touchobj.clientY, 10) - this.touchY;
                     this.handleEventWheelScroll(-dist);
                     e.preventDefault();
-                };
-                MainScrollEvents.prototype.handleEventLeftScroll = function () {
-                    var _this = this;
-                    if (this.vhandle.scrollHeight === this.vhandle.parentNode.clientHeight) {
-                        return false;
-                    }
-                    requestAnimationFrame(function () {
-                        if (_this.timerLeft) {
-                            clearTimeout(_this.timerLeft);
-                            _this.removeScrollEvents('left');
-                        }
-                        requestAnimationFrame(function () {
-                            var newTopPosition = _this.left.scrollTop;
-                            _this.right.scrollTop = newTopPosition;
-                            _this.main.scrollTop = newTopPosition;
-                            _this.vhandle.scrollTop = newTopPosition;
-                            _this.group.scrollTop = newTopPosition;
-                            _this.checkScroll(newTopPosition);
-                            _this.timerLeft = setTimeout(function () {
-                                _this.addScrollEvents('left');
-                                _this.timerLeft = null;
-                            }, 30);
-                        });
-                    });
-                    return true;
                 };
                 MainScrollEvents.prototype.handleEventWheelScroll = function (newTopPosition) {
                     var _this = this;
@@ -193,61 +118,6 @@ System.register([], function (exports_1, context_1) {
                             }, 30);
                         });
                     });
-                };
-                MainScrollEvents.prototype.handleEventMainScroll = function () {
-                    var _this = this;
-                    if (this.vhandle.scrollHeight === this.vhandle.parentNode.clientHeight) {
-                        this.main.scrollTop = 0;
-                        var newLeftPosition = this.main.scrollLeft;
-                        this.mainHead.style.left = -newLeftPosition + 'px';
-                        return false;
-                    }
-                    requestAnimationFrame(function () {
-                        if (_this.timerMain) {
-                            clearTimeout(_this.timerMain);
-                            _this.removeScrollEvents('main');
-                        }
-                        requestAnimationFrame(function () {
-                            var newTopPosition = _this.main.scrollTop;
-                            _this.right.scrollTop = newTopPosition;
-                            _this.left.scrollTop = newTopPosition;
-                            _this.vhandle.scrollTop = newTopPosition;
-                            _this.group.scrollTop = newTopPosition;
-                            var newLeftPosition = _this.main.scrollLeft;
-                            _this.mainHead.style.left = -newLeftPosition + 'px';
-                            _this.checkScroll(newTopPosition);
-                            _this.timerMain = setTimeout(function () {
-                                _this.addScrollEvents('main');
-                                _this.timerMain = null;
-                            }, 30);
-                        });
-                    });
-                    return true;
-                };
-                MainScrollEvents.prototype.handleEventRightScroll = function () {
-                    var _this = this;
-                    if (this.vhandle.scrollHeight === this.vhandle.parentNode.clientHeight) {
-                        return false;
-                    }
-                    requestAnimationFrame(function () {
-                        if (_this.timerRight) {
-                            clearTimeout(_this.timerRight);
-                            _this.removeScrollEvents('right');
-                        }
-                        requestAnimationFrame(function () {
-                            var newTopPosition = _this.right.scrollTop;
-                            _this.left.scrollTop = newTopPosition;
-                            _this.main.scrollTop = newTopPosition;
-                            _this.vhandle.scrollTop = newTopPosition;
-                            _this.group.scrollTop = newTopPosition;
-                            _this.checkScroll(newTopPosition);
-                            _this.timerRight = setTimeout(function () {
-                                _this.addScrollEvents('right');
-                                _this.timerRight = null;
-                            }, 30);
-                        });
-                    });
-                    return true;
                 };
                 MainScrollEvents.prototype.handleEventVhandle = function () {
                     var _this = this;
