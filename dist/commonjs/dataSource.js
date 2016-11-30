@@ -1,12 +1,12 @@
 var selection_1 = require("./selection");
 var collection_1 = require("./collection");
-var arrayHelper_1 = require("./utils/arrayHelper");
+var arrayUtils_1 = require("./utils/arrayUtils");
 var DataSource = (function () {
     function DataSource(selection, config) {
         this.selection = selection || new selection_1.Selection('single');
         this.selection.overrideGetRowKey(this.getRowKey.bind(this));
         this.selection.overrideGetRowKeys(this.getRowKeys.bind(this));
-        this.arrayHelper = new arrayHelper_1.ArrayHelper();
+        this.arrayUtils = new arrayUtils_1.ArrayUtils();
         this.key = null;
         this.mainArray = null;
         this.config = config;
@@ -54,7 +54,7 @@ var DataSource = (function () {
     };
     DataSource.prototype.query = function (options) {
         if (options) {
-            var newArray = this.arrayHelper.query(this.mainArray, options);
+            var newArray = this.arrayUtils.query(this.mainArray, options);
             this.collection.setData(newArray);
         }
         else {
@@ -65,15 +65,15 @@ var DataSource = (function () {
     };
     DataSource.prototype.orderBy = function (attribute, addToCurrentSort) {
         var collection = this.collection.getEntities();
-        var result = this.arrayHelper.orderBy(collection, attribute, addToCurrentSort);
+        var result = this.arrayUtils.orderBy(collection, attribute, addToCurrentSort);
         this.collection.setData(result.fixed, result.full);
         this.triggerEvent('collection_sorted');
     };
     DataSource.prototype.getCurrentOrderBy = function () {
-        return this.arrayHelper.getOrderBy();
+        return this.arrayUtils.getOrderBy();
     };
     DataSource.prototype.getCurrentFilter = function () {
-        return this.arrayHelper.getCurrentFilter();
+        return this.arrayUtils.getCurrentFilter();
     };
     DataSource.prototype.getElement = function (row) {
         if (row === undefined || row === null) {
@@ -85,18 +85,18 @@ var DataSource = (function () {
     };
     DataSource.prototype.group = function (grouping, keepExpanded) {
         var _this = this;
-        this.arrayHelper.resetSort();
+        this.arrayUtils.resetSort();
         grouping.forEach(function (groupName) {
-            _this.arrayHelper.setOrderBy(groupName, true);
+            _this.arrayUtils.setOrderBy(groupName, true);
         });
-        this.arrayHelper.runOrderbyOn(this.collection.getEntities());
+        this.arrayUtils.runOrderbyOn(this.collection.getEntities());
         var untouchedgrouped = this.collection.getEntities();
-        var groupedArray = this.arrayHelper.group(untouchedgrouped, grouping, keepExpanded);
+        var groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, keepExpanded);
         this.collection.setData(groupedArray, untouchedgrouped);
         this.triggerEvent('collection_grouped');
     };
     DataSource.prototype.groupCollapse = function (id) {
-        var newArray = this.arrayHelper.groupCollapse(id);
+        var newArray = this.arrayUtils.groupCollapse(id);
         var oldArray = this.collection.getEntities();
         this.collection.setData(newArray, oldArray);
         if (id) {
@@ -107,7 +107,7 @@ var DataSource = (function () {
         }
     };
     DataSource.prototype.groupExpand = function (id) {
-        var newArray = this.arrayHelper.groupExpand(id);
+        var newArray = this.arrayUtils.groupExpand(id);
         var oldArray = this.collection.getEntities();
         this.collection.setData(newArray, oldArray);
         if (id) {
@@ -118,7 +118,7 @@ var DataSource = (function () {
         }
     };
     DataSource.prototype.getGrouping = function () {
-        return this.arrayHelper.getGrouping();
+        return this.arrayUtils.getGrouping();
     };
     DataSource.prototype.addElement = function (data) {
         if (data) {

@@ -1,15 +1,13 @@
-var filterOperators_1 = require("./filterOperators");
 var arrayFilter_1 = require("./arrayFilter");
 var arraySort_1 = require("./arraySort");
 var arrayGrouping_1 = require("./arrayGrouping");
-var ArrayHelper = (function () {
-    function ArrayHelper() {
-        this.filterOperators = new filterOperators_1.FilterOperators();
-        this.arrayFilter = new arrayFilter_1.ArrayFilter(this.filterOperators);
+var ArrayUtils = (function () {
+    function ArrayUtils() {
+        this.arrayFilter = new arrayFilter_1.ArrayFilter();
         this.arraySort = new arraySort_1.ArraySort();
         this.arrayGrouping = new arrayGrouping_1.ArrayGrouping();
     }
-    ArrayHelper.prototype.orderBy = function (collection, attribute, addToCurrentSort) {
+    ArrayUtils.prototype.orderBy = function (collection, attribute, addToCurrentSort) {
         var grouping = this.getGrouping();
         var result = {
             fixed: null,
@@ -73,41 +71,41 @@ var ArrayHelper = (function () {
         }
         return result;
     };
-    ArrayHelper.prototype.group = function (array, grouping, keepExpanded) {
+    ArrayUtils.prototype.group = function (array, grouping, keepExpanded) {
         return this.arrayGrouping.group(array, grouping, keepExpanded);
     };
-    ArrayHelper.prototype.getGrouping = function () {
+    ArrayUtils.prototype.getGrouping = function () {
         return this.arrayGrouping.getGrouping();
     };
-    ArrayHelper.prototype.groupCollapse = function (id) {
+    ArrayUtils.prototype.groupCollapse = function (id) {
         return this.arrayGrouping.collapse(id);
     };
-    ArrayHelper.prototype.groupExpand = function (id) {
+    ArrayUtils.prototype.groupExpand = function (id) {
         return this.arrayGrouping.expand(id);
     };
-    ArrayHelper.prototype.getOrderBy = function () {
+    ArrayUtils.prototype.getOrderBy = function () {
         return this.arraySort.getOrderBy();
     };
-    ArrayHelper.prototype.setLastSort = function (array) {
+    ArrayUtils.prototype.setLastSort = function (array) {
         this.arraySort.setLastSort(array);
     };
-    ArrayHelper.prototype.setOrderBy = function (attribute, addToCurrentSort) {
+    ArrayUtils.prototype.setOrderBy = function (attribute, addToCurrentSort) {
         this.arraySort.setOrderBy(attribute, addToCurrentSort);
     };
-    ArrayHelper.prototype.runOrderbyOn = function (array) {
+    ArrayUtils.prototype.runOrderbyOn = function (array) {
         this.arraySort.runOrderbyOn(array);
     };
-    ArrayHelper.prototype.resetSort = function () {
+    ArrayUtils.prototype.resetSort = function () {
         this.arraySort.reset();
     };
-    ArrayHelper.prototype.getCurrentFilter = function () {
+    ArrayUtils.prototype.getCurrentFilter = function () {
         return this.arrayFilter.getLastFilter();
     };
-    ArrayHelper.prototype.query = function (array, params) {
+    ArrayUtils.prototype.query = function (array, params) {
         return this.arrayFilter.runQueryOn(array, params);
     };
-    return ArrayHelper;
+    return ArrayUtils;
 }());
-exports.ArrayHelper = ArrayHelper;
+exports.ArrayUtils = ArrayUtils;
 
-//# sourceMappingURL=arrayHelper.js.map
+//# sourceMappingURL=arrayUtils.js.map

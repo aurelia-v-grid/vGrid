@@ -1,4 +1,4 @@
-define(["require", "exports", "aurelia-framework", "./grid/htmlCache", "./grid/controller", "./grid/mainMarkup", "./grid/mainScrollEvents", "./grid/rowMarkup", "./grid/rowScrollEvents", "./grid/columnMarkup", "./grid/htmlHeightWidth", "./grid/viewSlots", "./grid/columnBindingContext", "./grid/rowDataBinder", "./grid/rowClickHandler", "./grid/groupingElements", "./grid/loadingScreen", "./grid/contextMenu", "./grid/v-grid", "./gridConnector", "./dataSource", "./selection", "./utils/filterOperators", "./utils/arrayFilter", "./utils/arraySort", "./utils/arrayGrouping"], function (require, exports, aurelia_framework_1, htmlCache_1, controller_1, mainMarkup_1, mainScrollEvents_1, rowMarkup_1, rowScrollEvents_1, columnMarkup_1, htmlHeightWidth_1, viewSlots_1, columnBindingContext_1, rowDataBinder_1, rowClickHandler_1, groupingElements_1, loadingScreen_1, contextMenu_1, v_grid_1, gridConnector_1, dataSource_1, selection_1, filterOperators_1, arrayFilter_1, arraySort_1, arrayGrouping_1) {
+define(["require", "exports", "aurelia-framework", "./grid/htmlCache", "./grid/controller", "./grid/mainMarkup", "./grid/mainScrollEvents", "./grid/rowMarkup", "./grid/rowScrollEvents", "./grid/columnMarkup", "./grid/htmlHeightWidth", "./grid/viewSlots", "./grid/columnBindingContext", "./grid/rowDataBinder", "./grid/rowClickHandler", "./grid/groupingElements", "./grid/loadingScreen", "./grid/contextMenu", "./grid/v-grid", "./gridConnector", "./dataSource", "./selection", "./utils/arrayFilter", "./utils/arraySort", "./utils/arrayGrouping"], function (require, exports, aurelia_framework_1, htmlCache_1, controller_1, mainMarkup_1, mainScrollEvents_1, rowMarkup_1, rowScrollEvents_1, columnMarkup_1, htmlHeightWidth_1, viewSlots_1, columnBindingContext_1, rowDataBinder_1, rowClickHandler_1, groupingElements_1, loadingScreen_1, contextMenu_1, v_grid_1, gridConnector_1, dataSource_1, selection_1, arrayFilter_1, arraySort_1, arrayGrouping_1) {
     function __export(m) {
         for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
     }
@@ -22,7 +22,6 @@ define(["require", "exports", "aurelia-framework", "./grid/htmlCache", "./grid/c
     exports.GridConnector = gridConnector_1.GridConnector;
     exports.DataSource = dataSource_1.DataSource;
     exports.Selection = selection_1.Selection;
-    exports.FilterOperators = filterOperators_1.FilterOperators;
     exports.ArrayFilter = arrayFilter_1.ArrayFilter;
     exports.ArraySort = arraySort_1.ArraySort;
     exports.ArrayGrouping = arrayGrouping_1.ArrayGrouping;

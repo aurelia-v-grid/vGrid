@@ -1,8 +1,22 @@
 var ArrayFilter = (function () {
-    function ArrayFilter(filterOperators) {
-        this.filterOperators = filterOperators;
+    function ArrayFilter() {
+        this.filterOperators = {
+            '=': 1,
+            '<=': 2,
+            '>=': 3,
+            '<': 4,
+            '>': 5,
+            '*': 6,
+            '!=': 7,
+            '!*': 8,
+            '*=': 9,
+            '=*': 10
+        };
         this.lastFilter = [];
     }
+    ArrayFilter.prototype.getOperatorNo = function (val) {
+        return this.filterOperators[val];
+    };
     ArrayFilter.prototype.getLastFilter = function () {
         return this.lastFilter;
     };
@@ -13,7 +27,7 @@ var ArrayFilter = (function () {
             ObjFilter.forEach(function (x) {
                 var rowValue;
                 var filterValue;
-                var filterOperator = _this.filterOperators.getOperatorNo(x.operator);
+                var filterOperator = _this.getOperatorNo(x.operator);
                 var newFilterOperator;
                 var typeBool = {
                     true: true,

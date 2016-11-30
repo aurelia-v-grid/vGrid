@@ -22,7 +22,6 @@ export { VGrid } from './grid/v-grid';
 export { GridConnector } from './gridConnector';
 export { DataSource } from './dataSource';
 export { Selection } from './selection';
-export { FilterOperators } from './utils/filterOperators';
 export { ArrayFilter } from './utils/arrayFilter';
 export { ArraySort } from './utils/arraySort';
 export { ArrayGrouping } from './utils/arrayGrouping';

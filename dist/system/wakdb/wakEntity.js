@@ -56,7 +56,6 @@ System.register(["./wakDataSource"], function (exports_1, context_1) {
                                                         _this.modifiedAttributes.splice(index, 1);
                                                     }
                                                     _this.__isModified = _this.modifiedAttributes.length > 0 || _this.__isNew;
-                                                    ;
                                                     _this.__modified[attributeName] = undefined;
                                                 }
                                                 break;
@@ -76,7 +75,6 @@ System.register(["./wakDataSource"], function (exports_1, context_1) {
                                                         _this.modifiedAttributes.splice(index, 1);
                                                     }
                                                     _this.__isModified = _this.modifiedAttributes.length > 0 || _this.__isNew;
-                                                    ;
                                                     _this.__modified[attributeName] = undefined;
                                                 }
                                                 break;
@@ -95,7 +93,6 @@ System.register(["./wakDataSource"], function (exports_1, context_1) {
                                                             _this.modifiedAttributes.splice(index, 1);
                                                         }
                                                         _this.__isModified = _this.modifiedAttributes.length > 0 || _this.__isNew;
-                                                        ;
                                                         _this.__modified[attributeName] = undefined;
                                                     }
                                                 }
@@ -124,7 +121,6 @@ System.register(["./wakDataSource"], function (exports_1, context_1) {
                                                                 _this.modifiedAttributes.splice(index, 1);
                                                             }
                                                             _this.__isModified = _this.modifiedAttributes.length > 0 || _this.__isNew;
-                                                            ;
                                                             _this.__modified[attributeName] = undefined;
                                                         }
                                                     }

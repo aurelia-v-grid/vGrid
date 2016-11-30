@@ -4,7 +4,7 @@ export declare class DataSource {
     entity: Entity;
     private selection;
     private key;
-    private arrayHelper;
+    private arrayUtils;
     private mainArray;
     private config;
     private eventIdCount;

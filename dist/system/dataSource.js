@@ -1,6 +1,6 @@
-System.register(["./selection", "./collection", "./utils/arrayHelper"], function (exports_1, context_1) {
+System.register(["./selection", "./collection", "./utils/arrayUtils"], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
-    var selection_1, collection_1, arrayHelper_1, DataSource;
+    var selection_1, collection_1, arrayUtils_1, DataSource;
     return {
         setters: [
             function (selection_1_1) {
@@ -9,8 +9,8 @@ System.register(["./selection", "./collection", "./utils/arrayHelper"], function
             function (collection_1_1) {
                 collection_1 = collection_1_1;
             },
-            function (arrayHelper_1_1) {
-                arrayHelper_1 = arrayHelper_1_1;
+            function (arrayUtils_1_1) {
+                arrayUtils_1 = arrayUtils_1_1;
             }
         ],
         execute: function () {
@@ -19,7 +19,7 @@ System.register(["./selection", "./collection", "./utils/arrayHelper"], function
                     this.selection = selection || new selection_1.Selection('single');
                     this.selection.overrideGetRowKey(this.getRowKey.bind(this));
                     this.selection.overrideGetRowKeys(this.getRowKeys.bind(this));
-                    this.arrayHelper = new arrayHelper_1.ArrayHelper();
+                    this.arrayUtils = new arrayUtils_1.ArrayUtils();
                     this.key = null;
                     this.mainArray = null;
                     this.config = config;
@@ -67,7 +67,7 @@ System.register(["./selection", "./collection", "./utils/arrayHelper"], function
                 };
                 DataSource.prototype.query = function (options) {
                     if (options) {
-                        var newArray = this.arrayHelper.query(this.mainArray, options);
+                        var newArray = this.arrayUtils.query(this.mainArray, options);
                         this.collection.setData(newArray);
                     }
                     else {
@@ -78,15 +78,15 @@ System.register(["./selection", "./collection", "./utils/arrayHelper"], function
                 };
                 DataSource.prototype.orderBy = function (attribute, addToCurrentSort) {
                     var collection = this.collection.getEntities();
-                    var result = this.arrayHelper.orderBy(collection, attribute, addToCurrentSort);
+                    var result = this.arrayUtils.orderBy(collection, attribute, addToCurrentSort);
                     this.collection.setData(result.fixed, result.full);
                     this.triggerEvent('collection_sorted');
                 };
                 DataSource.prototype.getCurrentOrderBy = function () {
-                    return this.arrayHelper.getOrderBy();
+                    return this.arrayUtils.getOrderBy();
                 };
                 DataSource.prototype.getCurrentFilter = function () {
-                    return this.arrayHelper.getCurrentFilter();
+                    return this.arrayUtils.getCurrentFilter();
                 };
                 DataSource.prototype.getElement = function (row) {
                     if (row === undefined || row === null) {
@@ -98,18 +98,18 @@ System.register(["./selection", "./collection", "./utils/arrayHelper"], function
                 };
                 DataSource.prototype.group = function (grouping, keepExpanded) {
                     var _this = this;
-                    this.arrayHelper.resetSort();
+                    this.arrayUtils.resetSort();
                     grouping.forEach(function (groupName) {
-                        _this.arrayHelper.setOrderBy(groupName, true);
+                        _this.arrayUtils.setOrderBy(groupName, true);
                     });
-                    this.arrayHelper.runOrderbyOn(this.collection.getEntities());
+                    this.arrayUtils.runOrderbyOn(this.collection.getEntities());
                     var untouchedgrouped = this.collection.getEntities();
-                    var groupedArray = this.arrayHelper.group(untouchedgrouped, grouping, keepExpanded);
+                    var groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, keepExpanded);
                     this.collection.setData(groupedArray, untouchedgrouped);
                     this.triggerEvent('collection_grouped');
                 };
                 DataSource.prototype.groupCollapse = function (id) {
-                    var newArray = this.arrayHelper.groupCollapse(id);
+                    var newArray = this.arrayUtils.groupCollapse(id);
                     var oldArray = this.collection.getEntities();
                     this.collection.setData(newArray, oldArray);
                     if (id) {
@@ -120,7 +120,7 @@ System.register(["./selection", "./collection", "./utils/arrayHelper"], function
                     }
                 };
                 DataSource.prototype.groupExpand = function (id) {
-                    var newArray = this.arrayHelper.groupExpand(id);
+                    var newArray = this.arrayUtils.groupExpand(id);
                     var oldArray = this.collection.getEntities();
                     this.collection.setData(newArray, oldArray);
                     if (id) {
@@ -131,7 +131,7 @@ System.register(["./selection", "./collection", "./utils/arrayHelper"], function
                     }
                 };
                 DataSource.prototype.getGrouping = function () {
-                    return this.arrayHelper.getGrouping();
+                    return this.arrayUtils.getGrouping();
                 };
                 DataSource.prototype.addElement = function (data) {
                     if (data) {

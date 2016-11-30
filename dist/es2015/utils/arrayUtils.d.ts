@@ -1,10 +1,8 @@
-import { FilterOperators } from './filterOperators';
 import { ArrayFilter } from './arrayFilter';
 import { ArraySort } from './arraySort';
 import { ArrayGrouping } from './arrayGrouping';
 import { SortObject, FilterObject, Entity } from '../interfaces';
-export declare class ArrayHelper {
-    filterOperators: FilterOperators;
+export declare class ArrayUtils {
     arrayFilter: ArrayFilter;
     arraySort: ArraySort;
     arrayGrouping: ArrayGrouping;

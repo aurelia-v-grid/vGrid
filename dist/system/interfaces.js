@@ -1,4 +1,4 @@
-System.register(["aurelia-framework", "./grid/htmlCache", "./grid/controller", "./grid/mainMarkup", "./grid/mainScrollEvents", "./grid/rowMarkup", "./grid/rowScrollEvents", "./grid/columnMarkup", "./grid/htmlHeightWidth", "./grid/viewSlots", "./grid/columnBindingContext", "./grid/rowDataBinder", "./grid/rowClickHandler", "./grid/groupingElements", "./grid/loadingScreen", "./grid/contextMenu", "./grid/v-grid", "./gridConnector", "./dataSource", "./selection", "./utils/filterOperators", "./utils/arrayFilter", "./utils/arraySort", "./utils/arrayGrouping"], function (exports_1, context_1) {
+System.register(["aurelia-framework", "./grid/htmlCache", "./grid/controller", "./grid/mainMarkup", "./grid/mainScrollEvents", "./grid/rowMarkup", "./grid/rowScrollEvents", "./grid/columnMarkup", "./grid/htmlHeightWidth", "./grid/viewSlots", "./grid/columnBindingContext", "./grid/rowDataBinder", "./grid/rowClickHandler", "./grid/groupingElements", "./grid/loadingScreen", "./grid/contextMenu", "./grid/v-grid", "./gridConnector", "./dataSource", "./selection", "./utils/arrayFilter", "./utils/arraySort", "./utils/arrayGrouping"], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
     var exportedNames_1 = {
         "HtmlCache": true,
@@ -20,7 +20,6 @@ System.register(["aurelia-framework", "./grid/htmlCache", "./grid/controller", "
         "GridConnector": true,
         "DataSource": true,
         "Selection": true,
-        "FilterOperators": true,
         "ArrayFilter": true,
         "ArraySort": true,
         "ArrayGrouping": true
@@ -131,11 +130,6 @@ System.register(["aurelia-framework", "./grid/htmlCache", "./grid/controller", "
             function (selection_1_1) {
                 exports_1({
                     "Selection": selection_1_1["Selection"]
-                });
-            },
-            function (filterOperators_1_1) {
-                exports_1({
-                    "FilterOperators": filterOperators_1_1["FilterOperators"]
                 });
             },
             function (arrayFilter_1_1) {
