@@ -3,7 +3,7 @@ import { ArraySort } from './arraySort';
 import { ArrayGrouping } from './arrayGrouping';
 import {SortObject, FilterObject, Entity} from '../interfaces';
 
-export class ArrayHelper {
+export class ArrayUtils {
   public arrayFilter: ArrayFilter;
   public arraySort: ArraySort;
   public arrayGrouping: ArrayGrouping;

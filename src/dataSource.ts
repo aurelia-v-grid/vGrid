@@ -1,13 +1,13 @@
 import { Selection } from './selection';
 import { Collection } from './collection';
-import { ArrayHelper } from './utils/arrayHelper';
+import { ArrayUtils } from './utils/arrayUtils';
 import {Entity, DatasourceConfig, SortObject, FilterObject} from './interfaces';
 
 export class DataSource {
   public entity: Entity;
   private selection: Selection;
   private key: string;
-  private arrayHelper: ArrayHelper;
+  private arrayUtils: ArrayUtils;
   private mainArray: Array<Entity>;
   private config: DatasourceConfig;
   private eventIdCount: number;
@@ -22,7 +22,7 @@ export class DataSource {
     this.selection.overrideGetRowKey(this.getRowKey.bind(this));
     this.selection.overrideGetRowKeys(this.getRowKeys.bind(this));
     // array helper helps with grouping/sorting and filtering
-    this.arrayHelper = new ArrayHelper();
+    this.arrayUtils = new ArrayUtils();
     // key if you dont want grid to add
     this.key = null;
     // main array fill contain all the data set to grid
@@ -34,7 +34,7 @@ export class DataSource {
     } else {
       this.key = '__avgKey';
     }
-    // todo, give option to override arrayhelper, 
+    // todo, give option to override ArrayUtils, 
     // or and option to set params you pass into array helper to override some of its functionality
     // events, gridConnector will add event lister to datasource set to it
     this.eventIdCount = -1;
@@ -82,7 +82,7 @@ export class DataSource {
   public setArray(array: Array<Entity>): void {
     // new collection
     this.collection = new Collection(this);
-    // todo, clear stuff set in arrayHelper or just create new?
+    // todo, clear stuff set in ArrayUtils or just create new?
     // ???????
     // set data to collection
     this.collection.setData(array);
@@ -99,7 +99,7 @@ export class DataSource {
   public query(options: Array<FilterObject>): void {
     if (options) {
       // query data (using main here, so we query all data set)
-      let newArray = this.arrayHelper.query(this.mainArray, options);
+      let newArray = this.arrayUtils.query(this.mainArray, options);
       // set data to our collection
       this.collection.setData(newArray);
     } else {
@@ -115,7 +115,7 @@ export class DataSource {
     // get collection (cant use main,,, might be filtered)
     let collection = this.collection.getEntities();
     // use array helper to sort (takes care of the grouping if set)
-    let result = this.arrayHelper.orderBy(collection, attribute, addToCurrentSort);
+    let result = this.arrayUtils.orderBy(collection, attribute, addToCurrentSort);
     // set data, need both incase we have grouping
     this.collection.setData(result.fixed, result.full);
     // trigger event to update grid
@@ -123,11 +123,11 @@ export class DataSource {
   }
 
   public getCurrentOrderBy(): Array<SortObject> {
-    return this.arrayHelper.getOrderBy();
+    return this.arrayUtils.getOrderBy();
   }
 
   public getCurrentFilter(): Array<FilterObject> {
-    return this.arrayHelper.getCurrentFilter();
+    return this.arrayUtils.getCurrentFilter();
   }
 
   public getElement(row: number): Entity {
@@ -139,19 +139,19 @@ export class DataSource {
   }
 
   public group(grouping: Array<string>, keepExpanded?: boolean): void {
-    this.arrayHelper.resetSort();
+    this.arrayUtils.resetSort();
     grouping.forEach((groupName: string) => {
-      this.arrayHelper.setOrderBy(groupName, true);
+      this.arrayUtils.setOrderBy(groupName, true);
     });
-    this.arrayHelper.runOrderbyOn(this.collection.getEntities());
+    this.arrayUtils.runOrderbyOn(this.collection.getEntities());
     let untouchedgrouped = this.collection.getEntities();
-    let groupedArray = this.arrayHelper.group(untouchedgrouped, grouping, keepExpanded);
+    let groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, keepExpanded);
     this.collection.setData(groupedArray, untouchedgrouped);
     this.triggerEvent('collection_grouped');
   }
 
   public groupCollapse(id: string): void {
-    let newArray = this.arrayHelper.groupCollapse(id);
+    let newArray = this.arrayUtils.groupCollapse(id);
     let oldArray = this.collection.getEntities();
     this.collection.setData(newArray, oldArray);
     if (id) {
@@ -162,7 +162,7 @@ export class DataSource {
   }
 
   public groupExpand(id: string): void {
-    let newArray = this.arrayHelper.groupExpand(id);
+    let newArray = this.arrayUtils.groupExpand(id);
     let oldArray = this.collection.getEntities();
     this.collection.setData(newArray, oldArray);
     if (id) {
@@ -173,7 +173,7 @@ export class DataSource {
   }
 
   public getGrouping(): Array<string> {
-    return this.arrayHelper.getGrouping();
+    return this.arrayUtils.getGrouping();
   }
 
   public addElement(data: Entity): void {
