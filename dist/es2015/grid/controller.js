@@ -171,10 +171,10 @@ define(["require", "exports"], function (require, exports) {
         };
         Controller.prototype.triggerScroll = function (position) {
             if (position === null || position === undefined) {
-                position = this.htmlCache.avg_content_main.scrollTop;
+                position = this.htmlCache.avg_content_vhandle.scrollTop;
             }
             else {
-                this.htmlCache.avg_content_main.scrollTop = position;
+                this.htmlCache.avg_content_vhandle.scrollTop = position;
             }
             this.raiseEvent('avg-scroll', {
                 isScrollBarScrolling: true,
