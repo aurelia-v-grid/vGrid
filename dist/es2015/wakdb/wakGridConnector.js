@@ -186,8 +186,8 @@ define(["require", "exports"], function (require, exports) {
                     this.controller.setLoadingScreen(false);
                     break;
                 default:
-                    console.log('unknown event');
-                    console.log(event);
+                    console.warn('unknown event');
+                    console.warn(event);
             }
         };
         WakGridConnector.prototype.raiseEvent = function (name, data) {

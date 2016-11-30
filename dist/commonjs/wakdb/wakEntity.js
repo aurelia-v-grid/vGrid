@@ -200,7 +200,7 @@ var WakEntity = (function () {
                         }
                     }
                     catch (err) {
-                        console.log('catch setter entity');
+                        console.warn('catch setter entity');
                     }
                 },
                 get: function () {
@@ -286,7 +286,7 @@ var WakEntity = (function () {
             return returnValue;
         }
         catch (err) {
-            console.log('catch setter entity');
+            console.warn('catch setter entity');
         }
     };
     WakEntity.prototype.__setDefaults = function (data) {

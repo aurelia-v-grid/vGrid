@@ -352,7 +352,8 @@ var WakDataSource = (function () {
             _this.resetCurrentEntity();
             _this.__queueRequest(function (done) {
                 options = options ? options : {};
-                var dataURI = _this.collection.entityset ? _this.collection.entityset : _this.dataURI + '/$entityset/' + _this.__guid();
+                var dataURI = _this.collection.entityset ?
+                    _this.collection.entityset : _this.dataURI + '/$entityset/' + _this.__guid();
                 var releaseEntitySet = options.releaseEntitySet;
                 var restString = _this.restApi.generateRestString(dataURI, {
                     skip: 0,
@@ -478,7 +479,7 @@ var WakDataSource = (function () {
                                 }
                             }
                             catch (e) {
-                                console.log('need to check save error... ');
+                                console.warn('need to check save error... ');
                             }
                             done();
                             reject({
@@ -554,8 +555,8 @@ var WakDataSource = (function () {
                                 }
                             }
                             catch (e) {
-                                console.log('refresh error');
-                                console.log(e);
+                                console.warn('refresh error');
+                                console.warn(e);
                             }
                         }
                         done();

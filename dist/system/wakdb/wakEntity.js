@@ -209,7 +209,7 @@ System.register(["./wakDataSource"], function (exports_1, context_1) {
                                     }
                                 }
                                 catch (err) {
-                                    console.log('catch setter entity');
+                                    console.warn('catch setter entity');
                                 }
                             },
                             get: function () {
@@ -295,7 +295,7 @@ System.register(["./wakDataSource"], function (exports_1, context_1) {
                         return returnValue;
                     }
                     catch (err) {
-                        console.log('catch setter entity');
+                        console.warn('catch setter entity');
                     }
                 };
                 WakEntity.prototype.__setDefaults = function (data) {

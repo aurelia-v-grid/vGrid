@@ -53,7 +53,10 @@ define(["require", "exports"], function (require, exports) {
                                 newFilterOperator = 6;
                                 filterValue = filterValue.substr(0, filterValue.length - 1);
                             }
-                            if (x.value.charAt(x.value.length - 1) === '*' && filterOperator === 1 && newFilterOperator !== 10 && newFilterOperator !== 6) {
+                            if (x.value.charAt(x.value.length - 1) === '*'
+                                && filterOperator === 1
+                                && newFilterOperator !== 10
+                                && newFilterOperator !== 6) {
                                 newFilterOperator = 9;
                                 filterValue = filterValue.substr(0, filterValue.length - 1);
                             }

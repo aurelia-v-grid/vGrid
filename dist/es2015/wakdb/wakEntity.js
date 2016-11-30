@@ -200,7 +200,7 @@ define(["require", "exports", "./wakDataSource"], function (require, exports, wa
                             }
                         }
                         catch (err) {
-                            console.log('catch setter entity');
+                            console.warn('catch setter entity');
                         }
                     },
                     get: function () {
@@ -286,7 +286,7 @@ define(["require", "exports", "./wakDataSource"], function (require, exports, wa
                 return returnValue;
             }
             catch (err) {
-                console.log('catch setter entity');
+                console.warn('catch setter entity');
             }
         };
         WakEntity.prototype.__setDefaults = function (data) {

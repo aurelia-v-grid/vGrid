@@ -15,7 +15,6 @@ export declare class ContextMenu {
     private groupbyMenu;
     private callback;
     private menuStrings;
-    private menuStringsBrackes;
     constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots);
     setDefaults(): void;
     init(customMenuTemplates: any, overrideContext: OverrideContext): void;
