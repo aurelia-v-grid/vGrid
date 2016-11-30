@@ -10,7 +10,6 @@ import {
   OverrideContext
 } from '../interfaces';
 
-
 @noView()
 @processContent((
   compiler: ViewCompiler,
@@ -42,7 +41,6 @@ import {
    instruction.colCss = css;
   }
 
-
 })
 @customElement('v-grid-col')
 @inject(Element, VGrid, TargetInstruction)
@@ -54,9 +52,6 @@ export class VGridElementColConfig {
   private colCss: string;
   private bindingContext: BindingContext;
   private overrideContext: OverrideContext;
-
-
-
 
   @bindable({ attribute: 'col-width' }) private colWidth: number;
   @bindable({ attribute: 'col-field' }) private colField: string;
@@ -77,7 +72,6 @@ export class VGridElementColConfig {
   @bindable({ attribute: 'col-drag-drop' }) private colDragDrop: string;
   @bindable({ attribute: 'col-resizeable' }) private colResizeable: string;
 
-
   constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
     this.vGrid = vGrid;
     this.element = element;
@@ -85,7 +79,6 @@ export class VGridElementColConfig {
     this.colHeaderTemplate = targetInstruction.elementInstruction.colHeaderTemplate;
     this.colCss = targetInstruction.elementInstruction.colCss;
   }
-
 
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
@@ -136,6 +129,5 @@ export class VGridElementColConfig {
     }
     return value;
   }
-
 
 }

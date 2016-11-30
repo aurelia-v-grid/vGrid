@@ -1,6 +1,5 @@
 import { WakRestApi, RequestOptions } from './wakInterfaces';
 
-
 export class WakDirectory {
     public restApi: WakRestApi;
     public username: any;
@@ -9,7 +8,6 @@ export class WakDirectory {
         this.restApi = restApi;
         this.username = this.getCookie('username');
     }
-
 
     public getCookie(cname: any) {
         let name = cname + '=';
@@ -25,7 +23,6 @@ export class WakDirectory {
         }
         return '';
     }
-
 
     public currentUser() {
         return new Promise((resolve, reject) => {
@@ -44,10 +41,7 @@ export class WakDirectory {
             });
 
         });
-
-
     }
-
 
     public currentUserBelongsTo(groups: Array<string>) {
         return new Promise((resolve, reject) => {
@@ -66,9 +60,7 @@ export class WakDirectory {
             });
 
         });
-
     }
-
 
     public login(username: string, password: string, duration: number) {
         return new Promise((resolve, reject) => {
@@ -89,9 +81,7 @@ export class WakDirectory {
             });
 
         });
-
     }
-
 
     public logout() {
         return new Promise((resolve, reject) => {
@@ -113,6 +103,4 @@ export class WakDirectory {
 
         });
     }
-
-
 }

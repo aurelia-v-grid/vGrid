@@ -4,8 +4,6 @@ import { WakDataSource } from './wakDataSource';
 import { WakRestUtil } from './wakRestUtil';
 import { WakDirectory } from './wakDirectory';
 
-
-
 export class WakRestApi {
     public rest: WakRestUtil;
     public ready: boolean;
@@ -26,11 +24,9 @@ export class WakRestApi {
         this.loadFailed = false;
     }
 
-
     public generateRestString(url: string, options: any) {
         return this.rest.generateRestString(url, options);
     }
-
 
     public loaded() {
         return new Promise((resolve: any) => {
@@ -58,7 +54,6 @@ export class WakRestApi {
 
         });
     }
-
 
     public callServer(url: string, options?: any) {
         if (!options) {
@@ -93,7 +88,6 @@ export class WakRestApi {
                 });
         });
     }
-
 
     public configure(config: any) {
         return new Promise((resolve, reject) => {
@@ -141,7 +135,6 @@ export class WakRestApi {
         });
     }
 
-
     public configureHttp() {
         this.httpClient.configure((config: any) => {
             config
@@ -152,7 +145,6 @@ export class WakRestApi {
                 });
         });
     }
-
 
     public createDataSources(sources: any) {
         return new Promise((resolve) => {
@@ -171,7 +163,6 @@ export class WakRestApi {
             });
     }
 
-
     public localCatalog(data: any) {
         return new Promise((resolve, reject) => {
             let restAPI = this;
@@ -186,7 +177,6 @@ export class WakRestApi {
             }
         });
     }
-
 
     public fetchCatalog() {
         return new Promise((resolve: Function, reject: any) => {
@@ -212,6 +202,5 @@ export class WakRestApi {
                 });
         });
     }
-
 
 }

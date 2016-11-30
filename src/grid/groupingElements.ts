@@ -30,9 +30,6 @@ class GroupContext {
   }
 }
 
-
-
-
 export class GroupingElements {
   private element: Element;
   private htmlCache: HtmlCache;
@@ -47,7 +44,6 @@ export class GroupingElements {
   private avgTopPanel: Element;
   private columnBindingContext: ColumnBindingContext;
 
-
   constructor(
     element: Element,
     viewCompiler: ViewCompiler,
@@ -56,7 +52,6 @@ export class GroupingElements {
     htmlCache: HtmlCache,
     viewSlots: ViewSlots,
     columnBindingContext: ColumnBindingContext) {
-
 
     // basic stuff
     this.element = element;
@@ -72,22 +67,19 @@ export class GroupingElements {
     this.lastAdded = null;
   }
 
-
   public init(controller: Controller, colGroupElement: string) {
     this.controller = controller;
     this.avgTopPanel = this.htmlCache.avg_top_panel;
     this.colGroupElement = colGroupElement;
   }
 
-
   public addGroup(name: string, field: string): void {
-
-
     if (!this.groupContext[name]) {
       this.lastAdded = name;
       this.groupContext[name] = new GroupContext(name, field, this);
 
       // view-viewslot
+      // tslint:disable:max-line-length
       let viewMarkup = this.colGroupElement ||
         `<div class="avg-grouping">  
           <p class="avg-grouping-element" v-sort="field.bind:field">${name} 
@@ -96,7 +88,6 @@ export class GroupingElements {
             </svg></i>
           </p>
          </div>`;
-
 
       let viewFactory = this.viewCompiler.compile(`<template>${viewMarkup}</template>`, this.viewResources);
       let view = viewFactory.create(this.container);
@@ -108,11 +99,7 @@ export class GroupingElements {
     this.groupContext[name].viewSlot.bind(this.groupContext[name]);
     this.groupContext[name].viewSlot.attached();
 
-    // set out viewPort class...not happy with all Im doing here
-
-
   }
-
 
   public removeGroup(name?: string): void {
     if (name) {
@@ -131,7 +118,6 @@ export class GroupingElements {
     }
   }
 
-
   public addToGrouping(): void {
     if (this.lastAdded) {
       let toAdd = this.groupContext[this.lastAdded].field;
@@ -140,10 +126,8 @@ export class GroupingElements {
     }
   }
 
-
   public removeFromGrouping(field: string): void {
     this.controller.removeFromGrouping(field);
   }
-
 
 }

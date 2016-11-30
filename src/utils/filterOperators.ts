@@ -3,8 +3,6 @@ interface Operators {
   [key: string]: any;
 }
 
-
-
 export class FilterOperators {
   private filterOperatorsNumbers: Operators;
 
@@ -29,6 +27,5 @@ export class FilterOperators {
   public getOperatorNo(operator: string): number {
     return this.filterOperatorsNumbers[operator];
   }
-
 
 }

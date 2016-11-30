@@ -1,6 +1,5 @@
 import { Controller, ColumBindingContextObject, Entity } from '../interfaces';
 
-
 export class ColumnBindingContext {
   public setupleft: Array<ColumBindingContextObject>;
   public setupmain: Array<ColumBindingContextObject>;
@@ -10,7 +9,6 @@ export class ColumnBindingContext {
   public changeGrouping: Function;
   private controller: Controller;
   [key: string]: any;
-
 
   constructor(controller: Controller) {
     this.controller = controller;
@@ -51,6 +49,5 @@ export class ColumnBindingContext {
 
     };
   }
-
 
 }

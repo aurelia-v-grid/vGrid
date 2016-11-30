@@ -27,7 +27,6 @@ export { ArrayFilter } from './utils/arrayFilter';
 export { ArraySort } from './utils/arraySort';
 export { ArrayGrouping } from './utils/arrayGrouping';
 
-
 export interface RowCache {
   [key: string]: any;
   left: HTMLElement;
@@ -115,7 +114,6 @@ export interface TargetData {
   panel: boolean;
 }
 
-
 export interface FilterObject {
   [key: string]: any;
   operator: string;
@@ -129,7 +127,6 @@ export interface SortObject {
   asc: boolean;
   no?: number;
 }
-
 
 export interface DatasourceConfig {
   [key: string]: any;
@@ -196,7 +193,6 @@ export interface ColumBindingContextObject {
   show: boolean;
   left: number;
   width: number;
-
 }
 
 export interface GroupingContext {
@@ -207,7 +203,6 @@ export interface GroupingContext {
   remove: Function;
   ctx: GroupingElements;
 }
-
 
 // only included what the grid classes is asking for, not datasource etc.
 export interface SelectionInterface {
@@ -221,8 +216,6 @@ export interface SelectionInterface {
   setSelectedRows(newRows: Array<number>): void;
   reset(): void;
 }
-
-
 
 // only included what the grid classes is asking for, not datasource etc.
 export interface GridConnectorInterface {
@@ -243,7 +236,6 @@ export interface GridConnectorInterface {
   expandGroup(id: string): void;
   collapseGroup(id: string): void;
 }
-
 
 export interface ControllerInterface {
   element: Element;

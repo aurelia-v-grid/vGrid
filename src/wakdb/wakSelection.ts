@@ -19,11 +19,9 @@ export class WakSelection implements SelectionInterface {
         this.selection = new Set([]);
     }
 
-
     public getMode(): string {
         return this.mode;
     }
-
 
     public isSelected(row: number): boolean {
         let result = false;
@@ -33,18 +31,15 @@ export class WakSelection implements SelectionInterface {
         return result;
     }
 
-
     public deSelect(row: number): void {
         this.selection.delete(row);
         this.selectedRows = this.selection.size;
     }
 
-
     public deSelectAll(): void {
         this.selection.clear();
         this.selectedRows = this.selection.size;
     }
-
 
     public select(row: number, addToSelection?: boolean): void {
         switch (this.mode) {
@@ -68,7 +63,6 @@ export class WakSelection implements SelectionInterface {
         this.selectedRows = this.selection.size;
     }
 
-
     public selectRange(start: number, end: number): void {
         if (this.mode === 'multiple') {
             this.selection.clear();
@@ -78,7 +72,6 @@ export class WakSelection implements SelectionInterface {
             this.selectedRows = this.selection.size;
         }
     }
-
 
     public getSelectedRows(): Array<number> {
         let array: Array<number> = [];
@@ -90,7 +83,6 @@ export class WakSelection implements SelectionInterface {
         return array;
     }
 
-
     public setSelectedRows(newRows: Array<number>): void {
         if (this.selectedRows > 0) {
             this.selection.clear();
@@ -101,11 +93,9 @@ export class WakSelection implements SelectionInterface {
         this.selectedRows = this.selection.size;
     }
 
-
     public getmode(): string {
         return this.mode;
     }
-
 
     public reset(): void {
         if (this.selectedRows > 0) {
@@ -116,11 +106,9 @@ export class WakSelection implements SelectionInterface {
         this.selectedRows = this.selection.size;
     }
 
-
     public trigger(): void {
         this.source.__triggerEvent('selection_changed');
     }
-
 
     public toggle(): void {
         let length = this.source.collection.length;
@@ -134,7 +122,6 @@ export class WakSelection implements SelectionInterface {
         this.selectedRows = this.selection.size;
         this.trigger();
     }
-
 
     public prepareToSend(): any {
         interface ResultSet {
@@ -177,12 +164,10 @@ export class WakSelection implements SelectionInterface {
                 }
             }
 
-
         });
 
         return result;
     }
-
 
     public setSelectionFromServer(selection: any) {
         this.selection.clear();
@@ -201,6 +186,5 @@ export class WakSelection implements SelectionInterface {
             this.selection.delete(row);
         });
     }
-
 
 }

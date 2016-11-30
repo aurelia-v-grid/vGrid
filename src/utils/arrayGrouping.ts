@@ -1,26 +1,19 @@
 import {Entity} from '../interfaces'; // todo make a interface
 
-
 export class ArrayGrouping {
   private groups: Array<Array<Entity>>;
   private grouping: Array<string>;
   private expanded: Set<string>;
 
   constructor() {
-
     this.grouping = [];
     this.expanded = new Set([]);
-
-
   }
-
 
   // @params grouping : ["attribute", "attribute2"  etc etc ])
   public group(arrayToGroup: Array<Entity>, grouping: Array<string>, keepExpanded?: boolean) {
 
     if (grouping.length > 0) {
-
-
       // temp holder for groups as we create them
       if (!keepExpanded) {
         this.expanded = new Set([]);
@@ -64,11 +57,9 @@ export class ArrayGrouping {
 
   }
 
-
   public getGrouping() {
     return this.grouping;
   }
-
 
   public expand(id: string, array?: Set<string>) {
     let all = id ? false : true; // if no id, then all
@@ -130,7 +121,6 @@ export class ArrayGrouping {
 
     return collection;
   }
-
 
   public collapse(id: string) {
     let all = id ? false : true; // if no id, then all
@@ -222,7 +212,6 @@ export class ArrayGrouping {
 
     return tempGroupArray;
   }
-
 
   private groupChildren(childGroupArray: Array<Entity>, groupBy: string, groupNo: number) {
     let tempGroupArray: Array<Entity> = [];

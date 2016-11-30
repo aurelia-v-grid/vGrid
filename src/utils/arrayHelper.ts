@@ -24,7 +24,6 @@ export class ArrayHelper {
     addToCurrentSort?: boolean
     ): {fixed: Array<Entity>, full: Array<Entity>} {
 
-
     let grouping = this.getGrouping();
     let result: {fixed: Array<Entity>, full: Array<Entity>} = {
       fixed: null,

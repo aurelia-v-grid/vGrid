@@ -2,7 +2,6 @@ import { inject, noView, customElement, processContent, TargetInstruction } from
 import { VGrid } from './v-grid';
 import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
-
 @noView()
 @customElement('v-grid-row-repeat')
 @processContent((
@@ -50,12 +49,10 @@ export class VGridElementRowRepeat {
 
   }
 
-
   public bind(): void {
     this.vGrid.colRepeater = true;
     this.vGrid.colRepeatRowTemplate = this.rowTemplate;
     this.vGrid.colRepeatRowHeaderTemplate = this.headerTemplate;
   }
-
 
 }

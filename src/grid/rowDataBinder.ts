@@ -16,7 +16,6 @@ export class RowDataBinder {
     this.addEventListener();
   }
 
-
   private addEventListener(): void {
     this.rebindRowBinded = this.rebindRow.bind(this);
     this.rebindAllRowsBinded = this.rebindAllRows.bind(this);
@@ -30,14 +29,12 @@ export class RowDataBinder {
     this.element.removeEventListener('avg-rebind-all-rows', this.rebindAllRowsBinded);
   }*/
 
-
   private rebindRow(event: CustomEvent): void {
     let currentRow = event.detail.currentRow;
     let rowCache: RowCache = event.detail.rowCache;
     let downScroll = event.detail.downScroll;
 
     let bindingContext = rowCache.bindingContext;
-
 
     this.controller.getElement(currentRow, downScroll, (data: BindingContext) => {
 
@@ -94,7 +91,6 @@ export class RowDataBinder {
     });
   }
 
-
   private rebindAllRows(event: CustomEvent): void {
 
     let rowCache: Array<RowCache> = event.detail.rowCache;
@@ -113,7 +109,6 @@ export class RowDataBinder {
             rowCache[i].isGroup = false;
           }
         }
-
 
         // todo clean up...
         let isSelected = data.selection.isSelected(rowCache[i].row);

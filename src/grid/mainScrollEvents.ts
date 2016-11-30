@@ -126,7 +126,6 @@ export class MainScrollEvents {
     e.preventDefault();
   }
 
-
   private handleEventWheelScroll(newTopPosition: number): void {
     requestAnimationFrame(() => {
       if (this.timerWheel) {
@@ -151,7 +150,6 @@ export class MainScrollEvents {
 
     });
   }
-
 
   private handleEventVhandle(): void {
 

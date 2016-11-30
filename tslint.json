@@ -18,7 +18,7 @@
     "interface-name": [true, "never-prefix"],
     "no-shadowed-variable": false,
     "no-string-literal": false,
-    "trailing-comma": false,
+    "trailing-comma": [],
     "variable-name": false,
     "member-ordering": [true, { "order": "fields-first" }]
   }

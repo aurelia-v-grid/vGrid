@@ -177,7 +177,6 @@ export class RowScrollEvents {
       currentRowTop = currentRowTop + rowHeight;
     };
 
-
     // for setting before (when hitting bottom)
     let setBefore = (no: number) => {
       let row = this.rowCache[no];

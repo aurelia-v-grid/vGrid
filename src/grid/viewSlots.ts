@@ -9,7 +9,6 @@ import {
   SelectionInterface
 } from '../interfaces';
 
-
 export class ViewSlots {
   public leftRowViewSlots: Array<ViewSlot>;
   public mainRowViewSlots: Array<ViewSlot>;
@@ -24,7 +23,6 @@ export class ViewSlots {
   public groupingViewSlots: Array<ViewSlot>;
   private rowCache: Array<RowCache>;
   private headerCache: HeaderCache;
-
 
   // plan was to keep all viewslots here so i can bind/unbind... but...
   constructor(htmlCache: HtmlCache) {
@@ -49,7 +47,10 @@ export class ViewSlots {
 
   }
 
-  public bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext, curSelection: SelectionInterface): void {
+  public bindAndAttachColumns(
+    overrideContext: OverrideContext,
+    columnBindingContext: ColumnBindingContext,
+    curSelection: SelectionInterface): void {
 
     let context: BindingContext;
 
@@ -57,7 +58,6 @@ export class ViewSlots {
       bindingContext: columnBindingContext,
       parentOverrideContext: overrideContext
     };
-
 
     for (let i = 0; i < this.rowCache.length; i++) {
       // one for each row.
@@ -82,9 +82,7 @@ export class ViewSlots {
       this.groupRowViewSlots[i].attached();
     }
 
-
-
-    context = ({selection: curSelection} as BindingContext);
+    context = ({ selection: curSelection } as BindingContext);
     this.headerCache.bindingContext = context;
     this.headerCache.parentOverrideContext = {
       bindingContext: context,
@@ -101,7 +99,6 @@ export class ViewSlots {
     this.rightHeaderViewSlot.attached();
 
   }
-
 
   public unbindAndDetachColumns(): void {
     for (let i = 0; i < this.groupRowViewSlots.length; i++) {
@@ -155,6 +152,5 @@ export class ViewSlots {
     this.mainHeaderViewSlot = null;
     this.rightHeaderViewSlot = null;
   }
-
 
 }

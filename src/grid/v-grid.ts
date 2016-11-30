@@ -23,7 +23,6 @@ import {
     OverrideContext
 } from '../interfaces';
 
-
 export class VGrid {
     public static inject = [Element, ViewCompiler, Container, ViewResources, TaskQueue];
     public element: Element;
@@ -62,9 +61,6 @@ export class VGrid {
     public filterOperatorNames: any;
     public filterOperatorTranslationKeys: any;
 
-
-
-
     @bindable({ attribute: 'v-row-height' }) public attRowHeight: number;
     @bindable({ attribute: 'v-header-height' }) public attHeaderHeight: number;
     @bindable({ attribute: 'v-footer-height' }) public attFooterHeight: number;
@@ -78,16 +74,12 @@ export class VGrid {
     @bindable({ attribute: 'v-i18n' }) public attI18N: Function;
     @bindable({ attribute: 'v-data-delay' }) public attDataDelay: number;
 
-
-
-
     constructor(
         element: Element,
         viewCompiler: ViewCompiler,
         container: Container,
         viewResources: ViewResources,
         taskQueue: TaskQueue) {
-
 
         this.element = element;
         this.viewCompiler = viewCompiler;
@@ -111,8 +103,6 @@ export class VGrid {
 
         // to know if new or hidden by "if"
         this.newGrid = true;
-
-
 
         // create our classes
         this.controller = new Controller(this);
@@ -175,22 +165,21 @@ export class VGrid {
             '!*': 'does not contain',   // 8
             '*=': 'begins with',        // 9
             '=*': 'ends with'           // 10
-            };
+        };
 
         this.filterOperatorTranslationKeys = {
-             equals: '=',
-             lessThanOrEqual: '<=',
-             greaterThanOrEqual: '>=',
-             lessThan: '<',
-             greaterThan: '>',
-             contains: '*',
-             notEqualTo: '!=',
-             doesNotContain: '!*',
-             beginsWith: '*=',
-             endsWith: '=*'
-            };
+            equals: '=',
+            lessThanOrEqual: '<=',
+            greaterThanOrEqual: '>=',
+            lessThan: '<',
+            greaterThan: '>',
+            contains: '*',
+            notEqualTo: '!=',
+            doesNotContain: '!*',
+            beginsWith: '*=',
+            endsWith: '=*'
+        };
     }
-
 
     public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
 
@@ -213,7 +202,6 @@ export class VGrid {
 
     }
 
-
     public unbind(): void {
 
         // if unbined we want to know if its new time ( I prb should have more code in created event... to late...)
@@ -224,9 +212,7 @@ export class VGrid {
 
         // todo: should I bind the main, grouping and loading screen here?
         // not unless I let users put custom html into those I can see why to bother atm
-
     }
-
 
     public attached(): void {
 
@@ -279,6 +265,5 @@ export class VGrid {
         }
         return value;
     }
-
 
 }

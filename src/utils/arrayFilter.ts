@@ -1,4 +1,4 @@
-import {FilterOperators, FilterObject, Entity} from '../interfaces'; // todo make a interface
+import { FilterOperators, FilterObject, Entity } from '../interfaces'; // todo make a interface
 
 export class ArrayFilter {
   private filterOperators: FilterOperators;
@@ -10,25 +10,20 @@ export class ArrayFilter {
 
   }
 
-
   public getLastFilter() {
     return this.lastFilter;
   }
 
-
   public runQueryOn(objArray: Array<Entity>, ObjFilter: Array<FilterObject>) {
 
     // my operators
-   // let filterOperatorTable = this.filterOperators.getOperatorNo();
-
+    // let filterOperatorTable = this.filterOperators.getOperatorNo();
 
     let resultArray = objArray.filter((data) => {
-
 
       // lets have true as default, so all that should not be there we set false..
       let result = true;
       ObjFilter.forEach((x: FilterObject) => {
-
 
         // vars
         let rowValue: any;
@@ -36,22 +31,19 @@ export class ArrayFilter {
         let filterOperator = this.filterOperators.getOperatorNo(x.operator);
         let newFilterOperator: any;
 
-
         // helper for boolean
-        let typeBool: {true: boolean, false: boolean, [key: string]: any} = {
+        let typeBool: { true: boolean, false: boolean, [key: string]: any } = {
           true: true,
           false: false
         };
 
-
         // set defult type
         let type: string;
         try {
-          type = typeof(data[x.attribute]);
+          type = typeof (data[x.attribute]);
         } catch (e) {
           type = 'string';
         }
-
 
         // lets set som defaults
         switch (type) {
@@ -62,7 +54,6 @@ export class ArrayFilter {
             if (filterOperator === 6) {
               filterOperator = 1;
             }
-
             break;
           case 'string':
             rowValue = data[x.attribute].toLowerCase();
@@ -78,7 +69,6 @@ export class ArrayFilter {
               filterValue = filterValue.substr(1, filterValue.length);
             }
 
-
             // if filter operator is EQUAL TO
             // wildcard first = end with
             if (x.value.charAt(0) === '*' && filterOperator === 1) {
@@ -86,43 +76,37 @@ export class ArrayFilter {
               filterValue = filterValue.substr(1, filterValue.length);
             }
 
-
             // wildcard end and first = contains
             if (x.value.charAt(x.value.length - 1) === '*' && filterOperator === 1 && newFilterOperator === 10) {
               newFilterOperator = 6;
               filterValue = filterValue.substr(0, filterValue.length - 1);
             }
 
-
             // begin with since wildcard is in the end
-            if (x.value.charAt(x.value.length - 1) === '*' && filterOperator === 1 && newFilterOperator !== 10 && newFilterOperator !== 6) {
+            if (x.value.charAt(x.value.length - 1) === '*'
+              && filterOperator === 1
+              && newFilterOperator !== 10
+              && newFilterOperator !== 6) {
               newFilterOperator = 9;
               filterValue = filterValue.substr(0, filterValue.length - 1);
             }
-
 
             // set the filteroperator from new if changed
             if (filterOperator !== newFilterOperator) {
               filterOperator = newFilterOperator;
             }
             break;
-
-
           case 'boolean':
             rowValue = data[x.attribute];
             filterValue = typeBool[x.value];
             filterOperator = 1;
             break;
-
-
           case 'object':
             rowValue = data[x.attribute].toISOString();
             filterValue = new Date(x.value).toISOString(); // todo, this needs to be better...
             filterOperator = filterOperator || 2;
             break;
-
-
-          default :
+          default:
             // todo: take the stuff under equal to and put in a function 
             // and also call i from here.. or just make it fail?
             try {
@@ -138,7 +122,6 @@ export class ArrayFilter {
             filterOperator = filterOperator || 1;
             break;
         }
-
 
         // filter from what operator used
         switch (filterOperator) {
@@ -192,7 +175,7 @@ export class ArrayFilter {
               result = false;
             }
             break;
-          default :
+          default:
             if (rowValue !== filterValue) {
               result = false;
             }
@@ -203,15 +186,10 @@ export class ArrayFilter {
           }
         }
 
-
       }); // end foreach obj
       return result;
 
     });
     return resultArray;
   }
-
-
 }
-
-

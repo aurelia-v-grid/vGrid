@@ -24,7 +24,6 @@ export class WakEntity {
 
     }
 
-
     public __setGetterSetters() {
         let attributeArray = [];
         for (let k in this.__attributes) {
@@ -67,8 +66,6 @@ export class WakEntity {
                                         this.__isModified = this.modifiedAttributes.length > 0 || this.__isNew; ;
                                         this.__modified[attributeName] = undefined;
                                     }
-
-
 
                                     break;
                                 case 'bool':
@@ -230,7 +227,7 @@ export class WakEntity {
                             this.__values[attributeName] = value;
                         }
                     } catch (err) {
-                        console.log('catch setter entity');
+                        console.warn('catch setter entity');
                     }
                 },
                 get: () => {
@@ -239,7 +236,6 @@ export class WakEntity {
             });
         });
     }
-
 
     public bindWithKey(attributeName: string, key: any) {
         // now it should be possible to just set a object to it as long as it contains __KEY
@@ -255,7 +251,6 @@ export class WakEntity {
             }
         }
     }
-
 
     public __checkBool(value: any) {
         if (value == null || value === undefined) {
@@ -275,7 +270,6 @@ export class WakEntity {
         }
         return value;
     }
-
 
     public __convert(attributeName: string, value: any) {
         let returnValue = value;
@@ -327,14 +321,13 @@ export class WakEntity {
                     //
                     break;
                 default:
-                    // console.log("storage type missing")
+                    // console.warn("storage type missing")
             }
             return returnValue;
         } catch (err) {
-            console.log('catch setter entity');
+            console.warn('catch setter entity');
         }
     }
-
 
     public __setDefaults(data: any) {
 
@@ -380,7 +373,6 @@ export class WakEntity {
 
     }
 
-
     public __getUnsaved(returnKey: any) {
         let changeObject: any = {};
 
@@ -400,15 +392,11 @@ export class WakEntity {
             changeObject.__KEY = this.__KEY;
         }
 
-
         return changeObject;
     }
 
-
     public __update(data: any) {
-
         this.__setDefaults(data);
-
         // if no key, then this does not exist on server side any more
         if (!data.__KEY) {
             this.__original = {};
@@ -421,12 +409,9 @@ export class WakEntity {
         }
     }
 
-
     public __refreshOnly(data: any) {
         this.__KEY = data.__KEY;
         this.__STAMP = data.__STAMP;
-
-
         for (let k in this.__attributes) {
             if (data[k]) {
                 this.__values[k] = this.__convert(k, data[k]);
@@ -434,7 +419,6 @@ export class WakEntity {
             } else {
                 this.__values[k] = null;
             }
-
         }
 
         if (this.__KEY === -1 && !this.__isNew) {
@@ -442,7 +426,5 @@ export class WakEntity {
         } else {
             this.__isEntity = true;
         }
-
     }
-
 }

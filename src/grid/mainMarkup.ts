@@ -10,7 +10,6 @@ import {
   HtmlHeightWidth
 } from '../interfaces';
 
-
 export class MainMarkup {
   private element: Element;
   private viewCompiler: ViewCompiler;
@@ -40,7 +39,6 @@ export class MainMarkup {
 
   }
 
-
   public generateMainMarkup(): void {
 
     this.viewFactory = this.viewCompiler.compile(
@@ -58,6 +56,5 @@ export class MainMarkup {
     this.viewSlots.mainViewSlot.attached();
 
   }
-
 
 }

@@ -2,7 +2,6 @@ import { inject, noView, customElement, processContent, TargetInstruction } from
 import { VGrid } from './v-grid';
 import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
-
 @noView()
 @customElement('v-grid-group-row')
 @processContent((
@@ -32,10 +31,8 @@ export class VGridGroupRow {
 
   }
 
-
   public bind(): void {
     this.vGrid.colGroupRow = this.rowTemplate;
   }
-
 
 }

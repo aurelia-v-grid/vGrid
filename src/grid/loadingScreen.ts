@@ -2,7 +2,6 @@ import { ViewSlot } from 'aurelia-framework';
 import { ViewCompiler, Container, ViewResources, ViewSlots } from '../interfaces';
 import { OverrideContext } from '../interfaces';
 
-
 export class LoadingScreen {
   private element: Element;
   private viewSlots: ViewSlots;
@@ -12,7 +11,6 @@ export class LoadingScreen {
   private loading: boolean;
   private loadingMessage: string;
   private overrideContext: OverrideContext;
-
 
   constructor(
     element: Element,
@@ -49,7 +47,6 @@ export class LoadingScreen {
       '</template>',
       this.viewResources);
 
-
     let view = viewFactory.create(this.container);
     let loadingScreenViewSlot = new ViewSlot(this.element, true);
     loadingScreenViewSlot.add(view);
@@ -64,7 +61,6 @@ export class LoadingScreen {
     this.viewSlots.loadingScreenViewSlot = loadingScreenViewSlot;
   }
 
-
   public enable(msg?: string, collectionLength?: number): Promise<any> {
     return new Promise((resolve: Function) => {
       this.loading = collectionLength ? collectionLength > 10000 ? true : false : false;
@@ -74,7 +70,6 @@ export class LoadingScreen {
       });
     });
   }
-
 
   public disable(): Promise<any> {
     return new Promise((resolve: Function) => {

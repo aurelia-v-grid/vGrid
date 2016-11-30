@@ -19,27 +19,22 @@ export class WakGridConnector implements GridConnectorInterface {
     private curSort: Array<any> = [];
     private lastFilter: Array<any> = [];
 
-
     constructor(datasource?: WakDataSource) {
         // depending on source you can add on creation if datasource is there, else use set datasource
         this.datasource = datasource;
     }
 
-
     public getSelection(): SelectionInterface {
         return this.datasource.selection;
     }
-
 
     public getCurrentOrderBy(): Array<any> {
         return this.curSort;
     }
 
-
     public getCurrentFilter(): Array<FilterObject> {
         return this.lastFilter;
     }
-
 
     public expandGroup(id: string): void {
         console.warn('not usable in wak datasource');
@@ -47,13 +42,11 @@ export class WakGridConnector implements GridConnectorInterface {
         id = null;
     }
 
-
     public collapseGroup(id: string): void {
         console.warn('not usable in wak datasource');
         // not usable in wak datasource
         id = null;
     }
-
 
     public getDatasourceLength() {
         if (this.datasource) {
@@ -63,7 +56,6 @@ export class WakGridConnector implements GridConnectorInterface {
         }
     }
 
-
     public connect(controller: ControllerInterface, create: Function): void {
         this.controller = controller;
         this.createGrid = create;
@@ -72,7 +64,6 @@ export class WakGridConnector implements GridConnectorInterface {
         }
     }
 
-
     public gridCreated(): void {
         if (this.datasource) {
             this.controller.updateHeights();
@@ -80,7 +71,6 @@ export class WakGridConnector implements GridConnectorInterface {
             this.eventHandler('collectionChange');
         }
     }
-
 
     public setDatasource(datasource: any, errorHandler?: any, setHeight?: any, setSort?: any) {
         // fix later, do this to get ts to stop complaining
@@ -98,27 +88,22 @@ export class WakGridConnector implements GridConnectorInterface {
 
     }
 
-
     public destroy() {
         this.datasource.removeEventListener(this.eventListenerID);
     }
-
 
     public getColConfig(): Array<ColConfig> {
         return this.controller.getColumnConfig();
     }
 
-
     public setColConfig(colconfig: Array<ColConfig>): void {
         this.controller.setColumnConfig(colconfig);
     }
-
 
     public getGrouping(): Array<string> {
         // not implemeted in wak datasource
         return []; // this.datasource.getGrouping();
     }
-
 
     public group(grouping: Array<string>, keepExpanded?: boolean): void {
         console.warn('not usable in wak datasource');
@@ -127,13 +112,11 @@ export class WakGridConnector implements GridConnectorInterface {
         keepExpanded = false;
     }
 
-
     public select(row: any) {
         if (this.datasource) {
             this.datasource.select(row);
         }
     }
-
 
     public getElement(options: { row: number, isDown: boolean, callback: Function }) {
         // send back emty object so we clear cell.
@@ -167,7 +150,6 @@ export class WakGridConnector implements GridConnectorInterface {
         }
     }
 
-
     public query(filterObj: Array<FilterObject>): void {
 
         // set last filter for later usage
@@ -191,7 +173,6 @@ export class WakGridConnector implements GridConnectorInterface {
         });
     }
 
-
     public orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
 
         // get last sort
@@ -211,13 +192,11 @@ export class WakGridConnector implements GridConnectorInterface {
         });
     }
 
-
     public setValueToRow(attribute: any, value: any, row: any) {
         if (this.datasource) {
             this.datasource.collection.setValueToRow(attribute, value, row);
         }
     }
-
 
     private eventHandler(event: string): void {
         switch (event) {
@@ -263,11 +242,10 @@ export class WakGridConnector implements GridConnectorInterface {
                 this.controller.setLoadingScreen(false);
                 break;
             default:
-                console.log('unknown event');
-                console.log(event);
+                console.warn('unknown event');
+                console.warn(event);
         }
     }
-
 
     private raiseEvent(name: string, data = {}): void {
         let event = new CustomEvent(name, {
@@ -278,7 +256,6 @@ export class WakGridConnector implements GridConnectorInterface {
             this.controller.element.dispatchEvent(event);
         }
     }
-
 
     private getRowProperties(obj: { [key: string]: any }): {} {
         let x: { [key: string]: any } = {};
@@ -295,12 +272,9 @@ export class WakGridConnector implements GridConnectorInterface {
         return x;
     }
 
-
     /************************************************************
      *   Helper function, not called by grid, but use them to convert the query/filter params
      */
-
-
     private createOrderByString(orderByArray: any) {
         let sortArray: Array<any> = [];
         if (orderByArray) {
@@ -315,7 +289,6 @@ export class WakGridConnector implements GridConnectorInterface {
             return null;
         }
     }
-
 
     private createQueryString(queryArray: any) {
         if (queryArray) {
@@ -367,7 +340,6 @@ export class WakGridConnector implements GridConnectorInterface {
         }
     }
 
-
     private setOrderBy(param: SortObject | any, add?: boolean): void {
         let sort: any;
         let useSetValue = false;
@@ -384,15 +356,12 @@ export class WakGridConnector implements GridConnectorInterface {
             useSetValue = true;
         }
 
-
         // do we add or is it the first one
         if (add && this.lastSort.length > 0) {
-
 
             // its adding, so lets get last one
             this.curSort = this.lastSort;
             let exist = false;
-
 
             // loop to se if it exist from before
             this.curSort.forEach((x) => {
@@ -405,17 +374,13 @@ export class WakGridConnector implements GridConnectorInterface {
 
             });
 
-
             // if it dont exist we add it, else there isnt anythin else to do for now
             if (!exist) {
                 this.curSort.push(sort);
                 this.curSort[this.curSort.length - 1].no = this.curSort.length;
             }
             this.lastSort = this.curSort;
-
-
         } else {
-
             // if not adding, just set it
             this.curSort = [sort];
             this.curSort[0].no = 1;
@@ -431,5 +396,4 @@ export class WakGridConnector implements GridConnectorInterface {
             this.lastSort = this.curSort;
         }
     }
-
 }

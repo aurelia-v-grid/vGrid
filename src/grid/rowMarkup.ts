@@ -9,17 +9,10 @@ export class RowMarkup {
   private group: Element;
   private rowHeight: number;
 
-
-
-
   constructor(element: Element, htmlCache: HtmlCache) {
     this.element = element;
     this.htmlCache = htmlCache;
   }
-
-
-
-
 
   public init(rowHeight: number): void {
     this.rowHeight = rowHeight;
@@ -27,14 +20,12 @@ export class RowMarkup {
     this.generateRows();
   }
 
-
   private generateRows(): void {
 
     let markupLeft = '';
     let markupMain = '';
     let markupRight = '';
     let markupGroup = '';
-
 
     for (let i = 0; i < 40; i++) { // <- rows here will impact creation time
 
@@ -58,7 +49,6 @@ export class RowMarkup {
           row="${i}">
         </avg-row>`;
 
-
       markupLeft = markupLeft + avgRowMarkup;
       markupMain = markupMain + avgRowMarkup;
       markupRight = markupRight + avgRowMarkup;
@@ -72,12 +62,10 @@ export class RowMarkup {
 
   }
 
-
   private updateInternalHtmlCache(): void {
     this.left = this.htmlCache.avg_content_left_scroll;
     this.main = this.htmlCache.avg_content_main_scroll;
     this.right = this.htmlCache.avg_content_right_scroll;
     this.group = this.htmlCache.avg_content_group_scroll;
   }
-
 }

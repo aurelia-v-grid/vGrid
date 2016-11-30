@@ -15,8 +15,8 @@ export { WakSelection } from './wakSelection';
 import { WakSelection } from './wakSelection';
 
 export interface RequestOptions {
-    body: any;
-    method: any;
+  body: any;
+  method: any;
 }
 
 export interface ControllerInterface {
@@ -29,7 +29,6 @@ export interface ControllerInterface {
   getColumnConfig(): Array<ColConfig>;
   setColumnConfig(colConfig: Array<ColConfig>): void;
 }
-
 
 export interface Entity {
   [key: string]: any;
@@ -76,8 +75,6 @@ export interface SelectionInterface {
   setSelectedRows(newRows: Array<number>): void;
   reset(): void;
 }
-
-
 
 // only included what the grid classes is asking for, not datasource etc.
 export interface GridConnectorInterface {

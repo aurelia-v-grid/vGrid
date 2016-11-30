@@ -4,12 +4,10 @@ export class ArraySort {
   private lastSort: Array<SortObject>;
   private curSort: Array<SortObject>;
 
-
   constructor() {
     this.lastSort = [];
     this.curSort = [];
   }
-
 
   public reset(): void {
     this.lastSort = [];
@@ -38,15 +36,12 @@ export class ArraySort {
       useSetValue = true;
     }
 
-
     // do we add or is it the first one
     if (add && this.lastSort.length > 0) {
-
 
       // its adding, so lets get last one
       this.curSort = this.lastSort;
       let exist = false;
-
 
       // loop to se if it exist from before
       this.curSort.forEach((x) => {
@@ -59,14 +54,12 @@ export class ArraySort {
 
       });
 
-
       // if it dont exist we add it, else there isnt anythin else to do for now
       if (!exist) {
         this.curSort.push(sort);
         this.curSort[this.curSort.length - 1].no = this.curSort.length;
       }
       this.lastSort = this.curSort;
-
 
     } else {
 
@@ -86,11 +79,9 @@ export class ArraySort {
     }
   }
 
-
   public getOrderBy(): Array<SortObject> {
     return this.curSort;
   }
-
 
   public getValue(attribute: string, obj: any): any {
     let arr: Array<any> = attribute.split('.');
@@ -108,9 +99,7 @@ export class ArraySort {
     return tempValue;
   }
 
-
   public runOrderbyOn(array: Array<Entity>): void {
-
 
     // super simple for now.. atleast I have som form for sort
     let thisSort = this.getOrderBy();

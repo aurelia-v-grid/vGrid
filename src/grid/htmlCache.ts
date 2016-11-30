@@ -1,7 +1,5 @@
 import { RowCache, HeaderCache } from '../interfaces';
 
-
-
 export class HtmlCache {
     public element: Element | HTMLElement;
     public avg_top_panel: Element | HTMLElement;
@@ -30,7 +28,6 @@ export class HtmlCache {
     public avg_group_rows: NodeListOf<any>;
     public rowCache: Array<RowCache>;
     public headerCache: HeaderCache;
-
 
     constructor(element: Element) {
 
@@ -61,7 +58,6 @@ export class HtmlCache {
         this.avg_content_hhandle = null;
         this.avg_content_hhandle_scroll = null;
 
-
         this.avg_left_rows = null;
         this.avg_main_rows = null;
         this.avg_right_rows = null;
@@ -80,9 +76,7 @@ export class HtmlCache {
             rightRowViewSlot: null,
             groupRowViewSlot: null
         } as HeaderCache);
-
     }
-
 
     public updateRowsMarkup(): void {
         this.avg_left_rows = this.avg_content_left_scroll.getElementsByTagName('avg-row');
@@ -90,7 +84,6 @@ export class HtmlCache {
         this.avg_right_rows = this.avg_content_right_scroll.getElementsByTagName('avg-row');
         this.avg_group_rows = this.avg_content_group_scroll.getElementsByTagName('avg-row');
     }
-
 
     public updateMainMarkup(): void {
         this.avg_top_panel = this.element.getElementsByTagName('avg-top-panel')[0];
@@ -127,6 +120,5 @@ export class HtmlCache {
         this.avg_content_hhandle_scroll = this.element.getElementsByTagName('avg-content-hhandle-scroll')[0];
 
     }
-
 
 }

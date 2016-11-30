@@ -2,7 +2,6 @@ import { inject, noView, customElement, processContent, TargetInstruction } from
 import { VGrid } from './v-grid';
 import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
-
 @noView()
 @customElement('v-grid-contextmenu')
 @processContent((
@@ -61,7 +60,6 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
     instruction.menuTemplates.all = templateHTML;
   }
 
-
   element.innerHTML = '';
 
 })
@@ -77,10 +75,8 @@ export class VGridContextmenu {
     this.customMenuTemplates = targetInstruction.elementInstruction.menuTemplates;
   }
 
-
   public bind(): void {
     this.vGrid.customMenuTemplates = this.customMenuTemplates;
   }
-
 
 }

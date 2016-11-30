@@ -18,5 +18,3 @@ export function configure(config: any) {
     prefix + '/v-grid'
   );
 }
-
-

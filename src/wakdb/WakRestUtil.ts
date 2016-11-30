@@ -8,7 +8,6 @@ export class WakRestUtil {
         // todo
     }
 
-
     public orderByArgsToString(orderby: any): any {
         let retString = '';
         if (typeof orderby === 'string') {
@@ -23,9 +22,6 @@ export class WakRestUtil {
 
         return retString;
     };
-
-
-
 
     public generateRestString(url: any, options: any): any {
 
@@ -207,8 +203,5 @@ export class WakRestUtil {
         }
 
         return url;
-
     }
-
-
 }

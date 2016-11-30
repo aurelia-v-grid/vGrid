@@ -45,7 +45,6 @@ export class HtmlHeightWidth {
   public attFooterHeight: number;
   public attPanelHeight: number;
 
-
   constructor() {
 
     this.avgScrollBarWidth = this.getScrollbarWidth() || 17;
@@ -57,7 +56,6 @@ export class HtmlHeightWidth {
 
     this.avgContent_Top = 30;
     this.avgContent_Bottom = 30;
-
 
     this.avgHeaderLeft_Width = 200;
 
@@ -92,7 +90,6 @@ export class HtmlHeightWidth {
     this.avgContentGroup_Top = 0;
     this.avgContentGroup_Bottom = 0;
 
-
     this.avgContentVhandle_Width = 0 + this.avgScrollBarWidth;
     this.avgContentVhandle_Height = 0;
     this.avgContentVhandle_Top = 0;
@@ -108,7 +105,6 @@ export class HtmlHeightWidth {
     this.avgFooter_Height = 30;
   }
 
-
   public setCollectionLength(length: number): void {
     let total = length * this.attRowHeight;
     this.avgContentRightScroll_Height = total + this.avgScrollBarWidth;
@@ -118,13 +114,11 @@ export class HtmlHeightWidth {
     this.avgContentLeftScroll_Height = total + this.avgScrollBarWidth;
   }
 
-
   public addDefaultsAttributes(
     attHeaderHeight: number,
     attRowHeight: number,
     attFooterHeight: number,
     attPanelHeight: number): void {
-
 
     this.attHeaderHeight = attHeaderHeight;
     this.attRowHeight = attRowHeight;
@@ -149,12 +143,10 @@ export class HtmlHeightWidth {
     this.avgContentHhandle_Height = this.avgScrollBarWidth;
   }
 
-
   public adjustWidthsColumns(columnBindingContext: ColumnBindingContext, groupsLength: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
     let main = 0;
     let right = 0;
-
 
     for (let i = 0; i < columnBindingContext.setupmain.length; i++) {
       if (columnBindingContext.setupleft[i].show) {
@@ -186,7 +178,6 @@ export class HtmlHeightWidth {
     this.avgContentHhandle_Left = left;
     this.avgContentHhandleScroll_Width = main;
   }
-
 
   public setWidthFromColumnConfig(colConfig: Array<ColConfig>, groupsLength?: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
@@ -231,7 +222,6 @@ export class HtmlHeightWidth {
     this.avgContentHhandleScroll_Width = main;
   }
 
-
   public getScrollbarWidth(): number {
     let outer = document.createElement('div');
     outer.style.visibility = 'hidden';
@@ -254,6 +244,5 @@ export class HtmlHeightWidth {
 
     return widthNoScroll - widthWithScroll;
   }
-
 
 }

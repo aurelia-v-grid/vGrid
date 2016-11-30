@@ -12,8 +12,6 @@ import {
   OverrideContext
 } from '../interfaces';
 
-
-
 export class ColumnMarkup {
   private element: Element;
   private htmlCache: HtmlCache;
@@ -43,9 +41,6 @@ export class ColumnMarkup {
   private groupRows: NodeListOf<Element>;
   private rowLength: number;
 
-
-
-
   constructor(
     element: Element,
     viewCompiler: ViewCompiler,
@@ -66,7 +61,6 @@ export class ColumnMarkup {
     this.viewResources = viewResources;
 
   }
-
 
   public init(
     colConfig: Array<ColConfig>,
@@ -91,10 +85,6 @@ export class ColumnMarkup {
     this.generateColumns();
   }
 
-
-
-
-
   private getRowViews(type: string): ViewFactory {
     let viewMarkup = '';
     let markupArray: Array<string> = [];
@@ -104,11 +94,11 @@ export class ColumnMarkup {
 
       // default markup
       let defaultMarkup: Array<string> = [
-         '<i click.delegate="changeGrouping(rowRef)">',
-         '<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">',
-         '<path show.bind="rowRef.__groupExpanded" d="M4.8 7.5h6.5v1H4.8z"/>',
-         '<path show.bind="!rowRef.__groupExpanded" d="M7.4 4.8v2.7H4.7v1h2.7v3h1v-3h2.8v-1H8.5V4.8h-1z"/>',
-         '</svg>',
+        '<i click.delegate="changeGrouping(rowRef)">',
+        '<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">',
+        '<path show.bind="rowRef.__groupExpanded" d="M4.8 7.5h6.5v1H4.8z"/>',
+        '<path show.bind="!rowRef.__groupExpanded" d="M7.4 4.8v2.7H4.7v1h2.7v3h1v-3h2.8v-1H8.5V4.8h-1z"/>',
+        '</svg>',
         '</i>&nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})',
       ];
 
@@ -165,7 +155,6 @@ export class ColumnMarkup {
       }
     }
 
-
     // this is the block that puches the column from left for grouping
     let groupingBlock = '';
     if (type === 'left') {
@@ -173,12 +162,8 @@ export class ColumnMarkup {
       class="avg-col-grouping" \
       css="left:0px;width:${rowRef.__groupLvl ? rowRef.__groupLvl *15:0}px"></avg-col>';
     }
-
-
     return this.viewCompiler.compile(`<template>${groupingBlock + viewMarkup}</template>`, this.viewResources);
-
   }
-
 
   private createColSetupContext(type: string): void {
 
@@ -212,7 +197,6 @@ export class ColumnMarkup {
 
   }
 
-
   private getHeaderViews(type: string): ViewFactory {
     let viewMarkup = '';
 
@@ -238,7 +222,6 @@ export class ColumnMarkup {
             break;
           default:
         }
-
 
         let template = this.colConfig[i].__colHeaderTemplateGenerated;
         let colMarkup = `<avg-col \
@@ -266,7 +249,6 @@ export class ColumnMarkup {
 
   }
 
-
   private generateColumns(): void {
 
     if (this.columnBindingContext.setupmain.length === 0) {
@@ -282,7 +264,6 @@ export class ColumnMarkup {
     let viewFactoryRight = this.getRowViews('right');
     let viewFactoryGroup = this.getRowViews('group');
 
-
     for (let i = 0; i < this.rowLength; i++) {
       this.viewSlots.leftRowViewSlots[i] = this.createViewSlot(this.leftRows[i], viewFactoryLeft);
       this.viewSlots.mainRowViewSlots[i] = this.createViewSlot(this.mainRows[i], viewFactoryMain);
@@ -294,29 +275,22 @@ export class ColumnMarkup {
       this.htmlCache.rowCache[i].groupRowViewSlot = this.viewSlots.groupRowViewSlots[i];
     }
 
-
     let viewFactoryHeaderLeft = this.getHeaderViews('left');
     let viewFactoryHeaderMain = this.getHeaderViews('main');
     let viewFactoryHeaderRight = this.getHeaderViews('right');
 
-
     this.viewSlots.leftHeaderViewSlot = this.createViewSlot(this.leftHeader, viewFactoryHeaderLeft);
     this.viewSlots.mainHeaderViewSlot = this.createViewSlot(this.mainHeader, viewFactoryHeaderMain);
     this.viewSlots.rightHeaderViewSlot = this.createViewSlot(this.rightHeader, viewFactoryHeaderRight);
-
   }
-
 
   private createViewSlot(element: Element, viewFactory: ViewFactory): ViewSlot {
 
     let view = viewFactory.create(this.container); // <<< time consumer, I should rebuild ?
     let viewSlot = new ViewSlot(element, true);
-
     viewSlot.add(view);
-
     return viewSlot;
   }
-
 
   private updateInternalHtmlCache(): void {
     this.leftScroll = this.htmlCache.avg_content_left_scroll;
@@ -328,15 +302,12 @@ export class ColumnMarkup {
     this.mainHeader = this.htmlCache.avg_header_main_scroll;
     this.rightHeader = this.htmlCache.avg_header_right;
 
-
     this.leftRows = this.htmlCache.avg_left_rows;
     this.mainRows = this.htmlCache.avg_main_rows;
     this.rightRows = this.htmlCache.avg_right_rows;
     this.groupRows = this.htmlCache.avg_group_rows;
 
-
     this.rowLength = this.leftRows.length;
   }
-
 
 }

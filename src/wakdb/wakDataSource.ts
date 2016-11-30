@@ -4,8 +4,6 @@ import { WakCollectionMethod } from './wakCollectionMethod';
 import { WakClassMethod } from './wakClassMethod';
 import { WakEntityMethod } from './wakEntityMethod';
 
-
-
 export class WakDataSource {
     public name: any;
     public classname: any;
@@ -32,8 +30,6 @@ export class WakDataSource {
     public entityMethods: any;
     public classMethods: any;
 
-
-
     constructor(restApi: any, sourceConfig: any) {
         this.name = sourceConfig.dataClass;
         this.classname = sourceConfig.dataClass;
@@ -52,8 +48,6 @@ export class WakDataSource {
         this.eventListenerID = [];
         this.eventListenerCount = 0;
 
-
-
         // request queue
         this.requests = [];
 
@@ -61,7 +55,6 @@ export class WakDataSource {
         this.collection = new WakCollection(this.attributes, this.restApi.baseURL);
         this.entity = null; // new Entity(null, this.attributes);
         this.selection = new WakSelection(this.multiSelect, this);
-
 
         // collection, class & entity method handlers
         this.methods = {};
@@ -76,7 +69,6 @@ export class WakDataSource {
             }
         }
 
-
         // datasource entity methods
         this.entityMethods = {};
         let em = restApi.classes[this.classname].entityMethods;
@@ -87,7 +79,6 @@ export class WakDataSource {
             }
         }
 
-
         // datasource class methods
         this.classMethods = {};
         let cm = restApi.classes[this.classname].dataClassMethods;
@@ -97,10 +88,7 @@ export class WakDataSource {
                 this.classMethods[k] = this.methods[k].execute.bind(this.methods[k]);
             }
         }
-
-
     }
-
 
     // queues the rest of the datasource calls so we dont hammer the server
     public __queueRequest(callBack: any, atOnce?: any) {
@@ -141,7 +129,6 @@ export class WakDataSource {
         }
     }
 
-
     public __stopAllRequest() {
         this.requests = [];
     }
@@ -150,16 +137,13 @@ export class WakDataSource {
         return this.selection;
     }
 
-
     public resetCurrentEntity() {
         this.entity = null;
     }
 
-
     public length(): number {
         return this.collection.length;
     }
-
 
     public addEventListener(fn: any) {
         this.eventListenerCount++;
@@ -167,7 +151,6 @@ export class WakDataSource {
         this.eventListenerID.push(this.eventListenerCount);
         return this.eventListenerCount;
     }
-
 
     public removeEventListener(id: any) {
         let row = this.eventListenerID.indexOf(id);
@@ -180,7 +163,6 @@ export class WakDataSource {
         }
     }
 
-
     public __triggerEvent(event: any) {
         this.eventListener.forEach((list) => {
             if (list) {
@@ -188,7 +170,6 @@ export class WakDataSource {
             }
         });
     }
-
 
     public all(options: any) {
         return new Promise((resolve, reject) => {
@@ -225,7 +206,6 @@ export class WakDataSource {
         });
     }
 
-
     public releaseEntitySet(entitySetUrl: any, options?: any) {
 
         options = options === undefined ? {} : options;
@@ -233,7 +213,6 @@ export class WakDataSource {
         let restString = this.restApi.generateRestString(entitySetUrl, {
             method: 'release'
         });
-
 
         this.restApi.callServer(restString).then(() => {
             this.__triggerEvent('entitysetRelease');
@@ -243,7 +222,6 @@ export class WakDataSource {
              });*/
         });
     }
-
 
     public query(queryString: string, options?: any) {
         return new Promise((resolve, reject) => {
@@ -256,7 +234,6 @@ export class WakDataSource {
                 let releaseEntitySet = options.releaseEntitySet;
                 let orderByArray = options.orderby || this.savedOrderby;
 
-
                 let restString = this.restApi.generateRestString(dataURI, {
                     top: options.override_pageSize || this.pageSize,
                     filter: queryString,
@@ -266,7 +243,6 @@ export class WakDataSource {
                     filterAttributes: options.override_filterAttributes || this.filterAttributes,
                     method: options.override_method || 'entityset'
                 });
-
 
                 this.restApi.callServer(restString).then((data: any) => {
                     let entitySet;
@@ -298,9 +274,7 @@ export class WakDataSource {
         });
     }
 
-
     public replaceCollection(collection: any, releaseOldEntityset: any) {
-
         let entitySet;
         if (releaseOldEntityset) {
             entitySet = this.collection.entityset;
@@ -311,7 +285,6 @@ export class WakDataSource {
         this.__triggerEvent('collectionChange');
     }
 
-
     public buildFromSelection(sel: any, options: any) {
         return new Promise((resolve, reject) => {
             this.__stopAllRequest();
@@ -319,11 +292,9 @@ export class WakDataSource {
             this.__queueRequest((done: any) => {
                 if (this.collection.entityset) {
 
-
                     options = options ? options : {};
                     let dataURI = this.collection.entityset;
                     let orderByArray = options.orderby || this.savedOrderby;
-
 
                     let restString = this.restApi.generateRestString(dataURI, {
                         skip: 0,
@@ -336,7 +307,6 @@ export class WakDataSource {
                         filterAttributes: options.override_filterAttributes || this.filterAttributes,
                         fromSelection: sel || this.selection.prepareToSend()
                     });
-
 
                     this.restApi.callServer(restString).then((data: any) => {
                         let tempCol = new WakCollection(this.attributes, this.dataURI);
@@ -375,7 +345,6 @@ export class WakDataSource {
 
     }
 
-
     public select(row: any) {
         return new Promise((resolve, reject) => {
             this.getElement(row).then((entity: any) => {
@@ -386,7 +355,6 @@ export class WakDataSource {
             });
         });
     }
-
 
     public getElement(row: any, options?: any, overrideCache?: any) {
         return new Promise((resolve, reject) => {
@@ -411,19 +379,16 @@ export class WakDataSource {
                             resolve(data);
                         } else {
 
-
                             options = options ? options : {};
                             rowToGet = overrideCache ? row : this.collection.getClosestPage(row, this.pageSize);
                             let dataURI = this.dataURI;
                             let method = 'entityset';
-
 
                             if (this.collection.entityset) {
                                 dataURI = this.collection.entityset;
                             } else {
                                 method = null;
                             }
-
 
                             let restString = this.restApi.generateRestString(dataURI, {
                                 skip: rowToGet,
@@ -432,7 +397,6 @@ export class WakDataSource {
                                 filterAttributes: options.override_method || this.filterAttributes,
                                 method: options.override_method || 'entityset'
                             });
-
 
                             this.restApi.callServer(restString).then((data: any) => {
                                 this.collection.add(data);
@@ -448,7 +412,6 @@ export class WakDataSource {
                                     });
                                 }
 
-
                             }).catch((err: any) => {
                                 done();
                                 reject({
@@ -462,7 +425,6 @@ export class WakDataSource {
         });
     }
 
-
     public orderby(orderByArray: any, options: any) {
         return new Promise((resolve, reject) => {
             this.__stopAllRequest();
@@ -470,7 +432,8 @@ export class WakDataSource {
             this.__queueRequest((done: any) => {
 
                 options = options ? options : {};
-                let dataURI = this.collection.entityset ? this.collection.entityset : this.dataURI + '/$entityset/' + this.__guid();
+                let dataURI = this.collection.entityset ?
+                    this.collection.entityset : this.dataURI + '/$entityset/' + this.__guid();
                 let releaseEntitySet = options.releaseEntitySet;
 
                 let restString = this.restApi.generateRestString(dataURI, {
@@ -484,7 +447,6 @@ export class WakDataSource {
                     filterAttributes: options.override_method || this.filterAttributes,
                     keepSelection: options.override_keepSelection || this.selection.prepareToSend()
                 });
-
 
                 this.restApi.callServer(restString).then((data: any) => {
 
@@ -527,7 +489,6 @@ export class WakDataSource {
         });
     }
 
-
     public clearCache(row: any) {
         return new Promise((resolve, reject) => {
             this.__stopAllRequest();
@@ -556,7 +517,6 @@ export class WakDataSource {
         });
     }
 
-
     public addNewElement() {
         this.collection.addRow().then(() => {
             this.selection.select(this.collection.length - 1, false);
@@ -564,7 +524,6 @@ export class WakDataSource {
             this.select(this.collection.length - 1);
         });
     }
-
 
     public __guid() {
         function s4() {
@@ -575,7 +534,6 @@ export class WakDataSource {
         let uuid = '' + s4() + '' + s4() + '' + s4() + '' + s4() + '' + s4() + '' + s4() + '' + s4() + '' + s4();
         return uuid.toUpperCase();
     }
-
 
     public saveCurrent(entityObject: any, options: any) {
         return new Promise((resolve, reject) => {
@@ -630,7 +588,7 @@ export class WakDataSource {
                                     entity.__update(err); // do I want to save anyway , should add option for this??
                                 }
                             } catch (e) {
-                                console.log('need to check save error... '); // just for testing
+                                console.warn('need to check save error... '); // just for testing
                             }
                             done();
                             reject({
@@ -663,7 +621,6 @@ export class WakDataSource {
         });
 
     }
-
 
     public refreshCurrent(entityObject: any, options: any) {
         return new Promise((resolve, reject) => {
@@ -699,8 +656,6 @@ export class WakDataSource {
 
                     this.restApi.callServer(restString, requestOptions).then((data: any) => {
 
-
-
                         // update key array and add to "$addToSet" so entityset can be updated
                         if (entity.__isNew) {
                             let newKeyIndex = this.collection.data.indexOf(entity);
@@ -712,9 +667,6 @@ export class WakDataSource {
                         done();
                         resolve(entity);
 
-
-
-
                     }).catch((err: any) => {
                         if (err.__ERROR) {
                             try {
@@ -722,8 +674,8 @@ export class WakDataSource {
                                     entity.__update(err); // do I want to save anyway , should add option for this??
                                 }
                             } catch (e) {
-                                console.log('refresh error'); // just for testing during development
-                                console.log(e);
+                                console.warn('refresh error'); // just for testing during development
+                                console.warn(e);
                             }
                         }
                         done();
@@ -741,7 +693,6 @@ export class WakDataSource {
 
     }
 
-
     public resetCollection() {
         this.__stopAllRequest();
         this.resetCurrentEntity();
@@ -749,7 +700,6 @@ export class WakDataSource {
         this.selection = new WakSelection(this.multiSelect, this);
         this.__triggerEvent('collectionChange');
     }
-
 
     public saveAll(options: any) {
         return new Promise((resolve, reject) => {
@@ -767,7 +717,6 @@ export class WakDataSource {
                         method: 'update'
                     });
 
-
                     let postData: Array<any> = [];
                     entities.forEach((entity: any) => {
                         let tempData = entity.__getUnsaved();
@@ -780,13 +729,10 @@ export class WakDataSource {
                         postData.push(tempData);
                     });
 
-
                     let requestOptions = {
                         body: postData,
                         method: 'post'
                     };
-
-
 
                     this.restApi.callServer(restString, requestOptions).then((result: any) => {
                         entities.forEach((ent: any, i: any) => {
@@ -833,9 +779,7 @@ export class WakDataSource {
                 }
             });
         });
-
     }
-
 
     public deleteCurrent(options: any) {
         return new Promise((resolve, reject) => {
@@ -853,7 +797,6 @@ export class WakDataSource {
                 let row = this.collection.getRowFromEntity(this.entity);
                 let overbyArray = options.override_orderby || this.savedOrderby;
 
-
                 let restString = this.restApi.generateRestString(dataURI, {
                     skip: row,
                     top: options.override_pageSize || this.pageSize,
@@ -863,14 +806,9 @@ export class WakDataSource {
                     removeAtPos: row
                 });
 
-
                 this.restApi.callServer(restString).then((data: any) => {
-
                     data.__ENTITYSET = this.collection.entityset;
-
                     this.collection.removeUnsavedRow(row);
-
-
                     this.collection.insertData(data);
                     this.entity = null;
                     if (this.collection.length > row) {
@@ -882,10 +820,7 @@ export class WakDataSource {
                             this.selection.select(this.collection.length - 1);
                         }
                     }
-
                     this.__triggerEvent('collectionChange_oneRemoved');
-
-
                     resolve(data);
                 }).catch((err: any) => {
                     reject({
@@ -915,12 +850,7 @@ export class WakDataSource {
                     this.__triggerEvent('collectionChange_oneRemoved');
                     resolve();
                 }
-
-
-
             }
         });
     }
-
-
 }

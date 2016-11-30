@@ -27,8 +27,6 @@ import {
   SelectionInterface
 } from '../interfaces';
 
-
-
 export class Controller {
   public vGrid: VGrid;
   public htmlCache: HtmlCache;
@@ -74,8 +72,6 @@ export class Controller {
   public attI18N: any;
   public attDataDelay: number;
 
-
-
   constructor(vGrid: VGrid) {
     // main context
     this.vGrid = vGrid;
@@ -83,7 +79,6 @@ export class Controller {
     // main element
     this.element = vGrid.element;
   }
-
 
   public getContext() {
 
@@ -137,7 +132,6 @@ export class Controller {
 
   }
 
-
   public triggerI18N() {
     let keys = Object.keys({
       close: 'Close',
@@ -163,7 +157,6 @@ export class Controller {
       endsWith: 'Ends with'
     });
 
-
     if (this.attI18N) {
       keys.forEach((key: string) => {
         if (this.vGrid.filterOperatorTranslationKeys[key]) {
@@ -176,7 +169,6 @@ export class Controller {
     }
 
   }
-
 
   public createGrid(): void {
 
@@ -195,7 +187,6 @@ export class Controller {
     // generate main markup and updates our cache
     this.mainMarkup.generateMainMarkup();
     this.htmlCache.updateMainMarkup();
-
 
     this.rowDataBinder.init();
     // starts the scroll events on main html markup (left/main/right)
@@ -217,28 +208,19 @@ export class Controller {
       this.colRepeatRowHeaderTemplate,
       this.colGroupRow);
 
-
     // more updates to main markup
     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
-
     // register the rowClick handler (when clicking on rows)
     this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);
-
     // create grouping elements helper... pretty much just creates view when dragging to group box
     this.groupingElements.init(this, this.colGroupElement);
-
     // loading screen view
     this.loadingScreen.init(this.overrideContext);
-
     // add context menu
     this.contextMenu.init(this.customMenuTemplates, this.overrideContext);
-
-    
-
   }
 
   // misc function, all calls to/from gridconnector will go in functions here, mostly.. I think...
-
   public getElement(rowNumber: number, isDownScroll: boolean, callbackFN: Function): void {
     this.attGridConnector.getElement({
       row: rowNumber,
@@ -252,8 +234,6 @@ export class Controller {
     });
   }
 
-
-
   public expandGroup(id: string): void {
     this.attGridConnector.expandGroup(id);
   }
@@ -266,17 +246,13 @@ export class Controller {
     this.attGridConnector.select(row);
   }
 
-
   public addToGrouping(attribute: string): void {
     let currentGrouping = this.attGridConnector.getGrouping();
     if (currentGrouping.indexOf(attribute) === -1) {
       currentGrouping.push(attribute);
       this.attGridConnector.group(currentGrouping, true);
     }
-
   }
-
-
 
   public removeFromGrouping(attribute: string) {
     let currentGrouping = this.attGridConnector.getGrouping();
@@ -286,7 +262,6 @@ export class Controller {
       this.attGridConnector.group(currentGrouping, true);
     }
   }
-
 
   public getSelectionContext(): SelectionInterface {
     let sel: SelectionInterface = this.attGridConnector.getSelection();
@@ -309,7 +284,6 @@ export class Controller {
       return this.loadingScreen.disable();
     }
   }
-
 
   public updateHeights(): void {
     this.rowScrollEvents.setCollectionLength(this.attGridConnector.getDatasourceLength());
@@ -340,14 +314,12 @@ export class Controller {
     });
   }
 
-
   public rebindAllRows(): void {
     this.raiseEvent('avg-rebind-all-rows', {
       rowCache: this.htmlCache.rowCache,
       downScroll: true
     });
   }
-
 
   public getColumnConfig(): Array<ColConfig> {
 
@@ -432,7 +404,6 @@ export class Controller {
     return newColConfig;
   }
 
-
   public setColumnConfig(colConfig: Array<ColConfig>): void {
     let length = this.columnBindingContext.setupgrouping;
     this.viewSlots.unbindAndDetachColumns();
@@ -446,18 +417,14 @@ export class Controller {
       this.colRepeatRowTemplate,
       this.colRepeatRowHeaderTemplate,
       this.colGroupRow);
-    this.viewSlots.bindAndAttachColumns(this.overrideContext, this.columnBindingContext, this.attGridConnector.getSelection());
+    this.viewSlots.bindAndAttachColumns(
+        this.overrideContext,
+        this.columnBindingContext,
+        this.attGridConnector.getSelection());
     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
     this.columnBindingContext.setupgrouping = length;
     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
-
     this.rebindAllRows();
-
-
   }
-
-
-
-
 
 }
