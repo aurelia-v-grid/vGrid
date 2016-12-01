@@ -137,7 +137,11 @@ export class VGridAttributesFilter {
       return this.valueFormater ? this.valueFormater.fromView(
         (this.element as HTMLInputElement).value) : (this.element as HTMLInputElement).value;
     } else {
-      return this.state ? this.state === 2 ? true : false : '';
+      if (this.valueFormater && this.state) {
+        return this.valueFormater.fromView(this.state ? this.state === 2 ? true : false : '');
+      } else {
+        return this.state ? this.state === 2 ? true : false : '';
+      }
     }
   }
 
