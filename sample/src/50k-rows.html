@@ -12,6 +12,16 @@
         <v-grid-col col-width="100" col-sort="field:name"    col-type="image"  col-field="images" image-fix></v-grid-col>
         <v-grid-col col-width="160" col-sort="field:name"    col-filter="field:name;operator:*"  col-field="name" col-pin-left="true"></v-grid-col>
         <v-grid-col col-width="100" col-sort="field:number" col-filter="field:number" col-field="number | numberFormatter" col-pin-right="true"></v-grid-col>
+
+        <v-grid-loadingscreen>
+          <div class="avg-overlay" if.bind="loading">
+          </div>
+          <div if.two-way="loading" class="avg-progress-indicator">
+          <div class="avg-progress-bar" role="progressbar" style="width:100%">
+          <span>${ loadingMessage } super duper</span>
+          </div>
+          </div>
+      </v-grid-loadingscreen>
       </v-grid>
     </div>
   </section>
