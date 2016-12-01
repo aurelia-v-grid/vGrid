@@ -13,6 +13,7 @@ export function configure(config: any) {
     prefix + '/v-grid-row-repeat',
     prefix + '/v-grid-group-row',
     prefix + '/v-grid-group-element',
+    prefix + '/v-grid-loadingscreen',
     prefix + '/v-grid-contextmenu',
     prefix + '/v-grid-col',
     prefix + '/v-grid'

@@ -29,22 +29,21 @@ export class LoadingScreen {
     this.loadingMessage = 'Loading';
   }
 
-  public init(overrideContext: OverrideContext): void {
+  public init(overrideContext: OverrideContext, loadingScreenTemplate: string): void {
     this.overrideContext = overrideContext;
-    let loadingScreentHtml = [
-      '<div class="avg-overlay" if.bind="loading">',
-      '</div>',
-      '<div if.two-way="loading" class="avg-progress-indicator">',
-      '<div class="avg-progress-bar" role="progressbar" style="width:100%">',
-      '<span>${ loadingMessage }</span>',
-      '</div>',
-      '</div>'
-    ];
+    let loadingScreentHtml = loadingScreenTemplate || `[
+      <div class="avg-overlay" if.bind="loading">
+      </div>
+      <div if.two-way="loading" class="avg-progress-indicator">
+      <div class="avg-progress-bar" role="progressbar" style="width:100%">
+      <span>$au{ loadingMessage }</span>
+      </div>
+      </div>`.replace(/\$(au{)/g, '${');
 
     let viewFactory = this.viewCompiler.compile(
-      '<template>' +
-      loadingScreentHtml.join('') +
-      '</template>',
+      `<template>
+      ${loadingScreentHtml}
+      </template>`,
       this.viewResources);
 
     let view = viewFactory.create(this.container);

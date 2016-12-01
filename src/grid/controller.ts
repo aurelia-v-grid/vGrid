@@ -71,6 +71,8 @@ export class Controller {
   public attOnRowDraw: Function;
   public attI18N: any;
   public attDataDelay: number;
+  public loadingScreenTemplate: string;
+  public footerTemplate: string;
 
   constructor(vGrid: VGrid) {
     // main context
@@ -92,6 +94,8 @@ export class Controller {
     this.colRepeatRowTemplate = c.colRepeatRowTemplate;
     this.colRepeatRowHeaderTemplate = c.colRepeatRowHeaderTemplate;
     this.customMenuTemplates = c.customMenuTemplates;
+    this.loadingScreenTemplate = c.loadingScreenTemplate;
+    this.footerTemplate = c.footerTemplate;
 
     // aurelia classes
     this.viewCompiler = c.viewCompiler;
@@ -215,7 +219,7 @@ export class Controller {
     // create grouping elements helper... pretty much just creates view when dragging to group box
     this.groupingElements.init(this, this.colGroupElement);
     // loading screen view
-    this.loadingScreen.init(this.overrideContext);
+    this.loadingScreen.init(this.overrideContext, this.loadingScreenTemplate);
     // add context menu
     this.contextMenu.init(this.customMenuTemplates, this.overrideContext);
   }
