@@ -25,6 +25,8 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
             this.colGroupRow = null;
             this.colGroupElement = null;
             this.customMenuTemplates = {};
+            this.footerTemplate = null;
+            this.loadingScreenTemplate = null;
             this.newGrid = true;
             this.controller = new controller_1.Controller(this);
             this.htmlCache = new htmlCache_1.HtmlCache(element);

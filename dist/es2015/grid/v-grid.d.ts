@@ -55,6 +55,8 @@ export declare class VGrid {
     backupColConfig: Array<ColConfig>;
     filterOperatorNames: any;
     filterOperatorTranslationKeys: any;
+    loadingScreenTemplate: string;
+    footerTemplate: string;
     attRowHeight: number;
     attHeaderHeight: number;
     attFooterHeight: number;

@@ -123,21 +123,23 @@ export interface DatasourceConfig {
 }
 export interface CustomTargetInstruction extends TargetInstruction {
     [key: string]: any;
-    colHeaderTemplate: string;
-    colRowTemplate: string;
-    colCss: string;
-    headerTemplate: string;
-    rowTemplate: string;
+    colHeaderTemplate?: string;
+    colRowTemplate?: string;
+    colCss?: string;
+    headerTemplate?: string;
+    rowTemplate?: string;
+    template?: string;
     elementInstruction: CustomBehaviorInstruction;
 }
 export interface CustomBehaviorInstruction extends BehaviorInstruction {
     [key: string]: any;
-    colHeaderTemplate: string;
-    colRowTemplate: string;
-    colCss: string;
-    headerTemplate: string;
-    rowTemplate: string;
-    menuTemplates: any;
+    colHeaderTemplate?: string;
+    colRowTemplate?: string;
+    colCss?: string;
+    headerTemplate?: string;
+    rowTemplate?: string;
+    template?: string;
+    menuTemplates?: any;
 }
 export interface BindingContext {
     [key: string]: any;

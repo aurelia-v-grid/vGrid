@@ -109,7 +109,12 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                         return this.valueFormater ? this.valueFormater.fromView(this.element.value) : this.element.value;
                     }
                     else {
-                        return this.state ? this.state === 2 ? true : false : '';
+                        if (this.valueFormater && this.state) {
+                            return this.valueFormater.fromView(this.state ? this.state === 2 ? true : false : '');
+                        }
+                        else {
+                            return this.state ? this.state === 2 ? true : false : '';
+                        }
                     }
                 };
                 VGridAttributesFilter.prototype.resetValue = function () {
