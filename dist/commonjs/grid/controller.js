@@ -13,6 +13,8 @@ var Controller = (function () {
         this.colRepeatRowTemplate = c.colRepeatRowTemplate;
         this.colRepeatRowHeaderTemplate = c.colRepeatRowHeaderTemplate;
         this.customMenuTemplates = c.customMenuTemplates;
+        this.loadingScreenTemplate = c.loadingScreenTemplate;
+        this.footerTemplate = c.footerTemplate;
         this.viewCompiler = c.viewCompiler;
         this.container = c.container;
         this.viewResources = c.viewResources;
@@ -96,7 +98,7 @@ var Controller = (function () {
         this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
         this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);
         this.groupingElements.init(this, this.colGroupElement);
-        this.loadingScreen.init(this.overrideContext);
+        this.loadingScreen.init(this.overrideContext, this.loadingScreenTemplate);
         this.contextMenu.init(this.customMenuTemplates, this.overrideContext);
     };
     Controller.prototype.getElement = function (rowNumber, isDownScroll, callbackFN) {

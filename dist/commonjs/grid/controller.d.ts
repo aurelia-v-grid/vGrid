@@ -43,6 +43,8 @@ export declare class Controller {
     attOnRowDraw: Function;
     attI18N: any;
     attDataDelay: number;
+    loadingScreenTemplate: string;
+    footerTemplate: string;
     constructor(vGrid: VGrid);
     getContext(): void;
     triggerI18N(): void;
