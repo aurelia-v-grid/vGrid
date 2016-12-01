@@ -60,6 +60,8 @@ export class VGrid {
     public backupColConfig: Array<ColConfig>;
     public filterOperatorNames: any;
     public filterOperatorTranslationKeys: any;
+    public loadingScreenTemplate: string;
+    public footerTemplate: string;
 
     @bindable({ attribute: 'v-row-height' }) public attRowHeight: number;
     @bindable({ attribute: 'v-header-height' }) public attHeaderHeight: number;
@@ -100,6 +102,8 @@ export class VGrid {
         this.colGroupRow = null;
         this.colGroupElement = null;
         this.customMenuTemplates = {};
+        this.footerTemplate = null;
+        this.loadingScreenTemplate = null;
 
         // to know if new or hidden by "if"
         this.newGrid = true;
