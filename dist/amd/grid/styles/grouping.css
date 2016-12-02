@@ -3,6 +3,7 @@
   position: relative;
   margin: 3px;
   height: 80%;
+  box-sizing: border-box;
   padding-left: 10px;
   padding-right: 10px;
   display: block;
@@ -15,6 +16,7 @@
   width: 2px;
   left: 0;
   height: 100%;
+  box-sizing: border-box;
   position: absolute;
 }
 
