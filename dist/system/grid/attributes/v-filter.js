@@ -71,21 +71,26 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                             };
                         }
                         else {
+                            this.element.indeterminate = true;
                             this.element.style.opacity = '0.3';
                             this.element.onclick = function () {
                                 switch (_this.state) {
                                     case 0:
                                         _this.state = 2;
                                         _this.element.style.opacity = '1';
+                                        _this.element.checked = true;
+                                        _this.element.indeterminate = false;
                                         break;
                                     case 2:
                                         _this.state = 3;
                                         _this.element.style.opacity = '1';
+                                        _this.element.indeterminate = false;
                                         break;
                                     default:
                                         _this.element.checked = false;
                                         _this.state = 0;
                                         _this.element.style.opacity = '0.3';
+                                        _this.element.indeterminate = true;
                                 }
                                 _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
                                 _this.vGrid.attGridConnector.query(_this.vGrid.attGridConnector.getCurrentFilter());
