@@ -1,7 +1,7 @@
 System.register(["./interfaces", "./wakdb/wakinterfaces"], function (exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
     function configure(config) {
-        config.globalResources(prefix + '/attributes/v-filter', prefix + '/attributes/v-sort', prefix + '/attributes/v-image', prefix + '/attributes/v-drag-drop-col', prefix + '/attributes/v-resize-col', prefix + '/attributes/v-menu', prefix + '/attributes/v-selection', prefix + '/v-grid-row-repeat', prefix + '/v-grid-group-row', prefix + '/v-grid-group-element', prefix + '/v-grid-loadingscreen', prefix + '/v-grid-contextmenu', prefix + '/v-grid-col', prefix + '/v-grid');
+        config.globalResources(prefix + '/attributes/v-filter', prefix + '/attributes/v-filter-trigger', prefix + '/attributes/v-sort', prefix + '/attributes/v-image', prefix + '/attributes/v-drag-drop-col', prefix + '/attributes/v-resize-col', prefix + '/attributes/v-menu', prefix + '/attributes/v-selection', prefix + '/v-grid-row-repeat', prefix + '/v-grid-group-row', prefix + '/v-grid-group-element', prefix + '/v-grid-loadingscreen', prefix + '/v-grid-contextmenu', prefix + '/v-grid-col', prefix + '/v-grid');
     }
     var prefix;
     exports_1("configure", configure);
