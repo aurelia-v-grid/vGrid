@@ -93,6 +93,7 @@ export class VGridAttributesFilter {
 
       } else {
         // set default!
+        (this.element as HTMLInputElement).indeterminate  = true;
         (this.element as HTMLElement).style.opacity = '0.3';
         // is checkbox
         this.element.onclick = () => {
@@ -100,15 +101,19 @@ export class VGridAttributesFilter {
             case 0:
               this.state = 2;
               this.element.style.opacity = '1';
+              (this.element as HTMLInputElement).checked = true;
+              (this.element as HTMLInputElement).indeterminate = false;
               break;
             case 2:
               this.state = 3;
               this.element.style.opacity = '1';
+              (this.element as HTMLInputElement).indeterminate = false;
               break;
             default:
               (this.element as HTMLInputElement).checked = false;
               this.state = 0;
               this.element.style.opacity = '0.3';
+              (this.element as HTMLInputElement).indeterminate = true;
           }
           this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
           this.vGrid.attGridConnector.query(this.vGrid.attGridConnector.getCurrentFilter());
