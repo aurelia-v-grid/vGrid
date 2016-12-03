@@ -8,7 +8,7 @@ export class RowClickHandler {
   private lastKeyKodeUsed: string;
   private selectedRows: number;
   private controller: Controller;
-  private selection: SelectionInterface;
+  private getSelection: Function;
   private manualSelection: boolean;
 
   constructor(element: Element, htmlCache: HtmlCache) {
@@ -23,7 +23,7 @@ export class RowClickHandler {
   public init(mode: boolean, manualSelection: boolean, controller: Controller): void {
 
     this.controller = controller;
-    this.selection = controller.getSelectionContext();
+    this.getSelection = controller.getSelectionContext.bind(controller);
     this.manualSelection = manualSelection;
 
     if (mode === false) {
@@ -40,7 +40,8 @@ export class RowClickHandler {
 
     let rowCache = this.htmlCache.rowCache;
     for (let i = 0; i < rowCache.length; i++) {
-      let isSelected = this.selection.isSelected(rowCache[i].row);
+      let selection: SelectionInterface = this.getSelection();
+      let isSelected = selection.isSelected(rowCache[i].row);
       rowCache[i].bindingContext.selected = isSelected;
       rowCache[i].bindingContext.selected = isSelected;
       rowCache[i].bindingContext.selected = isSelected;
@@ -65,7 +66,8 @@ export class RowClickHandler {
   }
 
   public getSelectionMode(): string {
-    return this.selection.getMode();
+    let selection: SelectionInterface = this.getSelection();
+    return selection.getMode();
   }
 
   public removeEventlistener(): void {
@@ -147,27 +149,33 @@ export class RowClickHandler {
   }
 
   private isSelected(row: number): boolean {
-    return this.selection.isSelected(row);
+    let selection: SelectionInterface = this.getSelection();
+    return selection.isSelected(row);
   }
 
   private deSelect(row: number): void {
-    this.selection.deSelect(row);
+    let selection: SelectionInterface = this.getSelection();
+    selection.deSelect(row);
   }
 
   private select(row: number, addToSelection: boolean): void {
-    this.selection.select(row, addToSelection);
+    let selection: SelectionInterface = this.getSelection();
+    selection.select(row, addToSelection);
   }
 
   private selectRange(start: number, end: number): void {
-    this.selection.selectRange(start, end);
+    let selection: SelectionInterface = this.getSelection();
+    selection.selectRange(start, end);
   }
 
   private getSelectedRows(): Array<number> {
-    return this.selection.getSelectedRows();
+    let selection: SelectionInterface = this.getSelection();
+    return selection.getSelectedRows();
   }
 
   private setSelectedRows(newRows: Array<number>): void {
-    this.selection.setSelectedRows(newRows);
+    let selection: SelectionInterface = this.getSelection();
+    selection.setSelectedRows(newRows);
   }
 
   private highlightRow(e: MouseEvent, currentRow: number): void {
