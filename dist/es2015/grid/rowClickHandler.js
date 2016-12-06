@@ -10,7 +10,7 @@ define(["require", "exports"], function (require, exports) {
         }
         RowClickHandler.prototype.init = function (mode, manualSelection, controller) {
             this.controller = controller;
-            this.selection = controller.getSelectionContext();
+            this.getSelection = controller.getSelectionContext.bind(controller);
             this.manualSelection = manualSelection;
             if (mode === false) {
                 this.selectionMode = 'single';
@@ -23,7 +23,8 @@ define(["require", "exports"], function (require, exports) {
         RowClickHandler.prototype.updateSelectionOnAllRows = function () {
             var rowCache = this.htmlCache.rowCache;
             for (var i = 0; i < rowCache.length; i++) {
-                var isSelected = this.selection.isSelected(rowCache[i].row);
+                var selection = this.getSelection();
+                var isSelected = selection.isSelected(rowCache[i].row);
                 rowCache[i].bindingContext.selected = isSelected;
                 rowCache[i].bindingContext.selected = isSelected;
                 rowCache[i].bindingContext.selected = isSelected;
@@ -46,7 +47,8 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         RowClickHandler.prototype.getSelectionMode = function () {
-            return this.selection.getMode();
+            var selection = this.getSelection();
+            return selection.getMode();
         };
         RowClickHandler.prototype.removeEventlistener = function () {
             var avgLeftRows = this.htmlCache.avg_left_rows;
@@ -120,22 +122,28 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         RowClickHandler.prototype.isSelected = function (row) {
-            return this.selection.isSelected(row);
+            var selection = this.getSelection();
+            return selection.isSelected(row);
         };
         RowClickHandler.prototype.deSelect = function (row) {
-            this.selection.deSelect(row);
+            var selection = this.getSelection();
+            selection.deSelect(row);
         };
         RowClickHandler.prototype.select = function (row, addToSelection) {
-            this.selection.select(row, addToSelection);
+            var selection = this.getSelection();
+            selection.select(row, addToSelection);
         };
         RowClickHandler.prototype.selectRange = function (start, end) {
-            this.selection.selectRange(start, end);
+            var selection = this.getSelection();
+            selection.selectRange(start, end);
         };
         RowClickHandler.prototype.getSelectedRows = function () {
-            return this.selection.getSelectedRows();
+            var selection = this.getSelection();
+            return selection.getSelectedRows();
         };
         RowClickHandler.prototype.setSelectedRows = function (newRows) {
-            this.selection.setSelectedRows(newRows);
+            var selection = this.getSelection();
+            selection.setSelectedRows(newRows);
         };
         RowClickHandler.prototype.highlightRow = function (e, currentRow) {
             var isSel;

@@ -7,7 +7,7 @@ export declare class RowClickHandler {
     private lastKeyKodeUsed;
     private selectedRows;
     private controller;
-    private selection;
+    private getSelection;
     private manualSelection;
     constructor(element: Element, htmlCache: HtmlCache);
     init(mode: boolean, manualSelection: boolean, controller: Controller): void;

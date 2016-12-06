@@ -8,17 +8,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 define(["require", "exports", "aurelia-framework", "../v-grid"], function (require, exports, aurelia_framework_1, v_grid_1) {
-    var VGridAttributesFilterTrigger = (function () {
-        function VGridAttributesFilterTrigger(element, vGrid) {
+    var VGridAttributesFilterObserver = (function () {
+        function VGridAttributesFilterObserver(element, vGrid) {
             this.vGrid = vGrid;
             this.element = element;
         }
-        VGridAttributesFilterTrigger.prototype.valueChanged = function (newValue) {
+        VGridAttributesFilterObserver.prototype.valueChanged = function (newValue) {
             if (this.attribute && newValue) {
                 this.updateFilter();
             }
         };
-        VGridAttributesFilterTrigger.prototype.bind = function (bindingContext, overrideContext) {
+        VGridAttributesFilterObserver.prototype.bind = function (bindingContext, overrideContext) {
             this.bindingContext = bindingContext;
             this.overrideContext = overrideContext;
             var valueConverter = this.valueConverters(this.converter);
@@ -27,10 +27,10 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             this.valueFormater = valueConverter || null;
             this.state = 0;
         };
-        VGridAttributesFilterTrigger.prototype.getValue = function () {
+        VGridAttributesFilterObserver.prototype.getValue = function () {
             return this.valueFormater ? this.valueFormater.fromView(this.value) : this.value;
         };
-        VGridAttributesFilterTrigger.prototype.updateFilter = function () {
+        VGridAttributesFilterObserver.prototype.updateFilter = function () {
             var _this = this;
             var curFilter = this.vGrid.attGridConnector.getCurrentFilter();
             var filterIndex = -1;
@@ -59,34 +59,34 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             }
             this.vGrid.attGridConnector.query(this.vGrid.attGridConnector.getCurrentFilter());
         };
-        VGridAttributesFilterTrigger.prototype.valueConverters = function (value) {
+        VGridAttributesFilterObserver.prototype.valueConverters = function (value) {
             var valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
             return valueConverter(value);
         };
-        return VGridAttributesFilterTrigger;
+        return VGridAttributesFilterObserver;
     }());
     __decorate([
         aurelia_framework_1.bindable,
         __metadata("design:type", String)
-    ], VGridAttributesFilterTrigger.prototype, "field", void 0);
+    ], VGridAttributesFilterObserver.prototype, "field", void 0);
     __decorate([
         aurelia_framework_1.bindable,
         __metadata("design:type", String)
-    ], VGridAttributesFilterTrigger.prototype, "operator", void 0);
+    ], VGridAttributesFilterObserver.prototype, "operator", void 0);
     __decorate([
         aurelia_framework_1.bindable,
         __metadata("design:type", String)
-    ], VGridAttributesFilterTrigger.prototype, "converter", void 0);
+    ], VGridAttributesFilterObserver.prototype, "converter", void 0);
     __decorate([
         aurelia_framework_1.bindable,
         __metadata("design:type", String)
-    ], VGridAttributesFilterTrigger.prototype, "value", void 0);
-    VGridAttributesFilterTrigger = __decorate([
-        aurelia_framework_1.customAttribute('v-filter-trigger'),
+    ], VGridAttributesFilterObserver.prototype, "value", void 0);
+    VGridAttributesFilterObserver = __decorate([
+        aurelia_framework_1.customAttribute('v-filter-observer'),
         aurelia_framework_1.inject(Element, v_grid_1.VGrid),
         __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
-    ], VGridAttributesFilterTrigger);
-    exports.VGridAttributesFilterTrigger = VGridAttributesFilterTrigger;
+    ], VGridAttributesFilterObserver);
+    exports.VGridAttributesFilterObserver = VGridAttributesFilterObserver;
 });
 
-//# sourceMappingURL=v-filter-trigger.js.map
+//# sourceMappingURL=v-filter-observer.js.map

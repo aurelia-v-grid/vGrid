@@ -1,6 +1,6 @@
 import { VGrid } from '../v-grid';
 import { BindingContext, OverrideContext } from '../../interfaces';
-export declare class VGridAttributesFilterTrigger {
+export declare class VGridAttributesFilterObserver {
     private field;
     private operator;
     private converter;
