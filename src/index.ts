@@ -4,7 +4,7 @@ const prefix = './grid';
 export function configure(config: any) {
   config.globalResources(
     prefix + '/attributes/v-filter',
-    prefix + '/attributes/v-filter-trigger',
+    prefix + '/attributes/v-filter-observer',
     prefix + '/attributes/v-sort',
     prefix + '/attributes/v-image',
     prefix + '/attributes/v-drag-drop-col',

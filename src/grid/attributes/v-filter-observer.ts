@@ -3,9 +3,9 @@ import { VGrid } from '../v-grid';
 import { BindingContext, OverrideContext, FilterObject } from '../../interfaces';
 
 
-@customAttribute('v-filter-trigger')
+@customAttribute('v-filter-observer')
 @inject(Element, VGrid)
-export class VGridAttributesFilterTrigger {
+export class VGridAttributesFilterObserver {
   @bindable private field: string;
   @bindable private operator: string;
   @bindable private converter: string;
