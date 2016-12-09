@@ -29,6 +29,10 @@ export class LoadingScreen {
     this.loadingMessage = 'Loading';
   }
 
+  public updateLoadingDefaultLoadingMessage(msg: string): void {
+    this.loadingMessage = msg;
+  }
+
   public init(overrideContext: OverrideContext, loadingScreenTemplate: string): void {
     this.overrideContext = overrideContext;
     let loadingScreentHtml = loadingScreenTemplate || `[

@@ -140,7 +140,7 @@ export class Controller {
   }
 
   public triggerI18N() {
-    let keys = Object.keys({
+    let keys: any = Object.keys({
       close: 'Close',
       pinLeft: 'Pin left',
       pinRight: 'Pin Right',
@@ -161,7 +161,8 @@ export class Controller {
       notEqualTo: 'Not equal to',
       doesNotContain: 'Does not contain',
       beginsWith: 'Begins with',
-      endsWith: 'Ends with'
+      endsWith: 'Ends with',
+      loading: 'loading'
     });
 
     if (this.attI18N) {
@@ -173,6 +174,8 @@ export class Controller {
       });
 
       this.raiseEvent('filterTranslation', {});
+      let loading: string = this.attI18N('loading')  || keys.loading;
+      this.loadingScreen.updateLoadingDefaultLoadingMessage(loading);
     }
 
   }
