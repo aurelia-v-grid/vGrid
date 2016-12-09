@@ -39,7 +39,9 @@
 * fix a few bugs, and added more features
 * Created a gitbook to start showing how to use while I keep developing it [gitbook](https://www.gitbook.com/book/vegarringdal/dev-rebuild/details)
 
-09 November 2016:
+---
+
+09 Desember 2016:
 
 * added a bunch of stuff, and updated docs with the new stuff
 * fix a lot of bugs, done a lot of changes to soem of the attributes, thx to @Thanood for using the experimental grid at work so it gets better
