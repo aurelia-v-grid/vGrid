@@ -14,6 +14,7 @@ import { GroupingElements } from './groupingElements';
 import { Controller } from './controller';
 import { LoadingScreen } from './loadingScreen';
 import { ContextMenu } from './contextMenu';
+import { Footer } from './footer';
 import {
     ResizeShardContext,
     GridConnectorInterface,
@@ -62,6 +63,7 @@ export class VGrid {
     public filterOperatorTranslationKeys: any;
     public loadingScreenTemplate: string;
     public footerTemplate: string;
+    public footer: Footer;
 
     @bindable({ attribute: 'v-row-height' }) public attRowHeight: number;
     @bindable({ attribute: 'v-header-height' }) public attHeaderHeight: number;
@@ -153,6 +155,12 @@ export class VGrid {
             this.viewSlots);
 
         this.contextMenu = new ContextMenu(
+            viewCompiler,
+            container,
+            viewResources,
+            this.viewSlots);
+
+        this.footer = new Footer(this.htmlCache,
             viewCompiler,
             container,
             viewResources,

@@ -19,6 +19,7 @@ export class ViewSlots {
   public rightHeaderViewSlot: ViewSlot;
   public mainViewSlot: ViewSlot;
   public loadingScreenViewSlot: ViewSlot;
+  public footerViewSlot: ViewSlot;
   public contextMenu: ViewSlot;
   public groupingViewSlots: Array<ViewSlot>;
   private rowCache: Array<RowCache>;
@@ -98,6 +99,8 @@ export class ViewSlots {
     this.rightHeaderViewSlot.bind(this.headerCache.bindingContext, this.headerCache.parentOverrideContext);
     this.rightHeaderViewSlot.attached();
 
+    // todo loading screen and footer?
+
   }
 
   public unbindAndDetachColumns(): void {
@@ -125,6 +128,8 @@ export class ViewSlots {
     this.rightHeaderViewSlot.unbind();
     this.rightHeaderViewSlot.detached();
 
+    // todo loading screen and footer?
+
   }
 
   public clear(): void {
@@ -151,6 +156,8 @@ export class ViewSlots {
     this.leftHeaderViewSlot = null;
     this.mainHeaderViewSlot = null;
     this.rightHeaderViewSlot = null;
+
+    // todo loading screen and footer?
   }
 
 }

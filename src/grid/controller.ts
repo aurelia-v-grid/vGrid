@@ -24,7 +24,8 @@ import {
   OverrideContext,
   DragDropShardContext,
   ResizeShardContext,
-  SelectionInterface
+  SelectionInterface,
+  Footer
 } from '../interfaces';
 
 export class Controller {
@@ -73,6 +74,7 @@ export class Controller {
   public attDataDelay: number;
   public loadingScreenTemplate: string;
   public footerTemplate: string;
+  public footer: Footer;
 
   constructor(vGrid: VGrid) {
     // main context
@@ -119,6 +121,7 @@ export class Controller {
     this.groupingElements = c.groupingElements;
     this.loadingScreen = c.loadingScreen;
     this.contextMenu = c.contextMenu;
+    this.footer = c.footer;
 
     // attributes
     this.bindingContext = c.bindingContext;
@@ -220,6 +223,8 @@ export class Controller {
     this.groupingElements.init(this, this.colGroupElement);
     // loading screen view
     this.loadingScreen.init(this.overrideContext, this.loadingScreenTemplate);
+    // footer view
+    this.footer.init(this.overrideContext, this.footerTemplate);
     // add context menu
     this.contextMenu.init(this.customMenuTemplates, this.overrideContext);
   }
