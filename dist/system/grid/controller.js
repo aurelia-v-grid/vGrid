@@ -40,6 +40,7 @@ System.register([], function (exports_1, context_1) {
                     this.groupingElements = c.groupingElements;
                     this.loadingScreen = c.loadingScreen;
                     this.contextMenu = c.contextMenu;
+                    this.footer = c.footer;
                     this.bindingContext = c.bindingContext;
                     this.overrideContext = c.overrideContext;
                     this.attRowHeight = c.attRowHeight;
@@ -76,7 +77,8 @@ System.register([], function (exports_1, context_1) {
                         notEqualTo: 'Not equal to',
                         doesNotContain: 'Does not contain',
                         beginsWith: 'Begins with',
-                        endsWith: 'Ends with'
+                        endsWith: 'Ends with',
+                        loading: 'loading'
                     });
                     if (this.attI18N) {
                         keys.forEach(function (key) {
@@ -86,6 +88,8 @@ System.register([], function (exports_1, context_1) {
                             _this.contextMenu.updateMenuStrings(key, _this.attI18N(key));
                         });
                         this.raiseEvent('filterTranslation', {});
+                        var loading = this.attI18N('loading') || keys.loading;
+                        this.loadingScreen.updateLoadingDefaultLoadingMessage(loading);
                     }
                 };
                 Controller.prototype.createGrid = function () {
@@ -105,6 +109,7 @@ System.register([], function (exports_1, context_1) {
                     this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);
                     this.groupingElements.init(this, this.colGroupElement);
                     this.loadingScreen.init(this.overrideContext, this.loadingScreenTemplate);
+                    this.footer.init(this.overrideContext, this.footerTemplate);
                     this.contextMenu.init(this.customMenuTemplates, this.overrideContext);
                 };
                 Controller.prototype.getElement = function (rowNumber, isDownScroll, callbackFN) {

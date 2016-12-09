@@ -1,4 +1,4 @@
-System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./rowMarkup", "./rowScrollEvents", "./columnMarkup", "./htmlCache", "./htmlHeightWidth", "./viewSlots", "./columnBindingContext", "./rowDataBinder", "./rowClickHandler", "./groupingElements", "./controller", "./loadingScreen", "./contextMenu"], function (exports_1, context_1) {
+System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./rowMarkup", "./rowScrollEvents", "./columnMarkup", "./htmlCache", "./htmlHeightWidth", "./viewSlots", "./columnBindingContext", "./rowDataBinder", "./rowClickHandler", "./groupingElements", "./controller", "./loadingScreen", "./contextMenu", "./footer"], function (exports_1, context_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,7 +9,7 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var aurelia_framework_1, mainMarkup_1, mainScrollEvents_1, rowMarkup_1, rowScrollEvents_1, columnMarkup_1, htmlCache_1, htmlHeightWidth_1, viewSlots_1, columnBindingContext_1, rowDataBinder_1, rowClickHandler_1, groupingElements_1, controller_1, loadingScreen_1, contextMenu_1, VGrid;
+    var aurelia_framework_1, mainMarkup_1, mainScrollEvents_1, rowMarkup_1, rowScrollEvents_1, columnMarkup_1, htmlCache_1, htmlHeightWidth_1, viewSlots_1, columnBindingContext_1, rowDataBinder_1, rowClickHandler_1, groupingElements_1, controller_1, loadingScreen_1, contextMenu_1, footer_1, VGrid;
     return {
         setters: [
             function (aurelia_framework_1_1) {
@@ -59,6 +59,9 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
             },
             function (contextMenu_1_1) {
                 contextMenu_1 = contextMenu_1_1;
+            },
+            function (footer_1_1) {
+                footer_1 = footer_1_1;
             }
         ],
         execute: function () {
@@ -97,6 +100,7 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                     this.groupingElements = new groupingElements_1.GroupingElements(element, viewCompiler, container, viewResources, this.htmlCache, this.viewSlots, this.columnBindingContext);
                     this.loadingScreen = new loadingScreen_1.LoadingScreen(element, viewCompiler, container, viewResources, this.viewSlots);
                     this.contextMenu = new contextMenu_1.ContextMenu(viewCompiler, container, viewResources, this.viewSlots);
+                    this.footer = new footer_1.Footer(this.htmlCache, viewCompiler, container, viewResources, this.viewSlots);
                     this.filterOperatorNames = {
                         '=': 'equals',
                         '<=': 'less than or eq',
@@ -177,7 +181,6 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                 };
                 return VGrid;
             }());
-            exports_1("VGrid", VGrid);
             VGrid.inject = [Element, aurelia_framework_1.ViewCompiler, aurelia_framework_1.Container, aurelia_framework_1.ViewResources, aurelia_framework_1.TaskQueue];
             __decorate([
                 aurelia_framework_1.bindable({ attribute: 'v-row-height' }),
@@ -227,6 +230,7 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                 aurelia_framework_1.bindable({ attribute: 'v-data-delay' }),
                 __metadata("design:type", Number)
             ], VGrid.prototype, "attDataDelay", void 0);
+            exports_1("VGrid", VGrid);
         }
     };
 });

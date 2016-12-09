@@ -9,6 +9,7 @@ export declare class ViewSlots {
     rightHeaderViewSlot: ViewSlot;
     mainViewSlot: ViewSlot;
     loadingScreenViewSlot: ViewSlot;
+    footerViewSlot: ViewSlot;
     contextMenu: ViewSlot;
     groupingViewSlots: Array<ViewSlot>;
     private rowCache;

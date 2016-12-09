@@ -18,6 +18,9 @@ System.register(["aurelia-framework"], function (exports_1, context_1) {
                     this.loading = false;
                     this.loadingMessage = 'Loading';
                 }
+                LoadingScreen.prototype.updateLoadingDefaultLoadingMessage = function (msg) {
+                    this.loadingMessage = msg;
+                };
                 LoadingScreen.prototype.init = function (overrideContext, loadingScreenTemplate) {
                     this.overrideContext = overrideContext;
                     var loadingScreentHtml = loadingScreenTemplate || "[\n      <div class=\"avg-overlay\" if.bind=\"loading\">\n      </div>\n      <div if.two-way=\"loading\" class=\"avg-progress-indicator\">\n      <div class=\"avg-progress-bar\" role=\"progressbar\" style=\"width:100%\">\n      <span>$au{ loadingMessage }</span>\n      </div>\n      </div>".replace(/\$(au{)/g, '${');
@@ -36,7 +39,7 @@ System.register(["aurelia-framework"], function (exports_1, context_1) {
                     var _this = this;
                     return new Promise(function (resolve) {
                         _this.loading = collectionLength ? collectionLength > 10000 ? true : false : false;
-                        _this.loadingMessage = msg || 'Loading';
+                        _this.loadingMessage = msg || '...';
                         setTimeout(function () {
                             resolve(null);
                         });

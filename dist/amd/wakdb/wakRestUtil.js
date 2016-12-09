@@ -181,4 +181,4 @@ define(["require", "exports"], function (require, exports) {
     exports.WakRestUtil = WakRestUtil;
 });
 
-//# sourceMappingURL=wakRestUtil.js.map
+//# sourceMappingURL=WakRestUtil.js.map

@@ -10,6 +10,7 @@ export declare class LoadingScreen {
     private loadingMessage;
     private overrideContext;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots);
+    updateLoadingDefaultLoadingMessage(msg: string): void;
     init(overrideContext: OverrideContext, loadingScreenTemplate: string): void;
     enable(msg?: string, collectionLength?: number): Promise<any>;
     disable(): Promise<any>;

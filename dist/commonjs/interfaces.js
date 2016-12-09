@@ -46,5 +46,7 @@ var arraySort_1 = require("./utils/arraySort");
 exports.ArraySort = arraySort_1.ArraySort;
 var arrayGrouping_1 = require("./utils/arrayGrouping");
 exports.ArrayGrouping = arrayGrouping_1.ArrayGrouping;
+var footer_1 = require("./grid/footer");
+exports.Footer = footer_1.Footer;
 
 //# sourceMappingURL=interfaces.js.map

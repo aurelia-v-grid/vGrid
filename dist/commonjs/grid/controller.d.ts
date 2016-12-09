@@ -1,4 +1,4 @@
-import { ViewCompiler, ViewResources, Container, TaskQueue, MainMarkup, MainScrollEvents, ColumnMarkup, HtmlHeightWidth, ViewSlots, ColumnBindingContext, HtmlCache, RowDataBinder, RowClickHandler, GroupingElements, RowMarkup, LoadingScreen, ContextMenu, VGrid, GridConnectorInterface, RowScrollEvents, ColConfig, BindingContext, OverrideContext, DragDropShardContext, ResizeShardContext, SelectionInterface } from '../interfaces';
+import { ViewCompiler, ViewResources, Container, TaskQueue, MainMarkup, MainScrollEvents, ColumnMarkup, HtmlHeightWidth, ViewSlots, ColumnBindingContext, HtmlCache, RowDataBinder, RowClickHandler, GroupingElements, RowMarkup, LoadingScreen, ContextMenu, VGrid, GridConnectorInterface, RowScrollEvents, ColConfig, BindingContext, OverrideContext, DragDropShardContext, ResizeShardContext, SelectionInterface, Footer } from '../interfaces';
 export declare class Controller {
     vGrid: VGrid;
     htmlCache: HtmlCache;
@@ -45,6 +45,7 @@ export declare class Controller {
     attDataDelay: number;
     loadingScreenTemplate: string;
     footerTemplate: string;
+    footer: Footer;
     constructor(vGrid: VGrid);
     getContext(): void;
     triggerI18N(): void;

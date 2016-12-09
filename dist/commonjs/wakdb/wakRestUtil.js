@@ -179,4 +179,4 @@ var WakRestUtil = (function () {
 }());
 exports.WakRestUtil = WakRestUtil;
 
-//# sourceMappingURL=wakRestUtil.js.map
+//# sourceMappingURL=WakRestUtil.js.map

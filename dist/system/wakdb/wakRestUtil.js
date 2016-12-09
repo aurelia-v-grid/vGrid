@@ -188,4 +188,4 @@ System.register([], function (exports_1, context_1) {
     };
 });
 
-//# sourceMappingURL=wakRestUtil.js.map
+//# sourceMappingURL=WakRestUtil.js.map

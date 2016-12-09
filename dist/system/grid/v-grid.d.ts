@@ -14,6 +14,7 @@ import { GroupingElements } from './groupingElements';
 import { Controller } from './controller';
 import { LoadingScreen } from './loadingScreen';
 import { ContextMenu } from './contextMenu';
+import { Footer } from './footer';
 import { ResizeShardContext, GridConnectorInterface, DragDropShardContext, ColConfig, BindingContext, OverrideContext } from '../interfaces';
 export declare class VGrid {
     static inject: ({
@@ -57,6 +58,7 @@ export declare class VGrid {
     filterOperatorTranslationKeys: any;
     loadingScreenTemplate: string;
     footerTemplate: string;
+    footer: Footer;
     attRowHeight: number;
     attHeaderHeight: number;
     attFooterHeight: number;

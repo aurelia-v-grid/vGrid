@@ -25,6 +25,7 @@ export { Selection } from './selection';
 export { ArrayFilter } from './utils/arrayFilter';
 export { ArraySort } from './utils/arraySort';
 export { ArrayGrouping } from './utils/arrayGrouping';
+export { Footer } from './grid/footer';
 export interface RowCache {
     [key: string]: any;
     left: HTMLElement;

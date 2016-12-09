@@ -23,6 +23,7 @@ var groupingElements_1 = require("./groupingElements");
 var controller_1 = require("./controller");
 var loadingScreen_1 = require("./loadingScreen");
 var contextMenu_1 = require("./contextMenu");
+var footer_1 = require("./footer");
 var VGrid = (function () {
     function VGrid(element, viewCompiler, container, viewResources, taskQueue) {
         this.element = element;
@@ -58,6 +59,7 @@ var VGrid = (function () {
         this.groupingElements = new groupingElements_1.GroupingElements(element, viewCompiler, container, viewResources, this.htmlCache, this.viewSlots, this.columnBindingContext);
         this.loadingScreen = new loadingScreen_1.LoadingScreen(element, viewCompiler, container, viewResources, this.viewSlots);
         this.contextMenu = new contextMenu_1.ContextMenu(viewCompiler, container, viewResources, this.viewSlots);
+        this.footer = new footer_1.Footer(this.htmlCache, viewCompiler, container, viewResources, this.viewSlots);
         this.filterOperatorNames = {
             '=': 'equals',
             '<=': 'less than or eq',
@@ -138,7 +140,6 @@ var VGrid = (function () {
     };
     return VGrid;
 }());
-exports.VGrid = VGrid;
 VGrid.inject = [Element, aurelia_framework_1.ViewCompiler, aurelia_framework_1.Container, aurelia_framework_1.ViewResources, aurelia_framework_1.TaskQueue];
 __decorate([
     aurelia_framework_1.bindable({ attribute: 'v-row-height' }),
@@ -188,5 +189,6 @@ __decorate([
     aurelia_framework_1.bindable({ attribute: 'v-data-delay' }),
     __metadata("design:type", Number)
 ], VGrid.prototype, "attDataDelay", void 0);
+exports.VGrid = VGrid;
 
 //# sourceMappingURL=v-grid.js.map
