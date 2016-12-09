@@ -26,14 +26,7 @@ export class Footer {
 
   public init(overrideContext: OverrideContext, footerStringTemplate: string): void {
     this.overrideContext = overrideContext;
-    let footerTemplate = footerStringTemplate || `[
-      <div class="avg-overlay" if.bind="loading">
-      </div>
-      <div if.two-way="loading" class="avg-progress-indicator">
-      <div class="avg-progress-bar" role="progressbar" style="width:100%">
-      <span>$au{ loadingMessage }</span>
-      </div>
-      </div>`.replace(/\$(au{)/g, '${');
+    let footerTemplate = footerStringTemplate || ``.replace(/\$(au{)/g, '${');
 
     let viewFactory = this.viewCompiler.compile(
       `<template>

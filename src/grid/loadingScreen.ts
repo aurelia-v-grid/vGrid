@@ -63,7 +63,7 @@ export class LoadingScreen {
   public enable(msg?: string, collectionLength?: number): Promise<any> {
     return new Promise((resolve: Function) => {
       this.loading = collectionLength ? collectionLength > 10000 ? true : false : false;
-      this.loadingMessage = msg || 'Loading';
+      this.loadingMessage = msg || '...';
       setTimeout(() => {
         resolve(null);
       });
