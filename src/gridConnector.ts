@@ -53,19 +53,19 @@ export class GridConnector implements GridConnectorInterface {
     return this.datasource.length();
   }
 
-  public getColConfig(): Array<ColConfig> {
+  public getColConfig(): ColConfig[] {
     return this.controller.getColumnConfig();
   }
 
-  public setColConfig(colconfig: Array<ColConfig>): void {
+  public setColConfig(colconfig: ColConfig[]): void {
     this.controller.setColumnConfig(colconfig);
   }
 
-  public getGrouping(): Array<string> {
+  public getGrouping(): string[] {
     return this.datasource.getGrouping();
   }
 
-  public group(grouping: Array<string>, keepExpanded?: boolean): void {
+  public group(grouping: string[], keepExpanded?: boolean): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.group(grouping, keepExpanded);
     });
@@ -83,7 +83,7 @@ export class GridConnector implements GridConnectorInterface {
     options.callback(rowContext);
   }
 
-  public query(a: Array<FilterObject>): void {
+  public query(a: FilterObject[]): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.query(a);
     });
@@ -99,11 +99,11 @@ export class GridConnector implements GridConnectorInterface {
     this.datasource.removeEventListener(this.eventID);
   }
 
-  public getCurrentOrderBy(): Array<SortObject> {
+  public getCurrentOrderBy(): SortObject[] {
     return this.datasource.getCurrentOrderBy();
   }
 
-  public getCurrentFilter(): Array<FilterObject> {
+  public getCurrentFilter(): FilterObject[] {
     return this.datasource.getCurrentFilter();
   }
 

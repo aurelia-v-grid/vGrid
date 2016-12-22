@@ -22,7 +22,7 @@ export class ColumnMarkup {
   private container: Container;
   private viewResources: ViewResources;
   private overrideContext: OverrideContext;
-  private colConfig: Array<ColConfig>;
+  private colConfig: ColConfig[];
   private configLength: number;
   private colRepeater: boolean;
   private colRepeatRowTemplate: string;
@@ -63,7 +63,7 @@ export class ColumnMarkup {
   }
 
   public init(
-    colConfig: Array<ColConfig>,
+    colConfig: ColConfig[],
     overrideContext: OverrideContext,
     colRepeater: boolean,
     colRepeatRowTemplate: string,
@@ -87,13 +87,13 @@ export class ColumnMarkup {
 
   private getRowViews(type: string): ViewFactory {
     let viewMarkup = '';
-    let markupArray: Array<string> = [];
+    let markupArray: string[] = [];
 
     // group column
     if (type === 'group') {
 
       // default markup
-      let defaultMarkup: Array<string> = [
+      let defaultMarkup: string[] = [
         '<i click.delegate="changeGrouping(rowRef)">',
         '<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">',
         '<path show.bind="rowRef.__groupExpanded" d="M4.8 7.5h6.5v1H4.8z"/>',

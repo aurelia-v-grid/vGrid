@@ -2,7 +2,6 @@ import {inject, customAttribute} from 'aurelia-framework';
 import {VGrid} from '../v-grid';
 import {BindingContext, OverrideContext } from '../../interfaces';
 
-
 @customAttribute('v-image-fix')
 @inject(Element, VGrid)
 export class VGridAttributesImageFix {
@@ -17,12 +16,10 @@ export class VGridAttributesImageFix {
     this.element = element;
   }
 
-
   public valueChanged(newValue: string): void {
     this.element.src = '';
     this.element.src = this.value || newValue;
   }
-
 
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
@@ -30,6 +27,4 @@ export class VGridAttributesImageFix {
     this.element.src = '';
     this.element.src = this.value || '';
   }
-
-
 }

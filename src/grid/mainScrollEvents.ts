@@ -2,12 +2,12 @@ import { HtmlCache } from './htmlCache';
 
 export class MainScrollEvents {
   private element: Element;
-  private timerLeft: NodeJS.Timer;
-  private timerMain: NodeJS.Timer;
-  private timerRight: NodeJS.Timer;
-  private timerVhandle: NodeJS.Timer;
-  private timerWheel: NodeJS.Timer;
-  private timerHhandle: NodeJS.Timer;
+  private timerLeft: any;
+  private timerMain: any;
+  private timerRight: any;
+  private timerVhandle: any;
+  private timerWheel: any;
+  private timerHhandle: any;
   private lastTopPosition: number;
   private htmlCache: HtmlCache;
   private left: Element;

@@ -73,8 +73,8 @@ export class WakSelection implements SelectionInterface {
         }
     }
 
-    public getSelectedRows(): Array<number> {
-        let array: Array<number> = [];
+    public getSelectedRows(): number[] {
+        let array: number[] = [];
         if (this.selectedRows > 0) {
             this.selection.forEach((value: any) => {
                 array.push(value);
@@ -83,10 +83,11 @@ export class WakSelection implements SelectionInterface {
         return array;
     }
 
-    public setSelectedRows(newRows: Array<number>): void {
+    public setSelectedRows(newRows: number[]): void {
         if (this.selectedRows > 0) {
             this.selection.clear();
         }
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < newRows.length; i++) {
             this.selection.add(newRows[i]);
         }
@@ -126,9 +127,9 @@ export class WakSelection implements SelectionInterface {
     public prepareToSend(): any {
         interface ResultSet {
             _mode: any;
-            _rows: Array<any>;
-            _ranges: Array<any>;
-            _butRows: Array<any>;
+            _rows: any[];
+            _ranges: any[];
+            _butRows: any[];
         }
         // haveto stick within wakanda rest api...
         let result: ResultSet = {
@@ -154,6 +155,7 @@ export class WakSelection implements SelectionInterface {
             } else {
                 if (workingOnRange) {
                     result._ranges.push({
+                        // tslint:disable-next-line:object-literal-shorthand
                         start: start,
                         end: row
                     });

@@ -25,12 +25,10 @@ export class VGridAttributesSelection {
     }
   }
 
-
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
   }
-
 
   public attached(): void {
 
@@ -64,8 +62,6 @@ export class VGridAttributesSelection {
 
     };
 
-
   }
-
 
 }

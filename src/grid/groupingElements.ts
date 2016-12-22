@@ -30,6 +30,7 @@ class GroupContext {
   }
 }
 
+// tslint:disable-next-line:max-classes-per-file
 export class GroupingElements {
   private element: Element;
   private htmlCache: HtmlCache;

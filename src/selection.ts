@@ -19,7 +19,7 @@ export class Selection implements SelectionInterface {
     return row;
   }
 
-  public getRowKeys(): Array<any> {
+  public getRowKeys(): any[] {
     return [];
   }
 
@@ -27,7 +27,7 @@ export class Selection implements SelectionInterface {
     this.getRowKey = fn;
   }
 
-  public overrideGetRowKeys(fn: () => Array<any>): void {
+  public overrideGetRowKeys(fn: () => any[]): void {
     this.getRowKeys = fn;
   }
 
@@ -87,8 +87,8 @@ export class Selection implements SelectionInterface {
   }
 
   // only uses visiable rows when getting selected rows, todo: add option for getting all when filtered
-  public getSelectedRows(): Array<number> {
-    let array: Array<number> = [];
+  public getSelectedRows(): number[] {
+    let array: number[] = [];
     let keys = this.getRowKeys();
     if (this.selectedRows > 0) {
       keys.forEach((key, index) => {
@@ -100,10 +100,11 @@ export class Selection implements SelectionInterface {
     return array;
   }
 
-  public setSelectedRows(newRows: Array<number>): void {
+  public setSelectedRows(newRows: number[]): void {
     if (this.selectedRows > 0) {
       this.selection.clear();
     }
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < newRows.length; i++) {
       this.selection.add(this.getRowKey(newRows[i]));
     }

@@ -1,7 +1,7 @@
 import { FilterObject, Entity } from '../interfaces'; // todo make a interface
 
 export class ArrayFilter {
-  private lastFilter: Array<FilterObject>;
+  private lastFilter: FilterObject[];
   private filterOperators: any = {
       '=': 1,   // equal
       '<=': 2,  // less than or equal to
@@ -27,7 +27,7 @@ export class ArrayFilter {
     return this.lastFilter;
   }
 
-  public runQueryOn(objArray: Array<Entity>, ObjFilter: Array<FilterObject>) {
+  public runQueryOn(objArray: Entity[], ObjFilter: FilterObject[]) {
 
     let resultArray = objArray.filter((data) => {
 

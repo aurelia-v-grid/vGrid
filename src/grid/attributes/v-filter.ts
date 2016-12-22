@@ -2,7 +2,6 @@ import { inject, customAttribute, bindable } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
 import { BindingContext, OverrideContext, FilterObject } from '../../interfaces';
 
-
 @customAttribute('v-filter')
 @inject(Element, VGrid)
 export class VGridAttributesFilter {
@@ -26,12 +25,9 @@ export class VGridAttributesFilter {
     this.element = element;
   }
 
-
   public getOperatorName(operator: string): string {
     return this.vGrid.filterOperatorNames[operator];
   }
-
-
 
   public attached(): void {
 
@@ -52,7 +48,6 @@ export class VGridAttributesFilter {
           this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
       });
 
-
       this.vGrid.element.addEventListener('filterClearCell', (e: CustomEvent) => {
         if (e.detail.attribute === this.attribute) {
           this.resetValue();
@@ -65,12 +60,10 @@ export class VGridAttributesFilter {
         this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
       });
 
-
       if (this.type !== 'checkbox') {
 
         (this.element as HTMLInputElement).placeholder =
           this.getOperatorName(this.filterOperator);
-
 
         // add event listner
         this.element.onkeyup = (e: KeyboardEvent) => {
@@ -89,7 +82,6 @@ export class VGridAttributesFilter {
             }
           }
         };
-
 
       } else {
         // set default!
@@ -118,7 +110,6 @@ export class VGridAttributesFilter {
           this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
           this.vGrid.attGridConnector.query(this.vGrid.attGridConnector.getCurrentFilter());
         };
-
 
       }
     }
@@ -150,7 +141,6 @@ export class VGridAttributesFilter {
     }
   }
 
-
   private resetValue(): void {
     if (this.type !== 'checkbox') {
       (this.element as HTMLInputElement).value = '';
@@ -160,8 +150,7 @@ export class VGridAttributesFilter {
     }
   }
 
-
-  private updateFilter(curFilter: Array<FilterObject>): void {
+  private updateFilter(curFilter: FilterObject[]): void {
     let filterIndex = -1;
 
     // get index of filter

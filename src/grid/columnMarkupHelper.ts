@@ -3,7 +3,7 @@ import { ColConfig } from '../interfaces';
 export class ColumnMarkupHelper {
 
   // todo use same if column setup is just json binded to grid
-  public generate(colConfig: Array<ColConfig>): void {
+  public generate(colConfig: ColConfig[]): void {
     let type: string = null;
     if (colConfig && colConfig.length > 0) {
       type = 'typeHtml';
@@ -14,7 +14,7 @@ export class ColumnMarkupHelper {
     this.processColumns(colConfig);
   }
 
-  private processColumns(array: Array<ColConfig>): void {
+  private processColumns(array: ColConfig[]): void {
     array.forEach((col, index) => {
       // we need attribute or rowtemplate, else throm error
       if (!col.colField && !col.colRowTemplate) {

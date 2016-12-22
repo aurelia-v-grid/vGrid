@@ -47,7 +47,4 @@ export class Footer {
 
     this.viewSlots.footerViewSlot = footerViewSlot;
   }
-
-
-
 }

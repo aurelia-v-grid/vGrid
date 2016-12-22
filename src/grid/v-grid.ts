@@ -33,7 +33,7 @@ export class VGrid {
     public taskQueue: TaskQueue;
     public dragDropAttributeSharedContext: DragDropShardContext;
     public resizeAttributeSharedContext: ResizeShardContext;
-    public colConfig: Array<ColConfig>;
+    public colConfig: ColConfig[];
     public colRepeater: boolean;
     public colRepeatRowTemplate: string;
     public colRepeatRowHeaderTemplate: string;
@@ -58,7 +58,7 @@ export class VGrid {
     public contextMenu: ContextMenu;
     public bindingContext: BindingContext;
     public overrideContext: OverrideContext;
-    public backupColConfig: Array<ColConfig>;
+    public backupColConfig: ColConfig[];
     public filterOperatorNames: any;
     public filterOperatorTranslationKeys: any;
     public loadingScreenTemplate: string;
@@ -74,7 +74,7 @@ export class VGrid {
     @bindable({ attribute: 'v-manual-sel' }) public attManualSelection: boolean;
     @bindable({ attribute: 'v-theme' }) public attTheme: string;
     @bindable({ attribute: 'v-row-on-draw' }) public attOnRowDraw: Function;
-    @bindable({ attribute: 'v-columns' }) public attColConfig: Array<ColConfig>;
+    @bindable({ attribute: 'v-columns' }) public attColConfig: ColConfig[];
     @bindable({ attribute: 'v-i18n' }) public attI18N: Function;
     @bindable({ attribute: 'v-data-delay' }) public attDataDelay: number;
 

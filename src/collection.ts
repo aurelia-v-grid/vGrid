@@ -2,12 +2,12 @@ import { DataSource, Entity } from './interfaces'; // todo,create interface when
 
 export class Collection {
   public length: number;
-  private entities: Array<Entity>;
-  private keys: Array<string>;
+  private entities: Entity[];
+  private keys: string[];
   private key: string;
   private count: number;
   private datasource: DataSource;
-  private ungroupedArray: Array<Entity>;
+  private ungroupedArray: Entity[];
 
   constructor(datasource: DataSource) {
     this.datasource = datasource;
@@ -19,7 +19,7 @@ export class Collection {
     this.ungroupedArray = [];
   }
 
-  public setData(array: Array<Entity>, ungroupedArray?: Array<Entity>): void {
+  public setData(array: Entity[], ungroupedArray?: Entity[]): void {
     this.entities = [];
     this.keys = [];
 
@@ -46,11 +46,11 @@ export class Collection {
 
   }
 
-  public getEntities(): Array<Entity> {
+  public getEntities(): Entity[] {
     return this.ungroupedArray;
   }
 
-  public getCurrentEntities(): Array<Entity> {
+  public getCurrentEntities(): Entity[] {
     return this.entities;
   }
 
@@ -58,7 +58,7 @@ export class Collection {
     return this.keys[row];
   }
 
-  public getRowKeys(): Array<any> {
+  public getRowKeys(): any[] {
     return this.keys;
   }
 

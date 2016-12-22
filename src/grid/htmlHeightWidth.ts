@@ -148,6 +148,7 @@ export class HtmlHeightWidth {
     let main = 0;
     let right = 0;
 
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < columnBindingContext.setupmain.length; i++) {
       if (columnBindingContext.setupleft[i].show) {
         left = left + columnBindingContext.setupleft[i].width;
@@ -179,11 +180,12 @@ export class HtmlHeightWidth {
     this.avgContentHhandleScroll_Width = main;
   }
 
-  public setWidthFromColumnConfig(colConfig: Array<ColConfig>, groupsLength?: number): void {
+  public setWidthFromColumnConfig(colConfig: ColConfig[], groupsLength?: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
     let main = 0;
     let right = 0;
 
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < colConfig.length; i++) {
       switch (true) {
         case colConfig[i].colPinLeft && colConfig[i].colPinRight:

@@ -1,8 +1,8 @@
 import {Entity} from '../interfaces'; // todo make a interface
 
 export class ArrayGrouping {
-  private groups: Array<Array<Entity>>;
-  private grouping: Array<string>;
+  private groups: Entity[][];
+  private grouping: string[];
   private expanded: Set<string>;
 
   constructor() {
@@ -11,7 +11,7 @@ export class ArrayGrouping {
   }
 
   // @params grouping : ["attribute", "attribute2"  etc etc ])
-  public group(arrayToGroup: Array<Entity>, grouping: Array<string>, keepExpanded?: boolean) {
+  public group(arrayToGroup: Entity[], grouping: string[], keepExpanded?: boolean) {
 
     if (grouping.length > 0) {
       // temp holder for groups as we create them
@@ -19,7 +19,7 @@ export class ArrayGrouping {
         this.expanded = new Set([]);
       }
 
-      let groups: Array<Array<Entity>> = [];
+      let groups: Entity[][] = [];
 
       grouping.forEach((groupBy, groupNo) => {
 
@@ -73,7 +73,7 @@ export class ArrayGrouping {
       array = new Set([]);
     }
     let subGroup: Function;
-    let collection: Array<Entity> = [];
+    let collection: Entity[] = [];
     let mainGroups = this.groups[0];
 
     // lopp children
@@ -126,7 +126,7 @@ export class ArrayGrouping {
     let all = id ? false : true; // if no id, then all
     id = id === undefined ? null : id;
     let subGroup: Function;
-    let collection: Array<Entity> = [];
+    let collection: Entity[] = [];
     let mainGroups = this.groups[0];
 
     // lopp children
@@ -182,8 +182,8 @@ export class ArrayGrouping {
     return collection;
   }
 
-    private groupMain(array: Array<Entity>, groupBy: string, groupNo: number) {
-    let tempGroupArray: Array<Entity> = [];
+    private groupMain(array: Entity[], groupBy: string, groupNo: number) {
+    let tempGroupArray: Entity[] = [];
     let curGroup: Entity = ({} as Entity);
     let tempValue: string = null;
 
@@ -213,8 +213,8 @@ export class ArrayGrouping {
     return tempGroupArray;
   }
 
-  private groupChildren(childGroupArray: Array<Entity>, groupBy: string, groupNo: number) {
-    let tempGroupArray: Array<Entity> = [];
+  private groupChildren(childGroupArray: Entity[], groupBy: string, groupNo: number) {
+    let tempGroupArray: Entity[] = [];
 
     let curGroup: Entity = ({} as Entity);
 
@@ -222,7 +222,7 @@ export class ArrayGrouping {
     childGroupArray.forEach((element: Entity) => {
       let tempValue: string = null;
       // loop children
-      let rebuiltChildrenArray: Array<Entity> = [];
+      let rebuiltChildrenArray: Entity[] = [];
       element.__groupChildren.forEach((child: Entity) => {
 
         if (child[groupBy] !== tempValue) {

@@ -1,7 +1,6 @@
 // a lot of this is from here:
 // https://github.com/Wakanda/WAF/blob/WAK9/Core/Native/Rest.js
 // plan to clean up a little more...
-
 export class WakRestUtil {
 
     constructor() {
@@ -40,11 +39,14 @@ export class WakRestUtil {
         }
         // $filter
         if (options.filter) {
+            // tslint:disable-next-line:quotemark
             queryString += (!addAmpersand ? '$filter=' : '&$filter=') + encodeURIComponent("'" + options.filter + "'");
             addAmpersand = true;
         }
         // $params
         if (options.params) {
+            // tslint:disable-next-line:max-line-length
+            // tslint:disable-next-line:quotemark
             queryString += (!addAmpersand ? '$params=' : '&$params=') + encodeURIComponent("'" + JSON.stringify(options.params) + "'");
             addAmpersand = true;
         }
@@ -78,6 +80,7 @@ export class WakRestUtil {
             addAmpersand = true;
         }
         if (options.progressInfo) {
+            // tslint:disable-next-line:max-line-length
             queryString += (!addAmpersand ? '$progressinfo=' : '&$progressinfo=') + encodeURIComponent(options.progressInfo);
             addAmpersand = true;
         }
@@ -86,6 +89,8 @@ export class WakRestUtil {
             addAmpersand = true;
         }
         if (options.savedQueryString) {
+            // tslint:disable-next-line:max-line-length
+            // tslint:disable-next-line:quotemark
             queryString += (!addAmpersand ? '$savedfilter=' : '&$savedfilter=') + encodeURIComponent("'" + options.savedQueryString + "'");
             addAmpersand = true;
         }
@@ -119,21 +124,28 @@ export class WakRestUtil {
         }
         // $attributes
         if (options.filterAttributes != null) {
+            // tslint:disable-next-line:max-line-length
             queryString += (!addAmpersand ? '$attributes=' : '&$attributes=') + encodeURIComponent(options.filterAttributes);
             addAmpersand = true;
         }
         // $addToSet
         if (options.addToSet != null) {
+            // tslint:disable-next-line:max-line-length
+            // tslint:disable-next-line:quotemark
             queryString += (!addAmpersand ? '$addToSet=' : '&$addToSet=') + encodeURIComponent("'" + JSON.stringify(options.addToSet) + "'");
             addAmpersand = true;
         }
         // $fromSel
         if (options.fromSelection != null) {
+            // tslint:disable-next-line:max-line-length
+            // tslint:disable-next-line:quotemark
             queryString += (!addAmpersand ? '$fromSel=' : '&$fromSel=') + encodeURIComponent("'" + JSON.stringify(options.fromSelection) + "'");
             addAmpersand = true;
         }
         // $keepSel <-- need to use for keeping selection
         if (options.keepSelection != null) {
+            // tslint:disable-next-line:max-line-length
+            // tslint:disable-next-line:quotemark
             queryString += (!addAmpersand ? '$keepSel=' : '&$keepSel=') + encodeURIComponent("'" + JSON.stringify(options.keepSelection) + "'");
             addAmpersand = true;
         }
@@ -154,7 +166,7 @@ export class WakRestUtil {
             addAmpersand = true;
         }
         // $expand
-        if (options.attributesExpanded != undefined) {
+        if (options.attributesExpanded !== undefined) {
             if (options.attributesExpanded.length > 0) {
                 let expandString = '';
                 if (!addAmpersand) {

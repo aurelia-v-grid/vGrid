@@ -3,20 +3,20 @@ import { WakEntity } from './wakEntity';
 export class WakCollection {
     public baseUrl: string;
     public attributes: any;
-    public rowno: Array<number>;
-    public keys: Array<any>;
-    public created: Array<Date>;
-    public data: Array<any>;
+    public rowno: number[];
+    public keys: any[];
+    public created: Date[];
+    public data: any[];
     public length: number;
-    public pages: Array<number>;
-    public addToSet: Array<any>;
+    public pages: number[];
+    public addToSet: any[];
     public currentPage: number;
     public entityset: any;
     public options: any;
-    public pagesFetching: Array<any>;
+    public pagesFetching: any[];
     public entityModel: any;
 
-    constructor(attributes: Array<any>, baseUrl: string) {
+    constructor(attributes: any[], baseUrl: string) {
         this.baseUrl = baseUrl;
         this.attributes = attributes;
         this.setDefaults();
@@ -65,7 +65,7 @@ export class WakCollection {
     }
 
     public getUnsaved() {
-        let unsaved: Array<any> = [];
+        let unsaved: any[] = [];
         this.data.forEach((entity) => {
             if (entity.__isNew) {
                 unsaved.push(entity);
@@ -119,7 +119,7 @@ export class WakCollection {
     }
 
     public getModified() {
-        let modified: Array<any> = [];
+        let modified: any[] = [];
         this.data.forEach((row) => {
             if (row.__isModified) {
                 modified.push(row);

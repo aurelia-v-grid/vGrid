@@ -2,7 +2,6 @@ import { inject, customAttribute, bindable } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
 import { BindingContext, OverrideContext, FilterObject } from '../../interfaces';
 
-
 @customAttribute('v-filter-observer')
 @inject(Element, VGrid)
 export class VGridAttributesFilterObserver {
@@ -45,7 +44,7 @@ export class VGridAttributesFilterObserver {
   }
 
   private updateFilter(): void {
-    let curFilter: Array<FilterObject> = this.vGrid.attGridConnector.getCurrentFilter();
+    let curFilter: FilterObject[] = this.vGrid.attGridConnector.getCurrentFilter();
     let filterIndex = -1;
 
     // get index of filter

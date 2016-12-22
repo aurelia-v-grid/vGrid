@@ -20,14 +20,14 @@ export class VGridAttributesResizeCol {
   private colType: string;
   private colNo: number;
   private context: ColumBindingContextObject;
-  private columnsArray: Array<ColumBindingContextObject>;
+  private columnsArray: ColumBindingContextObject[];
   private columnBindingContext: ColumnBindingContext;
   private bindingContext: BindingContext;
   private overrideContext: OverrideContext;
   private onmousedownBinded: EventListenerOrEventListenerObject;
   private onmousemoveBinded: EventListenerOrEventListenerObject;
   private onmouseupBinded: EventListenerOrEventListenerObject;
-  private originals: Array<number>;
+  private originals: number[];
 
   private avgContentLeft_Width: number;
   private avgHeaderLeft_Width: number;
@@ -46,7 +46,6 @@ export class VGridAttributesResizeCol {
   private rightColNo: number;
   private rightColNoWidth: number;
 
-
   constructor(element: Element, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.ctx = vGrid.resizeAttributeSharedContext;
@@ -64,13 +63,10 @@ export class VGridAttributesResizeCol {
     this.columnBindingContext = vGrid.columnBindingContext;
   }
 
-
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
-
   }
-
 
   public attached(): void {
 
@@ -90,9 +86,7 @@ export class VGridAttributesResizeCol {
 
     // add
     this.column.appendChild(resizeHandle);
-
   }
-
 
   private onmouseup(): void {
     // remove events
@@ -101,18 +95,14 @@ export class VGridAttributesResizeCol {
     this.ctx.resizing = false;
   }
 
-
   private onmousemove(e: MouseEvent): void {
     this.updateHeader(e);
   }
 
-
   private updateHeader(e: MouseEvent): void {
 
     let w = Math.abs(this.screenX - e.screenX);
-
     if (w % 2 === 0) { // no need for every px...
-
       requestAnimationFrame(() => {
         let movementX = this.originalWidth - (this.screenX - e.screenX);
         let appendValue = this.originalWidth - movementX;
@@ -122,6 +112,7 @@ export class VGridAttributesResizeCol {
           this.columnsArray[this.colNo].width = movementX;
           this.vGrid.colConfig[this.colNo].colWidth = this.columnsArray[this.colNo].width;
 
+          // tslint:disable-next-line:prefer-for-of
           for (let i = 0; i < this.columnsArray.length; i++) {
             if (this.columnsArray[this.colNo].left < this.columnsArray[i].left) {
               this.columnsArray[i].left = this.originals[i] - appendValue;
@@ -132,16 +123,15 @@ export class VGridAttributesResizeCol {
           this.vGrid.htmlHeightWidth.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width - appendValue;
         }
 
-
         if (this.colType === 'right') {
           this.columnsArray[this.colNo].width = movementX;
           this.vGrid.colConfig[this.colNo].colWidth = this.columnsArray[this.colNo].width;
 
+          // tslint:disable-next-line:prefer-for-of
           for (let i = 0; i < this.columnsArray.length; i++) {
             if (this.columnsArray[this.colNo].left < this.columnsArray[i].left) {
               this.columnsArray[i].left = this.originals[i] - appendValue;
             }
-
           }
           this.vGrid.htmlHeightWidth.avgContentRight_Width = this.avgContentRight_Width - appendValue;
           this.vGrid.htmlHeightWidth.avgHeaderRight_Width = this.avgHeaderRight_Width - appendValue;
@@ -149,19 +139,17 @@ export class VGridAttributesResizeCol {
           this.vGrid.htmlHeightWidth.avgContentMain_Right = this.avgContentMain_Right - appendValue;
           this.vGrid.htmlHeightWidth.avgHeaderMain_Right = this.avgHeaderMain_Right - appendValue;
           this.vGrid.htmlHeightWidth.avgContentHhandle_Right = this.avgContentHhandle_Right - appendValue;
-
         }
-
 
         if (this.colType === 'left') {
           this.columnsArray[this.colNo].width = movementX;
           this.vGrid.colConfig[this.colNo].colWidth = this.columnsArray[this.colNo].width;
 
+          // tslint:disable-next-line:prefer-for-of
           for (let i = 0; i < this.columnsArray.length; i++) {
             if (this.columnsArray[this.colNo].left < this.columnsArray[i].left) {
               this.columnsArray[i].left = this.originals[i] - appendValue;
             }
-
           }
 
           this.vGrid.htmlHeightWidth.avgContentLeft_Width = this.avgContentLeft_Width - appendValue;
@@ -172,16 +160,11 @@ export class VGridAttributesResizeCol {
           this.vGrid.htmlHeightWidth.avgContentHhandle_Left = this.avgContentHhandle_Left - appendValue;
         }
 
-
       });
-
     }
-
   }
 
-
   private onmousedown(e: MouseEvent): void {
-
 
     // get some vars
     this.screenX = e.screenX;
@@ -189,10 +172,10 @@ export class VGridAttributesResizeCol {
     this.originalWidth = this.context.width;
 
     this.originals = [];
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.columnsArray.length; i++) {
       this.originals.push(this.columnsArray[i].left);
     }
-
 
     this.avgContentLeft_Width = this.vGrid.htmlHeightWidth.avgContentLeft_Width;
     this.avgHeaderLeft_Width = this.vGrid.htmlHeightWidth.avgHeaderLeft_Width;
@@ -209,7 +192,6 @@ export class VGridAttributesResizeCol {
 
     this.avgContentMainScrollLeft = this.vGrid.htmlCache.avg_content_main.scrollLeft;
 
-
     if (this.colType === 'main') {
       this.isLast = this.vGrid.htmlHeightWidth.avgContentMainScroll_Width === (this.context.left + this.context.width);
     }
@@ -223,7 +205,6 @@ export class VGridAttributesResizeCol {
       this.isLast = this.vGrid.htmlHeightWidth.avgContentRight_Width === sum;
     }
 
-
     let setupRight = this.vGrid.columnBindingContext.setupright;
     this.rightColNo = 0;
     this.rightColNoWidth = 0;
@@ -234,13 +215,9 @@ export class VGridAttributesResizeCol {
       }
     });
 
-
     // register mosemove and mouse up event
     document.addEventListener('mousemove', this.onmousemoveBinded);
     document.addEventListener('mouseup', this.onmouseupBinded);
-
-
   }
-
 
 }

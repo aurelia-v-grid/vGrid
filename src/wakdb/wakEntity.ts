@@ -112,8 +112,8 @@ export class WakEntity {
                                         try {
                                             let isDate = value instanceof Date && !isNaN(value.valueOf());
                                             let testDate = isDate ? value.toISOString() : new Date(value);
-
-                                            if (testDate.toString() !== this.__valuesOriginal[attributeName].toString()) {
+                                            // tslint:disable-next-line:max-line-length
+                                            if (testDate.toString() !==  this.__valuesOriginal[attributeName].toString()) {
                                                 this.__isModified = true;
                                                 if (this.__attributes[attributeName].simpleDate) {
                                                     let tempDate = new Date(value);

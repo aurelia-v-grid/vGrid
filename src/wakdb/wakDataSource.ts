@@ -18,10 +18,10 @@ export class WakDataSource {
     public savedQueryString: any;
     public multiSelect: any;
     public savedOrderby: any;
-    public eventListener: Array<any>;
-    public eventListenerID: Array<any>;
+    public eventListener: any[];
+    public eventListenerID: any[];
     public eventListenerCount: any;
-    public requests: Array<any>;
+    public requests: any[];
     public collection: any;
     public entity: any;
     public selection: WakSelection;
@@ -594,6 +594,7 @@ export class WakDataSource {
                             reject({
                                 error: err,
                                 changedValues: unsavedValues,
+                                // tslint:disable-next-line:object-literal-shorthand
                                 entity: entity
                             });
                         } else {
@@ -717,7 +718,7 @@ export class WakDataSource {
                         method: 'update'
                     });
 
-                    let postData: Array<any> = [];
+                    let postData: any[] = [];
                     entities.forEach((entity: any) => {
                         let tempData = entity.__getUnsaved();
                         if (entity.__isNew) {
@@ -769,6 +770,7 @@ export class WakDataSource {
                         reject({
                             error: err,
                             changedValues: postData,
+                            // tslint:disable-next-line:object-literal-shorthand
                             entities: entities
                         });
                     });

@@ -1,10 +1,10 @@
 import { Controller, ColumBindingContextObject, Entity } from '../interfaces';
 
 export class ColumnBindingContext {
-  public setupleft: Array<ColumBindingContextObject>;
-  public setupmain: Array<ColumBindingContextObject>;
-  public setupright: Array<ColumBindingContextObject>;
-  public setupgroup: Array<ColumBindingContextObject>;
+  public setupleft: ColumBindingContextObject[];
+  public setupmain: ColumBindingContextObject[];
+  public setupright: ColumBindingContextObject[];
+  public setupgroup: ColumBindingContextObject[];
   public setupgrouping: number;
   public changeGrouping: Function;
   private controller: Controller;

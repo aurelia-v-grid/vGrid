@@ -2,7 +2,6 @@ import { bindable, inject, customAttribute } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
 import { Controller, GroupingElements } from '../../interfaces';
 
-
 @customAttribute('v-menu')
 @inject(Element, VGrid)
 export class VGridAttributeMenu {
@@ -14,13 +13,11 @@ export class VGridAttributeMenu {
   private callbackBinded: Function;
   private groupingElements: GroupingElements;
 
-
   @bindable private filter: string;
   @bindable private sort: string ;
   @bindable private pinned: string;
   @bindable private groupby: string;
   // @bindable private copypaste: string; //todo
-
 
   constructor(element: Element, vGrid: VGrid) {
     this.element = element;
@@ -37,11 +34,9 @@ export class VGridAttributeMenu {
     this.element.addEventListener('contextmenu', this.openBinded);
   }
 
-
   public unbind(): void {
     document.removeEventListener('click', this.checkBinded);
   }
-
 
   private check(e: MouseEvent): void {
     let x = (e.target as HTMLElement).classList.contains('avg-menu__link');
@@ -50,7 +45,6 @@ export class VGridAttributeMenu {
       document.removeEventListener('click', this.checkBinded);
     }
   }
-
 
   private callback(type: string, option: string, event: MouseEvent): boolean {
     if (type === 'filter') {
@@ -71,13 +65,12 @@ export class VGridAttributeMenu {
         document.removeEventListener('click', this.checkBinded);
         return true;
       }
-
     }
 
     if (type === 'sort') {
 
       let field: string = this.sort;
-      let arr: Array<string> = this.sort.split(';');
+      let arr: string[] = this.sort.split(';');
       arr.forEach((x: string) => {
           if (x.indexOf('field') !== -1) {
             field = x.replace('field:', '');
@@ -101,13 +94,12 @@ export class VGridAttributeMenu {
     if (type === 'filterOption') {
 
       let field: string = this.filter;
-      let arr: Array<string> = this.filter.split(';');
+      let arr: string[] = this.filter.split(';');
       arr.forEach((x: string) => {
           if (x.indexOf('field') !== -1) {
             field = x.replace('field:', '');
           }
       });
-
 
       this.raiseEvent('filterUpdate', {
         attribute: field,
@@ -116,10 +108,8 @@ export class VGridAttributeMenu {
       document.removeEventListener('click', this.checkBinded);
       return true;
     }
-
     return false;
   }
-
 
   private open(e: MouseEvent): void {
     this.check(e);
@@ -137,14 +127,11 @@ export class VGridAttributeMenu {
         callback: this.callbackBinded
       });
     }
-
   }
-
 
   private getPosition(e: MouseEvent): any {
     let posx = 0;
     let posy = 0;
-
 
     if (e.pageX || e.pageY) {
       posx = e.pageX;
@@ -159,6 +146,5 @@ export class VGridAttributeMenu {
       y: posy
     };
   }
-
 
 }

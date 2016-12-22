@@ -10,10 +10,10 @@ import {
 } from '../interfaces';
 
 export class ViewSlots {
-  public leftRowViewSlots: Array<ViewSlot>;
-  public mainRowViewSlots: Array<ViewSlot>;
-  public rightRowViewSlots: Array<ViewSlot>;
-  public groupRowViewSlots: Array<ViewSlot>;
+  public leftRowViewSlots: ViewSlot[];
+  public mainRowViewSlots: ViewSlot[];
+  public rightRowViewSlots: ViewSlot[];
+  public groupRowViewSlots: ViewSlot[];
   public leftHeaderViewSlot: ViewSlot;
   public mainHeaderViewSlot: ViewSlot;
   public rightHeaderViewSlot: ViewSlot;
@@ -21,8 +21,8 @@ export class ViewSlots {
   public loadingScreenViewSlot: ViewSlot;
   public footerViewSlot: ViewSlot;
   public contextMenu: ViewSlot;
-  public groupingViewSlots: Array<ViewSlot>;
-  private rowCache: Array<RowCache>;
+  public groupingViewSlots: ViewSlot[];
+  private rowCache: RowCache[];
   private headerCache: HeaderCache;
 
   // plan was to keep all viewslots here so i can bind/unbind... but...

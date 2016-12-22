@@ -3,11 +3,11 @@ import {HtmlCache, RowCache} from '../interfaces';
 export class RowScrollEvents {
   private htmlCache: HtmlCache;
   private element: Element;
-  private timer: NodeJS.Timer;
+  private timer: any;
   private largeScroll: boolean;
   private collectionLength: number;
   private largeScrollUpdateDelay: number;
-  private rowCache: Array<RowCache>;
+  private rowCache: RowCache[];
   private rowHeight: number;
   private cacheLength: number;
   private leftRows: NodeListOf<Element>;
@@ -245,7 +245,7 @@ export class RowScrollEvents {
     this.element.dispatchEvent(event);
   }
 
-  private triggerRebindAllRowsEvent(isDownScroll: boolean, curRowCache: Array<RowCache>): void {
+  private triggerRebindAllRowsEvent(isDownScroll: boolean, curRowCache: RowCache[]): void {
     let event = new CustomEvent('avg-rebind-all-rows', {
       detail: {
         downScroll: isDownScroll,

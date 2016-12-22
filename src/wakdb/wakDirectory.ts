@@ -12,6 +12,7 @@ export class WakDirectory {
     public getCookie(cname: any) {
         let name = cname + '=';
         let ca = document.cookie.split(';');
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < ca.length; i++) {
             let c = ca[i];
             while (c.charAt(0) === ' ') {
@@ -43,7 +44,7 @@ export class WakDirectory {
         });
     }
 
-    public currentUserBelongsTo(groups: Array<string>) {
+    public currentUserBelongsTo(groups: string[]) {
         return new Promise((resolve, reject) => {
 
             let dataURI = '/rest/$directory/currentUserBelongsTo';

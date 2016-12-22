@@ -8,10 +8,10 @@ export class DataSource {
   private selection: Selection;
   private key: string;
   private arrayUtils: ArrayUtils;
-  private mainArray: Array<Entity>;
+  private mainArray: Entity[];
   private config: DatasourceConfig;
   private eventIdCount: number;
-  private eventCallBacks: Array<Function>;
+  private eventCallBacks: Function[];
   private collection: Collection;
 
   constructor(selection: Selection, config?: DatasourceConfig) {
@@ -79,7 +79,7 @@ export class DataSource {
     this.eventCallBacks.splice(id, 1);
   }
 
-  public setArray(array: Array<Entity>): void {
+  public setArray(array: Entity[]): void {
     // new collection
     this.collection = new Collection(this);
     // todo, clear stuff set in ArrayUtils or just create new?
@@ -96,7 +96,7 @@ export class DataSource {
     this.entity = this.collection.getRow(row);
   }
 
-  public query(options: Array<FilterObject>): void {
+  public query(options: FilterObject[]): void {
     if (options) {
       // query data (using main here, so we query all data set)
       let newArray = this.arrayUtils.query(this.mainArray, options);
@@ -122,11 +122,11 @@ export class DataSource {
     this.triggerEvent('collection_sorted');
   }
 
-  public getCurrentOrderBy(): Array<SortObject> {
+  public getCurrentOrderBy(): SortObject[] {
     return this.arrayUtils.getOrderBy();
   }
 
-  public getCurrentFilter(): Array<FilterObject> {
+  public getCurrentFilter(): FilterObject[] {
     return this.arrayUtils.getCurrentFilter();
   }
 
@@ -138,7 +138,7 @@ export class DataSource {
     }
   }
 
-  public group(grouping: Array<string>, keepExpanded?: boolean): void {
+  public group(grouping: string[], keepExpanded?: boolean): void {
     this.arrayUtils.resetSort();
     grouping.forEach((groupName: string) => {
       this.arrayUtils.setOrderBy(groupName, true);
@@ -172,7 +172,7 @@ export class DataSource {
     }
   }
 
-  public getGrouping(): Array<string> {
+  public getGrouping(): string[] {
     return this.arrayUtils.getGrouping();
   }
 
@@ -203,7 +203,7 @@ export class DataSource {
     }
   }
 
-  private getRowKeys(): Array<any> {
+  private getRowKeys(): any[] {
     // if collection then get the keys
     if (this.collection) {
       return this.collection.getRowKeys();

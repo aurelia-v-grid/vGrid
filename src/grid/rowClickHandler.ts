@@ -39,6 +39,7 @@ export class RowClickHandler {
   public updateSelectionOnAllRows(): void {
 
     let rowCache = this.htmlCache.rowCache;
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < rowCache.length; i++) {
       let selection: SelectionInterface = this.getSelection();
       let isSelected = selection.isSelected(rowCache[i].row);
@@ -168,12 +169,12 @@ export class RowClickHandler {
     selection.selectRange(start, end);
   }
 
-  private getSelectedRows(): Array<number> {
+  private getSelectedRows(): number[] {
     let selection: SelectionInterface = this.getSelection();
     return selection.getSelectedRows();
   }
 
-  private setSelectedRows(newRows: Array<number>): void {
+  private setSelectedRows(newRows: number[]): void {
     let selection: SelectionInterface = this.getSelection();
     selection.setSelectedRows(newRows);
   }

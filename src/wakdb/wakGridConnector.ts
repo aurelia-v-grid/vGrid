@@ -15,9 +15,9 @@ export class WakGridConnector implements GridConnectorInterface {
     private eventListenerID: any;
     private controller: ControllerInterface;
     private createGrid: any;
-    private lastSort: Array<any> = [];
-    private curSort: Array<any> = [];
-    private lastFilter: Array<any> = [];
+    private lastSort: any[] = [];
+    private curSort: any[] = [];
+    private lastFilter: any[] = [];
 
     constructor(datasource?: WakDataSource) {
         // depending on source you can add on creation if datasource is there, else use set datasource
@@ -28,11 +28,11 @@ export class WakGridConnector implements GridConnectorInterface {
         return this.datasource.selection;
     }
 
-    public getCurrentOrderBy(): Array<any> {
+    public getCurrentOrderBy(): any[] {
         return this.curSort;
     }
 
-    public getCurrentFilter(): Array<FilterObject> {
+    public getCurrentFilter(): FilterObject[] {
         return this.lastFilter;
     }
 
@@ -92,20 +92,20 @@ export class WakGridConnector implements GridConnectorInterface {
         this.datasource.removeEventListener(this.eventListenerID);
     }
 
-    public getColConfig(): Array<ColConfig> {
+    public getColConfig(): ColConfig[] {
         return this.controller.getColumnConfig();
     }
 
-    public setColConfig(colconfig: Array<ColConfig>): void {
+    public setColConfig(colconfig: ColConfig[]): void {
         this.controller.setColumnConfig(colconfig);
     }
 
-    public getGrouping(): Array<string> {
+    public getGrouping(): string[] {
         // not implemeted in wak datasource
         return []; // this.datasource.getGrouping();
     }
 
-    public group(grouping: Array<string>, keepExpanded?: boolean): void {
+    public group(grouping: string[], keepExpanded?: boolean): void {
         console.warn('not usable in wak datasource');
         // not implemeted in wak datasource
         grouping = null;
@@ -150,7 +150,7 @@ export class WakGridConnector implements GridConnectorInterface {
         }
     }
 
-    public query(filterObj: Array<FilterObject>): void {
+    public query(filterObj: FilterObject[]): void {
 
         // set last filter for later usage
         this.lastFilter = filterObj;
@@ -276,7 +276,7 @@ export class WakGridConnector implements GridConnectorInterface {
      *   Helper function, not called by grid, but use them to convert the query/filter params
      */
     private createOrderByString(orderByArray: any) {
-        let sortArray: Array<any> = [];
+        let sortArray: any[] = [];
         if (orderByArray) {
             orderByArray.forEach((param: any) => {
                 sortArray.push(`${param.attribute} ${param.asc ? 'asc' : 'desc'}`);

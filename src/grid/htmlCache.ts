@@ -26,7 +26,7 @@ export class HtmlCache {
     public avg_main_rows: NodeListOf<any>;
     public avg_right_rows: NodeListOf<any>;
     public avg_group_rows: NodeListOf<any>;
-    public rowCache: Array<RowCache>;
+    public rowCache: RowCache[];
     public headerCache: HeaderCache;
 
     constructor(element: Element) {

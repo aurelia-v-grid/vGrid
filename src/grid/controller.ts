@@ -52,8 +52,8 @@ export class Controller {
   public taskQueue: TaskQueue;
   public dragDropAttributeSharedContext: DragDropShardContext;
   public resizeAttributeSharedContext: ResizeShardContext;
-  public colConfig: Array<ColConfig>;
-  public backupColConfig: Array<ColConfig>;
+  public colConfig: ColConfig[];
+  public backupColConfig: ColConfig[];
   public colRepeater: boolean;
   public colRepeatRowTemplate: string;
   public colRepeatRowHeaderTemplate: string;
@@ -302,7 +302,7 @@ export class Controller {
     this.htmlHeightWidth.setCollectionLength(this.attGridConnector.getDatasourceLength());
   }
 
-  public updateHeaderGrouping(groups: Array<string>): void {
+  public updateHeaderGrouping(groups: string[]): void {
     let length = groups.length;
     this.columnBindingContext.setupgrouping = length;
     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
@@ -333,13 +333,13 @@ export class Controller {
     });
   }
 
-  public getColumnConfig(): Array<ColConfig> {
+  public getColumnConfig(): ColConfig[] {
 
     // get current colcontext
     let colContext = this.columnBindingContext;
 
     // temp array to hold data
-    let tempArray: Array<any> = [];
+    let tempArray: any[] = [];
 
     // loop and find out whats what..
     for (let i = 0; i < this.colConfig.length; i++) {
@@ -380,7 +380,7 @@ export class Controller {
     }
 
     // temp colconf to return
-    let newColConfig: Array<ColConfig> = [];
+    let newColConfig: ColConfig[] = [];
 
     // loop and set correct params
     this.colConfig.forEach((col: ColConfig, i: number) => {
@@ -416,7 +416,7 @@ export class Controller {
     return newColConfig;
   }
 
-  public setColumnConfig(colConfig: Array<ColConfig>): void {
+  public setColumnConfig(colConfig: ColConfig[]): void {
     let length = this.columnBindingContext.setupgrouping;
     this.viewSlots.unbindAndDetachColumns();
     this.columnBindingContext.clear();

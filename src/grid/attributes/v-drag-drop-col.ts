@@ -10,7 +10,6 @@ import {
   TargetData
 } from '../../interfaces';
 
-
 @customAttribute('v-drag-drop-col')
 @inject(Element, VGrid)
 export class VGridDragDropCol {
@@ -33,13 +32,12 @@ export class VGridDragDropCol {
   private colType: string;
   private colNo: number;
   private context: ColumBindingContextObject;
-  private columnsArray: Array<ColumBindingContextObject>;
+  private columnsArray: ColumBindingContextObject[];
   private isPanel: boolean;
   private dragColumnBlock: HTMLElement;
-  private mouseMoveTimer: NodeJS.Timer;
+  private mouseMoveTimer: any;
   @bindable private title: string;
   @bindable private field: string;
-
 
   constructor(element: Element, vGrid: VGrid) {
     // get contexts
@@ -58,7 +56,6 @@ export class VGridDragDropCol {
 
   }
 
-
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
@@ -71,7 +68,6 @@ export class VGridDragDropCol {
     this.onDragOutSideBinded = this.onDragOutSide.bind(this);
   }
 
-
   public unbind(): void {
     // todo remove event listeners
   }
@@ -79,7 +75,6 @@ export class VGridDragDropCol {
   public detached(): void {
     //  console.log("detached")
   }
-
 
   public attached(): void {
 
@@ -100,9 +95,7 @@ export class VGridDragDropCol {
       // why target ? bacuse thats the entire column object no mather what user have inside
       result.target.addEventListener('mouseenter', this.onDragenterBinded);
 
-
     }
-
 
     if (result.ok && result.target.nodeName === 'AVG-TOP-PANEL') {
       // if panel we need to listen and do some stuff differently
@@ -131,12 +124,9 @@ export class VGridDragDropCol {
         }
       };
 
-
     }
 
-
   }
-
 
   private createDragElement(): void {
 
@@ -150,10 +140,7 @@ export class VGridDragDropCol {
 
     // <- maybe do something here, use value for custom html?
     this.dragColumnBlock.innerHTML = this.title || this.vGrid.colConfig[this.colNo].colHeaderName;
-
-
   }
-
 
   private onDragstart(): void {
 
@@ -162,13 +149,11 @@ export class VGridDragDropCol {
     this.vGridElement.addEventListener('mouseleave', this.onDragOutSideBinded);
     this.createDragElement();
 
-
     // want to delay this a little
     this.mouseMoveTimer = setTimeout(() => {
       // create our element we drag with upo
       document.addEventListener('mousemove', this.onDragoverBinded, false);
     }, 300);
-
 
     // set our shared resources for all the drag drop so we know them when we enter another
     this.sharedContext.dragging = true;
@@ -185,11 +170,7 @@ export class VGridDragDropCol {
     this.sharedContext.columnsArray.forEach((x) => {
       this.sharedContext.columnsArraySorted.push(x);
     });
-
-
   }
-
-
 
   private onDragOutSide(event: MouseEvent): void {
 
@@ -227,11 +208,9 @@ export class VGridDragDropCol {
         }
       }
 
-
     }
 
   }
-
 
   private onDragenter(event: MouseEvent): void {
 
@@ -254,7 +233,6 @@ export class VGridDragDropCol {
           let newLeft = this.sharedContext.columnsArray[result.colNo].left;
           let oldLeft = this.sharedContext.columnsArray[this.sharedContext.colNo].left;
 
-
           if (newLeft < oldLeft) {
             this.sharedContext.columnsArray[this.sharedContext.colNo].left = newLeft;
             this.sharedContext.columnsArray[result.colNo].left = newLeft + 1;
@@ -268,7 +246,6 @@ export class VGridDragDropCol {
             (a, b) => {
               return a.left - b.left;
             });
-
 
           // loop and set left/right  
           let appendValue = 0;
@@ -291,7 +268,6 @@ export class VGridDragDropCol {
 
   }
 
-
   private onDragover(event: MouseEvent): void {
 
     // setting position of out dragBlock
@@ -301,7 +277,6 @@ export class VGridDragDropCol {
     }
 
   }
-
 
   private onDragend(): void {
 
@@ -316,7 +291,6 @@ export class VGridDragDropCol {
     document.removeEventListener('mousemove', this.onDragoverBinded);
     this.vGridElement.removeEventListener('mouseleave', this.onDragOutSideBinded);
 
-
     // reset blocks
     this.sharedContext.lastTarget = null;
     // this.sharedContext.group = null;
@@ -329,9 +303,7 @@ export class VGridDragDropCol {
         this.dragColumnBlock = null;
       }
     }
-
   }
-
 
   private switchColumns(result: TargetData): void {
 
@@ -349,7 +321,6 @@ export class VGridDragDropCol {
       case newColType === 'main' && oldColType === 'right':
       case newColType === 'left' && oldColType === 'right':
       case newColType === 'right' && oldColType === 'left':
-
 
         // hide column
         this.sharedContext.columnsArray[this.sharedContext.colNo].show = false;
@@ -371,7 +342,6 @@ export class VGridDragDropCol {
             appendValue = appendValue + x.width;
           }
         });
-
 
         // set new col type
         this.sharedContext.colType = result.colType;
@@ -410,7 +380,6 @@ export class VGridDragDropCol {
         break;
     }
 
-
     // a lot of repeated code... throw this in htmlHeightWidths class, so I can call it from somewhere else too?
     if (newColType === 'left' && oldColType === 'main') {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
@@ -424,7 +393,6 @@ export class VGridDragDropCol {
       heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left + width;
     }
 
-
     if (newColType === 'main' && oldColType === 'left') {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
       heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
@@ -436,7 +404,6 @@ export class VGridDragDropCol {
       heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left - width;
       heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left - width;
     }
-
 
     if (newColType === 'right' && oldColType === 'main') {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
@@ -450,7 +417,6 @@ export class VGridDragDropCol {
       heightAndWidths.avgContentHhandle_Right = heightAndWidths.avgContentHhandle_Right + width;
     }
 
-
     if (newColType === 'main' && oldColType === 'right') {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
       heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
@@ -462,7 +428,6 @@ export class VGridDragDropCol {
       heightAndWidths.avgHeaderMain_Right = heightAndWidths.avgHeaderMain_Right - width;
       heightAndWidths.avgContentHhandle_Right = heightAndWidths.avgContentHhandle_Right - width;
     }
-
 
     if (newColType === 'left' && oldColType === 'right') {
 
@@ -481,7 +446,6 @@ export class VGridDragDropCol {
       heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left + width;
     }
 
-
     if (newColType === 'right' && oldColType === 'left') {
 
       heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width + width;
@@ -498,10 +462,7 @@ export class VGridDragDropCol {
       heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left - width;
       heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left - width;
     }
-
-
   }
-
 
   private getTargetData(curTarget: Element): TargetData {
 
@@ -510,7 +471,6 @@ export class VGridDragDropCol {
     let count = 0;
     let exit = true;
     let isOk = false;
-
 
     while (exit) {
       // have count, so we dont end up locking browser if anything goes really bad
@@ -549,9 +509,8 @@ export class VGridDragDropCol {
     let curColType: string = null;
     let curColNo: number = null;
     let curContext: ColumBindingContextObject = null;
-    let curColumnsArray: Array<ColumBindingContextObject> = null;
+    let curColumnsArray: ColumBindingContextObject[] = null;
     let isPanel = false;
-
 
     // if ok, get variables we need
     if (isOk && curTarget.nodeName === 'AVG-COL') {
@@ -578,6 +537,5 @@ export class VGridDragDropCol {
     } as TargetData);
 
   }
-
 
 }

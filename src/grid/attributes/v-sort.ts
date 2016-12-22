@@ -15,19 +15,16 @@ export class VGridAttributesSort {
   private sortIcon: HTMLElement;
   private firstTime: boolean = true;
 
-
   constructor(element: HTMLElement, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
   }
-
 
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
     this.attribute = this.field;
   }
-
 
   public attached(): void {
     this.sortIcon = document.createElement('i');
@@ -54,11 +51,9 @@ export class VGridAttributesSort {
     });
   }
 
-
   public detached(): void {
     this.element.removeChild(this.sortIcon);
   }
-
 
   private getSortIconMarkup(): string {
 
@@ -86,6 +81,5 @@ export class VGridAttributesSort {
 
     return markup;
   }
-
 
 }

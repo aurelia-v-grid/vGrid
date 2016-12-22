@@ -93,9 +93,10 @@ export class RowDataBinder {
 
   private rebindAllRows(event: CustomEvent): void {
 
-    let rowCache: Array<RowCache> = event.detail.rowCache;
+    let rowCache: RowCache[] = event.detail.rowCache;
     let downScroll = event.detail.downScroll;
 
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < rowCache.length; i++) {
 
       this.controller.getElement(rowCache[i].row, downScroll, (data: BindingContext) => {
