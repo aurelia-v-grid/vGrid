@@ -28,7 +28,7 @@ export declare class VGrid {
     taskQueue: TaskQueue;
     dragDropAttributeSharedContext: DragDropShardContext;
     resizeAttributeSharedContext: ResizeShardContext;
-    colConfig: Array<ColConfig>;
+    colConfig: ColConfig[];
     colRepeater: boolean;
     colRepeatRowTemplate: string;
     colRepeatRowHeaderTemplate: string;
@@ -53,7 +53,7 @@ export declare class VGrid {
     contextMenu: ContextMenu;
     bindingContext: BindingContext;
     overrideContext: OverrideContext;
-    backupColConfig: Array<ColConfig>;
+    backupColConfig: ColConfig[];
     filterOperatorNames: any;
     filterOperatorTranslationKeys: any;
     loadingScreenTemplate: string;
@@ -68,7 +68,7 @@ export declare class VGrid {
     attManualSelection: boolean;
     attTheme: string;
     attOnRowDraw: Function;
-    attColConfig: Array<ColConfig>;
+    attColConfig: ColConfig[];
     attI18N: Function;
     attDataDelay: number;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, taskQueue: TaskQueue);

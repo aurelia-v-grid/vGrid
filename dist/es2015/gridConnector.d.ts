@@ -12,20 +12,20 @@ export declare class GridConnector implements GridConnectorInterface {
     gridCreated(): void;
     select(row: number): void;
     getDatasourceLength(): number;
-    getColConfig(): Array<ColConfig>;
-    setColConfig(colconfig: Array<ColConfig>): void;
-    getGrouping(): Array<string>;
-    group(grouping: Array<string>, keepExpanded?: boolean): void;
+    getColConfig(): ColConfig[];
+    setColConfig(colconfig: ColConfig[]): void;
+    getGrouping(): string[];
+    group(grouping: string[], keepExpanded?: boolean): void;
     getElement(options: {
         row: number;
         isDown: boolean;
         callback: Function;
     }): void;
-    query(a: Array<FilterObject>): void;
+    query(a: FilterObject[]): void;
     orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
     destroy(): void;
-    getCurrentOrderBy(): Array<SortObject>;
-    getCurrentFilter(): Array<FilterObject>;
+    getCurrentOrderBy(): SortObject[];
+    getCurrentFilter(): FilterObject[];
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
     triggerI18n(): void;

@@ -11,8 +11,8 @@ export declare class WakSelection implements SelectionInterface {
     deSelectAll(): void;
     select(row: number, addToSelection?: boolean): void;
     selectRange(start: number, end: number): void;
-    getSelectedRows(): Array<number>;
-    setSelectedRows(newRows: Array<number>): void;
+    getSelectedRows(): number[];
+    setSelectedRows(newRows: number[]): void;
     getmode(): string;
     reset(): void;
     trigger(): void;

@@ -1,19 +1,19 @@
 export declare class WakCollection {
     baseUrl: string;
     attributes: any;
-    rowno: Array<number>;
-    keys: Array<any>;
-    created: Array<Date>;
-    data: Array<any>;
+    rowno: number[];
+    keys: any[];
+    created: Date[];
+    data: any[];
     length: number;
-    pages: Array<number>;
-    addToSet: Array<any>;
+    pages: number[];
+    addToSet: any[];
     currentPage: number;
     entityset: any;
     options: any;
-    pagesFetching: Array<any>;
+    pagesFetching: any[];
     entityModel: any;
-    constructor(attributes: Array<any>, baseUrl: string);
+    constructor(attributes: any[], baseUrl: string);
     setDefaults(): void;
     clearCache(): Promise<{}>;
     getUnsaved(): any[];

@@ -5,7 +5,7 @@ export declare class WakDirectory {
     constructor(restApi: WakRestApi);
     getCookie(cname: any): string;
     currentUser(): Promise<{}>;
-    currentUserBelongsTo(groups: Array<string>): Promise<{}>;
+    currentUserBelongsTo(groups: string[]): Promise<{}>;
     login(username: string, password: string, duration: number): Promise<{}>;
     logout(): Promise<{}>;
 }

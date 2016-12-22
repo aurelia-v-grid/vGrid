@@ -1,9 +1,9 @@
 import { ViewSlot, OverrideContext, HtmlCache, ColumnBindingContext, SelectionInterface } from '../interfaces';
 export declare class ViewSlots {
-    leftRowViewSlots: Array<ViewSlot>;
-    mainRowViewSlots: Array<ViewSlot>;
-    rightRowViewSlots: Array<ViewSlot>;
-    groupRowViewSlots: Array<ViewSlot>;
+    leftRowViewSlots: ViewSlot[];
+    mainRowViewSlots: ViewSlot[];
+    rightRowViewSlots: ViewSlot[];
+    groupRowViewSlots: ViewSlot[];
     leftHeaderViewSlot: ViewSlot;
     mainHeaderViewSlot: ViewSlot;
     rightHeaderViewSlot: ViewSlot;
@@ -11,7 +11,7 @@ export declare class ViewSlots {
     loadingScreenViewSlot: ViewSlot;
     footerViewSlot: ViewSlot;
     contextMenu: ViewSlot;
-    groupingViewSlots: Array<ViewSlot>;
+    groupingViewSlots: ViewSlot[];
     private rowCache;
     private headerCache;
     constructor(htmlCache: HtmlCache);

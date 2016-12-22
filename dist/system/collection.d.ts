@@ -8,11 +8,11 @@ export declare class Collection {
     private datasource;
     private ungroupedArray;
     constructor(datasource: DataSource);
-    setData(array: Array<Entity>, ungroupedArray?: Array<Entity>): void;
-    getEntities(): Array<Entity>;
-    getCurrentEntities(): Array<Entity>;
+    setData(array: Entity[], ungroupedArray?: Entity[]): void;
+    getEntities(): Entity[];
+    getCurrentEntities(): Entity[];
     getRowKey(row: number): string;
-    getRowKeys(): Array<any>;
+    getRowKeys(): any[];
     getRow(row: number): Entity;
     getRowFromEntity(entity: Entity): number;
 }

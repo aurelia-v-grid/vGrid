@@ -13,10 +13,10 @@ export declare class WakDataSource {
     savedQueryString: any;
     multiSelect: any;
     savedOrderby: any;
-    eventListener: Array<any>;
-    eventListenerID: Array<any>;
+    eventListener: any[];
+    eventListenerID: any[];
     eventListenerCount: any;
-    requests: Array<any>;
+    requests: any[];
     collection: any;
     entity: any;
     selection: WakSelection;

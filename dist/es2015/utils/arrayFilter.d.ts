@@ -5,5 +5,5 @@ export declare class ArrayFilter {
     constructor();
     getOperatorNo(val: string): number;
     getLastFilter(): FilterObject[];
-    runQueryOn(objArray: Array<Entity>, ObjFilter: Array<FilterObject>): Entity[];
+    runQueryOn(objArray: Entity[], ObjFilter: FilterObject[]): Entity[];
 }

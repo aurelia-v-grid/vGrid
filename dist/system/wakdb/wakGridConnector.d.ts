@@ -10,8 +10,8 @@ export declare class WakGridConnector implements GridConnectorInterface {
     private lastFilter;
     constructor(datasource?: WakDataSource);
     getSelection(): SelectionInterface;
-    getCurrentOrderBy(): Array<any>;
-    getCurrentFilter(): Array<FilterObject>;
+    getCurrentOrderBy(): any[];
+    getCurrentFilter(): FilterObject[];
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
     getDatasourceLength(): any;
@@ -19,17 +19,17 @@ export declare class WakGridConnector implements GridConnectorInterface {
     gridCreated(): void;
     setDatasource(datasource: any, errorHandler?: any, setHeight?: any, setSort?: any): void;
     destroy(): void;
-    getColConfig(): Array<ColConfig>;
-    setColConfig(colconfig: Array<ColConfig>): void;
-    getGrouping(): Array<string>;
-    group(grouping: Array<string>, keepExpanded?: boolean): void;
+    getColConfig(): ColConfig[];
+    setColConfig(colconfig: ColConfig[]): void;
+    getGrouping(): string[];
+    group(grouping: string[], keepExpanded?: boolean): void;
     select(row: any): void;
     getElement(options: {
         row: number;
         isDown: boolean;
         callback: Function;
     }): void;
-    query(filterObj: Array<FilterObject>): void;
+    query(filterObj: FilterObject[]): void;
     orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
     setValueToRow(attribute: any, value: any, row: any): void;
     private eventHandler(event);

@@ -22,8 +22,8 @@ export interface ControllerInterface {
     collectionLength(): number;
     triggerScroll(position: number): void;
     rebindAllRows(): void;
-    getColumnConfig(): Array<ColConfig>;
-    setColumnConfig(colConfig: Array<ColConfig>): void;
+    getColumnConfig(): ColConfig[];
+    setColumnConfig(colConfig: ColConfig[]): void;
 }
 export interface Entity {
     [key: string]: any;
@@ -32,7 +32,7 @@ export interface Entity {
     __groupName?: string;
     __groupLvl?: number;
     __groupTotal?: number;
-    __groupChildren?: Array<Entity>;
+    __groupChildren?: Entity[];
     __groupExpanded?: boolean;
 }
 export interface FilterObject {
@@ -62,8 +62,8 @@ export interface SelectionInterface {
     deSelect(row: number): void;
     select(row: number, add?: boolean): void;
     selectRange(start: number, end: number): void;
-    getSelectedRows(): Array<number>;
-    setSelectedRows(newRows: Array<number>): void;
+    getSelectedRows(): number[];
+    setSelectedRows(newRows: number[]): void;
     reset(): void;
 }
 export interface GridConnectorInterface {
@@ -72,19 +72,19 @@ export interface GridConnectorInterface {
     gridCreated(): void;
     select(row: number): void;
     getDatasourceLength(): number;
-    getColConfig(): Array<ColConfig>;
-    setColConfig(colconfig: Array<ColConfig>): void;
-    getGrouping(): Array<string>;
-    group(grouping: Array<string>, keepExpanded?: boolean): void;
+    getColConfig(): ColConfig[];
+    setColConfig(colconfig: ColConfig[]): void;
+    getGrouping(): string[];
+    group(grouping: string[], keepExpanded?: boolean): void;
     getElement(options: {
         row: number;
         isDown: boolean;
         callback: Function;
     }): void;
-    query(a: Array<FilterObject>): void;
+    query(a: FilterObject[]): void;
     orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
-    getCurrentOrderBy(): Array<SortObject>;
-    getCurrentFilter(): Array<FilterObject>;
+    getCurrentOrderBy(): SortObject[];
+    getCurrentFilter(): FilterObject[];
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
 }

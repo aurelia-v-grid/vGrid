@@ -132,7 +132,7 @@ System.register([], function (exports_1, context_1) {
                         queryString += (!addAmpersand ? '$subOrderby=' : '&$subOrderby=') + encodeURIComponent(options.subOrderby);
                         addAmpersand = true;
                     }
-                    if (options.attributesExpanded != undefined) {
+                    if (options.attributesExpanded !== undefined) {
                         if (options.attributesExpanded.length > 0) {
                             var expandString = '';
                             if (!addAmpersand) {

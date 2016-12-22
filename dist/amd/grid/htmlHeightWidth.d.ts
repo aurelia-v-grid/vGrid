@@ -47,6 +47,6 @@ export declare class HtmlHeightWidth {
     setCollectionLength(length: number): void;
     addDefaultsAttributes(attHeaderHeight: number, attRowHeight: number, attFooterHeight: number, attPanelHeight: number): void;
     adjustWidthsColumns(columnBindingContext: ColumnBindingContext, groupsLength: number): void;
-    setWidthFromColumnConfig(colConfig: Array<ColConfig>, groupsLength?: number): void;
+    setWidthFromColumnConfig(colConfig: ColConfig[], groupsLength?: number): void;
     getScrollbarWidth(): number;
 }

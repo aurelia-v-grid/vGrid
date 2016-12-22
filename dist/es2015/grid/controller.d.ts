@@ -23,8 +23,8 @@ export declare class Controller {
     taskQueue: TaskQueue;
     dragDropAttributeSharedContext: DragDropShardContext;
     resizeAttributeSharedContext: ResizeShardContext;
-    colConfig: Array<ColConfig>;
-    backupColConfig: Array<ColConfig>;
+    colConfig: ColConfig[];
+    backupColConfig: ColConfig[];
     colRepeater: boolean;
     colRepeatRowTemplate: string;
     colRepeatRowHeaderTemplate: string;
@@ -60,10 +60,10 @@ export declare class Controller {
     raiseEvent(name: string, data?: {}): void;
     setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<void>;
     updateHeights(): void;
-    updateHeaderGrouping(groups: Array<string>): void;
+    updateHeaderGrouping(groups: string[]): void;
     collectionLength(): number;
     triggerScroll(position: number): void;
     rebindAllRows(): void;
-    getColumnConfig(): Array<ColConfig>;
-    setColumnConfig(colConfig: Array<ColConfig>): void;
+    getColumnConfig(): ColConfig[];
+    setColumnConfig(colConfig: ColConfig[]): void;
 }

@@ -4,7 +4,7 @@ export declare class ArrayGrouping {
     private grouping;
     private expanded;
     constructor();
-    group(arrayToGroup: Array<Entity>, grouping: Array<string>, keepExpanded?: boolean): Entity[];
+    group(arrayToGroup: Entity[], grouping: string[], keepExpanded?: boolean): Entity[];
     getGrouping(): string[];
     expand(id: string, array?: Set<string>): Entity[];
     collapse(id: string): Entity[];
