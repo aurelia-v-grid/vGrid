@@ -18,6 +18,7 @@ export class MainScrollEvents {
   private hhandle: Element;
   private group: Element;
   private touchY: number;
+  private touchX: number;
   private isIE11: boolean;
   private wheelEvent: string;
 
@@ -116,17 +117,19 @@ export class MainScrollEvents {
   private touchStart(e: any) {
     let touchobj = e.changedTouches[0];
     this.touchY = parseInt(touchobj.clientY, 10);
+    this.touchX = parseInt(touchobj.clientX, 10);
     e.preventDefault();
   }
 
   private touchMove(e: any) {
     let touchobj = e.changedTouches[0];
     let dist = parseInt(touchobj.clientY, 10) - this.touchY;
-    this.handleEventWheelScroll(-dist);
+    let distX = parseInt(touchobj.clientX, 10) - this.touchX;
+    this.handleEventWheelScroll(-dist, -distX);
     e.preventDefault();
   }
 
-  private handleEventWheelScroll(newTopPosition: number): void {
+  private handleEventWheelScroll(newTopPosition: number, left?: number): void {
     requestAnimationFrame(() => {
       if (this.timerWheel) {
         clearTimeout(this.timerWheel);
@@ -138,7 +141,10 @@ export class MainScrollEvents {
         this.left.scrollTop = this.left.scrollTop + newTopPosition;
         this.vhandle.scrollTop = this.vhandle.scrollTop + newTopPosition;
         this.group.scrollTop = this.group.scrollTop + newTopPosition;
-
+        if (left !== undefined) {
+          this.main.scrollLeft = this.main.scrollLeft + left;
+          (this.mainHead as HTMLElement).style.left = - this.main.scrollLeft + 'px';
+        }
         this.checkScroll(this.main.scrollTop);
 
         this.timerWheel = setTimeout(() => {
