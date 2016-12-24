@@ -135,7 +135,7 @@ export class HtmlHeightWidth {
     this.avgHeaderMainScroll_Height = attHeaderHeight;
     this.avgContentGroup_Height = this.avgContentGroup_Height;
     this.avgContentGroup_Top = this.avgContent_Top;
-    this.avgContentGroup_Bottom = this.avgContent_Bottom + this.avgScrollBarWidth;
+    this.avgContentGroup_Bottom = this.avgContent_Bottom;
     this.avgContentVhandle_Height = this.avgContentVhandle_Height;
     this.avgContentVhandle_Top = this.avgContent_Top;
     this.avgContentVhandle_Bottom = this.avgContent_Bottom;
