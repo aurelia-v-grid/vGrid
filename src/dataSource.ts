@@ -82,8 +82,11 @@ export class DataSource {
   public setArray(array: Entity[]): void {
     // new collection
     this.collection = new Collection(this);
-    // todo, clear stuff set in ArrayUtils or just create new?
-    // ???????
+    // clear stuff set in ArrayUtils
+    this.selection.reset();
+    this.arrayUtils.resetGrouping();
+    this.arrayUtils.resetSort();
+
     // set data to collection
     this.collection.setData(array);
     // set our main collection, we will use this for later

@@ -10,6 +10,13 @@ export class ArrayGrouping {
     this.expanded = new Set([]);
   }
 
+
+  public reset() {
+    this.groups = [];
+    this.grouping = [];
+    this.expanded = new Set([]);
+  }
+
   // @params grouping : ["attribute", "attribute2"  etc etc ])
   public group(arrayToGroup: Entity[], grouping: string[], keepExpanded?: boolean) {
 

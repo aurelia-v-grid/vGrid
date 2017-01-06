@@ -1,7 +1,7 @@
 import { ArrayFilter } from './arrayFilter';
 import { ArraySort } from './arraySort';
 import { ArrayGrouping } from './arrayGrouping';
-import {SortObject, FilterObject, Entity} from '../interfaces';
+import { SortObject, FilterObject, Entity } from '../interfaces';
 
 export class ArrayUtils {
   public arrayFilter: ArrayFilter;
@@ -18,10 +18,10 @@ export class ArrayUtils {
     collection: Array<Entity>,
     attribute: string | SortObject,
     addToCurrentSort?: boolean
-    ): {fixed: Array<Entity>, full: Array<Entity>} {
+  ): { fixed: Array<Entity>, full: Array<Entity> } {
 
     let grouping = this.getGrouping();
-    let result: {fixed: Array<Entity>, full: Array<Entity>} = {
+    let result: { fixed: Array<Entity>, full: Entity[] } = {
       fixed: null,
       full: null
     };
@@ -38,7 +38,7 @@ export class ArrayUtils {
       let exist = false;
 
       // if not adding, create new sort array
-      let newSort: Array<SortObject> = [];
+      let newSort: SortObject[] = [];
 
       let count = 0;
       // loop existing
@@ -104,35 +104,35 @@ export class ArrayUtils {
     return result;
   }
 
-  public group(array: Array<Entity>, grouping: Array<string>, keepExpanded: boolean): Array<Entity> {
+  public group(array: Entity[], grouping: string[], keepExpanded: boolean): Entity[] {
     return this.arrayGrouping.group(array, grouping, keepExpanded);
   }
 
-  public getGrouping(): Array<string> {
+  public getGrouping(): string[] {
     return this.arrayGrouping.getGrouping();
   }
 
-  public groupCollapse(id: string): Array<Entity> {
+  public groupCollapse(id: string): Entity[] {
     return this.arrayGrouping.collapse(id);
   }
 
-  public groupExpand(id: string): Array<Entity> {
+  public groupExpand(id: string): Entity[] {
     return this.arrayGrouping.expand(id);
   }
 
-  public getOrderBy(): Array<SortObject> {
+  public getOrderBy(): SortObject[] {
     return this.arraySort.getOrderBy();
   }
 
-  public setLastSort(array: Array<SortObject>): void {
-    this.arraySort.setLastSort(array);
+  public setLastSort(array: SortObject[]): void {
+      this.arraySort.setLastSort(array);
   }
 
-  public setOrderBy(attribute: string| SortObject, addToCurrentSort?: boolean): void {
+  public setOrderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
     this.arraySort.setOrderBy(attribute, addToCurrentSort);
   }
 
-  public runOrderbyOn(array: Array<Entity>): void {
+  public runOrderbyOn(array: Entity[]): void {
     this.arraySort.runOrderbyOn(array);
   }
 
@@ -140,11 +140,15 @@ export class ArrayUtils {
     this.arraySort.reset();
   }
 
-  public getCurrentFilter(): Array<FilterObject> {
+  public resetGrouping(): void {
+    this.arrayGrouping.reset();
+  }
+
+  public getCurrentFilter(): FilterObject[] {
     return this.arrayFilter.getLastFilter();
   }
 
-  public query(array: Array<Entity>, params: Array<FilterObject>): Array<Entity> {
+  public query(array: Entity[], params: FilterObject[]): Entity[] {
     return this.arrayFilter.runQueryOn(array, params);
   }
 
