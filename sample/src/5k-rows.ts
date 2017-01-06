@@ -27,7 +27,7 @@ export class Welcome {
     return this.testString;
   }
 
-  //this is called by my button... not very good
+  // this is called by my button... not very good
   public translate() {
     if (this.testString === 'cool') {
       this.testString = 'yay';
@@ -38,7 +38,18 @@ export class Welcome {
     this.gridConnector.triggerI18n();
   }
 
+  public replace(x) {
+    this.dummyDataGenerator.generateData(x, (data) => {
+      this.myCollection = data;
+    });
+    this.ds.setArray(this.myCollection);
+  }
 
-
+  public add(x) {
+    this.dummyDataGenerator.generateData(x, (data) => {
+      this.myCollection = data;
+    });
+    this.ds.setArray(this.myCollection);
+  }
 
 }
