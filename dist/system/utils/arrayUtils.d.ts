@@ -7,19 +7,20 @@ export declare class ArrayUtils {
     arraySort: ArraySort;
     arrayGrouping: ArrayGrouping;
     constructor();
-    orderBy(collection: Array<Entity>, attribute: string | SortObject, addToCurrentSort?: boolean): {
-        fixed: Array<Entity>;
-        full: Array<Entity>;
+    orderBy(collection: Entity[], attribute: string | SortObject, addToCurrentSort?: boolean): {
+        fixed: Entity[];
+        full: Entity[];
     };
-    group(array: Array<Entity>, grouping: Array<string>, keepExpanded: boolean): Array<Entity>;
-    getGrouping(): Array<string>;
-    groupCollapse(id: string): Array<Entity>;
-    groupExpand(id: string): Array<Entity>;
-    getOrderBy(): Array<SortObject>;
-    setLastSort(array: Array<SortObject>): void;
+    group(array: Entity[], grouping: string[], keepExpanded: boolean): Entity[];
+    getGrouping(): string[];
+    groupCollapse(id: string): Entity[];
+    groupExpand(id: string): Entity[];
+    getOrderBy(): SortObject[];
+    setLastSort(array: SortObject[]): void;
     setOrderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
-    runOrderbyOn(array: Array<Entity>): void;
+    runOrderbyOn(array: Entity[]): void;
     resetSort(): void;
-    getCurrentFilter(): Array<FilterObject>;
-    query(array: Array<Entity>, params: Array<FilterObject>): Array<Entity>;
+    resetGrouping(): void;
+    getCurrentFilter(): FilterObject[];
+    query(array: Entity[], params: FilterObject[]): Entity[];
 }

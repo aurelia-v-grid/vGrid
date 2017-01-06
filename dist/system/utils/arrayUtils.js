@@ -111,6 +111,9 @@ System.register(["./arrayFilter", "./arraySort", "./arrayGrouping"], function (e
                 ArrayUtils.prototype.resetSort = function () {
                     this.arraySort.reset();
                 };
+                ArrayUtils.prototype.resetGrouping = function () {
+                    this.arrayGrouping.reset();
+                };
                 ArrayUtils.prototype.getCurrentFilter = function () {
                     return this.arrayFilter.getLastFilter();
                 };

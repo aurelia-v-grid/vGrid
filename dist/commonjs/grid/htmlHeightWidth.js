@@ -40,13 +40,18 @@ var HtmlHeightWidth = (function () {
         this.avgContentHhandleScroll_Width = 17;
         this.avgFooter_Height = 30;
     }
-    HtmlHeightWidth.prototype.setCollectionLength = function (length) {
-        var total = length * this.attRowHeight;
-        this.avgContentRightScroll_Height = total + this.avgScrollBarWidth;
-        this.avgContentGroup_Height = total + this.avgScrollBarWidth;
-        this.avgContentVhandleScroll_Height = total + this.avgScrollBarWidth;
-        this.avgContentMainScroll_Height = total + this.avgScrollBarWidth;
-        this.avgContentLeftScroll_Height = total + this.avgScrollBarWidth;
+    HtmlHeightWidth.prototype.getNewHeight = function (length) {
+        return length * this.attRowHeight;
+    };
+    HtmlHeightWidth.prototype.setCollectionLength = function (length, includeScroller) {
+        var rowTotal = this.getNewHeight(length);
+        var avgScrollbarHeightValue = includeScroller === false ? 0 : this.avgScrollBarWidth;
+        var total = rowTotal + avgScrollbarHeightValue;
+        this.avgContentRightScroll_Height = total;
+        this.avgContentGroup_Height = total;
+        this.avgContentVhandleScroll_Height = total;
+        this.avgContentMainScroll_Height = total;
+        this.avgContentLeftScroll_Height = total;
     };
     HtmlHeightWidth.prototype.addDefaultsAttributes = function (attHeaderHeight, attRowHeight, attFooterHeight, attPanelHeight) {
         this.attHeaderHeight = attHeaderHeight;
@@ -62,7 +67,7 @@ var HtmlHeightWidth = (function () {
         this.avgHeaderMainScroll_Height = attHeaderHeight;
         this.avgContentGroup_Height = this.avgContentGroup_Height;
         this.avgContentGroup_Top = this.avgContent_Top;
-        this.avgContentGroup_Bottom = this.avgContent_Bottom + this.avgScrollBarWidth;
+        this.avgContentGroup_Bottom = this.avgContent_Bottom;
         this.avgContentVhandle_Height = this.avgContentVhandle_Height;
         this.avgContentVhandle_Top = this.avgContent_Top;
         this.avgContentVhandle_Bottom = this.avgContent_Bottom;

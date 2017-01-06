@@ -96,6 +96,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
                         _this.vGrid.htmlHeightWidth.avgHeaderMain_Left = _this.avgHeaderMain_Left - appendValue;
                         _this.vGrid.htmlHeightWidth.avgContentHhandle_Left = _this.avgContentHhandle_Left - appendValue;
                     }
+                    _this.vGrid.controller.udateHorizontalScroller();
                 });
             }
         };

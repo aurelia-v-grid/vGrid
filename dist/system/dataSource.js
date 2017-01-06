@@ -58,6 +58,9 @@ System.register(["./selection", "./collection", "./utils/arrayUtils"], function 
                 };
                 DataSource.prototype.setArray = function (array) {
                     this.collection = new collection_1.Collection(this);
+                    this.selection.reset();
+                    this.arrayUtils.resetGrouping();
+                    this.arrayUtils.resetSort();
                     this.collection.setData(array);
                     this.mainArray = this.collection.getEntities();
                     this.triggerEvent('collection_changed');

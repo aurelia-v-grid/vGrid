@@ -4,9 +4,9 @@ export declare class ArraySort {
     private curSort;
     constructor();
     reset(): void;
-    setLastSort(array: Array<SortObject>): void;
+    setLastSort(array: SortObject[]): void;
     setOrderBy(param: SortObject | any, add?: boolean): void;
-    getOrderBy(): Array<SortObject>;
+    getOrderBy(): SortObject[];
     getValue(attribute: string, obj: any): any;
-    runOrderbyOn(array: Array<Entity>): void;
+    runOrderbyOn(array: Entity[]): void;
 }

@@ -157,6 +157,7 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                             _this.controller.createGrid();
                         }
                         _this.viewSlots.bindAndAttachColumns(_this.overrideContext, _this.columnBindingContext, _this.attGridConnector.getSelection());
+                        _this.controller.udateHorizontalScroller();
                         _this.attGridConnector.gridCreated();
                     });
                 };

@@ -3,6 +3,11 @@ var ArrayGrouping = (function () {
         this.grouping = [];
         this.expanded = new Set([]);
     }
+    ArrayGrouping.prototype.reset = function () {
+        this.groups = [];
+        this.grouping = [];
+        this.expanded = new Set([]);
+    };
     ArrayGrouping.prototype.group = function (arrayToGroup, grouping, keepExpanded) {
         var _this = this;
         if (grouping.length > 0) {

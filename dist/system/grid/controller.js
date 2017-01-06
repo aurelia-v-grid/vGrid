@@ -170,8 +170,26 @@ System.register([], function (exports_1, context_1) {
                     }
                 };
                 Controller.prototype.updateHeights = function () {
+                    var totalRowHeight = this.htmlHeightWidth.getNewHeight(this.attGridConnector.getDatasourceLength());
+                    var bodyHeight = this.htmlCache.avg_content_main.clientHeight;
+                    if (bodyHeight < totalRowHeight) {
+                        this.htmlCache.avg_content_vhandle.style.display = 'block';
+                    }
+                    else {
+                        this.htmlCache.avg_content_vhandle.style.display = 'none';
+                    }
                     this.rowScrollEvents.setCollectionLength(this.attGridConnector.getDatasourceLength());
-                    this.htmlHeightWidth.setCollectionLength(this.attGridConnector.getDatasourceLength());
+                    this.htmlHeightWidth.setCollectionLength(this.attGridConnector.getDatasourceLength(), bodyHeight < totalRowHeight);
+                };
+                Controller.prototype.udateHorizontalScroller = function () {
+                    var bodyWidth = this.htmlCache.avg_content_main.clientWidth;
+                    var scrollWidth = this.htmlHeightWidth.avgContentMainScroll_Width;
+                    if (bodyWidth < scrollWidth) {
+                        this.htmlCache.avg_content_hhandle.style.display = 'block';
+                    }
+                    else {
+                        this.htmlCache.avg_content_hhandle.style.display = 'none';
+                    }
                 };
                 Controller.prototype.updateHeaderGrouping = function (groups) {
                     var length = groups.length;
@@ -276,6 +294,7 @@ System.register([], function (exports_1, context_1) {
                     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
                     this.columnBindingContext.setupgrouping = length;
                     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
+                    this.udateHorizontalScroller();
                     this.rebindAllRows();
                 };
                 return Controller;

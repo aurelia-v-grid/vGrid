@@ -60,6 +60,7 @@ export declare class Controller {
     raiseEvent(name: string, data?: {}): void;
     setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<void>;
     updateHeights(): void;
+    udateHorizontalScroller(): void;
     updateHeaderGrouping(groups: string[]): void;
     collectionLength(): number;
     triggerScroll(position: number): void;

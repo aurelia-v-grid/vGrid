@@ -85,15 +85,17 @@ define(["require", "exports"], function (require, exports) {
         MainScrollEvents.prototype.touchStart = function (e) {
             var touchobj = e.changedTouches[0];
             this.touchY = parseInt(touchobj.clientY, 10);
+            this.touchX = parseInt(touchobj.clientX, 10);
             e.preventDefault();
         };
         MainScrollEvents.prototype.touchMove = function (e) {
             var touchobj = e.changedTouches[0];
             var dist = parseInt(touchobj.clientY, 10) - this.touchY;
-            this.handleEventWheelScroll(-dist);
+            var distX = parseInt(touchobj.clientX, 10) - this.touchX;
+            this.handleEventWheelScroll(-dist, -distX);
             e.preventDefault();
         };
-        MainScrollEvents.prototype.handleEventWheelScroll = function (newTopPosition) {
+        MainScrollEvents.prototype.handleEventWheelScroll = function (newTopPosition, left) {
             var _this = this;
             requestAnimationFrame(function () {
                 if (_this.timerWheel) {
@@ -106,6 +108,10 @@ define(["require", "exports"], function (require, exports) {
                     _this.left.scrollTop = _this.left.scrollTop + newTopPosition;
                     _this.vhandle.scrollTop = _this.vhandle.scrollTop + newTopPosition;
                     _this.group.scrollTop = _this.group.scrollTop + newTopPosition;
+                    if (left !== undefined) {
+                        _this.main.scrollLeft = _this.main.scrollLeft + left;
+                        _this.mainHead.style.left = -_this.main.scrollLeft + 'px';
+                    }
                     _this.checkScroll(_this.main.scrollTop);
                     _this.timerWheel = setTimeout(function () {
                         _this.addScrollEvents('wheel');

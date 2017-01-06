@@ -108,6 +108,7 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                                 _this.vGrid.htmlHeightWidth.avgHeaderMain_Left = _this.avgHeaderMain_Left - appendValue;
                                 _this.vGrid.htmlHeightWidth.avgContentHhandle_Left = _this.avgContentHhandle_Left - appendValue;
                             }
+                            _this.vGrid.controller.udateHorizontalScroller();
                         });
                     }
                 };
