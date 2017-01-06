@@ -1,4 +1,4 @@
-import {ColConfig, ColumnBindingContext} from '../interfaces';
+import { ColConfig, ColumnBindingContext } from '../interfaces';
 
 export class HtmlHeightWidth {
   public avgScrollBarWidth: number;
@@ -105,14 +105,23 @@ export class HtmlHeightWidth {
     this.avgFooter_Height = 30;
   }
 
-  public setCollectionLength(length: number): void {
-    let total = length * this.attRowHeight;
-    this.avgContentRightScroll_Height = total + this.avgScrollBarWidth;
-    this.avgContentGroup_Height = total + this.avgScrollBarWidth;
-    this.avgContentVhandleScroll_Height = total  + this.avgScrollBarWidth;
-    this.avgContentMainScroll_Height = total + this.avgScrollBarWidth;
-    this.avgContentLeftScroll_Height = total + this.avgScrollBarWidth;
+
+  public getNewHeight(length: number): number {
+    return length * this.attRowHeight;
   }
+
+  public setCollectionLength(length: number, includeScroller?: boolean): void {
+    let rowTotal = this.getNewHeight(length);
+    let avgScrollbarHeightValue = includeScroller === false ? 0 : this.avgScrollBarWidth;
+    let total = rowTotal + avgScrollbarHeightValue;
+    this.avgContentRightScroll_Height = total;
+    this.avgContentGroup_Height = total;
+    this.avgContentVhandleScroll_Height = total;
+    this.avgContentMainScroll_Height = total;
+    this.avgContentLeftScroll_Height = total;
+  }
+
+
 
   public addDefaultsAttributes(
     attHeaderHeight: number,

@@ -298,8 +298,17 @@ export class Controller {
   }
 
   public updateHeights(): void {
+    let totalRowHeight = this.htmlHeightWidth.getNewHeight(this.attGridConnector.getDatasourceLength());
+    let bodyHeight = this.htmlCache.avg_content_main.clientHeight;
+    if (bodyHeight < totalRowHeight) {
+      //hide it
+      (this.htmlCache.avg_content_vhandle as HTMLElement).style.display = 'block';
+    } else {
+      //display
+      (this.htmlCache.avg_content_vhandle as HTMLElement).style.display = 'none';
+    }
     this.rowScrollEvents.setCollectionLength(this.attGridConnector.getDatasourceLength());
-    this.htmlHeightWidth.setCollectionLength(this.attGridConnector.getDatasourceLength());
+    this.htmlHeightWidth.setCollectionLength(this.attGridConnector.getDatasourceLength(), bodyHeight < totalRowHeight);
   }
 
   public updateHeaderGrouping(groups: string[]): void {
