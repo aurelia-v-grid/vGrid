@@ -10,7 +10,6 @@ export class ArrayGrouping {
     this.expanded = new Set([]);
   }
 
-
   public reset() {
     this.groups = [];
     this.grouping = [];

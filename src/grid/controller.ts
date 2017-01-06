@@ -174,7 +174,7 @@ export class Controller {
       });
 
       this.raiseEvent('filterTranslation', {});
-      let loading: string = this.attI18N('loading')  || keys.loading;
+      let loading: string = this.attI18N('loading') || keys.loading;
       this.loadingScreen.updateLoadingDefaultLoadingMessage(loading);
     }
 
@@ -301,14 +301,28 @@ export class Controller {
     let totalRowHeight = this.htmlHeightWidth.getNewHeight(this.attGridConnector.getDatasourceLength());
     let bodyHeight = this.htmlCache.avg_content_main.clientHeight;
     if (bodyHeight < totalRowHeight) {
-      //hide it
+      // hide it
       (this.htmlCache.avg_content_vhandle as HTMLElement).style.display = 'block';
     } else {
-      //display
+      // display
       (this.htmlCache.avg_content_vhandle as HTMLElement).style.display = 'none';
     }
     this.rowScrollEvents.setCollectionLength(this.attGridConnector.getDatasourceLength());
     this.htmlHeightWidth.setCollectionLength(this.attGridConnector.getDatasourceLength(), bodyHeight < totalRowHeight);
+  }
+
+  public udateHorizontalScroller(): void {
+    let bodyWidth = this.htmlCache.avg_content_main.clientWidth;
+    let scrollWidth = this.htmlHeightWidth.avgContentMainScroll_Width;
+
+    // todo : I also need to adjust scrollheight here, but its a start
+    if (bodyWidth < scrollWidth) {
+      // hide it
+      (this.htmlCache.avg_content_hhandle as HTMLElement).style.display = 'block';
+    } else {
+      // display
+      (this.htmlCache.avg_content_hhandle as HTMLElement).style.display = 'none';
+    }
   }
 
   public updateHeaderGrouping(groups: string[]): void {
@@ -439,12 +453,13 @@ export class Controller {
       this.colRepeatRowHeaderTemplate,
       this.colGroupRow);
     this.viewSlots.bindAndAttachColumns(
-        this.overrideContext,
-        this.columnBindingContext,
-        this.attGridConnector.getSelection());
+      this.overrideContext,
+      this.columnBindingContext,
+      this.attGridConnector.getSelection());
     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
     this.columnBindingContext.setupgrouping = length;
     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
+    this.udateHorizontalScroller();
     this.rebindAllRows();
   }
 

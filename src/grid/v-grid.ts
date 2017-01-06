@@ -250,6 +250,9 @@ export class VGrid {
                 this.columnBindingContext,
                 this.attGridConnector.getSelection());
 
+            // update horizontal scroller
+            this.controller.udateHorizontalScroller();
+
             // todo: should I bind the main, grouping and loading screen here?
             // connect gridConnector to this controler
             this.attGridConnector.gridCreated();

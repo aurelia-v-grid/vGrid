@@ -1,8 +1,8 @@
 import { SortObject, Entity } from '../interfaces';
 
 export class ArraySort {
-  private lastSort: Array<SortObject>;
-  private curSort: Array<SortObject>;
+  private lastSort: SortObject[];
+  private curSort: SortObject[];
 
   constructor() {
     this.lastSort = [];
@@ -14,7 +14,7 @@ export class ArraySort {
     this.curSort = [];
   }
 
-  public setLastSort(array: Array<SortObject>): void {
+  public setLastSort(array: SortObject[]): void {
     this.lastSort = array;
     this.curSort = array;
   }
@@ -79,12 +79,12 @@ export class ArraySort {
     }
   }
 
-  public getOrderBy(): Array<SortObject> {
+  public getOrderBy(): SortObject[] {
     return this.curSort;
   }
 
   public getValue(attribute: string, obj: any): any {
-    let arr: Array<any> = attribute.split('.');
+    let arr: any[] = attribute.split('.');
     let tempValue: any = Infinity;
     if (arr.length > 1) {
       try {
@@ -99,7 +99,7 @@ export class ArraySort {
     return tempValue;
   }
 
-  public runOrderbyOn(array: Array<Entity>): void {
+  public runOrderbyOn(array: Entity[]): void {
 
     // super simple for now.. atleast I have som form for sort
     let thisSort = this.getOrderBy();

@@ -105,7 +105,6 @@ export class HtmlHeightWidth {
     this.avgFooter_Height = 30;
   }
 
-
   public getNewHeight(length: number): number {
     return length * this.attRowHeight;
   }
@@ -120,8 +119,6 @@ export class HtmlHeightWidth {
     this.avgContentMainScroll_Height = total;
     this.avgContentLeftScroll_Height = total;
   }
-
-
 
   public addDefaultsAttributes(
     attHeaderHeight: number,

@@ -160,6 +160,8 @@ export class VGridAttributesResizeCol {
           this.vGrid.htmlHeightWidth.avgContentHhandle_Left = this.avgContentHhandle_Left - appendValue;
         }
 
+        this.vGrid.controller.udateHorizontalScroller();
+
       });
     }
   }

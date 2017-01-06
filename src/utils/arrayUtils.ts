@@ -15,13 +15,13 @@ export class ArrayUtils {
   }
 
   public orderBy(
-    collection: Array<Entity>,
+    collection: Entity[],
     attribute: string | SortObject,
     addToCurrentSort?: boolean
-  ): { fixed: Array<Entity>, full: Array<Entity> } {
+  ): { fixed: Entity[], full: Entity[] } {
 
     let grouping = this.getGrouping();
-    let result: { fixed: Array<Entity>, full: Entity[] } = {
+    let result: { fixed: Entity[], full: Entity[] } = {
       fixed: null,
       full: null
     };
