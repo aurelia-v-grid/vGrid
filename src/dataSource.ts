@@ -87,6 +87,9 @@ export class DataSource {
     this.arrayUtils.resetGrouping();
     this.arrayUtils.resetSort();
 
+    // reset current entity
+    this.entity = null;
+
     // set data to collection
     this.collection.setData(array);
     // set our main collection, we will use this for later
