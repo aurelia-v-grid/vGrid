@@ -52,6 +52,19 @@ var DataSource = (function () {
         this.mainArray = this.collection.getEntities();
         this.triggerEvent('collection_changed');
     };
+    DataSource.prototype.addRows = function (array) {
+        var grouping = this.arrayUtils.getGrouping();
+        var collection = this.collection.getEntities();
+        collection = collection.concat(array);
+        this.collection.setData(collection);
+        this.arrayUtils.runOrderbyOn(this.collection.getEntities());
+        var untouchedgrouped = this.collection.getEntities();
+        if (grouping.length > 0) {
+            var groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, true);
+            this.collection.setData(groupedArray, untouchedgrouped);
+        }
+        this.triggerEvent('collection_updated');
+    };
     DataSource.prototype.select = function (row) {
         this.entity = this.collection.getRow(row);
     };

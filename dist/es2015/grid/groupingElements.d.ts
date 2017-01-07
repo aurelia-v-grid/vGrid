@@ -13,6 +13,7 @@ export declare class GroupingElements {
     private avgTopPanel;
     private columnBindingContext;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, htmlCache: HtmlCache, viewSlots: ViewSlots, columnBindingContext: ColumnBindingContext);
+    getGroups(): any[];
     init(controller: Controller, colGroupElement: string): void;
     addGroup(name: string, field: string): void;
     removeGroup(name?: string): void;

@@ -107,6 +107,7 @@ System.register([], function (exports_1, context_1) {
                             break;
                         case 'collection_collapsed':
                         case 'collection_expanded':
+                        case 'collection_updated':
                             this.raiseEvent('sortIconUpdate');
                             this.controller.updateHeights();
                             this.controller.triggerScroll(null);

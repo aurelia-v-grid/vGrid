@@ -23,6 +23,15 @@ var GroupingElements = (function () {
         this.groupContext = {};
         this.lastAdded = null;
     }
+    GroupingElements.prototype.getGroups = function () {
+        var x = [];
+        for (var i in this.groupContext) {
+            if (i) {
+                x.push(i);
+            }
+        }
+        return x;
+    };
     GroupingElements.prototype.init = function (controller, colGroupElement) {
         this.controller = controller;
         this.avgTopPanel = this.htmlCache.avg_top_panel;

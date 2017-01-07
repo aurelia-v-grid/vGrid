@@ -102,6 +102,7 @@ define(["require", "exports"], function (require, exports) {
                     break;
                 case 'collection_collapsed':
                 case 'collection_expanded':
+                case 'collection_updated':
                     this.raiseEvent('sortIconUpdate');
                     this.controller.updateHeights();
                     this.controller.triggerScroll(null);

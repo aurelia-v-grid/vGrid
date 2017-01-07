@@ -192,8 +192,15 @@ System.register([], function (exports_1, context_1) {
                     }
                 };
                 Controller.prototype.updateHeaderGrouping = function (groups) {
+                    var _this = this;
                     var length = groups.length;
                     this.columnBindingContext.setupgrouping = length;
+                    if (length === 0) {
+                        var groups_1 = this.groupingElements.getGroups();
+                        groups_1.forEach(function (group) {
+                            _this.groupingElements.removeGroup(group);
+                        });
+                    }
                     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
                 };
                 Controller.prototype.collectionLength = function () {

@@ -18,6 +18,7 @@ export declare class DataSource {
     addEventListener(callback: Function): number;
     removeEventListener(id: number): void;
     setArray(array: Entity[]): void;
+    addRows(array: Entity[]): void;
     select(row: number): void;
     query(options: FilterObject[]): void;
     orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;

@@ -57,7 +57,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
                 requestAnimationFrame(function () {
                     var movementX = _this.originalWidth - (_this.screenX - e.screenX);
                     var appendValue = _this.originalWidth - movementX;
-                    if (_this.colType === 'main') {
+                    if (_this.colType === 'main' && movementX > 10) {
                         _this.columnsArray[_this.colNo].width = movementX;
                         _this.vGrid.colConfig[_this.colNo].colWidth = _this.columnsArray[_this.colNo].width;
                         for (var i = 0; i < _this.columnsArray.length; i++) {
@@ -68,7 +68,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
                         _this.vGrid.htmlHeightWidth.avgContentMainScroll_Width = _this.avgContentMainScroll_Width - appendValue;
                         _this.vGrid.htmlHeightWidth.avgContentHhandleScroll_Width = _this.avgContentHhandleScroll_Width - appendValue;
                     }
-                    if (_this.colType === 'right') {
+                    if (_this.colType === 'right' && movementX > 10) {
                         _this.columnsArray[_this.colNo].width = movementX;
                         _this.vGrid.colConfig[_this.colNo].colWidth = _this.columnsArray[_this.colNo].width;
                         for (var i = 0; i < _this.columnsArray.length; i++) {
@@ -82,7 +82,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
                         _this.vGrid.htmlHeightWidth.avgHeaderMain_Right = _this.avgHeaderMain_Right - appendValue;
                         _this.vGrid.htmlHeightWidth.avgContentHhandle_Right = _this.avgContentHhandle_Right - appendValue;
                     }
-                    if (_this.colType === 'left') {
+                    if (_this.colType === 'left' && movementX > 10) {
                         _this.columnsArray[_this.colNo].width = movementX;
                         _this.vGrid.colConfig[_this.colNo].colWidth = _this.columnsArray[_this.colNo].width;
                         for (var i = 0; i < _this.columnsArray.length; i++) {
