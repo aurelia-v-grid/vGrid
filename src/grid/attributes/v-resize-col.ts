@@ -107,7 +107,7 @@ export class VGridAttributesResizeCol {
         let movementX = this.originalWidth - (this.screenX - e.screenX);
         let appendValue = this.originalWidth - movementX;
 
-        if (this.colType === 'main') {
+        if (this.colType === 'main' && movementX > 10) {
 
           this.columnsArray[this.colNo].width = movementX;
           this.vGrid.colConfig[this.colNo].colWidth = this.columnsArray[this.colNo].width;
@@ -123,7 +123,7 @@ export class VGridAttributesResizeCol {
           this.vGrid.htmlHeightWidth.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width - appendValue;
         }
 
-        if (this.colType === 'right') {
+        if (this.colType === 'right' && movementX > 10) {
           this.columnsArray[this.colNo].width = movementX;
           this.vGrid.colConfig[this.colNo].colWidth = this.columnsArray[this.colNo].width;
 
@@ -141,7 +141,7 @@ export class VGridAttributesResizeCol {
           this.vGrid.htmlHeightWidth.avgContentHhandle_Right = this.avgContentHhandle_Right - appendValue;
         }
 
-        if (this.colType === 'left') {
+        if (this.colType === 'left' && movementX > 10) {
           this.columnsArray[this.colNo].width = movementX;
           this.vGrid.colConfig[this.colNo].colWidth = this.columnsArray[this.colNo].width;
 
