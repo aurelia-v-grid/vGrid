@@ -38,18 +38,19 @@ export class Welcome {
     this.gridConnector.triggerI18n();
   }
 
-  public replace(x) {
-    this.dummyDataGenerator.generateData(x, (data) => {
+  public replace(x: any) {
+    this.dummyDataGenerator.generateData(x, (data: any) => {
       this.myCollection = data;
     });
     this.ds.setArray(this.myCollection);
   }
 
-  public add(x) {
-    this.dummyDataGenerator.generateData(x, (data) => {
-      this.myCollection = data;
+  public add(x: any) {
+    this.dummyDataGenerator.generateData(x, (data: any) => {
+      this.ds.addRows(data);
     });
-    this.ds.setArray(this.myCollection);
   }
+
+
 
 }
