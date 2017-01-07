@@ -15,7 +15,7 @@
 * Not made this as a plugin right now, own catalog for sample files and own for plugin under SRC
 * For issues /question/suggestions on the experimental grid please keep it under here : https://github.com/vegarringdal/vGrid/issues
 * Some commits in the start might have sample and grid changes.. this is more or less to keep code somewhere safe/ make it possible to test/comment code/suggestions
-* [temp demo](http://vegarringdal.github.io/vGrid/) (very old demo, look in dev docs how the grid looks now)
+* [temp demo](https://vegarringdal.github.io/vGridDemo/)
 
 ---
 
@@ -45,3 +45,7 @@
 
 * added a bunch of stuff, and updated docs with the new stuff
 * fix a lot of bugs, done a lot of changes to soem of the attributes, thx to @Thanood for using the experimental grid at work so it gets better
+
+07 January 2017:
+
+* Update [demo](https://vegarringdal.github.io/vGridDemo/)
