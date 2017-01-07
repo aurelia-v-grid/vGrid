@@ -48,6 +48,7 @@ var DataSource = (function () {
         this.selection.reset();
         this.arrayUtils.resetGrouping();
         this.arrayUtils.resetSort();
+        this.entity = null;
         this.collection.setData(array);
         this.mainArray = this.collection.getEntities();
         this.triggerEvent('collection_changed');
