@@ -68,6 +68,16 @@ export class GroupingElements {
     this.lastAdded = null;
   }
 
+  public getGroups(): any[] {
+    let x = [];
+    for (let i in this.groupContext) {
+      if (i) {
+        x.push(i);
+      }
+    }
+    return x;
+  }
+
   public init(controller: Controller, colGroupElement: string) {
     this.controller = controller;
     this.avgTopPanel = this.htmlCache.avg_top_panel;

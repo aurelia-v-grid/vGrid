@@ -328,6 +328,12 @@ export class Controller {
   public updateHeaderGrouping(groups: string[]): void {
     let length = groups.length;
     this.columnBindingContext.setupgrouping = length;
+    if (length === 0) {
+      let groups = this.groupingElements.getGroups();
+      groups.forEach((group) => {
+        this.groupingElements.removeGroup(group);
+      });
+    }
     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
   }
 
