@@ -1,7 +1,7 @@
 import { Selection } from './selection';
 import { Collection } from './collection';
 import { ArrayUtils } from './utils/arrayUtils';
-import {Entity, DatasourceConfig, SortObject, FilterObject} from './interfaces';
+import { Entity, DatasourceConfig, SortObject, FilterObject } from './interfaces';
 
 export class DataSource {
   public entity: Entity;
@@ -94,6 +94,20 @@ export class DataSource {
     this.triggerEvent('collection_changed');
   }
 
+  public addRows(array: Entity[]): void {
+    let grouping = this.arrayUtils.getGrouping();
+    let collection = this.collection.getEntities();
+    collection = collection.concat(array);
+    this.collection.setData(collection);
+    this.arrayUtils.runOrderbyOn(this.collection.getEntities());
+    let untouchedgrouped = this.collection.getEntities();
+    if (grouping.length > 0) {
+      let groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, true);
+      this.collection.setData(groupedArray, untouchedgrouped);
+    }
+    this.triggerEvent('collection_grouped');
+  }
+
   public select(row: number): void {
     // get row and set as current entity "entity" of datasource
     this.entity = this.collection.getRow(row);
@@ -114,7 +128,7 @@ export class DataSource {
     this.triggerEvent('collection_filtered');
   }
 
-  public orderBy(attribute: string|SortObject, addToCurrentSort?: boolean): void {
+  public orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
     // get collection (cant use main,,, might be filtered)
     let collection = this.collection.getEntities();
     // use array helper to sort (takes care of the grouping if set)
