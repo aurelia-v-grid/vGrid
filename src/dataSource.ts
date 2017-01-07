@@ -105,7 +105,7 @@ export class DataSource {
       let groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, true);
       this.collection.setData(groupedArray, untouchedgrouped);
     }
-    this.triggerEvent('collection_grouped');
+    this.triggerEvent('collection_updated');
   }
 
   public select(row: number): void {
