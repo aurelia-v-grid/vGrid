@@ -51,6 +51,10 @@ export class Welcome {
     });
   }
 
+  public remove() {
+    console.log(this.ds.remove(this.gridConnector.getSelection().getSelectedRows()));
+  }
+
   public addNew(data?: any) {
     if (!data) {
       this.ds.addBlankRow();
