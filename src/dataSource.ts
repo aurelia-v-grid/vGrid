@@ -97,14 +97,33 @@ export class DataSource {
     this.triggerEvent('collection_changed');
   }
 
-  public addRows(array: Entity[]): void {
+  public push(array: Entity[]): void {
+    if (Array.isArray(array)) {
+      let grouping = this.arrayUtils.getGrouping();
+      let collection = this.collection.getEntities();
+      collection = collection.concat(array);
+      this.collection.setData(collection);
+      this.mainArray = this.collection.getEntities();
+      this.arrayUtils.runOrderbyOn(this.collection.getEntities());
+      let untouchedgrouped = this.collection.getEntities();
+      if (grouping.length > 0) {
+        let groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, true);
+        this.collection.setData(groupedArray, untouchedgrouped);
+      }
+      this.triggerEvent('collection_updated');
+    }
+  }
+
+  public refresh(data?: any) {
+    if (data) {
+      this.collection = new Collection(this);
+      this.collection.setData(data);
+      this.mainArray = this.collection.getEntities();
+    }
     let grouping = this.arrayUtils.getGrouping();
-    let collection = this.collection.getEntities();
-    collection = collection.concat(array);
-    this.collection.setData(collection);
     this.arrayUtils.runOrderbyOn(this.collection.getEntities());
-    let untouchedgrouped = this.collection.getEntities();
     if (grouping.length > 0) {
+      let untouchedgrouped = this.collection.getEntities();
       let groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, true);
       this.collection.setData(groupedArray, untouchedgrouped);
     }
@@ -196,21 +215,44 @@ export class DataSource {
     return this.arrayUtils.getGrouping();
   }
 
-  public addElement(data: Entity): void {
+  public addBlankRow(): void {
+    let newElement = ({} as Entity);
+    this.mainArray.unshift(newElement);
+    let oldArray = this.collection.getEntities();
+    let oldMaybeGroupedArray = this.collection.getCurrentEntities();
+    let index = oldArray.indexOf(newElement);
+    if (index === -1) {
+      oldArray.unshift(newElement);
+    }
+    oldMaybeGroupedArray.unshift(newElement);
+    this.collection.setData(oldMaybeGroupedArray, oldArray);
+    this.entity = newElement;
+    this.triggerEvent('collection_filtered');
+  }
+
+  public unshift(data: any): void {
     if (data) {
-      // todo
-    } else {
-      let newElement = ({} as Entity);
-      this.mainArray.unshift(newElement);
+      this.mainArray.unshift(data);
       let oldArray = this.collection.getEntities();
       let oldMaybeGroupedArray = this.collection.getCurrentEntities();
-      let index = oldArray.indexOf(newElement);
+      let index = oldArray.indexOf(data);
       if (index === -1) {
-        oldArray.unshift(newElement);
+        oldArray.unshift(data);
       }
-      oldMaybeGroupedArray.unshift(newElement);
+      oldMaybeGroupedArray.unshift(data);
       this.collection.setData(oldMaybeGroupedArray, oldArray);
+      this.entity = data;
       this.triggerEvent('collection_filtered');
+    }
+  }
+
+  public remove(rows?: any[]): void {
+    if (Array.isArray(rows)) {
+      // todo
+    } else {
+      if (this.entity) {
+        // todo 
+      }
     }
   }
 
