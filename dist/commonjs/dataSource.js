@@ -74,6 +74,7 @@ var DataSource = (function () {
             this.collection = new collection_1.Collection(this);
             this.collection.setData(data);
             this.mainArray = this.collection.getEntities();
+            this.entity = null;
         }
         var grouping = this.arrayUtils.getGrouping();
         this.arrayUtils.runOrderbyOn(this.collection.getEntities());
