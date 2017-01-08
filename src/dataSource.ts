@@ -252,14 +252,32 @@ export class DataSource {
     }
   }
 
-  public remove(rows?: any[]): void {
+  public remove(rows?: any[]): any[] {
+    let keysToDelete = new Set();
+    let returnArray = [];
     if (Array.isArray(rows)) {
-      // todo
+      rows.forEach((row) => {
+        keysToDelete.add(this.getRowKey(row));
+      });
     } else {
-      if (this.entity) {
-        // todo 
+      if (this.entity && Number.isInteger(rows)) {
+        keysToDelete.add(this.getRowKey(rows));
       }
     }
+
+    if (keysToDelete.size > 0) {
+      let oldArray = this.collection.getEntities();
+      for (let i = 0; i < oldArray.length; i++ ) {
+        if (keysToDelete.has(oldArray[i][this.key]) === true) {
+          returnArray.push(oldArray.splice(i, 1)[0]);
+          i--;
+        }
+      }
+      this.collection.setData(oldArray);
+      this.refresh();
+    }
+
+    return returnArray;
   }
 
   private getRowKey(row: number): string {
