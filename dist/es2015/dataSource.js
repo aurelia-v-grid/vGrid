@@ -184,12 +184,31 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils
             }
         };
         DataSource.prototype.remove = function (rows) {
+            var _this = this;
+            var keysToDelete = new Set();
+            var returnArray = [];
             if (Array.isArray(rows)) {
+                rows.forEach(function (row) {
+                    keysToDelete.add(_this.getRowKey(row));
+                });
             }
             else {
-                if (this.entity) {
+                if (this.entity && Number.isInteger(rows)) {
+                    keysToDelete.add(this.getRowKey(rows));
                 }
             }
+            if (keysToDelete.size > 0) {
+                var oldArray = this.collection.getEntities();
+                for (var i = 0; i < oldArray.length; i++) {
+                    if (keysToDelete.has(oldArray[i][this.key]) === true) {
+                        returnArray.push(oldArray.splice(i, 1)[0]);
+                        i--;
+                    }
+                }
+                this.collection.setData(oldArray);
+                this.refresh();
+            }
+            return returnArray;
         };
         DataSource.prototype.getRowKey = function (row) {
             if (this.collection) {

@@ -32,7 +32,7 @@ export declare class DataSource {
     getGrouping(): string[];
     addBlankRow(): void;
     unshift(data: any): void;
-    remove(rows?: any[]): void;
+    remove(rows?: any[]): any[];
     private getRowKey(row);
     private getRowKeys();
 }
