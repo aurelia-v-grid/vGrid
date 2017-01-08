@@ -119,6 +119,7 @@ export class DataSource {
       this.collection = new Collection(this);
       this.collection.setData(data);
       this.mainArray = this.collection.getEntities();
+      this.entity = null;
     }
     let grouping = this.arrayUtils.getGrouping();
     this.arrayUtils.runOrderbyOn(this.collection.getEntities());
