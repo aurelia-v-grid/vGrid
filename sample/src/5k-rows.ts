@@ -13,7 +13,7 @@ export class Welcome {
   // public translate: any = { equals: 'er lik', greaterThan: 'større enn' };
   private myCollection: any;
   constructor(public dummyDataGenerator: DummyDataGenerator) {
-    this.dummyDataGenerator.generateData(5000, (data) => {
+    this.dummyDataGenerator.generateData(5000, (data: any) => {
       this.myCollection = data;
     });
     this.ds = new DataSource(new Selection('multiple'));
@@ -47,8 +47,27 @@ export class Welcome {
 
   public add(x: any) {
     this.dummyDataGenerator.generateData(x, (data: any) => {
-      this.ds.addRows(data);
+      this.ds.push(data);
     });
+  }
+
+  public addNew(data?: any) {
+    if (!data) {
+      this.ds.addBlankRow();
+    } else {
+      this.ds.unshift({ name: 'new' });
+    }
+  }
+
+  public refresh(addData?: any) {
+    if (addData) {
+      this.dummyDataGenerator.generateData(addData, (data: any) => {
+        this.ds.refresh(data);
+      });
+    } else {
+      this.ds.refresh();
+    }
+
   }
 
 
