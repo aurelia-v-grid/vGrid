@@ -66,14 +66,32 @@ System.register(["./selection", "./collection", "./utils/arrayUtils"], function 
                     this.mainArray = this.collection.getEntities();
                     this.triggerEvent('collection_changed');
                 };
-                DataSource.prototype.addRows = function (array) {
+                DataSource.prototype.push = function (array) {
+                    if (Array.isArray(array)) {
+                        var grouping = this.arrayUtils.getGrouping();
+                        var collection = this.collection.getEntities();
+                        collection = collection.concat(array);
+                        this.collection.setData(collection);
+                        this.mainArray = this.collection.getEntities();
+                        this.arrayUtils.runOrderbyOn(this.collection.getEntities());
+                        var untouchedgrouped = this.collection.getEntities();
+                        if (grouping.length > 0) {
+                            var groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, true);
+                            this.collection.setData(groupedArray, untouchedgrouped);
+                        }
+                        this.triggerEvent('collection_updated');
+                    }
+                };
+                DataSource.prototype.refresh = function (data) {
+                    if (data) {
+                        this.collection = new collection_1.Collection(this);
+                        this.collection.setData(data);
+                        this.mainArray = this.collection.getEntities();
+                    }
                     var grouping = this.arrayUtils.getGrouping();
-                    var collection = this.collection.getEntities();
-                    collection = collection.concat(array);
-                    this.collection.setData(collection);
                     this.arrayUtils.runOrderbyOn(this.collection.getEntities());
-                    var untouchedgrouped = this.collection.getEntities();
                     if (grouping.length > 0) {
+                        var untouchedgrouped = this.collection.getEntities();
                         var groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, true);
                         this.collection.setData(groupedArray, untouchedgrouped);
                     }
@@ -150,21 +168,41 @@ System.register(["./selection", "./collection", "./utils/arrayUtils"], function 
                 DataSource.prototype.getGrouping = function () {
                     return this.arrayUtils.getGrouping();
                 };
-                DataSource.prototype.addElement = function (data) {
-                    if (data) {
+                DataSource.prototype.addBlankRow = function () {
+                    var newElement = {};
+                    this.mainArray.unshift(newElement);
+                    var oldArray = this.collection.getEntities();
+                    var oldMaybeGroupedArray = this.collection.getCurrentEntities();
+                    var index = oldArray.indexOf(newElement);
+                    if (index === -1) {
+                        oldArray.unshift(newElement);
                     }
-                    else {
-                        var newElement = {};
-                        this.mainArray.unshift(newElement);
+                    oldMaybeGroupedArray.unshift(newElement);
+                    this.collection.setData(oldMaybeGroupedArray, oldArray);
+                    this.entity = newElement;
+                    this.triggerEvent('collection_filtered');
+                };
+                DataSource.prototype.unshift = function (data) {
+                    if (data) {
+                        this.mainArray.unshift(data);
                         var oldArray = this.collection.getEntities();
                         var oldMaybeGroupedArray = this.collection.getCurrentEntities();
-                        var index = oldArray.indexOf(newElement);
+                        var index = oldArray.indexOf(data);
                         if (index === -1) {
-                            oldArray.unshift(newElement);
+                            oldArray.unshift(data);
                         }
-                        oldMaybeGroupedArray.unshift(newElement);
+                        oldMaybeGroupedArray.unshift(data);
                         this.collection.setData(oldMaybeGroupedArray, oldArray);
+                        this.entity = data;
                         this.triggerEvent('collection_filtered');
+                    }
+                };
+                DataSource.prototype.remove = function (rows) {
+                    if (Array.isArray(rows)) {
+                    }
+                    else {
+                        if (this.entity) {
+                        }
                     }
                 };
                 DataSource.prototype.getRowKey = function (row) {

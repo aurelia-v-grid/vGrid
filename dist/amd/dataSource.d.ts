@@ -18,7 +18,8 @@ export declare class DataSource {
     addEventListener(callback: Function): number;
     removeEventListener(id: number): void;
     setArray(array: Entity[]): void;
-    addRows(array: Entity[]): void;
+    push(array: Entity[]): void;
+    refresh(data?: any): void;
     select(row: number): void;
     query(options: FilterObject[]): void;
     orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
@@ -29,7 +30,9 @@ export declare class DataSource {
     groupCollapse(id: string): void;
     groupExpand(id: string): void;
     getGrouping(): string[];
-    addElement(data: Entity): void;
+    addBlankRow(): void;
+    unshift(data: any): void;
+    remove(rows?: any[]): void;
     private getRowKey(row);
     private getRowKeys();
 }
