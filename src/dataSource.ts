@@ -86,10 +86,8 @@ export class DataSource {
     this.selection.reset();
     this.arrayUtils.resetGrouping();
     this.arrayUtils.resetSort();
-
     // reset current entity
     this.entity = null;
-
     // set data to collection
     this.collection.setData(array);
     // set our main collection, we will use this for later
@@ -99,11 +97,15 @@ export class DataSource {
 
   public push(array: Entity[]): void {
     if (Array.isArray(array)) {
+      // get current grouping and collection
       let grouping = this.arrayUtils.getGrouping();
       let collection = this.collection.getEntities();
+      // add to the collection, set that data back so keys get added
       collection = collection.concat(array);
       this.collection.setData(collection);
+      //  get main data for later (when filtering etc)
       this.mainArray = this.collection.getEntities();
+      // run orderby, and regroup if there is any
       this.arrayUtils.runOrderbyOn(this.collection.getEntities());
       let untouchedgrouped = this.collection.getEntities();
       if (grouping.length > 0) {
@@ -116,11 +118,14 @@ export class DataSource {
 
   public refresh(data?: any) {
     if (data) {
+      // if data create new collection and set data to it
       this.collection = new Collection(this);
       this.collection.setData(data);
+      //  get main data for later (when filtering etc), then clear current entity
       this.mainArray = this.collection.getEntities();
       this.entity = null;
     }
+    // get current grouping, run orderby, if grouping we also run that
     let grouping = this.arrayUtils.getGrouping();
     this.arrayUtils.runOrderbyOn(this.collection.getEntities());
     if (grouping.length > 0) {
