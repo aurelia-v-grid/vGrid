@@ -55,7 +55,7 @@ export class Welcome {
 
 
   public clearCache() {
-     this.ds.person.clearCache().then(() => {
+     this.ds.person.clearCache(this.gridConnector.getTopRow()).then(() => {
       // noting atm
     }).catch((err) => {
       // noting atm
