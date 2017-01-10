@@ -1,5 +1,5 @@
 import { autoinject } from 'aurelia-framework';
-import { WakGridConnector } from 'aurelia-v-grid';
+import { WakGridConnector } from 'aurelia-v-grid/wakdb';
 import { WakDataProvider } from './utils/wakDataProvider';
 
 @autoinject()

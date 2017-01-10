@@ -1,5 +1,5 @@
 // import the rest api
-import { WakRestApi } from 'aurelia-v-grid';
+import { WakRestApi } from 'aurelia-v-grid/wakdb';
 
 // if you dont want to contact the server to get the catalog you can add a json file
 // to import json install the plugin "jspm install json" for cli/webpack I dont know atm
