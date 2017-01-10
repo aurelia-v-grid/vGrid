@@ -355,6 +355,11 @@ export class Controller {
     });
   }
 
+  public getTopRow(): number {
+    let position = this.htmlCache.avg_content_vhandle.scrollTop;
+    return Math.floor(position / this.attRowHeight);
+  }
+
   public rebindAllRows(): void {
     this.raiseEvent('avg-rebind-all-rows', {
       rowCache: this.htmlCache.rowCache,

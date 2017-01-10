@@ -28,6 +28,7 @@ export interface ControllerInterface {
   rebindAllRows(): void;
   getColumnConfig(): ColConfig[];
   setColumnConfig(colConfig: ColConfig[]): void;
+  getTopRow(): number;
 }
 
 export interface Entity {

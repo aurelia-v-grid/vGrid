@@ -198,6 +198,10 @@ export class WakGridConnector implements GridConnectorInterface {
         }
     }
 
+    public getTopRow(): number {
+        return this.controller.getTopRow();
+    }
+
     private eventHandler(event: string): void {
         switch (event) {
             case 'collectionChange':
