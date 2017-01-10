@@ -32,6 +32,7 @@ export declare class WakGridConnector implements GridConnectorInterface {
     query(filterObj: FilterObject[]): void;
     orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
     setValueToRow(attribute: any, value: any, row: any): void;
+    getTopRow(): number;
     private eventHandler(event);
     private raiseEvent(name, data?);
     private getRowProperties(obj);

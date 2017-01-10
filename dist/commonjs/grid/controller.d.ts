@@ -64,6 +64,7 @@ export declare class Controller {
     updateHeaderGrouping(groups: string[]): void;
     collectionLength(): number;
     triggerScroll(position: number): void;
+    getTopRow(): number;
     rebindAllRows(): void;
     getColumnConfig(): ColConfig[];
     setColumnConfig(colConfig: ColConfig[]): void;

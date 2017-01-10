@@ -219,6 +219,10 @@ System.register([], function (exports_1, context_1) {
                         newTopPosition: position
                     });
                 };
+                Controller.prototype.getTopRow = function () {
+                    var position = this.htmlCache.avg_content_vhandle.scrollTop;
+                    return Math.floor(position / this.attRowHeight);
+                };
                 Controller.prototype.rebindAllRows = function () {
                     this.raiseEvent('avg-rebind-all-rows', {
                         rowCache: this.htmlCache.rowCache,

@@ -140,6 +140,9 @@ var WakGridConnector = (function () {
             this.datasource.collection.setValueToRow(attribute, value, row);
         }
     };
+    WakGridConnector.prototype.getTopRow = function () {
+        return this.controller.getTopRow();
+    };
     WakGridConnector.prototype.eventHandler = function (event) {
         var _this = this;
         switch (event) {
