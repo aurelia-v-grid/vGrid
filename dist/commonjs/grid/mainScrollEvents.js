@@ -88,9 +88,11 @@ var MainScrollEvents = (function () {
     };
     MainScrollEvents.prototype.touchMove = function (e) {
         var touchobj = e.changedTouches[0];
-        var dist = parseInt(touchobj.clientY, 10) - this.touchY;
+        var dist = this.touchY - parseInt(touchobj.clientY, 10);
         var distX = parseInt(touchobj.clientX, 10) - this.touchX;
-        this.handleEventWheelScroll(-dist, -distX);
+        this.touchY = parseInt(touchobj.clientY, 10);
+        this.touchX = parseInt(touchobj.clientX, 10);
+        this.handleEventWheelScroll(dist, -distX);
         e.preventDefault();
     };
     MainScrollEvents.prototype.handleEventWheelScroll = function (newTopPosition, left) {

@@ -55,18 +55,22 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
         };
         GroupingElements.prototype.removeGroup = function (name) {
             if (name) {
-                this.groupContext[name].viewSlot.unbind();
-                this.groupContext[name].viewSlot.detached();
-                this.groupContext[name].viewSlot.removeAll();
-                this.groupContext[name] = null;
+                if (this.groupContext[name] !== null) {
+                    this.groupContext[name].viewSlot.unbind();
+                    this.groupContext[name].viewSlot.detached();
+                    this.groupContext[name].viewSlot.removeAll();
+                    this.groupContext[name] = null;
+                }
             }
             else {
                 if (this.lastAdded) {
-                    this.groupContext[this.lastAdded].viewSlot.unbind();
-                    this.groupContext[this.lastAdded].viewSlot.detached();
-                    this.groupContext[this.lastAdded].viewSlot.removeAll();
-                    this.groupContext[this.lastAdded] = null;
-                    this.lastAdded = null;
+                    if (this.groupContext[this.lastAdded] !== null) {
+                        this.groupContext[this.lastAdded].viewSlot.unbind();
+                        this.groupContext[this.lastAdded].viewSlot.detached();
+                        this.groupContext[this.lastAdded].viewSlot.removeAll();
+                        this.groupContext[this.lastAdded] = null;
+                        this.lastAdded = null;
+                    }
                 }
             }
         };
