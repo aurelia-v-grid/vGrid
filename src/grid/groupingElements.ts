@@ -114,17 +114,21 @@ export class GroupingElements {
 
   public removeGroup(name?: string): void {
     if (name) {
-      this.groupContext[name].viewSlot.unbind();
-      this.groupContext[name].viewSlot.detached();
-      this.groupContext[name].viewSlot.removeAll();
-      this.groupContext[name] = null; // <-- I could prb reuse them...
+      if (this.groupContext[name] !== null) {
+        this.groupContext[name].viewSlot.unbind();
+        this.groupContext[name].viewSlot.detached();
+        this.groupContext[name].viewSlot.removeAll();
+        this.groupContext[name] = null; // <-- I could prb reuse them...
+      }
     } else {
       if (this.lastAdded) {
-        this.groupContext[this.lastAdded].viewSlot.unbind();
-        this.groupContext[this.lastAdded].viewSlot.detached();
-        this.groupContext[this.lastAdded].viewSlot.removeAll();
-        this.groupContext[this.lastAdded] = null;
-        this.lastAdded = null;
+        if (this.groupContext[this.lastAdded] !== null) {
+          this.groupContext[this.lastAdded].viewSlot.unbind();
+          this.groupContext[this.lastAdded].viewSlot.detached();
+          this.groupContext[this.lastAdded].viewSlot.removeAll();
+          this.groupContext[this.lastAdded] = null;
+          this.lastAdded = null;
+        }
       }
     }
   }
