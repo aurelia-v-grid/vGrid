@@ -118,14 +118,16 @@ export class MainScrollEvents {
     let touchobj = e.changedTouches[0];
     this.touchY = parseInt(touchobj.clientY, 10);
     this.touchX = parseInt(touchobj.clientX, 10);
-    // e.preventDefault();
   }
 
   private touchMove(e: any) {
     let touchobj = e.changedTouches[0];
-    let dist = parseInt(touchobj.clientY, 10) - this.touchY;
+    let dist = this.touchY - parseInt(touchobj.clientY, 10);
     let distX = parseInt(touchobj.clientX, 10) - this.touchX;
-    this.handleEventWheelScroll(-dist, -distX);
+    this.touchY = parseInt(touchobj.clientY, 10);
+    this.touchX = parseInt(touchobj.clientX, 10);
+
+    this.handleEventWheelScroll(dist, -distX);
      e.preventDefault();
   }
 
