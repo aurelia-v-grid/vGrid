@@ -1,0 +1,33 @@
+import { RowCache, HeaderCache } from '../interfaces';
+export declare class HtmlCache {
+    element: Element | HTMLElement;
+    avg_top_panel: Element | HTMLElement;
+    avg_header_left: Element | HTMLElement;
+    avg_header: Element | HTMLElement;
+    avg_header_main: Element | HTMLElement;
+    avg_header_main_scroll: Element | HTMLElement;
+    avg_header_right: Element | HTMLElement;
+    avg_content: Element | HTMLElement;
+    avg_content_left: Element | HTMLElement;
+    avg_content_left_scroll: Element | HTMLElement;
+    avg_content_main: Element | HTMLElement;
+    avg_content_main_scroll: Element | HTMLElement;
+    avg_content_right: Element | HTMLElement;
+    avg_content_right_scroll: Element | HTMLElement;
+    avg_footer: Element | HTMLElement;
+    avg_content_group: Element | HTMLElement;
+    avg_content_group_scroll: Element | HTMLElement;
+    avg_content_vhandle: Element | HTMLElement;
+    avg_content_vhandle_scroll: Element | HTMLElement;
+    avg_content_hhandle: Element | HTMLElement;
+    avg_content_hhandle_scroll: Element | HTMLElement;
+    avg_left_rows: NodeListOf<any>;
+    avg_main_rows: NodeListOf<any>;
+    avg_right_rows: NodeListOf<any>;
+    avg_group_rows: NodeListOf<any>;
+    rowCache: RowCache[];
+    headerCache: HeaderCache;
+    constructor(element: Element);
+    updateRowsMarkup(): void;
+    updateMainMarkup(): void;
+}
