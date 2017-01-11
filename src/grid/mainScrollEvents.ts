@@ -118,7 +118,7 @@ export class MainScrollEvents {
     let touchobj = e.changedTouches[0];
     this.touchY = parseInt(touchobj.clientY, 10);
     this.touchX = parseInt(touchobj.clientX, 10);
-    e.preventDefault();
+    // e.preventDefault();
   }
 
   private touchMove(e: any) {
@@ -126,7 +126,7 @@ export class MainScrollEvents {
     let dist = parseInt(touchobj.clientY, 10) - this.touchY;
     let distX = parseInt(touchobj.clientX, 10) - this.touchX;
     this.handleEventWheelScroll(-dist, -distX);
-    e.preventDefault();
+    // e.preventDefault();
   }
 
   private handleEventWheelScroll(newTopPosition: number, left?: number): void {
