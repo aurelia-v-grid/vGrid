@@ -91,14 +91,12 @@ System.register([], function (exports_1, context_1) {
                     var touchobj = e.changedTouches[0];
                     this.touchY = parseInt(touchobj.clientY, 10);
                     this.touchX = parseInt(touchobj.clientX, 10);
-                    e.preventDefault();
                 };
                 MainScrollEvents.prototype.touchMove = function (e) {
                     var touchobj = e.changedTouches[0];
                     var dist = parseInt(touchobj.clientY, 10) - this.touchY;
                     var distX = parseInt(touchobj.clientX, 10) - this.touchX;
                     this.handleEventWheelScroll(-dist, -distX);
-                    e.preventDefault();
                 };
                 MainScrollEvents.prototype.handleEventWheelScroll = function (newTopPosition, left) {
                     var _this = this;
