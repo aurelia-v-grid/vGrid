@@ -18,13 +18,19 @@ export class Welcome {
     });
     this.ds = new DataSource(new Selection('multiple'));
     this.gridConnector = new GridConnector(this.ds);
-
+    console.log(this.dummyDataGenerator.rowTop)
+    this.gridConnector.setInitTop(this.dummyDataGenerator.rowTop);
     this.ds.setArray(this.myCollection);
   }
 
   // this is the i18N translation
   public translateI18n(key: string) {
     return this.testString;
+  }
+
+  public deactivate() {
+    console.log("deactivate")
+    this.dummyDataGenerator.rowTop = this.gridConnector.getTopRow() * 25;
   }
 
   // this is called by my button... not very good

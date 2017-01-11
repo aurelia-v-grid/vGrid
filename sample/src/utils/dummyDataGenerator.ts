@@ -27,6 +27,7 @@ export class DummyDataGenerator {
     private bool: any;
     private zip: any;
     private internalDataArray: any;
+    public rowTop: number;
 
 
     constructor() {
@@ -34,7 +35,7 @@ export class DummyDataGenerator {
         this.totalGenerated = 0;
         // transform json object to an array
         this.internalDataArray = internalDataArray.data;
-
+        this.rowTop = 0;
         this.index = [];
         this.name = [];
         this.first = [];
