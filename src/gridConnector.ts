@@ -18,6 +18,7 @@ export class GridConnector implements GridConnectorInterface {
   private key: string;
   private errorhandler: Function;
   private eventID: number;
+  private initTop: number = 0;
 
   constructor(datasource: DataSource, selection?: Selection, errorHandler?: Function) {
     this.controller = null;
@@ -25,6 +26,10 @@ export class GridConnector implements GridConnectorInterface {
     this.key = datasource.getKey();
     this.selection = selection || datasource.getSelection();
     this.errorhandler = errorHandler || null;
+  }
+
+  public setInitTop(top: number): void{
+    this.initTop = top;
   }
 
   public getSelection(): SelectionInterface {
@@ -39,10 +44,12 @@ export class GridConnector implements GridConnectorInterface {
 
   public gridCreated(): void {
     // I want to be able to override this, so you could add/do more with datasource before displaying results
-    this.raiseEvent('sortIconUpdate');
-    this.controller.updateHeights();
-    this.controller.triggerScroll(0);
-    this.controller.updateHeaderGrouping(this.datasource.getGrouping());
+      this.raiseEvent('sortIconUpdate');
+      this.controller.updateHeights();
+      setTimeout(() => {
+        this.controller.triggerScroll(this.initTop);
+      }, 0);
+      this.controller.updateHeaderGrouping(this.datasource.getGrouping());
   }
 
   public select(row: number): void {
@@ -118,6 +125,10 @@ export class GridConnector implements GridConnectorInterface {
       this.datasource.groupCollapse(id);
     });
   }
+
+  public getTopRow(): number {
+        return this.controller.getTopRow();
+    }
 
   public triggerI18n() {
     this.controller.triggerI18N();
