@@ -7,6 +7,24 @@ define(["require", "exports"], function (require, exports) {
         RowDataBinder.prototype.init = function () {
             this.addEventListener();
         };
+        RowDataBinder.prototype.rebindRowNo = function (row) {
+            var rowCache = this.controller.htmlCache.rowCache;
+            var foundRowCache = null;
+            rowCache.forEach(function (cache) {
+                if (cache.row === row) {
+                    foundRowCache = cache;
+                }
+            });
+            if (foundRowCache) {
+                this.rebindRow({
+                    detail: {
+                        currentRow: row,
+                        rowCache: foundRowCache,
+                        downScroll: true
+                    }
+                });
+            }
+        };
         RowDataBinder.prototype.addEventListener = function () {
             this.rebindRowBinded = this.rebindRow.bind(this);
             this.rebindAllRowsBinded = this.rebindAllRows.bind(this);

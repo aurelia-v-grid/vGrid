@@ -128,10 +128,10 @@ var ColumnMarkupHelper = (function () {
         var colRowMenu = col.colRowMenu ? "v-menu=\"" + col.colRowMenu + "\"" : '';
         var colCss = col.colCss ? "css=\"" + col.colCss + "\"" : '';
         if (col.colType === 'checkbox') {
-            col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colAddRowAttributes + " \n        " + colRowMenu + "  \n        checked.bind=\"" + col.colField + "\">";
+            col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colAddRowAttributes + " \n        v-onchange \n        " + colRowMenu + "  \n        checked.bind=\"" + col.colField + "\">";
         }
         else {
-            col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colRowMenu + "  \n        " + colAddRowAttributes + "  \n        value.bind=\"" + col.colField + "\">";
+            col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colRowMenu + "\n        v-onchange \n        " + colAddRowAttributes + "  \n        value.bind=\"" + col.colField + "\">";
         }
     };
     ColumnMarkupHelper.prototype.createInputHeaderMarkup = function (col) {

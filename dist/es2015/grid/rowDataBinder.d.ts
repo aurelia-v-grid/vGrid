@@ -6,6 +6,7 @@ export declare class RowDataBinder {
     private rebindAllRowsBinded;
     constructor(element: Element, controller: Controller);
     init(): void;
+    rebindRowNo(row: number): void;
     private addEventListener();
     private rebindRow(event);
     private rebindAllRows(event);
