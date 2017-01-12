@@ -28,6 +28,7 @@ System.register([], function (exports_1, context_1) {
                 };
                 ArrayFilter.prototype.runQueryOn = function (objArray, ObjFilter) {
                     var _this = this;
+                    this.lastFilter = ObjFilter;
                     var resultArray = objArray.filter(function (data) {
                         var result = true;
                         ObjFilter.forEach(function (x) {

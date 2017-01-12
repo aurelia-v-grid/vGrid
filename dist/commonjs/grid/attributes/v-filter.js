@@ -28,6 +28,17 @@ var VGridAttributesFilter = (function () {
                     _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
                 }
             });
+            this.vGrid.element.addEventListener('filterUpdateValues', function () {
+                var curFilter = _this.vGrid.attGridConnector.getCurrentFilter();
+                curFilter.forEach(function (f) {
+                    if (f.attribute === _this.attribute) {
+                        _this.element.value = f.value;
+                        _this.filterOperator = f.operator;
+                        _this.element.placeholder =
+                            _this.getOperatorName(_this.filterOperator);
+                    }
+                });
+            });
             this.vGrid.element.addEventListener('filterTranslation', function () {
                 _this.element.placeholder =
                     _this.getOperatorName(_this.filterOperator);
