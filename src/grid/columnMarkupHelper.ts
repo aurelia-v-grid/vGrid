@@ -168,6 +168,7 @@ export class ColumnMarkupHelper {
         ${colClass} 
         ${colType} 
         ${colAddRowAttributes} 
+        v-onchange 
         ${colRowMenu}  
         checked.bind="${col.colField}">`;
     } else {
@@ -175,7 +176,8 @@ export class ColumnMarkupHelper {
         ${colCss} 
         ${colClass} 
         ${colType} 
-        ${colRowMenu}  
+        ${colRowMenu}
+        v-onchange 
         ${colAddRowAttributes}  
         value.bind="${col.colField}">`;
     }

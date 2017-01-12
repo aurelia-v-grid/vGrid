@@ -7,6 +7,7 @@ export function configure(config: any) {
     prefix + '/attributes/v-sort',
     prefix + '/attributes/v-image',
     prefix + '/attributes/v-drag-drop-col',
+    prefix + '/attributes/v-changed',
     prefix + '/attributes/v-resize-col',
     prefix + '/attributes/v-menu',
     prefix + '/attributes/v-selection',

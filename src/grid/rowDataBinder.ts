@@ -16,6 +16,25 @@ export class RowDataBinder {
     this.addEventListener();
   }
 
+  public rebindRowNo(row: number): void {
+      let rowCache = this.controller.htmlCache.rowCache;
+      let foundRowCache = null;
+      rowCache.forEach((cache) => {
+        if (cache.row === row) {
+          foundRowCache = cache;
+        }
+      });
+      if (foundRowCache) {
+        this.rebindRow(({
+          detail: {
+            currentRow: row,
+            rowCache: foundRowCache,
+            downScroll: true
+          }
+        } as CustomEvent));
+      }
+  }
+
   private addEventListener(): void {
     this.rebindRowBinded = this.rebindRow.bind(this);
     this.rebindAllRowsBinded = this.rebindAllRows.bind(this);
