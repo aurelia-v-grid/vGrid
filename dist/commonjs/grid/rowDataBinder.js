@@ -56,6 +56,7 @@ var RowDataBinder = (function () {
                 rowCache.group.style.display = 'block';
             }
             bindingContext.rowRef = data.rowRef;
+            bindingContext.tempRef = data.tempRef;
             bindingContext.selection = data.selection;
             bindingContext.selected = isSelected;
             bindingContext.row = currentRow;
@@ -105,6 +106,7 @@ var RowDataBinder = (function () {
                     rowCache[i].group.style.display = 'block';
                 }
                 bindingContext.rowRef = data.rowRef;
+                bindingContext.tempRef = data.tempRef;
                 bindingContext.selection = data.selection;
                 bindingContext.selected = isSelected;
                 bindingContext.row = rowCache[i].row;

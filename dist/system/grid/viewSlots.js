@@ -27,7 +27,7 @@ System.register([], function (exports_1, context_1) {
                         parentOverrideContext: overrideContext
                     };
                     for (var i = 0; i < this.rowCache.length; i++) {
-                        context = {};
+                        context = { rowRef: {}, tempRef: {} };
                         this.rowCache[i].bindingContext = context;
                         this.rowCache[i].parentOverrideContext = {
                             bindingContext: context,

@@ -28,8 +28,24 @@ export class Welcome {
     return this.testString;
   }
 
+  public onRowDraw(data) {
+
+   if (data) {
+    if (data.tempRef) {
+      if (data.tempRef.number > 100) {
+        data.tempRef.numberColor = 'green';
+        data.tempRef.numberFont = 'normal';
+      } else {
+        data.tempRef.numberColor = 'red';
+        data.tempRef.numberFont = 'bold';
+    }
+    }
+  }
+}
+
+
   public deactivate() {
-    console.log("deactivate")
+    console.log('deactivate')
     this.dummyDataGenerator.rowTop = this.gridConnector.getTopRow() * 25;
   }
 

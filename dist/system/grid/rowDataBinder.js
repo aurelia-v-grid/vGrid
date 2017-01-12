@@ -62,6 +62,7 @@ System.register([], function (exports_1, context_1) {
                             rowCache.group.style.display = 'block';
                         }
                         bindingContext.rowRef = data.rowRef;
+                        bindingContext.tempRef = data.tempRef;
                         bindingContext.selection = data.selection;
                         bindingContext.selected = isSelected;
                         bindingContext.row = currentRow;
@@ -111,6 +112,7 @@ System.register([], function (exports_1, context_1) {
                                 rowCache[i].group.style.display = 'block';
                             }
                             bindingContext.rowRef = data.rowRef;
+                            bindingContext.tempRef = data.tempRef;
                             bindingContext.selection = data.selection;
                             bindingContext.selected = isSelected;
                             bindingContext.row = rowCache[i].row;

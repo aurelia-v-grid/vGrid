@@ -22,7 +22,7 @@ define(["require", "exports"], function (require, exports) {
                 parentOverrideContext: overrideContext
             };
             for (var i = 0; i < this.rowCache.length; i++) {
-                context = {};
+                context = { rowRef: {}, tempRef: {} };
                 this.rowCache[i].bindingContext = context;
                 this.rowCache[i].parentOverrideContext = {
                     bindingContext: context,

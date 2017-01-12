@@ -9,7 +9,8 @@
         v-header-height="50" 
         v-panel-height="25"
         v-footer-height="25"
-        v-data-delay="200" 
+        v-data-delay="200"
+        v-row-on-draw.call="onRowDraw($event)"
         
         style="height:400px">
         
@@ -61,7 +62,7 @@
           col-width="100" 
           col-sort="field:guid" 
           col-filter="field:guid" 
-          col-field="guid">
+          col-field="test">
         </v-grid-col>
 
         <v-grid-col
@@ -79,19 +80,22 @@
           col-width="160" 
           col-sort="field:name" 
           col-filter="field:name;operator:*" 
-          col-field="name" 
-          col-pin-left="true">
+          col-field="tempRef.numberColor" 
+         >
         </v-grid-col>
 
         <v-grid-col
           col-filter-menu="filter:number"
           col-label-menu="sort:number"  
-          col-width="100" 
+          col-width="100"
+          col-css="color:${tempRef.numberColor};font-weight:${tempRef.numberFont}"
           col-sort="field:number" 
-          col-filter="field:number" 
+          col-filter="field:number;operator:<" 
           col-field="number | numberFormatter" 
-          col-pin-right="true">
+         >
         </v-grid-col>
+
+  
       
 <!--        <v-grid-group-row>
           <i click.delegate="changeGrouping(rowRef)">
