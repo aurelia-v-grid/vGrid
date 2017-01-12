@@ -73,6 +73,11 @@ export class Welcome {
     });
   }
 
+  public filterByCode(){
+    this.ds.query([{attribute:"country", operator:"*", value:"and"}])
+    this.gridConnector.raiseEvent("filterUpdateValues")
+  }
+
   public remove() {
     console.log(this.ds.remove(this.gridConnector.getSelection().getSelectedRows()));
   }
