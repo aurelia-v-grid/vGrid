@@ -62,7 +62,7 @@ export class ViewSlots {
 
     for (let i = 0; i < this.rowCache.length; i++) {
       // one for each row.
-      context = ({} as BindingContext);
+      context = ({rowRef: {}, tempRef: {}} as BindingContext);
 
       this.rowCache[i].bindingContext = context;
       this.rowCache[i].parentOverrideContext = {

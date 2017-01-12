@@ -76,8 +76,9 @@ export class RowDataBinder {
         rowCache.group.style.display = 'block';
       }
 
-      // row ref
+      // row ref & temp
       bindingContext.rowRef = data.rowRef;
+      bindingContext.tempRef = data.tempRef;
 
       // selection
       bindingContext.selection = data.selection;
@@ -142,8 +143,9 @@ export class RowDataBinder {
           rowCache[i].group.style.display = 'block';
         }
 
-        // row ref
+        // row ref & tempRef
         bindingContext.rowRef = data.rowRef;
+        bindingContext.tempRef = data.tempRef;
 
         // selection
         bindingContext.selection = data.selection;
