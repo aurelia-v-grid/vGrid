@@ -29,6 +29,8 @@ export class ArrayFilter {
 
   public runQueryOn(objArray: Entity[], ObjFilter: FilterObject[]) {
 
+    this.lastFilter = ObjFilter;
+
     let resultArray = objArray.filter((data) => {
 
       // lets have true as default, so all that should not be there we set false..

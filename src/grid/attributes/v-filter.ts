@@ -42,6 +42,18 @@ export class VGridAttributesFilter {
         }
       });
 
+      this.vGrid.element.addEventListener('filterUpdateValues', () => {
+      let curFilter = this.vGrid.attGridConnector.getCurrentFilter();
+      curFilter.forEach((f: any) => {
+          if (f.attribute === this.attribute) {
+            (this.element as HTMLInputElement).value = f.value;
+            this.filterOperator = f.operator;
+            (this.element as HTMLInputElement).placeholder =
+            this.getOperatorName(this.filterOperator);
+            }
+         });
+      });
+
       this.vGrid.element.addEventListener('filterTranslation', () => {
           (this.element as HTMLInputElement).placeholder =
             this.getOperatorName(this.filterOperator);
