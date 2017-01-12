@@ -207,6 +207,9 @@ define(["require", "exports"], function (require, exports) {
             }
             else {
                 this.htmlCache.avg_content_vhandle.scrollTop = position;
+                this.htmlCache.avg_content_left.scrollTop = position;
+                this.htmlCache.avg_content_main.scrollTop = position;
+                this.htmlCache.avg_content_right.scrollTop = position;
             }
             this.raiseEvent('avg-scroll', {
                 isScrollBarScrolling: true,

@@ -1,12 +1,16 @@
 define(["require", "exports"], function (require, exports) {
     var GridConnector = (function () {
         function GridConnector(datasource, selection, errorHandler) {
+            this.initTop = 0;
             this.controller = null;
             this.datasource = datasource;
             this.key = datasource.getKey();
             this.selection = selection || datasource.getSelection();
             this.errorhandler = errorHandler || null;
         }
+        GridConnector.prototype.setInitTop = function (top) {
+            this.initTop = top;
+        };
         GridConnector.prototype.getSelection = function () {
             return this.selection;
         };
@@ -16,9 +20,12 @@ define(["require", "exports"], function (require, exports) {
             create();
         };
         GridConnector.prototype.gridCreated = function () {
+            var _this = this;
             this.raiseEvent('sortIconUpdate');
             this.controller.updateHeights();
-            this.controller.triggerScroll(0);
+            setTimeout(function () {
+                _this.controller.triggerScroll(_this.initTop);
+            }, 0);
             this.controller.updateHeaderGrouping(this.datasource.getGrouping());
         };
         GridConnector.prototype.select = function (row) {
@@ -84,6 +91,9 @@ define(["require", "exports"], function (require, exports) {
             this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(function () {
                 _this.datasource.groupCollapse(id);
             });
+        };
+        GridConnector.prototype.getTopRow = function () {
+            return this.controller.getTopRow();
         };
         GridConnector.prototype.triggerI18n = function () {
             this.controller.triggerI18N();

@@ -6,7 +6,9 @@ export declare class GridConnector implements GridConnectorInterface {
     private key;
     private errorhandler;
     private eventID;
+    private initTop;
     constructor(datasource: DataSource, selection?: Selection, errorHandler?: Function);
+    setInitTop(top: number): void;
     getSelection(): SelectionInterface;
     connect(controller: Controller, create: Function): void;
     gridCreated(): void;
@@ -28,6 +30,7 @@ export declare class GridConnector implements GridConnectorInterface {
     getCurrentFilter(): FilterObject[];
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
+    getTopRow(): number;
     triggerI18n(): void;
     private eventHandler(event);
     private raiseEvent(name, data?);

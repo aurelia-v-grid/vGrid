@@ -6,8 +6,7 @@ export function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
-    .plugin('aurelia-v-grid')
-    .plugin('aurelia-v-grid/wakdb');
+    .plugin('aurelia-v-grid');
 
   // Uncomment the line below to enable animation.
   // aurelia.use.plugin('aurelia-animator-css');
