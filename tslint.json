@@ -19,6 +19,7 @@
     "no-shadowed-variable": false,
     "no-string-literal": false,
     "trailing-comma": [],
+    "no-consecutive-blank-lines": [true, 3],
     "variable-name": false,
     "member-ordering": [true, { "order": "fields-first" }]
   }
