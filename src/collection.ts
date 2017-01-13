@@ -2,25 +2,44 @@ import { DataSource, Entity } from './interfaces'; // todo,create interface when
 
 export class Collection {
   public length: number;
-  private entities: Entity[];
+  private displayedEntities: Entity[];
   private keys: string[];
   private key: string;
   private count: number;
   private datasource: DataSource;
   private ungroupedArray: Entity[];
 
+
+
+  /**
+   * Creates an instance of Collection.
+   * 
+   * @param {DataSource} datasource
+   * 
+   * @memberOf Collection
+   */
   constructor(datasource: DataSource) {
     this.datasource = datasource;
     this.key = datasource.getKey();
-    this.entities = [];
+    this.displayedEntities = [];
     this.keys = [];
     this.count = 0;
     this.length = 0;
     this.ungroupedArray = [];
   }
 
+
+
+  /**
+   * Sets data to the collection
+   * 
+   * @param {Entity[]} array
+   * @param {Entity[]} [ungroupedArray]
+   * 
+   * @memberOf Collection
+   */
   public setData(array: Entity[], ungroupedArray?: Entity[]): void {
-    this.entities = [];
+    this.displayedEntities = [];
     this.keys = [];
 
     // need a ungrouped collection, so we can use that forward when needing to sort, regroup etc
@@ -31,43 +50,104 @@ export class Collection {
 
     // create entities
     array.forEach((rowData) => {
+
+      // if entity does not have key we add one, need this for selection
       if (!rowData[this.key]) {
         this.count++;
         rowData[this.key] = 'key' + this.count;
       }
 
+      // if entity is not group we set the keys to our internal key array, if not we set null
       if (!rowData.__group) {
         this.keys.push(rowData[this.key]);
       } else {
         this.keys.push(null);
       }
-      this.entities.push(rowData);
-    });
 
+      // we now set the entity data into our displayed entities
+      this.displayedEntities.push(rowData);
+    });
   }
 
+
+
+  /**
+   * Returns the ungrouped array of displayed collection
+   * 
+   * @returns {Entity[]}
+   * 
+   * @memberOf Collection
+   */
   public getEntities(): Entity[] {
     return this.ungroupedArray;
   }
 
+
+
+  /**
+   * Returns array displayed in collection, including groups
+   * 
+   * @returns {Entity[]}
+   * 
+   * @memberOf Collection
+   */
   public getCurrentEntities(): Entity[] {
-    return this.entities;
+    return this.displayedEntities;
   }
 
+
+
+  /**
+   * Returns key of row number passed in
+   * 
+   * @param {number} row
+   * @returns {string}
+   * 
+   * @memberOf Collection
+   */
   public getRowKey(row: number): string {
     return this.keys[row];
   }
 
+
+
+  /**
+   * Returns all keys in displayed collection
+   * 
+   * @returns {any[]}
+   * 
+   * @memberOf Collection
+   */
   public getRowKeys(): any[] {
     return this.keys;
   }
 
+
+
+  /**
+   * Returns entity of rows in displayed collection
+   * 
+   * @param {number} row
+   * @returns {Entity}
+   * 
+   * @memberOf Collection
+   */
   public getRow(row: number): Entity {
-    return this.entities[row];
+    return this.displayedEntities[row];
   }
 
+
+
+  /**
+   * Return row number of entity passed in as param
+   * 
+   * @param {Entity} entity
+   * @returns {number}
+   * 
+   * @memberOf Collection
+   */
   public getRowFromEntity(entity: Entity): number {
-    return this.entities.indexOf(entity);
+    return this.displayedEntities.indexOf(entity);
   }
 
 }
