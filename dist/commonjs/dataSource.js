@@ -4,6 +4,7 @@ var arrayUtils_1 = require("./utils/arrayUtils");
 var DataSource = (function () {
     function DataSource(selection, config) {
         this.selection = selection || new selection_1.Selection('single');
+        this.selectionEventID = this.selection.addEventListener(this.selectionEventCallback.bind(this));
         this.selection.overrideGetRowKey(this.getRowKey.bind(this));
         this.selection.overrideGetRowKeys(this.getRowKeys.bind(this));
         this.arrayUtils = new arrayUtils_1.ArrayUtils();
@@ -31,8 +32,14 @@ var DataSource = (function () {
         return this.collection.length;
     };
     DataSource.prototype.triggerEvent = function (event) {
-        this.eventCallBacks.forEach(function (FN) {
-            FN(event);
+        var _this = this;
+        this.eventCallBacks.forEach(function (FN, i) {
+            if (FN !== null) {
+                var alive = FN(event);
+                if (!alive) {
+                    _this.eventCallBacks[i] = null;
+                }
+            }
         });
     };
     DataSource.prototype.addEventListener = function (callback) {
@@ -212,6 +219,13 @@ var DataSource = (function () {
         }
         return returnArray;
     };
+    DataSource.prototype.getCollectionStatus = function () {
+        var status = {};
+        status.collectionLength = this.mainArray ? this.mainArray.length : 0;
+        status.filteredCollectionLength = this.collection.getEntities().length;
+        status.selectionLength = this.selection.getLength();
+        return status;
+    };
     DataSource.prototype.getRowKey = function (row) {
         if (this.collection) {
             return this.collection.getRowKey(row);
@@ -227,6 +241,10 @@ var DataSource = (function () {
         else {
             return [];
         }
+    };
+    DataSource.prototype.selectionEventCallback = function (e) {
+        this.triggerEvent(e);
+        return true;
     };
     return DataSource;
 }());

@@ -10,6 +10,7 @@ export declare class DataSource {
     private eventIdCount;
     private eventCallBacks;
     private collection;
+    private selectionEventID;
     constructor(selection: Selection, config?: DatasourceConfig);
     getSelection(): Selection;
     getKey(): string;
@@ -33,6 +34,8 @@ export declare class DataSource {
     addBlankRow(): void;
     unshift(data: any): void;
     remove(rows?: any[]): any[];
+    getCollectionStatus(): any;
     private getRowKey(row);
     private getRowKeys();
+    private selectionEventCallback(e);
 }

@@ -3,8 +3,29 @@ define(["require", "exports"], function (require, exports) {
         function Selection(mode) {
             this.mode = mode;
             this.selectedRows = 0;
+            this.eventIdCount = -1;
+            this.eventCallBacks = [];
             this.selection = new Set([]);
         }
+        Selection.prototype.triggerEvent = function (event) {
+            var _this = this;
+            this.eventCallBacks.forEach(function (FN, i) {
+                if (FN !== null) {
+                    var alive = FN(event);
+                    if (!alive) {
+                        _this.eventCallBacks[i] = null;
+                    }
+                }
+            });
+        };
+        Selection.prototype.addEventListener = function (callback) {
+            this.eventIdCount++;
+            this.eventCallBacks.push(callback);
+            return this.eventIdCount;
+        };
+        Selection.prototype.getLength = function () {
+            return this.selection.size;
+        };
         Selection.prototype.getMode = function () {
             return this.mode;
         };
@@ -30,10 +51,12 @@ define(["require", "exports"], function (require, exports) {
         Selection.prototype.deSelectAll = function () {
             this.selection.clear();
             this.selectedRows = this.selection.size;
+            this.triggerEvent('selection_changed');
         };
         Selection.prototype.deSelect = function (row) {
             this.selection.delete(this.getRowKey(row));
             this.selectedRows = this.selection.size;
+            this.triggerEvent('selection_changed');
         };
         Selection.prototype.select = function (row, add) {
             switch (this.mode) {
@@ -59,6 +82,7 @@ define(["require", "exports"], function (require, exports) {
                     break;
                 default:
             }
+            this.triggerEvent('selection_changed');
         };
         Selection.prototype.selectRange = function (start, end) {
             if (this.mode === 'multiple') {
@@ -67,6 +91,7 @@ define(["require", "exports"], function (require, exports) {
                     this.selection.add(this.getRowKey(i));
                 }
                 this.selectedRows = this.selection.size;
+                this.triggerEvent('selection_changed');
             }
         };
         Selection.prototype.getSelectedRows = function () {
@@ -90,12 +115,14 @@ define(["require", "exports"], function (require, exports) {
                 this.selection.add(this.getRowKey(newRows[i]));
             }
             this.selectedRows = this.selection.size;
+            this.triggerEvent('selection_changed');
         };
         Selection.prototype.reset = function () {
             if (this.selectedRows > 0) {
                 this.selection.clear();
             }
             this.selectedRows = this.selection.size;
+            this.triggerEvent('selection_changed');
         };
         return Selection;
     }());

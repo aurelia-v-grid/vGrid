@@ -145,10 +145,13 @@ System.register([], function (exports_1, context_1) {
                             this.controller.triggerScroll(null);
                             this.controller.setLoadingScreen(false);
                             break;
+                        case 'selection_changed':
+                            break;
                         default:
                             console.warn('unknown event');
                             console.warn(event);
                     }
+                    return true;
                 };
                 GridConnector.prototype.getRowProperties = function (obj) {
                     var x = {};

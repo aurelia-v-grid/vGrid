@@ -3,7 +3,12 @@ export declare class Selection implements SelectionInterface {
     private mode;
     private selectedRows;
     private selection;
+    private eventIdCount;
+    private eventCallBacks;
     constructor(mode: string);
+    triggerEvent(event: string): void;
+    addEventListener(callback: Function): number;
+    getLength(): number;
     getMode(): string;
     getRowKey(row: number): number;
     getRowKeys(): any[];
