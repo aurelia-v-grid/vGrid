@@ -113,7 +113,8 @@ System.register([], function (exports_1, context_1) {
                     if (!this.manualSelection) {
                         this.controller.raiseEvent('v-row-onclick', {
                             evt: event,
-                            data: null,
+                            data: cache.bindingContext.rowRef,
+                            bindingContext: cache.bindingContext,
                             row: cache.row
                         });
                     }
@@ -122,7 +123,8 @@ System.register([], function (exports_1, context_1) {
                     var cache = this.getCache(event.currentTarget) || {};
                     this.controller.raiseEvent('v-row-ondblclick', {
                         evt: event,
-                        data: null,
+                        data: cache.bindingContext.rowRef,
+                        bindingContext: cache.bindingContext,
                         row: cache.row
                     });
                 };

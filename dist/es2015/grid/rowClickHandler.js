@@ -108,7 +108,8 @@ define(["require", "exports"], function (require, exports) {
             if (!this.manualSelection) {
                 this.controller.raiseEvent('v-row-onclick', {
                     evt: event,
-                    data: null,
+                    data: cache.bindingContext.rowRef,
+                    bindingContext: cache.bindingContext,
                     row: cache.row
                 });
             }
@@ -117,7 +118,8 @@ define(["require", "exports"], function (require, exports) {
             var cache = this.getCache(event.currentTarget) || {};
             this.controller.raiseEvent('v-row-ondblclick', {
                 evt: event,
-                data: null,
+                data: cache.bindingContext.rowRef,
+                bindingContext: cache.bindingContext,
                 row: cache.row
             });
         };

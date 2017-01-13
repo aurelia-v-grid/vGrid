@@ -32,7 +32,7 @@ export declare class GridConnector implements GridConnectorInterface {
     collapseGroup(id: string): void;
     getTopRow(): number;
     triggerI18n(): void;
+    raiseEvent(name: string, data?: {}): void;
     private eventHandler(event);
-    private raiseEvent(name, data?);
     private getRowProperties(obj);
 }

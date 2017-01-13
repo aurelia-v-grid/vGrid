@@ -107,7 +107,8 @@ var RowClickHandler = (function () {
         if (!this.manualSelection) {
             this.controller.raiseEvent('v-row-onclick', {
                 evt: event,
-                data: null,
+                data: cache.bindingContext.rowRef,
+                bindingContext: cache.bindingContext,
                 row: cache.row
             });
         }
@@ -116,7 +117,8 @@ var RowClickHandler = (function () {
         var cache = this.getCache(event.currentTarget) || {};
         this.controller.raiseEvent('v-row-ondblclick', {
             evt: event,
-            data: null,
+            data: cache.bindingContext.rowRef,
+            bindingContext: cache.bindingContext,
             row: cache.row
         });
     };

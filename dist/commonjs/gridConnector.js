@@ -97,6 +97,16 @@ var GridConnector = (function () {
     GridConnector.prototype.triggerI18n = function () {
         this.controller.triggerI18N();
     };
+    GridConnector.prototype.raiseEvent = function (name, data) {
+        if (data === void 0) { data = {}; }
+        var event = new CustomEvent(name, {
+            detail: data,
+            bubbles: true
+        });
+        if (this.controller) {
+            this.controller.element.dispatchEvent(event);
+        }
+    };
     GridConnector.prototype.eventHandler = function (event) {
         switch (event) {
             case 'collection_changed':
@@ -132,16 +142,6 @@ var GridConnector = (function () {
             default:
                 console.warn('unknown event');
                 console.warn(event);
-        }
-    };
-    GridConnector.prototype.raiseEvent = function (name, data) {
-        if (data === void 0) { data = {}; }
-        var event = new CustomEvent(name, {
-            detail: data,
-            bubbles: true
-        });
-        if (this.controller) {
-            this.controller.element.dispatchEvent(event);
         }
     };
     GridConnector.prototype.getRowProperties = function (obj) {
