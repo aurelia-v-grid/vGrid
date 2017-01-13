@@ -4,11 +4,41 @@ export class Selection implements SelectionInterface {
   private mode: string;
   private selectedRows: number;
   private selection: Set<number>;
+  private eventIdCount: number;
+  private eventCallBacks: Function[];
 
   constructor(mode: string) {
     this.mode = mode;
     this.selectedRows = 0;
+    this.eventIdCount = -1;
+    this.eventCallBacks = [];
     this.selection = new Set([]);
+  }
+
+  public triggerEvent(event: string): void {
+    // call all event listeners
+    this.eventCallBacks.forEach((FN, i) => {
+      if (FN !== null) {
+         let alive = FN(event);
+         if (!alive) {
+           // todo: remove these after
+           this.eventCallBacks[i] = null;
+         }
+      }
+    });
+  }
+
+  public addEventListener(callback: Function): number {
+    // add key
+    this.eventIdCount++;
+    // add to callback queue
+    this.eventCallBacks.push(callback);
+    // return ID, so they can remove listnener
+    return this.eventIdCount;
+  }
+
+  public getLength(): number {
+    return this.selection.size;
   }
 
   public getMode(): string {
@@ -43,11 +73,13 @@ export class Selection implements SelectionInterface {
   public deSelectAll(): void {
     this.selection.clear();
     this.selectedRows = this.selection.size;
+    this.triggerEvent('selection_changed');
   }
 
   public deSelect(row: number): void {
     this.selection.delete(this.getRowKey(row));
     this.selectedRows = this.selection.size;
+    this.triggerEvent('selection_changed');
   }
 
   public select(row: number, add?: boolean): void {
@@ -74,6 +106,7 @@ export class Selection implements SelectionInterface {
       default:
       // nothing-> warn ?
     }
+    this.triggerEvent('selection_changed');
   }
 
   public selectRange(start: number, end: number): void {
@@ -83,6 +116,7 @@ export class Selection implements SelectionInterface {
         this.selection.add(this.getRowKey(i));
       }
       this.selectedRows = this.selection.size;
+      this.triggerEvent('selection_changed');
     }
   }
 
@@ -109,6 +143,7 @@ export class Selection implements SelectionInterface {
       this.selection.add(this.getRowKey(newRows[i]));
     }
     this.selectedRows = this.selection.size;
+    this.triggerEvent('selection_changed');
   }
 
   public reset(): void {
@@ -116,6 +151,7 @@ export class Selection implements SelectionInterface {
       this.selection.clear();
     }
     this.selectedRows = this.selection.size;
+    this.triggerEvent('selection_changed');
   }
 
 }

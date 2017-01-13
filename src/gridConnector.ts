@@ -144,7 +144,7 @@ export class GridConnector implements GridConnectorInterface {
     }
   }
 
-  private eventHandler(event: string): void {
+  private eventHandler(event: string): boolean {
     switch (event) {
       case 'collection_changed':
       case 'collection_grouped':
@@ -176,11 +176,14 @@ export class GridConnector implements GridConnectorInterface {
         this.controller.triggerScroll(null);
         this.controller.setLoadingScreen(false);
         break;
-
+      case 'selection_changed':
+        // nothing atm
+      break;
       default:
         console.warn('unknown event');
         console.warn(event);
     }
+    return true;
   }
 
   private getRowProperties(obj: {[key: string]: any}): {} {

@@ -13,10 +13,12 @@ export class DataSource {
   private eventIdCount: number;
   private eventCallBacks: Function[];
   private collection: Collection;
+  private selectionEventID: number;
 
   constructor(selection: Selection, config?: DatasourceConfig) {
     // selection
     this.selection = selection || new Selection('single');
+    this.selectionEventID = this.selection.addEventListener(this.selectionEventCallback.bind(this));
     // overide selection get row/key from row
     // why not in selection ? because I might need rowbased selection only
     this.selection.overrideGetRowKey(this.getRowKey.bind(this));
@@ -60,8 +62,14 @@ export class DataSource {
 
   public triggerEvent(event: string): void {
     // call all event listeners
-    this.eventCallBacks.forEach((FN) => {
-      FN(event);
+    this.eventCallBacks.forEach((FN, i) => {
+      if (FN !== null) {
+         let alive = FN(event);
+         if (!alive) {
+           // todo: remove these after
+           this.eventCallBacks[i] = null;
+         }
+      }
     });
   }
 
@@ -280,6 +288,14 @@ export class DataSource {
     return returnArray;
   }
 
+  public getCollectionStatus(): any {
+    let status: any = {};
+    status.collectionLength = this.mainArray ? this.mainArray.length : 0;
+    status.filteredCollectionLength = this.collection.getEntities().length;
+    status.selectionLength = this.selection.getLength();
+    return status;
+  }
+
   private getRowKey(row: number): string {
     // if collection, then get row key
     if (this.collection) {
@@ -296,5 +312,10 @@ export class DataSource {
     } else {
       return [];
     }
+  }
+
+  private selectionEventCallback(e: any): boolean {
+    this.triggerEvent(e);
+    return true;
   }
 }
