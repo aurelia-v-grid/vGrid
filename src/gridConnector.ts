@@ -134,6 +134,16 @@ export class GridConnector implements GridConnectorInterface {
     this.controller.triggerI18N();
   }
 
+  public raiseEvent(name: string, data = {}): void {
+    let event = new CustomEvent(name, {
+      detail: data,
+      bubbles: true
+    });
+    if (this.controller) {
+      this.controller.element.dispatchEvent(event);
+    }
+  }
+
   private eventHandler(event: string): void {
     switch (event) {
       case 'collection_changed':
@@ -170,16 +180,6 @@ export class GridConnector implements GridConnectorInterface {
       default:
         console.warn('unknown event');
         console.warn(event);
-    }
-  }
-
-  private raiseEvent(name: string, data = {}): void {
-    let event = new CustomEvent(name, {
-      detail: data,
-      bubbles: true
-    });
-    if (this.controller) {
-      this.controller.element.dispatchEvent(event);
     }
   }
 
