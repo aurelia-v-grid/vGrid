@@ -10,6 +10,7 @@ export class Welcome {
   public ds: DataSource;
   public gridConnector: GridConnector;
   private testString: string = 'yay';
+  private dsEventID: any;
   // public translate: any = { equals: 'er lik', greaterThan: 'større enn' };
   private myCollection: any;
   constructor(public dummyDataGenerator: DummyDataGenerator) {
@@ -17,10 +18,17 @@ export class Welcome {
       this.myCollection = data;
     });
     this.ds = new DataSource(new Selection('multiple'));
+    this.dsEventID = this.ds.addEventListener(this.dsEvents.bind(this));
     this.gridConnector = new GridConnector(this.ds);
     console.log(this.dummyDataGenerator.rowTop)
     this.gridConnector.setInitTop(this.dummyDataGenerator.rowTop);
     this.ds.setArray(this.myCollection);
+  }
+
+  public dsEvents(e) {
+    console.log(e)
+    console.log(this.ds.getCollectionStatus());
+    return true;
   }
 
   // this is the i18N translation
@@ -29,11 +37,11 @@ export class Welcome {
   }
 
   public singleClick (event) {
-    console.log(event);
+    //console.log(event);
   }
 
   public dblClick(event) {
-    console.log(event);
+    //console.log(event);
   }
 
   public onRowDraw(data) {
@@ -53,7 +61,7 @@ export class Welcome {
 
 
   public deactivate() {
-    console.log('deactivate')
+    console.log('deactivate');
     this.dummyDataGenerator.rowTop = this.gridConnector.getTopRow() * 25;
   }
 
