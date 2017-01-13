@@ -134,7 +134,8 @@ export class RowClickHandler {
     if (!this.manualSelection) {
       this.controller.raiseEvent('v-row-onclick', {
         evt: event,
-        data: null, // todo, row data ?
+        data: cache.bindingContext.rowRef,
+        bindingContext: cache.bindingContext,
         row: cache.row
       });
     }
@@ -144,7 +145,8 @@ export class RowClickHandler {
     let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCache);
     this.controller.raiseEvent('v-row-ondblclick', {
       evt: event,
-      data: null, // todo, row data ?
+      data: cache.bindingContext.rowRef,
+      bindingContext: cache.bindingContext,
       row: cache.row
     });
   }
