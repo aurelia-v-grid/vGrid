@@ -80,6 +80,7 @@
   margin: 0 !important;
   padding-top: 5px;
   text-align: center;
+  overflow: hidden;
 }
 
 .avg-default .avg-label-top {
@@ -93,15 +94,16 @@
   margin: 0 !important;
   padding-top: 5px;
   text-align: center;
+  overflow: hidden;
 }
 
-.avg-default .avg-label-top p {
+/*.avg-default .avg-label-top p {
   margin: 0 !important;
 }
 
 .avg-default .avg-label-bottom p {
   margin: 0 !important;
-}
+}*/
 
 .avg-default .avg-label-full {
   box-sizing: border-box;

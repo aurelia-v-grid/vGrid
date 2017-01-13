@@ -53,7 +53,7 @@
 }
 
 .avg-default .avg-header-left .avg-col {
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   box-sizing: border-box;
   text-overflow: ellipsis;
   border-right: 1px solid rgb(230, 230, 230);
@@ -61,7 +61,7 @@
 }
 
 .avg-default .avg-header-main .avg-col {
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   box-sizing: border-box;
   text-overflow: ellipsis;
   border-right: 1px solid rgb(230, 230, 230);
