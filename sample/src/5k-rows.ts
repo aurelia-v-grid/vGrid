@@ -28,6 +28,14 @@ export class Welcome {
     return this.testString;
   }
 
+  public singleClick (event) {
+    console.log(event);
+  }
+
+  public dblClick(event) {
+    console.log(event);
+  }
+
   public onRowDraw(data) {
 
    if (data) {
@@ -74,7 +82,7 @@ export class Welcome {
   }
 
   public filterByCode(){
-    this.ds.query([{attribute:"country", operator:"*", value:"and"}])
+    this.ds.query([{attribute:"index", operator:">", value:5}, {attribute:"index", operator:"<", value:10}])
     this.gridConnector.raiseEvent("filterUpdateValues")
   }
 

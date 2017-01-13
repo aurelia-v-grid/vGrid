@@ -10,6 +10,9 @@
         v-panel-height="25"
         v-footer-height="25"
         v-data-delay="200"
+        v-row-onclick.delegate="singleClick($event.detail)"
+        v-row-ondblclick.delegate="dblClick($event.detail)"
+        
         v-row-on-draw.call="onRowDraw($event)"
         
         style="height:400px">
