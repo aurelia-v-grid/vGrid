@@ -155,7 +155,10 @@ export class DataSource {
     // clear stuff set in ArrayUtils
     this.selection.reset();
     this.arrayUtils.resetGrouping();
-    this.arrayUtils.resetSort();
+
+    // use the default key as sort
+    // this way first query returns result in same order as put into the datasource
+    this.arrayUtils.resetSort(this.key);
 
     // reset current entity
     this.entity = null;

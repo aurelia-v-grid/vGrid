@@ -9,9 +9,15 @@ export class ArraySort {
     this.curSort = [];
   }
 
-  public reset(): void {
-    this.lastSort = [];
-    this.curSort = [];
+  public reset(defaultSortAttribute?: string): void {
+    if (defaultSortAttribute) {
+      this.lastSort = [{attribute: defaultSortAttribute, asc: true, no: 0}];
+      this.curSort = [{attribute: defaultSortAttribute, asc: true, no: 0}];
+    } else {
+      this.lastSort = [];
+      this.curSort = [];
+    }
+
   }
 
   public setLastSort(array: SortObject[]): void {
@@ -89,12 +95,12 @@ export class ArraySort {
     if (arr.length > 1) {
       try {
         tempValue = obj[arr[0]][arr[1]];
-      } catch (e) { /* nothing*/}
+      } catch (e) { /* nothing*/ }
     }
     if (arr.length === 1) {
       try {
         tempValue = obj[attribute];
-      } catch (e) { /* nothing*/}
+      } catch (e) { /* nothing*/ }
     }
     return tempValue;
   }

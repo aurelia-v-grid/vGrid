@@ -136,8 +136,8 @@ export class ArrayUtils {
     this.arraySort.runOrderbyOn(array);
   }
 
-  public resetSort(): void {
-    this.arraySort.reset();
+  public resetSort(defaultSortAttribute?: string): void {
+    this.arraySort.reset(defaultSortAttribute);
   }
 
   public resetGrouping(): void {

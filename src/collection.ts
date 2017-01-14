@@ -47,7 +47,7 @@ export class Collection {
       // if entity does not have key we add one, need this for selection
       if (!rowData[this.key]) {
         this.count++;
-        rowData[this.key] = 'key' + this.count;
+        rowData[this.key] = this.count;
       }
 
       // if entity is not group we set the keys to our internal key array, if not we set null
