@@ -14,9 +14,6 @@ export class Collection {
   /**
    * Creates an instance of Collection.
    * 
-   * @param {DataSource} datasource
-   * 
-   * @memberOf Collection
    */
   constructor(datasource: DataSource) {
     this.datasource = datasource;
@@ -33,10 +30,6 @@ export class Collection {
   /**
    * Sets data to the collection
    * 
-   * @param {Entity[]} array
-   * @param {Entity[]} [ungroupedArray]
-   * 
-   * @memberOf Collection
    */
   public setData(array: Entity[], ungroupedArray?: Entity[]): void {
     this.displayedEntities = [];
@@ -74,9 +67,6 @@ export class Collection {
   /**
    * Returns the ungrouped array of displayed collection
    * 
-   * @returns {Entity[]}
-   * 
-   * @memberOf Collection
    */
   public getEntities(): Entity[] {
     return this.ungroupedArray;
@@ -87,9 +77,6 @@ export class Collection {
   /**
    * Returns array displayed in collection, including groups
    * 
-   * @returns {Entity[]}
-   * 
-   * @memberOf Collection
    */
   public getCurrentEntities(): Entity[] {
     return this.displayedEntities;
@@ -100,10 +87,6 @@ export class Collection {
   /**
    * Returns key of row number passed in
    * 
-   * @param {number} row
-   * @returns {string}
-   * 
-   * @memberOf Collection
    */
   public getRowKey(row: number): string {
     return this.keys[row];
@@ -114,9 +97,6 @@ export class Collection {
   /**
    * Returns all keys in displayed collection
    * 
-   * @returns {any[]}
-   * 
-   * @memberOf Collection
    */
   public getRowKeys(): any[] {
     return this.keys;
@@ -127,10 +107,6 @@ export class Collection {
   /**
    * Returns entity of rows in displayed collection
    * 
-   * @param {number} row
-   * @returns {Entity}
-   * 
-   * @memberOf Collection
    */
   public getRow(row: number): Entity {
     return this.displayedEntities[row];
@@ -141,10 +117,6 @@ export class Collection {
   /**
    * Return row number of entity passed in as param
    * 
-   * @param {Entity} entity
-   * @returns {number}
-   * 
-   * @memberOf Collection
    */
   public getRowFromEntity(entity: Entity): number {
     return this.displayedEntities.indexOf(entity);

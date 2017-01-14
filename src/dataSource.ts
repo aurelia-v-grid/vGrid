@@ -20,10 +20,6 @@ export class DataSource {
   /**
    * Creates an instance of DataSource.
    * 
-   * @param {Selection} selection
-   * @param {DatasourceConfig} [config]
-   * 
-   * @memberOf DataSource
    */
   constructor(selection: Selection, config?: DatasourceConfig) {
 
@@ -73,9 +69,6 @@ export class DataSource {
   /**
    * Returns the current selection class
    * 
-   * @returns {Selection}
-   * 
-   * @memberOf DataSource
    */
   public getSelection(): Selection {
     return this.selection;
@@ -86,9 +79,6 @@ export class DataSource {
   /**
    * Returns keys name used for selection/added to each entity
    * 
-   * @returns {string}
-   * 
-   * @memberOf DataSource
    */
   public getKey(): string {
     return this.key;
@@ -99,9 +89,6 @@ export class DataSource {
   /**
    * returns the numbers of rows in displayed view (inludes groupings etc)
    * 
-   * @returns {number}
-   * 
-   * @memberOf DataSource
    */
   public length(): number {
     return this.collection.length;
@@ -112,9 +99,6 @@ export class DataSource {
   /**
    * Sends event string to all listeners
    * 
-   * @param {string} event
-   * 
-   * @memberOf DataSource
    */
   public triggerEvent(event: string): void {
     // call all event listeners
@@ -134,10 +118,6 @@ export class DataSource {
   /**
    * Adds functions to callback array, this will be called when collection/selection event happens
    * 
-   * @param {Function} callback
-   * @returns {number}
-   * 
-   * @memberOf DataSource
    */
   public addEventListener(callback: Function): number {
 
@@ -156,9 +136,6 @@ export class DataSource {
   /**
    * removes event listener
    * 
-   * @param {number} id
-   * 
-   * @memberOf DataSource
    */
   public removeEventListener(id: number): void {
     // remove listtener from id
@@ -170,9 +147,6 @@ export class DataSource {
   /**
    * Replaces internal collection and clear internal selection/sorting and grouping
    * 
-   * @param {Entity[]} array
-   * 
-   * @memberOf DataSource
    */
   public setArray(array: Entity[]): void {
     // new collection
@@ -200,9 +174,6 @@ export class DataSource {
   /**
    * Adds to internal/displayed collection and reruns sort and grouping
    * 
-   * @param {Entity[]} array
-   * 
-   * @memberOf DataSource
    */
   public push(array: Entity[]): void {
     if (Array.isArray(array)) {
@@ -238,9 +209,6 @@ export class DataSource {
    * If no data is added it just reruns sorting and grouping
    * TODO: do we want to also rerun filter if any?
    * 
-   * @param {*} [data]
-   * 
-   * @memberOf DataSource
    */
   public refresh(data?: any) {
     if (data) {
@@ -271,9 +239,6 @@ export class DataSource {
   /**
    * Sets row passed in as current entity
    * 
-   * @param {number} row
-   * 
-   * @memberOf DataSource
    */
   public select(row: number): void {
     // get row and set as current entity "entity" of datasource
@@ -283,11 +248,8 @@ export class DataSource {
 
 
   /**
+   * Queries all entities with paramas passed in
    * 
-   * 
-   * @param {FilterObject[]} options
-   * 
-   * @memberOf DataSource
    */
   public query(options: FilterObject[]): void {
 
@@ -315,10 +277,6 @@ export class DataSource {
   /**
    * Sorts the array with params passed in
    * 
-   * @param {(string | SortObject)} attribute
-   * @param {boolean} [addToCurrentSort]
-   * 
-   * @memberOf DataSource
    */
   public orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
 
@@ -340,9 +298,6 @@ export class DataSource {
   /**
    * returns current orderBy used
    * 
-   * @returns {SortObject[]}
-   * 
-   * @memberOf DataSource
    */
   public getCurrentOrderBy(): SortObject[] {
     return this.arrayUtils.getOrderBy();
@@ -353,9 +308,6 @@ export class DataSource {
   /**
    * Returns current filter used
    * 
-   * @returns {FilterObject[]}
-   * 
-   * @memberOf DataSource
    */
   public getCurrentFilter(): FilterObject[] {
     return this.arrayUtils.getCurrentFilter();
@@ -366,10 +318,6 @@ export class DataSource {
   /**
    * Returns current enlement of row passed in
    * 
-   * @param {number} row
-   * @returns {Entity}
-   * 
-   * @memberOf DataSource
    */
   public getElement(row: number): Entity {
     if (row === undefined || row === null) {
@@ -384,10 +332,6 @@ export class DataSource {
   /**
    * Groups the collection with params passed in
    * 
-   * @param {string[]} grouping
-   * @param {boolean} [keepExpanded]
-   * 
-   * @memberOf DataSource
    */
   public group(grouping: string[], keepExpanded?: boolean): void {
 
@@ -420,9 +364,6 @@ export class DataSource {
   /**
    * Collapses all groups or just ID passes in
    * 
-   * @param {string} id
-   * 
-   * @memberOf DataSource
    */
   public groupCollapse(id: string): void {
     let groupedArray = this.arrayUtils.groupCollapse(id);
@@ -440,9 +381,6 @@ export class DataSource {
   /**
    * Expands all groups or just ID passed in
    * 
-   * @param {string} id
-   * 
-   * @memberOf DataSource
    */
   public groupExpand(id: string): void {
     let groupedArray = this.arrayUtils.groupExpand(id);
@@ -460,9 +398,6 @@ export class DataSource {
   /**
    * Returns grouping used
    * 
-   * @returns {string[]}
-   * 
-   * @memberOf DataSource
    */
   public getGrouping(): string[] {
     return this.arrayUtils.getGrouping();
@@ -474,7 +409,6 @@ export class DataSource {
    * Adds blank row to top of diaplayed colelction and updates grid
    * Todo: custom key will prb break this... need more testing
    * 
-   * @memberOf DataSource
    */
   public addBlankRow(): void {
 
@@ -514,9 +448,6 @@ export class DataSource {
   /**
    * Added new enity to top of grid, no sorting or grouping after
    * 
-   * @param {*} data
-   * 
-   * @memberOf DataSource
    */
   public unshift(data: any): void {
     if (data) {
@@ -555,10 +486,6 @@ export class DataSource {
   /**
    * Removed rows from displayed collection and returns removed
    * 
-   * @param {any[]} [rows]
-   * @returns {any[]}
-   * 
-   * @memberOf DataSource
    */
   public remove(rows?: any[]): any[] {
     let keysToDelete = new Set();
@@ -593,9 +520,6 @@ export class DataSource {
   /**
    * Returns status(lengths) of collection/selection 
    * 
-   * @returns {*}
-   * 
-   * @memberOf DataSource
    */
   public getCollectionStatus(): any {
     let status: any = {};
@@ -610,11 +534,6 @@ export class DataSource {
   /**
    * Returns key of row passed in from displayedCollection
    * 
-   * @private
-   * @param {number} row
-   * @returns {string}
-   * 
-   * @memberOf DataSource
    */
   private getRowKey(row: number): string {
     // if collection, then get row key
@@ -630,10 +549,6 @@ export class DataSource {
   /**
    * Returns all keys of collection
    * 
-   * @private
-   * @returns {any[]}
-   * 
-   * @memberOf DataSource
    */
   private getRowKeys(): any[] {
     // if collection then get the keys
@@ -649,11 +564,6 @@ export class DataSource {
   /**
    * Calls the triggere event with event from selection
    * 
-   * @private
-   * @param {*} e
-   * @returns {boolean}
-   * 
-   * @memberOf DataSource
    */
   private selectionEventCallback(e: any): boolean {
     this.triggerEvent(e);
