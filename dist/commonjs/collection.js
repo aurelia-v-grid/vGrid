@@ -2,7 +2,7 @@ var Collection = (function () {
     function Collection(datasource) {
         this.datasource = datasource;
         this.key = datasource.getKey();
-        this.entities = [];
+        this.displayedEntities = [];
         this.keys = [];
         this.count = 0;
         this.length = 0;
@@ -10,14 +10,14 @@ var Collection = (function () {
     }
     Collection.prototype.setData = function (array, ungroupedArray) {
         var _this = this;
-        this.entities = [];
+        this.displayedEntities = [];
         this.keys = [];
         this.ungroupedArray = ungroupedArray || array;
         this.length = array.length;
         array.forEach(function (rowData) {
             if (!rowData[_this.key]) {
                 _this.count++;
-                rowData[_this.key] = 'key' + _this.count;
+                rowData[_this.key] = _this.count;
             }
             if (!rowData.__group) {
                 _this.keys.push(rowData[_this.key]);
@@ -25,14 +25,14 @@ var Collection = (function () {
             else {
                 _this.keys.push(null);
             }
-            _this.entities.push(rowData);
+            _this.displayedEntities.push(rowData);
         });
     };
     Collection.prototype.getEntities = function () {
         return this.ungroupedArray;
     };
     Collection.prototype.getCurrentEntities = function () {
-        return this.entities;
+        return this.displayedEntities;
     };
     Collection.prototype.getRowKey = function (row) {
         return this.keys[row];
@@ -41,10 +41,10 @@ var Collection = (function () {
         return this.keys;
     };
     Collection.prototype.getRow = function (row) {
-        return this.entities[row];
+        return this.displayedEntities[row];
     };
     Collection.prototype.getRowFromEntity = function (entity) {
-        return this.entities.indexOf(entity);
+        return this.displayedEntities.indexOf(entity);
     };
     return Collection;
 }());

@@ -95,8 +95,8 @@ var ArrayUtils = (function () {
     ArrayUtils.prototype.runOrderbyOn = function (array) {
         this.arraySort.runOrderbyOn(array);
     };
-    ArrayUtils.prototype.resetSort = function () {
-        this.arraySort.reset();
+    ArrayUtils.prototype.resetSort = function (defaultSortAttribute) {
+        this.arraySort.reset(defaultSortAttribute);
     };
     ArrayUtils.prototype.resetGrouping = function () {
         this.arrayGrouping.reset();

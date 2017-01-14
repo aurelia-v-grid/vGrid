@@ -3,7 +3,7 @@ export declare class ArraySort {
     private lastSort;
     private curSort;
     constructor();
-    reset(): void;
+    reset(defaultSortAttribute?: string): void;
     setLastSort(array: SortObject[]): void;
     setOrderBy(param: SortObject | any, add?: boolean): void;
     getOrderBy(): SortObject[];

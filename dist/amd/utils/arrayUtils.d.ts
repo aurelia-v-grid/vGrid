@@ -19,7 +19,7 @@ export declare class ArrayUtils {
     setLastSort(array: SortObject[]): void;
     setOrderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
     runOrderbyOn(array: Entity[]): void;
-    resetSort(): void;
+    resetSort(defaultSortAttribute?: string): void;
     resetGrouping(): void;
     getCurrentFilter(): FilterObject[];
     query(array: Entity[], params: FilterObject[]): Entity[];

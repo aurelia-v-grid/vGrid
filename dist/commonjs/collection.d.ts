@@ -1,7 +1,7 @@
 import { DataSource, Entity } from './interfaces';
 export declare class Collection {
     length: number;
-    private entities;
+    private displayedEntities;
     private keys;
     private key;
     private count;

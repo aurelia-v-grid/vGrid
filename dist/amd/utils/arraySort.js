@@ -4,9 +4,15 @@ define(["require", "exports"], function (require, exports) {
             this.lastSort = [];
             this.curSort = [];
         }
-        ArraySort.prototype.reset = function () {
-            this.lastSort = [];
-            this.curSort = [];
+        ArraySort.prototype.reset = function (defaultSortAttribute) {
+            if (defaultSortAttribute) {
+                this.lastSort = [{ attribute: defaultSortAttribute, asc: true, no: 0 }];
+                this.curSort = [{ attribute: defaultSortAttribute, asc: true, no: 0 }];
+            }
+            else {
+                this.lastSort = [];
+                this.curSort = [];
+            }
         };
         ArraySort.prototype.setLastSort = function (array) {
             this.lastSort = array;

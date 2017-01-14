@@ -52,7 +52,7 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils
             this.collection = new collection_1.Collection(this);
             this.selection.reset();
             this.arrayUtils.resetGrouping();
-            this.arrayUtils.resetSort();
+            this.arrayUtils.resetSort(this.key);
             this.entity = null;
             this.collection.setData(array);
             this.mainArray = this.collection.getEntities();
@@ -84,9 +84,9 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils
             var grouping = this.arrayUtils.getGrouping();
             this.arrayUtils.runOrderbyOn(this.collection.getEntities());
             if (grouping.length > 0) {
-                var untouchedgrouped = this.collection.getEntities();
-                var groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, true);
-                this.collection.setData(groupedArray, untouchedgrouped);
+                var unGroupedArray = this.collection.getEntities();
+                var groupedArray = this.arrayUtils.group(unGroupedArray, grouping, true);
+                this.collection.setData(groupedArray, unGroupedArray);
             }
             this.triggerEvent('collection_updated');
         };
@@ -131,15 +131,15 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils
                 _this.arrayUtils.setOrderBy(groupName, true);
             });
             this.arrayUtils.runOrderbyOn(this.collection.getEntities());
-            var untouchedgrouped = this.collection.getEntities();
-            var groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, keepExpanded);
-            this.collection.setData(groupedArray, untouchedgrouped);
+            var ungroupedArray = this.collection.getEntities();
+            var groupedArray = this.arrayUtils.group(ungroupedArray, grouping, keepExpanded);
+            this.collection.setData(groupedArray, ungroupedArray);
             this.triggerEvent('collection_grouped');
         };
         DataSource.prototype.groupCollapse = function (id) {
-            var newArray = this.arrayUtils.groupCollapse(id);
-            var oldArray = this.collection.getEntities();
-            this.collection.setData(newArray, oldArray);
+            var groupedArray = this.arrayUtils.groupCollapse(id);
+            var ungroupedArray = this.collection.getEntities();
+            this.collection.setData(groupedArray, ungroupedArray);
             if (id) {
                 this.triggerEvent('collection_collapsed');
             }
@@ -148,9 +148,9 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils
             }
         };
         DataSource.prototype.groupExpand = function (id) {
-            var newArray = this.arrayUtils.groupExpand(id);
-            var oldArray = this.collection.getEntities();
-            this.collection.setData(newArray, oldArray);
+            var groupedArray = this.arrayUtils.groupExpand(id);
+            var ungroupedArray = this.collection.getEntities();
+            this.collection.setData(groupedArray, ungroupedArray);
             if (id) {
                 this.triggerEvent('collection_expanded');
             }
@@ -164,28 +164,28 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils
         DataSource.prototype.addBlankRow = function () {
             var newElement = {};
             this.mainArray.unshift(newElement);
-            var oldArray = this.collection.getEntities();
-            var oldMaybeGroupedArray = this.collection.getCurrentEntities();
-            var index = oldArray.indexOf(newElement);
+            var collectionUngrouped = this.collection.getEntities();
+            var displayedCollection = this.collection.getCurrentEntities();
+            var index = collectionUngrouped.indexOf(newElement);
             if (index === -1) {
-                oldArray.unshift(newElement);
+                collectionUngrouped.unshift(newElement);
             }
-            oldMaybeGroupedArray.unshift(newElement);
-            this.collection.setData(oldMaybeGroupedArray, oldArray);
+            displayedCollection.unshift(newElement);
+            this.collection.setData(displayedCollection, collectionUngrouped);
             this.entity = newElement;
             this.triggerEvent('collection_filtered');
         };
         DataSource.prototype.unshift = function (data) {
             if (data) {
                 this.mainArray.unshift(data);
-                var oldArray = this.collection.getEntities();
-                var oldMaybeGroupedArray = this.collection.getCurrentEntities();
-                var index = oldArray.indexOf(data);
+                var displayedCollection = this.collection.getEntities();
+                var ungroupedCollection = this.collection.getCurrentEntities();
+                var index = displayedCollection.indexOf(data);
                 if (index === -1) {
-                    oldArray.unshift(data);
+                    displayedCollection.unshift(data);
                 }
-                oldMaybeGroupedArray.unshift(data);
-                this.collection.setData(oldMaybeGroupedArray, oldArray);
+                ungroupedCollection.unshift(data);
+                this.collection.setData(ungroupedCollection, displayedCollection);
                 this.entity = data;
                 this.triggerEvent('collection_filtered');
             }
