@@ -1,5 +1,10 @@
 import { SortObject, Entity } from '../interfaces';
 
+/**
+ * This does all the sorting on the array passed in
+ * Used by default datasource
+ * 
+ */
 export class ArraySort {
   private lastSort: SortObject[];
   private curSort: SortObject[];
@@ -9,10 +14,17 @@ export class ArraySort {
     this.curSort = [];
   }
 
+
+
+  /**
+   * Resets sort
+   * if attribute is passed it sets that as default, this way first filter wont be messed up
+   * 
+   */
   public reset(defaultSortAttribute?: string): void {
     if (defaultSortAttribute) {
-      this.lastSort = [{attribute: defaultSortAttribute, asc: true, no: 0}];
-      this.curSort = [{attribute: defaultSortAttribute, asc: true, no: 0}];
+      this.lastSort = [{ attribute: defaultSortAttribute, asc: true, no: 0 }];
+      this.curSort = [{ attribute: defaultSortAttribute, asc: true, no: 0 }];
     } else {
       this.lastSort = [];
       this.curSort = [];
@@ -20,12 +32,25 @@ export class ArraySort {
 
   }
 
+
+
+  /**
+   * Sets last sort
+   * todo: why do I have this?
+   * 
+   */
   public setLastSort(array: SortObject[]): void {
     this.lastSort = array;
     this.curSort = array;
   }
 
-  // any = "string"
+
+
+  /**
+   * Sets the sort order to be used next sort Runs
+   * any = string
+   * 
+   */
   public setOrderBy(param: SortObject | any, add?: boolean): void {
     let sort: any;
     let useSetValue = false;
@@ -85,10 +110,21 @@ export class ArraySort {
     }
   }
 
+
+  /**
+   * Returns current sort by
+   * 
+   */
   public getOrderBy(): SortObject[] {
     return this.curSort;
   }
 
+
+
+  /**
+   * Get value from deeper inside the object, this will need a lot more work, and filter does not support it
+   * 
+   */
   public getValue(attribute: string, obj: any): any {
     let arr: any[] = attribute.split('.');
     let tempValue: any = Infinity;
@@ -105,6 +141,12 @@ export class ArraySort {
     return tempValue;
   }
 
+
+
+  /**
+   *  Runs sort on array passed in with params set earlier
+   * 
+   */
   public runOrderbyOn(array: Entity[]): void {
 
     // super simple for now.. atleast I have som form for sort
@@ -120,6 +162,11 @@ export class ArraySort {
         let v1 = this.getValue(currentObj.attribute, obj1);
         let v2 = this.getValue(currentObj.attribute, obj2);
 
+        // todo figure out how to use :
+        // String.prototype.localeCompare()
+        // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare
+        // special charcters will prb be sorted wrong, 
+        // not getting localeCompare() to work with norwegian Ø Æ Å charcters
         if (v1 !== v2) {
           if (currentObj.asc) {
             // ASC
@@ -141,6 +188,7 @@ export class ArraySort {
       return result;
     });
 
+    // set current sort as last sort that was used
     this.lastSort = this.getOrderBy().slice(0);
 
   }

@@ -3,6 +3,10 @@ import { ArraySort } from './arraySort';
 import { ArrayGrouping } from './arrayGrouping';
 import { SortObject, FilterObject, Entity } from '../interfaces';
 
+/**
+ * Helper class for calling internal sort, filter and grouping classes
+ * 
+ */
 export class ArrayUtils {
   public arrayFilter: ArrayFilter;
   public arraySort: ArraySort;
@@ -13,6 +17,8 @@ export class ArrayUtils {
     this.arraySort = new ArraySort();
     this.arrayGrouping = new ArrayGrouping();
   }
+
+
 
   public orderBy(
     collection: Entity[],
@@ -104,52 +110,78 @@ export class ArrayUtils {
     return result;
   }
 
+
+
   public group(array: Entity[], grouping: string[], keepExpanded: boolean): Entity[] {
     return this.arrayGrouping.group(array, grouping, keepExpanded);
   }
+
+
 
   public getGrouping(): string[] {
     return this.arrayGrouping.getGrouping();
   }
 
+
+
   public groupCollapse(id: string): Entity[] {
     return this.arrayGrouping.collapse(id);
   }
+
+
 
   public groupExpand(id: string): Entity[] {
     return this.arrayGrouping.expand(id);
   }
 
+
+
   public getOrderBy(): SortObject[] {
     return this.arraySort.getOrderBy();
   }
+
+
 
   public setLastSort(array: SortObject[]): void {
       this.arraySort.setLastSort(array);
   }
 
+
+
   public setOrderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
     this.arraySort.setOrderBy(attribute, addToCurrentSort);
   }
+
+
 
   public runOrderbyOn(array: Entity[]): void {
     this.arraySort.runOrderbyOn(array);
   }
 
+
+
   public resetSort(defaultSortAttribute?: string): void {
     this.arraySort.reset(defaultSortAttribute);
   }
+
+
 
   public resetGrouping(): void {
     this.arrayGrouping.reset();
   }
 
+
+
   public getCurrentFilter(): FilterObject[] {
     return this.arrayFilter.getLastFilter();
   }
 
+
+
   public query(array: Entity[], params: FilterObject[]): Entity[] {
     return this.arrayFilter.runQueryOn(array, params);
   }
+
+
 
 }
