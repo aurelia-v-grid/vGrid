@@ -533,6 +533,15 @@ export class DataSource {
   }
 
 
+  /**
+   * Sets local compare options to use with sorting
+   * http://stackoverflow.com/questions/3191664/list-of-all-locales-and-their-short-codes
+   * 
+   */
+  public setLocaleCompare(code: string, options: any): void {
+    this.arrayUtils.setLocaleCompare(code, options);
+  }
+
 
   /**
    * Returns key of row passed in from displayedCollection

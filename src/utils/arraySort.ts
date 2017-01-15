@@ -8,10 +8,25 @@ import { SortObject, Entity } from '../interfaces';
 export class ArraySort {
   private lastSort: SortObject[];
   private curSort: SortObject[];
+  private localeCompareCode: string;
+  private localeCompareOptions: any;
 
   constructor() {
     this.lastSort = [];
     this.curSort = [];
+    this.localeCompareCode = null;
+    this.localeCompareOptions = { sensitivity: 'base' };
+  }
+
+
+
+  /**
+   * Sets localCompare
+   * 
+   */
+  public setLocaleCompare(code: string, options?: any): void {
+    this.localeCompareCode = code ? code : null;
+    this.localeCompareOptions = options ? options : { sensitivity: 'base' };
   }
 
 
@@ -141,8 +156,6 @@ export class ArraySort {
     return tempValue;
   }
 
-
-
   /**
    *  Runs sort on array passed in with params set earlier
    * 
@@ -162,25 +175,51 @@ export class ArraySort {
         let v1 = this.getValue(currentObj.attribute, obj1);
         let v2 = this.getValue(currentObj.attribute, obj2);
 
-        // todo figure out how to use :
-        // String.prototype.localeCompare()
-        // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare
-        // special charcters will prb be sorted wrong, 
-        // not getting localeCompare() to work with norwegian Ø Æ Å charcters
+        // compares with locale
+        let getLocaleCompareResult = (x1: string, x2: string): number => {
+          let resultLocale = null;
+          if (this.localeCompareCode) {
+            resultLocale = x1.localeCompare(x2, this.localeCompareCode, this.localeCompareOptions);
+          } else {
+            resultLocale = x1.localeCompare(x2);
+          }
+          return resultLocale;
+        };
+
+
         if (v1 !== v2) {
           if (currentObj.asc) {
             // ASC
-            if (v1 < v2) {
-              result = -1;
+            if (typeof v1 === 'string' && typeof v1 === 'string') {
+              if (
+                getLocaleCompareResult(v1, v2) < 0 &&
+                getLocaleCompareResult(v1, v2) !== 0) {
+                result = -1;
+              } else {
+                result = 1;
+              }
             } else {
-              result = 1;
+              if (v1 < v2) {
+                result = -1;
+              } else {
+                result = 1;
+              }
             }
           } else {
-            // DESC
-            if (v1 < v2) {
-              result = 1;
+            if (typeof v1 === 'string' && typeof v1 === 'string') {
+              if (
+                getLocaleCompareResult(v1, v2) < 0 &&
+                getLocaleCompareResult(v1, v2) !== 0) {
+                result = 1;
+              } else {
+                result = -1;
+              }
             } else {
-              result = -1;
+              if (v1 < v2) {
+                result = 1;
+              } else {
+                result = -1;
+              }
             }
           }
         }
@@ -192,5 +231,6 @@ export class ArraySort {
     this.lastSort = this.getOrderBy().slice(0);
 
   }
+
 
 }

@@ -182,6 +182,10 @@ export class ArrayUtils {
     return this.arrayFilter.runQueryOn(array, params);
   }
 
+  public setLocaleCompare(code: string, options?: any): void {
+    this.arraySort.setLocaleCompare(code, options);
+  }
+
 
 
 }
