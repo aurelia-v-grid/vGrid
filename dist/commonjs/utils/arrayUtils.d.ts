@@ -23,4 +23,5 @@ export declare class ArrayUtils {
     resetGrouping(): void;
     getCurrentFilter(): FilterObject[];
     query(array: Entity[], params: FilterObject[]): Entity[];
+    setLocaleCompare(code: string, options?: any): void;
 }

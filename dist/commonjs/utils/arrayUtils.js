@@ -107,6 +107,9 @@ var ArrayUtils = (function () {
     ArrayUtils.prototype.query = function (array, params) {
         return this.arrayFilter.runQueryOn(array, params);
     };
+    ArrayUtils.prototype.setLocaleCompare = function (code, options) {
+        this.arraySort.setLocaleCompare(code, options);
+    };
     return ArrayUtils;
 }());
 exports.ArrayUtils = ArrayUtils;

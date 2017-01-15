@@ -8,7 +8,13 @@ System.register([], function (exports_1, context_1) {
                 function ArraySort() {
                     this.lastSort = [];
                     this.curSort = [];
+                    this.localeCompareCode = null;
+                    this.localeCompareOptions = { sensitivity: 'base' };
                 }
+                ArraySort.prototype.setLocaleCompare = function (code, options) {
+                    this.localeCompareCode = code ? code : null;
+                    this.localeCompareOptions = options ? options : { sensitivity: 'base' };
+                };
                 ArraySort.prototype.reset = function (defaultSortAttribute) {
                     if (defaultSortAttribute) {
                         this.lastSort = [{ attribute: defaultSortAttribute, asc: true, no: 0 }];
@@ -100,21 +106,53 @@ System.register([], function (exports_1, context_1) {
                             var currentObj = thisSort[i];
                             var v1 = _this.getValue(currentObj.attribute, obj1);
                             var v2 = _this.getValue(currentObj.attribute, obj2);
+                            var getLocaleCompareResult = function (x1, x2) {
+                                var resultLocale = null;
+                                if (_this.localeCompareCode) {
+                                    resultLocale = x1.localeCompare(x2, _this.localeCompareCode, _this.localeCompareOptions);
+                                }
+                                else {
+                                    resultLocale = x1.localeCompare(x2);
+                                }
+                                return resultLocale;
+                            };
                             if (v1 !== v2) {
                                 if (currentObj.asc) {
-                                    if (v1 < v2) {
-                                        result = -1;
+                                    if (typeof v1 === 'string' && typeof v1 === 'string') {
+                                        if (getLocaleCompareResult(v1, v2) < 0 &&
+                                            getLocaleCompareResult(v1, v2) !== 0) {
+                                            result = -1;
+                                        }
+                                        else {
+                                            result = 1;
+                                        }
                                     }
                                     else {
-                                        result = 1;
+                                        if (v1 < v2) {
+                                            result = -1;
+                                        }
+                                        else {
+                                            result = 1;
+                                        }
                                     }
                                 }
                                 else {
-                                    if (v1 < v2) {
-                                        result = 1;
+                                    if (typeof v1 === 'string' && typeof v1 === 'string') {
+                                        if (getLocaleCompareResult(v1, v2) < 0 &&
+                                            getLocaleCompareResult(v1, v2) !== 0) {
+                                            result = 1;
+                                        }
+                                        else {
+                                            result = -1;
+                                        }
                                     }
                                     else {
-                                        result = -1;
+                                        if (v1 < v2) {
+                                            result = 1;
+                                        }
+                                        else {
+                                            result = -1;
+                                        }
                                     }
                                 }
                             }

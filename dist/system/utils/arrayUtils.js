@@ -120,6 +120,9 @@ System.register(["./arrayFilter", "./arraySort", "./arrayGrouping"], function (e
                 ArrayUtils.prototype.query = function (array, params) {
                     return this.arrayFilter.runQueryOn(array, params);
                 };
+                ArrayUtils.prototype.setLocaleCompare = function (code, options) {
+                    this.arraySort.setLocaleCompare(code, options);
+                };
                 return ArrayUtils;
             }());
             exports_1("ArrayUtils", ArrayUtils);

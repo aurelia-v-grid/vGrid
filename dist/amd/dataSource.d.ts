@@ -35,6 +35,7 @@ export declare class DataSource {
     unshift(data: any): void;
     remove(rows?: any[]): any[];
     getCollectionStatus(): any;
+    setLocaleCompare(code: string, options: any): void;
     private getRowKey(row);
     private getRowKeys();
     private selectionEventCallback(e);

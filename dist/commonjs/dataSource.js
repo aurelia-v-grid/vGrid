@@ -226,6 +226,9 @@ var DataSource = (function () {
         status.selectionLength = this.selection.getLength();
         return status;
     };
+    DataSource.prototype.setLocaleCompare = function (code, options) {
+        this.arrayUtils.setLocaleCompare(code, options);
+    };
     DataSource.prototype.getRowKey = function (row) {
         if (this.collection) {
             return this.collection.getRowKey(row);
