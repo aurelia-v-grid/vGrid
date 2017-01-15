@@ -4,6 +4,9 @@
 * https://vegarringdal.gitbooks.io/dev-rebuild/content/chap15/
 
 
+### Demo:
+* [demo link](https://vegarringdal.github.io/vGridDemo/) (not updated all the time, not very fancy atm)
+
 
 ###Updates..
 
