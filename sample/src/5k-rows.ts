@@ -36,8 +36,12 @@ export class Welcome {
     return this.testString;
   }
 
-  public singleClick (event) {
+  public singleClick(event) {
     //console.log(event);
+  }
+
+  public setLocal(code: string): void{
+    this.ds.setLocaleCompare(code);
   }
 
   public dblClick(event) {
@@ -46,18 +50,18 @@ export class Welcome {
 
   public onRowDraw(data) {
 
-   if (data) {
-    if (data.tempRef) {
-      if (data.tempRef.number > 100) {
-        data.tempRef.numberColor = 'green';
-        data.tempRef.numberFont = 'normal';
-      } else {
-        data.tempRef.numberColor = 'red';
-        data.tempRef.numberFont = 'bold';
-    }
+    if (data) {
+      if (data.tempRef) {
+        if (data.tempRef.number > 100) {
+          data.tempRef.numberColor = 'green';
+          data.tempRef.numberFont = 'normal';
+        } else {
+          data.tempRef.numberColor = 'red';
+          data.tempRef.numberFont = 'bold';
+        }
+      }
     }
   }
-}
 
 
   public deactivate() {
@@ -89,8 +93,9 @@ export class Welcome {
     });
   }
 
-  public filterByCode(){
-    this.ds.query([{attribute:"index", operator:">", value:5}, {attribute:"index", operator:"<", value:10}])
+
+  public filterByCode() {
+    this.ds.query([{ attribute: "index", operator: ">", value: 5 }, { attribute: "index", operator: "<", value: 10 }])
     this.gridConnector.raiseEvent("filterUpdateValues")
   }
 
