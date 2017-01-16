@@ -538,7 +538,7 @@ export class DataSource {
    * http://stackoverflow.com/questions/3191664/list-of-all-locales-and-their-short-codes
    * 
    */
-  public setLocaleCompare(code: string, options: any): void {
+  public setLocaleCompare(code: string, options?: any): void {
     this.arrayUtils.setLocaleCompare(code, options);
   }
 

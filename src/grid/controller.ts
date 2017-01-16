@@ -329,10 +329,33 @@ export class Controller {
     let length = groups.length;
     this.columnBindingContext.setupgrouping = length;
     if (length === 0) {
-      let groups = this.groupingElements.getGroups();
-      groups.forEach((group) => {
+      let groupings = this.groupingElements.getGroups();
+      groupings.forEach((group) => {
         this.groupingElements.removeGroup(group);
       });
+    } else {
+      let check = true;
+      groups.forEach((group: string) => {
+        if (!this.groupingElements[group]) {
+          check = false;
+        }
+      });
+      if (!check) {
+        // check failed
+        let groupings = this.groupingElements.getGroups();
+
+        // remove groups
+        groupings.forEach((group) => {
+          this.groupingElements.removeGroup(group);
+        });
+        // add groups
+        groups.forEach((group: string) => {
+          // really dont know what they want to call it.. lets just use attribute name
+          // todo, I should have something better here...
+          let groupName: string = group.charAt(0).toUpperCase() + group.slice(1);
+          this.groupingElements.addGroup(groupName, group);
+        });
+      }
     }
     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
   }
