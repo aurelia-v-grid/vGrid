@@ -25,7 +25,7 @@ class GroupContext {
   }
 
   public remove(): void {
-    this.groupingElements.removeGroup(this.name);
+    this.groupingElements.removeGroup(this.field);
     this.groupingElements.removeFromGrouping(this.field);
   }
 }
@@ -85,9 +85,9 @@ export class GroupingElements {
   }
 
   public addGroup(name: string, field: string): void {
-    if (!this.groupContext[name]) {
-      this.lastAdded = name;
-      this.groupContext[name] = new GroupContext(name, field, this);
+    if (!this.groupContext[field]) {
+      this.lastAdded = field;
+      this.groupContext[field] = new GroupContext(name, field, this);
 
       // view-viewslot
       // tslint:disable:max-line-length
@@ -104,21 +104,21 @@ export class GroupingElements {
       let view = viewFactory.create(this.container);
       let viewSlot = new ViewSlot(this.avgTopPanel, true);
       viewSlot.add(view);
-      this.groupContext[name].viewSlot = viewSlot;
-      this.viewSlots.groupingViewSlots.push(this.groupContext[name]);
+      this.groupContext[field].viewSlot = viewSlot;
+      this.viewSlots.groupingViewSlots.push(this.groupContext[field]);
     }
-    this.groupContext[name].viewSlot.bind(this.groupContext[name]);
-    this.groupContext[name].viewSlot.attached();
+    this.groupContext[field].viewSlot.bind(this.groupContext[field]);
+    this.groupContext[field].viewSlot.attached();
 
   }
 
-  public removeGroup(name?: string): void {
-    if (name) {
-      if (this.groupContext[name] !== null) {
-        this.groupContext[name].viewSlot.unbind();
-        this.groupContext[name].viewSlot.detached();
-        this.groupContext[name].viewSlot.removeAll();
-        this.groupContext[name] = null; // <-- I could prb reuse them...
+  public removeGroup(field?: string): void {
+    if (field) {
+      if (this.groupContext[field] !== null) {
+        this.groupContext[field].viewSlot.unbind();
+        this.groupContext[field].viewSlot.detached();
+        this.groupContext[field].viewSlot.removeAll();
+        this.groupContext[field] = null; // <-- I could prb reuse them...
       }
     } else {
       if (this.lastAdded) {
