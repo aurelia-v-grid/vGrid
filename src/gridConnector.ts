@@ -84,6 +84,9 @@ export class GridConnector implements GridConnectorInterface {
     this.raiseEvent('sortIconUpdate');
     this.controller.updateHeights();
     setTimeout(() => {
+      this.controller.updateHeaderGrouping(this.datasource.getGrouping());
+      this.raiseEvent('sortIconUpdate');
+      this.raiseEvent('filterUpdateValues');
       this.controller.triggerScroll(this.initTop);
     }, 0);
     this.controller.updateHeaderGrouping(this.datasource.getGrouping());
