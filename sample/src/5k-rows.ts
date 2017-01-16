@@ -18,16 +18,15 @@ export class Welcome {
       this.myCollection = data;
     });
     this.ds = new DataSource(new Selection('multiple'));
-    
+
 
     this.dsEventID = this.ds.addEventListener(this.dsEvents.bind(this));
     this.gridConnector = new GridConnector(this.ds);
-    console.log(this.dummyDataGenerator.rowTop)
     this.gridConnector.setInitTop(this.dummyDataGenerator.rowTop);
     this.ds.setArray(this.myCollection);
-    this.ds.query([{attribute:"index", operator:"<", value:5}])
-    this.ds.group(['country'])
-    this.ds.orderBy("high")
+    this.ds.query([{attribute: 'index', operator: '<', value: 5 }]);
+    this.ds.group(['country', 'bool']);
+    this.ds.orderBy('high');
   }
 
   public dsEvents(e) {
@@ -100,8 +99,8 @@ export class Welcome {
 
 
   public filterByCode() {
-    this.ds.query([{ attribute: "index", operator: ">", value: 5 }, { attribute: "index", operator: "<", value: 10 }])
-    this.gridConnector.raiseEvent("filterUpdateValues")
+    this.ds.query([{ attribute: "index", operator: ">", value: 5 }, { attribute: 'index', operator: '<', value: 10 }])
+    this.gridConnector.raiseEvent('filterUpdateValues')
   }
 
   public remove() {
