@@ -25,7 +25,7 @@ export class Welcome {
     this.gridConnector.setInitTop(this.dummyDataGenerator.rowTop);
     this.ds.setArray(this.myCollection);
     this.ds.query([{attribute: 'index', operator: '<', value: 5 }]);
-    this.ds.group(['country', 'bool']);
+    this.ds.group([{title: 'My Country', field: 'country'}, {title: 'My bool', field: 'bool'}]);
     this.ds.orderBy('high');
   }
 
@@ -44,7 +44,7 @@ export class Welcome {
     //console.log(event);
   }
 
-  public setLocal(code: string): void{
+  public setLocal(code: string): void {
     this.ds.setLocaleCompare(code);
   }
 
