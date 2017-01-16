@@ -29,6 +29,9 @@ System.register([], function (exports_1, context_1) {
                     this.raiseEvent('sortIconUpdate');
                     this.controller.updateHeights();
                     setTimeout(function () {
+                        _this.controller.updateHeaderGrouping(_this.datasource.getGrouping());
+                        _this.raiseEvent('sortIconUpdate');
+                        _this.raiseEvent('filterUpdateValues');
                         _this.controller.triggerScroll(_this.initTop);
                     }, 0);
                     this.controller.updateHeaderGrouping(this.datasource.getGrouping());
