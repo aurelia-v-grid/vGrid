@@ -17,6 +17,7 @@ export class VGridAttributeMenu {
   @bindable private sort: string ;
   @bindable private pinned: string;
   @bindable private groupby: string;
+  @bindable private groupbytitle: string;
   // @bindable private copypaste: string; //todo
 
   constructor(element: Element, vGrid: VGrid) {
@@ -86,7 +87,8 @@ export class VGridAttributeMenu {
     }
 
     if (type === 'groupby') {
-      this.groupingElements.addGroup(this.groupby, this.groupby);
+      let groupTitle = this.groupbytitle ? this.groupbytitle : this.groupby;
+      this.groupingElements.addGroup(groupTitle, this.groupby);
       this.groupingElements.addToGrouping();
       return true;
     }

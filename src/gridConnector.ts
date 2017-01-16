@@ -9,7 +9,8 @@ import {
   Controller,
   Entity,
   ColConfig,
-  BindingContext
+  BindingContext,
+  GroupingObj
 } from './interfaces';
 
 export class GridConnector implements GridConnectorInterface {
@@ -144,7 +145,7 @@ export class GridConnector implements GridConnectorInterface {
    * Need be in custom gridConnector
    * 
    */
-  public getGrouping(): string[] {
+  public getGrouping(): GroupingObj[] {
     return this.datasource.getGrouping();
   }
 
@@ -155,7 +156,7 @@ export class GridConnector implements GridConnectorInterface {
    * Need be in custom gridConnector
    * 
    */
-  public group(grouping: string[], keepExpanded?: boolean): void {
+  public group(grouping: GroupingObj[], keepExpanded?: boolean): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
       this.datasource.group(grouping, keepExpanded);
     });

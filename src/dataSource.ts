@@ -1,7 +1,7 @@
 import { Selection } from './selection';
 import { Collection } from './collection';
 import { ArrayUtils } from './utils/arrayUtils';
-import { Entity, DatasourceConfig, SortObject, FilterObject } from './interfaces';
+import { Entity, DatasourceConfig, SortObject, FilterObject, GroupingObj } from './interfaces';
 
 export class DataSource {
   public entity: Entity;
@@ -336,14 +336,14 @@ export class DataSource {
    * Groups the collection with params passed in
    * 
    */
-  public group(grouping: string[], keepExpanded?: boolean): void {
+  public group(grouping: GroupingObj[], keepExpanded?: boolean): void {
 
     // resets current sortclass
     this.arrayUtils.resetSort();
 
     // set new sort by grouping
-    grouping.forEach((groupName: string) => {
-      this.arrayUtils.setOrderBy(groupName, true);
+    grouping.forEach((group: GroupingObj) => {
+      this.arrayUtils.setOrderBy(group.field, true);
     });
 
     // run sort on displayedCollection
@@ -402,7 +402,7 @@ export class DataSource {
    * Returns grouping used
    * 
    */
-  public getGrouping(): string[] {
+  public getGrouping(): GroupingObj[] {
     return this.arrayUtils.getGrouping();
   }
 

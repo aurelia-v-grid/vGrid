@@ -1,8 +1,8 @@
-import {Entity} from '../interfaces'; // todo make a interface
+import {Entity, GroupingObj} from '../interfaces'; // todo make a interface
 
 export class ArrayGrouping {
   private groups: Entity[][];
-  private grouping: string[];
+  private grouping: GroupingObj[];
   private expanded: Set<string>;
 
   constructor() {
@@ -17,7 +17,7 @@ export class ArrayGrouping {
   }
 
   // @params grouping : ["attribute", "attribute2"  etc etc ])
-  public group(arrayToGroup: Entity[], grouping: string[], keepExpanded?: boolean) {
+  public group(arrayToGroup: Entity[], grouping: GroupingObj[], keepExpanded?: boolean) {
 
     if (grouping.length > 0) {
       // temp holder for groups as we create them
@@ -32,14 +32,14 @@ export class ArrayGrouping {
         if (groupNo === 0) {
 
           // create main group and add to groups array
-          let mainGroup = this.groupMain(arrayToGroup, groupBy, groupNo);
+          let mainGroup = this.groupMain(arrayToGroup, groupBy.field, groupNo);
           groups.push(mainGroup);
 
         } else {
 
           // get last group created, and group children
           let childGroupArray = groups[groups.length - 1];
-          let newSubGroup = this.groupChildren(childGroupArray, groupBy, groupNo);
+          let newSubGroup = this.groupChildren(childGroupArray, groupBy.field, groupNo);
           groups.push(newSubGroup);
 
         }
@@ -63,7 +63,7 @@ export class ArrayGrouping {
 
   }
 
-  public getGrouping() {
+  public getGrouping(): GroupingObj[] {
     return this.grouping;
   }
 

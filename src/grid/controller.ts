@@ -25,7 +25,8 @@ import {
   DragDropShardContext,
   ResizeShardContext,
   SelectionInterface,
-  Footer
+  Footer,
+  GroupingObj
 } from '../interfaces';
 
 export class Controller {
@@ -258,17 +259,28 @@ export class Controller {
     this.attGridConnector.select(row);
   }
 
-  public addToGrouping(attribute: string): void {
+  public addToGrouping(groupObj: GroupingObj): void {
     let currentGrouping = this.attGridConnector.getGrouping();
-    if (currentGrouping.indexOf(attribute) === -1) {
-      currentGrouping.push(attribute);
+    let exist = false;
+    currentGrouping.forEach((group: GroupingObj) => {
+      if (group.field === groupObj.field) {
+        exist = true;
+      }
+    });
+    if (!exist) {
+      currentGrouping.push(groupObj);
       this.attGridConnector.group(currentGrouping, true);
     }
   }
 
-  public removeFromGrouping(attribute: string) {
+  public removeFromGrouping(field: string): void {
     let currentGrouping = this.attGridConnector.getGrouping();
-    let index = currentGrouping.indexOf(attribute);
+    let index = -1;
+    currentGrouping.forEach((group, i) => {
+      if (field === group.field) {
+        index = i;
+      }
+    });
     if (index !== -1) {
       currentGrouping.splice(index, 1);
       this.attGridConnector.group(currentGrouping, true);
@@ -325,18 +337,18 @@ export class Controller {
     }
   }
 
-  public updateHeaderGrouping(groups: string[]): void {
+  public updateHeaderGrouping(groups: GroupingObj[]): void {
     let length = groups.length;
     this.columnBindingContext.setupgrouping = length;
     if (length === 0) {
       let groupings = this.groupingElements.getGroups();
       groupings.forEach((group) => {
-        this.groupingElements.removeGroup(group);
+        this.groupingElements.removeGroup(group.field);
       });
     } else {
       let check = true;
-      groups.forEach((group: string) => {
-        if (!this.groupingElements[group]) {
+      groups.forEach((group: GroupingObj) => {
+        if (!this.groupingElements[group.field]) {
           check = false;
         }
       });
@@ -349,11 +361,10 @@ export class Controller {
           this.groupingElements.removeGroup(group);
         });
         // add groups
-        groups.forEach((group: string) => {
+        groups.forEach((group: GroupingObj) => {
           // really dont know what they want to call it.. lets just use attribute name
           // todo, I should have something better here...
-          let groupName: string = group.charAt(0).toUpperCase() + group.slice(1);
-          this.groupingElements.addGroup(groupName, group);
+          this.groupingElements.addGroup(group.title, group.field);
         });
       }
     }

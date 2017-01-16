@@ -135,8 +135,9 @@ export class GroupingElements {
 
   public addToGrouping(): void {
     if (this.lastAdded) {
-      let toAdd = this.groupContext[this.lastAdded].field;
-      this.controller.addToGrouping(toAdd);
+      let toAddField = this.groupContext[this.lastAdded].field;
+      let toAddTitle = this.groupContext[this.lastAdded].name;
+      this.controller.addToGrouping({field: toAddField, title: toAddTitle});
       this.lastAdded = null;
     }
   }

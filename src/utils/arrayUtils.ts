@@ -1,7 +1,7 @@
 import { ArrayFilter } from './arrayFilter';
 import { ArraySort } from './arraySort';
 import { ArrayGrouping } from './arrayGrouping';
-import { SortObject, FilterObject, Entity } from '../interfaces';
+import { SortObject, FilterObject, Entity, GroupingObj } from '../interfaces';
 
 /**
  * Helper class for calling internal sort, filter and grouping classes
@@ -26,13 +26,14 @@ export class ArrayUtils {
     addToCurrentSort?: boolean
   ): { fixed: Entity[], full: Entity[] } {
 
+    let groupingFields = this.getGrouping().map((data: GroupingObj) => {return data.field;});
     let grouping = this.getGrouping();
     let result: { fixed: Entity[], full: Entity[] } = {
       fixed: null,
       full: null
     };
 
-    if (grouping.length > 0) {
+    if (groupingFields.length > 0) {
 
       // get last sort
       let lastSort = this.getOrderBy();
@@ -50,7 +51,7 @@ export class ArrayUtils {
       // loop existing
       lastSort.forEach((sort: SortObject) => {
         count++;
-        if (grouping.indexOf(sort.attribute) !== -1 || addToCurrentSort) {
+        if (groupingFields.indexOf(sort.attribute) !== -1 || addToCurrentSort) {
           newSort.push(sort);
           if (sort.attribute === attribute) {
             sort.asc = sort.asc === true ? false : true;
@@ -112,13 +113,13 @@ export class ArrayUtils {
 
 
 
-  public group(array: Entity[], grouping: string[], keepExpanded: boolean): Entity[] {
+  public group(array: Entity[], grouping: GroupingObj[], keepExpanded: boolean): Entity[] {
     return this.arrayGrouping.group(array, grouping, keepExpanded);
   }
 
 
 
-  public getGrouping(): string[] {
+  public getGrouping(): GroupingObj[] {
     return this.arrayGrouping.getGrouping();
   }
 
