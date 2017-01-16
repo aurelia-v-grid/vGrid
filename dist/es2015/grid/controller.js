@@ -129,16 +129,27 @@ define(["require", "exports"], function (require, exports) {
         Controller.prototype.select = function (row) {
             this.attGridConnector.select(row);
         };
-        Controller.prototype.addToGrouping = function (attribute) {
+        Controller.prototype.addToGrouping = function (groupObj) {
             var currentGrouping = this.attGridConnector.getGrouping();
-            if (currentGrouping.indexOf(attribute) === -1) {
-                currentGrouping.push(attribute);
+            var exist = false;
+            currentGrouping.forEach(function (group) {
+                if (group.field === groupObj.field) {
+                    exist = true;
+                }
+            });
+            if (!exist) {
+                currentGrouping.push(groupObj);
                 this.attGridConnector.group(currentGrouping, true);
             }
         };
-        Controller.prototype.removeFromGrouping = function (attribute) {
+        Controller.prototype.removeFromGrouping = function (field) {
             var currentGrouping = this.attGridConnector.getGrouping();
-            var index = currentGrouping.indexOf(attribute);
+            var index = -1;
+            currentGrouping.forEach(function (group, i) {
+                if (field === group.field) {
+                    index = i;
+                }
+            });
             if (index !== -1) {
                 currentGrouping.splice(index, 1);
                 this.attGridConnector.group(currentGrouping, true);
@@ -193,13 +204,13 @@ define(["require", "exports"], function (require, exports) {
             if (length === 0) {
                 var groupings = this.groupingElements.getGroups();
                 groupings.forEach(function (group) {
-                    _this.groupingElements.removeGroup(group);
+                    _this.groupingElements.removeGroup(group.field);
                 });
             }
             else {
                 var check_1 = true;
                 groups.forEach(function (group) {
-                    if (!_this.groupingElements[group]) {
+                    if (!_this.groupingElements[group.field]) {
                         check_1 = false;
                     }
                 });
@@ -209,8 +220,7 @@ define(["require", "exports"], function (require, exports) {
                         _this.groupingElements.removeGroup(group);
                     });
                     groups.forEach(function (group) {
-                        var groupName = group.charAt(0).toUpperCase() + group.slice(1);
-                        _this.groupingElements.addGroup(groupName, group);
+                        _this.groupingElements.addGroup(group.title, group.field);
                     });
                 }
             }

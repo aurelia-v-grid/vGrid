@@ -11,6 +11,7 @@ export declare class VGridAttributeMenu {
     private sort;
     private pinned;
     private groupby;
+    private groupbytitle;
     constructor(element: Element, vGrid: VGrid);
     attached(): void;
     unbind(): void;

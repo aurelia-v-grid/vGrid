@@ -24,8 +24,8 @@ export class Welcome {
     this.gridConnector = new GridConnector(this.ds);
     this.gridConnector.setInitTop(this.dummyDataGenerator.rowTop);
     this.ds.setArray(this.myCollection);
-    this.ds.query([{attribute: 'index', operator: '<', value: 5 }]);
-    this.ds.group([{title: 'My Country', field: 'country'}, {title: 'My bool', field: 'bool'}]);
+    //this.ds.query([{attribute: 'index', operator: '<', value: 5 }]);
+    //this.ds.group([{title: 'My Country', field: 'country'}, {title: 'My bool', field: 'bool'}]);
     this.ds.orderBy('high');
   }
 

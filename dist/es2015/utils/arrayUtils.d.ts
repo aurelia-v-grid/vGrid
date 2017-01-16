@@ -1,7 +1,7 @@
 import { ArrayFilter } from './arrayFilter';
 import { ArraySort } from './arraySort';
 import { ArrayGrouping } from './arrayGrouping';
-import { SortObject, FilterObject, Entity } from '../interfaces';
+import { SortObject, FilterObject, Entity, GroupingObj } from '../interfaces';
 export declare class ArrayUtils {
     arrayFilter: ArrayFilter;
     arraySort: ArraySort;
@@ -11,8 +11,8 @@ export declare class ArrayUtils {
         fixed: Entity[];
         full: Entity[];
     };
-    group(array: Entity[], grouping: string[], keepExpanded: boolean): Entity[];
-    getGrouping(): string[];
+    group(array: Entity[], grouping: GroupingObj[], keepExpanded: boolean): Entity[];
+    getGrouping(): GroupingObj[];
     groupCollapse(id: string): Entity[];
     groupExpand(id: string): Entity[];
     getOrderBy(): SortObject[];

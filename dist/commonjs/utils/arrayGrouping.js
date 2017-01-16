@@ -17,12 +17,12 @@ var ArrayGrouping = (function () {
             var groups_1 = [];
             grouping.forEach(function (groupBy, groupNo) {
                 if (groupNo === 0) {
-                    var mainGroup = _this.groupMain(arrayToGroup, groupBy, groupNo);
+                    var mainGroup = _this.groupMain(arrayToGroup, groupBy.field, groupNo);
                     groups_1.push(mainGroup);
                 }
                 else {
                     var childGroupArray = groups_1[groups_1.length - 1];
-                    var newSubGroup = _this.groupChildren(childGroupArray, groupBy, groupNo);
+                    var newSubGroup = _this.groupChildren(childGroupArray, groupBy.field, groupNo);
                     groups_1.push(newSubGroup);
                 }
             });

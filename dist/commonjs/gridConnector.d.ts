@@ -1,4 +1,4 @@
-import { SelectionInterface, GridConnectorInterface, DataSource, Selection, SortObject, FilterObject, Controller, ColConfig } from './interfaces';
+import { SelectionInterface, GridConnectorInterface, DataSource, Selection, SortObject, FilterObject, Controller, ColConfig, GroupingObj } from './interfaces';
 export declare class GridConnector implements GridConnectorInterface {
     private selection;
     private controller;
@@ -16,8 +16,8 @@ export declare class GridConnector implements GridConnectorInterface {
     getDatasourceLength(): number;
     getColConfig(): ColConfig[];
     setColConfig(colconfig: ColConfig[]): void;
-    getGrouping(): string[];
-    group(grouping: string[], keepExpanded?: boolean): void;
+    getGrouping(): GroupingObj[];
+    group(grouping: GroupingObj[], keepExpanded?: boolean): void;
     getElement(options: {
         row: number;
         isDown: boolean;

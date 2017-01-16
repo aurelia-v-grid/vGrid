@@ -1,5 +1,5 @@
 import { Selection } from './selection';
-import { Entity, DatasourceConfig, SortObject, FilterObject } from './interfaces';
+import { Entity, DatasourceConfig, SortObject, FilterObject, GroupingObj } from './interfaces';
 export declare class DataSource {
     entity: Entity;
     private selection;
@@ -27,10 +27,10 @@ export declare class DataSource {
     getCurrentOrderBy(): SortObject[];
     getCurrentFilter(): FilterObject[];
     getElement(row: number): Entity;
-    group(grouping: string[], keepExpanded?: boolean): void;
+    group(grouping: GroupingObj[], keepExpanded?: boolean): void;
     groupCollapse(id: string): void;
     groupExpand(id: string): void;
-    getGrouping(): string[];
+    getGrouping(): GroupingObj[];
     addBlankRow(): void;
     unshift(data: any): void;
     remove(rows?: any[]): any[];

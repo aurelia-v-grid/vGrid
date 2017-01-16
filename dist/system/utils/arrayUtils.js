@@ -21,12 +21,13 @@ System.register(["./arrayFilter", "./arraySort", "./arrayGrouping"], function (e
                     this.arrayGrouping = new arrayGrouping_1.ArrayGrouping();
                 }
                 ArrayUtils.prototype.orderBy = function (collection, attribute, addToCurrentSort) {
+                    var groupingFields = this.getGrouping().map(function (data) { return data.field; });
                     var grouping = this.getGrouping();
                     var result = {
                         fixed: null,
                         full: null
                     };
-                    if (grouping.length > 0) {
+                    if (groupingFields.length > 0) {
                         var lastSort = this.getOrderBy();
                         this.resetSort();
                         var exist_1 = false;
@@ -34,7 +35,7 @@ System.register(["./arrayFilter", "./arraySort", "./arrayGrouping"], function (e
                         var count_1 = 0;
                         lastSort.forEach(function (sort) {
                             count_1++;
-                            if (grouping.indexOf(sort.attribute) !== -1 || addToCurrentSort) {
+                            if (groupingFields.indexOf(sort.attribute) !== -1 || addToCurrentSort) {
                                 newSort_1.push(sort);
                                 if (sort.attribute === attribute) {
                                     sort.asc = sort.asc === true ? false : true;

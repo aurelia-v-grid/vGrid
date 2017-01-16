@@ -16,7 +16,7 @@ export declare class GroupingElements {
     getGroups(): any[];
     init(controller: Controller, colGroupElement: string): void;
     addGroup(name: string, field: string): void;
-    removeGroup(name?: string): void;
+    removeGroup(field?: string): void;
     addToGrouping(): void;
     removeFromGrouping(field: string): void;
 }

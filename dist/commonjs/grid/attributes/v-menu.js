@@ -66,7 +66,8 @@ var VGridAttributeMenu = (function () {
             return true;
         }
         if (type === 'groupby') {
-            this.groupingElements.addGroup(this.groupby, this.groupby);
+            var groupTitle = this.groupbytitle ? this.groupbytitle : this.groupby;
+            this.groupingElements.addGroup(groupTitle, this.groupby);
             this.groupingElements.addToGrouping();
             return true;
         }
@@ -138,6 +139,10 @@ __decorate([
     aurelia_framework_1.bindable,
     __metadata("design:type", String)
 ], VGridAttributeMenu.prototype, "groupby", void 0);
+__decorate([
+    aurelia_framework_1.bindable,
+    __metadata("design:type", String)
+], VGridAttributeMenu.prototype, "groupbytitle", void 0);
 VGridAttributeMenu = __decorate([
     aurelia_framework_1.customAttribute('v-menu'),
     aurelia_framework_1.inject(Element, v_grid_1.VGrid),

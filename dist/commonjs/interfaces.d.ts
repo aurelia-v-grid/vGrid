@@ -187,6 +187,11 @@ export interface GroupingContext {
     remove: Function;
     ctx: GroupingElements;
 }
+export interface GroupingObj {
+    [key: string]: any;
+    title: string;
+    field: string;
+}
 export interface SelectionInterface {
     getMode(): string;
     isSelected(row: number): boolean;
@@ -206,8 +211,8 @@ export interface GridConnectorInterface {
     getDatasourceLength(): number;
     getColConfig(): ColConfig[];
     setColConfig(colconfig: ColConfig[]): void;
-    getGrouping(): string[];
-    group(grouping: string[], keepExpanded?: boolean): void;
+    getGrouping(): GroupingObj[];
+    group(grouping: GroupingObj[], keepExpanded?: boolean): void;
     getElement(options: {
         row: number;
         isDown: boolean;

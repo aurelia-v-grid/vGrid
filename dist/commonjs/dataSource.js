@@ -129,8 +129,8 @@ var DataSource = (function () {
     DataSource.prototype.group = function (grouping, keepExpanded) {
         var _this = this;
         this.arrayUtils.resetSort();
-        grouping.forEach(function (groupName) {
-            _this.arrayUtils.setOrderBy(groupName, true);
+        grouping.forEach(function (group) {
+            _this.arrayUtils.setOrderBy(group.field, true);
         });
         this.arrayUtils.runOrderbyOn(this.collection.getEntities());
         var ungroupedArray = this.collection.getEntities();
