@@ -190,10 +190,28 @@ var Controller = (function () {
         var length = groups.length;
         this.columnBindingContext.setupgrouping = length;
         if (length === 0) {
-            var groups_1 = this.groupingElements.getGroups();
-            groups_1.forEach(function (group) {
+            var groupings = this.groupingElements.getGroups();
+            groupings.forEach(function (group) {
                 _this.groupingElements.removeGroup(group);
             });
+        }
+        else {
+            var check_1 = true;
+            groups.forEach(function (group) {
+                if (!_this.groupingElements[group]) {
+                    check_1 = false;
+                }
+            });
+            if (!check_1) {
+                var groupings = this.groupingElements.getGroups();
+                groupings.forEach(function (group) {
+                    _this.groupingElements.removeGroup(group);
+                });
+                groups.forEach(function (group) {
+                    var groupName = group.charAt(0).toUpperCase() + group.slice(1);
+                    _this.groupingElements.addGroup(groupName, group);
+                });
+            }
         }
         this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
     };
