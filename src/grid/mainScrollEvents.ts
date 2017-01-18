@@ -138,17 +138,16 @@ export class MainScrollEvents {
         this.removeScrollEvents('wheel');
       }
       requestAnimationFrame(() => {
-        this.main.scrollTop = this.main.scrollTop + newTopPosition;
-        this.right.scrollTop = this.right.scrollTop + newTopPosition;
-        this.left.scrollTop = this.left.scrollTop + newTopPosition;
         this.vhandle.scrollTop = this.vhandle.scrollTop + newTopPosition;
-        this.group.scrollTop = this.group.scrollTop + newTopPosition;
+        this.main.scrollTop = this.vhandle.scrollTop;
+        this.right.scrollTop = this.vhandle.scrollTop;
+        this.left.scrollTop = this.vhandle.scrollTop;
+        this.group.scrollTop = this.vhandle.scrollTop;
         if (left !== undefined) {
           this.main.scrollLeft = this.main.scrollLeft + left;
           (this.mainHead as HTMLElement).style.left = - this.main.scrollLeft + 'px';
         }
         this.checkScroll(this.main.scrollTop);
-
         this.timerWheel = setTimeout(() => {
           this.addScrollEvents('wheel');
           this.timerWheel = null;
