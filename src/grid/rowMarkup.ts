@@ -1,5 +1,12 @@
 import { HtmlCache } from '../interfaces';
 
+/**
+ * This creates the markup for the rows for:
+ * - pinned left and right
+ * - main
+ * - group
+ * 
+ */
 export class RowMarkup {
   private element: Element;
   private htmlCache: HtmlCache;
@@ -9,16 +16,22 @@ export class RowMarkup {
   private group: Element;
   private rowHeight: number;
 
+
+
   constructor(element: Element, htmlCache: HtmlCache) {
     this.element = element;
     this.htmlCache = htmlCache;
   }
+
+
 
   public init(rowHeight: number): void {
     this.rowHeight = rowHeight;
     this.updateInternalHtmlCache();
     this.generateRows();
   }
+
+
 
   private generateRows(): void {
 
@@ -61,6 +74,8 @@ export class RowMarkup {
     this.group.innerHTML = markupGroup;
 
   }
+
+
 
   private updateInternalHtmlCache(): void {
     this.left = this.htmlCache.avg_content_left_scroll;

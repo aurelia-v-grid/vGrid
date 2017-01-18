@@ -2,6 +2,13 @@ import { inject, noView, customElement, processContent, TargetInstruction } from
 import { VGrid } from './v-grid';
 import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
+
+
+/**
+ * Custom element <v-grid-loadingscreen>
+ * This is used for creating custom loading screen
+ * 
+ */
 @noView()
 @customElement('v-grid-loadingscreen')
 @processContent((
@@ -24,12 +31,16 @@ export class VGridLoadingScreen {
   private vGrid: VGrid;
   private template: string;
 
+
+
   constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
     this.element = element;
     this.vGrid = vGrid;
     this.template = targetInstruction.elementInstruction.template;
 
   }
+
+
 
   public bind(): void {
     this.vGrid.loadingScreenTemplate = this.template;

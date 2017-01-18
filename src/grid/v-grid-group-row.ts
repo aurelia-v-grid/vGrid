@@ -2,6 +2,14 @@ import { inject, noView, customElement, processContent, TargetInstruction } from
 import { VGrid } from './v-grid';
 import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
+
+
+/**
+ * Custom element <v-grid-group-row>
+ * This is used for creating custom rows in grouping
+ * The one holding the group value / full width rows
+ * 
+ */
 @noView()
 @customElement('v-grid-group-row')
 @processContent((
@@ -24,12 +32,16 @@ export class VGridGroupRow {
   private vGrid: VGrid;
   private rowTemplate: string;
 
+
+
   constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
     this.element = element;
     this.vGrid = vGrid;
     this.rowTemplate = targetInstruction.elementInstruction.rowTemplate;
 
   }
+
+
 
   public bind(): void {
     this.vGrid.colGroupRow = this.rowTemplate;

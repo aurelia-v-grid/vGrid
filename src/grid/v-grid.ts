@@ -24,6 +24,12 @@ import {
     OverrideContext
 } from '../interfaces';
 
+
+
+/**
+ * Custom Element <v-grid>
+ * 
+ */
 export class VGrid {
     public static inject = [Element, ViewCompiler, Container, ViewResources, TaskQueue];
     public element: Element;
@@ -85,6 +91,7 @@ export class VGrid {
         viewResources: ViewResources,
         taskQueue: TaskQueue) {
 
+        // injected variables
         this.element = element;
         this.viewCompiler = viewCompiler;
         this.container = container;
@@ -113,7 +120,6 @@ export class VGrid {
         // create our classes
         this.controller = new Controller(this);
         this.htmlCache = new HtmlCache(element);
-
         this.htmlHeightWidth = new HtmlHeightWidth();
         this.viewSlots = new ViewSlots(this.htmlCache);
         this.columnBindingContext = new ColumnBindingContext(this.controller);
@@ -193,6 +199,8 @@ export class VGrid {
         };
     }
 
+
+
     public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
 
         // binding contexts, will need some for the views we create
@@ -214,6 +222,8 @@ export class VGrid {
 
     }
 
+
+
     public unbind(): void {
 
         // if unbined we want to know if its new time ( I prb should have more code in created event... to late...)
@@ -225,6 +235,8 @@ export class VGrid {
         // todo: should I bind the main, grouping and loading screen here?
         // not unless I let users put custom html into those I can see why to bother atm
     }
+
+
 
     public attached(): void {
 
@@ -260,6 +272,12 @@ export class VGrid {
         });
     }
 
+
+
+    /**
+     * Checkes bool values if they are strings or or and return real boolean
+     * 
+     */
     private checkBool(value: string | boolean): boolean {
         if (typeof value === 'string') {
             value = value.toLowerCase();

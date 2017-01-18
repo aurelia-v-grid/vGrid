@@ -2,6 +2,11 @@ import { inject, noView, customElement, processContent, TargetInstruction } from
 import { VGrid } from './v-grid';
 import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
+/**
+ * Custom element <v-grid-contextmenu>
+ * This is used for creating custom menus markup
+ * 
+ */
 @noView()
 @customElement('v-grid-contextmenu')
 @processContent((
@@ -18,6 +23,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
   let template: any;
   let templateHTML: any;
 
+  // Check if any templates are added, if so add to instruction for use
   template = element.getElementsByTagName('V-MENU-CLOSE')[0];
   templateHTML = template ? template.innerHTML : null;
   if (templateHTML !== '') {
@@ -60,6 +66,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
     instruction.menuTemplates.all = templateHTML;
   }
 
+  // clear the innerhtml, not needed, and we dont want it there messing up stuff
   element.innerHTML = '';
 
 })
@@ -69,12 +76,20 @@ export class VGridContextmenu {
   private vGrid: VGrid;
   private customMenuTemplates: any;
 
+
+
   constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
     this.element = element;
     this.vGrid = vGrid;
     this.customMenuTemplates = targetInstruction.elementInstruction.menuTemplates;
   }
 
+
+
+  /**
+   * Add the templates to vGrid class for use later when we generate the grid
+   * 
+   */
   public bind(): void {
     this.vGrid.customMenuTemplates = this.customMenuTemplates;
   }

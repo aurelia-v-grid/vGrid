@@ -2,6 +2,14 @@ import { inject, noView, customElement, processContent, TargetInstruction } from
 import { VGrid } from './v-grid';
 import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
+
+
+/**
+ * Custom element <v-grid-group-element>
+ * This is used for creating custom grouping element 
+ * The ones in the top panel
+ * 
+ */
 @noView()
 @customElement('v-grid-group-element')
 @processContent((
@@ -24,12 +32,16 @@ export class VGridGroupElement {
   private vGrid: VGrid;
   private rowTemplate: string;
 
+
+
   constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
     this.element = element;
     this.vGrid = vGrid;
     this.rowTemplate = targetInstruction.elementInstruction.rowTemplate;
 
   }
+
+
 
   public bind(): void {
     this.vGrid.colGroupElement = this.rowTemplate;

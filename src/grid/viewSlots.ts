@@ -9,6 +9,12 @@ import {
   SelectionInterface
 } from '../interfaces';
 
+
+
+/**
+ * This holds all the grids viewslots, so its easy to bind and attach and unbind/detach when removed
+ * 
+ */
 export class ViewSlots {
   public leftRowViewSlots: ViewSlot[];
   public mainRowViewSlots: ViewSlot[];
@@ -25,6 +31,8 @@ export class ViewSlots {
   private rowCache: RowCache[];
   private headerCache: HeaderCache;
 
+
+
   // plan was to keep all viewslots here so i can bind/unbind... but...
   constructor(htmlCache: HtmlCache) {
     this.rowCache = htmlCache.rowCache;
@@ -34,20 +42,28 @@ export class ViewSlots {
     this.rightRowViewSlots = [];
     this.groupRowViewSlots = [];
 
+    // header view slots
     this.leftHeaderViewSlot = null;
     this.mainHeaderViewSlot = null;
     this.rightHeaderViewSlot = null;
 
+    // entire grid markup / skeleton
     this.mainViewSlot = null;
 
+    // misc other viewslots
     this.loadingScreenViewSlot = null;
-
     this.groupingViewSlots = [];
-
     this.contextMenu = null;
 
   }
 
+
+
+  /**
+   * Bind and attaches the viewslots
+   * Called when created, and reattached after if.bind is used
+   * 
+   */
   public bindAndAttachColumns(
     overrideContext: OverrideContext,
     columnBindingContext: ColumnBindingContext,
@@ -103,6 +119,13 @@ export class ViewSlots {
 
   }
 
+
+
+  /**
+   * Unbinds and detach all the viewslots
+   * usually called during grids unbind event
+   * 
+   */
   public unbindAndDetachColumns(): void {
     for (let i = 0; i < this.groupRowViewSlots.length; i++) {
 
@@ -128,10 +151,15 @@ export class ViewSlots {
     this.rightHeaderViewSlot.unbind();
     this.rightHeaderViewSlot.detached();
 
-    // todo loading screen and footer?
+     // todo loading screen and footer, or grouping elements?
 
   }
 
+  /**
+   * removes all viewslots
+   * Todo, is this even in use?
+   * 
+   */
   public clear(): void {
     for (let i = 0; i < this.groupRowViewSlots.length; i++) {
       this.leftRowViewSlots[i].removeAll();
@@ -157,7 +185,7 @@ export class ViewSlots {
     this.mainHeaderViewSlot = null;
     this.rightHeaderViewSlot = null;
 
-    // todo loading screen and footer?
+    // todo loading screen and footer, or grouping elements?
   }
 
 }

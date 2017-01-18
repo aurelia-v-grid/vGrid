@@ -1,5 +1,11 @@
 import { HtmlCache, Controller, SelectionInterface, RowCache } from '../interfaces';
 
+/**
+ * Listen for click on rows
+ * Fixes/calls selection to set correct highlighs when using shift/contrl button for multiselect
+ * Calls grids single/dbl click events
+ * 
+ */
 export class RowClickHandler {
   private element: Element;
   private htmlCache: HtmlCache;
@@ -11,6 +17,8 @@ export class RowClickHandler {
   private getSelection: Function;
   private manualSelection: boolean;
 
+
+
   constructor(element: Element, htmlCache: HtmlCache) {
     this.element = element;
     this.htmlCache = htmlCache;
@@ -19,6 +27,8 @@ export class RowClickHandler {
     this.lastKeyKodeUsed = 'none'; // this ned to be reset when filtering
     this.selectedRows = 0;
   }
+
+
 
   public init(mode: boolean, manualSelection: boolean, controller: Controller): void {
 
@@ -66,10 +76,14 @@ export class RowClickHandler {
 
   }
 
+
+
   public getSelectionMode(): string {
     let selection: SelectionInterface = this.getSelection();
     return selection.getMode();
   }
+
+
 
   public removeEventlistener(): void {
     let avgLeftRows = this.htmlCache.avg_left_rows;
@@ -86,6 +100,8 @@ export class RowClickHandler {
     }
   }
 
+
+
   private addEventlistener(): void {
     let avgLeftRows = this.htmlCache.avg_left_rows;
     let avgMainRows = this.htmlCache.avg_main_rows;
@@ -100,6 +116,8 @@ export class RowClickHandler {
       avgRightRows[i].ondblclick = this.doubleClick.bind(this);
     }
   }
+
+
 
   private getCache(target: Element): RowCache {
     let no = -1;
@@ -125,6 +143,8 @@ export class RowClickHandler {
 
   }
 
+
+
   private singleClick(event: MouseEvent): void {
     let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCache);
     if (!cache.isGroup) {
@@ -141,6 +161,8 @@ export class RowClickHandler {
     }
   }
 
+
+
   private doubleClick(event: MouseEvent): void {
     let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCache);
     this.controller.raiseEvent('v-row-ondblclick', {
@@ -151,35 +173,49 @@ export class RowClickHandler {
     });
   }
 
+
+
   private isSelected(row: number): boolean {
     let selection: SelectionInterface = this.getSelection();
     return selection.isSelected(row);
   }
+
+
 
   private deSelect(row: number): void {
     let selection: SelectionInterface = this.getSelection();
     selection.deSelect(row);
   }
 
+
+
   private select(row: number, addToSelection: boolean): void {
     let selection: SelectionInterface = this.getSelection();
     selection.select(row, addToSelection);
   }
+
+
 
   private selectRange(start: number, end: number): void {
     let selection: SelectionInterface = this.getSelection();
     selection.selectRange(start, end);
   }
 
+
+
   private getSelectedRows(): number[] {
     let selection: SelectionInterface = this.getSelection();
     return selection.getSelectedRows();
   }
 
+
+
   private setSelectedRows(newRows: number[]): void {
     let selection: SelectionInterface = this.getSelection();
     selection.setSelectedRows(newRows);
   }
+
+
 
   private highlightRow(e: MouseEvent, currentRow: number): void {
 

@@ -213,7 +213,7 @@ export class DataSource {
    * TODO: do we want to also rerun filter if any?
    * 
    */
-  public refresh(data?: any) {
+  public refresh(data?: any): void {
     if (data) {
       // if data create new collection and set data to it
       this.collection = new Collection(this);
@@ -319,7 +319,7 @@ export class DataSource {
 
 
   /**
-   * Returns current enlement of row passed in
+   * Returns current element of row passed in
    * 
    */
   public getElement(row: number): Entity {

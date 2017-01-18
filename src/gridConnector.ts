@@ -120,7 +120,6 @@ export class GridConnector implements GridConnectorInterface {
 
   /**
    * Can be used for getting column config inside grid
-   * Used by default datasource
    * 
    */
   public getColConfig(): ColConfig[] {
@@ -131,7 +130,6 @@ export class GridConnector implements GridConnectorInterface {
 
   /**
    * Can be used for setting column config inside grid
-   * Used by default datasource
    * 
    */
   public setColConfig(colconfig: ColConfig[]): void {
@@ -283,7 +281,7 @@ export class GridConnector implements GridConnectorInterface {
    * Forces grid to try and update language
    * 
    */
-  public triggerI18n() {
+  public triggerI18n(): void {
     this.controller.triggerI18N();
   }
 

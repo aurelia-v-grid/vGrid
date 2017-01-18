@@ -26,7 +26,7 @@ export class ArrayUtils {
     addToCurrentSort?: boolean
   ): { fixed: Entity[], full: Entity[] } {
 
-    let groupingFields = this.getGrouping().map((data: GroupingObj) => {return data.field;});
+    let groupingFields = this.getGrouping().map((data: GroupingObj) => {return data.field; });
     let grouping = this.getGrouping();
     let result: { fixed: Entity[], full: Entity[] } = {
       fixed: null,

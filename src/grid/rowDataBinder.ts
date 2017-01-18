@@ -1,10 +1,16 @@
-import {Controller, RowCache, BindingContext} from '../interfaces';
+import { Controller, RowCache, BindingContext } from '../interfaces';
 
+/**
+ * Updates the data rows and sets correct row highlight
+ * 
+ */
 export class RowDataBinder {
   private element: Element;
   private controller: Controller;
   private rebindRowBinded: EventListenerOrEventListenerObject;
   private rebindAllRowsBinded: EventListenerOrEventListenerObject;
+
+
 
   constructor(element: Element, controller: Controller) {
     this.element = element;
@@ -12,28 +18,34 @@ export class RowDataBinder {
 
   }
 
+
+
   public init(): void {
     this.addEventListener();
   }
 
+
+
   public rebindRowNo(row: number): void {
-      let rowCache = this.controller.htmlCache.rowCache;
-      let foundRowCache = null;
-      rowCache.forEach((cache) => {
-        if (cache.row === row) {
-          foundRowCache = cache;
-        }
-      });
-      if (foundRowCache) {
-        this.rebindRow(({
-          detail: {
-            currentRow: row,
-            rowCache: foundRowCache,
-            downScroll: true
-          }
-        } as CustomEvent));
+    let rowCache = this.controller.htmlCache.rowCache;
+    let foundRowCache = null;
+    rowCache.forEach((cache) => {
+      if (cache.row === row) {
+        foundRowCache = cache;
       }
+    });
+    if (foundRowCache) {
+      this.rebindRow(({
+        detail: {
+          currentRow: row,
+          rowCache: foundRowCache,
+          downScroll: true
+        }
+      } as CustomEvent));
+    }
   }
+
+
 
   private addEventListener(): void {
     this.rebindRowBinded = this.rebindRow.bind(this);
@@ -42,11 +54,15 @@ export class RowDataBinder {
     this.element.addEventListener('avg-rebind-all-rows', this.rebindAllRowsBinded);
   }
 
-/*  unused for now
-    private removeEventListener(): void {
-    this.element.removeEventListener('avg-rebind-row', this.rebindRowBinded);
-    this.element.removeEventListener('avg-rebind-all-rows', this.rebindAllRowsBinded);
-  }*/
+
+
+  /*  unused for now
+      private removeEventListener(): void {
+      this.element.removeEventListener('avg-rebind-row', this.rebindRowBinded);
+      this.element.removeEventListener('avg-rebind-all-rows', this.rebindAllRowsBinded);
+    }*/
+
+
 
   private rebindRow(event: CustomEvent): void {
     let currentRow = event.detail.currentRow;
@@ -110,6 +126,8 @@ export class RowDataBinder {
 
     });
   }
+
+
 
   private rebindAllRows(event: CustomEvent): void {
 

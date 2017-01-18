@@ -2,6 +2,13 @@ import { inject, noView, customElement, processContent, TargetInstruction } from
 import { VGrid } from './v-grid';
 import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
+
+
+/**
+ * Custom element <v-grid-footer>
+ * This is used for creating custom footer markup
+ * 
+ */
 @noView()
 @customElement('v-grid-footer')
 @processContent((

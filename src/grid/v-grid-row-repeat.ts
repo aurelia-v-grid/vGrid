@@ -2,6 +2,14 @@ import { inject, noView, customElement, processContent, TargetInstruction } from
 import { VGrid } from './v-grid';
 import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
+
+/**
+ * Custom element <v-grid-row-repeat>
+ * This is used for creating custom row repeat
+ * Row repeat is just a full grid with row without no column
+ * Thisone is useful for when you need to for repeated
+ * 
+ */
 @noView()
 @customElement('v-grid-row-repeat')
 @processContent((

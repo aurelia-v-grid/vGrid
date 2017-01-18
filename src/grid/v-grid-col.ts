@@ -10,6 +10,13 @@ import {
   OverrideContext
 } from '../interfaces';
 
+
+
+/**
+ * Custom element <v-grid-col>
+ * This is used for creating the simple html columns
+ * 
+ */
 @noView()
 @processContent((
   compiler: ViewCompiler,
@@ -21,24 +28,27 @@ import {
   compiler = null;
   resources = null;
 
+  // check if any header template is added, if so add to instruction for use
   let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
   let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
   if (headerTemplateHtml !== '') {
     instruction.colHeaderTemplate = headerTemplateHtml;
   }
 
+  // check if any row template is added, if so add to instruction for use
   let rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
   let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
   if (rowTemplateHtml !== '') {
     instruction.colRowTemplate = rowTemplateHtml;
   }
 
+  // clear the innerhtml, not needed, and we dont want it there messing up stuff
   element.innerHTML = '';
 
   // we want to get this css attribute and use if later
   let css = element.getAttribute('col-css');
   if (css) {
-   instruction.colCss = css;
+    instruction.colCss = css;
   }
 
 })
@@ -72,6 +82,8 @@ export class VGridElementColConfig {
   @bindable({ attribute: 'col-drag-drop' }) private colDragDrop: string;
   @bindable({ attribute: 'col-resizeable' }) private colResizeable: string;
 
+
+
   constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
     this.vGrid = vGrid;
     this.element = element;
@@ -80,9 +92,17 @@ export class VGridElementColConfig {
     this.colCss = targetInstruction.elementInstruction.colCss;
   }
 
+
+
+  /**
+   * When bind runs we get the bindable attributes & template markup if any from <v-grid-col>
+   * We add this to the vGrid class colConfig to use later when grid is generated
+   * 
+   */
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
+
     this.vGrid.colConfig.push(({
       colWidth: this.colWidth ? this.colWidth * 1 : 100,
       colRowTemplate: this.colRowTemplate,
@@ -109,6 +129,11 @@ export class VGridElementColConfig {
 
   }
 
+
+  /**
+   * Checks bool value and return real boolean
+   * 
+   */
   private checkBool(value: string | boolean): boolean {
     if (typeof value === 'string') {
       value = value.toLowerCase();
