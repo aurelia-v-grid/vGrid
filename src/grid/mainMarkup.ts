@@ -50,6 +50,10 @@ export class MainMarkup {
 
 
 
+  /**
+   * Generates the main markup/skeleton of the grid
+   * 
+   */
   public generateMainMarkup(): void {
 
     this.viewFactory = this.viewCompiler.compile(

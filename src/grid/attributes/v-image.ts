@@ -28,6 +28,10 @@ export class VGridAttributesImageFix {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public valueChanged(newValue: string): void {
     newValue = newValue ? newValue : '';
     this.element.src = '';
@@ -36,6 +40,10 @@ export class VGridAttributesImageFix {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;

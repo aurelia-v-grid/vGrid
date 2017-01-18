@@ -114,12 +114,20 @@ export class HtmlHeightWidth {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public getNewHeight(length: number): number {
     return length * this.attRowHeight;
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public setCollectionLength(length: number, includeScroller?: boolean): void {
     let rowTotal = this.getNewHeight(length);
     let avgScrollbarHeightValue = includeScroller === false ? 0 : this.avgScrollBarWidth;
@@ -133,6 +141,10 @@ export class HtmlHeightWidth {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public addDefaultsAttributes(
     attHeaderHeight: number,
     attRowHeight: number,
@@ -164,6 +176,10 @@ export class HtmlHeightWidth {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public adjustWidthsColumns(columnBindingContext: ColumnBindingContext, groupsLength: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
     let main = 0;
@@ -203,6 +219,10 @@ export class HtmlHeightWidth {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public setWidthFromColumnConfig(colConfig: ColConfig[], groupsLength?: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
     let main = 0;
@@ -249,6 +269,10 @@ export class HtmlHeightWidth {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public getScrollbarWidth(): number {
     let outer = document.createElement('div');
     outer.style.visibility = 'hidden';

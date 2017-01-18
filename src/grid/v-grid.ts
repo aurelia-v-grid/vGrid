@@ -233,7 +233,6 @@ export class VGrid {
         this.viewSlots.unbindAndDetachColumns();
 
         // todo: should I bind the main, grouping and loading screen here?
-        // not unless I let users put custom html into those I can see why to bother atm
     }
 
 

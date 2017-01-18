@@ -40,6 +40,10 @@ export class ColumnBindingContext {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public clear() {
     this.setupleft = [];
     this.setupmain = [];
@@ -53,10 +57,9 @@ export class ColumnBindingContext {
         } else {
           this.controller.expandGroup(x.__groupID);
         }
-
       }
-
     };
+
   }
 
 }

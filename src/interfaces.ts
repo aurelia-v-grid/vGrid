@@ -27,6 +27,8 @@ export { ArraySort } from './utils/arraySort';
 export { ArrayGrouping } from './utils/arrayGrouping';
 export { Footer } from './grid/footer';
 
+
+
 export interface RowCache {
   [key: string]: any;
   left: HTMLElement;
@@ -46,6 +48,8 @@ export interface RowCache {
   selected: boolean;
 }
 
+
+
 export interface HeaderCache {
   [key: string]: any;
   left: HTMLElement;
@@ -60,6 +64,8 @@ export interface HeaderCache {
   rightRowViewSlot: ViewSlot;
   groupRowViewSlot: ViewSlot;
 }
+
+
 
 export interface ColConfig {
   [key: string]: any;
@@ -89,6 +95,8 @@ export interface ColConfig {
   __colRowTemplateGenerated?: string;
 }
 
+
+
 // the properties will mostly only be on group entities..
 // want to rename these to .__avgXXX so we cant crash with someone else
 export interface Entity {
@@ -102,6 +110,8 @@ export interface Entity {
   __groupExpanded?: boolean;
 }
 
+
+
 export interface TargetData {
   [key: string]: any;
   draggable: HTMLElement;
@@ -114,12 +124,16 @@ export interface TargetData {
   panel: boolean;
 }
 
+
+
 export interface FilterObject {
   [key: string]: any;
   operator: string;
   value: any;
   attribute: string;
 }
+
+
 
 export interface SortObject {
   [key: string]: any;
@@ -128,10 +142,14 @@ export interface SortObject {
   no?: number;
 }
 
+
+
 export interface DatasourceConfig {
   [key: string]: any;
   key: string;
 }
+
+
 
 export interface CustomTargetInstruction extends TargetInstruction {
   [key: string]: any;
@@ -144,6 +162,8 @@ export interface CustomTargetInstruction extends TargetInstruction {
   elementInstruction: CustomBehaviorInstruction;
 }
 
+
+
 export interface CustomBehaviorInstruction extends BehaviorInstruction {
   [key: string]: any;
   colHeaderTemplate?: string;
@@ -155,6 +175,8 @@ export interface CustomBehaviorInstruction extends BehaviorInstruction {
   menuTemplates?: any;
 }
 
+
+
 export interface BindingContext {
   [key: string]: any;
   rowRef: Entity;
@@ -164,11 +186,15 @@ export interface BindingContext {
   tempRef: Entity;
 }
 
+
+
 export interface OverrideContext {
   [key: string]: any;
   bindContext: any;
   parentOverrideContext: any;
 }
+
+
 
 export interface DragDropShardContext {
   [key: string]: any;
@@ -185,10 +211,14 @@ export interface DragDropShardContext {
   title: string;
 }
 
+
+
 export interface ResizeShardContext {
   [key: string]: any;
   resizing: boolean;
 }
+
+
 
 export interface ColumBindingContextObject {
   [key: string]: any;
@@ -196,6 +226,8 @@ export interface ColumBindingContextObject {
   left: number;
   width: number;
 }
+
+
 
 export interface GroupingContext {
   [key: string]: any;
@@ -206,11 +238,15 @@ export interface GroupingContext {
   ctx: GroupingElements;
 }
 
+
+
 export interface GroupingObj {
   [key: string]: any;
   title: string;
   field: string;
 }
+
+
 
 // only included what the grid classes is asking for, not datasource etc.
 export interface SelectionInterface {
@@ -224,6 +260,8 @@ export interface SelectionInterface {
   setSelectedRows(newRows: number[]): void;
   reset(): void;
 }
+
+
 
 // only included what the grid classes is asking for, not datasource etc.
 export interface GridConnectorInterface {
@@ -244,6 +282,8 @@ export interface GridConnectorInterface {
   expandGroup(id: string): void;
   collapseGroup(id: string): void;
 }
+
+
 
 export interface ControllerInterface {
   element: Element;

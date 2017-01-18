@@ -32,6 +32,10 @@ export class Footer {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public init(overrideContext: OverrideContext, footerStringTemplate: string): void {
     this.overrideContext = overrideContext;
     let footerTemplate = footerStringTemplate || ``.replace(/\$(au{)/g, '${');
@@ -55,4 +59,5 @@ export class Footer {
 
     this.viewSlots.footerViewSlot = footerViewSlot;
   }
+
 }

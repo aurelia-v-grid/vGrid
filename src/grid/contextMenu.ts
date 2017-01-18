@@ -57,6 +57,10 @@ export class ContextMenu {
 
 
 
+  /**
+   * todo description
+   * 
+   */
     public setDefaults(): void {
         this.top = 0;
         this.left = 0;
@@ -69,6 +73,10 @@ export class ContextMenu {
 
 
 
+  /**
+   * todo description
+   * 
+   */
     public init(customMenuTemplates: any, overrideContext: OverrideContext): void {
         this.overrideContext = overrideContext;
         let viewFactory = this.viewCompiler.compile(`<template>${this.menuHtml(customMenuTemplates)}</template>`, this.viewResources);
@@ -82,6 +90,10 @@ export class ContextMenu {
 
 
 
+  /**
+   * todo description
+   * 
+   */
     public openMenu(options: {
         left: number,
         top: number,
@@ -103,6 +115,10 @@ export class ContextMenu {
 
 
 
+  /**
+   * todo description
+   * 
+   */
     public menuClick(type: string, option: string, event: Event): void {
         switch (true) {
             case type === 'filter' && option === 'options':
@@ -128,6 +144,10 @@ export class ContextMenu {
 
 
 
+  /**
+   * todo description
+   * 
+   */
     public updateMenuStrings(key: string, text: string) {
 
         if (this.menuStrings[key]) {
@@ -138,12 +158,20 @@ export class ContextMenu {
 
 
 
+  /**
+   * todo description
+   * 
+   */
     private showFilterOptions(): void {
         this.filterOptionsMenu = true;
     }
 
 
 
+  /**
+   * todo description
+   * 
+   */
     private hideFilterOptions(): void {
         this.filterOptionsMenu = false;
     }
@@ -172,7 +200,12 @@ export class ContextMenu {
         }
       }*/
 
-    // not the best way of doing, but easy... not very userfiendly for other languages atm
+
+
+    /**
+     * todo description
+     * 
+     */
     private menuHtml(customMenuTemplates: any): string {
 
         let menuTop: string =

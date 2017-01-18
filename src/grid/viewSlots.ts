@@ -33,7 +33,6 @@ export class ViewSlots {
 
 
 
-  // plan was to keep all viewslots here so i can bind/unbind... but...
   constructor(htmlCache: HtmlCache) {
     this.rowCache = htmlCache.rowCache;
     this.headerCache = htmlCache.headerCache;
@@ -55,6 +54,8 @@ export class ViewSlots {
     this.groupingViewSlots = [];
     this.contextMenu = null;
 
+    // grouping elements viewslots is not here... see GroupingElements class
+
   }
 
 
@@ -71,6 +72,8 @@ export class ViewSlots {
 
     let context: BindingContext;
 
+    // create a extra parent override context so we can add
+    // overrideContext from model holding grid and columnbinding
     let newParentOverrideContext = {
       bindingContext: columnBindingContext,
       parentOverrideContext: overrideContext
@@ -99,6 +102,7 @@ export class ViewSlots {
       this.groupRowViewSlots[i].attached();
     }
 
+    // add selection to the context, so we can control selection (delselect/select all)
     context = ({ selection: curSelection } as BindingContext);
     this.headerCache.bindingContext = context;
     this.headerCache.parentOverrideContext = {

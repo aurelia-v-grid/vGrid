@@ -20,6 +20,10 @@ export class ArrayUtils {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public orderBy(
     collection: Entity[],
     attribute: string | SortObject,
@@ -113,76 +117,129 @@ export class ArrayUtils {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public group(array: Entity[], grouping: GroupingObj[], keepExpanded: boolean): Entity[] {
     return this.arrayGrouping.group(array, grouping, keepExpanded);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public getGrouping(): GroupingObj[] {
     return this.arrayGrouping.getGrouping();
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public groupCollapse(id: string): Entity[] {
     return this.arrayGrouping.collapse(id);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public groupExpand(id: string): Entity[] {
     return this.arrayGrouping.expand(id);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public getOrderBy(): SortObject[] {
     return this.arraySort.getOrderBy();
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public setLastSort(array: SortObject[]): void {
       this.arraySort.setLastSort(array);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public setOrderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
     this.arraySort.setOrderBy(attribute, addToCurrentSort);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public runOrderbyOn(array: Entity[]): void {
     this.arraySort.runOrderbyOn(array);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public resetSort(defaultSortAttribute?: string): void {
     this.arraySort.reset(defaultSortAttribute);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public resetGrouping(): void {
     this.arrayGrouping.reset();
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public getCurrentFilter(): FilterObject[] {
     return this.arrayFilter.getLastFilter();
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public query(array: Entity[], params: FilterObject[]): Entity[] {
     return this.arrayFilter.runQueryOn(array, params);
   }
 
+
+  /**
+   * todo description
+   * 
+   */
   public setLocaleCompare(code: string, options?: any): void {
     this.arraySort.setLocaleCompare(code, options);
   }

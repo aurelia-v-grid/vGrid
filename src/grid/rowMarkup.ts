@@ -24,7 +24,10 @@ export class RowMarkup {
   }
 
 
-
+  /**
+   * Called when grid is created to set defaults, add event listners
+   * 
+   */
   public init(rowHeight: number): void {
     this.rowHeight = rowHeight;
     this.updateInternalHtmlCache();
@@ -33,6 +36,11 @@ export class RowMarkup {
 
 
 
+  /**
+   * Generate the row markup
+   * called when grid is created and not used again
+   * 
+   */
   private generateRows(): void {
 
     let markupLeft = '';
@@ -77,6 +85,10 @@ export class RowMarkup {
 
 
 
+  /**
+   * just adds the main html elements to class
+   * 
+   */
   private updateInternalHtmlCache(): void {
     this.left = this.htmlCache.avg_content_left_scroll;
     this.main = this.htmlCache.avg_content_main_scroll;

@@ -96,7 +96,10 @@ export class GroupingElements {
   }
 
 
-
+  /**
+   * Called when grid is created to set defaults, add event listners
+   * 
+   */
   public init(controller: Controller, colGroupElement: string) {
     this.controller = controller;
     this.avgTopPanel = this.htmlCache.avg_top_panel;
@@ -105,6 +108,10 @@ export class GroupingElements {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public addGroup(name: string, field: string): void {
     if (!this.groupContext[field]) {
       this.lastAdded = field;
@@ -135,6 +142,10 @@ export class GroupingElements {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public removeGroup(field?: string): void {
     if (field) {
       if (this.groupContext[field] !== null) {
@@ -158,6 +169,10 @@ export class GroupingElements {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public addToGrouping(): void {
     if (this.lastAdded) {
       let toAddField = this.groupContext[this.lastAdded].field;
@@ -169,6 +184,10 @@ export class GroupingElements {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public removeFromGrouping(field: string): void {
     this.controller.removeFromGrouping(field);
   }

@@ -96,6 +96,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public getContext() {
 
     let c = this.vGrid;
@@ -153,6 +157,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public triggerI18N() {
     let keys: any = Object.keys({
       close: 'Close',
@@ -196,6 +204,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public createGrid(): void {
 
     // translate ?
@@ -250,7 +262,10 @@ export class Controller {
 
 
 
-  // misc function, all calls to/from gridconnector will go in functions here, mostly.. I think...
+  /**
+   * todo description
+   * 
+   */
   public getElement(rowNumber: number, isDownScroll: boolean, callbackFN: Function): void {
     this.attGridConnector.getElement({
       row: rowNumber,
@@ -266,24 +281,40 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public expandGroup(id: string): void {
     this.attGridConnector.expandGroup(id);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public collapseGroup(id: string): void {
     this.attGridConnector.collapseGroup(id);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public select(row: number): void {
     this.attGridConnector.select(row);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public addToGrouping(groupObj: GroupingObj): void {
     let currentGrouping = this.attGridConnector.getGrouping();
     let exist = false;
@@ -300,6 +331,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public removeFromGrouping(field: string): void {
     let currentGrouping = this.attGridConnector.getGrouping();
     let index = -1;
@@ -316,6 +351,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public getSelectionContext(): SelectionInterface {
     let sel: SelectionInterface = this.attGridConnector.getSelection();
     return sel;
@@ -323,6 +362,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public raiseEvent(name: string, data = {}): void {
     let event = new CustomEvent(name, {
       detail: data,
@@ -333,6 +376,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<void> {
 
     if (value) {
@@ -344,6 +391,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public updateHeights(): void {
     let totalRowHeight = this.htmlHeightWidth.getNewHeight(this.attGridConnector.getDatasourceLength());
     let bodyHeight = this.htmlCache.avg_content_main.clientHeight;
@@ -360,6 +411,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public udateHorizontalScroller(): void {
     let bodyWidth = this.htmlCache.avg_content_main.clientWidth;
     let scrollWidth = this.htmlHeightWidth.avgContentMainScroll_Width;
@@ -379,6 +434,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public updateHeaderGrouping(groups: GroupingObj[]): void {
     let length = groups.length;
     this.columnBindingContext.setupgrouping = length;
@@ -415,12 +474,20 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public collectionLength(): number {
     return this.attGridConnector.getDatasourceLength();
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public triggerScroll(position: number): void {
     if (position === null || position === undefined) {
       position = this.htmlCache.avg_content_vhandle.scrollTop;
@@ -440,6 +507,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public getTopRow(): number {
     let position = this.htmlCache.avg_content_vhandle.scrollTop;
     return Math.floor(position / this.attRowHeight);
@@ -447,6 +518,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public rebindAllRows(): void {
     this.raiseEvent('avg-rebind-all-rows', {
       rowCache: this.htmlCache.rowCache,
@@ -456,6 +531,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public getColumnConfig(): ColConfig[] {
 
     // get current colcontext
@@ -541,6 +620,10 @@ export class Controller {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public setColumnConfig(colConfig: ColConfig[]): void {
     let length = this.columnBindingContext.setupgrouping;
     this.viewSlots.unbindAndDetachColumns();

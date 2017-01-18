@@ -33,6 +33,10 @@ export class VGridAttributesFilterObserver {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public valueChanged(newValue: any) {
     if (this.attribute && newValue) { // if no attibute we do not want to do anything
         this.updateFilter();
@@ -41,6 +45,10 @@ export class VGridAttributesFilterObserver {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
@@ -53,12 +61,20 @@ export class VGridAttributesFilterObserver {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private getValue(): any {
       return this.valueFormater ? this.valueFormater.fromView(this.value) : this.value;
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private updateFilter(): void {
     let curFilter: FilterObject[] = this.vGrid.attGridConnector.getCurrentFilter();
     let filterIndex = -1;
@@ -98,6 +114,10 @@ export class VGridAttributesFilterObserver {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private valueConverters(value: string): { fromView: Function; toView: Function } {
     let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
     return valueConverter(value);

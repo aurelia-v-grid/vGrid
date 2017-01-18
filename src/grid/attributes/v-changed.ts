@@ -28,18 +28,30 @@ export class VGridAttributesOnChange {
 
 
 
+  /**
+   * todo description
+   * 
+   */
     public attached() {
         this.element.onchange = this.onChanged.bind(this);
     }
 
 
 
+  /**
+   * todo description
+   * 
+   */
     public onChanged() {
         this.vGrid.controller.rowDataBinder.rebindRowNo(this.bindingContext.row);
     }
 
 
 
+  /**
+   * todo description
+   * 
+   */
     public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
         this.bindingContext = bindingContext;
         this.overrideContext = overrideContext;

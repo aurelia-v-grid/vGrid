@@ -37,12 +37,20 @@ export class VGridAttributesFilter {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public getOperatorName(operator: string): string {
     return this.vGrid.filterOperatorNames[operator];
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public attached(): void {
 
     if (this.attribute) { // if no attibute we do not want to do anything
@@ -143,6 +151,10 @@ export class VGridAttributesFilter {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
@@ -158,6 +170,10 @@ export class VGridAttributesFilter {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private getValue(): any {
     if (this.type !== 'checkbox') {
       return this.valueFormater ? this.valueFormater.fromView(
@@ -173,6 +189,10 @@ export class VGridAttributesFilter {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private resetValue(): void {
     if (this.type !== 'checkbox') {
       (this.element as HTMLInputElement).value = '';
@@ -184,6 +204,10 @@ export class VGridAttributesFilter {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private updateFilter(curFilter: FilterObject[]): void {
     let filterIndex = -1;
 
@@ -220,6 +244,10 @@ export class VGridAttributesFilter {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private valueConverters(value: string): { fromView: Function; toView: Function } {
     let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
     return valueConverter(value);

@@ -87,6 +87,10 @@ export class HtmlCache {
 
 
 
+  /**
+   * todo description
+   * 
+   */
     public updateRowsMarkup(): void {
         this.avg_left_rows = this.avg_content_left_scroll.getElementsByTagName('avg-row');
         this.avg_main_rows = this.avg_content_main_scroll.getElementsByTagName('avg-row');
@@ -96,6 +100,10 @@ export class HtmlCache {
 
 
 
+  /**
+   * todo description
+   * 
+   */
     public updateMainMarkup(): void {
         this.avg_top_panel = this.element.getElementsByTagName('avg-top-panel')[0];
 

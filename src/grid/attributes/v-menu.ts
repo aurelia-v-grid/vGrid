@@ -43,18 +43,30 @@ export class VGridAttributeMenu {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public attached(): void {
     this.element.addEventListener('contextmenu', this.openBinded);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public unbind(): void {
     document.removeEventListener('click', this.checkBinded);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private check(e: MouseEvent): void {
     let x = (e.target as HTMLElement).classList.contains('avg-menu__link');
     if (!x) {
@@ -65,6 +77,10 @@ export class VGridAttributeMenu {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private callback(type: string, option: string, event: MouseEvent): boolean {
     if (type === 'filter') {
       if (option === 'clear') {
@@ -133,6 +149,10 @@ export class VGridAttributeMenu {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private open(e: MouseEvent): void {
     this.check(e);
     document.addEventListener('click', this.checkBinded);
@@ -153,6 +173,10 @@ export class VGridAttributeMenu {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private getPosition(e: MouseEvent): any {
     let posx = 0;
     let posy = 0;

@@ -32,6 +32,10 @@ export class VGridAttributesSort {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
@@ -40,6 +44,10 @@ export class VGridAttributesSort {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public attached(): void {
     this.sortIcon = document.createElement('i');
     this.sortIcon.innerHTML = this.getSortIconMarkup();
@@ -67,12 +75,20 @@ export class VGridAttributesSort {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public detached(): void {
     this.element.removeChild(this.sortIcon);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private getSortIconMarkup(): string {
 
     let markup = ``;

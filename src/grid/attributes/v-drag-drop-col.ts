@@ -68,6 +68,10 @@ export class VGridDragDropCol {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
@@ -82,18 +86,30 @@ export class VGridDragDropCol {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public unbind(): void {
     // todo remove event listeners
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public detached(): void {
     //  console.log("detached")
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public attached(): void {
 
     // get our target data (this case: this actual column..)
@@ -148,6 +164,10 @@ export class VGridDragDropCol {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private createDragElement(): void {
 
     // just creates the element we drag
@@ -164,6 +184,10 @@ export class VGridDragDropCol {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private onDragstart(): void {
 
     // register mouseup, so we can exit
@@ -196,6 +220,10 @@ export class VGridDragDropCol {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private onDragOutSide(event: MouseEvent): void {
 
     if (this.sharedContext.dragging) {
@@ -238,6 +266,10 @@ export class VGridDragDropCol {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private onDragenter(event: MouseEvent): void {
 
     // event.preventDefault();
@@ -294,6 +326,12 @@ export class VGridDragDropCol {
 
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   private onDragover(event: MouseEvent): void {
 
     // setting position of out dragBlock
@@ -304,6 +342,12 @@ export class VGridDragDropCol {
 
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   private onDragend(): void {
 
     // clear mosuemove timer
@@ -331,6 +375,12 @@ export class VGridDragDropCol {
     }
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   private switchColumns(result: TargetData): void {
 
     // get vars 
@@ -490,6 +540,12 @@ export class VGridDragDropCol {
     }
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   private getTargetData(curTarget: Element): TargetData {
 
     // set variables

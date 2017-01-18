@@ -38,12 +38,20 @@ export class LoadingScreen {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public updateLoadingDefaultLoadingMessage(msg: string): void {
     this.loadingMessage = msg;
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public init(overrideContext: OverrideContext, loadingScreenTemplate: string): void {
     this.overrideContext = overrideContext;
     let loadingScreentHtml = loadingScreenTemplate || `[
@@ -77,6 +85,10 @@ export class LoadingScreen {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public enable(msg?: string, collectionLength?: number): Promise<any> {
     return new Promise((resolve: Function) => {
       this.loading = collectionLength ? collectionLength > 10000 ? true : false : false;
@@ -89,6 +101,10 @@ export class LoadingScreen {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public disable(): Promise<any> {
     return new Promise((resolve: Function) => {
       this.loading = false;

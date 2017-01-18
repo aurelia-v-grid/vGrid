@@ -19,13 +19,20 @@ export class RowDataBinder {
   }
 
 
-
+  /**
+   * Called when grid is created to set defaults, add event listners
+   * 
+   */
   public init(): void {
     this.addEventListener();
   }
 
 
 
+  /**
+   * rebinds row passed in
+   * 
+   */
   public rebindRowNo(row: number): void {
     let rowCache = this.controller.htmlCache.rowCache;
     let foundRowCache = null;
@@ -47,6 +54,10 @@ export class RowDataBinder {
 
 
 
+  /**
+   * adds needed event listners to know when to rebind on scrolling
+   * 
+   */
   private addEventListener(): void {
     this.rebindRowBinded = this.rebindRow.bind(this);
     this.rebindAllRowsBinded = this.rebindAllRows.bind(this);
@@ -64,6 +75,10 @@ export class RowDataBinder {
 
 
 
+  /**
+   * rebinds row, called from event listener
+   * 
+   */
   private rebindRow(event: CustomEvent): void {
     let currentRow = event.detail.currentRow;
     let rowCache: RowCache = event.detail.rowCache;
@@ -128,7 +143,10 @@ export class RowDataBinder {
   }
 
 
-
+  /**
+   * rebinds all rows, called from event listener
+   * 
+   */
   private rebindAllRows(event: CustomEvent): void {
 
     let rowCache: RowCache[] = event.detail.rowCache;

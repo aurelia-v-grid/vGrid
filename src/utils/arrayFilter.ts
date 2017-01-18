@@ -1,5 +1,10 @@
 import { FilterObject, Entity } from '../interfaces'; // todo make a interface
 
+
+  /**
+   * filters the array
+   * 
+   */
 export class ArrayFilter {
   private lastFilter: FilterObject[];
   private filterOperators: any = {
@@ -15,18 +20,38 @@ export class ArrayFilter {
       '=*': 10  // end with
     };
 
+
+
   constructor() {
     this.lastFilter = [];
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public getOperatorNo(val: string): number {
     return this.filterOperators[val];
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public getLastFilter() {
     return this.lastFilter;
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public runQueryOn(objArray: Entity[], ObjFilter: FilterObject[]) {
 
     this.lastFilter = ObjFilter;

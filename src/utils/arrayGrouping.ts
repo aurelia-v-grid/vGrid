@@ -1,22 +1,40 @@
-import {Entity, GroupingObj} from '../interfaces'; // todo make a interface
+import { Entity, GroupingObj } from '../interfaces'; // todo make a interface
 
+
+/**
+ * This takes care the generating the flat array the grid can use for grouping
+ * 
+ */
 export class ArrayGrouping {
   private groups: Entity[][];
   private grouping: GroupingObj[];
   private expanded: Set<string>;
+
+
 
   constructor() {
     this.grouping = [];
     this.expanded = new Set([]);
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public reset() {
     this.groups = [];
     this.grouping = [];
     this.expanded = new Set([]);
   }
 
-  // @params grouping : ["attribute", "attribute2"  etc etc ])
+
+
+  /**
+   * todo description
+   * 
+   */
   public group(arrayToGroup: Entity[], grouping: GroupingObj[], keepExpanded?: boolean) {
 
     if (grouping.length > 0) {
@@ -63,10 +81,20 @@ export class ArrayGrouping {
 
   }
 
+
+  /**
+   * todo description
+   * 
+   */
   public getGrouping(): GroupingObj[] {
     return this.grouping;
   }
 
+
+  /**
+   * todo description
+   * 
+   */
   public expand(id: string, array?: Set<string>) {
     let all = id ? false : true; // if no id, then all
     if (!id) {
@@ -97,9 +125,9 @@ export class ArrayGrouping {
               subGroup(sg);
             }
             break;
-            default:
+          default:
             // need anything here ?
-          break;
+            break;
         }
 
       });
@@ -119,8 +147,8 @@ export class ArrayGrouping {
             subGroup(g);
           }
           break;
-          default:
-            // need anything here ?
+        default:
+          // need anything here ?
           break;
       }
     });
@@ -128,6 +156,11 @@ export class ArrayGrouping {
     return collection;
   }
 
+
+  /**
+   * todo description
+   * 
+   */
   public collapse(id: string) {
     let all = id ? false : true; // if no id, then all
     id = id === undefined ? null : id;
@@ -188,7 +221,13 @@ export class ArrayGrouping {
     return collection;
   }
 
-    private groupMain(array: Entity[], groupBy: string, groupNo: number) {
+
+
+  /**
+   * todo description
+   * 
+   */
+  private groupMain(array: Entity[], groupBy: string, groupNo: number) {
     let tempGroupArray: Entity[] = [];
     let curGroup: Entity = ({} as Entity);
     let tempValue: string = null;
@@ -196,7 +235,7 @@ export class ArrayGrouping {
     // first level, here we use array
     array.forEach((element) => {
 
-      let gidm = element[groupBy]
+      let gidm = element[groupBy];
       gidm = typeof gidm === 'boolean' ? gidm.toString() : gidm;
       gidm = gidm || 'blank';
 
@@ -223,6 +262,11 @@ export class ArrayGrouping {
     return tempGroupArray;
   }
 
+
+  /**
+   * todo description
+   * 
+   */
   private groupChildren(childGroupArray: Entity[], groupBy: string, groupNo: number) {
     let tempGroupArray: Entity[] = [];
 

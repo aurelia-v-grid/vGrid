@@ -75,6 +75,10 @@ export class VGridAttributesResizeCol {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
@@ -82,6 +86,10 @@ export class VGridAttributesResizeCol {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public attached(): void {
 
     // add resize handle
@@ -104,6 +112,10 @@ export class VGridAttributesResizeCol {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private onmouseup(): void {
     // remove events
     document.removeEventListener('mousemove', this.onmousemoveBinded);
@@ -113,12 +125,20 @@ export class VGridAttributesResizeCol {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private onmousemove(e: MouseEvent): void {
     this.updateHeader(e);
   }
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private updateHeader(e: MouseEvent): void {
 
     let w = Math.abs(this.screenX - e.screenX);
@@ -188,6 +208,10 @@ export class VGridAttributesResizeCol {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private onmousedown(e: MouseEvent): void {
 
     // get some vars

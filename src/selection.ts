@@ -7,6 +7,8 @@ export class Selection implements SelectionInterface {
   private eventIdCount: number;
   private eventCallBacks: Function[];
 
+
+
   constructor(mode: string) {
     this.mode = mode;
     this.selectedRows = 0;
@@ -15,6 +17,12 @@ export class Selection implements SelectionInterface {
     this.selection = new Set([]);
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public triggerEvent(event: string): void {
     // call all event listeners
     this.eventCallBacks.forEach((FN, i) => {
@@ -28,6 +36,12 @@ export class Selection implements SelectionInterface {
     });
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public addEventListener(callback: Function): number {
     // add key
     this.eventIdCount++;
@@ -37,30 +51,72 @@ export class Selection implements SelectionInterface {
     return this.eventIdCount;
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public getLength(): number {
     return this.selection.size;
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public getMode(): string {
     return this.mode;
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public getRowKey(row: number): number {
     return row;
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public getRowKeys(): any[] {
     return [];
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public overrideGetRowKey(fn: (row: number) => number): void {
     this.getRowKey = fn;
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public overrideGetRowKeys(fn: () => any[]): void {
     this.getRowKeys = fn;
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public isSelected(row: number): boolean {
     let result = false;
     if (this.selectedRows > 0) {
@@ -70,18 +126,36 @@ export class Selection implements SelectionInterface {
 
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public deSelectAll(): void {
     this.selection.clear();
     this.selectedRows = this.selection.size;
     this.triggerEvent('selection_changed');
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public deSelect(row: number): void {
     this.selection.delete(this.getRowKey(row));
     this.selectedRows = this.selection.size;
     this.triggerEvent('selection_changed');
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public select(row: number, add?: boolean): void {
     switch (this.mode) {
       case 'none':
@@ -109,6 +183,12 @@ export class Selection implements SelectionInterface {
     this.triggerEvent('selection_changed');
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public selectRange(start: number, end: number): void {
     if (this.mode === 'multiple') {
       this.selection.clear();
@@ -120,7 +200,12 @@ export class Selection implements SelectionInterface {
     }
   }
 
-  // only uses visiable rows when getting selected rows, todo: add option for getting all when filtered
+
+
+  /**
+   * todo description
+   * 
+   */
   public getSelectedRows(): number[] {
     let array: number[] = [];
     let keys = this.getRowKeys();
@@ -134,6 +219,12 @@ export class Selection implements SelectionInterface {
     return array;
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public setSelectedRows(newRows: number[]): void {
     if (this.selectedRows > 0) {
       this.selection.clear();
@@ -146,6 +237,12 @@ export class Selection implements SelectionInterface {
     this.triggerEvent('selection_changed');
   }
 
+
+
+  /**
+   * todo description
+   * 
+   */
   public reset(): void {
     if (this.selectedRows > 0) {
       this.selection.clear();
@@ -153,5 +250,7 @@ export class Selection implements SelectionInterface {
     this.selectedRows = this.selection.size;
     this.triggerEvent('selection_changed');
   }
+
+
 
 }

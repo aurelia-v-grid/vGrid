@@ -8,7 +8,10 @@ export class ColumnMarkupHelper {
 
 
 
-  // todo use same if column setup is just json binded to grid
+  /**
+   * todo description
+   * 
+   */
   public generate(colConfig: ColConfig[]): void {
     let type: string = null;
     if (colConfig && colConfig.length > 0) {
@@ -22,6 +25,10 @@ export class ColumnMarkupHelper {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private processColumns(array: ColConfig[]): void {
     array.forEach((col, index) => {
       // we need attribute or rowtemplate, else throm error
@@ -52,6 +59,10 @@ export class ColumnMarkupHelper {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private createHeaderTemplate(col: any): void {
     // if header template does not exist then lets create it
     if (!col.colHeaderTemplate) {
@@ -89,6 +100,10 @@ export class ColumnMarkupHelper {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private createRowTemplate(col: any): void {
     // if row template does not exist, then lets create it
     if (!col.colRowTemplate) {
@@ -114,6 +129,10 @@ export class ColumnMarkupHelper {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private getAttribute(value: string, capitalize: boolean): string {
     let returnValue = value || 'missing!';
     if (value) {
@@ -144,6 +163,10 @@ export class ColumnMarkupHelper {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private checkAttribute(attribute: string): string {
     let value = attribute;
     if (attribute) {
@@ -156,6 +179,10 @@ export class ColumnMarkupHelper {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private createImageRowMarkup(col: ColConfig): void {
     // get the values/settings
     let classNames = 'class="avg-image-round"';
@@ -168,6 +195,10 @@ export class ColumnMarkupHelper {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private createInputRowMarkup(col: ColConfig): void {
 
     // get the values/settings
@@ -205,6 +236,10 @@ export class ColumnMarkupHelper {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private createInputHeaderMarkup(col: ColConfig): string {
 
     // is it filter ?
@@ -242,6 +277,10 @@ export class ColumnMarkupHelper {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   private createLabelMarkup(col: ColConfig): string {
     // get the values/settings
     let filterClass = col.colFilter ? `${col.colFilterTop ? 'avg-label-bottom' : 'avg-label-top'}` : 'avg-label-full';

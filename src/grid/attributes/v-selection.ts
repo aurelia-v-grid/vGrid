@@ -31,6 +31,10 @@ export class VGridAttributesSelection {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public selectedChanged(newValue: boolean): void {
     if (this.type === 'row') {
       (this.element as HTMLInputElement).checked = newValue;
@@ -39,6 +43,10 @@ export class VGridAttributesSelection {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
@@ -46,6 +54,10 @@ export class VGridAttributesSelection {
 
 
 
+  /**
+   * todo description
+   * 
+   */
   public attached(): void {
 
     this.element.checked = this.selected;

@@ -29,7 +29,10 @@ export class RowClickHandler {
   }
 
 
-
+  /**
+   * Called when grid is created to set defaults, add event listners
+   * 
+   */
   public init(mode: boolean, manualSelection: boolean, controller: Controller): void {
 
     this.controller = controller;
@@ -48,6 +51,10 @@ export class RowClickHandler {
 
 
 
+  /**
+   * updates selection, usually after row click values is checked and selection set
+   * 
+   */
   public updateSelectionOnAllRows(): void {
 
     let rowCache = this.htmlCache.rowCache;
@@ -80,6 +87,10 @@ export class RowClickHandler {
 
 
 
+  /**
+   * returns mode of selection used
+   * 
+   */
   public getSelectionMode(): string {
     let selection: SelectionInterface = this.getSelection();
     return selection.getMode();
@@ -87,6 +98,10 @@ export class RowClickHandler {
 
 
 
+  /**
+   * remove event listeners set, not is use really atm
+   * 
+   */
   public removeEventlistener(): void {
     let avgLeftRows = this.htmlCache.avg_left_rows;
     let avgMainRows = this.htmlCache.avg_main_rows;
@@ -104,6 +119,10 @@ export class RowClickHandler {
 
 
 
+  /**
+   * add click events to rows
+   * 
+   */
   private addEventlistener(): void {
     let avgLeftRows = this.htmlCache.avg_left_rows;
     let avgMainRows = this.htmlCache.avg_main_rows;
@@ -147,6 +166,10 @@ export class RowClickHandler {
 
 
 
+  /**
+   * Called when single click event triggers
+   * 
+   */
   private singleClick(event: MouseEvent): void {
     let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCache);
     if (!cache.isGroup) {
@@ -164,7 +187,10 @@ export class RowClickHandler {
   }
 
 
-
+  /**
+   * Called when dbl click event triggers
+   * 
+   */
   private doubleClick(event: MouseEvent): void {
     let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCache);
     this.controller.raiseEvent('v-row-ondblclick', {
@@ -177,6 +203,10 @@ export class RowClickHandler {
 
 
 
+  /**
+   * calls selection added to grid
+   * 
+   */
   private isSelected(row: number): boolean {
     let selection: SelectionInterface = this.getSelection();
     return selection.isSelected(row);
@@ -184,6 +214,10 @@ export class RowClickHandler {
 
 
 
+  /**
+   * calls selection added to grid
+   * 
+   */
   private deSelect(row: number): void {
     let selection: SelectionInterface = this.getSelection();
     selection.deSelect(row);
@@ -191,6 +225,10 @@ export class RowClickHandler {
 
 
 
+  /**
+   * calls selection added to grid
+   * 
+   */
   private select(row: number, addToSelection: boolean): void {
     let selection: SelectionInterface = this.getSelection();
     selection.select(row, addToSelection);
@@ -198,6 +236,10 @@ export class RowClickHandler {
 
 
 
+  /**
+   * calls selection added to grid
+   * 
+   */
   private selectRange(start: number, end: number): void {
     let selection: SelectionInterface = this.getSelection();
     selection.selectRange(start, end);
@@ -205,6 +247,10 @@ export class RowClickHandler {
 
 
 
+  /**
+   * calls selection added to grid
+   * 
+   */
   private getSelectedRows(): number[] {
     let selection: SelectionInterface = this.getSelection();
     return selection.getSelectedRows();
@@ -212,13 +258,20 @@ export class RowClickHandler {
 
 
 
+  /**
+   * calls selection added to grid
+   * 
+   */
   private setSelectedRows(newRows: number[]): void {
     let selection: SelectionInterface = this.getSelection();
     selection.setSelectedRows(newRows);
   }
 
 
-
+  /**
+   * logic behind multiselect of rows with shoft and contrl button
+   * 
+   */
   private highlightRow(e: MouseEvent, currentRow: number): void {
 
     let isSel: boolean;
