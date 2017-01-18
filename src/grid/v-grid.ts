@@ -263,7 +263,10 @@ export class VGrid {
                 this.attGridConnector.getSelection());
 
             // update horizontal scroller
-            this.controller.udateHorizontalScroller();
+            // todo, use TaskQueue
+            setTimeout(() => {
+               this.controller.udateHorizontalScroller();
+            }, 50);
 
             // todo: should I bind the main, grouping and loading screen here?
             // connect gridConnector to this controler

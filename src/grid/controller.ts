@@ -331,11 +331,15 @@ export class Controller {
     if (bodyWidth < scrollWidth) {
       // hide it
       (this.htmlCache.avg_content_hhandle as HTMLElement).style.display = 'block';
+      this.htmlHeightWidth.setCollectionLength(this.collectionLength(), true);
     } else {
       // display
       (this.htmlCache.avg_content_hhandle as HTMLElement).style.display = 'none';
+      this.htmlHeightWidth.setCollectionLength(this.collectionLength(), false);
     }
   }
+
+
 
   public updateHeaderGrouping(groups: GroupingObj[]): void {
     let length = groups.length;
