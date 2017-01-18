@@ -1,6 +1,12 @@
 import { ColConfig } from '../interfaces';
 
+/**
+ * Generate the simple html columns markup from settings fetched from the attrubites
+ * 
+ */
 export class ColumnMarkupHelper {
+
+
 
   // todo use same if column setup is just json binded to grid
   public generate(colConfig: ColConfig[]): void {
@@ -13,6 +19,8 @@ export class ColumnMarkupHelper {
     }
     this.processColumns(colConfig);
   }
+
+
 
   private processColumns(array: ColConfig[]): void {
     array.forEach((col, index) => {
@@ -41,6 +49,8 @@ export class ColumnMarkupHelper {
 
     });
   }
+
+
 
   private createHeaderTemplate(col: any): void {
     // if header template does not exist then lets create it
@@ -77,6 +87,8 @@ export class ColumnMarkupHelper {
     }
   }
 
+
+
   private createRowTemplate(col: any): void {
     // if row template does not exist, then lets create it
     if (!col.colRowTemplate) {
@@ -99,6 +111,8 @@ export class ColumnMarkupHelper {
       }
     }
   }
+
+
 
   private getAttribute(value: string, capitalize: boolean): string {
     let returnValue = value || 'missing!';
@@ -128,6 +142,8 @@ export class ColumnMarkupHelper {
     return returnValue;
   };
 
+
+
   private checkAttribute(attribute: string): string {
     let value = attribute;
     if (attribute) {
@@ -138,6 +154,8 @@ export class ColumnMarkupHelper {
     return value;
   }
 
+
+
   private createImageRowMarkup(col: ColConfig): void {
     // get the values/settings
     let classNames = 'class="avg-image-round"';
@@ -147,6 +165,8 @@ export class ColumnMarkupHelper {
     // insert the markup
     col.__colRowTemplateGenerated = `<image ${css} ${classNames} ${imageFix} ${attributeRow}>`;
   }
+
+
 
   private createInputRowMarkup(col: ColConfig): void {
 
@@ -183,6 +203,8 @@ export class ColumnMarkupHelper {
     }
   }
 
+
+
   private createInputHeaderMarkup(col: ColConfig): string {
 
     // is it filter ?
@@ -217,6 +239,8 @@ export class ColumnMarkupHelper {
     return markup;
 
   }
+
+
 
   private createLabelMarkup(col: ColConfig): string {
     // get the values/settings

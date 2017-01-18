@@ -2,6 +2,12 @@ import { inject, customAttribute, bindable } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
 import { BindingContext, OverrideContext, FilterObject } from '../../interfaces';
 
+/**
+ * Custom attribute "v-filter-observer"
+ * Alternative filter that listen for value changed
+ * Can be used with custom html
+ * 
+ */
 @customAttribute('v-filter-observer')
 @inject(Element, VGrid)
 export class VGridAttributesFilterObserver {
@@ -18,16 +24,22 @@ export class VGridAttributesFilterObserver {
   private valueFormater: { fromView: Function; toView: Function };
   private state: number;
 
+
+
   constructor(element: HTMLElement, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
   }
+
+
 
   public valueChanged(newValue: any) {
     if (this.attribute && newValue) { // if no attibute we do not want to do anything
         this.updateFilter();
     }
   }
+
+
 
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
@@ -39,9 +51,13 @@ export class VGridAttributesFilterObserver {
     this.state = 0;
   }
 
+
+
   private getValue(): any {
       return this.valueFormater ? this.valueFormater.fromView(this.value) : this.value;
   }
+
+
 
   private updateFilter(): void {
     let curFilter: FilterObject[] = this.vGrid.attGridConnector.getCurrentFilter();
@@ -79,6 +95,8 @@ export class VGridAttributesFilterObserver {
 
     this.vGrid.attGridConnector.query(this.vGrid.attGridConnector.getCurrentFilter());
   }
+
+
 
   private valueConverters(value: string): { fromView: Function; toView: Function } {
     let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);

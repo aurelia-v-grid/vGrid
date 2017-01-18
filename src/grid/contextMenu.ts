@@ -2,6 +2,10 @@
 import { ViewSlot } from 'aurelia-framework';
 import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContext } from '../interfaces';
 
+/**
+ * Creates the context menus used in the grid
+ * 
+ */
 export class ContextMenu {
     public show: boolean;
     private viewCompiler: ViewCompiler;
@@ -41,6 +45,8 @@ export class ContextMenu {
         endsWith: 'Ends with'
     };
 
+
+
     constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots) {
         this.viewCompiler = viewCompiler;
         this.container = container;
@@ -48,6 +54,8 @@ export class ContextMenu {
         this.viewSlots = viewSlots;
         this.setDefaults();
     }
+
+
 
     public setDefaults(): void {
         this.top = 0;
@@ -59,16 +67,20 @@ export class ContextMenu {
         this.filterOptionsMenu = false;
     }
 
-   public init(customMenuTemplates: any, overrideContext: OverrideContext): void {
+
+
+    public init(customMenuTemplates: any, overrideContext: OverrideContext): void {
         this.overrideContext = overrideContext;
         let viewFactory = this.viewCompiler.compile(`<template>${this.menuHtml(customMenuTemplates)}</template>`, this.viewResources);
         let view = viewFactory.create(this.container);
         let viewSlot: ViewSlot = new ViewSlot(document.body, true);
         viewSlot.add(view);
         this.viewSlots.contextMenu = viewSlot;
-        viewSlot.bind(this, {bindingContext: this, parentOverrideContext: this.overrideContext});
+        viewSlot.bind(this, { bindingContext: this, parentOverrideContext: this.overrideContext });
         viewSlot.attached();
     }
+
+
 
     public openMenu(options: {
         left: number,
@@ -88,6 +100,8 @@ export class ContextMenu {
         this.show = true;
         this.callback = options.callback;
     }
+
+
 
     public menuClick(type: string, option: string, event: Event): void {
         switch (true) {
@@ -112,17 +126,23 @@ export class ContextMenu {
         }
     }
 
+
+
     public updateMenuStrings(key: string, text: string) {
 
-      if (this.menuStrings[key]) {
-             this.menuStrings[key] = text;
-      }
+        if (this.menuStrings[key]) {
+            this.menuStrings[key] = text;
+        }
 
     }
+
+
 
     private showFilterOptions(): void {
         this.filterOptionsMenu = true;
     }
+
+
 
     private hideFilterOptions(): void {
         this.filterOptionsMenu = false;
@@ -155,10 +175,10 @@ export class ContextMenu {
     // not the best way of doing, but easy... not very userfiendly for other languages atm
     private menuHtml(customMenuTemplates: any): string {
 
-            let menuTop: string =
+        let menuTop: string =
             `<div css="top:$au{top}px;left:$au{left}px" if.bind="show" class="avg-default avg-menu">`.replace(/\$(au{)/g, '${');
 
-            let menuClose: string = customMenuTemplates.close ||
+        let menuClose: string = customMenuTemplates.close ||
             `<ul if.bind="show" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('close','true')" class="avg-menu__link">
@@ -169,7 +189,7 @@ export class ContextMenu {
                 </li>
             </ul>`.replace(/\$(au{)/g, '${');
 
-            let menuPinned: string = customMenuTemplates.pinned ||
+        let menuPinned: string = customMenuTemplates.pinned ||
             `<ul if.bind="pinnedMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('pinned','left', $event)" class="avg-menu__link">
@@ -183,7 +203,7 @@ export class ContextMenu {
                 </li>
             </ul>`.replace(/\$(au{)/g, '${');
 
-            let menuGroupby: string = customMenuTemplates.groupby ||
+        let menuGroupby: string = customMenuTemplates.groupby ||
             `<ul if.bind="groupbyMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('groupby','groupby', $event)" class="avg-menu__link">
@@ -194,7 +214,7 @@ export class ContextMenu {
                 </li>
             </ul>`.replace(/\$(au{)/g, '${');
 
-            let menuSort: string = customMenuTemplates.sort ||
+        let menuSort: string = customMenuTemplates.sort ||
             `<ul if.bind="sortMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('sort','asc', $event)" class="avg-menu__link">
@@ -212,7 +232,7 @@ export class ContextMenu {
                 </li>
             </ul>`.replace(/\$(au{)/g, '${');
 
-            let menuFilter: string = customMenuTemplates.filter ||
+        let menuFilter: string = customMenuTemplates.filter ||
             `<ul if.bind="filterMainMenu && !filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filter','showall', $event)" class="avg-menu__link">
@@ -244,7 +264,7 @@ export class ContextMenu {
                 </li>
             </ul>`.replace(/\$(au{)/g, '${');
 
-            let menuFilterOptions: string = customMenuTemplates.filterOptions ||
+        let menuFilterOptions: string = customMenuTemplates.filterOptions ||
             `<ul if.bind="filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filterOption','Back', $event)" class="avg-menu__link">
@@ -327,21 +347,21 @@ export class ContextMenu {
                 </li>
             </ul>`.replace(/\$(au{)/g, '${');
 
-            let menuBottom: string =
+        let menuBottom: string =
             `</div>`;
 
-            let menuAll: string =  customMenuTemplates.all || [
-                menuTop,
-                menuClose,
-                menuPinned,
-                menuGroupby,
-                menuSort,
-                menuFilter,
-                menuFilterOptions,
-                menuBottom,
-            ].join('');
+        let menuAll: string = customMenuTemplates.all || [
+            menuTop,
+            menuClose,
+            menuPinned,
+            menuGroupby,
+            menuSort,
+            menuFilter,
+            menuFilterOptions,
+            menuBottom,
+        ].join('');
 
-            return menuAll;
+        return menuAll;
 
     }
 }

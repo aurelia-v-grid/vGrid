@@ -40,6 +40,7 @@ class GroupContext {
 
 
 /**
+ * Creates the grouping elements viewports and logic
  * This take care of the top panel, when called it adds the html element with its context
  * It also fixes/sets corrcet panel when grid is created/ grouping runs by code
  * 

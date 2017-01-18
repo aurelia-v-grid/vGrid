@@ -2,6 +2,14 @@ import { inject, customAttribute, bindable } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
 import { BindingContext, OverrideContext, FilterObject } from '../../interfaces';
 
+
+/**
+ * Custom attribute "v-filter"
+ * Logic behind filter in headers
+ * Used by default by the simple html setup
+ * Can be used with custom html
+ * 
+ */
 @customAttribute('v-filter')
 @inject(Element, VGrid)
 export class VGridAttributesFilter {
@@ -20,14 +28,20 @@ export class VGridAttributesFilter {
   private type: string;
   private state: number;
 
+
+
   constructor(element: HTMLElement, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
   }
 
+
+
   public getOperatorName(operator: string): string {
     return this.vGrid.filterOperatorNames[operator];
   }
+
+
 
   public attached(): void {
 
@@ -127,6 +141,8 @@ export class VGridAttributesFilter {
     }
   }
 
+
+
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
@@ -139,6 +155,8 @@ export class VGridAttributesFilter {
     this.type = (this.element as HTMLInputElement).type;
     this.state = 0;
   }
+
+
 
   private getValue(): any {
     if (this.type !== 'checkbox') {
@@ -153,6 +171,8 @@ export class VGridAttributesFilter {
     }
   }
 
+
+
   private resetValue(): void {
     if (this.type !== 'checkbox') {
       (this.element as HTMLInputElement).value = '';
@@ -161,6 +181,8 @@ export class VGridAttributesFilter {
       (this.element as HTMLInputElement).checked = false;
     }
   }
+
+
 
   private updateFilter(curFilter: FilterObject[]): void {
     let filterIndex = -1;
@@ -195,6 +217,8 @@ export class VGridAttributesFilter {
 
     }
   }
+
+
 
   private valueConverters(value: string): { fromView: Function; toView: Function } {
     let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);

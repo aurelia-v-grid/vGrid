@@ -2,6 +2,10 @@ import { ViewSlot } from 'aurelia-framework';
 import { ViewCompiler, Container, ViewResources, ViewSlots } from '../interfaces';
 import { OverrideContext , HtmlCache} from '../interfaces';
 
+/**
+ * Creates the footer viewport
+ * 
+ */
 export class Footer {
   private htmlCache: HtmlCache;
   private viewSlots: ViewSlots;
@@ -9,6 +13,8 @@ export class Footer {
   private container: Container;
   private viewResources: ViewResources;
   private overrideContext: OverrideContext;
+
+
 
   constructor(
     htmlCache: HtmlCache,
@@ -23,6 +29,8 @@ export class Footer {
     this.container = container;
     this.viewResources = viewResources;
   }
+
+
 
   public init(overrideContext: OverrideContext, footerStringTemplate: string): void {
     this.overrideContext = overrideContext;

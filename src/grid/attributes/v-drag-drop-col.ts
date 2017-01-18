@@ -10,6 +10,14 @@ import {
   TargetData
 } from '../../interfaces';
 
+
+/**
+ * Custom attribute "v-drag-drop-col"
+ * Logic behind dragdrop, & enables grouping
+ * Used by default by the simple html setup
+ * Can be used with custom html
+ * 
+ */
 @customAttribute('v-drag-drop-col')
 @inject(Element, VGrid)
 export class VGridDragDropCol {
@@ -39,6 +47,8 @@ export class VGridDragDropCol {
   @bindable private title: string;
   @bindable private field: string;
 
+
+
   constructor(element: Element, vGrid: VGrid) {
     // get contexts
     this.vGrid = vGrid;
@@ -56,6 +66,8 @@ export class VGridDragDropCol {
 
   }
 
+
+
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
@@ -68,13 +80,19 @@ export class VGridDragDropCol {
     this.onDragOutSideBinded = this.onDragOutSide.bind(this);
   }
 
+
+
   public unbind(): void {
     // todo remove event listeners
   }
 
+
+
   public detached(): void {
     //  console.log("detached")
   }
+
+
 
   public attached(): void {
 
@@ -128,6 +146,8 @@ export class VGridDragDropCol {
 
   }
 
+
+
   private createDragElement(): void {
 
     // just creates the element we drag
@@ -141,6 +161,8 @@ export class VGridDragDropCol {
     // <- maybe do something here, use value for custom html?
     this.dragColumnBlock.innerHTML = this.title || this.vGrid.colConfig[this.colNo].colHeaderName;
   }
+
+
 
   private onDragstart(): void {
 
@@ -171,6 +193,8 @@ export class VGridDragDropCol {
       this.sharedContext.columnsArraySorted.push(x);
     });
   }
+
+
 
   private onDragOutSide(event: MouseEvent): void {
 
@@ -211,6 +235,8 @@ export class VGridDragDropCol {
     }
 
   }
+
+
 
   private onDragenter(event: MouseEvent): void {
 

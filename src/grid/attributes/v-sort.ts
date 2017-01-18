@@ -2,6 +2,14 @@ import { inject, customAttribute, bindable } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
 import { BindingContext, OverrideContext } from '../../interfaces';
 
+
+/**
+ * Custom attribute "v-resize-col"
+ * logic behind sorting in grid/sort icons
+ * Used by default by the simple html setup
+ * Can be used with custom html
+ * 
+ */
 @customAttribute('v-sort')
 @inject(Element, VGrid)
 export class VGridAttributesSort {
@@ -15,16 +23,22 @@ export class VGridAttributesSort {
   private sortIcon: HTMLElement;
   private firstTime: boolean = true;
 
+
+
   constructor(element: HTMLElement, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
   }
+
+
 
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
     this.attribute = this.field;
   }
+
+
 
   public attached(): void {
     this.sortIcon = document.createElement('i');
@@ -51,9 +65,13 @@ export class VGridAttributesSort {
     });
   }
 
+
+
   public detached(): void {
     this.element.removeChild(this.sortIcon);
   }
+
+
 
   private getSortIconMarkup(): string {
 

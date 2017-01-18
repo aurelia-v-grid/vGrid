@@ -12,6 +12,10 @@ import {
   OverrideContext
 } from '../interfaces';
 
+/**
+ *  Creates all the columns markup/viewports when grid is created
+ * 
+ */
 export class ColumnMarkup {
   private element: Element;
   private htmlCache: HtmlCache;
@@ -41,6 +45,8 @@ export class ColumnMarkup {
   private groupRows: NodeListOf<Element>;
   private rowLength: number;
 
+
+
   constructor(
     element: Element,
     viewCompiler: ViewCompiler,
@@ -61,6 +67,8 @@ export class ColumnMarkup {
     this.viewResources = viewResources;
 
   }
+
+
 
   public init(
     colConfig: ColConfig[],
@@ -84,6 +92,8 @@ export class ColumnMarkup {
 
     this.generateColumns();
   }
+
+
 
   private getRowViews(type: string): ViewFactory {
     let viewMarkup = '';
@@ -165,6 +175,8 @@ export class ColumnMarkup {
     return this.viewCompiler.compile(`<template>${groupingBlock + viewMarkup}</template>`, this.viewResources);
   }
 
+
+
   private createColSetupContext(type: string): void {
 
     let leftCur = 0;
@@ -196,6 +208,8 @@ export class ColumnMarkup {
     }
 
   }
+
+
 
   private getHeaderViews(type: string): ViewFactory {
     let viewMarkup = '';
@@ -249,6 +263,8 @@ export class ColumnMarkup {
 
   }
 
+
+
   private generateColumns(): void {
 
     if (this.columnBindingContext.setupmain.length === 0) {
@@ -284,6 +300,8 @@ export class ColumnMarkup {
     this.viewSlots.rightHeaderViewSlot = this.createViewSlot(this.rightHeader, viewFactoryHeaderRight);
   }
 
+
+
   private createViewSlot(element: Element, viewFactory: ViewFactory): ViewSlot {
 
     let view = viewFactory.create(this.container); // <<< time consumer, I should rebuild ?
@@ -291,6 +309,8 @@ export class ColumnMarkup {
     viewSlot.add(view);
     return viewSlot;
   }
+
+
 
   private updateInternalHtmlCache(): void {
     this.leftScroll = this.htmlCache.avg_content_left_scroll;

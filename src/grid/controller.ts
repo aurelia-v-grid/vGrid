@@ -29,6 +29,13 @@ import {
   GroupingObj
 } from '../interfaces';
 
+/**
+ * Class controller is the class the grid connector use to call grid code
+ * It pretty much have function to most GridConnector should not call functions not inside the controller
+ * That will break things fast
+ * TODO: fix some bad parts
+ * 
+ */
 export class Controller {
   public vGrid: VGrid;
   public htmlCache: HtmlCache;
@@ -77,6 +84,8 @@ export class Controller {
   public footerTemplate: string;
   public footer: Footer;
 
+
+
   constructor(vGrid: VGrid) {
     // main context
     this.vGrid = vGrid;
@@ -84,6 +93,8 @@ export class Controller {
     // main element
     this.element = vGrid.element;
   }
+
+
 
   public getContext() {
 
@@ -140,6 +151,8 @@ export class Controller {
 
   }
 
+
+
   public triggerI18N() {
     let keys: any = Object.keys({
       close: 'Close',
@@ -180,6 +193,8 @@ export class Controller {
     }
 
   }
+
+
 
   public createGrid(): void {
 
@@ -233,6 +248,8 @@ export class Controller {
     this.contextMenu.init(this.customMenuTemplates, this.overrideContext);
   }
 
+
+
   // misc function, all calls to/from gridconnector will go in functions here, mostly.. I think...
   public getElement(rowNumber: number, isDownScroll: boolean, callbackFN: Function): void {
     this.attGridConnector.getElement({
@@ -247,17 +264,25 @@ export class Controller {
     });
   }
 
+
+
   public expandGroup(id: string): void {
     this.attGridConnector.expandGroup(id);
   }
+
+
 
   public collapseGroup(id: string): void {
     this.attGridConnector.collapseGroup(id);
   }
 
+
+
   public select(row: number): void {
     this.attGridConnector.select(row);
   }
+
+
 
   public addToGrouping(groupObj: GroupingObj): void {
     let currentGrouping = this.attGridConnector.getGrouping();
@@ -273,6 +298,8 @@ export class Controller {
     }
   }
 
+
+
   public removeFromGrouping(field: string): void {
     let currentGrouping = this.attGridConnector.getGrouping();
     let index = -1;
@@ -287,10 +314,14 @@ export class Controller {
     }
   }
 
+
+
   public getSelectionContext(): SelectionInterface {
     let sel: SelectionInterface = this.attGridConnector.getSelection();
     return sel;
   }
+
+
 
   public raiseEvent(name: string, data = {}): void {
     let event = new CustomEvent(name, {
@@ -300,6 +331,8 @@ export class Controller {
     this.element.dispatchEvent(event);
   }
 
+
+
   public setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<void> {
 
     if (value) {
@@ -308,6 +341,8 @@ export class Controller {
       return this.loadingScreen.disable();
     }
   }
+
+
 
   public updateHeights(): void {
     let totalRowHeight = this.htmlHeightWidth.getNewHeight(this.attGridConnector.getDatasourceLength());
@@ -323,6 +358,8 @@ export class Controller {
     this.htmlHeightWidth.setCollectionLength(this.attGridConnector.getDatasourceLength(), bodyHeight < totalRowHeight);
   }
 
+
+
   public udateHorizontalScroller(): void {
     let bodyWidth = this.htmlCache.avg_content_main.clientWidth;
     let scrollWidth = this.htmlHeightWidth.avgContentMainScroll_Width;
@@ -337,6 +374,7 @@ export class Controller {
       (this.htmlCache.avg_content_hhandle as HTMLElement).style.display = 'none';
       this.htmlHeightWidth.setCollectionLength(this.collectionLength(), false);
     }
+
   }
 
 
@@ -375,9 +413,13 @@ export class Controller {
     this.htmlHeightWidth.adjustWidthsColumns(this.columnBindingContext, length);
   }
 
+
+
   public collectionLength(): number {
     return this.attGridConnector.getDatasourceLength();
   }
+
+
 
   public triggerScroll(position: number): void {
     if (position === null || position === undefined) {
@@ -396,10 +438,14 @@ export class Controller {
     });
   }
 
+
+
   public getTopRow(): number {
     let position = this.htmlCache.avg_content_vhandle.scrollTop;
     return Math.floor(position / this.attRowHeight);
   }
+
+
 
   public rebindAllRows(): void {
     this.raiseEvent('avg-rebind-all-rows', {
@@ -407,6 +453,8 @@ export class Controller {
       downScroll: true
     });
   }
+
+
 
   public getColumnConfig(): ColConfig[] {
 
@@ -490,6 +538,8 @@ export class Controller {
     // return current config   
     return newColConfig;
   }
+
+
 
   public setColumnConfig(colConfig: ColConfig[]): void {
     let length = this.columnBindingContext.setupgrouping;

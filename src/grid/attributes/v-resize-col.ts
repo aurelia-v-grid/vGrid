@@ -8,6 +8,14 @@ import {
   ColumBindingContextObject
 } from '../../interfaces';
 
+
+/**
+ * Custom attribute "v-resize-col"
+ * logic behind resizing of columns
+ * Used by default by the simple html setup
+ * Can be used with custom html
+ * 
+ */
 @customAttribute('v-resize-col')
 @inject(Element, VGrid)
 export class VGridAttributesResizeCol {
@@ -46,6 +54,8 @@ export class VGridAttributesResizeCol {
   private rightColNo: number;
   private rightColNoWidth: number;
 
+
+
   constructor(element: Element, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.ctx = vGrid.resizeAttributeSharedContext;
@@ -63,10 +73,14 @@ export class VGridAttributesResizeCol {
     this.columnBindingContext = vGrid.columnBindingContext;
   }
 
+
+
   public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
   }
+
+
 
   public attached(): void {
 
@@ -88,6 +102,8 @@ export class VGridAttributesResizeCol {
     this.column.appendChild(resizeHandle);
   }
 
+
+
   private onmouseup(): void {
     // remove events
     document.removeEventListener('mousemove', this.onmousemoveBinded);
@@ -95,9 +111,13 @@ export class VGridAttributesResizeCol {
     this.ctx.resizing = false;
   }
 
+
+
   private onmousemove(e: MouseEvent): void {
     this.updateHeader(e);
   }
+
+
 
   private updateHeader(e: MouseEvent): void {
 
@@ -165,6 +185,8 @@ export class VGridAttributesResizeCol {
       });
     }
   }
+
+
 
   private onmousedown(e: MouseEvent): void {
 

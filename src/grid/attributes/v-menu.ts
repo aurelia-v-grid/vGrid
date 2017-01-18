@@ -2,6 +2,14 @@ import { bindable, inject, customAttribute } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
 import { Controller, GroupingElements } from '../../interfaces';
 
+
+/**
+ * Custom attribute "v-image-fix"
+ * logic behind menu/ adds contextmenu to grid
+ * Used by default by the simple html setup
+ * Can be used with custom html
+ * 
+ */
 @customAttribute('v-menu')
 @inject(Element, VGrid)
 export class VGridAttributeMenu {
@@ -20,6 +28,8 @@ export class VGridAttributeMenu {
   @bindable private groupbytitle: string;
   // @bindable private copypaste: string; //todo
 
+
+
   constructor(element: Element, vGrid: VGrid) {
     this.element = element;
     this.controller = vGrid.controller;
@@ -31,13 +41,19 @@ export class VGridAttributeMenu {
     this.callbackBinded = this.callback.bind(this);
   }
 
+
+
   public attached(): void {
     this.element.addEventListener('contextmenu', this.openBinded);
   }
 
+
+
   public unbind(): void {
     document.removeEventListener('click', this.checkBinded);
   }
+
+
 
   private check(e: MouseEvent): void {
     let x = (e.target as HTMLElement).classList.contains('avg-menu__link');
@@ -46,6 +62,8 @@ export class VGridAttributeMenu {
       document.removeEventListener('click', this.checkBinded);
     }
   }
+
+
 
   private callback(type: string, option: string, event: MouseEvent): boolean {
     if (type === 'filter') {
@@ -113,6 +131,8 @@ export class VGridAttributeMenu {
     return false;
   }
 
+
+
   private open(e: MouseEvent): void {
     this.check(e);
     document.addEventListener('click', this.checkBinded);
@@ -130,6 +150,8 @@ export class VGridAttributeMenu {
       });
     }
   }
+
+
 
   private getPosition(e: MouseEvent): any {
     let posx = 0;
