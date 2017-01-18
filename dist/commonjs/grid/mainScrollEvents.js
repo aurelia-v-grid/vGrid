@@ -103,11 +103,11 @@ var MainScrollEvents = (function () {
                 _this.removeScrollEvents('wheel');
             }
             requestAnimationFrame(function () {
-                _this.main.scrollTop = _this.main.scrollTop + newTopPosition;
-                _this.right.scrollTop = _this.right.scrollTop + newTopPosition;
-                _this.left.scrollTop = _this.left.scrollTop + newTopPosition;
                 _this.vhandle.scrollTop = _this.vhandle.scrollTop + newTopPosition;
-                _this.group.scrollTop = _this.group.scrollTop + newTopPosition;
+                _this.main.scrollTop = _this.vhandle.scrollTop;
+                _this.right.scrollTop = _this.vhandle.scrollTop;
+                _this.left.scrollTop = _this.vhandle.scrollTop;
+                _this.group.scrollTop = _this.vhandle.scrollTop;
                 if (left !== undefined) {
                     _this.main.scrollLeft = _this.main.scrollLeft + left;
                     _this.mainHead.style.left = -_this.main.scrollLeft + 'px';

@@ -157,18 +157,21 @@ var ArrayGrouping = (function () {
         var curGroup = {};
         var tempValue = null;
         array.forEach(function (element) {
-            if (element[groupBy] !== tempValue) {
+            var gidm = element[groupBy];
+            gidm = typeof gidm === 'boolean' ? gidm.toString() : gidm;
+            gidm = gidm || 'blank';
+            if (gidm !== tempValue) {
                 curGroup = {
-                    __groupName: element[groupBy] || 'blank',
+                    __groupName: gidm || 'blank',
                     __group: true,
-                    __groupID: element[groupBy],
+                    __groupID: gidm,
                     __groupLvl: groupNo,
                     __groupChildren: [element],
                     __groupTotal: 1,
                     __groupExpanded: false
                 };
                 element.__groupLvl = groupNo + 1;
-                tempValue = element[groupBy];
+                tempValue = gidm;
                 tempGroupArray.push(curGroup);
             }
             else {
