@@ -20,7 +20,7 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * Triggers event and calls listeners
    * 
    */
   public triggerEvent(event: string): void {
@@ -39,7 +39,7 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * add event to the selection changes
    * 
    */
   public addEventListener(callback: Function): number {
@@ -54,7 +54,7 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * returns selection size/length
    * 
    */
   public getLength(): number {
@@ -64,7 +64,7 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * returns selection ode
    * 
    */
   public getMode(): string {
@@ -74,7 +74,9 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * returns key of row
+   * overridden by default dataosurce to return keys from collection
+   * make private?
    * 
    */
   public getRowKey(row: number): number {
@@ -84,7 +86,9 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * retunrs all keys in selection
+   * overridden by default datasource to return its collection keys
+   * make private?
    * 
    */
   public getRowKeys(): any[] {
@@ -94,7 +98,7 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * function to override
    * 
    */
   public overrideGetRowKey(fn: (row: number) => number): void {
@@ -104,7 +108,7 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * function to override getRowKeys
    * 
    */
   public overrideGetRowKeys(fn: () => any[]): void {
@@ -114,7 +118,7 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * tells if row is selected true/false
    * 
    */
   public isSelected(row: number): boolean {
@@ -129,7 +133,7 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * deselcts all rows
    * 
    */
   public deSelectAll(): void {
@@ -141,7 +145,7 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * deselct row passed in
    * 
    */
   public deSelect(row: number): void {
@@ -153,7 +157,7 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * select 1 or adds to selection
    * 
    */
   public select(row: number, add?: boolean): void {
@@ -186,7 +190,7 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * selects range of rows
    * 
    */
   public selectRange(start: number, end: number): void {
@@ -203,7 +207,7 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * retuns selected rows
    * 
    */
   public getSelectedRows(): number[] {
@@ -222,7 +226,8 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * sets new selection/selected rows
+   * do we want to have a add params here
    * 
    */
   public setSelectedRows(newRows: number[]): void {
@@ -240,7 +245,8 @@ export class Selection implements SelectionInterface {
 
 
   /**
-   * todo description
+   * resets selection to 0
+   * its pretty much same as deselect all, remove one ?
    * 
    */
   public reset(): void {

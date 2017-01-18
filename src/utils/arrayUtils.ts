@@ -21,7 +21,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * orderby that also fixes grouping if set before
    * 
    */
   public orderBy(
@@ -118,7 +118,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * calls the group class group function
    * 
    */
   public group(array: Entity[], grouping: GroupingObj[], keepExpanded: boolean): Entity[] {
@@ -128,7 +128,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * returns current grouping
    * 
    */
   public getGrouping(): GroupingObj[] {
@@ -138,7 +138,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * collapses 1 or all
    * 
    */
   public groupCollapse(id: string): Entity[] {
@@ -148,7 +148,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * expands 1 or all
    * 
    */
   public groupExpand(id: string): Entity[] {
@@ -158,7 +158,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * return current orderby used/set
    * 
    */
   public getOrderBy(): SortObject[] {
@@ -168,7 +168,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * sets last sort used
    * 
    */
   public setLastSort(array: SortObject[]): void {
@@ -178,7 +178,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * sets new orderby that will be next time
    * 
    */
   public setOrderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
@@ -188,7 +188,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * reuns orderby on array passed in
    * 
    */
   public runOrderbyOn(array: Entity[]): void {
@@ -198,7 +198,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * sesets sorting to nothing
    * 
    */
   public resetSort(defaultSortAttribute?: string): void {
@@ -208,7 +208,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * resets grouping
    * 
    */
   public resetGrouping(): void {
@@ -218,7 +218,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * returns current filter
    * 
    */
   public getCurrentFilter(): FilterObject[] {
@@ -228,7 +228,7 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * queries and returns new array
    * 
    */
   public query(array: Entity[], params: FilterObject[]): Entity[] {
@@ -237,7 +237,8 @@ export class ArrayUtils {
 
 
   /**
-   * todo description
+   * sets local compare needed to sort language like german and norwegian
+   * Needed since you might need local sorting on browser/os set to english local
    * 
    */
   public setLocaleCompare(code: string, options?: any): void {
