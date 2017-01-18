@@ -1,6 +1,10 @@
 // tslint:disable:max-line-length
 // disabled, since it really wont be easier to read if I change it
 
+/**
+ * This holds all the main markup for the grid except the columns and rows
+ * In the $au the "au" is removed when we get it
+ */
 export const MainMarkupHtmlString = `
         <avg-top-panel v-drag-drop-col class="avg-top-panel" css="height:$au{avgPanel_Height}px">
 

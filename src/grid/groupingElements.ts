@@ -10,7 +10,15 @@ import {
   GroupingContext
 } from '../interfaces';
 
-// private class
+// Two classes here!   GroupContext & GroupingElements
+
+
+
+/**
+ * Private class used by grouping elements
+ * This is the context of the box in the top panel
+ * 
+ */
 class GroupContext {
   public viewSlot: ViewSlot;
   private name: string;
@@ -30,6 +38,12 @@ class GroupContext {
   }
 }
 
+
+/**
+ * This take care of the top panel, when called it adds the html element with its context
+ * It also fixes/sets corrcet panel when grid is created/ grouping runs by code
+ * 
+ */
 // tslint:disable-next-line:max-classes-per-file
 export class GroupingElements {
   private element: Element;
@@ -68,6 +82,8 @@ export class GroupingElements {
     this.lastAdded = null;
   }
 
+
+
   public getGroups(): any[] {
     let x = [];
     for (let i in this.groupContext) {
@@ -78,11 +94,15 @@ export class GroupingElements {
     return x;
   }
 
+
+
   public init(controller: Controller, colGroupElement: string) {
     this.controller = controller;
     this.avgTopPanel = this.htmlCache.avg_top_panel;
     this.colGroupElement = colGroupElement;
   }
+
+
 
   public addGroup(name: string, field: string): void {
     if (!this.groupContext[field]) {
@@ -112,6 +132,8 @@ export class GroupingElements {
 
   }
 
+
+
   public removeGroup(field?: string): void {
     if (field) {
       if (this.groupContext[field] !== null) {
@@ -133,14 +155,18 @@ export class GroupingElements {
     }
   }
 
+
+
   public addToGrouping(): void {
     if (this.lastAdded) {
       let toAddField = this.groupContext[this.lastAdded].field;
       let toAddTitle = this.groupContext[this.lastAdded].name;
-      this.controller.addToGrouping({field: toAddField, title: toAddTitle});
+      this.controller.addToGrouping({ field: toAddField, title: toAddTitle });
       this.lastAdded = null;
     }
   }
+
+
 
   public removeFromGrouping(field: string): void {
     this.controller.removeFromGrouping(field);

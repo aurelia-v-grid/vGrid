@@ -1,5 +1,12 @@
 import { HtmlCache } from './htmlCache';
 
+/**
+ * This takes care of the scrolling part
+ * It listen for mouse wheel, touch scroll and the extra scrollbars we attach to the grid
+ * Is also makes sure the left/right and main is same scrollTop, so we dont get that laggy effect on slow browsers
+ * It triggers event to update/bind data after its done
+ * 
+ */
 export class MainScrollEvents {
   private element: Element;
   private timerLeft: any;
@@ -22,6 +29,8 @@ export class MainScrollEvents {
   private isIE11: boolean;
   private wheelEvent: string;
 
+
+
   constructor(element: Element, htmlCache: HtmlCache) {
     this.element = element;
     this.htmlCache = htmlCache;
@@ -40,10 +49,14 @@ export class MainScrollEvents {
     }
   }
 
+
+
   public init(): void {
     this.updateInternalHtmlCache();
     this.addScrollEvents('all');
   }
+
+
 
   private updateInternalHtmlCache(): void {
 
@@ -55,6 +68,8 @@ export class MainScrollEvents {
     this.hhandle = this.htmlCache.avg_content_hhandle;
     this.group = this.htmlCache.avg_content_group;
   }
+
+
 
   private onWeel(event: MouseWheelEvent): boolean {
 
@@ -81,6 +96,8 @@ export class MainScrollEvents {
     return false;
   }
 
+
+
   private addScrollEvents(type: string): void {
 
     switch (type) {
@@ -102,6 +119,8 @@ export class MainScrollEvents {
 
   }
 
+
+
   private removeScrollEvents(type: string): void {
     switch (type) {
       case 'all':
@@ -114,11 +133,15 @@ export class MainScrollEvents {
     }
   }
 
+
+
   private touchStart(e: any) {
     let touchobj = e.changedTouches[0];
     this.touchY = parseInt(touchobj.clientY, 10);
     this.touchX = parseInt(touchobj.clientX, 10);
   }
+
+
 
   private touchMove(e: any) {
     let touchobj = e.changedTouches[0];
@@ -130,6 +153,8 @@ export class MainScrollEvents {
     this.handleEventWheelScroll(dist, -distX);
     e.preventDefault();
   }
+
+
 
   private handleEventWheelScroll(newTopPosition: number, left?: number): void {
     requestAnimationFrame(() => {
@@ -157,6 +182,8 @@ export class MainScrollEvents {
 
     });
   }
+
+
 
   private handleEventVhandle(): void {
 
@@ -186,6 +213,8 @@ export class MainScrollEvents {
 
   }
 
+
+
   private handleEventHhandle(): void {
 
     requestAnimationFrame(() => {
@@ -212,6 +241,8 @@ export class MainScrollEvents {
 
   }
 
+
+
   private checkScroll(newTopPosition: number): void {
     if (this.lastTopPosition !== newTopPosition) {
 
@@ -235,6 +266,8 @@ export class MainScrollEvents {
       this.triggerGridScrollEvent(isScrollBarScrolling, isDown, newTopPosition);
     }
   }
+
+
 
   private triggerGridScrollEvent(
     scrollbarScrolling: boolean,

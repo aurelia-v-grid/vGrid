@@ -46,6 +46,8 @@ export class RowClickHandler {
     this.addEventlistener();
   }
 
+
+
   public updateSelectionOnAllRows(): void {
 
     let rowCache = this.htmlCache.rowCache;

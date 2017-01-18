@@ -1,5 +1,10 @@
 import { RowCache, HeaderCache } from '../interfaces';
 
+/**
+ * Holds all the html elements, so we have 1 place to get em all
+ * All classes that creates html adds it to this one, some the parst the class get
+ * 
+ */
 export class HtmlCache {
     public element: Element | HTMLElement;
     public avg_top_panel: Element | HTMLElement;
@@ -28,6 +33,8 @@ export class HtmlCache {
     public avg_group_rows: NodeListOf<any>;
     public rowCache: RowCache[];
     public headerCache: HeaderCache;
+
+
 
     constructor(element: Element) {
 
@@ -78,12 +85,16 @@ export class HtmlCache {
         } as HeaderCache);
     }
 
+
+
     public updateRowsMarkup(): void {
         this.avg_left_rows = this.avg_content_left_scroll.getElementsByTagName('avg-row');
         this.avg_main_rows = this.avg_content_main_scroll.getElementsByTagName('avg-row');
         this.avg_right_rows = this.avg_content_right_scroll.getElementsByTagName('avg-row');
         this.avg_group_rows = this.avg_content_group_scroll.getElementsByTagName('avg-row');
     }
+
+
 
     public updateMainMarkup(): void {
         this.avg_top_panel = this.element.getElementsByTagName('avg-top-panel')[0];

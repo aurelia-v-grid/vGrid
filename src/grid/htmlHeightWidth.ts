@@ -1,5 +1,10 @@
 import { ColConfig, ColumnBindingContext } from '../interfaces';
 
+/**
+ * Holds all the height and width of main markup
+ * This is binded to the main markup, so changes here will reflect in the grid height/width
+ * 
+ */
 export class HtmlHeightWidth {
   public avgScrollBarWidth: number;
   public avgPanel_Height: number;
@@ -44,6 +49,8 @@ export class HtmlHeightWidth {
   public attRowHeight: number;
   public attFooterHeight: number;
   public attPanelHeight: number;
+
+
 
   constructor() {
 
@@ -105,9 +112,13 @@ export class HtmlHeightWidth {
     this.avgFooter_Height = 30;
   }
 
+
+
   public getNewHeight(length: number): number {
     return length * this.attRowHeight;
   }
+
+
 
   public setCollectionLength(length: number, includeScroller?: boolean): void {
     let rowTotal = this.getNewHeight(length);
@@ -119,6 +130,8 @@ export class HtmlHeightWidth {
     this.avgContentMainScroll_Height = total;
     this.avgContentLeftScroll_Height = total;
   }
+
+
 
   public addDefaultsAttributes(
     attHeaderHeight: number,
@@ -148,6 +161,8 @@ export class HtmlHeightWidth {
     this.avgContentHhandle_Bottom = attFooterHeight;
     this.avgContentHhandle_Height = this.avgScrollBarWidth;
   }
+
+
 
   public adjustWidthsColumns(columnBindingContext: ColumnBindingContext, groupsLength: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
@@ -185,6 +200,8 @@ export class HtmlHeightWidth {
     this.avgContentHhandle_Left = left;
     this.avgContentHhandleScroll_Width = main;
   }
+
+
 
   public setWidthFromColumnConfig(colConfig: ColConfig[], groupsLength?: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
@@ -229,6 +246,8 @@ export class HtmlHeightWidth {
     this.avgContentHhandle_Left = left;
     this.avgContentHhandleScroll_Width = main;
   }
+
+
 
   public getScrollbarWidth(): number {
     let outer = document.createElement('div');
