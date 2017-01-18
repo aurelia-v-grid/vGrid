@@ -116,7 +116,9 @@ var VGrid = (function () {
                 _this.controller.createGrid();
             }
             _this.viewSlots.bindAndAttachColumns(_this.overrideContext, _this.columnBindingContext, _this.attGridConnector.getSelection());
-            _this.controller.udateHorizontalScroller();
+            setTimeout(function () {
+                _this.controller.udateHorizontalScroller();
+            }, 50);
             _this.attGridConnector.gridCreated();
         });
     };

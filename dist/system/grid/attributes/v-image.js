@@ -26,6 +26,7 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                     this.element = element;
                 }
                 VGridAttributesImageFix.prototype.valueChanged = function (newValue) {
+                    newValue = newValue ? newValue : '';
                     this.element.src = '';
                     this.element.src = this.value || newValue;
                 };

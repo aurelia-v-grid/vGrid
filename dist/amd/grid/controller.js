@@ -192,9 +192,11 @@ define(["require", "exports"], function (require, exports) {
             var scrollWidth = this.htmlHeightWidth.avgContentMainScroll_Width;
             if (bodyWidth < scrollWidth) {
                 this.htmlCache.avg_content_hhandle.style.display = 'block';
+                this.htmlHeightWidth.setCollectionLength(this.collectionLength(), true);
             }
             else {
                 this.htmlCache.avg_content_hhandle.style.display = 'none';
+                this.htmlHeightWidth.setCollectionLength(this.collectionLength(), false);
             }
         };
         Controller.prototype.updateHeaderGrouping = function (groups) {
