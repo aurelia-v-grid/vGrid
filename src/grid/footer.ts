@@ -33,7 +33,7 @@ export class Footer {
 
 
   /**
-   * todo description
+   * set the custm html if any and and overridecontext to use, then creates the viewport and binds it
    * 
    */
   public init(overrideContext: OverrideContext, footerStringTemplate: string): void {

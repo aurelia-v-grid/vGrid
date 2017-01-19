@@ -97,7 +97,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * gets the grid conext, so we have access to it in this class
    * 
    */
   public getContext() {
@@ -158,7 +158,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * triggers event to call for all translation keys
    * 
    */
   public triggerI18N() {
@@ -205,7 +205,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * creates the grid
    * 
    */
   public createGrid(): void {
@@ -263,7 +263,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * gets element from datasource
    * 
    */
   public getElement(rowNumber: number, isDownScroll: boolean, callbackFN: Function): void {
@@ -282,7 +282,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * expand group/groups
    * 
    */
   public expandGroup(id: string): void {
@@ -292,7 +292,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * collapses group/groups
    * 
    */
   public collapseGroup(id: string): void {
@@ -302,7 +302,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * select row passed in
    * 
    */
   public select(row: number): void {
@@ -312,7 +312,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * adds to grouping
    * 
    */
   public addToGrouping(groupObj: GroupingObj): void {
@@ -332,7 +332,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * removes field from grouping
    * 
    */
   public removeFromGrouping(field: string): void {
@@ -352,7 +352,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * returns selection context, so you have the current one used/set in gridconnector/datasource
    * 
    */
   public getSelectionContext(): SelectionInterface {
@@ -363,7 +363,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * triggers event on grids element, nice for attributes etc
    * 
    */
   public raiseEvent(name: string, data = {}): void {
@@ -377,7 +377,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * sets the loading screen to show or hide
    * 
    */
   public setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<void> {
@@ -392,7 +392,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * updates and call classes that needs height updated if its changed
    * 
    */
   public updateHeights(): void {
@@ -412,7 +412,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * checks main column with, and hides scrollbar if not needed
    * 
    */
   public udateHorizontalScroller(): void {
@@ -435,7 +435,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * checks and updates the grouping in panel, also fixes it if not corrent
    * 
    */
   public updateHeaderGrouping(groups: GroupingObj[]): void {
@@ -475,7 +475,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * returns the collection length
    * 
    */
   public collectionLength(): number {
@@ -485,7 +485,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * triggers scroll event with new position, to top if no params
    * 
    */
   public triggerScroll(position: number): void {
@@ -508,7 +508,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * returns to row in current view/scrolltop
    * 
    */
   public getTopRow(): number {
@@ -519,7 +519,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * rebinds all rows
    * 
    */
   public rebindAllRows(): void {
@@ -532,7 +532,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * returns the column config, and can be used to save current user settings
    * 
    */
   public getColumnConfig(): ColConfig[] {
@@ -621,7 +621,7 @@ export class Controller {
 
 
   /**
-   * todo description
+   * sets the new column config and updates the grid
    * 
    */
   public setColumnConfig(colConfig: ColConfig[]): void {
