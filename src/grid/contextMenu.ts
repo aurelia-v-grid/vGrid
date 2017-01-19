@@ -74,7 +74,7 @@ export class ContextMenu {
 
 
   /**
-   * todo description
+   * add the custom templates if any and overridecontext to use
    * 
    */
     public init(customMenuTemplates: any, overrideContext: OverrideContext): void {
@@ -91,7 +91,7 @@ export class ContextMenu {
 
 
   /**
-   * todo description
+   * opens the menu
    * 
    */
     public openMenu(options: {
@@ -116,7 +116,7 @@ export class ContextMenu {
 
 
   /**
-   * todo description
+   * menu click event
    * 
    */
     public menuClick(type: string, option: string, event: Event): void {
@@ -145,7 +145,7 @@ export class ContextMenu {
 
 
   /**
-   * todo description
+   * update/translate menu strings
    * 
    */
     public updateMenuStrings(key: string, text: string) {
@@ -159,7 +159,7 @@ export class ContextMenu {
 
 
   /**
-   * todo description
+   * active the filter menu
    * 
    */
     private showFilterOptions(): void {
@@ -169,7 +169,7 @@ export class ContextMenu {
 
 
   /**
-   * todo description
+   * hide the filter menu
    * 
    */
     private hideFilterOptions(): void {
@@ -203,7 +203,7 @@ export class ContextMenu {
 
 
     /**
-     * todo description
+     * get the markup (custom if any, or else the markup)
      * 
      */
     private menuHtml(customMenuTemplates: any): string {

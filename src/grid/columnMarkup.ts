@@ -12,6 +12,8 @@ import {
   OverrideContext
 } from '../interfaces';
 
+
+
 /**
  *  Creates all the columns markup/viewports when grid is created
  * 
@@ -70,6 +72,10 @@ export class ColumnMarkup {
 
 
 
+/**
+ *  sets needed context/data and generates the columns needed
+ * 
+ */
   public init(
     colConfig: ColConfig[],
     overrideContext: OverrideContext,
@@ -95,6 +101,10 @@ export class ColumnMarkup {
 
 
 
+/**
+ *  returns the row view using the viewCompiler and markup needed
+ * 
+ */
   private getRowViews(type: string): ViewFactory {
     let viewMarkup = '';
     let markupArray: string[] = [];
@@ -177,6 +187,11 @@ export class ColumnMarkup {
 
 
 
+/**
+ *  create coluumn context that will be used to control the width & left style of them
+ *  It will also control if they are visible or hidden
+ * 
+ */
   private createColSetupContext(type: string): void {
 
     let leftCur = 0;
@@ -211,6 +226,10 @@ export class ColumnMarkup {
 
 
 
+/**
+ *  returns the header view using the viewCompiler and markup needed
+ * 
+ */
   private getHeaderViews(type: string): ViewFactory {
     let viewMarkup = '';
 
@@ -265,6 +284,10 @@ export class ColumnMarkup {
 
 
 
+/**
+ *  starts to generate the needed columns
+ * 
+ */
   private generateColumns(): void {
 
     if (this.columnBindingContext.setupmain.length === 0) {
@@ -302,6 +325,10 @@ export class ColumnMarkup {
 
 
 
+/**
+ *  creates a viewslot and adds the view using the viewFactory
+ * 
+ */
   private createViewSlot(element: Element, viewFactory: ViewFactory): ViewSlot {
 
     let view = viewFactory.create(this.container); // <<< time consumer, I should rebuild ?
@@ -312,6 +339,10 @@ export class ColumnMarkup {
 
 
 
+/**
+ *  gets the html markup from the htmlCache and sets it to this class instance
+ * 
+ */
   private updateInternalHtmlCache(): void {
     this.leftScroll = this.htmlCache.avg_content_left_scroll;
     this.mainScroll = this.htmlCache.avg_content_main_scroll;
