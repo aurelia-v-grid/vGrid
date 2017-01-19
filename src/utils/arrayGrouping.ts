@@ -37,12 +37,14 @@ export class ArrayGrouping {
    */
   public group(arrayToGroup: Entity[], grouping: GroupingObj[], keepExpanded?: boolean) {
 
+    // if grouping
     if (grouping.length > 0) {
       // temp holder for groups as we create them
       if (!keepExpanded) {
         this.expanded = new Set([]);
       }
 
+      // variable to hold our groups
       let groups: Entity[][] = [];
 
       grouping.forEach((groupBy, groupNo) => {
@@ -64,17 +66,25 @@ export class ArrayGrouping {
 
       });
 
+      // set to our class wo we have it for later
       this.groups = groups;
+
+      // set to clas so we can get it later
       this.grouping = grouping;
+
+      // do we want what was expanded still to be expanded, if so just return firts grouping
       if (!keepExpanded) {
         return groups[0];
       } else {
         return this.expand(null, this.expanded);
       }
     } else {
+      // set all rows to 0 grouping
       arrayToGroup.forEach((row) => {
         row.__groupLvl = 0;
       });
+
+      // clear prev grouping
       this.grouping = [];
       return arrayToGroup;
     }
@@ -83,7 +93,7 @@ export class ArrayGrouping {
 
 
   /**
-   * todo description
+   * returns current grouping
    * 
    */
   public getGrouping(): GroupingObj[] {
@@ -92,7 +102,7 @@ export class ArrayGrouping {
 
 
   /**
-   * todo description
+   * expands 1 group by id passed or all groups if no params
    * 
    */
   public expand(id: string, array?: Set<string>) {
@@ -158,7 +168,7 @@ export class ArrayGrouping {
 
 
   /**
-   * todo description
+   * collapses 1 by id or all if no params is passed
    * 
    */
   public collapse(id: string) {
@@ -224,7 +234,7 @@ export class ArrayGrouping {
 
 
   /**
-   * todo description
+   * creates main grouping
    * 
    */
   private groupMain(array: Entity[], groupBy: string, groupNo: number) {
@@ -264,7 +274,7 @@ export class ArrayGrouping {
 
 
   /**
-   * todo description
+   * loops the children of parant and creates grouping, then loops the cridren of that etc
    * 
    */
   private groupChildren(childGroupArray: Entity[], groupBy: string, groupNo: number) {

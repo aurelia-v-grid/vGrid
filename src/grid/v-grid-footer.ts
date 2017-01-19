@@ -21,6 +21,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
   compiler = null;
   resources = null;
 
+  // get html markup, this will be added to our viewport when we create it
   instruction.template = element.innerHTML;
   element.innerHTML = '';
 
@@ -31,6 +32,8 @@ export class VGridFooter {
   private vGrid: VGrid;
   private template: string;
 
+
+
   constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
     this.element = element;
     this.vGrid = vGrid;
@@ -38,6 +41,12 @@ export class VGridFooter {
 
   }
 
+
+
+  /**
+   * add the markup to vgrid class for use later when generating the grid
+   * 
+   */
   public bind(): void {
     this.vGrid.footerTemplate = this.template;
   }

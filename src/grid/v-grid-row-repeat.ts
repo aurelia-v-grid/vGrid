@@ -22,12 +22,14 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
   compiler = null;
   resources = null;
 
+  // check if any header template is added, if so add to instruction for use
   let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
   let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
   if (headerTemplateHtml !== '') {
     instruction.headerTemplate = headerTemplateHtml;
   }
 
+  // check if any row template is added, if so add to instruction for use
   let rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
   let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
   if (rowTemplateHtml !== '') {
@@ -57,6 +59,12 @@ export class VGridElementRowRepeat {
 
   }
 
+
+
+  /**
+   * add the markup to vgrid class for use later when generating the grid
+   * 
+   */
   public bind(): void {
     this.vGrid.colRepeater = true;
     this.vGrid.colRepeatRowTemplate = this.rowTemplate;

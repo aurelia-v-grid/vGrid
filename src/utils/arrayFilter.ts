@@ -29,7 +29,7 @@ export class ArrayFilter {
 
 
   /**
-   * todo description
+   * gets operator number from class
    * 
    */
   public getOperatorNo(val: string): number {
@@ -39,17 +39,17 @@ export class ArrayFilter {
 
 
   /**
-   * todo description
+   * returns last filter set
    * 
    */
-  public getLastFilter() {
+  public getLastFilter(): FilterObject[] {
     return this.lastFilter;
   }
 
 
 
   /**
-   * todo description
+   * runs query on the array
    * 
    */
   public runQueryOn(objArray: Entity[], ObjFilter: FilterObject[]) {

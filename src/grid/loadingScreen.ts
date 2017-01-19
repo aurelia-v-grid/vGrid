@@ -39,7 +39,7 @@ export class LoadingScreen {
 
 
   /**
-   * todo description
+   * update default loading test, used by the translation
    * 
    */
   public updateLoadingDefaultLoadingMessage(msg: string): void {
@@ -49,7 +49,7 @@ export class LoadingScreen {
 
 
   /**
-   * todo description
+   * call when creating the grid so we have custom html if any and overridecontext to use
    * 
    */
   public init(overrideContext: OverrideContext, loadingScreenTemplate: string): void {
@@ -86,7 +86,7 @@ export class LoadingScreen {
 
 
   /**
-   * todo description
+   * shows the loadingscreen overlay until removed
    * 
    */
   public enable(msg?: string, collectionLength?: number): Promise<any> {
@@ -102,7 +102,7 @@ export class LoadingScreen {
 
 
   /**
-   * todo description
+   * removes the loadingscreen overlay
    * 
    */
   public disable(): Promise<any> {

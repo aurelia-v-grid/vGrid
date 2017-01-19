@@ -88,7 +88,7 @@ export class HtmlCache {
 
 
   /**
-   * todo description
+   * just gets the row html elements for easy access later
    * 
    */
     public updateRowsMarkup(): void {
@@ -101,7 +101,7 @@ export class HtmlCache {
 
 
   /**
-   * todo description
+   * gets the mark markup parts after its created for easy access later
    * 
    */
     public updateMainMarkup(): void {

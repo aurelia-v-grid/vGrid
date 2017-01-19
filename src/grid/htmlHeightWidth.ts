@@ -115,7 +115,8 @@ export class HtmlHeightWidth {
 
 
   /**
-   * todo description
+   * returns the height the scroll area need to be
+   * TODO: need to make something else here if -Im going for wariable row height
    * 
    */
   public getNewHeight(length: number): number {
@@ -125,7 +126,7 @@ export class HtmlHeightWidth {
 
 
   /**
-   * todo description
+   * corrects the scroll area to the correct high af all scroll divs
    * 
    */
   public setCollectionLength(length: number, includeScroller?: boolean): void {
@@ -142,7 +143,7 @@ export class HtmlHeightWidth {
 
 
   /**
-   * todo description
+   * sets the correct wisth of main markup/skeleton of the grid
    * 
    */
   public addDefaultsAttributes(
@@ -177,7 +178,7 @@ export class HtmlHeightWidth {
 
 
   /**
-   * todo description
+   * corrects the left style and with of columns
    * 
    */
   public adjustWidthsColumns(columnBindingContext: ColumnBindingContext, groupsLength: number): void {
@@ -220,7 +221,7 @@ export class HtmlHeightWidth {
 
 
   /**
-   * todo description
+   * sets the correct with of columns based of the v-column or v-grid-col attributes
    * 
    */
   public setWidthFromColumnConfig(colConfig: ColConfig[], groupsLength?: number): void {
@@ -270,7 +271,7 @@ export class HtmlHeightWidth {
 
 
   /**
-   * todo description
+   * returns the scrollbar with used in browser
    * 
    */
   public getScrollbarWidth(): number {
