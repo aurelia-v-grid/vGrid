@@ -14,10 +14,13 @@ export class Welcome {
   // public translate: any = { equals: 'er lik', greaterThan: 'større enn' };
   private myCollection: any;
   constructor(public dummyDataGenerator: DummyDataGenerator) {
-    this.dummyDataGenerator.generateData(5000, (data: any) => {
+    this.dummyDataGenerator.generateData(10000, (data: any) => {
       this.myCollection = data;
     });
-    this.ds = new DataSource(new Selection('multiple'));
+    this.ds = new DataSource(new Selection('multiple'), {
+      rowHeight: 50,
+      groupHeight: 25
+    });
 
 
     this.dsEventID = this.ds.addEventListener(this.dsEvents.bind(this));
@@ -26,7 +29,7 @@ export class Welcome {
     this.ds.setArray(this.myCollection);
     //this.ds.query([{attribute: 'index', operator: '<', value: 5 }]);
     //this.ds.group([{title: 'My Country', field: 'country'}, {title: 'My bool', field: 'bool'}]);
-    this.ds.orderBy('high');
+    //this.ds.orderBy('index');
   }
 
   public dsEvents(e) {
