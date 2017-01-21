@@ -9,6 +9,7 @@ define(["require", "exports"], function (require, exports) {
             this.timerVhandle = null;
             this.timerHhandle = null;
             this.timerWheel = null;
+            this.isScrollbar = false;
             this.lastTopPosition = 0;
             this.wheelEvent = 'onwheel';
             this.isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
@@ -113,6 +114,7 @@ define(["require", "exports"], function (require, exports) {
                         _this.main.scrollLeft = _this.main.scrollLeft + left;
                         _this.mainHead.style.left = -_this.main.scrollLeft + 'px';
                     }
+                    _this.isScrollbar = false;
                     _this.checkScroll(_this.main.scrollTop);
                     _this.timerWheel = setTimeout(function () {
                         _this.addScrollEvents('wheel');
@@ -134,6 +136,7 @@ define(["require", "exports"], function (require, exports) {
                     _this.main.scrollTop = newTopPosition;
                     _this.left.scrollTop = newTopPosition;
                     _this.group.scrollTop = newTopPosition;
+                    _this.isScrollbar = true;
                     _this.checkScroll(newTopPosition);
                     _this.timerVhandle = setTimeout(function () {
                         _this.addScrollEvents('Vhandle');
@@ -162,17 +165,12 @@ define(["require", "exports"], function (require, exports) {
         };
         MainScrollEvents.prototype.checkScroll = function (newTopPosition) {
             if (this.lastTopPosition !== newTopPosition) {
-                var offset = Math.abs(this.lastTopPosition - newTopPosition);
-                var isScrollBarScrolling = false;
-                if (offset > 200) {
-                    isScrollBarScrolling = true;
-                }
                 var isDown = true;
                 if (this.lastTopPosition > newTopPosition) {
                     isDown = false;
                 }
                 this.lastTopPosition = newTopPosition;
-                this.triggerGridScrollEvent(isScrollBarScrolling, isDown, newTopPosition);
+                this.triggerGridScrollEvent(this.isScrollbar, isDown, newTopPosition);
             }
         };
         MainScrollEvents.prototype.triggerGridScrollEvent = function (scrollbarScrolling, down, topPosition) {

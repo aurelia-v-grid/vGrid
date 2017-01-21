@@ -121,6 +121,8 @@ export interface SortObject {
 export interface DatasourceConfig {
     [key: string]: any;
     key: string;
+    rowHeight?: number;
+    groupHeight?: number;
 }
 export interface CustomTargetInstruction extends TargetInstruction {
     [key: string]: any;
@@ -224,6 +226,7 @@ export interface GridConnectorInterface {
     getCurrentFilter(): FilterObject[];
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
+    getRowHeightState(): any;
 }
 export interface ControllerInterface {
     element: Element;

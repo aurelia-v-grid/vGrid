@@ -53,6 +53,7 @@ System.register([], function (exports_1, context_1) {
                     this.attOnRowDraw = c.attOnRowDraw;
                     this.attI18N = c.attI18N;
                     this.attDataDelay = c.attDataDelay;
+                    this.attVariableRowHeight = c.attVariableRowHeight;
                 };
                 Controller.prototype.triggerI18N = function () {
                     var _this = this;
@@ -92,6 +93,9 @@ System.register([], function (exports_1, context_1) {
                         this.loadingScreen.updateLoadingDefaultLoadingMessage(loading);
                     }
                 };
+                Controller.prototype.getRowHeightState = function () {
+                    return this.attGridConnector.getRowHeightState();
+                };
                 Controller.prototype.createGrid = function () {
                     if (this.attI18N) {
                         this.triggerI18N();
@@ -103,7 +107,7 @@ System.register([], function (exports_1, context_1) {
                     this.mainScrollEvents.init();
                     this.rowMarkup.init(this.attRowHeight);
                     this.htmlCache.updateRowsMarkup();
-                    this.rowScrollEvents.init(this.attRowHeight, this.attDataDelay);
+                    this.rowScrollEvents.init(this.attRowHeight, this.attDataDelay, this.attVariableRowHeight);
                     this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroupRow);
                     this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
                     this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);

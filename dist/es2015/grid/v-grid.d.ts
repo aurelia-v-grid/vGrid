@@ -71,6 +71,7 @@ export declare class VGrid {
     attColConfig: ColConfig[];
     attI18N: Function;
     attDataDelay: number;
+    attVariableRowHeight: boolean;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, taskQueue: TaskQueue);
     bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
     unbind(): void;

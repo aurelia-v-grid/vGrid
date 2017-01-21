@@ -11,6 +11,8 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils
             this.config = config;
             if (config) {
                 this.key = config.key || '__avgKey';
+                this.rowHeight = config.rowHeight || 25;
+                this.groupHeight = config.groupHeight || 25;
             }
             else {
                 this.key = '__avgKey';
@@ -226,6 +228,9 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils
         };
         DataSource.prototype.setLocaleCompare = function (code, options) {
             this.arrayUtils.setLocaleCompare(code, options);
+        };
+        DataSource.prototype.getRowHeightState = function () {
+            return this.collection.getRowHeightState();
         };
         DataSource.prototype.getRowKey = function (row) {
             if (this.collection) {

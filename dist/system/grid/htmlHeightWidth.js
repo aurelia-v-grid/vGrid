@@ -5,7 +5,8 @@ System.register([], function (exports_1, context_1) {
         setters: [],
         execute: function () {
             HtmlHeightWidth = (function () {
-                function HtmlHeightWidth() {
+                function HtmlHeightWidth(controller) {
+                    this.controller = controller;
                     this.avgScrollBarWidth = this.getScrollbarWidth() || 17;
                     this.avgPanel_Height = 0;
                     this.avgHeader_Height = 30;
@@ -47,7 +48,14 @@ System.register([], function (exports_1, context_1) {
                     this.avgFooter_Height = 30;
                 }
                 HtmlHeightWidth.prototype.getNewHeight = function (length) {
-                    return length * this.attRowHeight;
+                    var lengthTotal = 0;
+                    if (this.controller.attVariableRowHeight) {
+                        lengthTotal = this.controller.getRowHeightState().total;
+                    }
+                    else {
+                        lengthTotal = this.controller.attRowHeight * length;
+                    }
+                    return lengthTotal;
                 };
                 HtmlHeightWidth.prototype.setCollectionLength = function (length, includeScroller) {
                     var rowTotal = this.getNewHeight(length);

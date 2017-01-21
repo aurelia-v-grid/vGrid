@@ -34,6 +34,9 @@ define(["require", "exports"], function (require, exports) {
         GridConnector.prototype.select = function (row) {
             this.datasource.select(row);
         };
+        GridConnector.prototype.getRowHeightState = function () {
+            return this.datasource.getRowHeightState();
+        };
         GridConnector.prototype.getDatasourceLength = function () {
             return this.datasource.length();
         };
@@ -119,6 +122,7 @@ define(["require", "exports"], function (require, exports) {
                 case 'collection_expanded_all':
                     this.raiseEvent('sortIconUpdate');
                     this.controller.updateHeights();
+                    this.controller.udateHorizontalScroller();
                     this.controller.triggerScroll(0);
                     this.controller.updateHeaderGrouping(this.datasource.getGrouping());
                     this.controller.setLoadingScreen(false);
@@ -128,6 +132,7 @@ define(["require", "exports"], function (require, exports) {
                 case 'collection_updated':
                     this.raiseEvent('sortIconUpdate');
                     this.controller.updateHeights();
+                    this.controller.udateHorizontalScroller();
                     this.controller.triggerScroll(null);
                     this.controller.updateHeaderGrouping(this.datasource.getGrouping());
                     this.controller.setLoadingScreen(false);
@@ -135,6 +140,7 @@ define(["require", "exports"], function (require, exports) {
                 case 'collection_sorted':
                     this.raiseEvent('sortIconUpdate');
                     this.controller.rebindAllRows();
+                    this.controller.triggerScroll(null);
                     this.controller.setLoadingScreen(false);
                     break;
                 case 'collection_filtered':

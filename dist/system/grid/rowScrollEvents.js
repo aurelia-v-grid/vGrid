@@ -5,20 +5,25 @@ System.register([], function (exports_1, context_1) {
         setters: [],
         execute: function () {
             RowScrollEvents = (function () {
-                function RowScrollEvents(element, htmlCache) {
+                function RowScrollEvents(element, htmlCache, controller) {
                     this.htmlCache = htmlCache;
                     this.element = element;
+                    this.controller = controller;
                     this.timer = null;
                     this.largeScroll = false;
                     this.collectionLength = 0;
                     this.largeScrollUpdateDelay = 0;
                 }
-                RowScrollEvents.prototype.init = function (rowHeight, attDataDelay) {
+                RowScrollEvents.prototype.init = function (rowHeight, attDataDelay, attVariableRowHeight) {
                     this.rowCache = this.htmlCache.rowCache;
                     this.largeScrollUpdateDelay = attDataDelay;
                     this.rowHeight = rowHeight;
                     this.updateInternalHtmlCache();
                     this.createRowCache();
+                    if (attVariableRowHeight) {
+                        this.scrollNormal = this.scrollNormalVariableRowHeight.bind(this);
+                        this.scrollScrollBar = this.scrollScrollBarVariableRowHeight.bind(this);
+                    }
                     this.addEventListener();
                 };
                 RowScrollEvents.prototype.setCollectionLength = function (length) {
@@ -91,6 +96,15 @@ System.register([], function (exports_1, context_1) {
                     cache.group.style.transform = "translate3d(0px," + top + "px, 0px)";
                     cache.top = top;
                     cache.row = Math.floor(top / this.rowHeight);
+                };
+                RowScrollEvents.prototype.setRowTopValueVariableRowHeight = function (cache, top) {
+                    cache.left.style.transform = "translate3d(0px," + top + "px, 0px)";
+                    cache.main.style.transform = "translate3d(0px," + top + "px, 0px)";
+                    cache.right.style.transform = "translate3d(0px," + top + "px, 0px)";
+                    cache.group.style.transform = "translate3d(0px," + top + "px, 0px)";
+                    cache.top = top;
+                    var rowHeightState = this.controller.getRowHeightState();
+                    cache.row = rowHeightState.top.indexOf(top);
                 };
                 RowScrollEvents.prototype.scrollNormal = function (newTopPosition, downScroll) {
                     var rowHeight = this.rowHeight;
@@ -170,6 +184,128 @@ System.register([], function (exports_1, context_1) {
                             else {
                                 if (currentRow >= collectionLength) {
                                     setAfter(i);
+                                }
+                            }
+                        }
+                        currentRow++;
+                    }
+                    this.rowCache.sort(function (a, b) {
+                        return a.top - b.top;
+                    });
+                    this.triggerRebindAllRowsEvent(downScroll, this.rowCache);
+                };
+                RowScrollEvents.prototype.setRowHeight = function (rowElement, rowNo) {
+                    var rowHeightState = this.controller.getRowHeightState();
+                    rowElement.left.style.height = rowHeightState.rows[rowNo] + 'px';
+                    rowElement.main.style.height = rowHeightState.rows[rowNo] + 'px';
+                    rowElement.right.style.height = rowHeightState.rows[rowNo] + 'px';
+                    rowElement.group.style.height = rowHeightState.rows[rowNo] + 'px';
+                };
+                RowScrollEvents.prototype.scrollNormalVariableRowHeight = function (newTopPosition, downScroll) {
+                    var rowHeightState = this.controller.getRowHeightState();
+                    for (var i = 0; i < this.cacheLength; i++) {
+                        var cache = this.rowCache[i];
+                        var top_2 = this.rowCache[i].top;
+                        var currentRow = rowHeightState.top.indexOf(top_2);
+                        this.setRowHeight(this.rowCache[i], currentRow);
+                        var update = false;
+                        var newTop = void 0;
+                        if (!downScroll) {
+                            if (top_2 > (newTopPosition + this.contentHeight)) {
+                                currentRow = currentRow - this.cacheLength;
+                                if (currentRow > -1) {
+                                    update = true;
+                                    newTop = rowHeightState.top[currentRow];
+                                }
+                            }
+                        }
+                        else {
+                            if (top_2 < (newTopPosition - rowHeightState.rows[currentRow])) {
+                                update = true;
+                                newTop = rowHeightState.top[currentRow + this.cacheLength];
+                                currentRow = currentRow + this.cacheLength;
+                            }
+                        }
+                        if (update === true && currentRow >= 0 && currentRow <= this.collectionLength - 1) {
+                            this.setRowTopValueVariableRowHeight(cache, newTop);
+                            this.triggerRebindRowEvent(currentRow, cache, downScroll);
+                        }
+                    }
+                    this.rowCache.sort(function (a, b) {
+                        return a.top - b.top;
+                    });
+                };
+                RowScrollEvents.prototype.scrollScrollBarVariableRowHeight = function (newTopPosition, downScroll) {
+                    var _this = this;
+                    if (this.collectionLength <= this.cacheLength) {
+                        newTopPosition = 0;
+                    }
+                    var rowHeightState = this.controller.getRowHeightState();
+                    var x = 1000;
+                    var currentRow = 0;
+                    var currentRowTop = 0;
+                    var firstRow = 0;
+                    var i = 0;
+                    var run = true;
+                    if (newTopPosition !== 0) {
+                        while (i < rowHeightState.top.length) {
+                            var checkValue = Math.abs(newTopPosition - (rowHeightState.top[i]));
+                            if (checkValue === x) {
+                                currentRow = i - 1;
+                                firstRow = i - 1;
+                                run = false;
+                            }
+                            else {
+                                if (checkValue < x) {
+                                    currentRow = i - 1;
+                                    firstRow = i - 1;
+                                    x = checkValue;
+                                }
+                            }
+                            i++;
+                        }
+                    }
+                    var bodyHeight = this.contentHeight;
+                    currentRowTop = rowHeightState.top[currentRow];
+                    var firstRowTop = currentRowTop * 1;
+                    var collectionLength = this.collectionLength;
+                    var setAfter = function (no) {
+                        var row = _this.rowCache[no];
+                        _this.setRowHeight(row, currentRow);
+                        _this.setRowTopValueVariableRowHeight(row, currentRowTop);
+                        row.row = currentRow;
+                        currentRowTop = currentRowTop + rowHeightState.rows[currentRow];
+                    };
+                    var setBefore = function (no) {
+                        var row = _this.rowCache[no];
+                        _this.setRowHeight(row, currentRow);
+                        firstRowTop = firstRowTop - rowHeightState.rows[currentRow];
+                        _this.setRowTopValueVariableRowHeight(row, firstRowTop);
+                    };
+                    var setHiddenFromView = function (no) {
+                        var row = _this.rowCache[no];
+                        _this.setRowTopValueVariableRowHeight(row, -(currentRowTop + (rowHeightState.rows[currentRow] * 50)));
+                    };
+                    for (var i_1 = 0; i_1 < this.cacheLength; i_1++) {
+                        var moved = false;
+                        switch (true) {
+                            case currentRow >= 0 && currentRow <= collectionLength - 1:
+                                setAfter(i_1);
+                                moved = true;
+                                break;
+                            case currentRow >= collectionLength && (rowHeightState.total) >= bodyHeight:
+                                setBefore(i_1);
+                                moved = true;
+                                break;
+                            default:
+                        }
+                        if (!moved) {
+                            if (currentRow >= collectionLength && (currentRowTop - rowHeightState.rows[currentRow]) >= bodyHeight) {
+                                setHiddenFromView(i_1);
+                            }
+                            else {
+                                if (currentRow >= collectionLength) {
+                                    setAfter(i_1);
                                 }
                             }
                         }

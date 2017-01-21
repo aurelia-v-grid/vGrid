@@ -2,6 +2,8 @@ import { Selection } from './selection';
 import { Entity, DatasourceConfig, SortObject, FilterObject, GroupingObj } from './interfaces';
 export declare class DataSource {
     entity: Entity;
+    groupHeight: number;
+    rowHeight: number;
     private selection;
     private key;
     private arrayUtils;
@@ -36,6 +38,7 @@ export declare class DataSource {
     remove(rows?: any[]): any[];
     getCollectionStatus(): any;
     setLocaleCompare(code: string, options?: any): void;
+    getRowHeightState(): any;
     private getRowKey(row);
     private getRowKeys();
     private selectionEventCallback(e);

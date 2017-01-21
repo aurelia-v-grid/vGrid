@@ -13,6 +13,7 @@ export declare class GridConnector implements GridConnectorInterface {
     connect(controller: Controller, create: Function): void;
     gridCreated(): void;
     select(row: number): void;
+    getRowHeightState(): any;
     getDatasourceLength(): number;
     getColConfig(): ColConfig[];
     setColConfig(colconfig: ColConfig[]): void;

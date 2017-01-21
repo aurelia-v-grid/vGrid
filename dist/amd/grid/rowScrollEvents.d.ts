@@ -1,4 +1,4 @@
-import { HtmlCache } from '../interfaces';
+import { HtmlCache, Controller } from '../interfaces';
 export declare class RowScrollEvents {
     private htmlCache;
     private element;
@@ -18,16 +18,21 @@ export declare class RowScrollEvents {
     private main;
     private right;
     private scroller;
-    constructor(element: Element, htmlCache: HtmlCache);
-    init(rowHeight: number, attDataDelay: number): void;
+    private controller;
+    constructor(element: Element, htmlCache: HtmlCache, controller: Controller);
+    init(rowHeight: number, attDataDelay: number, attVariableRowHeight: boolean): void;
     setCollectionLength(length: number): void;
     private createRowCache();
     private updateInternalHtmlCache();
     readonly contentHeight: number;
     private onScroll(event);
     private setRowTopValue(cache, top);
+    private setRowTopValueVariableRowHeight(cache, top);
     private scrollNormal(newTopPosition, downScroll);
     private scrollScrollBar(newTopPosition, downScroll);
+    private setRowHeight(rowElement, rowNo);
+    private scrollNormalVariableRowHeight(newTopPosition, downScroll);
+    private scrollScrollBarVariableRowHeight(newTopPosition, downScroll);
     private addEventListener();
     private triggerRebindRowEvent(curRow, curRowCache, isDownScroll);
     private triggerRebindAllRowsEvent(isDownScroll, curRowCache);

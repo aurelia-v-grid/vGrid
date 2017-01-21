@@ -1,4 +1,4 @@
-import { ColConfig, ColumnBindingContext } from '../interfaces';
+import { ColConfig, ColumnBindingContext, Controller } from '../interfaces';
 export declare class HtmlHeightWidth {
     avgScrollBarWidth: number;
     avgPanel_Height: number;
@@ -43,7 +43,8 @@ export declare class HtmlHeightWidth {
     attRowHeight: number;
     attFooterHeight: number;
     attPanelHeight: number;
-    constructor();
+    private controller;
+    constructor(controller: Controller);
     getNewHeight(length: number): number;
     setCollectionLength(length: number, includeScroller?: boolean): void;
     addDefaultsAttributes(attHeaderHeight: number, attRowHeight: number, attFooterHeight: number, attPanelHeight: number): void;

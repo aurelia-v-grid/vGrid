@@ -20,6 +20,7 @@ export declare class MainScrollEvents {
     private touchX;
     private isIE11;
     private wheelEvent;
+    private isScrollbar;
     constructor(element: Element, htmlCache: HtmlCache);
     init(): void;
     private updateInternalHtmlCache();

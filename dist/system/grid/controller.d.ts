@@ -46,9 +46,11 @@ export declare class Controller {
     loadingScreenTemplate: string;
     footerTemplate: string;
     footer: Footer;
+    attVariableRowHeight: boolean;
     constructor(vGrid: VGrid);
     getContext(): void;
     triggerI18N(): void;
+    getRowHeightState(): any;
     createGrid(): void;
     getElement(rowNumber: number, isDownScroll: boolean, callbackFN: Function): void;
     expandGroup(id: string): void;

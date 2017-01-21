@@ -46,14 +46,14 @@ var VGrid = (function () {
         this.newGrid = true;
         this.controller = new controller_1.Controller(this);
         this.htmlCache = new htmlCache_1.HtmlCache(element);
-        this.htmlHeightWidth = new htmlHeightWidth_1.HtmlHeightWidth();
+        this.htmlHeightWidth = new htmlHeightWidth_1.HtmlHeightWidth(this.controller);
         this.viewSlots = new viewSlots_1.ViewSlots(this.htmlCache);
         this.columnBindingContext = new columnBindingContext_1.ColumnBindingContext(this.controller);
         this.rowDataBinder = new rowDataBinder_1.RowDataBinder(element, this.controller);
         this.mainMarkup = new mainMarkup_1.MainMarkup(element, viewCompiler, container, viewResources, this.htmlHeightWidth, this.viewSlots);
         this.mainScrollEvents = new mainScrollEvents_1.MainScrollEvents(element, this.htmlCache);
         this.rowMarkup = new rowMarkup_1.RowMarkup(element, this.htmlCache);
-        this.rowScrollEvents = new rowScrollEvents_1.RowScrollEvents(element, this.htmlCache);
+        this.rowScrollEvents = new rowScrollEvents_1.RowScrollEvents(element, this.htmlCache, this.controller);
         this.rowClickHandler = new rowClickHandler_1.RowClickHandler(element, this.htmlCache);
         this.columnMarkup = new columnMarkup_1.ColumnMarkup(element, viewCompiler, container, viewResources, this.htmlCache, this.viewSlots, this.columnBindingContext);
         this.groupingElements = new groupingElements_1.GroupingElements(element, viewCompiler, container, viewResources, this.htmlCache, this.viewSlots, this.columnBindingContext);
@@ -95,6 +95,7 @@ var VGrid = (function () {
         this.attDataDelay = this.attDataDelay ? this.attDataDelay * 1 : 0;
         this.attMultiSelect = this.checkBool(this.attMultiSelect);
         this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
+        this.attVariableRowHeight = this.attVariableRowHeight ? this.checkBool(this.attVariableRowHeight) : null;
         this.attTheme = this.attTheme || 'avg-default';
         this.element.classList.add(this.attTheme);
         this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
@@ -192,6 +193,10 @@ __decorate([
     aurelia_framework_1.bindable({ attribute: 'v-data-delay' }),
     __metadata("design:type", Number)
 ], VGrid.prototype, "attDataDelay", void 0);
+__decorate([
+    aurelia_framework_1.bindable({ attribute: 'v-variable-row-height' }),
+    __metadata("design:type", Boolean)
+], VGrid.prototype, "attVariableRowHeight", void 0);
 exports.VGrid = VGrid;
 
 //# sourceMappingURL=v-grid.js.map
