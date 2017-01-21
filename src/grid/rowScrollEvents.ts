@@ -1,4 +1,4 @@
-import { HtmlCache, RowCache } from '../interfaces';
+import { HtmlCache, RowCache, Controller } from '../interfaces';
 
 /**
  * This takes care of the row scrolling
@@ -27,12 +27,14 @@ export class RowScrollEvents {
   private main: Element;
   private right: Element;
   private scroller: Element;
+  private controller: Controller;
 
 
 
-  constructor(element: Element, htmlCache: HtmlCache) {
+  constructor(element: Element, htmlCache: HtmlCache, controller: Controller) {
     this.htmlCache = htmlCache;
     this.element = element;
+    this.controller = controller;
     this.timer = null;
     this.largeScroll = false;
     this.collectionLength = 0;
@@ -45,12 +47,17 @@ export class RowScrollEvents {
    * Called when grid is created to set defaults, add event listners
    * 
    */
-  public init(rowHeight: number, attDataDelay: number): void {
+  public init(rowHeight: number, attDataDelay: number, attVariableRowHeight: boolean): void {
     this.rowCache = this.htmlCache.rowCache;
     this.largeScrollUpdateDelay = attDataDelay;
     this.rowHeight = rowHeight;
     this.updateInternalHtmlCache();
     this.createRowCache();
+    if (attVariableRowHeight) {
+      // @override what scroll functions to use
+      this.scrollNormal = this.scrollNormalVariableRowHeight.bind(this);
+      this.scrollScrollBar = this.scrollScrollBarVariableRowHeight.bind(this);
+    }
     this.addEventListener();
   }
 
@@ -125,7 +132,6 @@ export class RowScrollEvents {
     let isDown = event.detail.isDown;
     let isScrollBarScrolling = event.detail.isScrollBarScrolling;
     let newTopPosition = event.detail.newTopPosition;
-
     if (this.largeScroll || isScrollBarScrolling) {
       if (this.largeScrollUpdateDelay) {
         clearTimeout(this.timer);
@@ -163,6 +169,23 @@ export class RowScrollEvents {
     cache.group.style.transform = `translate3d(0px,${top}px, 0px)`;
     cache.top = top;
     cache.row = Math.floor(top / this.rowHeight);
+  }
+
+
+
+  /**
+   * Sets new top calues to all needed columns (left, main, right, group)
+   * This one is used for the vaiable row height
+   * 
+   */
+  private setRowTopValueVariableRowHeight(cache: RowCache, top: number) {
+    cache.left.style.transform = `translate3d(0px,${top}px, 0px)`;
+    cache.main.style.transform = `translate3d(0px,${top}px, 0px)`;
+    cache.right.style.transform = `translate3d(0px,${top}px, 0px)`;
+    cache.group.style.transform = `translate3d(0px,${top}px, 0px)`;
+    cache.top = top;
+    let rowHeightState: any = this.controller.getRowHeightState();
+    cache.row = rowHeightState.top.indexOf(top);
   }
 
 
@@ -270,6 +293,181 @@ export class RowScrollEvents {
       }
       if (!moved) {
         if (currentRow >= collectionLength && (currentRowTop - rowHeight) >= bodyHeight) {
+          setHiddenFromView(i);
+        } else {
+          // if this triggers the collection have been removed, so really just need to place out the rows
+          if (currentRow >= collectionLength) {
+            setAfter(i);
+          }
+        }
+      }
+
+      currentRow++;
+    }
+
+    // I now sort the array again.
+    this.rowCache.sort(
+      (a, b) => {
+        return a.top - b.top;
+      });
+
+    // update row data
+    this.triggerRebindAllRowsEvent(downScroll, this.rowCache);
+  }
+
+
+
+  /**
+   * sets row height (used when using variable row height)
+   * 
+   */
+  private setRowHeight(rowElement: any, rowNo: number): void {
+    let rowHeightState: any = this.controller.getRowHeightState();
+    rowElement.left.style.height = rowHeightState.rows[rowNo] + 'px';
+    rowElement.main.style.height = rowHeightState.rows[rowNo] + 'px';
+    rowElement.right.style.height = rowHeightState.rows[rowNo] + 'px';
+    rowElement.group.style.height = rowHeightState.rows[rowNo] + 'px';
+  }
+
+
+
+  /**
+   * Handles normal scrolling (used when using variable row height)
+   * if varibale row state is set the override the "scrollNormal" method
+   * 
+   */
+  private scrollNormalVariableRowHeight(newTopPosition: number, downScroll: boolean) {
+
+    let rowHeightState: any = this.controller.getRowHeightState();
+
+
+    for (let i = 0; i < this.cacheLength; i++) {
+
+      let cache = this.rowCache[i];
+      let top = this.rowCache[i].top;
+      let currentRow = rowHeightState.top.indexOf(top);
+      this.setRowHeight(this.rowCache[i], currentRow);
+      let update = false;
+      let newTop: number;
+
+      if (!downScroll) {
+        if (top > (newTopPosition + this.contentHeight)) {
+          currentRow = currentRow - this.cacheLength;
+          if (currentRow > -1) {
+            update = true;
+            newTop = rowHeightState.top[currentRow];
+          }
+        }
+      } else {
+          if (top < (newTopPosition - rowHeightState.rows[currentRow])) {
+          update = true;
+          newTop = rowHeightState.top[currentRow + this.cacheLength];
+          currentRow = currentRow + this.cacheLength;
+        }
+      }
+
+      if (update === true && currentRow >= 0 && currentRow <= this.collectionLength - 1) {
+        this.setRowTopValueVariableRowHeight(cache, newTop);
+        this.triggerRebindRowEvent(currentRow, cache, downScroll);
+      }
+
+
+    }
+
+    // sort array
+    this.rowCache.sort(
+      (a, b) => {
+        return a.top - b.top;
+      });
+  }
+
+
+
+  /**
+   * Handles scrollbars scrolling, or when setting top value by code (used when using variable row height)
+   * if varibale row state is set the override the "scrollScrollBar" method
+   * 
+   */
+  private scrollScrollBarVariableRowHeight(newTopPosition: number, downScroll: boolean) {
+
+    if (this.collectionLength <= this.cacheLength) {
+      newTopPosition = 0;
+    }
+
+    let rowHeightState: any = this.controller.getRowHeightState();
+    let x = 1000;
+    let currentRow = 0;
+    let currentRowTop = 0;
+    let firstRow = 0;
+    let i = 0;
+    let run = true;
+    if (newTopPosition !== 0) {
+      // need to do some looping here, need to figure out where we are..
+      while (i < rowHeightState.top.length) {
+        let checkValue = Math.abs(newTopPosition - (rowHeightState.top[i]));
+        if  (checkValue === x)  {
+            currentRow = i - 1;
+            firstRow = i - 1;
+            run = false;
+          } else {
+            if (checkValue < x) {
+              currentRow = i - 1;
+              firstRow = i - 1;
+              x = checkValue;
+            }
+          }
+        i++;
+      }
+    }
+
+
+
+    // vars
+    let bodyHeight = this.contentHeight;
+    currentRowTop = rowHeightState.top[currentRow];
+
+    let firstRowTop = currentRowTop * 1;
+    let collectionLength = this.collectionLength;
+
+    // for setting after
+    let setAfter = (no: number) => {
+      let row = this.rowCache[no];
+      this.setRowHeight(row, currentRow);
+      this.setRowTopValueVariableRowHeight(row, currentRowTop);
+      row.row = currentRow;
+      currentRowTop = currentRowTop + rowHeightState.rows[currentRow];
+    };
+
+    // for setting before (when hitting bottom)
+    let setBefore = (no: number) => {
+      let row = this.rowCache[no];
+      this.setRowHeight(row, currentRow);
+      firstRowTop = firstRowTop - rowHeightState.rows[currentRow];
+      this.setRowTopValueVariableRowHeight(row, firstRowTop);
+    };
+
+    // for setting before (when hitting bottom)
+    let setHiddenFromView = (no: number) => {
+      let row = this.rowCache[no];
+      this.setRowTopValueVariableRowHeight(row, -(currentRowTop + (rowHeightState.rows[currentRow] * 50)));
+    };
+
+    // loop row html cache
+    for (let i = 0; i < this.cacheLength; i++) {
+      let moved = false;
+      switch (true) {
+        case currentRow >= 0 && currentRow <= collectionLength - 1:
+          setAfter(i);
+          moved = true;
+          break;
+        case currentRow >= collectionLength && (rowHeightState.total) >= bodyHeight:
+          setBefore(i);
+          moved = true;
+          break;
+        default:
+      }
+      if (!moved) {
+        if (currentRow >= collectionLength && (currentRowTop - rowHeightState.rows[currentRow]) >= bodyHeight) {
           setHiddenFromView(i);
         } else {
           // if this triggers the collection have been removed, so really just need to place out the rows

@@ -83,6 +83,7 @@ export class VGrid {
     @bindable({ attribute: 'v-columns' }) public attColConfig: ColConfig[];
     @bindable({ attribute: 'v-i18n' }) public attI18N: Function;
     @bindable({ attribute: 'v-data-delay' }) public attDataDelay: number;
+    @bindable({ attribute: 'v-variable-row-height' }) public attVariableRowHeight: boolean;
 
     constructor(
         element: Element,
@@ -120,7 +121,7 @@ export class VGrid {
         // create our classes
         this.controller = new Controller(this);
         this.htmlCache = new HtmlCache(element);
-        this.htmlHeightWidth = new HtmlHeightWidth();
+        this.htmlHeightWidth = new HtmlHeightWidth(this.controller);
         this.viewSlots = new ViewSlots(this.htmlCache);
         this.columnBindingContext = new ColumnBindingContext(this.controller);
         this.rowDataBinder = new RowDataBinder(element, this.controller);
@@ -134,7 +135,7 @@ export class VGrid {
 
         this.mainScrollEvents = new MainScrollEvents(element, this.htmlCache);
         this.rowMarkup = new RowMarkup(element, this.htmlCache);
-        this.rowScrollEvents = new RowScrollEvents(element, this.htmlCache);
+        this.rowScrollEvents = new RowScrollEvents(element, this.htmlCache, this.controller);
         this.rowClickHandler = new RowClickHandler(element, this.htmlCache);
         this.columnMarkup = new ColumnMarkup(
             element,
@@ -215,6 +216,7 @@ export class VGrid {
         this.attDataDelay = this.attDataDelay ? this.attDataDelay * 1 : 0;
         this.attMultiSelect = this.checkBool(this.attMultiSelect);
         this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
+        this.attVariableRowHeight = this.attVariableRowHeight ? this.checkBool(this.attVariableRowHeight) : null;
         this.attTheme = this.attTheme || 'avg-default';
         this.element.classList.add(this.attTheme);
         this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;

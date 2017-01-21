@@ -83,6 +83,7 @@ export class Controller {
   public loadingScreenTemplate: string;
   public footerTemplate: string;
   public footer: Footer;
+  public attVariableRowHeight: boolean;
 
 
 
@@ -152,6 +153,7 @@ export class Controller {
     this.attOnRowDraw = c.attOnRowDraw;
     this.attI18N = c.attI18N;
     this.attDataDelay = c.attDataDelay;
+    this.attVariableRowHeight = c.attVariableRowHeight;
 
   }
 
@@ -205,6 +207,16 @@ export class Controller {
 
 
   /**
+   * get the row state from gridconnector, used for variable row height
+   * 
+   */
+  public getRowHeightState(): any {
+    return this.attGridConnector.getRowHeightState();
+  }
+
+
+
+  /**
    * creates the grid
    * 
    */
@@ -235,7 +247,7 @@ export class Controller {
     this.htmlCache.updateRowsMarkup();
 
     // add scroll events (the one that moves the actual rows when scroling)
-    this.rowScrollEvents.init(this.attRowHeight, this.attDataDelay);
+    this.rowScrollEvents.init(this.attRowHeight, this.attDataDelay, this.attVariableRowHeight);
 
     // creates the views/viewports we need
     this.columnMarkup.init(

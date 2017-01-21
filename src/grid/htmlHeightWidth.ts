@@ -1,4 +1,4 @@
-import { ColConfig, ColumnBindingContext } from '../interfaces';
+import { ColConfig, ColumnBindingContext, Controller } from '../interfaces';
 
 /**
  * Holds all the height and width of main markup
@@ -49,10 +49,13 @@ export class HtmlHeightWidth {
   public attRowHeight: number;
   public attFooterHeight: number;
   public attPanelHeight: number;
+  private controller: Controller;
 
 
 
-  constructor() {
+  constructor(controller: Controller) {
+
+    this.controller = controller;
 
     this.avgScrollBarWidth = this.getScrollbarWidth() || 17;
 
@@ -120,7 +123,15 @@ export class HtmlHeightWidth {
    * 
    */
   public getNewHeight(length: number): number {
-    return length * this.attRowHeight;
+    let lengthTotal: number = 0;
+    if (this.controller.attVariableRowHeight) {
+       // If variable row height we need to use the 
+       lengthTotal = this.controller.getRowHeightState().total;
+    } else {
+      // if not varibale row height, we use default
+      lengthTotal = this.controller.attRowHeight * length;
+    }
+    return lengthTotal;
   }
 
 

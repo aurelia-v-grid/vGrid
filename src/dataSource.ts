@@ -5,6 +5,8 @@ import { Entity, DatasourceConfig, SortObject, FilterObject, GroupingObj } from 
 
 export class DataSource {
   public entity: Entity;
+  public groupHeight: number;
+  public rowHeight: number;
   private selection: Selection;
   private key: string;
   private arrayUtils: ArrayUtils;
@@ -45,6 +47,8 @@ export class DataSource {
     this.config = config;
     if (config) {
       this.key = config.key || '__avgKey';
+      this.rowHeight = config.rowHeight || 25;
+      this.groupHeight = config.groupHeight || 25;
     } else {
       this.key = '__avgKey';
     }
@@ -542,6 +546,15 @@ export class DataSource {
     this.arrayUtils.setLocaleCompare(code, options);
   }
 
+
+
+  /**
+   * Returns row heigth state for vaiable row height, will be called by gridConnector
+   * 
+   */
+  public getRowHeightState(): any {
+    return this.collection.getRowHeightState();
+  }
 
   /**
    * Returns key of row passed in from displayedCollection

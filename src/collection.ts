@@ -2,12 +2,17 @@ import { DataSource, Entity } from './interfaces'; // todo,create interface when
 
 export class Collection {
   public length: number;
+  public groupHeight: number;
+  public rowHeight: number;
   private displayedEntities: Entity[];
   private keys: string[];
   private key: string;
   private count: number;
   private datasource: DataSource;
   private ungroupedArray: Entity[];
+  private rowHeightArray: any[];
+  private rowTopArray: any[];
+  private rowHeightTotal: number;
 
 
 
@@ -18,11 +23,35 @@ export class Collection {
   constructor(datasource: DataSource) {
     this.datasource = datasource;
     this.key = datasource.getKey();
+
+    // get rowHeight if any
+    this.rowHeight = datasource.rowHeight || 25;
+
+    // get groupHeight if any 
+    this.groupHeight = datasource.groupHeight || 25;
+
+    // some defaults
+
+    // this contains the displayed including groups
     this.displayedEntities = [];
+
+    // all keys in displayed
     this.keys = [];
+
+    // count for setting unique keys, using numbers since I use it do keep entities sorted in inserted order
     this.count = 0;
+
+    // total length of displayed
     this.length = 0;
+
+    // this is the ungrouped array (all entities of displayed except the groups)
+    // this is used when grouping the displayed
     this.ungroupedArray = [];
+
+    // next 3 is variable for setting the correct top etc when using variable row height
+    this.rowHeightArray = [];
+    this.rowTopArray = [];
+    this.rowHeightTotal = 0;
   }
 
 
@@ -32,8 +61,14 @@ export class Collection {
    * 
    */
   public setData(array: Entity[], ungroupedArray?: Entity[]): void {
+
+    // clear defaults so they can be set correctly again
     this.displayedEntities = [];
     this.keys = [];
+    this.rowHeightArray = [];
+    this.rowHeightTotal = 0;
+    this.rowTopArray = [];
+
 
     // need a ungrouped collection, so we can use that forward when needing to sort, regroup etc
     this.ungroupedArray = ungroupedArray || array;
@@ -52,9 +87,25 @@ export class Collection {
 
       // if entity is not group we set the keys to our internal key array, if not we set null
       if (!rowData.__group) {
+
+        // for vairble row height we need to set some defaults the grid can use when scrolling
+        this.rowHeightArray.push(this.rowHeight);
+        this.rowTopArray.push(this.rowHeightTotal);
+        this.rowHeightTotal = this.rowHeightTotal + this.rowHeight;
+
+        // push the key we need for selection
         this.keys.push(rowData[this.key]);
+
       } else {
+
+        // for vairble row height we need to set some defaults the grid can use when scrolling
+        this.rowHeightArray.push(this.groupHeight);
+        this.rowTopArray.push(this.rowHeightTotal);
+        this.rowHeightTotal = this.rowHeightTotal + this.groupHeight;
+
+        // set null on groups, we dont want that in selection
         this.keys.push(null);
+
       }
 
       // we now set the entity data into our displayed entities
@@ -63,6 +114,17 @@ export class Collection {
   }
 
 
+  /**
+   * Returns rowheigth state, will be needed by the grid code when using varaible row height
+   * 
+   */
+  public getRowHeightState(): any {
+    return {
+      total: this.rowHeightTotal,
+      rows: this.rowHeightArray,
+      top: this.rowTopArray
+    };
+  }
 
   /**
    * Returns the ungrouped array of displayed collection

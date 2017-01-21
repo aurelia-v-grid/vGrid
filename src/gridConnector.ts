@@ -107,6 +107,15 @@ export class GridConnector implements GridConnectorInterface {
 
 
   /**
+   * Used by rowScroll events class and htmlheights class to get data needed for variable row height 
+   * Need be in custom gridConnector //Todo, check if it exsist in gridcode, so its not mandatory
+   * 
+   */
+  public getRowHeightState(): any {
+    return this.datasource.getRowHeightState();
+  }
+
+  /**
    * Grid will use this to know what size the body needs to be
    * Is called a lot, so never call a remote for this data when grid needs it
    * Need be in custom gridConnector
@@ -140,7 +149,7 @@ export class GridConnector implements GridConnectorInterface {
 
   /**
    * Grid will call this to know if there is any grouping/what grouping is
-   * Need be in custom gridConnector
+   * Need be in custom gridConnector //Todo, check if it exsist in gridcode, so its not mandatory
    * 
    */
   public getGrouping(): GroupingObj[] {
@@ -151,7 +160,7 @@ export class GridConnector implements GridConnectorInterface {
 
   /**
    * Grid calls to tell it want to group
-   * Need be in custom gridConnector
+   * Need be in custom gridConnector //Todo, check if it exsist in gridcode, so its not mandatory
    * 
    */
   public group(grouping: GroupingObj[], keepExpanded?: boolean): void {
@@ -242,7 +251,7 @@ export class GridConnector implements GridConnectorInterface {
 
   /**
    * Grid calls to tell it want to expand a group/all
-   * Need be in custom gridConnector
+   * Need be in custom gridConnector //Todo, check if it exsist in gridcode, so its not mandatory
    * 
    */
   public expandGroup(id: string): void {
@@ -255,7 +264,7 @@ export class GridConnector implements GridConnectorInterface {
 
   /**
    * Grid calls to tell it want to collapse a group/all
-   * Need be in custom gridConnector
+   * Need be in custom gridConnector //Todo, check if it exsist in gridcode, so its not mandatory
    * 
    */
   public collapseGroup(id: string): void {
@@ -317,6 +326,7 @@ export class GridConnector implements GridConnectorInterface {
       case 'collection_expanded_all':
         this.raiseEvent('sortIconUpdate');
         this.controller.updateHeights();
+        this.controller.udateHorizontalScroller();
         this.controller.triggerScroll(0);
         this.controller.updateHeaderGrouping(this.datasource.getGrouping());
         this.controller.setLoadingScreen(false);
@@ -326,6 +336,7 @@ export class GridConnector implements GridConnectorInterface {
       case 'collection_updated':
         this.raiseEvent('sortIconUpdate');
         this.controller.updateHeights();
+        this.controller.udateHorizontalScroller();
         this.controller.triggerScroll(null);
         this.controller.updateHeaderGrouping(this.datasource.getGrouping());
         this.controller.setLoadingScreen(false);
@@ -333,6 +344,7 @@ export class GridConnector implements GridConnectorInterface {
       case 'collection_sorted':
         this.raiseEvent('sortIconUpdate');
         this.controller.rebindAllRows();
+        this.controller.triggerScroll(null);
         this.controller.setLoadingScreen(false);
         break;
       case 'collection_filtered':

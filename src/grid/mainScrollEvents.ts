@@ -28,6 +28,7 @@ export class MainScrollEvents {
   private touchX: number;
   private isIE11: boolean;
   private wheelEvent: string;
+  private isScrollbar: boolean;
 
 
 
@@ -40,6 +41,7 @@ export class MainScrollEvents {
     this.timerVhandle = null;
     this.timerHhandle = null;
     this.timerWheel = null;
+    this.isScrollbar = false;
     this.lastTopPosition = 0;
     this.wheelEvent = 'onwheel';
 
@@ -205,6 +207,7 @@ export class MainScrollEvents {
           this.main.scrollLeft = this.main.scrollLeft + left;
           (this.mainHead as HTMLElement).style.left = - this.main.scrollLeft + 'px';
         }
+        this.isScrollbar = false;
         this.checkScroll(this.main.scrollTop);
         this.timerWheel = setTimeout(() => {
           this.addScrollEvents('wheel');
@@ -238,7 +241,7 @@ export class MainScrollEvents {
         this.main.scrollTop = newTopPosition;
         this.left.scrollTop = newTopPosition;
         this.group.scrollTop = newTopPosition;
-
+        this.isScrollbar = true;
         this.checkScroll(newTopPosition);
 
         this.timerVhandle = setTimeout(() => {
@@ -291,13 +294,6 @@ export class MainScrollEvents {
   private checkScroll(newTopPosition: number): void {
     if (this.lastTopPosition !== newTopPosition) {
 
-      // check is scroll bar scrolling
-      let offset = Math.abs(this.lastTopPosition - newTopPosition);
-      let isScrollBarScrolling = false;
-      if (offset > 200) {
-        isScrollBarScrolling = true;
-      }
-
       // check is up or down
       let isDown = true;
       if (this.lastTopPosition > newTopPosition) {
@@ -308,7 +304,7 @@ export class MainScrollEvents {
       this.lastTopPosition = newTopPosition;
 
       // trigger scroll
-      this.triggerGridScrollEvent(isScrollBarScrolling, isDown, newTopPosition);
+      this.triggerGridScrollEvent(this.isScrollbar, isDown, newTopPosition);
     }
   }
 

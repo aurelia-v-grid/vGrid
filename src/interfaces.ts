@@ -147,6 +147,8 @@ export interface SortObject {
 export interface DatasourceConfig {
   [key: string]: any;
   key: string;
+  rowHeight?: number;
+  groupHeight?: number;
 }
 
 
@@ -281,6 +283,7 @@ export interface GridConnectorInterface {
   getCurrentFilter(): FilterObject[];
   expandGroup(id: string): void;
   collapseGroup(id: string): void;
+  getRowHeightState(): any;
 }
 
 
