@@ -70,6 +70,8 @@ export class GridConnector implements GridConnectorInterface {
   public connect(controller: Controller, create: Function): void {
     this.controller = controller;
     this.eventID = this.datasource.addEventListener(this.eventHandler.bind(this));
+    // keep it hidden while we create
+    (this.controller.element as HTMLElement).style.visibility = 'hidden';
     create();
   }
 
@@ -89,8 +91,11 @@ export class GridConnector implements GridConnectorInterface {
       this.raiseEvent('sortIconUpdate');
       this.raiseEvent('filterUpdateValues');
       this.controller.triggerScroll(this.initTop);
+      setTimeout(() => {
+        // display it so we dont haveto see lags if grouping etc is set
+        (this.controller.element as HTMLElement).style.visibility = 'visible';
+      }, 100);
     }, 0);
-    this.controller.updateHeaderGrouping(this.datasource.getGrouping());
   }
 
 

@@ -22,6 +22,7 @@ export class VGridAttributeMenu {
   private groupingElements: GroupingElements;
 
   @bindable private filter: string;
+  @bindable private filterkey: string;
   @bindable private sort: string ;
   @bindable private pinned: string;
   @bindable private groupby: string;
@@ -84,7 +85,7 @@ export class VGridAttributeMenu {
   private callback(type: string, option: string, event: MouseEvent): boolean {
     if (type === 'filter') {
       if (option === 'clear') {
-        this.raiseEvent('filterClearCell', { attribute: this.filter.replace('rowRef.', '') });
+        this.raiseEvent('filterClearCell', { attribute: this.filter.replace('rowRef.', ''), key: this.filterkey });
         document.removeEventListener('click', this.checkBinded);
         return true;
       }
@@ -139,7 +140,8 @@ export class VGridAttributeMenu {
 
       this.raiseEvent('filterUpdate', {
         attribute: field,
-        operator: option
+        operator: option,
+        key: this.filterkey
       });
       document.removeEventListener('click', this.checkBinded);
       return true;

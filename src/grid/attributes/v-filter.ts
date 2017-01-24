@@ -17,6 +17,7 @@ export class VGridAttributesFilter {
   @bindable private operator: string;
   @bindable private converter: string;
   @bindable private keydown: string;
+  @bindable private key: string;
   private vGrid: VGrid;
   private element: HTMLElement;
   private bindingContext: BindingContext;
@@ -56,7 +57,7 @@ export class VGridAttributesFilter {
     if (this.attribute) { // if no attibute we do not want to do anything
 
       this.vGrid.element.addEventListener('filterUpdate', (e: CustomEvent) => {
-        if (e.detail.attribute === this.attribute) {
+        if (e.detail.attribute === this.attribute && e.detail.key === this.key) {
           this.filterOperator = e.detail.operator;
           (this.element as HTMLInputElement).placeholder =
             this.getOperatorName(this.filterOperator);
@@ -67,7 +68,7 @@ export class VGridAttributesFilter {
       this.vGrid.element.addEventListener('filterUpdateValues', () => {
       let curFilter = this.vGrid.attGridConnector.getCurrentFilter();
       curFilter.forEach((f: any) => {
-          if (f.attribute === this.attribute) {
+          if (f.attribute === this.attribute  && f.key === this.key) {
             (this.element as HTMLInputElement).value = f.value;
             this.filterOperator = f.operator;
             (this.element as HTMLInputElement).placeholder =
@@ -83,7 +84,7 @@ export class VGridAttributesFilter {
       });
 
       this.vGrid.element.addEventListener('filterClearCell', (e: CustomEvent) => {
-        if (e.detail.attribute === this.attribute) {
+        if (e.detail.attribute === this.attribute  && e.detail.key === this.key) {
           this.resetValue();
           this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
         }
@@ -213,7 +214,7 @@ export class VGridAttributesFilter {
 
     // get index of filter
     curFilter.forEach((filter: FilterObject, index: number) => {
-      if (filter.attribute === this.attribute) {
+      if (filter.attribute === this.attribute && filter.key === this.key) {
         filterIndex = index;
       }
     });
@@ -233,6 +234,7 @@ export class VGridAttributesFilter {
       // we didnt find filter, lets add one
       if (this.getValue() !== '') {
         curFilter.push({
+          key : this.key,
           attribute: this.attribute,
           operator: this.filterOperator,
           value: this.getValue()

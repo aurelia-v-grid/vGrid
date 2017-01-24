@@ -128,6 +128,7 @@ export interface TargetData {
 
 export interface FilterObject {
   [key: string]: any;
+  key?: string;
   operator: string;
   value: any;
   attribute: string;
@@ -146,7 +147,7 @@ export interface SortObject {
 
 export interface DatasourceConfig {
   [key: string]: any;
-  key: string;
+  key?: string;
   rowHeight?: number;
   groupHeight?: number;
 }
