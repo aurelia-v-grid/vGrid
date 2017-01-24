@@ -46,7 +46,7 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                 VGridAttributeMenu.prototype.callback = function (type, option, event) {
                     if (type === 'filter') {
                         if (option === 'clear') {
-                            this.raiseEvent('filterClearCell', { attribute: this.filter.replace('rowRef.', '') });
+                            this.raiseEvent('filterClearCell', { attribute: this.filter.replace('rowRef.', ''), key: this.filterkey });
                             document.removeEventListener('click', this.checkBinded);
                             return true;
                         }
@@ -92,7 +92,8 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                         });
                         this.raiseEvent('filterUpdate', {
                             attribute: field_2,
-                            operator: option
+                            operator: option,
+                            key: this.filterkey
                         });
                         document.removeEventListener('click', this.checkBinded);
                         return true;
@@ -138,6 +139,10 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                 aurelia_framework_1.bindable,
                 __metadata("design:type", String)
             ], VGridAttributeMenu.prototype, "filter", void 0);
+            __decorate([
+                aurelia_framework_1.bindable,
+                __metadata("design:type", String)
+            ], VGridAttributeMenu.prototype, "filterkey", void 0);
             __decorate([
                 aurelia_framework_1.bindable,
                 __metadata("design:type", String)

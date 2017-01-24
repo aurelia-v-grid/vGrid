@@ -8,6 +8,7 @@ export declare class VGridAttributeMenu {
     private callbackBinded;
     private groupingElements;
     private filter;
+    private filterkey;
     private sort;
     private pinned;
     private groupby;

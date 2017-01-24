@@ -5,6 +5,7 @@ export declare class VGridAttributesFilter {
     private operator;
     private converter;
     private keydown;
+    private key;
     private vGrid;
     private element;
     private bindingContext;

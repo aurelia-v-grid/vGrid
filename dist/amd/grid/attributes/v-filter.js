@@ -20,7 +20,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             var _this = this;
             if (this.attribute) {
                 this.vGrid.element.addEventListener('filterUpdate', function (e) {
-                    if (e.detail.attribute === _this.attribute) {
+                    if (e.detail.attribute === _this.attribute && e.detail.key === _this.key) {
                         _this.filterOperator = e.detail.operator;
                         _this.element.placeholder =
                             _this.getOperatorName(_this.filterOperator);
@@ -30,7 +30,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
                 this.vGrid.element.addEventListener('filterUpdateValues', function () {
                     var curFilter = _this.vGrid.attGridConnector.getCurrentFilter();
                     curFilter.forEach(function (f) {
-                        if (f.attribute === _this.attribute) {
+                        if (f.attribute === _this.attribute && f.key === _this.key) {
                             _this.element.value = f.value;
                             _this.filterOperator = f.operator;
                             _this.element.placeholder =
@@ -44,7 +44,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
                     _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
                 });
                 this.vGrid.element.addEventListener('filterClearCell', function (e) {
-                    if (e.detail.attribute === _this.attribute) {
+                    if (e.detail.attribute === _this.attribute && e.detail.key === _this.key) {
                         _this.resetValue();
                         _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
                     }
@@ -134,7 +134,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             var _this = this;
             var filterIndex = -1;
             curFilter.forEach(function (filter, index) {
-                if (filter.attribute === _this.attribute) {
+                if (filter.attribute === _this.attribute && filter.key === _this.key) {
                     filterIndex = index;
                 }
             });
@@ -150,6 +150,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             else {
                 if (this.getValue() !== '') {
                     curFilter.push({
+                        key: this.key,
                         attribute: this.attribute,
                         operator: this.filterOperator,
                         value: this.getValue()
@@ -179,6 +180,10 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
         aurelia_framework_1.bindable,
         __metadata("design:type", String)
     ], VGridAttributesFilter.prototype, "keydown", void 0);
+    __decorate([
+        aurelia_framework_1.bindable,
+        __metadata("design:type", String)
+    ], VGridAttributesFilter.prototype, "key", void 0);
     VGridAttributesFilter = __decorate([
         aurelia_framework_1.customAttribute('v-filter'),
         aurelia_framework_1.inject(Element, v_grid_1.VGrid),

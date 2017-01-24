@@ -17,6 +17,7 @@ define(["require", "exports"], function (require, exports) {
         GridConnector.prototype.connect = function (controller, create) {
             this.controller = controller;
             this.eventID = this.datasource.addEventListener(this.eventHandler.bind(this));
+            this.controller.element.style.visibility = 'hidden';
             create();
         };
         GridConnector.prototype.gridCreated = function () {
@@ -28,8 +29,10 @@ define(["require", "exports"], function (require, exports) {
                 _this.raiseEvent('sortIconUpdate');
                 _this.raiseEvent('filterUpdateValues');
                 _this.controller.triggerScroll(_this.initTop);
+                setTimeout(function () {
+                    _this.controller.element.style.visibility = 'visible';
+                }, 100);
             }, 0);
-            this.controller.updateHeaderGrouping(this.datasource.getGrouping());
         };
         GridConnector.prototype.select = function (row) {
             this.datasource.select(row);
