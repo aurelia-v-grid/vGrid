@@ -28,12 +28,23 @@
         </v-grid-col>
         
         <v-grid-col
-          col-filter-menu="filter:index"
-          col-header-name="filter index super cool"
+          col-filter-menu="filter:index;filterkey:less"
+          col-header-name="index"
           col-label-menu="sort:index" 
           col-width="100" 
           col-sort="field:index;asc:false" 
-          col-filter="field:index" 
+          col-filter="field:index;operator:<;key:less"
+          col-field="index | numberFormatter"
+          col-pin-left="true">
+        </v-grid-col>
+
+        <v-grid-col
+          col-filter-menu="filter:index;filterkey:greater"
+          col-header-name="index"
+          col-label-menu="sort:index" 
+          col-width="100" 
+          col-sort="field:index;asc:false" 
+          col-filter="field:index;operator:>;key:greater" 
           col-field="index | numberFormatter"
           col-pin-left="true">
         </v-grid-col>
