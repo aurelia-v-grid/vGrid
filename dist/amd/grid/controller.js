@@ -313,6 +313,7 @@ define(["require", "exports"], function (require, exports) {
                     colAddFilterAttributes: col.colAddFilterAttributes,
                     colAddRowAttributes: col.colAddRowAttributes,
                     colSort: col.colSort,
+                    colDisplayEdit: col.colDisplayEdit,
                     colFilter: col.colFilter,
                     colFilterTop: col.colFilterTop,
                     colCss: col.colCss,

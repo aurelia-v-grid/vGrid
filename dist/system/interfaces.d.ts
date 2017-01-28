@@ -77,6 +77,7 @@ export interface ColConfig {
     colDragDrop?: string;
     colResizeable?: string;
     colSort?: string;
+    colDisplayEdit?: string;
     colFilter?: string;
     colFilterTop?: boolean;
     colCss?: string;

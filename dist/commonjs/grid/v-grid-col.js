@@ -38,6 +38,7 @@ var VGridElementColConfig = (function () {
             colAddFilterAttributes: this.colAddFilterAttributes,
             colAddRowAttributes: this.colAddRowAttributes,
             colSort: this.colSort,
+            colDisplayEdit: this.colDisplayEdit,
             colFilter: this.colFilter,
             colFilterTop: this.checkBool(this.colFilterTop),
             colCss: this.colCss,
@@ -137,6 +138,10 @@ __decorate([
     aurelia_framework_1.bindable({ attribute: 'col-resizeable' }),
     __metadata("design:type", String)
 ], VGridElementColConfig.prototype, "colResizeable", void 0);
+__decorate([
+    aurelia_framework_1.bindable({ attribute: 'col-display-edit' }),
+    __metadata("design:type", String)
+], VGridElementColConfig.prototype, "colDisplayEdit", void 0);
 VGridElementColConfig = __decorate([
     aurelia_framework_1.noView(),
     aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {

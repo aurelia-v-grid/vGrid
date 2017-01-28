@@ -15,7 +15,9 @@ var VGridAttributesOnChange = (function () {
         this.vGrid = vGrid;
     }
     VGridAttributesOnChange.prototype.attached = function () {
-        this.element.onchange = this.onChanged.bind(this);
+        if (!this.element.onchange) {
+            this.element.onchange = this.onChanged.bind(this);
+        }
     };
     VGridAttributesOnChange.prototype.onChanged = function () {
         this.vGrid.controller.rowDataBinder.rebindRowNo(this.bindingContext.row);
