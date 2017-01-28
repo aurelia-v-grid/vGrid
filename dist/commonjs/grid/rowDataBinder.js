@@ -84,6 +84,7 @@ var RowDataBinder = (function () {
         var rowCache = event.detail.rowCache;
         var downScroll = event.detail.downScroll;
         var _loop_1 = function (i) {
+            console.log(rowCache[i].row);
             this_1.controller.getElement(rowCache[i].row, downScroll, function (data) {
                 var bindingContext = rowCache[i].bindingContext;
                 if (data.rowRef) {

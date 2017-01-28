@@ -129,7 +129,7 @@ var RowScrollEvents = (function () {
             }
         }
         this.rowCache.sort(function (a, b) {
-            return a.top - b.top;
+            return a.row - b.row;
         });
     };
     RowScrollEvents.prototype.scrollScrollBar = function (newTopPosition, downScroll) {
@@ -177,14 +177,14 @@ var RowScrollEvents = (function () {
                 }
                 else {
                     if (currentRow >= collectionLength) {
-                        setAfter(i);
+                        setHiddenFromView(i);
                     }
                 }
             }
             currentRow++;
         }
         this.rowCache.sort(function (a, b) {
-            return a.top - b.top;
+            return a.row - b.row;
         });
         this.triggerRebindAllRowsEvent(downScroll, this.rowCache);
     };
@@ -226,7 +226,7 @@ var RowScrollEvents = (function () {
             }
         }
         this.rowCache.sort(function (a, b) {
-            return a.top - b.top;
+            return a.row - b.row;
         });
     };
     RowScrollEvents.prototype.scrollScrollBarVariableRowHeight = function (newTopPosition, downScroll) {
@@ -299,14 +299,14 @@ var RowScrollEvents = (function () {
                 }
                 else {
                     if (currentRow >= collectionLength) {
-                        setAfter(i_1);
+                        setHiddenFromView(i_1);
                     }
                 }
             }
             currentRow++;
         }
         this.rowCache.sort(function (a, b) {
-            return a.top - b.top;
+            return a.row - b.row;
         });
         this.triggerRebindAllRowsEvent(downScroll, this.rowCache);
     };

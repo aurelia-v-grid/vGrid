@@ -137,11 +137,11 @@ System.register([], function (exports_1, context_1) {
                         col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colAddRowAttributes + " \n        v-onchange \n        " + colRowMenu + "  \n        checked.bind=\"" + col.colField + "\">";
                     }
                     else {
-                        var binding = "value.bind=\"" + col.colField + "\"";
+                        var binding = "value.bind=\"" + col.colField + "\" v-onchange ";
                         if (col.colDisplayEdit) {
                             binding = "v-data-handler=\"value.bind:" + col.colField + ";" + col.colDisplayEdit + "\"";
                         }
-                        col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colRowMenu + "\n        v-onchange \n        " + colAddRowAttributes + "  \n        " + binding + ">";
+                        col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colRowMenu + "\n        " + colAddRowAttributes + "  \n        " + binding + ">";
                     }
                 };
                 ColumnMarkupHelper.prototype.createInputHeaderMarkup = function (col) {

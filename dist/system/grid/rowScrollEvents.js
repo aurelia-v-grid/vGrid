@@ -135,7 +135,7 @@ System.register([], function (exports_1, context_1) {
                         }
                     }
                     this.rowCache.sort(function (a, b) {
-                        return a.top - b.top;
+                        return a.row - b.row;
                     });
                 };
                 RowScrollEvents.prototype.scrollScrollBar = function (newTopPosition, downScroll) {
@@ -183,14 +183,14 @@ System.register([], function (exports_1, context_1) {
                             }
                             else {
                                 if (currentRow >= collectionLength) {
-                                    setAfter(i);
+                                    setHiddenFromView(i);
                                 }
                             }
                         }
                         currentRow++;
                     }
                     this.rowCache.sort(function (a, b) {
-                        return a.top - b.top;
+                        return a.row - b.row;
                     });
                     this.triggerRebindAllRowsEvent(downScroll, this.rowCache);
                 };
@@ -232,7 +232,7 @@ System.register([], function (exports_1, context_1) {
                         }
                     }
                     this.rowCache.sort(function (a, b) {
-                        return a.top - b.top;
+                        return a.row - b.row;
                     });
                 };
                 RowScrollEvents.prototype.scrollScrollBarVariableRowHeight = function (newTopPosition, downScroll) {
@@ -305,14 +305,14 @@ System.register([], function (exports_1, context_1) {
                             }
                             else {
                                 if (currentRow >= collectionLength) {
-                                    setAfter(i_1);
+                                    setHiddenFromView(i_1);
                                 }
                             }
                         }
                         currentRow++;
                     }
                     this.rowCache.sort(function (a, b) {
-                        return a.top - b.top;
+                        return a.row - b.row;
                     });
                     this.triggerRebindAllRowsEvent(downScroll, this.rowCache);
                 };
