@@ -71,14 +71,6 @@
           col-type="checkbox">
         </v-grid-col>
 
-        <v-grid-col
-          col-filter-menu="filter:guid"
-          col-label-menu="sort:guid" 
-          col-width="100" 
-          col-sort="field:guid" 
-          col-filter="field:guid" 
-          col-field="test">
-        </v-grid-col>
 
         <v-grid-col
           col-label-menu="sort:name" 
@@ -92,7 +84,7 @@
         <v-grid-col
           col-filter-menu="filter:name"
           col-label-menu="sort:name" 
-          col-width="160" 
+          col-width="100" 
           col-sort="field:name" 
           col-filter="field:name;operator:*" 
           col-field="tempRef.numberColor" 
@@ -106,6 +98,7 @@
           col-css="color:${tempRef.numberColor};font-weight:${tempRef.numberFont}"
           col-sort="field:number" 
           col-filter="field:number;operator:<" 
+          col-display-edit="field:number;edit:editFormatNumber;display:displayFormatNumber"
           col-field="number | numberFormatter" 
          >
         </v-grid-col>
