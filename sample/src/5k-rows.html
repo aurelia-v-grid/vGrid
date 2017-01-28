@@ -11,7 +11,7 @@
         v-footer-height="25"
         v-row-onclick.delegate="singleClick($event.detail)"
         v-row-ondblclick.delegate="dblClick($event.detail)"
-        v-variable-row-height="true"
+        v-varciable-row-height="true"
         
         v-row-on-draw.call="onRowDraw($event)"
         
@@ -153,6 +153,8 @@
     <button click.delegate="filterByCode()">filterByCode</button>
     <button click.delegate="setLocal('nb-NO')">setLocal nb-NO</button>
     <button click.delegate="setLocal()">filterByCode nothing</button>
+    <input value.bind="ds.entity.number">
     </div>
+    
   </section>
 </template>

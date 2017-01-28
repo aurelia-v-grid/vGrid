@@ -33,8 +33,8 @@ export class Welcome {
   }
 
   public dsEvents(e) {
-    console.log(e)
-    console.log(this.ds.getCollectionStatus());
+    //console.log(e)
+    //console.log(this.ds.getCollectionStatus());
     return true;
   }
 

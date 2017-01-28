@@ -86,8 +86,9 @@ export class VGridAttributesDataHandler {
      * 
      */
     public onChanged() {
-        this.bindingContext.rowRef[this.field] = (this.element as HTMLInputElement).value;
         this.value = this.editFormater.fromView((this.element as HTMLInputElement).value);
+        this.bindingContext.rowRef[this.field] = this.value;
+        (this.element as HTMLInputElement).value = this.displayFormater.toView(this.value);
         this.vGrid.controller.rowDataBinder.rebindRowNo(this.bindingContext.row);
     }
 
