@@ -232,7 +232,7 @@ export class RowScrollEvents {
     // sort array
     this.rowCache.sort(
       (a, b) => {
-        return a.top - b.top;
+        return a.row - b.row;
       });
   }
 
@@ -297,7 +297,8 @@ export class RowScrollEvents {
         } else {
           // if this triggers the collection have been removed, so really just need to place out the rows
           if (currentRow >= collectionLength) {
-            setAfter(i);
+            //setAfter(i);
+            setHiddenFromView(i);
           }
         }
       }
@@ -308,7 +309,7 @@ export class RowScrollEvents {
     // I now sort the array again.
     this.rowCache.sort(
       (a, b) => {
-        return a.top - b.top;
+        return a.row - b.row;
       });
 
     // update row data
@@ -377,7 +378,7 @@ export class RowScrollEvents {
     // sort array
     this.rowCache.sort(
       (a, b) => {
-        return a.top - b.top;
+        return a.row - b.row;
       });
   }
 
@@ -472,7 +473,8 @@ export class RowScrollEvents {
         } else {
           // if this triggers the collection have been removed, so really just need to place out the rows
           if (currentRow >= collectionLength) {
-            setAfter(i);
+            setHiddenFromView(i);
+            //setAfter(i);
           }
         }
       }
@@ -483,7 +485,7 @@ export class RowScrollEvents {
     // I now sort the array again.
     this.rowCache.sort(
       (a, b) => {
-        return a.top - b.top;
+        return a.row - b.row;
       });
 
     // update row data

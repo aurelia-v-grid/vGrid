@@ -224,7 +224,7 @@ export class ColumnMarkupHelper {
         checked.bind="${col.colField}">`;
     } else {
 
-      let binding = `value.bind="${col.colField}"`;
+      let binding = `value.bind="${col.colField}" v-onchange `;
 
       if (col.colDisplayEdit) {
         binding = `v-data-handler="value.bind:${col.colField};${col.colDisplayEdit}"`;
@@ -235,7 +235,6 @@ export class ColumnMarkupHelper {
         ${colClass} 
         ${colType} 
         ${colRowMenu}
-        v-onchange 
         ${colAddRowAttributes}  
         ${binding}>`;
     }

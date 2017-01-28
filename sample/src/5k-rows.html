@@ -11,7 +11,7 @@
         v-footer-height="25"
         v-row-onclick.delegate="singleClick($event.detail)"
         v-row-ondblclick.delegate="dblClick($event.detail)"
-        v-varciable-row-height="true"
+        v-variable-row-height="true"
         
         v-row-on-draw.call="onRowDraw($event)"
         
@@ -99,7 +99,7 @@
           col-sort="field:number" 
           col-filter="field:number;operator:<" 
           col-display-edit="field:number;edit:editFormatNumber;display:displayFormatNumber"
-          col-field="number | numberFormatter" 
+          col-field="number" 
          >
         </v-grid-col>
 
@@ -153,7 +153,7 @@
     <button click.delegate="filterByCode()">filterByCode</button>
     <button click.delegate="setLocal('nb-NO')">setLocal nb-NO</button>
     <button click.delegate="setLocal()">filterByCode nothing</button>
-    <input value.bind="ds.entity.number">
+   
     </div>
     
   </section>
