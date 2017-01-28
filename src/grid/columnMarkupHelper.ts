@@ -223,6 +223,13 @@ export class ColumnMarkupHelper {
         ${colRowMenu}  
         checked.bind="${col.colField}">`;
     } else {
+
+      let binding = `value.bind="${col.colField}"`;
+
+      if (col.colDisplayEdit) {
+        binding = `v-data-handler="value.bind:${col.colField};${col.colDisplayEdit}"`;
+      }
+
       col.__colRowTemplateGenerated = `<input 
         ${colCss} 
         ${colClass} 
@@ -230,7 +237,7 @@ export class ColumnMarkupHelper {
         ${colRowMenu}
         v-onchange 
         ${colAddRowAttributes}  
-        value.bind="${col.colField}">`;
+        ${binding}>`;
     }
   }
 

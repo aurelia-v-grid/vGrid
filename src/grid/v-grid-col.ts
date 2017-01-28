@@ -81,6 +81,7 @@ export class VGridElementColConfig {
   @bindable({ attribute: 'col-hidden' }) private colHidden: boolean;
   @bindable({ attribute: 'col-drag-drop' }) private colDragDrop: string;
   @bindable({ attribute: 'col-resizeable' }) private colResizeable: string;
+  @bindable({ attribute: 'col-display-edit' }) private colDisplayEdit: string;
 
 
 
@@ -121,12 +122,12 @@ export class VGridElementColConfig {
       colAddFilterAttributes: this.colAddFilterAttributes,
       colAddRowAttributes: this.colAddRowAttributes,
       colSort: this.colSort,
+      colDisplayEdit: this.colDisplayEdit,
       colFilter: this.colFilter,
       colFilterTop: this.checkBool(this.colFilterTop),
       colCss: this.colCss,
       colType: this.colType || 'text'
     } as ColConfig));
-
   }
 
 

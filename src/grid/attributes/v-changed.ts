@@ -33,7 +33,9 @@ export class VGridAttributesOnChange {
    * 
    */
     public attached() {
-        this.element.onchange = this.onChanged.bind(this);
+        if (!this.element.onchange) {
+            this.element.onchange = this.onChanged.bind(this);
+        }
     }
 
 
