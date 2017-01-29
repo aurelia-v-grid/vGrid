@@ -110,9 +110,9 @@ export class VGridAttributesFilter {
 
           } else {
 
-            // if they hit enter we need to get filter, update
-            this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
+            // if they did nop hit enter we need to check if keydown is the trigger
             if (this.filterOn === 'onKeyDown') {
+              this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
               this.vGrid.attGridConnector.query(this.vGrid.attGridConnector.getCurrentFilter());
             }
           }
