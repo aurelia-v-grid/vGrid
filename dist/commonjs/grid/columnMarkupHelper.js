@@ -128,10 +128,10 @@ var ColumnMarkupHelper = (function () {
         var colRowMenu = col.colRowMenu ? "v-menu=\"" + col.colRowMenu + "\"" : '';
         var colCss = col.colCss ? "css=\"" + col.colCss + "\"" : '';
         if (col.colType === 'checkbox') {
-            col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colAddRowAttributes + " \n        v-onchange \n        " + colRowMenu + "  \n        checked.bind=\"" + col.colField + "\">";
+            col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colAddRowAttributes + " \n        " + colRowMenu + "  \n        checked.bind=\"" + col.colField + "\">";
         }
         else {
-            var binding = "value.bind=\"" + col.colField + "\" v-onchange ";
+            var binding = "value.bind=\"" + col.colField + "\"";
             if (col.colDisplayEdit) {
                 binding = "v-data-handler=\"value.bind:" + col.colField + ";" + col.colDisplayEdit + "\"";
             }
