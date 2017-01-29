@@ -74,8 +74,8 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                                     _this.vGrid.attGridConnector.query(_this.vGrid.attGridConnector.getCurrentFilter());
                                 }
                                 else {
-                                    _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
                                     if (_this.filterOn === 'onKeyDown') {
+                                        _this.updateFilter(_this.vGrid.attGridConnector.getCurrentFilter());
                                         _this.vGrid.attGridConnector.query(_this.vGrid.attGridConnector.getCurrentFilter());
                                     }
                                 }
