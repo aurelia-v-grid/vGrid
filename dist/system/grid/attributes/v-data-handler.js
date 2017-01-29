@@ -36,7 +36,6 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                 VGridAttributesDataHandler.prototype.onFocus = function () {
                     this.element.value = this.editFormater.toView(this.value);
                     this.tempValue = this.element.value;
-                    this.vGrid.controller.rowDataBinder.rebindRowNo(this.bindingContext.row);
                 };
                 VGridAttributesDataHandler.prototype.onBlur = function () {
                     if (this.tempValue === this.element.value) {
