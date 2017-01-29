@@ -154,7 +154,7 @@ export class RowDataBinder {
 
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < rowCache.length; i++) {
-      console.log(rowCache[i].row)
+
       this.controller.getElement(rowCache[i].row, downScroll, (data: BindingContext) => {
 
         let bindingContext = rowCache[i].bindingContext;

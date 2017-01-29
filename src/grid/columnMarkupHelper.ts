@@ -219,12 +219,11 @@ export class ColumnMarkupHelper {
         ${colClass} 
         ${colType} 
         ${colAddRowAttributes} 
-        v-onchange 
         ${colRowMenu}  
         checked.bind="${col.colField}">`;
     } else {
 
-      let binding = `value.bind="${col.colField}" v-onchange `;
+      let binding = `value.bind="${col.colField}"`;
 
       if (col.colDisplayEdit) {
         binding = `v-data-handler="value.bind:${col.colField};${col.colDisplayEdit}"`;
