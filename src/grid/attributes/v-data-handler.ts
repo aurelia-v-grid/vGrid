@@ -103,7 +103,7 @@ export class VGridAttributesDataHandler {
         this.overrideContext = overrideContext;
         this.displayFormater = this.valueConverters(this.display);
         this.editFormater = this.valueConverters(this.edit);
-        (this.element as HTMLInputElement).value = this.displayFormater.toView(this.field);
+        (this.element as HTMLInputElement).value = this.displayFormater.toView(this.value);
     }
 
 
