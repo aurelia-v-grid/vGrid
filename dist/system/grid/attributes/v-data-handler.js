@@ -53,7 +53,7 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                     this.overrideContext = overrideContext;
                     this.displayFormater = this.valueConverters(this.display);
                     this.editFormater = this.valueConverters(this.edit);
-                    this.element.value = this.displayFormater.toView(this.field);
+                    this.element.value = this.displayFormater.toView(this.value);
                 };
                 VGridAttributesDataHandler.prototype.valueConverters = function (value) {
                     var valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
