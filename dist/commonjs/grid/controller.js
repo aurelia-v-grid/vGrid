@@ -95,6 +95,7 @@ var Controller = (function () {
             this.triggerI18N();
         }
         this.htmlHeightWidth.addDefaultsAttributes(this.attHeaderHeight, this.attRowHeight, this.attFooterHeight, this.attPanelHeight);
+        this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
         this.mainMarkup.generateMainMarkup();
         this.htmlCache.updateMainMarkup();
         this.rowDataBinder.init();
@@ -103,7 +104,6 @@ var Controller = (function () {
         this.htmlCache.updateRowsMarkup();
         this.rowScrollEvents.init(this.attRowHeight, this.attDataDelay, this.attVariableRowHeight);
         this.columnMarkup.init(this.colConfig, this.overrideContext, this.colRepeater, this.colRepeatRowTemplate, this.colRepeatRowHeaderTemplate, this.colGroupRow);
-        this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
         this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);
         this.groupingElements.init(this, this.colGroupElement);
         this.loadingScreen.init(this.overrideContext, this.loadingScreenTemplate);
