@@ -234,6 +234,9 @@ export class Controller {
       this.attFooterHeight,
       this.attPanelHeight);
 
+    // more updates to main markup
+    this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
+
     // generate main markup and updates our cache
     this.mainMarkup.generateMainMarkup();
     this.htmlCache.updateMainMarkup();
@@ -258,8 +261,7 @@ export class Controller {
       this.colRepeatRowHeaderTemplate,
       this.colGroupRow);
 
-    // more updates to main markup
-    this.htmlHeightWidth.setWidthFromColumnConfig(this.colConfig);
+
     // register the rowClick handler (when clicking on rows)
     this.rowClickHandler.init(this.attMultiSelect, this.attManualSelection, this);
     // create grouping elements helper... pretty much just creates view when dragging to group box
