@@ -52,7 +52,10 @@ export class VGridAttributesDataHandler {
      * 
      */
     public valueChanged(newValue: any) {
-        (this.element as HTMLInputElement).value = this.displayFormater.toView(newValue);
+        let checkValue = this.editFormater.toView(newValue);
+        if (checkValue !== this.tempValue) {
+            (this.element as HTMLInputElement).value = this.displayFormater.toView(newValue);
+        }
     }
 
 
@@ -64,7 +67,6 @@ export class VGridAttributesDataHandler {
     public onFocus() {
         (this.element as HTMLInputElement).value = this.editFormater.toView(this.value);
         this.tempValue = (this.element as HTMLInputElement).value;
-        // this.vGrid.controller.rowDataBinder.rebindRowNo(this.bindingContext.row);
     }
 
 
