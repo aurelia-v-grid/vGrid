@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 define(["require", "exports", "aurelia-framework", "../v-grid"], function (require, exports, aurelia_framework_1, v_grid_1) {
     var VGridAttributesDataHandler = (function () {
         function VGridAttributesDataHandler(element, vGrid) {
+            this.isSet = false;
             this.element = element;
             this.vGrid = vGrid;
         }
@@ -19,12 +20,18 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             this.element.onblur = this.onBlur.bind(this);
         };
         VGridAttributesDataHandler.prototype.valueChanged = function (newValue) {
-            var checkValue = this.editFormater.toView(newValue);
-            if (checkValue !== this.tempValue) {
+            if (this.isSet) {
+                var checkValue = this.editFormater.toView(newValue);
+                if (checkValue !== this.tempValue) {
+                    this.element.value = this.displayFormater.toView(newValue);
+                }
+            }
+            else {
                 this.element.value = this.displayFormater.toView(newValue);
             }
         };
         VGridAttributesDataHandler.prototype.onFocus = function () {
+            this.isSet = true;
             this.element.value = this.editFormater.toView(this.value);
             this.tempValue = this.element.value;
         };
@@ -32,6 +39,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             if (this.tempValue === this.element.value) {
                 this.onChanged();
             }
+            this.isSet = false;
         };
         VGridAttributesDataHandler.prototype.onChanged = function () {
             this.value = this.editFormater.fromView(this.element.value);

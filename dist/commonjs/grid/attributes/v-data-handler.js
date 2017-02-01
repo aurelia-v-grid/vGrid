@@ -11,6 +11,7 @@ var aurelia_framework_1 = require("aurelia-framework");
 var v_grid_1 = require("../v-grid");
 var VGridAttributesDataHandler = (function () {
     function VGridAttributesDataHandler(element, vGrid) {
+        this.isSet = false;
         this.element = element;
         this.vGrid = vGrid;
     }
@@ -20,12 +21,18 @@ var VGridAttributesDataHandler = (function () {
         this.element.onblur = this.onBlur.bind(this);
     };
     VGridAttributesDataHandler.prototype.valueChanged = function (newValue) {
-        var checkValue = this.editFormater.toView(newValue);
-        if (checkValue !== this.tempValue) {
+        if (this.isSet) {
+            var checkValue = this.editFormater.toView(newValue);
+            if (checkValue !== this.tempValue) {
+                this.element.value = this.displayFormater.toView(newValue);
+            }
+        }
+        else {
             this.element.value = this.displayFormater.toView(newValue);
         }
     };
     VGridAttributesDataHandler.prototype.onFocus = function () {
+        this.isSet = true;
         this.element.value = this.editFormater.toView(this.value);
         this.tempValue = this.element.value;
     };
@@ -33,6 +40,7 @@ var VGridAttributesDataHandler = (function () {
         if (this.tempValue === this.element.value) {
             this.onChanged();
         }
+        this.isSet = false;
     };
     VGridAttributesDataHandler.prototype.onChanged = function () {
         this.value = this.editFormater.fromView(this.element.value);

@@ -12,6 +12,7 @@ export declare class VGridAttributesDataHandler {
     private displayFormater;
     private editFormater;
     private tempValue;
+    private isSet;
     constructor(element: HTMLElement, vGrid: VGrid);
     attached(): void;
     valueChanged(newValue: any): void;
