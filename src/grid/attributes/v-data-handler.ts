@@ -25,6 +25,7 @@ export class VGridAttributesDataHandler {
     private displayFormater: { fromView: Function; toView: Function };
     private editFormater: { fromView: Function; toView: Function };
     private tempValue: any;
+    private isSet: boolean = false;
 
 
 
@@ -52,8 +53,12 @@ export class VGridAttributesDataHandler {
      * 
      */
     public valueChanged(newValue: any) {
-        let checkValue = this.editFormater.toView(newValue);
-        if (checkValue !== this.tempValue) {
+        if (this.isSet) {
+            let checkValue = this.editFormater.toView(newValue);
+            if (checkValue !== this.tempValue) {
+                (this.element as HTMLInputElement).value = this.displayFormater.toView(newValue);
+            }
+        } else {
             (this.element as HTMLInputElement).value = this.displayFormater.toView(newValue);
         }
     }
@@ -65,6 +70,7 @@ export class VGridAttributesDataHandler {
      * 
      */
     public onFocus() {
+        this.isSet = true;
         (this.element as HTMLInputElement).value = this.editFormater.toView(this.value);
         this.tempValue = (this.element as HTMLInputElement).value;
     }
@@ -77,8 +83,9 @@ export class VGridAttributesDataHandler {
      */
     public onBlur() {
         if (this.tempValue === (this.element as HTMLInputElement).value) {
-                this.onChanged();
+            this.onChanged();
         }
+        this.isSet = false;
     }
 
 
