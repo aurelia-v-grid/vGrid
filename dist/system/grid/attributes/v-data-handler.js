@@ -31,7 +31,10 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                     this.element.onblur = this.onBlur.bind(this);
                 };
                 VGridAttributesDataHandler.prototype.valueChanged = function (newValue) {
-                    this.element.value = this.displayFormater.toView(newValue);
+                    var checkValue = this.editFormater.toView(newValue);
+                    if (checkValue !== this.tempValue) {
+                        this.element.value = this.displayFormater.toView(newValue);
+                    }
                 };
                 VGridAttributesDataHandler.prototype.onFocus = function () {
                     this.element.value = this.editFormater.toView(this.value);
