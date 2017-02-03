@@ -8,6 +8,16 @@
 * [demo link](https://vegarringdal.github.io/vGridDemo/) (not updated all the time, not very fancy atm)
 
 
+###How to get up and running to test sample ( clone, npm install and jspm install)
+* ```git clone https://github.com/vegarringdal/vGrid```
+* ```npm install``` on root (cd vgrid after clone)
+* ```npm install && jspm install``` under sample (not needed if you are not running sample/gulp watch)
+
+###How to build and run sample
+* ```gulp watch``` to run sample, sample refreshes if you make changes to sample or grid code
+* ```gulp build``` to build plugin <- you dont need to run this unless you are installing the grid from you private repo after changes
+
+
 ###Updates..
 
 ---
