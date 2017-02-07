@@ -27,5 +27,3 @@ System.register(["./interfaces"], function (exports_1, context_1) {
         }
     };
 });
-
-//# sourceMappingURL=index.js.map

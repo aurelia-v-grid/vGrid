@@ -33,5 +33,3 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
     ], VGridFooter);
     exports.VGridFooter = VGridFooter;
 });
-
-//# sourceMappingURL=v-grid-footer.js.map

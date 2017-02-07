@@ -82,5 +82,3 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
     ], VGridAttributesSort);
     exports.VGridAttributesSort = VGridAttributesSort;
 });
-
-//# sourceMappingURL=v-sort.js.map

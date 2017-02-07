@@ -123,5 +123,3 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
     }());
     exports.ContextMenu = ContextMenu;
 });
-
-//# sourceMappingURL=contextMenu.js.map

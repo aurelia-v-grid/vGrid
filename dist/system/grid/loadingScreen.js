@@ -60,5 +60,3 @@ System.register(["aurelia-framework"], function (exports_1, context_1) {
         }
     };
 });
-
-//# sourceMappingURL=loadingScreen.js.map

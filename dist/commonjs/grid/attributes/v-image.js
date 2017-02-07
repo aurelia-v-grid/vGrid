@@ -33,5 +33,3 @@ VGridAttributesImageFix = __decorate([
     __metadata("design:paramtypes", [HTMLImageElement, v_grid_1.VGrid])
 ], VGridAttributesImageFix);
 exports.VGridAttributesImageFix = VGridAttributesImageFix;
-
-//# sourceMappingURL=v-image.js.map

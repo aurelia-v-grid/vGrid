@@ -33,5 +33,3 @@ VGridGroupElement = __decorate([
     __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
 ], VGridGroupElement);
 exports.VGridGroupElement = VGridGroupElement;
-
-//# sourceMappingURL=v-grid-group-element.js.map

@@ -359,5 +359,3 @@ VGridDragDropCol = __decorate([
     __metadata("design:paramtypes", [Element, v_grid_1.VGrid])
 ], VGridDragDropCol);
 exports.VGridDragDropCol = VGridDragDropCol;
-
-//# sourceMappingURL=v-drag-drop-col.js.map

@@ -122,5 +122,3 @@ var ContextMenu = (function () {
     return ContextMenu;
 }());
 exports.ContextMenu = ContextMenu;
-
-//# sourceMappingURL=contextMenu.js.map

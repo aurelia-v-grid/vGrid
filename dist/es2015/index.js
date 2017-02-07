@@ -9,5 +9,3 @@ define(["require", "exports", "./interfaces"], function (require, exports, inter
     }
     exports.configure = configure;
 });
-
-//# sourceMappingURL=index.js.map

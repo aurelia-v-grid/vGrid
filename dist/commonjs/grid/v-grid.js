@@ -198,5 +198,3 @@ __decorate([
     __metadata("design:type", Boolean)
 ], VGrid.prototype, "attVariableRowHeight", void 0);
 exports.VGrid = VGrid;
-
-//# sourceMappingURL=v-grid.js.map

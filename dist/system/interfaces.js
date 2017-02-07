@@ -158,5 +158,3 @@ System.register(["aurelia-framework", "./grid/htmlCache", "./grid/controller", "
         }
     };
 });
-
-//# sourceMappingURL=interfaces.js.map

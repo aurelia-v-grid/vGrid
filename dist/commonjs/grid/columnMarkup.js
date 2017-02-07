@@ -201,5 +201,3 @@ var ColumnMarkup = (function () {
     return ColumnMarkup;
 }());
 exports.ColumnMarkup = ColumnMarkup;
-
-//# sourceMappingURL=columnMarkup.js.map

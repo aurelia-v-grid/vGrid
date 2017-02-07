@@ -94,5 +94,3 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.ViewSlots = ViewSlots;
 });
-
-//# sourceMappingURL=viewSlots.js.map

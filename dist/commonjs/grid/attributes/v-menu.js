@@ -154,5 +154,3 @@ VGridAttributeMenu = __decorate([
     __metadata("design:paramtypes", [Element, v_grid_1.VGrid])
 ], VGridAttributeMenu);
 exports.VGridAttributeMenu = VGridAttributeMenu;
-
-//# sourceMappingURL=v-menu.js.map

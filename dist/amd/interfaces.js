@@ -27,5 +27,3 @@ define(["require", "exports", "aurelia-framework", "./grid/htmlCache", "./grid/c
     exports.ArrayGrouping = arrayGrouping_1.ArrayGrouping;
     exports.Footer = footer_1.Footer;
 });
-
-//# sourceMappingURL=interfaces.js.map

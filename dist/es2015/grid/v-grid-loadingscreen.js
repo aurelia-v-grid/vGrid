@@ -33,5 +33,3 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
     ], VGridLoadingScreen);
     exports.VGridLoadingScreen = VGridLoadingScreen;
 });
-
-//# sourceMappingURL=v-grid-loadingscreen.js.map

@@ -257,5 +257,3 @@ var DataSource = (function () {
     return DataSource;
 }());
 exports.DataSource = DataSource;
-
-//# sourceMappingURL=dataSource.js.map

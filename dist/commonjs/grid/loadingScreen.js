@@ -48,5 +48,3 @@ var LoadingScreen = (function () {
     return LoadingScreen;
 }());
 exports.LoadingScreen = LoadingScreen;
-
-//# sourceMappingURL=loadingScreen.js.map

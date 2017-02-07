@@ -191,5 +191,3 @@ VGridAttributesFilter = __decorate([
     __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
 ], VGridAttributesFilter);
 exports.VGridAttributesFilter = VGridAttributesFilter;
-
-//# sourceMappingURL=v-filter.js.map

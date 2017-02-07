@@ -140,5 +140,3 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.RowDataBinder = RowDataBinder;
 });
-
-//# sourceMappingURL=rowDataBinder.js.map

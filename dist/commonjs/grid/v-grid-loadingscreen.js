@@ -33,5 +33,3 @@ VGridLoadingScreen = __decorate([
     __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
 ], VGridLoadingScreen);
 exports.VGridLoadingScreen = VGridLoadingScreen;
-
-//# sourceMappingURL=v-grid-loadingscreen.js.map

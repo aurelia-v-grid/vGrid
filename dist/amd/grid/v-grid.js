@@ -183,5 +183,3 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
     ], VGrid.prototype, "attVariableRowHeight", void 0);
     exports.VGrid = VGrid;
 });
-
-//# sourceMappingURL=v-grid.js.map

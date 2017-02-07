@@ -201,5 +201,3 @@ define(["require", "exports", "aurelia-framework", "./columnMarkupHelper"], func
     }());
     exports.ColumnMarkup = ColumnMarkup;
 });
-
-//# sourceMappingURL=columnMarkup.js.map

@@ -175,5 +175,3 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.ArrayFilter = ArrayFilter;
 });
-
-//# sourceMappingURL=arrayFilter.js.map

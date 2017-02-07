@@ -34,5 +34,3 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
     ], VGridAttributesOnChange);
     exports.VGridAttributesOnChange = VGridAttributesOnChange;
 });
-
-//# sourceMappingURL=v-changed.js.map

@@ -25,5 +25,3 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
     }());
     exports.Footer = Footer;
 });
-
-//# sourceMappingURL=footer.js.map

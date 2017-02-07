@@ -33,5 +33,3 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
     ], VGridAttributesImageFix);
     exports.VGridAttributesImageFix = VGridAttributesImageFix;
 });
-
-//# sourceMappingURL=v-image.js.map

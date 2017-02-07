@@ -83,5 +83,3 @@ VGridAttributesDataHandler = __decorate([
     __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
 ], VGridAttributesDataHandler);
 exports.VGridAttributesDataHandler = VGridAttributesDataHandler;
-
-//# sourceMappingURL=v-data-handler.js.map

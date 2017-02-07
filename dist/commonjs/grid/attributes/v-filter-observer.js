@@ -88,5 +88,3 @@ VGridAttributesFilterObserver = __decorate([
     __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
 ], VGridAttributesFilterObserver);
 exports.VGridAttributesFilterObserver = VGridAttributesFilterObserver;
-
-//# sourceMappingURL=v-filter-observer.js.map

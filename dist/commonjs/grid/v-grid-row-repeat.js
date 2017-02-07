@@ -48,5 +48,3 @@ VGridElementRowRepeat = __decorate([
     __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
 ], VGridElementRowRepeat);
 exports.VGridElementRowRepeat = VGridElementRowRepeat;
-
-//# sourceMappingURL=v-grid-row-repeat.js.map

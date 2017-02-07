@@ -37,5 +37,3 @@ System.register(["aurelia-framework", "./mainMarkupHtmlString"], function (expor
         }
     };
 });
-
-//# sourceMappingURL=mainMarkup.js.map

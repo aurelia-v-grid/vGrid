@@ -49,5 +49,3 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
     }());
     exports.LoadingScreen = LoadingScreen;
 });
-
-//# sourceMappingURL=loadingScreen.js.map

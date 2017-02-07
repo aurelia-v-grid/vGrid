@@ -33,5 +33,3 @@ VGridFooter = __decorate([
     __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
 ], VGridFooter);
 exports.VGridFooter = VGridFooter;
-
-//# sourceMappingURL=v-grid-footer.js.map

@@ -178,5 +178,3 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.GridConnector = GridConnector;
 });
-
-//# sourceMappingURL=gridConnector.js.map

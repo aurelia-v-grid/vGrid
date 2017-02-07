@@ -154,5 +154,3 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
     ], VGridAttributeMenu);
     exports.VGridAttributeMenu = VGridAttributeMenu;
 });
-
-//# sourceMappingURL=v-menu.js.map

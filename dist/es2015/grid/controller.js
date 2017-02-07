@@ -345,5 +345,3 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.Controller = Controller;
 });
-
-//# sourceMappingURL=controller.js.map

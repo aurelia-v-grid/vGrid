@@ -33,5 +33,3 @@ VGridGroupRow = __decorate([
     __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
 ], VGridGroupRow);
 exports.VGridGroupRow = VGridGroupRow;
-
-//# sourceMappingURL=v-grid-group-row.js.map

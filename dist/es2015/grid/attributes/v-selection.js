@@ -67,5 +67,3 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
     ], VGridAttributesSelection);
     exports.VGridAttributesSelection = VGridAttributesSelection;
 });
-
-//# sourceMappingURL=v-selection.js.map

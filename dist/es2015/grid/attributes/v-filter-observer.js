@@ -88,5 +88,3 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
     ], VGridAttributesFilterObserver);
     exports.VGridAttributesFilterObserver = VGridAttributesFilterObserver;
 });
-
-//# sourceMappingURL=v-filter-observer.js.map

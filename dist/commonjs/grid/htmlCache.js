@@ -70,5 +70,3 @@ var HtmlCache = (function () {
     return HtmlCache;
 }());
 exports.HtmlCache = HtmlCache;
-
-//# sourceMappingURL=htmlCache.js.map

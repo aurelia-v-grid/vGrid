@@ -264,5 +264,3 @@ var RowClickHandler = (function () {
     return RowClickHandler;
 }());
 exports.RowClickHandler = RowClickHandler;
-
-//# sourceMappingURL=rowClickHandler.js.map

@@ -70,5 +70,3 @@ VGridContextmenu = __decorate([
     __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
 ], VGridContextmenu);
 exports.VGridContextmenu = VGridContextmenu;
-
-//# sourceMappingURL=v-grid-contextmenu.js.map

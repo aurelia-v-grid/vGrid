@@ -168,5 +168,3 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
     ], VGridElementColConfig);
     exports.VGridElementColConfig = VGridElementColConfig;
 });
-
-//# sourceMappingURL=v-grid-col.js.map

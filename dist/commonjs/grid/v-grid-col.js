@@ -168,5 +168,3 @@ VGridElementColConfig = __decorate([
     __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
 ], VGridElementColConfig);
 exports.VGridElementColConfig = VGridElementColConfig;
-
-//# sourceMappingURL=v-grid-col.js.map

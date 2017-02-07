@@ -154,5 +154,3 @@ VGridAttributesResizeCol = __decorate([
     __metadata("design:paramtypes", [Element, v_grid_1.VGrid])
 ], VGridAttributesResizeCol);
 exports.VGridAttributesResizeCol = VGridAttributesResizeCol;
-
-//# sourceMappingURL=v-resize-col.js.map

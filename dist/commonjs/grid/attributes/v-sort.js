@@ -82,5 +82,3 @@ VGridAttributesSort = __decorate([
     __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
 ], VGridAttributesSort);
 exports.VGridAttributesSort = VGridAttributesSort;
-
-//# sourceMappingURL=v-sort.js.map

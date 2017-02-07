@@ -23,5 +23,3 @@ var MainMarkup = (function () {
     return MainMarkup;
 }());
 exports.MainMarkup = MainMarkup;
-
-//# sourceMappingURL=mainMarkup.js.map

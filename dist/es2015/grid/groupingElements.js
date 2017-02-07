@@ -89,5 +89,3 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
     }());
     exports.GroupingElements = GroupingElements;
 });
-
-//# sourceMappingURL=groupingElements.js.map

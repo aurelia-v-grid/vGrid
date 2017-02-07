@@ -83,5 +83,3 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
     ], VGridAttributesDataHandler);
     exports.VGridAttributesDataHandler = VGridAttributesDataHandler;
 });
-
-//# sourceMappingURL=v-data-handler.js.map

@@ -24,5 +24,3 @@ var Footer = (function () {
     return Footer;
 }());
 exports.Footer = Footer;
-
-//# sourceMappingURL=footer.js.map

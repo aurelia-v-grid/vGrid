@@ -34,5 +34,3 @@ VGridAttributesOnChange = __decorate([
     __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
 ], VGridAttributesOnChange);
 exports.VGridAttributesOnChange = VGridAttributesOnChange;
-
-//# sourceMappingURL=v-changed.js.map

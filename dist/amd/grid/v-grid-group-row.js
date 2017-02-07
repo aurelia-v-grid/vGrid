@@ -33,5 +33,3 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
     ], VGridGroupRow);
     exports.VGridGroupRow = VGridGroupRow;
 });
-
-//# sourceMappingURL=v-grid-group-row.js.map

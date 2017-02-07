@@ -72,5 +72,3 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.HtmlCache = HtmlCache;
 });
-
-//# sourceMappingURL=htmlCache.js.map

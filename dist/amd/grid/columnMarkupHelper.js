@@ -176,5 +176,3 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.ColumnMarkupHelper = ColumnMarkupHelper;
 });
-
-//# sourceMappingURL=columnMarkupHelper.js.map

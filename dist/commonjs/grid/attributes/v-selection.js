@@ -67,5 +67,3 @@ VGridAttributesSelection = __decorate([
     __metadata("design:paramtypes", [HTMLInputElement, v_grid_1.VGrid])
 ], VGridAttributesSelection);
 exports.VGridAttributesSelection = VGridAttributesSelection;
-
-//# sourceMappingURL=v-selection.js.map
