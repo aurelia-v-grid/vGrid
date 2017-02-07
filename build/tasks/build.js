@@ -42,22 +42,22 @@ var tsProjectSystem = ts.createProject('./tsconfig.json', {
 function build(tsProject, outputPath) {
   var tsResult = gulp.src(paths.dtsSrc.concat(paths.source))
     .pipe(plumber())
-    .pipe(changed(outputPath, {
+/*    .pipe(changed(outputPath, {
       extension: '.ts'
     }))
     .pipe(sourcemaps.init({
       loadMaps: true
-    }))
+    }))*/
     .pipe(tsProject());
 
   return merge([ // Merge the two output streams, so this task is finished when the IO of both operations is done. 
       tsResult.dts.pipe(gulp.dest(outputPath)),
       tsResult.js.pipe(gulp.dest(outputPath))
     ])
-    .pipe(sourcemaps.write('.', {
+/*    .pipe(sourcemaps.write('.', {
       includeContent: false,
       sourceRoot: paths.root
-    }))
+    }))*/
     .pipe(gulp.dest(outputPath))
 }
 
