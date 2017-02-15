@@ -13,7 +13,7 @@
     "noUnusedParameters": true,
     "suppressImplicitAnyIndexErrors": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitThis": false, //todo set to true
+    "noImplicitThis": false,
     "noUnusedLocals": true,
     "allowUnreachableCode":false,
     "removeComments": true,
