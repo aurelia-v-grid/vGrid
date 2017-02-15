@@ -1,6 +1,6 @@
 {
   "name": "aurelia-v-grid",
-  "version": "1.0.0-beta.0.0.55",
+  "version": "1.0.0-beta.0.0.56",
   "description": "Aurelia-v-grid",
   "keywords": [
     "aurelia",
@@ -14,8 +14,8 @@
   },
   "license": "MIT",
   "author": "Vegar Ringdal (vegar.ringdal@gmail.com)",
-  "main": "dist/amd/index.js",
-  "typings": "dist/amd/index.d.ts",
+  "main": "dist/commonjs/index.js",
+  "typings": "dist/commonjs/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/vegarringdal/vGrid"
@@ -52,9 +52,9 @@
   "jspm": {
     "registry": "npm",
     "main": "index",
-    "format": "amd",
+    "format": "commonjs",
     "directories": {
-      "dist": "dist/amd"
+      "dist": "dist/commonjs"
     },
     "devDependencies": {}
   },
