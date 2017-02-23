@@ -1,13 +1,13 @@
 import { inject, customAttribute, bindable } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
 import {
-  ColumBindingContextObject,
-  DragDropShardContext,
+  ColumBindingContextObjectInterface,
+  DragDropShardContextInterface,
   GroupingElements,
   Controller,
-  BindingContext,
-  OverrideContext,
-  TargetData
+  BindingContextInterface,
+  OverrideContextInterface,
+  TargetDataInterface
 } from '../../interfaces';
 
 
@@ -27,11 +27,11 @@ export class VGridDragDropCol {
   private vGridElement: Element;
   private controller: Controller;
   private groupingElements: GroupingElements;
-  private sharedContext: DragDropShardContext;
+  private sharedContext: DragDropShardContextInterface;
   private entered: boolean;
   private curColNo: number;
-  private bindingContext: BindingContext;
-  private overrideContext: OverrideContext;
+  private bindingContext: BindingContextInterface;
+  private overrideContext: OverrideContextInterface;
   private onDragstartBinded: EventListenerOrEventListenerObject;
   private onDragenterBinded: EventListenerOrEventListenerObject;
   private onDragoverBinded: EventListenerOrEventListenerObject;
@@ -39,8 +39,8 @@ export class VGridDragDropCol {
   private onDragOutSideBinded: EventListenerOrEventListenerObject;
   private colType: string;
   private colNo: number;
-  private context: ColumBindingContextObject;
-  private columnsArray: ColumBindingContextObject[];
+  private context: ColumBindingContextObjectInterface;
+  private columnsArray: ColumBindingContextObjectInterface[];
   private isPanel: boolean;
   private dragColumnBlock: HTMLElement;
   private mouseMoveTimer: any;
@@ -72,7 +72,7 @@ export class VGridDragDropCol {
    * todo description
    * 
    */
-  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+  public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
@@ -240,7 +240,7 @@ export class VGridDragDropCol {
         if (!left) {
           this.switchColumns(({
             colType: 'left'
-          } as TargetData));
+          } as TargetDataInterface));
         }
       }
 
@@ -256,7 +256,7 @@ export class VGridDragDropCol {
         if (!right) {
           this.switchColumns(({
             colType: 'right'
-          } as TargetData));
+          } as TargetDataInterface));
         }
       }
 
@@ -381,7 +381,7 @@ export class VGridDragDropCol {
    * todo description
    * 
    */
-  private switchColumns(result: TargetData): void {
+  private switchColumns(result: TargetDataInterface): void {
 
     // get vars 
     let width: number;
@@ -546,7 +546,7 @@ export class VGridDragDropCol {
    * todo description
    * 
    */
-  private getTargetData(curTarget: Element): TargetData {
+  private getTargetData(curTarget: Element): TargetDataInterface {
 
     // set variables
     let draggableTarget: Element = null;
@@ -590,8 +590,8 @@ export class VGridDragDropCol {
 
     let curColType: string = null;
     let curColNo: number = null;
-    let curContext: ColumBindingContextObject = null;
-    let curColumnsArray: ColumBindingContextObject[] = null;
+    let curContext: ColumBindingContextObjectInterface = null;
+    let curColumnsArray: ColumBindingContextObjectInterface[] = null;
     let isPanel = false;
 
     // if ok, get variables we need
@@ -616,7 +616,7 @@ export class VGridDragDropCol {
       context: curContext,
       columnsArray: curColumnsArray,
       panel: isPanel
-    } as TargetData);
+    } as TargetDataInterface);
 
   }
 

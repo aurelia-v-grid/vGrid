@@ -3,11 +3,11 @@ import { VGrid } from './v-grid';
 import {
   ViewCompiler,
   ViewResources,
-  ColConfig,
-  BindingContext,
+  ColConfigInterface,
+  BindingContextInterface,
   CustomTargetInstruction,
   CustomBehaviorInstruction,
-  OverrideContext
+  OverrideContextInterface
 } from '../interfaces';
 
 
@@ -60,8 +60,8 @@ export class VGridElementColConfig {
   private colRowTemplate: string;
   private colHeaderTemplate: string;
   private colCss: string;
-  private bindingContext: BindingContext;
-  private overrideContext: OverrideContext;
+  private bindingContext: BindingContextInterface;
+  private overrideContext: OverrideContextInterface;
 
   @bindable({ attribute: 'col-width' }) private colWidth: number;
   @bindable({ attribute: 'col-field' }) private colField: string;
@@ -100,7 +100,7 @@ export class VGridElementColConfig {
    * We add this to the vGrid class colConfig to use later when grid is generated
    * 
    */
-  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+  public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
@@ -127,7 +127,7 @@ export class VGridElementColConfig {
       colFilterTop: this.checkBool(this.colFilterTop),
       colCss: this.colCss,
       colType: this.colType || 'text'
-    } as ColConfig));
+    } as ColConfigInterface));
   }
 
 

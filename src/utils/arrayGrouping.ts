@@ -1,13 +1,13 @@
-import { Entity, GroupingObj } from '../interfaces'; // todo make a interface
+import { EntityInterface, GroupingObjInterface } from '../interfaces'; // todo make a interface
 
 
 /**
  * This takes care the generating the flat array the grid can use for grouping
- * 
+ *
  */
 export class ArrayGrouping {
-  private groups: Entity[][];
-  private grouping: GroupingObj[];
+  private groups: EntityInterface[][];
+  private grouping: GroupingObjInterface[];
   private expanded: Set<string>;
 
 
@@ -21,7 +21,7 @@ export class ArrayGrouping {
 
   /**
    * todo description
-   * 
+   *
    */
   public reset() {
     this.groups = [];
@@ -33,9 +33,9 @@ export class ArrayGrouping {
 
   /**
    * todo description
-   * 
+   *
    */
-  public group(arrayToGroup: Entity[], grouping: GroupingObj[], keepExpanded?: boolean) {
+  public group(arrayToGroup: EntityInterface[], grouping: GroupingObjInterface[], keepExpanded?: boolean) {
 
     // if grouping
     if (grouping.length > 0) {
@@ -45,21 +45,21 @@ export class ArrayGrouping {
       }
 
       // variable to hold our groups
-      let groups: Entity[][] = [];
+      const groups: EntityInterface[][] = [];
 
       grouping.forEach((groupBy, groupNo) => {
 
         if (groupNo === 0) {
 
           // create main group and add to groups array
-          let mainGroup = this.groupMain(arrayToGroup, groupBy.field, groupNo);
+          const mainGroup = this.groupMain(arrayToGroup, groupBy.field, groupNo);
           groups.push(mainGroup);
 
         } else {
 
           // get last group created, and group children
-          let childGroupArray = groups[groups.length - 1];
-          let newSubGroup = this.groupChildren(childGroupArray, groupBy.field, groupNo);
+          const childGroupArray = groups[groups.length - 1];
+          const newSubGroup = this.groupChildren(childGroupArray, groupBy.field, groupNo);
           groups.push(newSubGroup);
 
         }
@@ -94,16 +94,16 @@ export class ArrayGrouping {
 
   /**
    * returns current grouping
-   * 
+   *
    */
-  public getGrouping(): GroupingObj[] {
+  public getGrouping(): GroupingObjInterface[] {
     return this.grouping;
   }
 
 
   /**
    * expands 1 group by id passed or all groups if no params
-   * 
+   *
    */
   public expand(id: string, array?: Set<string>) {
     let all = id ? false : true; // if no id, then all
@@ -117,12 +117,12 @@ export class ArrayGrouping {
       array = new Set([]);
     }
     let subGroup: Function;
-    let collection: Entity[] = [];
-    let mainGroups = this.groups[0];
+    const collection: EntityInterface[] = [];
+    const mainGroups = this.groups[0];
 
     // lopp children
-    subGroup = (g: Entity) => {
-      g.__groupChildren.forEach((sg: Entity) => {
+    subGroup = (g: EntityInterface) => {
+      g.__groupChildren.forEach((sg: EntityInterface) => {
         collection.push(sg);
         switch (true) {
           case all:
@@ -144,7 +144,7 @@ export class ArrayGrouping {
     };
 
     // loop main groups
-    mainGroups.forEach((g: Entity) => {
+    mainGroups.forEach((g: EntityInterface) => {
       collection.push(g);
       switch (true) {
         case all:
@@ -169,18 +169,18 @@ export class ArrayGrouping {
 
   /**
    * collapses 1 by id or all if no params is passed
-   * 
+   *
    */
   public collapse(id: string) {
-    let all = id ? false : true; // if no id, then all
+    const all = id ? false : true; // if no id, then all
     id = id === undefined ? null : id;
     let subGroup: Function;
-    let collection: Entity[] = [];
-    let mainGroups = this.groups[0];
+    const collection: EntityInterface[] = [];
+    const mainGroups = this.groups[0];
 
     // lopp children
-    subGroup = (g: Entity) => {
-      g.__groupChildren.forEach((sg: Entity) => {
+    subGroup = (g: EntityInterface) => {
+      g.__groupChildren.forEach((sg: EntityInterface) => {
 
         switch (true) {
           case all:
@@ -206,7 +206,7 @@ export class ArrayGrouping {
     };
 
     // loop main groups
-    mainGroups.forEach((g: Entity) => {
+    mainGroups.forEach((g: EntityInterface) => {
       collection.push(g);
       switch (true) {
         case all:
@@ -235,11 +235,11 @@ export class ArrayGrouping {
 
   /**
    * creates main grouping
-   * 
+   *
    */
-  private groupMain(array: Entity[], groupBy: string, groupNo: number) {
-    let tempGroupArray: Entity[] = [];
-    let curGroup: Entity = ({} as Entity);
+  private groupMain(array: EntityInterface[], groupBy: string, groupNo: number) {
+    const tempGroupArray: EntityInterface[] = [];
+    let curGroup: EntityInterface = ({} as EntityInterface);
     let tempValue: string = null;
 
     // first level, here we use array
@@ -275,23 +275,23 @@ export class ArrayGrouping {
 
   /**
    * loops the children of parant and creates grouping, then loops the cridren of that etc
-   * 
+   *
    */
-  private groupChildren(childGroupArray: Entity[], groupBy: string, groupNo: number) {
-    let tempGroupArray: Entity[] = [];
+  private groupChildren(childGroupArray: EntityInterface[], groupBy: string, groupNo: number) {
+    const tempGroupArray: EntityInterface[] = [];
 
-    let curGroup: Entity = ({} as Entity);
+    let curGroup: EntityInterface = ({} as EntityInterface);
 
     // loop groups
-    childGroupArray.forEach((element: Entity) => {
+    childGroupArray.forEach((element: EntityInterface) => {
       let tempValue: string = null;
       // loop children
-      let rebuiltChildrenArray: Entity[] = [];
-      element.__groupChildren.forEach((child: Entity) => {
+      const rebuiltChildrenArray: EntityInterface[] = [];
+      element.__groupChildren.forEach((child: EntityInterface) => {
 
         if (child[groupBy] !== tempValue) {
-          let gidm = child[groupBy] || 'blank';
-          let gidc = element.__groupID || 'blank';
+          const gidm = child[groupBy] || 'blank';
+          const gidc = element.__groupID || 'blank';
           curGroup = {
             __groupName: child[groupBy],
             __groupID: gidm + '-' + gidc,

@@ -1,4 +1,4 @@
-import { RowCache, HeaderCache } from '../interfaces';
+import { RowCacheInterface, HeaderCacheInterface } from '../interfaces';
 
 /**
  * Holds all the html elements, so we have 1 place to get em all
@@ -31,8 +31,8 @@ export class HtmlCache {
     public avg_main_rows: NodeListOf<any>;
     public avg_right_rows: NodeListOf<any>;
     public avg_group_rows: NodeListOf<any>;
-    public rowCache: RowCache[];
-    public headerCache: HeaderCache;
+    public rowCache: RowCacheInterface[];
+    public headerCache: HeaderCacheInterface;
 
 
 
@@ -82,7 +82,7 @@ export class HtmlCache {
             mainRowViewSlot: null,
             rightRowViewSlot: null,
             groupRowViewSlot: null
-        } as HeaderCache);
+        } as HeaderCacheInterface);
     }
 
 

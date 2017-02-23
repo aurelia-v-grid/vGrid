@@ -16,12 +16,12 @@ import { LoadingScreen } from './loadingScreen';
 import { ContextMenu } from './contextMenu';
 import { Footer } from './footer';
 import {
-    ResizeShardContext,
+    ResizeShardContextInterface,
     GridConnectorInterface,
-    DragDropShardContext,
-    ColConfig,
-    BindingContext,
-    OverrideContext
+    DragDropShardContextInterface,
+    ColConfigInterface,
+    BindingContextInterface,
+    OverrideContextInterface
 } from '../interfaces';
 
 
@@ -37,9 +37,9 @@ export class VGrid {
     public container: Container;
     public viewResources: ViewResources;
     public taskQueue: TaskQueue;
-    public dragDropAttributeSharedContext: DragDropShardContext;
-    public resizeAttributeSharedContext: ResizeShardContext;
-    public colConfig: ColConfig[];
+    public dragDropAttributeSharedContext: DragDropShardContextInterface;
+    public resizeAttributeSharedContext: ResizeShardContextInterface;
+    public colConfig: ColConfigInterface[];
     public colRepeater: boolean;
     public colRepeatRowTemplate: string;
     public colRepeatRowHeaderTemplate: string;
@@ -62,9 +62,9 @@ export class VGrid {
     public groupingElements: GroupingElements;
     public loadingScreen: LoadingScreen;
     public contextMenu: ContextMenu;
-    public bindingContext: BindingContext;
-    public overrideContext: OverrideContext;
-    public backupColConfig: ColConfig[];
+    public bindingContext: BindingContextInterface;
+    public overrideContext: OverrideContextInterface;
+    public backupColConfig: ColConfigInterface[];
     public filterOperatorNames: any;
     public filterOperatorTranslationKeys: any;
     public loadingScreenTemplate: string;
@@ -80,7 +80,7 @@ export class VGrid {
     @bindable({ attribute: 'v-manual-sel' }) public attManualSelection: boolean;
     @bindable({ attribute: 'v-theme' }) public attTheme: string;
     @bindable({ attribute: 'v-row-on-draw' }) public attOnRowDraw: Function;
-    @bindable({ attribute: 'v-columns' }) public attColConfig: ColConfig[];
+    @bindable({ attribute: 'v-columns' }) public attColConfig: ColConfigInterface[];
     @bindable({ attribute: 'v-i18n' }) public attI18N: Function;
     @bindable({ attribute: 'v-data-delay' }) public attDataDelay: number;
     @bindable({ attribute: 'v-variable-row-height' }) public attVariableRowHeight: boolean;
@@ -100,8 +100,8 @@ export class VGrid {
         this.taskQueue = taskQueue;
 
         // used by attributes for holding data
-        this.dragDropAttributeSharedContext = ({} as DragDropShardContext);
-        this.resizeAttributeSharedContext = ({} as ResizeShardContext);
+        this.dragDropAttributeSharedContext = ({} as DragDropShardContextInterface);
+        this.resizeAttributeSharedContext = ({} as ResizeShardContextInterface);
 
         // use by v-grid-col element, that takes the data it gets and puts it in here
         this.colConfig = [];
@@ -202,7 +202,7 @@ export class VGrid {
 
 
 
-    public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+    public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
 
         // binding contexts, will need some for the views we create
         this.bindingContext = bindingContext;

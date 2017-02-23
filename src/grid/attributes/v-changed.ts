@@ -1,6 +1,6 @@
 import { inject, customAttribute} from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext} from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface} from '../../interfaces';
 
 // todo: look at adding option to disable this ?
 
@@ -16,8 +16,8 @@ import { BindingContext, OverrideContext} from '../../interfaces';
 export class VGridAttributesOnChange {
     private vGrid: VGrid;
     private element: HTMLElement;
-    private bindingContext: BindingContext;
-    private overrideContext: OverrideContext;
+    private bindingContext: BindingContextInterface;
+    private overrideContext: OverrideContextInterface;
 
 
 
@@ -54,7 +54,7 @@ export class VGridAttributesOnChange {
    * todo description
    * 
    */
-    public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+    public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
         this.bindingContext = bindingContext;
         this.overrideContext = overrideContext;
     }

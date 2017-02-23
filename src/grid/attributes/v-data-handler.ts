@@ -1,6 +1,6 @@
 import { inject, customAttribute, bindable } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext } from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 
 // todo: look at adding option to disable this ?
 
@@ -20,8 +20,8 @@ export class VGridAttributesDataHandler {
     @bindable private edit: string;
     private vGrid: VGrid;
     private element: HTMLElement;
-    private bindingContext: BindingContext;
-    private overrideContext: OverrideContext;
+    private bindingContext: BindingContextInterface;
+    private overrideContext: OverrideContextInterface;
     private displayFormater: { fromView: Function; toView: Function };
     private editFormater: { fromView: Function; toView: Function };
     private tempValue: any;
@@ -107,7 +107,7 @@ export class VGridAttributesDataHandler {
      * when attributes binds, get valueconverters and set value
      * 
      */
-    public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+    public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
         this.bindingContext = bindingContext;
         this.overrideContext = overrideContext;
         this.displayFormater = this.valueConverters(this.display);

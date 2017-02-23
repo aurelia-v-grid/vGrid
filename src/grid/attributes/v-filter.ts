@@ -1,6 +1,6 @@
 import { inject, customAttribute, bindable } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext, FilterObject } from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface, FilterObjectInterface } from '../../interfaces';
 
 
 /**
@@ -20,8 +20,8 @@ export class VGridAttributesFilter {
   @bindable private key: string;
   private vGrid: VGrid;
   private element: HTMLElement;
-  private bindingContext: BindingContext;
-  private overrideContext: OverrideContext;
+  private bindingContext: BindingContextInterface;
+  private overrideContext: OverrideContextInterface;
   private attribute: string;
   private filterOn: string;
   private filterOperator: string;
@@ -156,7 +156,7 @@ export class VGridAttributesFilter {
    * todo description
    * 
    */
-  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+  public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
@@ -209,11 +209,11 @@ export class VGridAttributesFilter {
    * todo description
    * 
    */
-  private updateFilter(curFilter: FilterObject[]): void {
+  private updateFilter(curFilter: FilterObjectInterface[]): void {
     let filterIndex = -1;
 
     // get index of filter
-    curFilter.forEach((filter: FilterObject, index: number) => {
+    curFilter.forEach((filter: FilterObjectInterface, index: number) => {
       if (filter.attribute === this.attribute && filter.key === this.key) {
         filterIndex = index;
       }

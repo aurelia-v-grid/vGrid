@@ -1,4 +1,4 @@
-import { Controller, RowCache, BindingContext } from '../interfaces';
+import { Controller, RowCacheInterface, BindingContextInterface } from '../interfaces';
 
 /**
  * Updates the data rows and sets correct row highlight
@@ -81,12 +81,12 @@ export class RowDataBinder {
    */
   private rebindRow(event: CustomEvent): void {
     let currentRow = event.detail.currentRow;
-    let rowCache: RowCache = event.detail.rowCache;
+    let rowCache: RowCacheInterface = event.detail.rowCache;
     let downScroll = event.detail.downScroll;
 
     let bindingContext = rowCache.bindingContext;
 
-    this.controller.getElement(currentRow, downScroll, (data: BindingContext) => {
+    this.controller.getElement(currentRow, downScroll, (data: BindingContextInterface) => {
 
       if (data.rowRef) {
         if (data.rowRef.__group) {
@@ -149,13 +149,13 @@ export class RowDataBinder {
    */
   private rebindAllRows(event: CustomEvent): void {
 
-    let rowCache: RowCache[] = event.detail.rowCache;
+    let rowCache: RowCacheInterface[] = event.detail.rowCache;
     let downScroll = event.detail.downScroll;
 
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < rowCache.length; i++) {
 
-      this.controller.getElement(rowCache[i].row, downScroll, (data: BindingContext) => {
+      this.controller.getElement(rowCache[i].row, downScroll, (data: BindingContextInterface) => {
 
         let bindingContext = rowCache[i].bindingContext;
 

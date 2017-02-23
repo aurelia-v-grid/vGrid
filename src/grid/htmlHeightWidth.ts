@@ -1,4 +1,4 @@
-import { ColConfig, ColumnBindingContext, Controller } from '../interfaces';
+import { ColConfigInterface, ColumnBindingContext, Controller } from '../interfaces';
 
 /**
  * Holds all the height and width of main markup
@@ -235,7 +235,7 @@ export class HtmlHeightWidth {
    * sets the correct with of columns based of the v-column or v-grid-col attributes
    * 
    */
-  public setWidthFromColumnConfig(colConfig: ColConfig[], groupsLength?: number): void {
+  public setWidthFromColumnConfig(colConfig: ColConfigInterface[], groupsLength?: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
     let main = 0;
     let right = 0;

@@ -1,7 +1,7 @@
 import { autoinject } from 'aurelia-framework';
 import { GridConnector } from 'aurelia-v-grid';
 import { DataSource } from 'aurelia-v-grid';
-import { Selection, ColConfig } from 'aurelia-v-grid';
+import { Selection, ColConfigInterface } from 'aurelia-v-grid';
 import { DummyDataGenerator } from './utils/dummyDataGenerator';
 
 @autoinject()
@@ -10,7 +10,7 @@ export class Welcome {
   public ds: DataSource;
   public gridConnector: GridConnector;
   private myCollection: any;
-  private myColumns: Array<ColConfig>;
+  private myColumns: ColConfigInterface[];
   constructor(public dummyDataGenerator: DummyDataGenerator) {
     this.dummyDataGenerator.generateData(5000, (data) => {
       this.myCollection = data;
@@ -31,7 +31,7 @@ export class Welcome {
         colField: 'index'
       }
 
-    ] as Array<ColConfig>);
+    ] as ColConfigInterface[]);
 
   }
 

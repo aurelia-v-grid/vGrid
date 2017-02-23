@@ -1,6 +1,6 @@
 import { inject, customAttribute, bindable } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext } from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 
 
 /**
@@ -17,8 +17,8 @@ export class VGridAttributesSort {
   @bindable private asc: string;
   private vGrid: VGrid;
   private element: HTMLElement;
-  private bindingContext: BindingContext;
-  private overrideContext: OverrideContext;
+  private bindingContext: BindingContextInterface;
+  private overrideContext: OverrideContextInterface;
   private attribute: string;
   private sortIcon: HTMLElement;
   private firstTime: boolean = true;
@@ -36,7 +36,7 @@ export class VGridAttributesSort {
    * todo description
    * 
    */
-  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+  public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
     this.attribute = this.field;

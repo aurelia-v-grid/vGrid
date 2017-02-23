@@ -1,6 +1,6 @@
 import {inject, customAttribute} from 'aurelia-framework';
 import {VGrid} from '../v-grid';
-import {BindingContext, OverrideContext } from '../../interfaces';
+import {BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 
 
 /**
@@ -16,8 +16,8 @@ export class VGridAttributesImageFix {
   private vGrid: VGrid;
   private element: HTMLImageElement;
   private value: string;
-  private bindingContext: BindingContext;
-  private overrideContext: OverrideContext;
+  private bindingContext: BindingContextInterface;
+  private overrideContext: OverrideContextInterface;
 
 
 
@@ -44,7 +44,7 @@ export class VGridAttributesImageFix {
    * todo description
    * 
    */
-  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+  public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
     this.element.src = '';

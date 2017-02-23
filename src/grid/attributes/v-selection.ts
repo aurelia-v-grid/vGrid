@@ -1,6 +1,6 @@
 import { bindable, inject, customAttribute } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-import { Controller, BindingContext, OverrideContext } from '../../interfaces';
+import { Controller, BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 
 
 /**
@@ -16,8 +16,8 @@ export class VGridAttributesSelection {
   private element: HTMLInputElement;
   private vGrid: VGrid;
   private controller: Controller;
-  private bindingContext: BindingContext;
-  private overrideContext: OverrideContext;
+  private bindingContext: BindingContextInterface;
+  private overrideContext: OverrideContextInterface;
   @bindable private selected: boolean;
   @bindable private type: string;
 
@@ -47,7 +47,7 @@ export class VGridAttributesSelection {
    * todo description
    * 
    */
-  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+  public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
   }

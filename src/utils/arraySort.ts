@@ -1,4 +1,4 @@
-import { SortObject, Entity } from '../interfaces';
+import { SortObjectInterface, EntityInterface } from '../interfaces';
 
 /**
  * This does all the sorting on the array passed in
@@ -6,8 +6,8 @@ import { SortObject, Entity } from '../interfaces';
  * 
  */
 export class ArraySort {
-  private lastSort: SortObject[];
-  private curSort: SortObject[];
+  private lastSort: SortObjectInterface[];
+  private curSort: SortObjectInterface[];
   private localeCompareCode: string;
   private localeCompareOptions: any;
 
@@ -54,7 +54,7 @@ export class ArraySort {
    * todo: why do I have this?
    * 
    */
-  public setLastSort(array: SortObject[]): void {
+  public setLastSort(array: SortObjectInterface[]): void {
     this.lastSort = array;
     this.curSort = array;
   }
@@ -66,7 +66,7 @@ export class ArraySort {
    * any = string
    * 
    */
-  public setOrderBy(param: SortObject | any, add?: boolean): void {
+  public setOrderBy(param: SortObjectInterface | any, add?: boolean): void {
     let sort: any;
     let useSetValue = false;
     if (param.asc === undefined) {
@@ -130,7 +130,7 @@ export class ArraySort {
    * Returns current sort by
    * 
    */
-  public getOrderBy(): SortObject[] {
+  public getOrderBy(): SortObjectInterface[] {
     return this.curSort;
   }
 
@@ -160,13 +160,13 @@ export class ArraySort {
    *  Runs sort on array passed in with params set earlier
    * 
    */
-  public runOrderbyOn(array: Entity[]): void {
+  public runOrderbyOn(array: EntityInterface[]): void {
 
     // super simple for now.. atleast I have som form for sort
     let thisSort = this.getOrderBy();
 
     // this is mix from different sources... from what I can tell it works now
-    array.sort((obj1: Entity, obj2: Entity) => {
+    array.sort((obj1: EntityInterface, obj2: EntityInterface) => {
       let result = 0;
 
       for (let i = 0; i < thisSort.length && result === 0; ++i) {

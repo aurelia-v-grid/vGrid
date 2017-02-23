@@ -1,7 +1,7 @@
-import { ColConfig } from 'aurelia-v-grid';
+import { ColConfigInterface } from 'aurelia-v-grid';
 
 export class Remember {
-    public columns: Array<ColConfig>;
+    public columns: ColConfigInterface[];
 
     constructor() {
         this.columns = null;

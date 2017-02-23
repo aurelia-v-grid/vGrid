@@ -1,4 +1,4 @@
-import { FilterObject, Entity } from '../interfaces'; // todo make a interface
+import { FilterObjectInterface, EntityInterface } from '../interfaces'; // todo make a interface
 
 
   /**
@@ -6,7 +6,7 @@ import { FilterObject, Entity } from '../interfaces'; // todo make a interface
    * 
    */
 export class ArrayFilter {
-  private lastFilter: FilterObject[];
+  private lastFilter: FilterObjectInterface[];
   private filterOperators: any = {
       '=': 1,   // equal
       '<=': 2,  // less than or equal to
@@ -42,7 +42,7 @@ export class ArrayFilter {
    * returns last filter set
    * 
    */
-  public getLastFilter(): FilterObject[] {
+  public getLastFilter(): FilterObjectInterface[] {
     return this.lastFilter;
   }
 
@@ -52,7 +52,7 @@ export class ArrayFilter {
    * runs query on the array
    * 
    */
-  public runQueryOn(objArray: Entity[], ObjFilter: FilterObject[]) {
+  public runQueryOn(objArray: EntityInterface[], ObjFilter: FilterObjectInterface[]) {
 
     this.lastFilter = ObjFilter;
 
@@ -60,7 +60,7 @@ export class ArrayFilter {
 
       // lets have true as default, so all that should not be there we set false..
       let result = true;
-      ObjFilter.forEach((x: FilterObject) => {
+      ObjFilter.forEach((x: FilterObjectInterface) => {
 
         // vars
         let rowValue: any;

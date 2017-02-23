@@ -1,11 +1,11 @@
 import { ArrayFilter } from './arrayFilter';
 import { ArraySort } from './arraySort';
 import { ArrayGrouping } from './arrayGrouping';
-import { SortObject, FilterObject, Entity, GroupingObj } from '../interfaces';
+import { SortObjectInterface, FilterObjectInterface, EntityInterface, GroupingObjInterface } from '../interfaces';
 
 /**
  * Helper class for calling internal sort, filter and grouping classes
- * 
+ *
  */
 export class ArrayUtils {
   public arrayFilter: ArrayFilter;
@@ -22,17 +22,17 @@ export class ArrayUtils {
 
   /**
    * orderby that also fixes grouping if set before
-   * 
+   *
    */
   public orderBy(
-    collection: Entity[],
-    attribute: string | SortObject,
+    collection: EntityInterface[],
+    attribute: string | SortObjectInterface,
     addToCurrentSort?: boolean
-  ): { fixed: Entity[], full: Entity[] } {
+  ): { fixed: EntityInterface[], full: EntityInterface[] } {
 
-    let groupingFields = this.getGrouping().map((data: GroupingObj) => {return data.field; });
-    let grouping = this.getGrouping();
-    let result: { fixed: Entity[], full: Entity[] } = {
+    const groupingFields = this.getGrouping().map((data: GroupingObjInterface) => data.field);
+    const grouping = this.getGrouping();
+    let result: { fixed: EntityInterface[], full: EntityInterface[] } = {
       fixed: null,
       full: null
     };
@@ -40,7 +40,7 @@ export class ArrayUtils {
     if (groupingFields.length > 0) {
 
       // get last sort
-      let lastSort = this.getOrderBy();
+      const lastSort = this.getOrderBy();
 
       // reset sort
       this.resetSort();
@@ -49,11 +49,11 @@ export class ArrayUtils {
       let exist = false;
 
       // if not adding, create new sort array
-      let newSort: SortObject[] = [];
+      const newSort: SortObjectInterface[] = [];
 
       let count = 0;
       // loop existing
-      lastSort.forEach((sort: SortObject) => {
+      lastSort.forEach((sort: SortObjectInterface) => {
         count++;
         if (groupingFields.indexOf(sort.attribute) !== -1 || addToCurrentSort) {
           newSort.push(sort);
@@ -85,7 +85,7 @@ export class ArrayUtils {
       this.runOrderbyOn(collection);
 
       // regroup
-      let groupedArray = this.group(collection, grouping, true);
+      const groupedArray = this.group(collection, grouping, true);
       // set result
       result = {
         fixed: groupedArray,
@@ -94,7 +94,7 @@ export class ArrayUtils {
     } else {
       if (!attribute) {
         // no attribute, just reset last sort...
-        let lastSort = this.getOrderBy();
+        const lastSort = this.getOrderBy();
         this.resetSort();
         this.setLastSort(lastSort);
         this.runOrderbyOn(collection);
@@ -119,9 +119,9 @@ export class ArrayUtils {
 
   /**
    * calls the group class group function
-   * 
+   *
    */
-  public group(array: Entity[], grouping: GroupingObj[], keepExpanded: boolean): Entity[] {
+  public group(array: EntityInterface[], grouping: GroupingObjInterface[], keepExpanded: boolean): EntityInterface[] {
     return this.arrayGrouping.group(array, grouping, keepExpanded);
   }
 
@@ -129,9 +129,9 @@ export class ArrayUtils {
 
   /**
    * returns current grouping
-   * 
+   *
    */
-  public getGrouping(): GroupingObj[] {
+  public getGrouping(): GroupingObjInterface[] {
     return this.arrayGrouping.getGrouping();
   }
 
@@ -139,9 +139,9 @@ export class ArrayUtils {
 
   /**
    * collapses 1 or all
-   * 
+   *
    */
-  public groupCollapse(id: string): Entity[] {
+  public groupCollapse(id: string): EntityInterface[] {
     return this.arrayGrouping.collapse(id);
   }
 
@@ -149,9 +149,9 @@ export class ArrayUtils {
 
   /**
    * expands 1 or all
-   * 
+   *
    */
-  public groupExpand(id: string): Entity[] {
+  public groupExpand(id: string): EntityInterface[] {
     return this.arrayGrouping.expand(id);
   }
 
@@ -159,9 +159,9 @@ export class ArrayUtils {
 
   /**
    * return current orderby used/set
-   * 
+   *
    */
-  public getOrderBy(): SortObject[] {
+  public getOrderBy(): SortObjectInterface[] {
     return this.arraySort.getOrderBy();
   }
 
@@ -169,9 +169,9 @@ export class ArrayUtils {
 
   /**
    * sets last sort used
-   * 
+   *
    */
-  public setLastSort(array: SortObject[]): void {
+  public setLastSort(array: SortObjectInterface[]): void {
       this.arraySort.setLastSort(array);
   }
 
@@ -179,9 +179,9 @@ export class ArrayUtils {
 
   /**
    * sets new orderby that will be next time
-   * 
+   *
    */
-  public setOrderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
+  public setOrderBy(attribute: string | SortObjectInterface, addToCurrentSort?: boolean): void {
     this.arraySort.setOrderBy(attribute, addToCurrentSort);
   }
 
@@ -189,9 +189,9 @@ export class ArrayUtils {
 
   /**
    * reuns orderby on array passed in
-   * 
+   *
    */
-  public runOrderbyOn(array: Entity[]): void {
+  public runOrderbyOn(array: EntityInterface[]): void {
     this.arraySort.runOrderbyOn(array);
   }
 
@@ -199,7 +199,7 @@ export class ArrayUtils {
 
   /**
    * sesets sorting to nothing
-   * 
+   *
    */
   public resetSort(defaultSortAttribute?: string): void {
     this.arraySort.reset(defaultSortAttribute);
@@ -209,7 +209,7 @@ export class ArrayUtils {
 
   /**
    * resets grouping
-   * 
+   *
    */
   public resetGrouping(): void {
     this.arrayGrouping.reset();
@@ -219,9 +219,9 @@ export class ArrayUtils {
 
   /**
    * returns current filter
-   * 
+   *
    */
-  public getCurrentFilter(): FilterObject[] {
+  public getCurrentFilter(): FilterObjectInterface[] {
     return this.arrayFilter.getLastFilter();
   }
 
@@ -229,9 +229,9 @@ export class ArrayUtils {
 
   /**
    * queries and returns new array
-   * 
+   *
    */
-  public query(array: Entity[], params: FilterObject[]): Entity[] {
+  public query(array: EntityInterface[], params: FilterObjectInterface[]): EntityInterface[] {
     return this.arrayFilter.runQueryOn(array, params);
   }
 
@@ -239,7 +239,7 @@ export class ArrayUtils {
   /**
    * sets local compare needed to sort language like german and norwegian
    * Needed since you might need local sorting on browser/os set to english local
-   * 
+   *
    */
   public setLocaleCompare(code: string, options?: any): void {
     this.arraySort.setLocaleCompare(code, options);

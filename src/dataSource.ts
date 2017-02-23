@@ -1,17 +1,24 @@
 import { Selection } from './selection';
 import { Collection } from './collection';
 import { ArrayUtils } from './utils/arrayUtils';
-import { Entity, DatasourceConfig, SortObject, FilterObject, GroupingObj } from './interfaces';
+import {
+  EntityInterface,
+  DatasourceConfigInterface,
+  SortObjectInterface,
+  FilterObjectInterface,
+  GroupingObjInterface,
+  DatasourceInterface
+} from './interfaces';
 
-export class DataSource {
-  public entity: Entity;
+export class DataSource implements DatasourceInterface {
+  public entity: EntityInterface;
   public groupHeight: number;
   public rowHeight: number;
   private selection: Selection;
   private key: string;
   private arrayUtils: ArrayUtils;
-  private mainArray: Entity[];
-  private config: DatasourceConfig;
+  private mainArray: EntityInterface[];
+  private config: DatasourceConfigInterface;
   private eventIdCount: number;
   private eventCallBacks: Function[];
   private collection: Collection;
@@ -21,9 +28,9 @@ export class DataSource {
 
   /**
    * Creates an instance of DataSource.
-   * 
+   *
    */
-  constructor(selection: Selection, config?: DatasourceConfig) {
+  constructor(selection: Selection, config?: DatasourceConfigInterface) {
 
     // Set selection or create new if none is passed in
     this.selection = selection || new Selection('single');
@@ -54,7 +61,7 @@ export class DataSource {
     }
 
 
-    // todo, give option to override ArrayUtils, 
+    // todo, give option to override ArrayUtils
     // or and option to set params you pass into array helper to override some of its functionality
     // events, gridConnector will add event lister to datasource set to it
     this.eventIdCount = -1;
@@ -72,7 +79,7 @@ export class DataSource {
 
   /**
    * Returns the current selection class
-   * 
+   *
    */
   public getSelection(): Selection {
     return this.selection;
@@ -82,7 +89,7 @@ export class DataSource {
 
   /**
    * Returns keys name used for selection/added to each entity
-   * 
+   *
    */
   public getKey(): string {
     return this.key;
@@ -92,7 +99,7 @@ export class DataSource {
 
   /**
    * returns the numbers of rows in displayed view (inludes groupings etc)
-   * 
+   *
    */
   public length(): number {
     return this.collection.length;
@@ -102,13 +109,13 @@ export class DataSource {
 
   /**
    * Sends event string to all listeners
-   * 
+   *
    */
   public triggerEvent(event: string): void {
     // call all event listeners
     this.eventCallBacks.forEach((FN, i) => {
       if (FN !== null) {
-        let alive = FN(event);
+        const alive = FN(event);
         if (!alive) {
           // todo: remove these after
           this.eventCallBacks[i] = null;
@@ -121,7 +128,7 @@ export class DataSource {
 
   /**
    * Adds functions to callback array, this will be called when collection/selection event happens
-   * 
+   *
    */
   public addEventListener(callback: Function): number {
 
@@ -139,7 +146,7 @@ export class DataSource {
 
   /**
    * removes event listener
-   * 
+   *
    */
   public removeEventListener(id: number): void {
     // remove listtener from id
@@ -150,9 +157,9 @@ export class DataSource {
 
   /**
    * Replaces internal collection and clear internal selection/sorting and grouping
-   * 
+   *
    */
-  public setArray(array: Entity[]): void {
+  public setArray(array: EntityInterface[]): void {
     // new collection
     this.collection = new Collection(this);
 
@@ -180,13 +187,13 @@ export class DataSource {
 
   /**
    * Adds to internal/displayed collection and reruns sort and grouping
-   * 
+   *
    */
-  public push(array: Entity[]): void {
+  public push(array: EntityInterface[]): void {
     if (Array.isArray(array)) {
 
       // get current grouping and collection
-      let grouping = this.arrayUtils.getGrouping();
+      const grouping = this.arrayUtils.getGrouping();
       let collection = this.collection.getEntities();
 
       // add to the collection, set that data back so keys get added
@@ -198,9 +205,9 @@ export class DataSource {
 
       // run orderby, and regroup if there is any
       this.arrayUtils.runOrderbyOn(this.collection.getEntities());
-      let untouchedgrouped = this.collection.getEntities();
+      const untouchedgrouped = this.collection.getEntities();
       if (grouping.length > 0) {
-        let groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, true);
+        const groupedArray = this.arrayUtils.group(untouchedgrouped, grouping, true);
         this.collection.setData(groupedArray, untouchedgrouped);
       }
 
@@ -215,7 +222,7 @@ export class DataSource {
    * Replace collection if array is passed in and rerun sort and groupings
    * If no data is added it just reruns sorting and grouping
    * TODO: do we want to also rerun filter if any?
-   * 
+   *
    */
   public refresh(data?: any): void {
     if (data) {
@@ -229,11 +236,11 @@ export class DataSource {
     }
 
     // get current grouping, run orderby, if grouping we also run that
-    let grouping = this.arrayUtils.getGrouping();
+    const grouping = this.arrayUtils.getGrouping();
     this.arrayUtils.runOrderbyOn(this.collection.getEntities());
     if (grouping.length > 0) {
-      let unGroupedArray = this.collection.getEntities();
-      let groupedArray = this.arrayUtils.group(unGroupedArray, grouping, true);
+      const unGroupedArray = this.collection.getEntities();
+      const groupedArray = this.arrayUtils.group(unGroupedArray, grouping, true);
       this.collection.setData(groupedArray, unGroupedArray);
     }
 
@@ -245,7 +252,7 @@ export class DataSource {
 
   /**
    * Sets row passed in as current entity
-   * 
+   *
    */
   public select(row: number): void {
     // get row and set as current entity "entity" of datasource
@@ -256,13 +263,13 @@ export class DataSource {
 
   /**
    * Queries all entities with paramas passed in
-   * 
+   *
    */
-  public query(options: FilterObject[]): void {
+  public query(options: FilterObjectInterface[]): void {
 
     if (options) {
       // query data (using main here, so we query all data set)
-      let newArray = this.arrayUtils.query(this.mainArray, options);
+      const newArray = this.arrayUtils.query(this.mainArray, options);
 
       // set data to our collection
       this.collection.setData(newArray);
@@ -283,15 +290,15 @@ export class DataSource {
 
   /**
    * Sorts the array with params passed in
-   * 
+   *
    */
-  public orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
+  public orderBy(attribute: string | SortObjectInterface, addToCurrentSort?: boolean): void {
 
     // get collection (cant use main,,, might be filtered)
-    let collection = this.collection.getEntities();
+    const collection = this.collection.getEntities();
 
     // use array helper to sort (takes care of the grouping if set)
-    let result = this.arrayUtils.orderBy(collection, attribute, addToCurrentSort);
+    const result = this.arrayUtils.orderBy(collection, attribute, addToCurrentSort);
 
     // set data, need both incase we have grouping
     this.collection.setData(result.fixed, result.full);
@@ -304,9 +311,9 @@ export class DataSource {
 
   /**
    * returns current orderBy used
-   * 
+   *
    */
-  public getCurrentOrderBy(): SortObject[] {
+  public getCurrentOrderBy(): SortObjectInterface[] {
     return this.arrayUtils.getOrderBy();
   }
 
@@ -314,9 +321,9 @@ export class DataSource {
 
   /**
    * Returns current filter used
-   * 
+   *
    */
-  public getCurrentFilter(): FilterObject[] {
+  public getCurrentFilter(): FilterObjectInterface[] {
     return this.arrayUtils.getCurrentFilter();
   }
 
@@ -324,9 +331,9 @@ export class DataSource {
 
   /**
    * Returns current element of row passed in
-   * 
+   *
    */
-  public getElement(row: number): Entity {
+  public getElement(row: number): EntityInterface {
     if (row === undefined || row === null) {
       throw new Error('row missing');
     } else {
@@ -338,15 +345,15 @@ export class DataSource {
 
   /**
    * Groups the collection with params passed in
-   * 
+   *
    */
-  public group(grouping: GroupingObj[], keepExpanded?: boolean): void {
+  public group(grouping: GroupingObjInterface[], keepExpanded?: boolean): void {
 
     // resets current sortclass
     this.arrayUtils.resetSort();
 
     // set new sort by grouping
-    grouping.forEach((group: GroupingObj) => {
+    grouping.forEach((group: GroupingObjInterface) => {
       this.arrayUtils.setOrderBy(group.field, true);
     });
 
@@ -354,10 +361,10 @@ export class DataSource {
     this.arrayUtils.runOrderbyOn(this.collection.getEntities());
 
     // get ungrouped collection
-    let ungroupedArray = this.collection.getEntities();
+    const ungroupedArray = this.collection.getEntities();
 
     // group array
-    let groupedArray = this.arrayUtils.group(ungroupedArray, grouping, keepExpanded);
+    const groupedArray = this.arrayUtils.group(ungroupedArray, grouping, keepExpanded);
 
     // set grouped array to collection
     this.collection.setData(groupedArray, ungroupedArray);
@@ -370,11 +377,11 @@ export class DataSource {
 
   /**
    * Collapses all groups or just ID passes in
-   * 
+   *
    */
   public groupCollapse(id: string): void {
-    let groupedArray = this.arrayUtils.groupCollapse(id);
-    let ungroupedArray = this.collection.getEntities();
+    const groupedArray = this.arrayUtils.groupCollapse(id);
+    const ungroupedArray = this.collection.getEntities();
     this.collection.setData(groupedArray, ungroupedArray);
     if (id) {
       this.triggerEvent('collection_collapsed');
@@ -387,11 +394,11 @@ export class DataSource {
 
   /**
    * Expands all groups or just ID passed in
-   * 
+   *
    */
   public groupExpand(id: string): void {
-    let groupedArray = this.arrayUtils.groupExpand(id);
-    let ungroupedArray = this.collection.getEntities();
+    const groupedArray = this.arrayUtils.groupExpand(id);
+    const ungroupedArray = this.collection.getEntities();
     this.collection.setData(groupedArray, ungroupedArray);
     if (id) {
       this.triggerEvent('collection_expanded');
@@ -404,9 +411,9 @@ export class DataSource {
 
   /**
    * Returns grouping used
-   * 
+   *
    */
-  public getGrouping(): GroupingObj[] {
+  public getGrouping(): GroupingObjInterface[] {
     return this.arrayUtils.getGrouping();
   }
 
@@ -415,24 +422,24 @@ export class DataSource {
   /**
    * Adds blank row to top of diaplayed colelction and updates grid
    * Todo: custom key will prb break this... need more testing
-   * 
+   *
    */
   public addBlankRow(): void {
 
     // create empty object
-    let newElement = ({} as Entity);
+    const newElement = ({} as EntityInterface);
 
     // add to our main array
     this.mainArray.unshift(newElement);
 
     // get the ungrouped array in collection
-    let collectionUngrouped = this.collection.getEntities();
+    const collectionUngrouped = this.collection.getEntities();
 
     // get displayed collection
-    let displayedCollection = this.collection.getCurrentEntities();
+    const displayedCollection = this.collection.getCurrentEntities();
 
     // if it does not exsist in old array we skip, else we add
-    let index = collectionUngrouped.indexOf(newElement);
+    const index = collectionUngrouped.indexOf(newElement);
     if (index === -1) {
       collectionUngrouped.unshift(newElement);
     }
@@ -454,7 +461,7 @@ export class DataSource {
 
   /**
    * Added new enity to top of grid, no sorting or grouping after
-   * 
+   *
    */
   public unshift(data: any): void {
     if (data) {
@@ -463,13 +470,13 @@ export class DataSource {
       this.mainArray.unshift(data);
 
       // get the ungrouped array in collection
-      let displayedCollection = this.collection.getEntities();
+      const displayedCollection = this.collection.getEntities();
 
       // get displayed collection
-      let ungroupedCollection = this.collection.getCurrentEntities();
+      const ungroupedCollection = this.collection.getCurrentEntities();
 
       // if it does not exsist in old array we skip, else we add
-      let index = displayedCollection.indexOf(data);
+      const index = displayedCollection.indexOf(data);
       if (index === -1) {
         displayedCollection.unshift(data);
       }
@@ -492,11 +499,11 @@ export class DataSource {
 
   /**
    * Removed rows from displayed collection and returns removed
-   * 
+   *
    */
   public remove(rows?: any[]): any[] {
-    let keysToDelete = new Set();
-    let returnArray = [];
+    const keysToDelete = new Set();
+    const returnArray = [];
     if (Array.isArray(rows)) {
       rows.forEach((row) => {
         keysToDelete.add(this.getRowKey(row));
@@ -508,7 +515,7 @@ export class DataSource {
     }
 
     if (keysToDelete.size > 0) {
-      let oldArray = this.collection.getEntities();
+      const oldArray = this.collection.getEntities();
       for (let i = 0; i < oldArray.length; i++) {
         if (keysToDelete.has(oldArray[i][this.key]) === true) {
           returnArray.push(oldArray.splice(i, 1)[0]);
@@ -525,11 +532,11 @@ export class DataSource {
 
 
   /**
-   * Returns status(lengths) of collection/selection 
-   * 
+   * Returns status(lengths) of collection/selection
+   *
    */
   public getCollectionStatus(): any {
-    let status: any = {};
+    const status: any = {};
     status.collectionLength = this.mainArray ? this.mainArray.length : 0;
     status.filteredCollectionLength = this.collection.getEntities().length;
     status.selectionLength = this.selection.getLength();
@@ -540,7 +547,7 @@ export class DataSource {
   /**
    * Sets local compare options to use with sorting
    * http://stackoverflow.com/questions/3191664/list-of-all-locales-and-their-short-codes
-   * 
+   *
    */
   public setLocaleCompare(code: string, options?: any): void {
     this.arrayUtils.setLocaleCompare(code, options);
@@ -550,7 +557,7 @@ export class DataSource {
 
   /**
    * Returns row heigth state for vaiable row height, will be called by gridConnector
-   * 
+   *
    */
   public getRowHeightState(): any {
     return this.collection.getRowHeightState();
@@ -558,7 +565,7 @@ export class DataSource {
 
   /**
    * Returns key of row passed in from displayedCollection
-   * 
+   *
    */
   private getRowKey(row: number): string {
     // if collection, then get row key
@@ -573,7 +580,7 @@ export class DataSource {
 
   /**
    * Returns all keys of collection
-   * 
+   *
    */
   private getRowKeys(): any[] {
     // if collection then get the keys
@@ -588,7 +595,7 @@ export class DataSource {
 
   /**
    * Calls the triggere event with event from selection
-   * 
+   *
    */
   private selectionEventCallback(e: any): boolean {
     this.triggerEvent(e);

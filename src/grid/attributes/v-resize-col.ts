@@ -1,11 +1,11 @@
 import { inject, customAttribute } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
 import {
-  ResizeShardContext,
-  BindingContext,
-  OverrideContext,
+  ResizeShardContextInterface,
+  BindingContextInterface,
+  OverrideContextInterface,
   ColumnBindingContext,
-  ColumBindingContextObject
+  ColumBindingContextObjectInterface
 } from '../../interfaces';
 
 
@@ -20,18 +20,18 @@ import {
 @inject(Element, VGrid)
 export class VGridAttributesResizeCol {
   private vGrid: VGrid;
-  private ctx: ResizeShardContext;
+  private ctx: ResizeShardContextInterface;
   private element: Element;
   private screenX: number;
   private originalWidth: number;
   private column: Element;
   private colType: string;
   private colNo: number;
-  private context: ColumBindingContextObject;
-  private columnsArray: ColumBindingContextObject[];
+  private context: ColumBindingContextObjectInterface;
+  private columnsArray: ColumBindingContextObjectInterface[];
   private columnBindingContext: ColumnBindingContext;
-  private bindingContext: BindingContext;
-  private overrideContext: OverrideContext;
+  private bindingContext: BindingContextInterface;
+  private overrideContext: OverrideContextInterface;
   private onmousedownBinded: EventListenerOrEventListenerObject;
   private onmousemoveBinded: EventListenerOrEventListenerObject;
   private onmouseupBinded: EventListenerOrEventListenerObject;
@@ -79,7 +79,7 @@ export class VGridAttributesResizeCol {
    * todo description
    * 
    */
-  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+  public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
   }

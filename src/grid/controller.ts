@@ -19,14 +19,14 @@ import {
   VGrid,
   GridConnectorInterface,
   RowScrollEvents,
-  ColConfig,
-  BindingContext,
-  OverrideContext,
-  DragDropShardContext,
-  ResizeShardContext,
+  ColConfigInterface,
+  BindingContextInterface,
+  OverrideContextInterface,
+  DragDropShardContextInterface,
+  ResizeShardContextInterface,
   SelectionInterface,
   Footer,
-  GroupingObj
+  GroupingObjInterface
 } from '../interfaces';
 
 /**
@@ -34,7 +34,7 @@ import {
  * It pretty much have function to most GridConnector should not call functions not inside the controller
  * That will break things fast
  * TODO: fix some bad parts
- * 
+ *
  */
 export class Controller {
   public vGrid: VGrid;
@@ -58,18 +58,18 @@ export class Controller {
   public container: Container;
   public viewResources: ViewResources;
   public taskQueue: TaskQueue;
-  public dragDropAttributeSharedContext: DragDropShardContext;
-  public resizeAttributeSharedContext: ResizeShardContext;
-  public colConfig: ColConfig[];
-  public backupColConfig: ColConfig[];
+  public dragDropAttributeSharedContext: DragDropShardContextInterface;
+  public resizeAttributeSharedContext: ResizeShardContextInterface;
+  public colConfig: ColConfigInterface[];
+  public backupColConfig: ColConfigInterface[];
   public colRepeater: boolean;
   public colRepeatRowTemplate: string;
   public colRepeatRowHeaderTemplate: string;
   public colGroupRow: string;
   public colGroupElement: string;
   public customMenuTemplates: any;
-  public bindingContext: BindingContext;
-  public overrideContext: OverrideContext;
+  public bindingContext: BindingContextInterface;
+  public overrideContext: OverrideContextInterface;
   public attRowHeight: number;
   public attHeaderHeight: number;
   public attFooterHeight: number;
@@ -99,11 +99,11 @@ export class Controller {
 
   /**
    * gets the grid conext, so we have access to it in this class
-   * 
+   *
    */
   public getContext() {
 
-    let c = this.vGrid;
+    const c = this.vGrid;
     // column configuration
     this.colConfig = c.colConfig;
     this.backupColConfig = c.backupColConfig;
@@ -161,10 +161,10 @@ export class Controller {
 
   /**
    * triggers event to call for all translation keys
-   * 
+   *
    */
-  public triggerI18N() {
-    let keys: any = Object.keys({
+  public triggerI18N(): void {
+    const keys: any = Object.keys({
       close: 'Close',
       pinLeft: 'Pin left',
       pinRight: 'Pin Right',
@@ -198,7 +198,7 @@ export class Controller {
       });
 
       this.raiseEvent('filterTranslation', {});
-      let loading: string = this.attI18N('loading') || keys.loading;
+      const loading: string = this.attI18N('loading') || keys.loading;
       this.loadingScreen.updateLoadingDefaultLoadingMessage(loading);
     }
 
@@ -208,7 +208,7 @@ export class Controller {
 
   /**
    * get the row state from gridconnector, used for variable row height
-   * 
+   *
    */
   public getRowHeightState(): any {
     return this.attGridConnector.getRowHeightState();
@@ -218,7 +218,7 @@ export class Controller {
 
   /**
    * creates the grid
-   * 
+   *
    */
   public createGrid(): void {
 
@@ -278,13 +278,13 @@ export class Controller {
 
   /**
    * gets element from datasource
-   * 
+   *
    */
   public getElement(rowNumber: number, isDownScroll: boolean, callbackFN: Function): void {
     this.attGridConnector.getElement({
       row: rowNumber,
       isDown: isDownScroll,
-      callback: (rowContext: BindingContext) => {
+      callback: (rowContext: BindingContextInterface) => {
         if (this.attOnRowDraw) {
           this.attOnRowDraw(rowContext);
         }
@@ -297,7 +297,7 @@ export class Controller {
 
   /**
    * expand group/groups
-   * 
+   *
    */
   public expandGroup(id: string): void {
     this.attGridConnector.expandGroup(id);
@@ -307,7 +307,7 @@ export class Controller {
 
   /**
    * collapses group/groups
-   * 
+   *
    */
   public collapseGroup(id: string): void {
     this.attGridConnector.collapseGroup(id);
@@ -317,7 +317,7 @@ export class Controller {
 
   /**
    * select row passed in
-   * 
+   *
    */
   public select(row: number): void {
     this.attGridConnector.select(row);
@@ -327,12 +327,12 @@ export class Controller {
 
   /**
    * adds to grouping
-   * 
+   *
    */
-  public addToGrouping(groupObj: GroupingObj): void {
-    let currentGrouping = this.attGridConnector.getGrouping();
+  public addToGrouping(groupObj: GroupingObjInterface): void {
+    const currentGrouping = this.attGridConnector.getGrouping();
     let exist = false;
-    currentGrouping.forEach((group: GroupingObj) => {
+    currentGrouping.forEach((group: GroupingObjInterface) => {
       if (group.field === groupObj.field) {
         exist = true;
       }
@@ -347,10 +347,10 @@ export class Controller {
 
   /**
    * removes field from grouping
-   * 
+   *
    */
   public removeFromGrouping(field: string): void {
-    let currentGrouping = this.attGridConnector.getGrouping();
+    const currentGrouping = this.attGridConnector.getGrouping();
     let index = -1;
     currentGrouping.forEach((group, i) => {
       if (field === group.field) {
@@ -367,10 +367,10 @@ export class Controller {
 
   /**
    * returns selection context, so you have the current one used/set in gridconnector/datasource
-   * 
+   *
    */
   public getSelectionContext(): SelectionInterface {
-    let sel: SelectionInterface = this.attGridConnector.getSelection();
+    const sel: SelectionInterface = this.attGridConnector.getSelection();
     return sel;
   }
 
@@ -378,10 +378,10 @@ export class Controller {
 
   /**
    * triggers event on grids element, nice for attributes etc
-   * 
+   *
    */
   public raiseEvent(name: string, data = {}): void {
-    let event = new CustomEvent(name, {
+    const event = new CustomEvent(name, {
       detail: data,
       bubbles: true
     });
@@ -392,7 +392,7 @@ export class Controller {
 
   /**
    * sets the loading screen to show or hide
-   * 
+   *
    */
   public setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<void> {
 
@@ -407,11 +407,11 @@ export class Controller {
 
   /**
    * updates and call classes that needs height updated if its changed
-   * 
+   *
    */
   public updateHeights(): void {
-    let totalRowHeight = this.htmlHeightWidth.getNewHeight(this.attGridConnector.getDatasourceLength());
-    let bodyHeight = this.htmlCache.avg_content_main.clientHeight;
+    const totalRowHeight = this.htmlHeightWidth.getNewHeight(this.attGridConnector.getDatasourceLength());
+    const bodyHeight = this.htmlCache.avg_content_main.clientHeight;
     if (bodyHeight < totalRowHeight) {
       // hide it
       (this.htmlCache.avg_content_vhandle as HTMLElement).style.display = 'block';
@@ -427,11 +427,11 @@ export class Controller {
 
   /**
    * checks main column with, and hides scrollbar if not needed
-   * 
+   *
    */
   public udateHorizontalScroller(): void {
-    let bodyWidth = this.htmlCache.avg_content_main.clientWidth;
-    let scrollWidth = this.htmlHeightWidth.avgContentMainScroll_Width;
+    const bodyWidth = this.htmlCache.avg_content_main.clientWidth;
+    const scrollWidth = this.htmlHeightWidth.avgContentMainScroll_Width;
 
     // todo : I also need to adjust scrollheight here, but its a start
     if (bodyWidth < scrollWidth) {
@@ -450,33 +450,33 @@ export class Controller {
 
   /**
    * checks and updates the grouping in panel, also fixes it if not corrent
-   * 
+   *
    */
-  public updateHeaderGrouping(groups: GroupingObj[]): void {
-    let length = groups.length;
+  public updateHeaderGrouping(groups: GroupingObjInterface[]): void {
+    const length = groups.length;
     this.columnBindingContext.setupgrouping = length;
     if (length === 0) {
-      let groupings = this.groupingElements.getGroups();
+      const groupings = this.groupingElements.getGroups();
       groupings.forEach((group) => {
         this.groupingElements.removeGroup(group.field);
       });
     } else {
       let check = true;
-      groups.forEach((group: GroupingObj) => {
+      groups.forEach((group: GroupingObjInterface) => {
         if (!this.groupingElements[group.field]) {
           check = false;
         }
       });
       if (!check) {
         // check failed
-        let groupings = this.groupingElements.getGroups();
+        const groupings = this.groupingElements.getGroups();
 
         // remove groups
         groupings.forEach((group) => {
           this.groupingElements.removeGroup(group);
         });
         // add groups
-        groups.forEach((group: GroupingObj) => {
+        groups.forEach((group: GroupingObjInterface) => {
           // really dont know what they want to call it.. lets just use attribute name
           // todo, I should have something better here...
           this.groupingElements.addGroup(group.title, group.field);
@@ -490,7 +490,7 @@ export class Controller {
 
   /**
    * returns the collection length
-   * 
+   *
    */
   public collectionLength(): number {
     return this.attGridConnector.getDatasourceLength();
@@ -500,7 +500,7 @@ export class Controller {
 
   /**
    * triggers scroll event with new position, to top if no params
-   * 
+   *
    */
   public triggerScroll(position: number): void {
     if (position === null || position === undefined) {
@@ -523,10 +523,10 @@ export class Controller {
 
   /**
    * returns to row in current view/scrolltop
-   * 
+   *
    */
   public getTopRow(): number {
-    let position = this.htmlCache.avg_content_vhandle.scrollTop;
+    const position = this.htmlCache.avg_content_vhandle.scrollTop;
     return Math.floor(position / this.attRowHeight);
   }
 
@@ -534,7 +534,7 @@ export class Controller {
 
   /**
    * rebinds all rows
-   * 
+   *
    */
   public rebindAllRows(): void {
     this.raiseEvent('avg-rebind-all-rows', {
@@ -547,15 +547,15 @@ export class Controller {
 
   /**
    * returns the column config, and can be used to save current user settings
-   * 
+   *
    */
-  public getColumnConfig(): ColConfig[] {
+  public getColumnConfig(): ColConfigInterface[] {
 
     // get current colcontext
-    let colContext = this.columnBindingContext;
+    const colContext = this.columnBindingContext;
 
     // temp array to hold data
-    let tempArray: any[] = [];
+    const tempArray: any[] = [];
 
     // loop and find out whats what..
     for (let i = 0; i < this.colConfig.length; i++) {
@@ -596,11 +596,11 @@ export class Controller {
     }
 
     // temp colconf to return
-    let newColConfig: ColConfig[] = [];
+    const newColConfig: ColConfigInterface[] = [];
 
     // loop and set correct params
-    this.colConfig.forEach((col: ColConfig, i: number) => {
-      let temp = ({
+    this.colConfig.forEach((col: ColConfigInterface, i: number) => {
+      const temp = ({
         colWidth: tempArray[i].width,
         colRowTemplate: col.colRowTemplate,
         colHeaderTemplate: col.colHeaderTemplate,
@@ -617,8 +617,8 @@ export class Controller {
         colFilterTop: col.colFilterTop,
         colCss: col.colCss,
         colType: col.colType,
-        __colSortHelper: tempArray[i].left,
-      } as ColConfig);
+        __colSortHelper: tempArray[i].left
+      } as ColConfigInterface);
 
       newColConfig.push(temp);
     });
@@ -629,7 +629,7 @@ export class Controller {
         return a.__colSortHelper - b.__colSortHelper;
       });
 
-    // return current config   
+    // return current config
     return newColConfig;
   }
 
@@ -637,10 +637,10 @@ export class Controller {
 
   /**
    * sets the new column config and updates the grid
-   * 
+   *
    */
-  public setColumnConfig(colConfig: ColConfig[]): void {
-    let length = this.columnBindingContext.setupgrouping;
+  public setColumnConfig(colConfig: ColConfigInterface[]): void {
+    const length = this.columnBindingContext.setupgrouping;
     this.viewSlots.unbindAndDetachColumns();
     this.columnBindingContext.clear();
     this.viewSlots.clear();

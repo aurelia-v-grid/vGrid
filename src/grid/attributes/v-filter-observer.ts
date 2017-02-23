@@ -1,6 +1,6 @@
 import { inject, customAttribute, bindable } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext, FilterObject } from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface, FilterObjectInterface } from '../../interfaces';
 
 /**
  * Custom attribute "v-filter-observer"
@@ -17,8 +17,8 @@ export class VGridAttributesFilterObserver {
   @bindable private value: string;
   private vGrid: VGrid;
   private element: HTMLElement;
-  private bindingContext: BindingContext;
-  private overrideContext: OverrideContext;
+  private bindingContext: BindingContextInterface;
+  private overrideContext: OverrideContextInterface;
   private attribute: string;
   private filterOperator: string;
   private valueFormater: { fromView: Function; toView: Function };
@@ -49,7 +49,7 @@ export class VGridAttributesFilterObserver {
    * todo description
    * 
    */
-  public bind(bindingContext: BindingContext, overrideContext: OverrideContext): void {
+  public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
     let valueConverter = this.valueConverters(this.converter);
@@ -76,11 +76,11 @@ export class VGridAttributesFilterObserver {
    * 
    */
   private updateFilter(): void {
-    let curFilter: FilterObject[] = this.vGrid.attGridConnector.getCurrentFilter();
+    let curFilter: FilterObjectInterface[] = this.vGrid.attGridConnector.getCurrentFilter();
     let filterIndex = -1;
 
     // get index of filter
-    curFilter.forEach((filter: FilterObject, index: number) => {
+    curFilter.forEach((filter: FilterObjectInterface, index: number) => {
       if (filter.attribute === this.attribute) {
         filterIndex = index;
       }

@@ -1,6 +1,6 @@
 // tslint:disable:max-line-length
 import { ViewSlot } from 'aurelia-framework';
-import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContext } from '../interfaces';
+import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContextInterface } from '../interfaces';
 
 /**
  * Creates the context menus used in the grid
@@ -12,7 +12,7 @@ export class ContextMenu {
     private container: Container;
     private viewResources: ViewResources;
     private viewSlots: ViewSlots;
-    private overrideContext: OverrideContext;
+    private overrideContext: OverrideContextInterface;
     private top: number;
     private left: number;
     private pinnedMenu: boolean;
@@ -77,7 +77,7 @@ export class ContextMenu {
    * add the custom templates if any and overridecontext to use
    * 
    */
-    public init(customMenuTemplates: any, overrideContext: OverrideContext): void {
+    public init(customMenuTemplates: any, overrideContext: OverrideContextInterface): void {
         this.overrideContext = overrideContext;
         let viewFactory = this.viewCompiler.compile(`<template>${this.menuHtml(customMenuTemplates)}</template>`, this.viewResources);
         let view = viewFactory.create(this.container);

@@ -1,4 +1,4 @@
-import { ColConfig } from '../interfaces';
+import { ColConfigInterface } from '../interfaces';
 
 /**
  * Generate the simple html columns markup from settings fetched from the attrubites
@@ -12,7 +12,7 @@ export class ColumnMarkupHelper {
    * todo description
    * 
    */
-  public generate(colConfig: ColConfig[]): void {
+  public generate(colConfig: ColConfigInterface[]): void {
     let type: string = null;
     if (colConfig && colConfig.length > 0) {
       type = 'typeHtml';
@@ -29,7 +29,7 @@ export class ColumnMarkupHelper {
    * todo description
    * 
    */
-  private processColumns(array: ColConfig[]): void {
+  private processColumns(array: ColConfigInterface[]): void {
     array.forEach((col, index) => {
       // we need attribute or rowtemplate, else throm error
       if (!col.colField && !col.colRowTemplate) {
@@ -183,7 +183,7 @@ export class ColumnMarkupHelper {
    * todo description
    * 
    */
-  private createImageRowMarkup(col: ColConfig): void {
+  private createImageRowMarkup(col: ColConfigInterface): void {
     // get the values/settings
     let classNames = 'class="avg-image-round"';
     let attributeRow = col.colAddRowAttributes ? col.colAddRowAttributes : '';
@@ -199,7 +199,7 @@ export class ColumnMarkupHelper {
    * todo description
    * 
    */
-  private createInputRowMarkup(col: ColConfig): void {
+  private createInputRowMarkup(col: ColConfigInterface): void {
 
     // get the values/settings
     let colClass = `class="${col.colType === 'checkbox' ? 'avg-row-checkbox-100' : 'avg-row-input'}"`;
@@ -245,7 +245,7 @@ export class ColumnMarkupHelper {
    * todo description
    * 
    */
-  private createInputHeaderMarkup(col: ColConfig): string {
+  private createInputHeaderMarkup(col: ColConfigInterface): string {
 
     // is it filter ?
     let markup: string;
@@ -286,7 +286,7 @@ export class ColumnMarkupHelper {
    * todo description
    * 
    */
-  private createLabelMarkup(col: ColConfig): string {
+  private createLabelMarkup(col: ColConfigInterface): string {
     // get the values/settings
     let filterClass = col.colFilter ? `${col.colFilterTop ? 'avg-label-bottom' : 'avg-label-top'}` : 'avg-label-full';
     let dragDropClass = col.colDragDrop ? 'avg-vGridDragHandle' : '';

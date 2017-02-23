@@ -1,6 +1,6 @@
 import { ViewSlot } from 'aurelia-framework';
 import { ViewCompiler, Container, ViewResources, ViewSlots } from '../interfaces';
-import { OverrideContext } from '../interfaces';
+import { OverrideContextInterface } from '../interfaces';
 
 /**
  * Creates the loading screen viewport and binds it
@@ -15,7 +15,7 @@ export class LoadingScreen {
   private viewResources: ViewResources;
   private loading: boolean;
   private loadingMessage: string;
-  private overrideContext: OverrideContext;
+  private overrideContext: OverrideContextInterface;
 
 
 
@@ -52,7 +52,7 @@ export class LoadingScreen {
    * call when creating the grid so we have custom html if any and overridecontext to use
    * 
    */
-  public init(overrideContext: OverrideContext, loadingScreenTemplate: string): void {
+  public init(overrideContext: OverrideContextInterface, loadingScreenTemplate: string): void {
     this.overrideContext = overrideContext;
     let loadingScreentHtml = loadingScreenTemplate || `[
       <div class="avg-overlay" if.bind="loading">

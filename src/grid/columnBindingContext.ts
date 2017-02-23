@@ -1,15 +1,15 @@
-import { Controller, ColumBindingContextObject, Entity } from '../interfaces';
+import { Controller, ColumBindingContextObjectInterface, EntityInterface } from '../interfaces';
 
 /**
  * Columns context object
  * Helps control the columns/rows get groups etc
- * 
+ *
  */
 export class ColumnBindingContext {
-  public setupleft: ColumBindingContextObject[];
-  public setupmain: ColumBindingContextObject[];
-  public setupright: ColumBindingContextObject[];
-  public setupgroup: ColumBindingContextObject[];
+  public setupleft: ColumBindingContextObjectInterface[];
+  public setupmain: ColumBindingContextObjectInterface[];
+  public setupright: ColumBindingContextObjectInterface[];
+  public setupgroup: ColumBindingContextObjectInterface[];
   public setupgrouping: number;
   public changeGrouping: Function;
   private controller: Controller;
@@ -24,7 +24,7 @@ export class ColumnBindingContext {
     this.setupright = [];
     this.setupgroup = [];
     this.setupgrouping = 0;
-    this.changeGrouping = (x: Entity) => {
+    this.changeGrouping = (x: EntityInterface) => {
       if (x) {
         if (x.__groupExpanded) {
           this.controller.collapseGroup(x.__groupID);
@@ -42,7 +42,7 @@ export class ColumnBindingContext {
 
   /**
    * todo description
-   * 
+   *
    */
   public clear() {
     this.setupleft = [];
@@ -50,7 +50,7 @@ export class ColumnBindingContext {
     this.setupright = [];
     this.setupgroup = [];
     this.setupgrouping = 0;
-    this.changeGrouping = (x: Entity) => {
+    this.changeGrouping = (x: EntityInterface) => {
       if (x) {
         if (x.__groupExpanded) {
           this.controller.collapseGroup(x.__groupID);

@@ -1,9 +1,9 @@
 import {
   ViewSlot,
-  BindingContext,
-  HeaderCache,
-  RowCache,
-  OverrideContext,
+  BindingContextInterface,
+  HeaderCacheInterface,
+  RowCacheInterface,
+  OverrideContextInterface,
   HtmlCache,
   ColumnBindingContext,
   SelectionInterface
@@ -28,8 +28,8 @@ export class ViewSlots {
   public footerViewSlot: ViewSlot;
   public contextMenu: ViewSlot;
   public groupingViewSlots: ViewSlot[];
-  private rowCache: RowCache[];
-  private headerCache: HeaderCache;
+  private rowCache: RowCacheInterface[];
+  private headerCache: HeaderCacheInterface;
 
 
 
@@ -66,11 +66,11 @@ export class ViewSlots {
    * 
    */
   public bindAndAttachColumns(
-    overrideContext: OverrideContext,
+    overrideContext: OverrideContextInterface,
     columnBindingContext: ColumnBindingContext,
     curSelection: SelectionInterface): void {
 
-    let context: BindingContext;
+    let context: BindingContextInterface;
 
     // create a extra parent override context so we can add
     // overrideContext from model holding grid and columnbinding
@@ -81,7 +81,7 @@ export class ViewSlots {
 
     for (let i = 0; i < this.rowCache.length; i++) {
       // one for each row.
-      context = ({rowRef: {}, tempRef: {}} as BindingContext);
+      context = ({rowRef: {}, tempRef: {}} as BindingContextInterface);
 
       this.rowCache[i].bindingContext = context;
       this.rowCache[i].parentOverrideContext = {
@@ -103,7 +103,7 @@ export class ViewSlots {
     }
 
     // add selection to the context, so we can control selection (delselect/select all)
-    context = ({ selection: curSelection } as BindingContext);
+    context = ({ selection: curSelection } as BindingContextInterface);
     this.headerCache.bindingContext = context;
     this.headerCache.parentOverrideContext = {
       bindingContext: context,

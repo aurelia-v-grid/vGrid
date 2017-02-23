@@ -8,15 +8,15 @@ import {
   HtmlCache,
   ColumnBindingContext,
   ViewSlots,
-  ColConfig,
-  OverrideContext
+  ColConfigInterface,
+  OverrideContextInterface
 } from '../interfaces';
 
 
 
 /**
  *  Creates all the columns markup/viewports when grid is created
- * 
+ *
  */
 export class ColumnMarkup {
   private element: Element;
@@ -27,8 +27,8 @@ export class ColumnMarkup {
   private viewCompiler: ViewCompiler;
   private container: Container;
   private viewResources: ViewResources;
-  private overrideContext: OverrideContext;
-  private colConfig: ColConfig[];
+  private overrideContext: OverrideContextInterface;
+  private colConfig: ColConfigInterface[];
   private configLength: number;
   private colRepeater: boolean;
   private colRepeatRowTemplate: string;
@@ -77,8 +77,8 @@ export class ColumnMarkup {
  * 
  */
   public init(
-    colConfig: ColConfig[],
-    overrideContext: OverrideContext,
+    colConfig: ColConfigInterface[],
+    overrideContext: OverrideContextInterface,
     colRepeater: boolean,
     colRepeatRowTemplate: string,
     colRepeatRowHeaderTemplate: string,
@@ -103,7 +103,7 @@ export class ColumnMarkup {
 
 /**
  *  returns the row view using the viewCompiler and markup needed
- * 
+ *
  */
   private getRowViews(type: string): ViewFactory {
     let viewMarkup = '';
@@ -122,10 +122,10 @@ export class ColumnMarkup {
         '</i>&nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})',
       ];
 
-      // if user supplied markup we use that, else default 
+      // if user supplied markup we use that, else default
       let gTemplate: string = this.colGroup || defaultMarkup.join('');
 
-      // all markup 
+      // all markup
       markupArray = [
         '<avg-col ',
         'class="avg-col-group"',
@@ -190,7 +190,7 @@ export class ColumnMarkup {
 /**
  *  create coluumn context that will be used to control the width & left style of them
  *  It will also control if they are visible or hidden
- * 
+ *
  */
   private createColSetupContext(type: string): void {
 
@@ -228,13 +228,13 @@ export class ColumnMarkup {
 
 /**
  *  returns the header view using the viewCompiler and markup needed
- * 
+ *
  */
   private getHeaderViews(type: string): ViewFactory {
     let viewMarkup = '';
 
     if (this.colRepeater && type === 'main' && this.colRepeatHeaderTemplate) {
-      // if repeater and main, we add to the 
+      // if repeater and main, we add to the
       let style = 'css="left:0;right:0"';
       viewMarkup = `<div class="avg-col" ${style}>${this.colRepeatHeaderTemplate}</div>`;
     } else {
@@ -286,7 +286,7 @@ export class ColumnMarkup {
 
 /**
  *  starts to generate the needed columns
- * 
+ *
  */
   private generateColumns(): void {
 
@@ -327,7 +327,7 @@ export class ColumnMarkup {
 
 /**
  *  creates a viewslot and adds the view using the viewFactory
- * 
+ *
  */
   private createViewSlot(element: Element, viewFactory: ViewFactory): ViewSlot {
 
@@ -341,7 +341,7 @@ export class ColumnMarkup {
 
 /**
  *  gets the html markup from the htmlCache and sets it to this class instance
- * 
+ *
  */
   private updateInternalHtmlCache(): void {
     this.leftScroll = this.htmlCache.avg_content_left_scroll;

@@ -2,22 +2,20 @@
 import {
   SelectionInterface,
   GridConnectorInterface,
-  DataSource,
-  Selection,
-  SortObject,
-  FilterObject,
-  Controller,
-  Entity,
-  ColConfig,
-  BindingContext,
-  GroupingObj
+  DatasourceInterface,
+  SortObjectInterface,
+  FilterObjectInterface,
+  ControllerInterface,
+  EntityInterface,
+  ColConfigInterface,
+  BindingContextInterface,
+  GroupingObjInterface
 } from './interfaces';
 
 export class GridConnector implements GridConnectorInterface {
-  private selection: Selection;
-  private controller: Controller;
-  private datasource: DataSource;
-  private key: string;
+  private selection: SelectionInterface;
+  private controller: ControllerInterface;
+  private datasource: DatasourceInterface;
   private errorhandler: Function;
   private eventID: number;
   private initTop: number = 0;
@@ -26,12 +24,11 @@ export class GridConnector implements GridConnectorInterface {
 
   /**
    * Creates an instance of GridConnector.
-   * 
+   *
    */
-  constructor(datasource: DataSource, selection?: Selection, errorHandler?: Function) {
+  constructor(datasource: DatasourceInterface, selection?: SelectionInterface, errorHandler?: Function) {
     this.controller = null;
     this.datasource = datasource;
-    this.key = datasource.getKey();
     this.selection = selection || datasource.getSelection();
     this.errorhandler = errorHandler || null;
   }
@@ -42,7 +39,7 @@ export class GridConnector implements GridConnectorInterface {
    * Set scroll value grid will use when it loads
    * Useful for when going back from a detail view
    * Used by default datasource
-   * 
+   *
    */
   public setInitTop(top: number): void {
     this.initTop = top;
@@ -53,7 +50,7 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Grid will call for this when a row is clicked
    * Need be in custom gridConnector
-   * 
+   *
    */
   public getSelection(): SelectionInterface {
     return this.selection;
@@ -65,11 +62,13 @@ export class GridConnector implements GridConnectorInterface {
    * Grid calls this to connect, we then haveto call the create function to grid to generate
    * Some might need to get a datasource ready first/call server so its usefull to know if should be created
    * Need be in custom gridConnector
-   * 
+   *
    */
-  public connect(controller: Controller, create: Function): void {
+  public connect(controller: ControllerInterface, create: Function): void {
     this.controller = controller;
-    this.eventID = this.datasource.addEventListener(this.eventHandler.bind(this));
+    if (typeof this.datasource.addEventListener === 'function') {
+      this.eventID = this.datasource.addEventListener(this.eventHandler.bind(this));
+    }
     // keep it hidden while we create
     (this.controller.element as HTMLElement).style.visibility = 'hidden';
     create();
@@ -80,7 +79,7 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Grid calls this when its created, you can now tell it to display data etc
    * Need be in custom gridConnector
-   * 
+   *
    */
   public gridCreated(): void {
     // I want to be able to override this, so you could add/do more with datasource before displaying results
@@ -103,40 +102,46 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Grid will use this to select in datasource
    * Need be in custom gridConnector
-   * 
+   *
    */
   public select(row: number): void {
-    this.datasource.select(row);
+    if (typeof this.datasource.select === 'function') {
+      this.datasource.select(row);
+    }
   }
 
 
 
   /**
-   * Used by rowScroll events class and htmlheights class to get data needed for variable row height 
+   * Used by rowScroll events class and htmlheights class to get data needed for variable row height
    * Need be in custom gridConnector //Todo, check if it exsist in gridcode, so its not mandatory
-   * 
+   *
    */
   public getRowHeightState(): any {
-    return this.datasource.getRowHeightState();
+    if (typeof this.datasource.getRowHeightState === 'function') {
+      return this.datasource.getRowHeightState();
+    } else {
+      return null;
+    }
   }
 
   /**
    * Grid will use this to know what size the body needs to be
    * Is called a lot, so never call a remote for this data when grid needs it
    * Need be in custom gridConnector
-   * 
+   *
    */
   public getDatasourceLength(): number {
-    return this.datasource.length();
+      return this.datasource.length();
   }
 
 
 
   /**
    * Can be used for getting column config inside grid
-   * 
+   *
    */
-  public getColConfig(): ColConfig[] {
+  public getColConfig(): ColConfigInterface[] {
     return this.controller.getColumnConfig();
   }
 
@@ -144,10 +149,10 @@ export class GridConnector implements GridConnectorInterface {
 
   /**
    * Can be used for setting column config inside grid
-   * 
+   *
    */
-  public setColConfig(colconfig: ColConfig[]): void {
-    this.controller.setColumnConfig(colconfig);
+  public setColConfig(colconfig: ColConfigInterface[]): void {
+      this.controller.setColumnConfig(colconfig);
   }
 
 
@@ -155,10 +160,14 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Grid will call this to know if there is any grouping/what grouping is
    * Need be in custom gridConnector //Todo, check if it exsist in gridcode, so its not mandatory
-   * 
+   *
    */
-  public getGrouping(): GroupingObj[] {
-    return this.datasource.getGrouping();
+  public getGrouping(): GroupingObjInterface[] {
+    if (typeof this.datasource.getGrouping === 'function') {
+      return this.datasource.getGrouping();
+    } else {
+      return [];
+    }
   }
 
 
@@ -166,11 +175,13 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Grid calls to tell it want to group
    * Need be in custom gridConnector //Todo, check if it exsist in gridcode, so its not mandatory
-   * 
+   *
    */
-  public group(grouping: GroupingObj[], keepExpanded?: boolean): void {
+  public group(grouping: GroupingObjInterface[], keepExpanded?: boolean): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
-      this.datasource.group(grouping, keepExpanded);
+      if (typeof this.datasource.group === 'function') {
+        this.datasource.group(grouping, keepExpanded);
+      }
     });
   }
 
@@ -179,16 +190,16 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Grid calls to get entity for a row
    * Need be in custom gridConnector
-   * 
+   *
    */
   public getElement(options: { row: number, isDown: boolean, callback: Function }): void {
-    let rowData: Entity = this.datasource.getElement(options.row);
-    let rowContext = ({
+    const rowData: EntityInterface = this.datasource.getElement(options.row);
+    const rowContext = ({
       row: options.row,
       selection: this.selection,
       rowRef: rowData,
       tempRef: this.getRowProperties(rowData)
-    } as BindingContext);
+    } as BindingContextInterface);
 
     options.callback(rowContext);
   }
@@ -198,11 +209,13 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Grid calls to tell it want to query
    * Need be in custom gridConnector
-   * 
+   *
    */
-  public query(a: FilterObject[]): void {
+  public query(a: FilterObjectInterface[]): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
-      this.datasource.query(a);
+      if (typeof this.datasource.query === 'function') {
+        this.datasource.query(a);
+      }
     });
   }
 
@@ -211,11 +224,13 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Grid calls to tell it want to sort
    * Need be in custom gridConnector
-   * 
+   *
    */
-  public orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void {
+  public orderBy(attribute: string | SortObjectInterface, addToCurrentSort?: boolean): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
-      this.datasource.orderBy(attribute, addToCurrentSort);
+       if (typeof this.datasource.orderBy === 'function') {
+        this.datasource.orderBy(attribute, addToCurrentSort);
+       }
     });
   }
 
@@ -224,10 +239,12 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * used to cut connection between gridConnector and datasource
    * TODO: do I even use this/need this?
-   * 
+   *
    */
   public destroy(): void {
-    this.datasource.removeEventListener(this.eventID);
+    if (typeof this.datasource.removeEventListener === 'function') {
+      this.datasource.removeEventListener(this.eventID);
+    }
   }
 
 
@@ -235,10 +252,14 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Grid calls to tell it want to know the current sort order
    * Need be in custom gridConnector
-   * 
+   *
    */
-  public getCurrentOrderBy(): SortObject[] {
-    return this.datasource.getCurrentOrderBy();
+  public getCurrentOrderBy(): SortObjectInterface[] {
+    if (typeof this.datasource.getCurrentOrderBy === 'function') {
+      return this.datasource.getCurrentOrderBy();
+    }else {
+      return [];
+    }
   }
 
 
@@ -246,10 +267,14 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Grid calls to tell it want to know the current filter
    * Need be in custom gridConnector
-   * 
+   *
    */
-  public getCurrentFilter(): FilterObject[] {
-    return this.datasource.getCurrentFilter();
+  public getCurrentFilter(): FilterObjectInterface[] {
+    if (typeof this.datasource.getCurrentFilter === 'function') {
+      return this.datasource.getCurrentFilter();
+    } else {
+      return [];
+    }
   }
 
 
@@ -257,11 +282,13 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Grid calls to tell it want to expand a group/all
    * Need be in custom gridConnector //Todo, check if it exsist in gridcode, so its not mandatory
-   * 
+   *
    */
   public expandGroup(id: string): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
-      this.datasource.groupExpand(id);
+      if (typeof this.datasource.groupExpand === 'function') {
+        this.datasource.groupExpand(id);
+      }
     });
   }
 
@@ -270,11 +297,13 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Grid calls to tell it want to collapse a group/all
    * Need be in custom gridConnector //Todo, check if it exsist in gridcode, so its not mandatory
-   * 
+   *
    */
   public collapseGroup(id: string): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
-      this.datasource.groupCollapse(id);
+      if (typeof this.datasource.groupCollapse === 'function') {
+        this.datasource.groupCollapse(id);
+      }
     });
   }
 
@@ -283,7 +312,7 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Can be used to get current scrolltop
    * Use this with setInitTop if you want to go between master/detail and have same rows displayed
-   * 
+   *
    */
   public getTopRow(): number {
     return this.controller.getTopRow();
@@ -293,7 +322,7 @@ export class GridConnector implements GridConnectorInterface {
 
   /**
    * Forces grid to try and update language
-   * 
+   *
    */
   public triggerI18n(): void {
     this.controller.triggerI18N();
@@ -304,10 +333,10 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Raise event on the grid element, usefull for overriding default behavior
    * TODO: I really dont want much of this, at own expense
-   * 
+   *
    */
   public raiseEvent(name: string, data = {}): void {
-    let event = new CustomEvent(name, {
+    const event = new CustomEvent(name, {
       detail: data,
       bubbles: true
     });
@@ -321,7 +350,7 @@ export class GridConnector implements GridConnectorInterface {
   /**
    * Listen for the events from datasource, and calls needed functions
    * TODO: look over all event names and rename a few
-   * 
+   *
    */
   private eventHandler(event: string): boolean {
     switch (event) {
@@ -372,13 +401,12 @@ export class GridConnector implements GridConnectorInterface {
 
   /**
    * Just used to get data for tempRef, cant use javascript refrense here
-   * 
+   *
    */
   private getRowProperties(obj: { [key: string]: any }): {} {
-    let x: { [key: string]: any } = {};
+    const x: { [key: string]: any } = {};
     if (obj) {
-      let k: any;
-      for (k in obj) {
+      for (const k in obj) {
         if (obj.hasOwnProperty(k)) {
           if (x[k] !== obj[k]) {
             x[k] = obj[k];

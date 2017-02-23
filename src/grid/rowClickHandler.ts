@@ -1,4 +1,4 @@
-import { HtmlCache, Controller, SelectionInterface, RowCache } from '../interfaces';
+import { HtmlCache, Controller, SelectionInterface, RowCacheInterface } from '../interfaces';
 
 /**
  * Listen for click on rows
@@ -140,7 +140,7 @@ export class RowClickHandler {
 
 
 
-  private getCache(target: Element): RowCache {
+  private getCache(target: Element): RowCacheInterface {
     let no = -1;
     this.htmlCache.rowCache.forEach((row, i) => {
       if (row.left === target) {
@@ -171,7 +171,7 @@ export class RowClickHandler {
    * 
    */
   private singleClick(event: MouseEvent): void {
-    let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCache);
+    let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCacheInterface);
     if (!cache.isGroup) {
       this.highlightRow(event, cache.row);
       this.controller.select(cache.row);
@@ -192,7 +192,7 @@ export class RowClickHandler {
    * 
    */
   private doubleClick(event: MouseEvent): void {
-    let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCache);
+    let cache = this.getCache((event.currentTarget as Element)) || ({} as RowCacheInterface);
     this.controller.raiseEvent('v-row-ondblclick', {
       evt: event,
       data: cache.bindingContext.rowRef,

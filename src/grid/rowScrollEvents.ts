@@ -1,4 +1,4 @@
-import { HtmlCache, RowCache, Controller } from '../interfaces';
+import { HtmlCache, RowCacheInterface, Controller } from '../interfaces';
 
 /**
  * This takes care of the row scrolling
@@ -15,7 +15,7 @@ export class RowScrollEvents {
   private largeScroll: boolean;
   private collectionLength: number;
   private largeScrollUpdateDelay: number;
-  private rowCache: RowCache[];
+  private rowCache: RowCacheInterface[];
   private rowHeight: number;
   private cacheLength: number;
   private leftRows: NodeListOf<Element>;
@@ -86,7 +86,7 @@ export class RowScrollEvents {
         group: this.groupRows[i],
         top: this.rowHeight * i,
         row: i
-      } as RowCache));
+      } as RowCacheInterface));
     }
   }
 
@@ -162,7 +162,7 @@ export class RowScrollEvents {
    * Sets new top calues to all needed columns (left, main, right, group)
    * 
    */
-  private setRowTopValue(cache: RowCache, top: number) {
+  private setRowTopValue(cache: RowCacheInterface, top: number) {
     cache.left.style.transform = `translate3d(0px,${top}px, 0px)`;
     cache.main.style.transform = `translate3d(0px,${top}px, 0px)`;
     cache.right.style.transform = `translate3d(0px,${top}px, 0px)`;
@@ -178,7 +178,7 @@ export class RowScrollEvents {
    * This one is used for the vaiable row height
    * 
    */
-  private setRowTopValueVariableRowHeight(cache: RowCache, top: number) {
+  private setRowTopValueVariableRowHeight(cache: RowCacheInterface, top: number) {
     cache.left.style.transform = `translate3d(0px,${top}px, 0px)`;
     cache.main.style.transform = `translate3d(0px,${top}px, 0px)`;
     cache.right.style.transform = `translate3d(0px,${top}px, 0px)`;
@@ -510,7 +510,7 @@ export class RowScrollEvents {
    * Triggers event to rebind row
    * 
    */
-  private triggerRebindRowEvent(curRow: number, curRowCache: RowCache, isDownScroll: boolean): void {
+  private triggerRebindRowEvent(curRow: number, curRowCache: RowCacheInterface, isDownScroll: boolean): void {
     let event = new CustomEvent('avg-rebind-row', {
       detail: {
         currentRow: curRow,
@@ -528,7 +528,7 @@ export class RowScrollEvents {
    * Triggers event to rebind all rows
    * 
    */
-  private triggerRebindAllRowsEvent(isDownScroll: boolean, curRowCache: RowCache[]): void {
+  private triggerRebindAllRowsEvent(isDownScroll: boolean, curRowCache: RowCacheInterface[]): void {
     let event = new CustomEvent('avg-rebind-all-rows', {
       detail: {
         downScroll: isDownScroll,

@@ -1,15 +1,15 @@
-import { DataSource, Entity } from './interfaces'; // todo,create interface when datasource is stable
+import { DataSource, EntityInterface } from './interfaces'; // todo,create interface when datasource is stable
 
 export class Collection {
   public length: number;
   public groupHeight: number;
   public rowHeight: number;
-  private displayedEntities: Entity[];
+  private displayedEntities: EntityInterface[];
   private keys: string[];
   private key: string;
   private count: number;
   private datasource: DataSource;
-  private ungroupedArray: Entity[];
+  private ungroupedArray: EntityInterface[];
   private rowHeightArray: any[];
   private rowTopArray: any[];
   private rowHeightTotal: number;
@@ -18,7 +18,7 @@ export class Collection {
 
   /**
    * Creates an instance of Collection.
-   * 
+   *
    */
   constructor(datasource: DataSource) {
     this.datasource = datasource;
@@ -27,7 +27,7 @@ export class Collection {
     // get rowHeight if any
     this.rowHeight = datasource.rowHeight || 25;
 
-    // get groupHeight if any 
+    // get groupHeight if any
     this.groupHeight = datasource.groupHeight || 25;
 
     // some defaults
@@ -58,9 +58,9 @@ export class Collection {
 
   /**
    * Sets data to the collection
-   * 
+   *
    */
-  public setData(array: Entity[], ungroupedArray?: Entity[]): void {
+  public setData(array: EntityInterface[], ungroupedArray?: EntityInterface[]): void {
 
     // clear defaults so they can be set correctly again
     this.displayedEntities = [];
@@ -116,7 +116,7 @@ export class Collection {
 
   /**
    * Returns rowheigth state, will be needed by the grid code when using varaible row height
-   * 
+   *
    */
   public getRowHeightState(): any {
     return {
@@ -128,9 +128,9 @@ export class Collection {
 
   /**
    * Returns the ungrouped array of displayed collection
-   * 
+   *
    */
-  public getEntities(): Entity[] {
+  public getEntities(): EntityInterface[] {
     return this.ungroupedArray;
   }
 
@@ -138,9 +138,9 @@ export class Collection {
 
   /**
    * Returns array displayed in collection, including groups
-   * 
+   *
    */
-  public getCurrentEntities(): Entity[] {
+  public getCurrentEntities(): EntityInterface[] {
     return this.displayedEntities;
   }
 
@@ -148,7 +148,7 @@ export class Collection {
 
   /**
    * Returns key of row number passed in
-   * 
+   *
    */
   public getRowKey(row: number): string {
     return this.keys[row];
@@ -158,7 +158,7 @@ export class Collection {
 
   /**
    * Returns all keys in displayed collection
-   * 
+   *
    */
   public getRowKeys(): any[] {
     return this.keys;
@@ -168,9 +168,9 @@ export class Collection {
 
   /**
    * Returns entity of rows in displayed collection
-   * 
+   *
    */
-  public getRow(row: number): Entity {
+  public getRow(row: number): EntityInterface {
     return this.displayedEntities[row];
   }
 
@@ -178,9 +178,9 @@ export class Collection {
 
   /**
    * Return row number of entity passed in as param
-   * 
+   *
    */
-  public getRowFromEntity(entity: Entity): number {
+  public getRowFromEntity(entity: EntityInterface): number {
     return this.displayedEntities.indexOf(entity);
   }
 

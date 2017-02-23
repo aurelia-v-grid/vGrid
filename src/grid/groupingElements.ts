@@ -7,7 +7,7 @@ import {
   ColumnBindingContext,
   ViewSlots,
   Controller,
-  GroupingContext
+  GroupingContextInterface
 } from '../interfaces';
 
 // Two classes here!   GroupContext & GroupingElements
@@ -17,7 +17,7 @@ import {
 /**
  * Private class used by grouping elements
  * This is the context of the box in the top panel
- * 
+ *
  */
 class GroupContext {
   public viewSlot: ViewSlot;
@@ -43,7 +43,7 @@ class GroupContext {
  * Creates the grouping elements viewports and logic
  * This take care of the top panel, when called it adds the html element with its context
  * It also fixes/sets corrcet panel when grid is created/ grouping runs by code
- * 
+ *
  */
 // tslint:disable-next-line:max-classes-per-file
 export class GroupingElements {
@@ -53,7 +53,7 @@ export class GroupingElements {
   private viewCompiler: ViewCompiler;
   private container: Container;
   private viewResources: ViewResources;
-  private groupContext: GroupingContext;
+  private groupContext: GroupingContextInterface;
   private lastAdded: string;
   private colGroupElement: string;
   private controller: Controller;
@@ -79,15 +79,15 @@ export class GroupingElements {
     this.columnBindingContext = columnBindingContext;
 
     // group context
-    this.groupContext = ({} as GroupingContext);
+    this.groupContext = ({} as GroupingContextInterface);
     this.lastAdded = null;
   }
 
 
 
   public getGroups(): any[] {
-    let x = [];
-    for (let i in this.groupContext) {
+    const x = [];
+    for (const i in this.groupContext) {
       if (i) {
         x.push(i);
       }
@@ -98,7 +98,7 @@ export class GroupingElements {
 
   /**
    * Called when grid is created to set defaults, add event listners
-   * 
+   *
    */
   public init(controller: Controller, colGroupElement: string) {
     this.controller = controller;
@@ -110,7 +110,7 @@ export class GroupingElements {
 
   /**
    * todo description
-   * 
+   *
    */
   public addGroup(name: string, field: string): void {
     if (!this.groupContext[field]) {
@@ -119,7 +119,7 @@ export class GroupingElements {
 
       // view-viewslot
       // tslint:disable:max-line-length
-      let viewMarkup = this.colGroupElement ||
+      const viewMarkup = this.colGroupElement ||
         `<div class="avg-grouping">  
           <p class="avg-grouping-element" v-sort="field.bind:field">${name} 
             <i><svg click.delegate="remove()" class="icon iconhidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
@@ -128,9 +128,9 @@ export class GroupingElements {
           </p>
          </div>`;
 
-      let viewFactory = this.viewCompiler.compile(`<template>${viewMarkup}</template>`, this.viewResources);
-      let view = viewFactory.create(this.container);
-      let viewSlot = new ViewSlot(this.avgTopPanel, true);
+      const viewFactory = this.viewCompiler.compile(`<template>${viewMarkup}</template>`, this.viewResources);
+      const view = viewFactory.create(this.container);
+      const viewSlot = new ViewSlot(this.avgTopPanel, true);
       viewSlot.add(view);
       this.groupContext[field].viewSlot = viewSlot;
       this.viewSlots.groupingViewSlots.push(this.groupContext[field]);
@@ -144,7 +144,7 @@ export class GroupingElements {
 
   /**
    * todo description
-   * 
+   *
    */
   public removeGroup(field?: string): void {
     if (field) {
@@ -171,12 +171,12 @@ export class GroupingElements {
 
   /**
    * todo description
-   * 
+   *
    */
   public addToGrouping(): void {
     if (this.lastAdded) {
-      let toAddField = this.groupContext[this.lastAdded].field;
-      let toAddTitle = this.groupContext[this.lastAdded].name;
+      const toAddField = this.groupContext[this.lastAdded].field;
+      const toAddTitle = this.groupContext[this.lastAdded].name;
       this.controller.addToGrouping({ field: toAddField, title: toAddTitle });
       this.lastAdded = null;
     }
@@ -186,7 +186,7 @@ export class GroupingElements {
 
   /**
    * todo description
-   * 
+   *
    */
   public removeFromGrouping(field: string): void {
     this.controller.removeFromGrouping(field);
