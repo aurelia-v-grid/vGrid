@@ -1,3 +1,4 @@
+Object.defineProperty(exports, "__esModule", { value: true });
 var ArraySort = (function () {
     function ArraySort() {
         this.lastSort = [];

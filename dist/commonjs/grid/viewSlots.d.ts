@@ -1,4 +1,4 @@
-import { ViewSlot, OverrideContext, HtmlCache, ColumnBindingContext, SelectionInterface } from '../interfaces';
+import { ViewSlot, OverrideContextInterface, HtmlCache, ColumnBindingContext, SelectionInterface } from '../interfaces';
 export declare class ViewSlots {
     leftRowViewSlots: ViewSlot[];
     mainRowViewSlots: ViewSlot[];
@@ -15,7 +15,7 @@ export declare class ViewSlots {
     private rowCache;
     private headerCache;
     constructor(htmlCache: HtmlCache);
-    bindAndAttachColumns(overrideContext: OverrideContext, columnBindingContext: ColumnBindingContext, curSelection: SelectionInterface): void;
+    bindAndAttachColumns(overrideContext: OverrideContextInterface, columnBindingContext: ColumnBindingContext, curSelection: SelectionInterface): void;
     unbindAndDetachColumns(): void;
     clear(): void;
 }

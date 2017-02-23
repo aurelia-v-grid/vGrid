@@ -1,3 +1,4 @@
+Object.defineProperty(exports, "__esModule", { value: true });
 var RowScrollEvents = (function () {
     function RowScrollEvents(element, htmlCache, controller) {
         this.htmlCache = htmlCache;

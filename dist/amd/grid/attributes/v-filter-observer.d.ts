@@ -1,5 +1,5 @@
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext } from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 export declare class VGridAttributesFilterObserver {
     private field;
     private operator;
@@ -15,7 +15,7 @@ export declare class VGridAttributesFilterObserver {
     private state;
     constructor(element: HTMLElement, vGrid: VGrid);
     valueChanged(newValue: any): void;
-    bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
+    bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
     private getValue();
     private updateFilter();
     private valueConverters(value);

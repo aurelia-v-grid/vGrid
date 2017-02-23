@@ -1,4 +1,4 @@
-import { ViewCompiler, ViewResources, Container, TaskQueue, MainMarkup, MainScrollEvents, ColumnMarkup, HtmlHeightWidth, ViewSlots, ColumnBindingContext, HtmlCache, RowDataBinder, RowClickHandler, GroupingElements, RowMarkup, LoadingScreen, ContextMenu, VGrid, GridConnectorInterface, RowScrollEvents, ColConfig, BindingContext, OverrideContext, DragDropShardContext, ResizeShardContext, SelectionInterface, Footer, GroupingObj } from '../interfaces';
+import { ViewCompiler, ViewResources, Container, TaskQueue, MainMarkup, MainScrollEvents, ColumnMarkup, HtmlHeightWidth, ViewSlots, ColumnBindingContext, HtmlCache, RowDataBinder, RowClickHandler, GroupingElements, RowMarkup, LoadingScreen, ContextMenu, VGrid, GridConnectorInterface, RowScrollEvents, ColConfigInterface, BindingContextInterface, OverrideContextInterface, DragDropShardContextInterface, ResizeShardContextInterface, SelectionInterface, Footer, GroupingObjInterface } from '../interfaces';
 export declare class Controller {
     vGrid: VGrid;
     htmlCache: HtmlCache;
@@ -21,18 +21,18 @@ export declare class Controller {
     container: Container;
     viewResources: ViewResources;
     taskQueue: TaskQueue;
-    dragDropAttributeSharedContext: DragDropShardContext;
-    resizeAttributeSharedContext: ResizeShardContext;
-    colConfig: ColConfig[];
-    backupColConfig: ColConfig[];
+    dragDropAttributeSharedContext: DragDropShardContextInterface;
+    resizeAttributeSharedContext: ResizeShardContextInterface;
+    colConfig: ColConfigInterface[];
+    backupColConfig: ColConfigInterface[];
     colRepeater: boolean;
     colRepeatRowTemplate: string;
     colRepeatRowHeaderTemplate: string;
     colGroupRow: string;
     colGroupElement: string;
     customMenuTemplates: any;
-    bindingContext: BindingContext;
-    overrideContext: OverrideContext;
+    bindingContext: BindingContextInterface;
+    overrideContext: OverrideContextInterface;
     attRowHeight: number;
     attHeaderHeight: number;
     attFooterHeight: number;
@@ -56,18 +56,18 @@ export declare class Controller {
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
     select(row: number): void;
-    addToGrouping(groupObj: GroupingObj): void;
+    addToGrouping(groupObj: GroupingObjInterface): void;
     removeFromGrouping(field: string): void;
     getSelectionContext(): SelectionInterface;
     raiseEvent(name: string, data?: {}): void;
     setLoadingScreen(value: boolean, msg?: string, collectionLength?: number): Promise<void>;
     updateHeights(): void;
     udateHorizontalScroller(): void;
-    updateHeaderGrouping(groups: GroupingObj[]): void;
+    updateHeaderGrouping(groups: GroupingObjInterface[]): void;
     collectionLength(): number;
     triggerScroll(position: number): void;
     getTopRow(): number;
     rebindAllRows(): void;
-    getColumnConfig(): ColConfig[];
-    setColumnConfig(colConfig: ColConfig[]): void;
+    getColumnConfig(): ColConfigInterface[];
+    setColumnConfig(colConfig: ColConfigInterface[]): void;
 }

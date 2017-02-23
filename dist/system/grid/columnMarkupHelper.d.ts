@@ -1,6 +1,6 @@
-import { ColConfig } from '../interfaces';
+import { ColConfigInterface } from '../interfaces';
 export declare class ColumnMarkupHelper {
-    generate(colConfig: ColConfig[]): void;
+    generate(colConfig: ColConfigInterface[]): void;
     private processColumns(array);
     private createHeaderTemplate(col);
     private createRowTemplate(col);

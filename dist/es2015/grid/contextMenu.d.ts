@@ -1,4 +1,4 @@
-import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContext } from '../interfaces';
+import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContextInterface } from '../interfaces';
 export declare class ContextMenu {
     show: boolean;
     private viewCompiler;
@@ -17,7 +17,7 @@ export declare class ContextMenu {
     private menuStrings;
     constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots);
     setDefaults(): void;
-    init(customMenuTemplates: any, overrideContext: OverrideContext): void;
+    init(customMenuTemplates: any, overrideContext: OverrideContextInterface): void;
     openMenu(options: {
         left: number;
         top: number;

@@ -1,5 +1,5 @@
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext } from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 export declare class VGridAttributesImageFix {
     private vGrid;
     private element;
@@ -8,5 +8,5 @@ export declare class VGridAttributesImageFix {
     private overrideContext;
     constructor(element: HTMLImageElement, vGrid: VGrid);
     valueChanged(newValue: string): void;
-    bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
+    bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
 }

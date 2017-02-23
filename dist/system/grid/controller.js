@@ -323,7 +323,7 @@ System.register([], function (exports_1, context_1) {
                             colFilterTop: col.colFilterTop,
                             colCss: col.colCss,
                             colType: col.colType,
-                            __colSortHelper: tempArray[i].left,
+                            __colSortHelper: tempArray[i].left
                         };
                         newColConfig.push(temp);
                     });

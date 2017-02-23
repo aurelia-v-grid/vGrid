@@ -1,5 +1,5 @@
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext } from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 export declare class VGridDragDropCol {
     private vGrid;
     private element;
@@ -27,7 +27,7 @@ export declare class VGridDragDropCol {
     private title;
     private field;
     constructor(element: Element, vGrid: VGrid);
-    bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
+    bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
     unbind(): void;
     detached(): void;
     attached(): void;

@@ -1,4 +1,5 @@
 define(["require", "exports", "aurelia-framework", "./mainMarkupHtmlString"], function (require, exports, aurelia_framework_1, mainMarkupHtmlString_1) {
+    Object.defineProperty(exports, "__esModule", { value: true });
     var MainMarkup = (function () {
         function MainMarkup(element, viewCompiler, container, viewResources, htmlHeightWidth, viewSlots) {
             this.element = element;

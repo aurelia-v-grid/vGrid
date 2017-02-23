@@ -9,7 +9,6 @@ System.register([], function (exports_1, context_1) {
                     this.initTop = 0;
                     this.controller = null;
                     this.datasource = datasource;
-                    this.key = datasource.getKey();
                     this.selection = selection || datasource.getSelection();
                     this.errorhandler = errorHandler || null;
                 }
@@ -21,7 +20,9 @@ System.register([], function (exports_1, context_1) {
                 };
                 GridConnector.prototype.connect = function (controller, create) {
                     this.controller = controller;
-                    this.eventID = this.datasource.addEventListener(this.eventHandler.bind(this));
+                    if (typeof this.datasource.addEventListener === 'function') {
+                        this.eventID = this.datasource.addEventListener(this.eventHandler.bind(this));
+                    }
                     this.controller.element.style.visibility = 'hidden';
                     create();
                 };
@@ -40,10 +41,17 @@ System.register([], function (exports_1, context_1) {
                     }, 0);
                 };
                 GridConnector.prototype.select = function (row) {
-                    this.datasource.select(row);
+                    if (typeof this.datasource.select === 'function') {
+                        this.datasource.select(row);
+                    }
                 };
                 GridConnector.prototype.getRowHeightState = function () {
-                    return this.datasource.getRowHeightState();
+                    if (typeof this.datasource.getRowHeightState === 'function') {
+                        return this.datasource.getRowHeightState();
+                    }
+                    else {
+                        return null;
+                    }
                 };
                 GridConnector.prototype.getDatasourceLength = function () {
                     return this.datasource.length();
@@ -55,12 +63,19 @@ System.register([], function (exports_1, context_1) {
                     this.controller.setColumnConfig(colconfig);
                 };
                 GridConnector.prototype.getGrouping = function () {
-                    return this.datasource.getGrouping();
+                    if (typeof this.datasource.getGrouping === 'function') {
+                        return this.datasource.getGrouping();
+                    }
+                    else {
+                        return [];
+                    }
                 };
                 GridConnector.prototype.group = function (grouping, keepExpanded) {
                     var _this = this;
                     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(function () {
-                        _this.datasource.group(grouping, keepExpanded);
+                        if (typeof _this.datasource.group === 'function') {
+                            _this.datasource.group(grouping, keepExpanded);
+                        }
                     });
                 };
                 GridConnector.prototype.getElement = function (options) {
@@ -76,34 +91,54 @@ System.register([], function (exports_1, context_1) {
                 GridConnector.prototype.query = function (a) {
                     var _this = this;
                     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(function () {
-                        _this.datasource.query(a);
+                        if (typeof _this.datasource.query === 'function') {
+                            _this.datasource.query(a);
+                        }
                     });
                 };
                 GridConnector.prototype.orderBy = function (attribute, addToCurrentSort) {
                     var _this = this;
                     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(function () {
-                        _this.datasource.orderBy(attribute, addToCurrentSort);
+                        if (typeof _this.datasource.orderBy === 'function') {
+                            _this.datasource.orderBy(attribute, addToCurrentSort);
+                        }
                     });
                 };
                 GridConnector.prototype.destroy = function () {
-                    this.datasource.removeEventListener(this.eventID);
+                    if (typeof this.datasource.removeEventListener === 'function') {
+                        this.datasource.removeEventListener(this.eventID);
+                    }
                 };
                 GridConnector.prototype.getCurrentOrderBy = function () {
-                    return this.datasource.getCurrentOrderBy();
+                    if (typeof this.datasource.getCurrentOrderBy === 'function') {
+                        return this.datasource.getCurrentOrderBy();
+                    }
+                    else {
+                        return [];
+                    }
                 };
                 GridConnector.prototype.getCurrentFilter = function () {
-                    return this.datasource.getCurrentFilter();
+                    if (typeof this.datasource.getCurrentFilter === 'function') {
+                        return this.datasource.getCurrentFilter();
+                    }
+                    else {
+                        return [];
+                    }
                 };
                 GridConnector.prototype.expandGroup = function (id) {
                     var _this = this;
                     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(function () {
-                        _this.datasource.groupExpand(id);
+                        if (typeof _this.datasource.groupExpand === 'function') {
+                            _this.datasource.groupExpand(id);
+                        }
                     });
                 };
                 GridConnector.prototype.collapseGroup = function (id) {
                     var _this = this;
                     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(function () {
-                        _this.datasource.groupCollapse(id);
+                        if (typeof _this.datasource.groupCollapse === 'function') {
+                            _this.datasource.groupCollapse(id);
+                        }
                     });
                 };
                 GridConnector.prototype.getTopRow = function () {
@@ -168,8 +203,7 @@ System.register([], function (exports_1, context_1) {
                 GridConnector.prototype.getRowProperties = function (obj) {
                     var x = {};
                     if (obj) {
-                        var k = void 0;
-                        for (k in obj) {
+                        for (var k in obj) {
                             if (obj.hasOwnProperty(k)) {
                                 if (x[k] !== obj[k]) {
                                     x[k] = obj[k];

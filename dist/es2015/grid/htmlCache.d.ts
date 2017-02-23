@@ -1,4 +1,4 @@
-import { RowCache, HeaderCache } from '../interfaces';
+import { RowCacheInterface, HeaderCacheInterface } from '../interfaces';
 export declare class HtmlCache {
     element: Element | HTMLElement;
     avg_top_panel: Element | HTMLElement;
@@ -25,8 +25,8 @@ export declare class HtmlCache {
     avg_main_rows: NodeListOf<any>;
     avg_right_rows: NodeListOf<any>;
     avg_group_rows: NodeListOf<any>;
-    rowCache: RowCache[];
-    headerCache: HeaderCache;
+    rowCache: RowCacheInterface[];
+    headerCache: HeaderCacheInterface;
     constructor(element: Element);
     updateRowsMarkup(): void;
     updateMainMarkup(): void;

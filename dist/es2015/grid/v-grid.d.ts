@@ -15,7 +15,7 @@ import { Controller } from './controller';
 import { LoadingScreen } from './loadingScreen';
 import { ContextMenu } from './contextMenu';
 import { Footer } from './footer';
-import { ResizeShardContext, GridConnectorInterface, DragDropShardContext, ColConfig, BindingContext, OverrideContext } from '../interfaces';
+import { ResizeShardContextInterface, GridConnectorInterface, DragDropShardContextInterface, ColConfigInterface, BindingContextInterface, OverrideContextInterface } from '../interfaces';
 export declare class VGrid {
     static inject: ({
         new (): Element;
@@ -26,9 +26,9 @@ export declare class VGrid {
     container: Container;
     viewResources: ViewResources;
     taskQueue: TaskQueue;
-    dragDropAttributeSharedContext: DragDropShardContext;
-    resizeAttributeSharedContext: ResizeShardContext;
-    colConfig: ColConfig[];
+    dragDropAttributeSharedContext: DragDropShardContextInterface;
+    resizeAttributeSharedContext: ResizeShardContextInterface;
+    colConfig: ColConfigInterface[];
     colRepeater: boolean;
     colRepeatRowTemplate: string;
     colRepeatRowHeaderTemplate: string;
@@ -51,9 +51,9 @@ export declare class VGrid {
     groupingElements: GroupingElements;
     loadingScreen: LoadingScreen;
     contextMenu: ContextMenu;
-    bindingContext: BindingContext;
-    overrideContext: OverrideContext;
-    backupColConfig: ColConfig[];
+    bindingContext: BindingContextInterface;
+    overrideContext: OverrideContextInterface;
+    backupColConfig: ColConfigInterface[];
     filterOperatorNames: any;
     filterOperatorTranslationKeys: any;
     loadingScreenTemplate: string;
@@ -68,12 +68,12 @@ export declare class VGrid {
     attManualSelection: boolean;
     attTheme: string;
     attOnRowDraw: Function;
-    attColConfig: ColConfig[];
+    attColConfig: ColConfigInterface[];
     attI18N: Function;
     attDataDelay: number;
     attVariableRowHeight: boolean;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, taskQueue: TaskQueue);
-    bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
+    bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
     unbind(): void;
     attached(): void;
     private checkBool(value);

@@ -1,5 +1,5 @@
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext } from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 export declare class VGridAttributesDataHandler {
     private field;
     private value;
@@ -19,6 +19,6 @@ export declare class VGridAttributesDataHandler {
     onFocus(): void;
     onBlur(): void;
     onChanged(): void;
-    bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
+    bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
     private valueConverters(value);
 }

@@ -1,3 +1,4 @@
+Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = require("aurelia-framework");
 var GroupContext = (function () {
     function GroupContext(name, field, groupingElements) {

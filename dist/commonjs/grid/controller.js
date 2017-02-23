@@ -1,3 +1,4 @@
+Object.defineProperty(exports, "__esModule", { value: true });
 var Controller = (function () {
     function Controller(vGrid) {
         this.vGrid = vGrid;
@@ -317,7 +318,7 @@ var Controller = (function () {
                 colFilterTop: col.colFilterTop,
                 colCss: col.colCss,
                 colType: col.colType,
-                __colSortHelper: tempArray[i].left,
+                __colSortHelper: tempArray[i].left
             };
             newColConfig.push(temp);
         });

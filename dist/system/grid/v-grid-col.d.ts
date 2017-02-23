@@ -1,5 +1,5 @@
 import { VGrid } from './v-grid';
-import { BindingContext, CustomTargetInstruction, OverrideContext } from '../interfaces';
+import { BindingContextInterface, CustomTargetInstruction, OverrideContextInterface } from '../interfaces';
 export declare class VGridElementColConfig {
     private vGrid;
     private element;
@@ -28,6 +28,6 @@ export declare class VGridElementColConfig {
     private colResizeable;
     private colDisplayEdit;
     constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction);
-    bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
+    bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
     private checkBool(value);
 }

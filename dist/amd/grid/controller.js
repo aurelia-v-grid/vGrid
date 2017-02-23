@@ -1,4 +1,5 @@
 define(["require", "exports"], function (require, exports) {
+    Object.defineProperty(exports, "__esModule", { value: true });
     var Controller = (function () {
         function Controller(vGrid) {
             this.vGrid = vGrid;
@@ -318,7 +319,7 @@ define(["require", "exports"], function (require, exports) {
                     colFilterTop: col.colFilterTop,
                     colCss: col.colCss,
                     colType: col.colType,
-                    __colSortHelper: tempArray[i].left,
+                    __colSortHelper: tempArray[i].left
                 };
                 newColConfig.push(temp);
             });

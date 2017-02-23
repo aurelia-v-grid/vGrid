@@ -1,7 +1,5 @@
 import { ViewSlot, TargetInstruction, BehaviorInstruction } from 'aurelia-framework';
-import { Selection } from './selection';
 import { GroupingElements } from './grid/groupingElements';
-import { Controller } from './grid/controller';
 export * from 'aurelia-framework';
 export { HtmlCache } from './grid/htmlCache';
 export { Controller } from './grid/controller';
@@ -26,31 +24,32 @@ export { ArrayFilter } from './utils/arrayFilter';
 export { ArraySort } from './utils/arraySort';
 export { ArrayGrouping } from './utils/arrayGrouping';
 export { Footer } from './grid/footer';
-export interface RowCache {
+export interface RowCacheInterface {
     [key: string]: any;
     left: HTMLElement;
     main: HTMLElement;
     right: HTMLElement;
     group: HTMLElement;
-    bindingContext: BindingContext;
+    bindingContext: BindingContextInterface;
     overrideContext: any;
     parentOverrideContext: any;
     leftRowViewSlot: ViewSlot;
     mainRowViewSlot: ViewSlot;
     rightRowViewSlot: ViewSlot;
     groupRowViewSlot: ViewSlot;
+    selection: SelectionInterface;
     row: number;
     top: number;
     isGroup: boolean;
     selected: boolean;
 }
-export interface HeaderCache {
+export interface HeaderCacheInterface {
     [key: string]: any;
     left: HTMLElement;
     main: HTMLElement;
     right: HTMLElement;
     group: HTMLElement;
-    bindingContext: BindingContext;
+    bindingContext: BindingContextInterface;
     overrideContext: any;
     parentOverrideContext: any;
     leftRowViewSlot: ViewSlot;
@@ -58,7 +57,7 @@ export interface HeaderCache {
     rightRowViewSlot: ViewSlot;
     groupRowViewSlot: ViewSlot;
 }
-export interface ColConfig {
+export interface ColConfigInterface {
     [key: string]: any;
     colWidth?: number;
     colRowTemplate?: string;
@@ -86,41 +85,41 @@ export interface ColConfig {
     __colHeaderTemplateGenerated?: string;
     __colRowTemplateGenerated?: string;
 }
-export interface Entity {
+export interface EntityInterface {
     [key: string]: any;
     __group?: boolean;
     __groupID?: string;
     __groupName?: string;
     __groupLvl?: number;
     __groupTotal?: number;
-    __groupChildren?: Entity[];
+    __groupChildren?: EntityInterface[];
     __groupExpanded?: boolean;
 }
-export interface TargetData {
+export interface TargetDataInterface {
     [key: string]: any;
     draggable: HTMLElement;
     ok: boolean;
     target: HTMLElement;
     colType: string;
     colNo: number;
-    context: ColumBindingContextObject;
-    columnsArray: ColumBindingContextObject[];
+    context: ColumBindingContextObjectInterface;
+    columnsArray: ColumBindingContextObjectInterface[];
     panel: boolean;
 }
-export interface FilterObject {
+export interface FilterObjectInterface {
     [key: string]: any;
     key?: string;
     operator: string;
     value: any;
     attribute: string;
 }
-export interface SortObject {
+export interface SortObjectInterface {
     [key: string]: any;
     attribute: string;
     asc: boolean;
     no?: number;
 }
-export interface DatasourceConfig {
+export interface DatasourceConfigInterface {
     [key: string]: any;
     key?: string;
     rowHeight?: number;
@@ -146,20 +145,20 @@ export interface CustomBehaviorInstruction extends BehaviorInstruction {
     template?: string;
     menuTemplates?: any;
 }
-export interface BindingContext {
+export interface BindingContextInterface {
     [key: string]: any;
-    rowRef: Entity;
-    selection: Selection;
+    rowRef: EntityInterface;
+    selection: SelectionInterface;
     row: number;
     selected: boolean;
-    tempRef: Entity;
+    tempRef: EntityInterface;
 }
-export interface OverrideContext {
+export interface OverrideContextInterface {
     [key: string]: any;
     bindContext: any;
     parentOverrideContext: any;
 }
-export interface DragDropShardContext {
+export interface DragDropShardContextInterface {
     [key: string]: any;
     dragging: boolean;
     panel: Element;
@@ -167,23 +166,23 @@ export interface DragDropShardContext {
     colType: string;
     colNo: number;
     curColNo: number;
-    columnsArray: ColumBindingContextObject[];
-    columnsArraySorted: ColumBindingContextObject[];
-    context: ColumBindingContextObject;
+    columnsArray: ColumBindingContextObjectInterface[];
+    columnsArraySorted: ColumBindingContextObjectInterface[];
+    context: ColumBindingContextObjectInterface;
     field: string;
     title: string;
 }
-export interface ResizeShardContext {
+export interface ResizeShardContextInterface {
     [key: string]: any;
     resizing: boolean;
 }
-export interface ColumBindingContextObject {
+export interface ColumBindingContextObjectInterface {
     [key: string]: any;
     show: boolean;
     left: number;
     width: number;
 }
-export interface GroupingContext {
+export interface GroupingContextInterface {
     [key: string]: any;
     viewSlot: ViewSlot;
     name: string;
@@ -191,7 +190,7 @@ export interface GroupingContext {
     remove: Function;
     ctx: GroupingElements;
 }
-export interface GroupingObj {
+export interface GroupingObjInterface {
     [key: string]: any;
     title: string;
     field: string;
@@ -209,26 +208,43 @@ export interface SelectionInterface {
 }
 export interface GridConnectorInterface {
     getSelection(): SelectionInterface;
-    connect(controller: Controller, create: Function): void;
+    connect(controller: ControllerInterface, create: Function): void;
     gridCreated(): void;
     select(row: number): void;
     getDatasourceLength(): number;
-    getColConfig(): ColConfig[];
-    setColConfig(colconfig: ColConfig[]): void;
-    getGrouping(): GroupingObj[];
-    group(grouping: GroupingObj[], keepExpanded?: boolean): void;
+    getColConfig(): ColConfigInterface[];
+    setColConfig(colconfig: ColConfigInterface[]): void;
+    getGrouping(): GroupingObjInterface[];
+    group(grouping: GroupingObjInterface[], keepExpanded?: boolean): void;
     getElement(options: {
         row: number;
         isDown: boolean;
         callback: Function;
     }): void;
-    query(a: FilterObject[]): void;
-    orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
-    getCurrentOrderBy(): SortObject[];
-    getCurrentFilter(): FilterObject[];
+    query(a: FilterObjectInterface[]): void;
+    orderBy(attribute: string | SortObjectInterface, addToCurrentSort?: boolean): void;
+    getCurrentOrderBy(): SortObjectInterface[];
+    getCurrentFilter(): FilterObjectInterface[];
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
     getRowHeightState(): any;
+}
+export interface DatasourceInterface {
+    groupCollapse(id: string): void;
+    groupExpand(id: string): void;
+    getCurrentFilter(): FilterObjectInterface[];
+    getCurrentOrderBy(): SortObjectInterface[];
+    orderBy(attribute: string | SortObjectInterface, addToCurrentSort?: boolean): void;
+    removeEventListener(id: number): void;
+    query(options: FilterObjectInterface[]): void;
+    group(grouping: GroupingObjInterface[], keepExpanded?: boolean): void;
+    getGrouping(): GroupingObjInterface[];
+    getRowHeightState(): any;
+    select(row: number): void;
+    addEventListener(callback: Function): number;
+    getSelection(): SelectionInterface;
+    length(): number;
+    getElement(row: number): EntityInterface;
 }
 export interface ControllerInterface {
     element: Element;
@@ -237,7 +253,10 @@ export interface ControllerInterface {
     collectionLength(): number;
     triggerScroll(position: number): void;
     rebindAllRows(): void;
-    getColumnConfig(): ColConfig[];
-    setColumnConfig(colConfig: ColConfig[]): void;
+    getColumnConfig(): ColConfigInterface[];
+    setColumnConfig(colConfig: ColConfigInterface[]): void;
     getTopRow(): number;
+    updateHeaderGrouping(groups: GroupingObjInterface[]): void;
+    triggerI18N(): void;
+    udateHorizontalScroller(): void;
 }

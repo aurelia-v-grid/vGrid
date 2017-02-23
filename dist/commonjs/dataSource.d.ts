@@ -1,7 +1,7 @@
 import { Selection } from './selection';
-import { Entity, DatasourceConfig, SortObject, FilterObject, GroupingObj } from './interfaces';
-export declare class DataSource {
-    entity: Entity;
+import { EntityInterface, DatasourceConfigInterface, SortObjectInterface, FilterObjectInterface, GroupingObjInterface, DatasourceInterface } from './interfaces';
+export declare class DataSource implements DatasourceInterface {
+    entity: EntityInterface;
     groupHeight: number;
     rowHeight: number;
     private selection;
@@ -13,26 +13,26 @@ export declare class DataSource {
     private eventCallBacks;
     private collection;
     private selectionEventID;
-    constructor(selection: Selection, config?: DatasourceConfig);
+    constructor(selection: Selection, config?: DatasourceConfigInterface);
     getSelection(): Selection;
     getKey(): string;
     length(): number;
     triggerEvent(event: string): void;
     addEventListener(callback: Function): number;
     removeEventListener(id: number): void;
-    setArray(array: Entity[]): void;
-    push(array: Entity[]): void;
+    setArray(array: EntityInterface[]): void;
+    push(array: EntityInterface[]): void;
     refresh(data?: any): void;
     select(row: number): void;
-    query(options: FilterObject[]): void;
-    orderBy(attribute: string | SortObject, addToCurrentSort?: boolean): void;
-    getCurrentOrderBy(): SortObject[];
-    getCurrentFilter(): FilterObject[];
-    getElement(row: number): Entity;
-    group(grouping: GroupingObj[], keepExpanded?: boolean): void;
+    query(options: FilterObjectInterface[]): void;
+    orderBy(attribute: string | SortObjectInterface, addToCurrentSort?: boolean): void;
+    getCurrentOrderBy(): SortObjectInterface[];
+    getCurrentFilter(): FilterObjectInterface[];
+    getElement(row: number): EntityInterface;
+    group(grouping: GroupingObjInterface[], keepExpanded?: boolean): void;
     groupCollapse(id: string): void;
     groupExpand(id: string): void;
-    getGrouping(): GroupingObj[];
+    getGrouping(): GroupingObjInterface[];
     addBlankRow(): void;
     unshift(data: any): void;
     remove(rows?: any[]): any[];

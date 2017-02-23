@@ -1,5 +1,5 @@
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext } from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 export declare class VGridAttributesResizeCol {
     private vGrid;
     private ctx;
@@ -35,7 +35,7 @@ export declare class VGridAttributesResizeCol {
     private rightColNo;
     private rightColNoWidth;
     constructor(element: Element, vGrid: VGrid);
-    bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
+    bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
     attached(): void;
     private onmouseup();
     private onmousemove(e);

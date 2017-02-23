@@ -1,9 +1,9 @@
-import { FilterObject, Entity } from '../interfaces';
+import { FilterObjectInterface, EntityInterface } from '../interfaces';
 export declare class ArrayFilter {
     private lastFilter;
     private filterOperators;
     constructor();
     getOperatorNo(val: string): number;
-    getLastFilter(): FilterObject[];
-    runQueryOn(objArray: Entity[], ObjFilter: FilterObject[]): Entity[];
+    getLastFilter(): FilterObjectInterface[];
+    runQueryOn(objArray: EntityInterface[], ObjFilter: FilterObjectInterface[]): EntityInterface[];
 }

@@ -1,9 +1,9 @@
-import { Controller, ColumBindingContextObject } from '../interfaces';
+import { Controller, ColumBindingContextObjectInterface } from '../interfaces';
 export declare class ColumnBindingContext {
-    setupleft: ColumBindingContextObject[];
-    setupmain: ColumBindingContextObject[];
-    setupright: ColumBindingContextObject[];
-    setupgroup: ColumBindingContextObject[];
+    setupleft: ColumBindingContextObjectInterface[];
+    setupmain: ColumBindingContextObjectInterface[];
+    setupright: ColumBindingContextObjectInterface[];
+    setupgroup: ColumBindingContextObjectInterface[];
     setupgrouping: number;
     changeGrouping: Function;
     private controller;

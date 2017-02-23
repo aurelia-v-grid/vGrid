@@ -1,5 +1,5 @@
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext } from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 export declare class VGridAttributesOnChange {
     private vGrid;
     private element;
@@ -8,5 +8,5 @@ export declare class VGridAttributesOnChange {
     constructor(element: HTMLElement, vGrid: VGrid);
     attached(): void;
     onChanged(): void;
-    bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
+    bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
 }

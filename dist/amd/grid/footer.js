@@ -1,4 +1,5 @@
 define(["require", "exports", "aurelia-framework"], function (require, exports, aurelia_framework_1) {
+    Object.defineProperty(exports, "__esModule", { value: true });
     var Footer = (function () {
         function Footer(htmlCache, viewCompiler, container, viewResources, viewSlots) {
             this.htmlCache = htmlCache;

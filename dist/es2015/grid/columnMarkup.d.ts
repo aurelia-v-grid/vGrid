@@ -1,4 +1,4 @@
-import { ViewCompiler, Container, ViewResources, HtmlCache, ColumnBindingContext, ViewSlots, ColConfig, OverrideContext } from '../interfaces';
+import { ViewCompiler, Container, ViewResources, HtmlCache, ColumnBindingContext, ViewSlots, ColConfigInterface, OverrideContextInterface } from '../interfaces';
 export declare class ColumnMarkup {
     private element;
     private htmlCache;
@@ -28,7 +28,7 @@ export declare class ColumnMarkup {
     private groupRows;
     private rowLength;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, htmlCache: HtmlCache, viewSlots: ViewSlots, columnBindingContext: ColumnBindingContext);
-    init(colConfig: ColConfig[], overrideContext: OverrideContext, colRepeater: boolean, colRepeatRowTemplate: string, colRepeatRowHeaderTemplate: string, colGroup: string): void;
+    init(colConfig: ColConfigInterface[], overrideContext: OverrideContextInterface, colRepeater: boolean, colRepeatRowTemplate: string, colRepeatRowHeaderTemplate: string, colGroup: string): void;
     private getRowViews(type);
     private createColSetupContext(type);
     private getHeaderViews(type);

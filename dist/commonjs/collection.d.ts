@@ -1,4 +1,4 @@
-import { DataSource, Entity } from './interfaces';
+import { DataSource, EntityInterface } from './interfaces';
 export declare class Collection {
     length: number;
     groupHeight: number;
@@ -13,12 +13,12 @@ export declare class Collection {
     private rowTopArray;
     private rowHeightTotal;
     constructor(datasource: DataSource);
-    setData(array: Entity[], ungroupedArray?: Entity[]): void;
+    setData(array: EntityInterface[], ungroupedArray?: EntityInterface[]): void;
     getRowHeightState(): any;
-    getEntities(): Entity[];
-    getCurrentEntities(): Entity[];
+    getEntities(): EntityInterface[];
+    getCurrentEntities(): EntityInterface[];
     getRowKey(row: number): string;
     getRowKeys(): any[];
-    getRow(row: number): Entity;
-    getRowFromEntity(entity: Entity): number;
+    getRow(row: number): EntityInterface;
+    getRowFromEntity(entity: EntityInterface): number;
 }

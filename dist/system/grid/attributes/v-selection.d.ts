@@ -1,5 +1,5 @@
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext } from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 export declare class VGridAttributesSelection {
     private element;
     private vGrid;
@@ -10,6 +10,6 @@ export declare class VGridAttributesSelection {
     private type;
     constructor(element: HTMLInputElement, vGrid: VGrid);
     selectedChanged(newValue: boolean): void;
-    bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
+    bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
     attached(): void;
 }

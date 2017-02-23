@@ -1,5 +1,5 @@
 import { VGrid } from '../v-grid';
-import { BindingContext, OverrideContext } from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 export declare class VGridAttributesSort {
     private field;
     private asc;
@@ -11,7 +11,7 @@ export declare class VGridAttributesSort {
     private sortIcon;
     private firstTime;
     constructor(element: HTMLElement, vGrid: VGrid);
-    bind(bindingContext: BindingContext, overrideContext: OverrideContext): void;
+    bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
     attached(): void;
     detached(): void;
     private getSortIconMarkup();
