@@ -8,7 +8,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 define(["require", "exports", "aurelia-framework", "../v-grid"], function (require, exports, aurelia_framework_1, v_grid_1) {
-    Object.defineProperty(exports, "__esModule", { value: true });
     var VGridAttributesOnChange = (function () {
         function VGridAttributesOnChange(element, vGrid) {
             this.element = element;

@@ -1,4 +1,3 @@
-Object.defineProperty(exports, "__esModule", { value: true });
 var RowDataBinder = (function () {
     function RowDataBinder(element, controller) {
         this.element = element;

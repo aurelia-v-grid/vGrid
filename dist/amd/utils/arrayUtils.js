@@ -1,5 +1,4 @@
 define(["require", "exports", "./arrayFilter", "./arraySort", "./arrayGrouping"], function (require, exports, arrayFilter_1, arraySort_1, arrayGrouping_1) {
-    Object.defineProperty(exports, "__esModule", { value: true });
     var ArrayUtils = (function () {
         function ArrayUtils() {
             this.arrayFilter = new arrayFilter_1.ArrayFilter();

@@ -1,4 +1,3 @@
-Object.defineProperty(exports, "__esModule", { value: true });
 var HtmlHeightWidth = (function () {
     function HtmlHeightWidth(controller) {
         this.controller = controller;

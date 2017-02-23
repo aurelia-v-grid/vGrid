@@ -1,5 +1,4 @@
 define(["require", "exports"], function (require, exports) {
-    Object.defineProperty(exports, "__esModule", { value: true });
     var RowClickHandler = (function () {
         function RowClickHandler(element, htmlCache) {
             this.element = element;

@@ -1,5 +1,4 @@
 define(["require", "exports"], function (require, exports) {
-    Object.defineProperty(exports, "__esModule", { value: true });
     var ViewSlots = (function () {
         function ViewSlots(htmlCache) {
             this.rowCache = htmlCache.rowCache;

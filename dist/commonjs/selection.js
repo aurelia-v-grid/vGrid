@@ -1,4 +1,3 @@
-Object.defineProperty(exports, "__esModule", { value: true });
 var Selection = (function () {
     function Selection(mode) {
         this.mode = mode;

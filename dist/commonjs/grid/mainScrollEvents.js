@@ -1,4 +1,3 @@
-Object.defineProperty(exports, "__esModule", { value: true });
 var MainScrollEvents = (function () {
     function MainScrollEvents(element, htmlCache) {
         this.element = element;

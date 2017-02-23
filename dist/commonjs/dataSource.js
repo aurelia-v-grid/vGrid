@@ -1,4 +1,3 @@
-Object.defineProperty(exports, "__esModule", { value: true });
 var selection_1 = require("./selection");
 var collection_1 = require("./collection");
 var arrayUtils_1 = require("./utils/arrayUtils");

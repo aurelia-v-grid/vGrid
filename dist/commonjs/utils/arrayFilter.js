@@ -1,4 +1,3 @@
-Object.defineProperty(exports, "__esModule", { value: true });
 var ArrayFilter = (function () {
     function ArrayFilter() {
         this.filterOperators = {

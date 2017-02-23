@@ -1,4 +1,3 @@
-Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = require("aurelia-framework");
 var mainMarkupHtmlString_1 = require("./mainMarkupHtmlString");
 var MainMarkup = (function () {

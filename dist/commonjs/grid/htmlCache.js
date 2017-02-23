@@ -1,4 +1,3 @@
-Object.defineProperty(exports, "__esModule", { value: true });
 var HtmlCache = (function () {
     function HtmlCache(element) {
         this.element = element;

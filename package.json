@@ -1,6 +1,6 @@
 {
   "name": "aurelia-v-grid",
-  "version": "1.0.0-beta.0.0.58",
+  "version": "1.0.0-beta.0.0.59",
   "description": "Aurelia-v-grid",
   "keywords": [
     "aurelia",
@@ -37,13 +37,13 @@
     "gulp-protractor": "3.0.0",
     "gulp-sourcemaps": "^2.4.1",
     "gulp-tslint": "^7.1.0",
-    "gulp-typescript": "^3.1.5",
+    "gulp-typescript": "^3.1.2",
     "gulp-yuidoc": "^0.1.2",
     "object.assign": "^4.0.4",
     "require-dir": "^0.3.1",
     "run-sequence": "^1.2.2",
     "tslint": "^4.4.2",
-    "typescript": "^2.2.1",
+    "typescript": "2.1.4",
     "typings": "^2.1.0",
     "vinyl-paths": "^2.1.0",
     "yargs": "^6.6.0",

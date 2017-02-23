@@ -1,4 +1,3 @@
-Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = require("aurelia-framework");
 var LoadingScreen = (function () {
     function LoadingScreen(element, viewCompiler, container, viewResources, viewSlots) {

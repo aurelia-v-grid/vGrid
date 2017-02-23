@@ -1,4 +1,3 @@
-Object.defineProperty(exports, "__esModule", { value: true });
 var arrayFilter_1 = require("./arrayFilter");
 var arraySort_1 = require("./arraySort");
 var arrayGrouping_1 = require("./arrayGrouping");

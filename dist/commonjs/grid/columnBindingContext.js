@@ -1,4 +1,3 @@
-Object.defineProperty(exports, "__esModule", { value: true });
 var ColumnBindingContext = (function () {
     function ColumnBindingContext(controller) {
         var _this = this;
