@@ -1,4 +1,5 @@
 define(["require", "exports"], function (require, exports) {
+    Object.defineProperty(exports, "__esModule", { value: true });
     var RowMarkup = (function () {
         function RowMarkup(element, htmlCache) {
             this.element = element;

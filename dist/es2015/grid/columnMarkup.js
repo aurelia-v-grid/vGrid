@@ -1,4 +1,5 @@
 define(["require", "exports", "aurelia-framework", "./columnMarkupHelper"], function (require, exports, aurelia_framework_1, columnMarkupHelper_1) {
+    Object.defineProperty(exports, "__esModule", { value: true });
     var ColumnMarkup = (function () {
         function ColumnMarkup(element, viewCompiler, container, viewResources, htmlCache, viewSlots, columnBindingContext) {
             this.element = element;

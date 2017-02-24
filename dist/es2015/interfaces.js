@@ -2,6 +2,7 @@ define(["require", "exports", "aurelia-framework", "./grid/htmlCache", "./grid/c
     function __export(m) {
         for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
     }
+    Object.defineProperty(exports, "__esModule", { value: true });
     __export(aurelia_framework_1);
     exports.HtmlCache = htmlCache_1.HtmlCache;
     exports.Controller = controller_1.Controller;
