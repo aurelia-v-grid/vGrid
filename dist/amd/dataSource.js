@@ -1,4 +1,5 @@
 define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils"], function (require, exports, selection_1, collection_1, arrayUtils_1) {
+    Object.defineProperty(exports, "__esModule", { value: true });
     var DataSource = (function () {
         function DataSource(selection, config) {
             this.selection = selection || new selection_1.Selection('single');

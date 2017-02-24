@@ -1,3 +1,4 @@
+Object.defineProperty(exports, "__esModule", { value: true });
 var GridConnector = (function () {
     function GridConnector(datasource, selection, errorHandler) {
         this.initTop = 0;

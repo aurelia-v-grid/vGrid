@@ -1,3 +1,4 @@
+Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = require("aurelia-framework");
 var ContextMenu = (function () {
     function ContextMenu(viewCompiler, container, viewResources, viewSlots) {
