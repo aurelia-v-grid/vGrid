@@ -52,7 +52,7 @@
   "jspm": {
     "registry": "npm",
     "main": "index",
-    "format": "commonjs",
+    "format": "cjs",
     "directories": {
       "dist": "dist/commonjs"
     },
