@@ -13,7 +13,7 @@
 }
 
 .avg-default .avg-header {
-  border-bottom: 1px solid rgb(230, 230, 230);
+  
 }
 
 .avg-default .avg-footer {
@@ -23,12 +23,12 @@
 
 .avg-default .avg-content-right {
   background-color: white;
-  border-top: 1px solid rgb(230, 230, 230);
+  border-top: 2px solid rgb(230, 230, 230);
 }
 
 .avg-default .avg-content-left {
   background-color: white;
-  border-top: 1px solid rgb(230, 230, 230);
+  border-top: 2px solid rgb(230, 230, 230);
 }
 
 .avg-default .avg-header-main {
@@ -45,7 +45,7 @@
 
 .avg-default .avg-content-main {
   background-color: white;
-  border-top: 1px solid rgb(230, 230, 230);
+  border-top: 2px solid rgb(230, 230, 230);
 }
 
 .avg-default .avg-row {
@@ -87,6 +87,7 @@
   text-overflow: ellipsis;
   border-right: 1px solid rgb(230, 230, 230);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .avg-default .avg-content-right .avg-col {
