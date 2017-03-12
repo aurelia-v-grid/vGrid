@@ -116,6 +116,7 @@ avg-content-group-scroll {
   pointer-events: none;
   position: absolute;
   box-sizing: border-box;
+  border-top: 1px solid rgb(230, 230, 230);
 }
 
 avg-content-vhandle {
