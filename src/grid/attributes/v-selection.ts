@@ -8,7 +8,7 @@ import { Controller, BindingContextInterface, OverrideContextInterface } from '.
  * enablkes checkbox selection
  * Used by default by the simple html setup
  * Can be used with custom html
- * 
+ *
  */
 @customAttribute('v-selection')
 @inject(Element, VGrid)
@@ -33,7 +33,7 @@ export class VGridAttributesSelection {
 
   /**
    * todo description
-   * 
+   *
    */
   public selectedChanged(newValue: boolean): void {
     if (this.type === 'row') {
@@ -45,7 +45,7 @@ export class VGridAttributesSelection {
 
   /**
    * todo description
-   * 
+   *
    */
   public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
@@ -56,7 +56,7 @@ export class VGridAttributesSelection {
 
   /**
    * todo description
-   * 
+   *
    */
   public attached(): void {
 

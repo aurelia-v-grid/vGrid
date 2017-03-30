@@ -9,7 +9,7 @@ import { BindingContextInterface, OverrideContextInterface} from '../../interfac
  * Only triggers new data update on row when change event happen
  * Used by default by the simple html setup
  * Can be used with custom html
- * 
+ *
  */
 @customAttribute('v-onchange')
 @inject(Element, VGrid)
@@ -30,7 +30,7 @@ export class VGridAttributesOnChange {
 
   /**
    * todo description
-   * 
+   *
    */
     public attached() {
         if (!this.element.onchange) {
@@ -42,7 +42,7 @@ export class VGridAttributesOnChange {
 
   /**
    * todo description
-   * 
+   *
    */
     public onChanged() {
         this.vGrid.controller.rowDataBinder.rebindRowNo(this.bindingContext.row);
@@ -52,7 +52,7 @@ export class VGridAttributesOnChange {
 
   /**
    * todo description
-   * 
+   *
    */
     public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
         this.bindingContext = bindingContext;

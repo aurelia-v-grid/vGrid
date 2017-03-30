@@ -9,7 +9,7 @@ import { BindingContextInterface, OverrideContextInterface } from '../../interfa
  * Only triggers new data update on row when change event happen
  * Used by default by the simple html setup
  * Can be used with custom html
- * 
+ *
  */
 @customAttribute('v-data-handler')
 @inject(Element, VGrid)
@@ -25,11 +25,12 @@ export class VGridAttributesDataHandler {
     private displayFormater: { fromView: Function; toView: Function };
     private editFormater: { fromView: Function; toView: Function };
     private tempValue: any;
-    private isSet: boolean = false;
+    private isSet: boolean;
 
 
 
     constructor(element: HTMLElement, vGrid: VGrid) {
+        this.isSet = false;
         this.element = element;
         this.vGrid = vGrid;
     }
@@ -38,7 +39,7 @@ export class VGridAttributesDataHandler {
 
     /**
      * todo description
-     * 
+     *
      */
     public attached() {
         this.element.onchange = this.onChanged.bind(this);
@@ -50,7 +51,7 @@ export class VGridAttributesDataHandler {
 
     /**
      * value changed handler
-     * 
+     *
      */
     public valueChanged(newValue: any) {
         if (this.isSet) {
@@ -67,7 +68,7 @@ export class VGridAttributesDataHandler {
 
     /**
      * onfocus event handler
-     * 
+     *
      */
     public onFocus() {
         this.isSet = true;
@@ -79,7 +80,7 @@ export class VGridAttributesDataHandler {
 
     /**
      * onblur event handler
-     * 
+     *
      */
     public onBlur() {
         if (this.tempValue === (this.element as HTMLInputElement).value) {
@@ -92,7 +93,7 @@ export class VGridAttributesDataHandler {
 
     /**
      * onchange event handler
-     * 
+     *
      */
     public onChanged() {
         this.value = this.editFormater.fromView((this.element as HTMLInputElement).value);
@@ -105,7 +106,7 @@ export class VGridAttributesDataHandler {
 
     /**
      * when attributes binds, get valueconverters and set value
-     * 
+     *
      */
     public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
         this.bindingContext = bindingContext;
@@ -119,7 +120,7 @@ export class VGridAttributesDataHandler {
 
     /**
      * get valueConverters and bind to grid resources
-     * 
+     *
      */
     private valueConverters(value: string): { fromView: Function; toView: Function } {
         let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);

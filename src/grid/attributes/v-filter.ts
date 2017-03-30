@@ -8,7 +8,7 @@ import { BindingContextInterface, OverrideContextInterface, FilterObjectInterfac
  * Logic behind filter in headers
  * Used by default by the simple html setup
  * Can be used with custom html
- * 
+ *
  */
 @customAttribute('v-filter')
 @inject(Element, VGrid)
@@ -40,7 +40,7 @@ export class VGridAttributesFilter {
 
   /**
    * todo description
-   * 
+   *
    */
   public getOperatorName(operator: string): string {
     return this.vGrid.filterOperatorNames[operator];
@@ -50,7 +50,7 @@ export class VGridAttributesFilter {
 
   /**
    * todo description
-   * 
+   *
    */
   public attached(): void {
 
@@ -154,7 +154,7 @@ export class VGridAttributesFilter {
 
   /**
    * todo description
-   * 
+   *
    */
   public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
@@ -173,7 +173,7 @@ export class VGridAttributesFilter {
 
   /**
    * todo description
-   * 
+   *
    */
   private getValue(): any {
     if (this.type !== 'checkbox') {
@@ -192,7 +192,7 @@ export class VGridAttributesFilter {
 
   /**
    * todo description
-   * 
+   *
    */
   private resetValue(): void {
     if (this.type !== 'checkbox') {
@@ -207,7 +207,7 @@ export class VGridAttributesFilter {
 
   /**
    * todo description
-   * 
+   *
    */
   private updateFilter(curFilter: FilterObjectInterface[]): void {
     let filterIndex = -1;
@@ -248,7 +248,7 @@ export class VGridAttributesFilter {
 
   /**
    * todo description
-   * 
+   *
    */
   private valueConverters(value: string): { fromView: Function; toView: Function } {
     let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);

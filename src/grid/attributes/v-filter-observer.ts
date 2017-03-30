@@ -6,7 +6,7 @@ import { BindingContextInterface, OverrideContextInterface, FilterObjectInterfac
  * Custom attribute "v-filter-observer"
  * Alternative filter that listen for value changed
  * Can be used with custom html
- * 
+ *
  */
 @customAttribute('v-filter-observer')
 @inject(Element, VGrid)
@@ -35,7 +35,7 @@ export class VGridAttributesFilterObserver {
 
   /**
    * todo description
-   * 
+   *
    */
   public valueChanged(newValue: any) {
     if (this.attribute && newValue) { // if no attibute we do not want to do anything
@@ -47,7 +47,7 @@ export class VGridAttributesFilterObserver {
 
   /**
    * todo description
-   * 
+   *
    */
   public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
@@ -63,7 +63,7 @@ export class VGridAttributesFilterObserver {
 
   /**
    * todo description
-   * 
+   *
    */
   private getValue(): any {
       return this.valueFormater ? this.valueFormater.fromView(this.value) : this.value;
@@ -73,7 +73,7 @@ export class VGridAttributesFilterObserver {
 
   /**
    * todo description
-   * 
+   *
    */
   private updateFilter(): void {
     let curFilter: FilterObjectInterface[] = this.vGrid.attGridConnector.getCurrentFilter();
@@ -116,7 +116,7 @@ export class VGridAttributesFilterObserver {
 
   /**
    * todo description
-   * 
+   *
    */
   private valueConverters(value: string): { fromView: Function; toView: Function } {
     let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);

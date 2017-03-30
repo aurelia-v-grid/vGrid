@@ -14,7 +14,7 @@ import {
  * logic behind resizing of columns
  * Used by default by the simple html setup
  * Can be used with custom html
- * 
+ *
  */
 @customAttribute('v-resize-col')
 @inject(Element, VGrid)
@@ -77,7 +77,7 @@ export class VGridAttributesResizeCol {
 
   /**
    * todo description
-   * 
+   *
    */
   public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
@@ -88,7 +88,7 @@ export class VGridAttributesResizeCol {
 
   /**
    * todo description
-   * 
+   *
    */
   public attached(): void {
 
@@ -114,7 +114,7 @@ export class VGridAttributesResizeCol {
 
   /**
    * todo description
-   * 
+   *
    */
   private onmouseup(): void {
     // remove events
@@ -127,7 +127,7 @@ export class VGridAttributesResizeCol {
 
   /**
    * todo description
-   * 
+   *
    */
   private onmousemove(e: MouseEvent): void {
     this.updateHeader(e);
@@ -137,7 +137,7 @@ export class VGridAttributesResizeCol {
 
   /**
    * todo description
-   * 
+   *
    */
   private updateHeader(e: MouseEvent): void {
 
@@ -210,7 +210,7 @@ export class VGridAttributesResizeCol {
 
   /**
    * todo description
-   * 
+   *
    */
   private onmousedown(e: MouseEvent): void {
 

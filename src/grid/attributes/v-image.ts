@@ -8,7 +8,7 @@ import {BindingContextInterface, OverrideContextInterface } from '../../interfac
  * Clears src of image so it does not lag
  * Used by default by the simple html setup
  * Can be used with custom html
- * 
+ *
  */
 @customAttribute('v-image-fix')
 @inject(Element, VGrid)
@@ -30,7 +30,7 @@ export class VGridAttributesImageFix {
 
   /**
    * todo description
-   * 
+   *
    */
   public valueChanged(newValue: string): void {
     newValue = newValue ? newValue : '';
@@ -42,7 +42,7 @@ export class VGridAttributesImageFix {
 
   /**
    * todo description
-   * 
+   *
    */
   public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;

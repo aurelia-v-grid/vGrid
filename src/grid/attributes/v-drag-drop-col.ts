@@ -16,7 +16,7 @@ import {
  * Logic behind dragdrop, & enables grouping
  * Used by default by the simple html setup
  * Can be used with custom html
- * 
+ *
  */
 @customAttribute('v-drag-drop-col')
 @inject(Element, VGrid)
@@ -70,7 +70,7 @@ export class VGridDragDropCol {
 
   /**
    * todo description
-   * 
+   *
    */
   public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
@@ -88,7 +88,7 @@ export class VGridDragDropCol {
 
   /**
    * todo description
-   * 
+   *
    */
   public unbind(): void {
     // todo remove event listeners
@@ -98,7 +98,7 @@ export class VGridDragDropCol {
 
   /**
    * todo description
-   * 
+   *
    */
   public detached(): void {
     //  console.log("detached")
@@ -108,7 +108,7 @@ export class VGridDragDropCol {
 
   /**
    * todo description
-   * 
+   *
    */
   public attached(): void {
 
@@ -166,7 +166,7 @@ export class VGridDragDropCol {
 
   /**
    * todo description
-   * 
+   *
    */
   private createDragElement(): void {
 
@@ -186,7 +186,7 @@ export class VGridDragDropCol {
 
   /**
    * todo description
-   * 
+   *
    */
   private onDragstart(): void {
 
@@ -222,7 +222,7 @@ export class VGridDragDropCol {
 
   /**
    * todo description
-   * 
+   *
    */
   private onDragOutSide(event: MouseEvent): void {
 
@@ -268,7 +268,7 @@ export class VGridDragDropCol {
 
   /**
    * todo description
-   * 
+   *
    */
   private onDragenter(event: MouseEvent): void {
 
@@ -284,7 +284,7 @@ export class VGridDragDropCol {
         // set last target
         this.sharedContext.lastTarget = result.target;
 
-        // if fifferent column, and same type (main/left/right) 
+        // if fifferent column, and same type (main/left/right)
         if (result.colNo !== this.sharedContext.colNo && result.colType === this.sharedContext.colType) {
 
           // get the left
@@ -305,7 +305,7 @@ export class VGridDragDropCol {
               return a.left - b.left;
             });
 
-          // loop and set left/right  
+          // loop and set left/right
           let appendValue = 0;
           this.sharedContext.columnsArraySorted.forEach((x) => {
             if (x.show) {
@@ -330,7 +330,7 @@ export class VGridDragDropCol {
 
   /**
    * todo description
-   * 
+   *
    */
   private onDragover(event: MouseEvent): void {
 
@@ -346,7 +346,7 @@ export class VGridDragDropCol {
 
   /**
    * todo description
-   * 
+   *
    */
   private onDragend(): void {
 
@@ -379,11 +379,11 @@ export class VGridDragDropCol {
 
   /**
    * todo description
-   * 
+   *
    */
   private switchColumns(result: TargetDataInterface): void {
 
-    // get vars 
+    // get vars
     let width: number;
     let newColType = result.colType;
     let oldColType = this.sharedContext.colType;
@@ -410,7 +410,7 @@ export class VGridDragDropCol {
             return a.left - b.left;
           });
 
-        // loop and set left/right  
+        // loop and set left/right
         let appendValue = 0;
         this.sharedContext.columnsArraySorted.forEach((x) => {
           if (x.show) {
@@ -441,7 +441,7 @@ export class VGridDragDropCol {
             return a.left - b.left;
           });
 
-        // loop and set left/right  
+        // loop and set left/right
         appendValue = 0;
         this.sharedContext.columnsArraySorted.forEach((x) => {
           if (x.show) {
@@ -544,7 +544,7 @@ export class VGridDragDropCol {
 
   /**
    * todo description
-   * 
+   *
    */
   private getTargetData(curTarget: Element): TargetDataInterface {
 

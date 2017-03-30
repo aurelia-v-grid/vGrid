@@ -8,7 +8,7 @@ import { BindingContextInterface, OverrideContextInterface } from '../../interfa
  * logic behind sorting in grid/sort icons
  * Used by default by the simple html setup
  * Can be used with custom html
- * 
+ *
  */
 @customAttribute('v-sort')
 @inject(Element, VGrid)
@@ -21,20 +21,21 @@ export class VGridAttributesSort {
   private overrideContext: OverrideContextInterface;
   private attribute: string;
   private sortIcon: HTMLElement;
-  private firstTime: boolean = true;
+  private firstTime: boolean;
 
 
 
   constructor(element: HTMLElement, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
+    this.firstTime = true;
   }
 
 
 
   /**
    * todo description
-   * 
+   *
    */
   public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
@@ -46,7 +47,7 @@ export class VGridAttributesSort {
 
   /**
    * todo description
-   * 
+   *
    */
   public attached(): void {
     this.sortIcon = document.createElement('i');
@@ -77,7 +78,7 @@ export class VGridAttributesSort {
 
   /**
    * todo description
-   * 
+   *
    */
   public detached(): void {
     this.element.removeChild(this.sortIcon);
@@ -87,7 +88,7 @@ export class VGridAttributesSort {
 
   /**
    * todo description
-   * 
+   *
    */
   private getSortIconMarkup(): string {
 

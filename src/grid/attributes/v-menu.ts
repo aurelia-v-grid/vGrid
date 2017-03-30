@@ -8,7 +8,7 @@ import { Controller, GroupingElements } from '../../interfaces';
  * logic behind menu/ adds contextmenu to grid
  * Used by default by the simple html setup
  * Can be used with custom html
- * 
+ *
  */
 @customAttribute('v-menu')
 @inject(Element, VGrid)
@@ -46,7 +46,7 @@ export class VGridAttributeMenu {
 
   /**
    * todo description
-   * 
+   *
    */
   public attached(): void {
     this.element.addEventListener('contextmenu', this.openBinded);
@@ -56,7 +56,7 @@ export class VGridAttributeMenu {
 
   /**
    * todo description
-   * 
+   *
    */
   public unbind(): void {
     document.removeEventListener('click', this.checkBinded);
@@ -66,7 +66,7 @@ export class VGridAttributeMenu {
 
   /**
    * todo description
-   * 
+   *
    */
   private check(e: MouseEvent): void {
     let x = (e.target as HTMLElement).classList.contains('avg-menu__link');
@@ -80,7 +80,7 @@ export class VGridAttributeMenu {
 
   /**
    * todo description
-   * 
+   *
    */
   private callback(type: string, option: string, event: MouseEvent): boolean {
     if (type === 'filter') {
@@ -153,7 +153,7 @@ export class VGridAttributeMenu {
 
   /**
    * todo description
-   * 
+   *
    */
   private open(e: MouseEvent): void {
     this.check(e);
@@ -177,7 +177,7 @@ export class VGridAttributeMenu {
 
   /**
    * todo description
-   * 
+   *
    */
   private getPosition(e: MouseEvent): any {
     let posx = 0;
