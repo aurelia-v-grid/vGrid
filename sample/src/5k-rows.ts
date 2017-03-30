@@ -9,7 +9,7 @@ export class Welcome {
 
   public ds: DataSource;
   public gridConnector: GridConnector;
-  private testString: string = 'yay';
+  private testString: string;
   private dsEventID: any;
   // public translate: any = { equals: 'er lik', greaterThan: 'større enn' };
   private myCollection: any;
@@ -27,14 +27,14 @@ export class Welcome {
     this.gridConnector = new GridConnector(this.ds);
     this.gridConnector.setInitTop(this.dummyDataGenerator.rowTop);
     this.ds.setArray(this.myCollection);
-    this.ds.query([{attribute: 'index', operator: '>', value: 5, key:'greater' }, {attribute: 'index', operator: '<', value: 10, key:'less' }]);
-    //this.ds.group([{title: 'My Country', field: 'country'}, {title: 'My bool', field: 'bool'}]);
-    //this.ds.orderBy('index');
+    this.ds.query([{attribute: 'index', operator: '>', value: 5, key: 'greater' }, {attribute: 'index', operator: '<', value: 10, key: 'less' }]);
+    // this.ds.group([{title: 'My Country', field: 'country'}, {title: 'My bool', field: 'bool'}]);
+    // this.ds.orderBy('index');
   }
 
   public dsEvents(e) {
-    //console.log(e)
-    //console.log(this.ds.getCollectionStatus());
+    // console.log(e)
+    // console.log(this.ds.getCollectionStatus());
     return true;
   }
 
@@ -44,7 +44,7 @@ export class Welcome {
   }
 
   public singleClick(event) {
-    //console.log(event);
+    // console.log(event);
   }
 
   public setLocal(code: string): void {
@@ -52,7 +52,7 @@ export class Welcome {
   }
 
   public dblClick(event) {
-    //console.log(event);
+    // console.log(event);
   }
 
   public onRowDraw(data) {
@@ -102,8 +102,8 @@ export class Welcome {
 
 
   public filterByCode() {
-    this.ds.query([{ attribute: "index", operator: ">", value: 5 }, { attribute: 'index', operator: '<', value: 10 }])
-    this.gridConnector.raiseEvent('filterUpdateValues')
+    this.ds.query([{ attribute: 'index', operator: '>', value: 5 }, { attribute: 'index', operator: '<', value: 10 }]);
+    this.gridConnector.raiseEvent('filterUpdateValues');
   }
 
   public remove() {

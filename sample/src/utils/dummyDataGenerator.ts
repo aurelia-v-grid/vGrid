@@ -2,7 +2,7 @@ import * as internalDataArray from './dummyData';
 
 
 export class DummyDataGenerator {
-
+    public rowTop: number;
     private totalGenerated: any;
     private index: any;
     private name: any;
@@ -27,11 +27,11 @@ export class DummyDataGenerator {
     private bool: any;
     private zip: any;
     private internalDataArray: any;
-    public rowTop: number;
+
 
 
     constructor() {
-        console.log(internalDataArray)
+        console.log(internalDataArray);
         this.totalGenerated = 0;
         // transform json object to an array
         this.internalDataArray = internalDataArray.data;
