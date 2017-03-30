@@ -7,7 +7,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
 /**
  * Custom element <v-grid-footer>
  * This is used for creating custom footer markup
- * 
+ *
  */
 @noView()
 @customElement('v-grid-footer')
@@ -17,7 +17,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
   element: Element,
   instruction: CustomBehaviorInstruction) => {
 
-  // dont use  
+  // dont use
   compiler = null;
   resources = null;
 
@@ -45,7 +45,7 @@ export class VGridFooter {
 
   /**
    * add the markup to vgrid class for use later when generating the grid
-   * 
+   *
    */
   public bind(): void {
     this.vGrid.footerTemplate = this.template;

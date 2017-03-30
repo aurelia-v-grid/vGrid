@@ -5,7 +5,7 @@ import { HtmlCache } from '../interfaces';
  * - pinned left and right
  * - main
  * - group
- * 
+ *
  */
 export class RowMarkup {
   private element: Element;
@@ -26,7 +26,7 @@ export class RowMarkup {
 
   /**
    * Called when grid is created to set defaults, add event listners
-   * 
+   *
    */
   public init(rowHeight: number): void {
     this.rowHeight = rowHeight;
@@ -39,7 +39,7 @@ export class RowMarkup {
   /**
    * Generate the row markup
    * called when grid is created and not used again
-   * 
+   *
    */
   private generateRows(): void {
 
@@ -87,7 +87,7 @@ export class RowMarkup {
 
   /**
    * just adds the main html elements to class
-   * 
+   *
    */
   private updateInternalHtmlCache(): void {
     this.left = this.htmlCache.avg_content_left_scroll;

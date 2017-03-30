@@ -3,7 +3,7 @@ import { SortObjectInterface, EntityInterface } from '../interfaces';
 /**
  * This does all the sorting on the array passed in
  * Used by default datasource
- * 
+ *
  */
 export class ArraySort {
   private lastSort: SortObjectInterface[];
@@ -22,7 +22,7 @@ export class ArraySort {
 
   /**
    * Sets localCompare
-   * 
+   *
    */
   public setLocaleCompare(code: string, options?: any): void {
     this.localeCompareCode = code ? code : null;
@@ -34,7 +34,7 @@ export class ArraySort {
   /**
    * Resets sort
    * if attribute is passed it sets that as default, this way first filter wont be messed up
-   * 
+   *
    */
   public reset(defaultSortAttribute?: string): void {
     if (defaultSortAttribute) {
@@ -52,7 +52,7 @@ export class ArraySort {
   /**
    * Sets last sort
    * todo: why do I have this?
-   * 
+   *
    */
   public setLastSort(array: SortObjectInterface[]): void {
     this.lastSort = array;
@@ -64,7 +64,7 @@ export class ArraySort {
   /**
    * Sets the sort order to be used next sort Runs
    * any = string
-   * 
+   *
    */
   public setOrderBy(param: SortObjectInterface | any, add?: boolean): void {
     let sort: any;
@@ -128,7 +128,7 @@ export class ArraySort {
 
   /**
    * Returns current sort by
-   * 
+   *
    */
   public getOrderBy(): SortObjectInterface[] {
     return this.curSort;
@@ -138,7 +138,7 @@ export class ArraySort {
 
   /**
    * Get value from deeper inside the object, this will need a lot more work, and filter does not support it
-   * 
+   *
    */
   public getValue(attribute: string, obj: any): any {
     let arr: any[] = attribute.split('.');
@@ -158,7 +158,7 @@ export class ArraySort {
 
   /**
    *  Runs sort on array passed in with params set earlier
-   * 
+   *
    */
   public runOrderbyOn(array: EntityInterface[]): void {
 

@@ -8,7 +8,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
  * This is used for creating custom row repeat
  * Row repeat is just a full grid with row without no column
  * Thisone is useful for when you need to for repeated
- * 
+ *
  */
 @noView()
 @customElement('v-grid-row-repeat')
@@ -18,7 +18,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
   element: Element,
   instruction: CustomBehaviorInstruction) => {
 
-  // dont use  
+  // dont use
   compiler = null;
   resources = null;
 
@@ -63,7 +63,7 @@ export class VGridElementRowRepeat {
 
   /**
    * add the markup to vgrid class for use later when generating the grid
-   * 
+   *
    */
   public bind(): void {
     this.vGrid.colRepeater = true;

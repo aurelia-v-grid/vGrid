@@ -6,7 +6,7 @@ import { HtmlCache, RowCacheInterface, Controller } from '../interfaces';
  * Columns are pinned left and right, main
  * It does not listen for scroll event on main elements, just internal event "avg-scroll"
  * After it sets correct top value, it triggers event to rebind row/ update data
- * 
+ *
  */
 export class RowScrollEvents {
   private htmlCache: HtmlCache;
@@ -45,7 +45,7 @@ export class RowScrollEvents {
 
   /**
    * Called when grid is created to set defaults, add event listners
-   * 
+   *
    */
   public init(rowHeight: number, attDataDelay: number, attVariableRowHeight: boolean): void {
     this.rowCache = this.htmlCache.rowCache;
@@ -65,7 +65,7 @@ export class RowScrollEvents {
 
   /**
    * Gets called when selection changes, this way it knows the limit of scrolling
-   * 
+   *
    */
   public setCollectionLength(length: number): void {
     this.collectionLength = length;
@@ -75,7 +75,7 @@ export class RowScrollEvents {
 
   /**
    * Creates a rowcache so its easy to get the bindingcontexts of all columns
-   * 
+   *
    */
   private createRowCache(): void {
     for (let i = 0; i < this.cacheLength; i++) {
@@ -94,7 +94,7 @@ export class RowScrollEvents {
 
   /**
    * Updates internal html cache so its easy to access
-   * 
+   *
    */
   private updateInternalHtmlCache(): void {
 
@@ -116,7 +116,7 @@ export class RowScrollEvents {
 
   /**
    * returns the context height of main column (middle one)
-   * 
+   *
    */
   get contentHeight(): number {
     return (this.htmlCache.avg_content_main as HTMLElement).offsetHeight;
@@ -126,7 +126,7 @@ export class RowScrollEvents {
 
   /**
    * Figues out what type of scrolling is done and calls correct method
-   * 
+   *
    */
   private onScroll(event: CustomEvent): void {
     let isDown = event.detail.isDown;
@@ -160,7 +160,7 @@ export class RowScrollEvents {
 
   /**
    * Sets new top calues to all needed columns (left, main, right, group)
-   * 
+   *
    */
   private setRowTopValue(cache: RowCacheInterface, top: number) {
     cache.left.style.transform = `translate3d(0px,${top}px, 0px)`;
@@ -176,7 +176,7 @@ export class RowScrollEvents {
   /**
    * Sets new top calues to all needed columns (left, main, right, group)
    * This one is used for the vaiable row height
-   * 
+   *
    */
   private setRowTopValueVariableRowHeight(cache: RowCacheInterface, top: number) {
     cache.left.style.transform = `translate3d(0px,${top}px, 0px)`;
@@ -192,7 +192,7 @@ export class RowScrollEvents {
 
   /**
    * Handles normal scrolling
-   * 
+   *
    */
   private scrollNormal(newTopPosition: number, downScroll: boolean) {
 
@@ -240,7 +240,7 @@ export class RowScrollEvents {
 
   /**
    * Handles scrollbars scrolling, or when setting top value by code
-   * 
+   *
    */
   private scrollScrollBar(newTopPosition: number, downScroll: boolean) {
 
@@ -297,7 +297,7 @@ export class RowScrollEvents {
         } else {
           // if this triggers the collection have been removed, so really just need to place out the rows
           if (currentRow >= collectionLength) {
-            //setAfter(i);
+            // setAfter(i);
             setHiddenFromView(i);
           }
         }
@@ -320,7 +320,7 @@ export class RowScrollEvents {
 
   /**
    * sets row height (used when using variable row height)
-   * 
+   *
    */
   private setRowHeight(rowElement: any, rowNo: number): void {
     let rowHeightState: any = this.controller.getRowHeightState();
@@ -335,7 +335,7 @@ export class RowScrollEvents {
   /**
    * Handles normal scrolling (used when using variable row height)
    * if varibale row state is set the override the "scrollNormal" method
-   * 
+   *
    */
   private scrollNormalVariableRowHeight(newTopPosition: number, downScroll: boolean) {
 
@@ -387,7 +387,7 @@ export class RowScrollEvents {
   /**
    * Handles scrollbars scrolling, or when setting top value by code (used when using variable row height)
    * if varibale row state is set the override the "scrollScrollBar" method
-   * 
+   *
    */
   private scrollScrollBarVariableRowHeight(newTopPosition: number, downScroll: boolean) {
 
@@ -454,6 +454,7 @@ export class RowScrollEvents {
     };
 
     // loop row html cache
+    // tslint:disable-next-line:no-shadowed-variable
     for (let i = 0; i < this.cacheLength; i++) {
       let moved = false;
       switch (true) {
@@ -474,7 +475,7 @@ export class RowScrollEvents {
           // if this triggers the collection have been removed, so really just need to place out the rows
           if (currentRow >= collectionLength) {
             setHiddenFromView(i);
-            //setAfter(i);
+            // setAfter(i);
           }
         }
       }
@@ -497,7 +498,7 @@ export class RowScrollEvents {
   /**
    * Adds event listener from "avg-scroll"
    * This is usually called by the mainScrollEvents class
-   * 
+   *
    */
   private addEventListener(): void {
     this.onScrollBinded = this.onScroll.bind(this);
@@ -508,7 +509,7 @@ export class RowScrollEvents {
 
   /**
    * Triggers event to rebind row
-   * 
+   *
    */
   private triggerRebindRowEvent(curRow: number, curRowCache: RowCacheInterface, isDownScroll: boolean): void {
     let event = new CustomEvent('avg-rebind-row', {
@@ -526,7 +527,7 @@ export class RowScrollEvents {
 
   /**
    * Triggers event to rebind all rows
-   * 
+   *
    */
   private triggerRebindAllRowsEvent(isDownScroll: boolean, curRowCache: RowCacheInterface[]): void {
     let event = new CustomEvent('avg-rebind-all-rows', {

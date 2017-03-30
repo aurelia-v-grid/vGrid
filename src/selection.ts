@@ -21,7 +21,7 @@ export class Selection implements SelectionInterface {
 
   /**
    * Triggers event and calls listeners
-   * 
+   *
    */
   public triggerEvent(event: string): void {
     // call all event listeners
@@ -40,7 +40,7 @@ export class Selection implements SelectionInterface {
 
   /**
    * add event to the selection changes
-   * 
+   *
    */
   public addEventListener(callback: Function): number {
     // add key
@@ -55,7 +55,7 @@ export class Selection implements SelectionInterface {
 
   /**
    * returns selection size/length
-   * 
+   *
    */
   public getLength(): number {
     return this.selection.size;
@@ -65,7 +65,7 @@ export class Selection implements SelectionInterface {
 
   /**
    * returns selection ode
-   * 
+   *
    */
   public getMode(): string {
     return this.mode;
@@ -77,7 +77,7 @@ export class Selection implements SelectionInterface {
    * returns key of row
    * overridden by default dataosurce to return keys from collection
    * make private?
-   * 
+   *
    */
   public getRowKey(row: number): number {
     return row;
@@ -89,7 +89,7 @@ export class Selection implements SelectionInterface {
    * retunrs all keys in selection
    * overridden by default datasource to return its collection keys
    * make private?
-   * 
+   *
    */
   public getRowKeys(): any[] {
     return [];
@@ -99,7 +99,7 @@ export class Selection implements SelectionInterface {
 
   /**
    * function to override
-   * 
+   *
    */
   public overrideGetRowKey(fn: (row: number) => number): void {
     this.getRowKey = fn;
@@ -109,7 +109,7 @@ export class Selection implements SelectionInterface {
 
   /**
    * function to override getRowKeys
-   * 
+   *
    */
   public overrideGetRowKeys(fn: () => any[]): void {
     this.getRowKeys = fn;
@@ -119,7 +119,7 @@ export class Selection implements SelectionInterface {
 
   /**
    * tells if row is selected true/false
-   * 
+   *
    */
   public isSelected(row: number): boolean {
     let result = false;
@@ -134,7 +134,7 @@ export class Selection implements SelectionInterface {
 
   /**
    * deselcts all rows
-   * 
+   *
    */
   public deSelectAll(): void {
     this.selection.clear();
@@ -146,7 +146,7 @@ export class Selection implements SelectionInterface {
 
   /**
    * deselct row passed in
-   * 
+   *
    */
   public deSelect(row: number): void {
     this.selection.delete(this.getRowKey(row));
@@ -158,7 +158,7 @@ export class Selection implements SelectionInterface {
 
   /**
    * select 1 or adds to selection
-   * 
+   *
    */
   public select(row: number, add?: boolean): void {
     switch (this.mode) {
@@ -191,7 +191,7 @@ export class Selection implements SelectionInterface {
 
   /**
    * selects range of rows
-   * 
+   *
    */
   public selectRange(start: number, end: number): void {
     if (this.mode === 'multiple') {
@@ -208,7 +208,7 @@ export class Selection implements SelectionInterface {
 
   /**
    * retuns selected rows
-   * 
+   *
    */
   public getSelectedRows(): number[] {
     let array: number[] = [];
@@ -228,7 +228,7 @@ export class Selection implements SelectionInterface {
   /**
    * sets new selection/selected rows
    * do we want to have a add params here
-   * 
+   *
    */
   public setSelectedRows(newRows: number[]): void {
     if (this.selectedRows > 0) {
@@ -247,7 +247,7 @@ export class Selection implements SelectionInterface {
   /**
    * resets selection to 0
    * its pretty much same as deselect all, remove one ?
-   * 
+   *
    */
   public reset(): void {
     if (this.selectedRows > 0) {

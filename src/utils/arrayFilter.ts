@@ -3,7 +3,7 @@ import { FilterObjectInterface, EntityInterface } from '../interfaces'; // todo 
 
   /**
    * filters the array
-   * 
+   *
    */
 export class ArrayFilter {
   private lastFilter: FilterObjectInterface[];
@@ -30,7 +30,7 @@ export class ArrayFilter {
 
   /**
    * gets operator number from class
-   * 
+   *
    */
   public getOperatorNo(val: string): number {
     return this.filterOperators[val];
@@ -40,7 +40,7 @@ export class ArrayFilter {
 
   /**
    * returns last filter set
-   * 
+   *
    */
   public getLastFilter(): FilterObjectInterface[] {
     return this.lastFilter;
@@ -50,7 +50,7 @@ export class ArrayFilter {
 
   /**
    * runs query on the array
-   * 
+   *
    */
   public runQueryOn(objArray: EntityInterface[], ObjFilter: FilterObjectInterface[]) {
 
@@ -144,7 +144,7 @@ export class ArrayFilter {
             filterOperator = filterOperator || 2;
             break;
           default:
-            // todo: take the stuff under equal to and put in a function 
+            // todo: take the stuff under equal to and put in a function
             // and also call i from here.. or just make it fail?
             try {
               rowValue = data[x.attribute].toLowerCase();

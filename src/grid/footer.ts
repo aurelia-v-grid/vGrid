@@ -4,7 +4,7 @@ import { OverrideContextInterface , HtmlCache} from '../interfaces';
 
 /**
  * Creates the footer viewport
- * 
+ *
  */
 export class Footer {
   private htmlCache: HtmlCache;
@@ -34,7 +34,7 @@ export class Footer {
 
   /**
    * set the custm html if any and and overridecontext to use, then creates the viewport and binds it
-   * 
+   *
    */
   public init(overrideContext: OverrideContextInterface, footerStringTemplate: string): void {
     this.overrideContext = overrideContext;

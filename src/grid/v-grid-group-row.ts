@@ -8,7 +8,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
  * Custom element <v-grid-group-row>
  * This is used for creating custom rows in grouping
  * The one holding the group value / full width rows
- * 
+ *
  */
 @noView()
 @customElement('v-grid-group-row')
@@ -18,7 +18,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
   element: Element,
   instruction: CustomBehaviorInstruction) => {
 
-  // dont use  
+  // dont use
   compiler = null;
   resources = null;
 
@@ -45,7 +45,7 @@ export class VGridGroupRow {
 
   /**
    * add the markup to vgrid class for use later when generating the grid
-   * 
+   *
    */
   public bind(): void {
     this.vGrid.colGroupRow = this.rowTemplate;

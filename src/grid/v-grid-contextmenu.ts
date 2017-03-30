@@ -5,7 +5,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
 /**
  * Custom element <v-grid-contextmenu>
  * This is used for creating custom menus markup
- * 
+ *
  */
 @noView()
 @customElement('v-grid-contextmenu')
@@ -15,7 +15,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
   element: Element,
   instruction: CustomBehaviorInstruction) => {
 
-  // dont use  
+  // dont use
   compiler = null;
   resources = null;
 
@@ -88,7 +88,7 @@ export class VGridContextmenu {
 
   /**
    * Add the templates to vGrid class for use later when we generate the grid
-   * 
+   *
    */
   public bind(): void {
     this.vGrid.customMenuTemplates = this.customMenuTemplates;

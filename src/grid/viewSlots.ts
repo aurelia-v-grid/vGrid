@@ -13,7 +13,7 @@ import {
 
 /**
  * This holds all the grids viewslots, so its easy to bind and attach and unbind/detach when removed
- * 
+ *
  */
 export class ViewSlots {
   public leftRowViewSlots: ViewSlot[];
@@ -63,7 +63,7 @@ export class ViewSlots {
   /**
    * Bind and attaches the viewslots
    * Called when created, and reattached after if.bind is used
-   * 
+   *
    */
   public bindAndAttachColumns(
     overrideContext: OverrideContextInterface,
@@ -128,7 +128,7 @@ export class ViewSlots {
   /**
    * Unbinds and detach all the viewslots
    * usually called during grids unbind event
-   * 
+   *
    */
   public unbindAndDetachColumns(): void {
     for (let i = 0; i < this.groupRowViewSlots.length; i++) {
@@ -162,7 +162,7 @@ export class ViewSlots {
   /**
    * removes all viewslots
    * Todo, is this even in use?
-   * 
+   *
    */
   public clear(): void {
     for (let i = 0; i < this.groupRowViewSlots.length; i++) {

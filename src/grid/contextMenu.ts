@@ -4,7 +4,7 @@ import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContextInter
 
 /**
  * Creates the context menus used in the grid
- * 
+ *
  */
 export class ContextMenu {
     public show: boolean;
@@ -59,7 +59,7 @@ export class ContextMenu {
 
   /**
    * todo description
-   * 
+   *
    */
     public setDefaults(): void {
         this.top = 0;
@@ -75,7 +75,7 @@ export class ContextMenu {
 
   /**
    * add the custom templates if any and overridecontext to use
-   * 
+   *
    */
     public init(customMenuTemplates: any, overrideContext: OverrideContextInterface): void {
         this.overrideContext = overrideContext;
@@ -92,7 +92,7 @@ export class ContextMenu {
 
   /**
    * opens the menu
-   * 
+   *
    */
     public openMenu(options: {
         left: number,
@@ -117,7 +117,7 @@ export class ContextMenu {
 
   /**
    * menu click event
-   * 
+   *
    */
     public menuClick(type: string, option: string, event: Event): void {
         switch (true) {
@@ -146,7 +146,7 @@ export class ContextMenu {
 
   /**
    * update/translate menu strings
-   * 
+   *
    */
     public updateMenuStrings(key: string, text: string) {
 
@@ -160,7 +160,7 @@ export class ContextMenu {
 
   /**
    * active the filter menu
-   * 
+   *
    */
     private showFilterOptions(): void {
         this.filterOptionsMenu = true;
@@ -170,7 +170,7 @@ export class ContextMenu {
 
   /**
    * hide the filter menu
-   * 
+   *
    */
     private hideFilterOptions(): void {
         this.filterOptionsMenu = false;
@@ -180,19 +180,19 @@ export class ContextMenu {
         //not in use atm
         let clickCoordsX = this.left;
         let clickCoordsY = this.top;
-    
+
         this.menuWidth = this.menu.offsetWidth + 4;
         this.menuHeight = this.menu.offsetHeight + 4;
-    
+
         this.windowWidth = window.innerWidth;
         this.windowHeight = window.innerHeight;
-    
+
         if ((this.windowWidth - this.clickCoordsX) < this.menuWidth) {
           this.left = this.windowWidth - this.menuWidth + "px";
         } else {
           this.left = this.clickCoordsX + "px";
         }
-    
+
         if ((this.windowHeight - this.clickCoordsY) < this.menuHeight) {
           this.top = this.windowHeight - this.menuHeight + "px";
         } else {
@@ -204,7 +204,7 @@ export class ContextMenu {
 
     /**
      * get the markup (custom if any, or else the markup)
-     * 
+     *
      */
     private menuHtml(customMenuTemplates: any): string {
 
@@ -380,8 +380,7 @@ export class ContextMenu {
                 </li>
             </ul>`.replace(/\$(au{)/g, '${');
 
-        let menuBottom: string =
-            `</div>`;
+        let menuBottom = `</div>`;
 
         let menuAll: string = customMenuTemplates.all || [
             menuTop,
@@ -391,7 +390,7 @@ export class ContextMenu {
             menuSort,
             menuFilter,
             menuFilterOptions,
-            menuBottom,
+            menuBottom
         ].join('');
 
         return menuAll;

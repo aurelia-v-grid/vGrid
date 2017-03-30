@@ -6,9 +6,9 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
 
 /**
  * Custom element <v-grid-group-element>
- * This is used for creating custom grouping element 
+ * This is used for creating custom grouping element
  * The ones in the top panel
- * 
+ *
  */
 @noView()
 @customElement('v-grid-group-element')
@@ -18,7 +18,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
   element: Element,
   instruction: CustomBehaviorInstruction) => {
 
-  // dont use  
+  // dont use
   compiler = null;
   resources = null;
 
@@ -45,7 +45,7 @@ export class VGridGroupElement {
 
   /**
    * add the markup to vgrid class for use later when generating the grid
-   * 
+   *
    */
   public bind(): void {
     this.vGrid.colGroupElement = this.rowTemplate;

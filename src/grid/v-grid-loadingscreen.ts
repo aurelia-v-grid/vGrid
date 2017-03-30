@@ -7,7 +7,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
 /**
  * Custom element <v-grid-loadingscreen>
  * This is used for creating custom loading screen
- * 
+ *
  */
 @noView()
 @customElement('v-grid-loadingscreen')
@@ -17,7 +17,7 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
   element: Element,
   instruction: CustomBehaviorInstruction) => {
 
-  // dont use  
+  // dont use
   compiler = null;
   resources = null;
 
@@ -44,7 +44,7 @@ export class VGridLoadingScreen {
 
   /**
    * add the markup to vgrid class for use later when generating the grid
-   * 
+   *
    */
   public bind(): void {
     this.vGrid.loadingScreenTemplate = this.template;

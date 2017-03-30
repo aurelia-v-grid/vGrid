@@ -18,7 +18,7 @@ export class GridConnector implements GridConnectorInterface {
   private datasource: DatasourceInterface;
   private errorhandler: Function;
   private eventID: number;
-  private initTop: number = 0;
+  private initTop: number;
 
 
 
@@ -27,6 +27,7 @@ export class GridConnector implements GridConnectorInterface {
    *
    */
   constructor(datasource: DatasourceInterface, selection?: SelectionInterface, errorHandler?: Function) {
+    this.initTop = 0;
     this.controller = null;
     this.datasource = datasource;
     this.selection = selection || datasource.getSelection();

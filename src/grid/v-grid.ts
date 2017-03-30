@@ -28,7 +28,7 @@ import {
 
 /**
  * Custom Element <v-grid>
- * 
+ *
  */
 export class VGrid {
     public static inject = [Element, ViewCompiler, Container, ViewResources, TaskQueue];
@@ -245,8 +245,8 @@ export class VGrid {
         // this way we give the gridconnetor/datasource a chance to get ready before we start asking for stuff
         this.attGridConnector.connect(this.controller, () => {
 
-            // if not new, and just hidden by if.bind, 
-            // then lets just skip creating the grid and just bind the columns    
+            // if not new, and just hidden by if.bind,
+            // then lets just skip creating the grid and just bind the columns
             if (this.newGrid) {
                 this.backupColConfig = this.colConfig.slice(0);
                 // override colconfig if binded
@@ -280,7 +280,7 @@ export class VGrid {
 
     /**
      * Checkes bool values if they are strings or or and return real boolean
-     * 
+     *
      */
     private checkBool(value: string | boolean): boolean {
         if (typeof value === 'string') {

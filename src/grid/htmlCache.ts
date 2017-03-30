@@ -3,7 +3,7 @@ import { RowCacheInterface, HeaderCacheInterface } from '../interfaces';
 /**
  * Holds all the html elements, so we have 1 place to get em all
  * All classes that creates html adds it to this one, some the parst the class get
- * 
+ *
  */
 export class HtmlCache {
     public element: Element | HTMLElement;
@@ -89,7 +89,7 @@ export class HtmlCache {
 
   /**
    * just gets the row html elements for easy access later
-   * 
+   *
    */
     public updateRowsMarkup(): void {
         this.avg_left_rows = this.avg_content_left_scroll.getElementsByTagName('avg-row');
@@ -102,7 +102,7 @@ export class HtmlCache {
 
   /**
    * gets the mark markup parts after its created for easy access later
-   * 
+   *
    */
     public updateMainMarkup(): void {
         this.avg_top_panel = this.element.getElementsByTagName('avg-top-panel')[0];

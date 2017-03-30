@@ -2,7 +2,7 @@ import { Controller, RowCacheInterface, BindingContextInterface } from '../inter
 
 /**
  * Updates the data rows and sets correct row highlight
- * 
+ *
  */
 export class RowDataBinder {
   private element: Element;
@@ -21,7 +21,7 @@ export class RowDataBinder {
 
   /**
    * Called when grid is created to set defaults, add event listners
-   * 
+   *
    */
   public init(): void {
     this.addEventListener();
@@ -31,7 +31,7 @@ export class RowDataBinder {
 
   /**
    * rebinds row passed in
-   * 
+   *
    */
   public rebindRowNo(row: number): void {
     let rowCache = this.controller.htmlCache.rowCache;
@@ -56,7 +56,7 @@ export class RowDataBinder {
 
   /**
    * adds needed event listners to know when to rebind on scrolling
-   * 
+   *
    */
   private addEventListener(): void {
     this.rebindRowBinded = this.rebindRow.bind(this);
@@ -77,7 +77,7 @@ export class RowDataBinder {
 
   /**
    * rebinds row, called from event listener
-   * 
+   *
    */
   private rebindRow(event: CustomEvent): void {
     let currentRow = event.detail.currentRow;
@@ -145,7 +145,7 @@ export class RowDataBinder {
 
   /**
    * rebinds all rows, called from event listener
-   * 
+   *
    */
   private rebindAllRows(event: CustomEvent): void {
 
@@ -210,7 +210,7 @@ export class RowDataBinder {
 
         // row number
         bindingContext.row = rowCache[i].row;
-        
+
 
       });
 

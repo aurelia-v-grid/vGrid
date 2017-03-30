@@ -3,7 +3,7 @@ import { ColConfigInterface, ColumnBindingContext, Controller } from '../interfa
 /**
  * Holds all the height and width of main markup
  * This is binded to the main markup, so changes here will reflect in the grid height/width
- * 
+ *
  */
 export class HtmlHeightWidth {
   public avgScrollBarWidth: number;
@@ -120,12 +120,12 @@ export class HtmlHeightWidth {
   /**
    * returns the height the scroll area need to be
    * TODO: need to make something else here if -Im going for wariable row height
-   * 
+   *
    */
   public getNewHeight(length: number): number {
-    let lengthTotal: number = 0;
+    let lengthTotal = 0;
     if (this.controller.attVariableRowHeight) {
-       // If variable row height we need to use the 
+       // If variable row height we need to use the
        lengthTotal = this.controller.getRowHeightState().total;
     } else {
       // if not varibale row height, we use default
@@ -138,7 +138,7 @@ export class HtmlHeightWidth {
 
   /**
    * corrects the scroll area to the correct high af all scroll divs
-   * 
+   *
    */
   public setCollectionLength(length: number, includeScroller?: boolean): void {
     let rowTotal = this.getNewHeight(length);
@@ -155,7 +155,7 @@ export class HtmlHeightWidth {
 
   /**
    * sets the correct wisth of main markup/skeleton of the grid
-   * 
+   *
    */
   public addDefaultsAttributes(
     attHeaderHeight: number,
@@ -190,7 +190,7 @@ export class HtmlHeightWidth {
 
   /**
    * corrects the left style and with of columns
-   * 
+   *
    */
   public adjustWidthsColumns(columnBindingContext: ColumnBindingContext, groupsLength: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
@@ -233,7 +233,7 @@ export class HtmlHeightWidth {
 
   /**
    * sets the correct with of columns based of the v-column or v-grid-col attributes
-   * 
+   *
    */
   public setWidthFromColumnConfig(colConfig: ColConfigInterface[], groupsLength?: number): void {
     let left = groupsLength ? groupsLength * 15 : 0;
@@ -283,7 +283,7 @@ export class HtmlHeightWidth {
 
   /**
    * returns the scrollbar with used in browser
-   * 
+   *
    */
   public getScrollbarWidth(): number {
     let outer = document.createElement('div');

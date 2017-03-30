@@ -2,7 +2,7 @@ import { ColConfigInterface } from '../interfaces';
 
 /**
  * Generate the simple html columns markup from settings fetched from the attrubites
- * 
+ *
  */
 export class ColumnMarkupHelper {
 
@@ -10,7 +10,7 @@ export class ColumnMarkupHelper {
 
   /**
    * todo description
-   * 
+   *
    */
   public generate(colConfig: ColConfigInterface[]): void {
     let type: string = null;
@@ -27,7 +27,7 @@ export class ColumnMarkupHelper {
 
   /**
    * todo description
-   * 
+   *
    */
   private processColumns(array: ColConfigInterface[]): void {
     array.forEach((col, index) => {
@@ -61,7 +61,7 @@ export class ColumnMarkupHelper {
 
   /**
    * todo description
-   * 
+   *
    */
   private createHeaderTemplate(col: any): void {
     // if header template does not exist then lets create it
@@ -102,7 +102,7 @@ export class ColumnMarkupHelper {
 
   /**
    * todo description
-   * 
+   *
    */
   private createRowTemplate(col: any): void {
     // if row template does not exist, then lets create it
@@ -131,7 +131,7 @@ export class ColumnMarkupHelper {
 
   /**
    * todo description
-   * 
+   *
    */
   private getAttribute(value: string, capitalize: boolean): string {
     let returnValue = value || 'missing!';
@@ -165,7 +165,7 @@ export class ColumnMarkupHelper {
 
   /**
    * todo description
-   * 
+   *
    */
   private checkAttribute(attribute: string): string {
     let value = attribute;
@@ -181,7 +181,7 @@ export class ColumnMarkupHelper {
 
   /**
    * todo description
-   * 
+   *
    */
   private createImageRowMarkup(col: ColConfigInterface): void {
     // get the values/settings
@@ -197,7 +197,7 @@ export class ColumnMarkupHelper {
 
   /**
    * todo description
-   * 
+   *
    */
   private createInputRowMarkup(col: ColConfigInterface): void {
 
@@ -243,7 +243,7 @@ export class ColumnMarkupHelper {
 
   /**
    * todo description
-   * 
+   *
    */
   private createInputHeaderMarkup(col: ColConfigInterface): string {
 
@@ -284,7 +284,7 @@ export class ColumnMarkupHelper {
 
   /**
    * todo description
-   * 
+   *
    */
   private createLabelMarkup(col: ColConfigInterface): string {
     // get the values/settings

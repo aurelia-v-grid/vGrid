@@ -15,7 +15,7 @@ import {
 /**
  * Loads the main markup and creates a viewport and binds it to our HtmlHeightWidth class
  * Viewport is added to the viewPorts class
- * 
+ *
  */
 export class MainMarkup {
   private element: Element;
@@ -52,7 +52,7 @@ export class MainMarkup {
 
   /**
    * Generates the main markup/skeleton of the grid
-   * 
+   *
    */
   public generateMainMarkup(): void {
 

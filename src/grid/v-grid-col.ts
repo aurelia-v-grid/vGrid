@@ -15,7 +15,7 @@ import {
 /**
  * Custom element <v-grid-col>
  * This is used for creating the simple html columns
- * 
+ *
  */
 @noView()
 @processContent((
@@ -24,7 +24,7 @@ import {
   element: HTMLElement,
   instruction: CustomBehaviorInstruction) => {
 
-  // dont use  
+  // dont use
   compiler = null;
   resources = null;
 
@@ -98,7 +98,7 @@ export class VGridElementColConfig {
   /**
    * When bind runs we get the bindable attributes & template markup if any from <v-grid-col>
    * We add this to the vGrid class colConfig to use later when grid is generated
-   * 
+   *
    */
   public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
@@ -133,7 +133,7 @@ export class VGridElementColConfig {
 
   /**
    * Checks bool value and return real boolean
-   * 
+   *
    */
   private checkBool(value: string | boolean): boolean {
     if (typeof value === 'string') {

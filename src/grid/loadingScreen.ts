@@ -5,7 +5,7 @@ import { OverrideContextInterface } from '../interfaces';
 /**
  * Creates the loading screen viewport and binds it
  * Controller calls this to enable/disable (show/hide) it
- * 
+ *
  */
 export class LoadingScreen {
   private element: Element;
@@ -40,7 +40,7 @@ export class LoadingScreen {
 
   /**
    * update default loading test, used by the translation
-   * 
+   *
    */
   public updateLoadingDefaultLoadingMessage(msg: string): void {
     this.loadingMessage = msg;
@@ -50,7 +50,7 @@ export class LoadingScreen {
 
   /**
    * call when creating the grid so we have custom html if any and overridecontext to use
-   * 
+   *
    */
   public init(overrideContext: OverrideContextInterface, loadingScreenTemplate: string): void {
     this.overrideContext = overrideContext;
@@ -87,7 +87,7 @@ export class LoadingScreen {
 
   /**
    * shows the loadingscreen overlay until removed
-   * 
+   *
    */
   public enable(msg?: string, collectionLength?: number): Promise<any> {
     return new Promise((resolve: Function) => {
@@ -103,7 +103,7 @@ export class LoadingScreen {
 
   /**
    * removes the loadingscreen overlay
-   * 
+   *
    */
   public disable(): Promise<any> {
     return new Promise((resolve: Function) => {

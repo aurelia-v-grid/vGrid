@@ -5,7 +5,7 @@ import { HtmlCache } from './htmlCache';
  * It listen for mouse wheel, touch scroll and the extra scrollbars we attach to the grid
  * Is also makes sure the left/right and main is same scrollTop, so we dont get that laggy effect on slow browsers
  * It triggers event to update/bind data after its done
- * 
+ *
  */
 export class MainScrollEvents {
   private element: Element;
@@ -56,7 +56,7 @@ export class MainScrollEvents {
 
   /**
    * Called when grid is created to set defaults, add event listners
-   * 
+   *
    */
   public init(): void {
     this.updateInternalHtmlCache();
@@ -67,7 +67,7 @@ export class MainScrollEvents {
 
   /**
    * just adds the html elements to class
-   * 
+   *
    */
   private updateInternalHtmlCache(): void {
 
@@ -83,7 +83,7 @@ export class MainScrollEvents {
 
   /**
    * called by mouse wheel event listener
-   * 
+   *
    */
   private onWeel(event: MouseWheelEvent): boolean {
 
@@ -114,8 +114,8 @@ export class MainScrollEvents {
 
   /**
    * Adds scroll events touch, mousewheel and scrolling on vertical scrollbar and horisontal scrollbar
-   * we dont use automatic scrollstate browsers can have a overflow y wtc, since it will look horrible on slow browsers 
-   * 
+   * we dont use automatic scrollstate browsers can have a overflow y wtc, since it will look horrible on slow browsers
+   *
    */
   private addScrollEvents(type: string): void {
 
@@ -142,7 +142,7 @@ export class MainScrollEvents {
   /**
    * removed the scroll event
    * was more before, main reason this was here, but didnt work well on old browsers
-   * 
+   *
    */
   private removeScrollEvents(type: string): void {
     switch (type) {
@@ -160,7 +160,7 @@ export class MainScrollEvents {
 
   /**
    * called by touchStart event listener
-   * 
+   *
    */
   private touchStart(e: any) {
     let touchobj = e.changedTouches[0];
@@ -172,7 +172,7 @@ export class MainScrollEvents {
 
   /**
    * called by touchMove event listener
-   * 
+   *
    */
   private touchMove(e: any) {
     let touchobj = e.changedTouches[0];
@@ -189,7 +189,7 @@ export class MainScrollEvents {
 
   /**
    * called by scrollwheel event listener function, the does the actual updating of scrolltop
-   * 
+   *
    */
   private handleEventWheelScroll(newTopPosition: number, left?: number): void {
     requestAnimationFrame(() => {
@@ -223,7 +223,7 @@ export class MainScrollEvents {
 
   /**
    * called when vertical scrollabrs is dragged
-   * 
+   *
    */
   private handleEventVhandle(): void {
 
@@ -257,7 +257,7 @@ export class MainScrollEvents {
 
   /**
    * called when horisontal scrollabrs is dragged
-   * 
+   *
    */
   private handleEventHhandle(): void {
 
@@ -289,7 +289,7 @@ export class MainScrollEvents {
 
   /**
    * check the scrolling and triggers updating of row top values
-   * 
+   *
    */
   private checkScroll(newTopPosition: number): void {
     if (this.lastTopPosition !== newTopPosition) {
@@ -312,7 +312,7 @@ export class MainScrollEvents {
 
   /**
    * trigger event called after checking type of scroll
-   * 
+   *
    */
   private triggerGridScrollEvent(
     scrollbarScrolling: boolean,

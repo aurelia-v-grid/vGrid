@@ -74,7 +74,7 @@ export class ColumnMarkup {
 
 /**
  *  sets needed context/data and generates the columns needed
- * 
+ *
  */
   public init(
     colConfig: ColConfigInterface[],
@@ -82,7 +82,7 @@ export class ColumnMarkup {
     colRepeater: boolean,
     colRepeatRowTemplate: string,
     colRepeatRowHeaderTemplate: string,
-    colGroup: string,
+    colGroup: string
   ): void {
     this.overrideContext = overrideContext;
     this.colConfig = colConfig;
@@ -119,7 +119,7 @@ export class ColumnMarkup {
         '<path show.bind="rowRef.__groupExpanded" d="M4.8 7.5h6.5v1H4.8z"/>',
         '<path show.bind="!rowRef.__groupExpanded" d="M7.4 4.8v2.7H4.7v1h2.7v3h1v-3h2.8v-1H8.5V4.8h-1z"/>',
         '</svg>',
-        '</i>&nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})',
+        '</i>&nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})'
       ];
 
       // if user supplied markup we use that, else default
