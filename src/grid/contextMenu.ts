@@ -25,7 +25,7 @@ export class ContextMenu {
     private groupbyMenu: boolean;
     private callback: Function;
     private columnsHidden: any[];
-    private menuClickBinded: any;
+    private closeMenuEventBinded: any;
     private controller: Controller;
     private menuStrings: any = {
         close: 'Close',
@@ -60,7 +60,8 @@ export class ContextMenu {
         this.viewResources = viewResources;
         this.viewSlots = viewSlots;
         this.controller = controller;
-        this.setDefaults();
+        this.closeMenuEventBinded = this.closeMenuEvent.bind(this)
+        this.controller.element.addEventListener('avg-close-menu', this.closeMenuEventBinded);
     }
 
 
@@ -79,9 +80,6 @@ export class ContextMenu {
         this.filterMainMenu = false;
         this.filterOptionsMenu = false;
         this.columnsHidden = [];
-        this.menuClickBinded = this.menuClick.bind(this)
-        this.controller.element.addEventListener('avg-close-menu', this.menuClickBinded);
-
     }
 
 
@@ -138,6 +136,7 @@ export class ContextMenu {
                 this.showFilterOptions();
                 break;
             case type === 'column' && option === 'options':
+
                 this.columnsHidden = this.controller.columnBindingContext.setupmain.map((col: any, i: number) => {
                     let main = this.controller.columnBindingContext.setupmain[i].show;
                     let left = this.controller.columnBindingContext.setupleft[i].show;
@@ -162,10 +161,16 @@ export class ContextMenu {
                 break;
             case type === 'close' && option === 'true':
                 this.show = false;
+                this.pinnedMenu = false;
+                this.sortMenu = false;
+                this.optionsMenu = false;
+                this.filterMainMenu = false;
+                this.filterOptionsMenu = false;
+                this.columnOptionsMenu = false;
                 break;
             default:
-               // let result = this.callback(type, option, event);
-                //if (result) {
+                let result = this.callback(type, option, event);
+                if (result) {
                     this.show = false;
                     this.pinnedMenu = false;
                     this.sortMenu = false;
@@ -173,7 +178,7 @@ export class ContextMenu {
                     this.filterMainMenu = false;
                     this.filterOptionsMenu = false;
                     this.columnOptionsMenu = false;
-               // }
+                }
         }
     }
 
@@ -191,6 +196,10 @@ export class ContextMenu {
 
     }
 
+
+    private closeMenuEvent():void {
+        this.menuClick('close','true', null);
+    }
 
 
     /**
@@ -347,7 +356,7 @@ export class ContextMenu {
 
         let menuColumnChooser: string = customMenuTemplates.columnChooser ||
             `<ul if.bind="columnChooser && !optionsMenu" class="avg-menu__items">
-          <li class="avg-menu__item">
+                <li class="avg-menu__item">
                 <p click.delegate="menuClick('column','options', $event)" class="avg-menu__link">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                         <path d="M7.4 4.8v2.7H4.7v1h2.7v3h1v-3h2.8v-1H8.5V4.8h-1z"/>
@@ -365,13 +374,15 @@ export class ContextMenu {
                       </svg> $au{menuStrings.back}
                 </p>
                 </li>
-            <li class="avg-menu__item" repeat.for="item of columnsHidden">
-                <avg-drag-helper v-drag-drop-col="title:$au{item.title}" avg-type="chooser" avg-config-col="$au{item.no}">
-                    <p class="avg-menu__link">
-                        $au{item.title}
-                    </p>
-                </avg-drag-helper>
-            </li>
+                <div repeat.for="item of columnsHidden">
+                    <li class="avg-menu__item">
+                        <avg-drag-helper v-drag-drop-col="title:$au{item.title}" avg-type="chooser" avg-config-col="$au{item.no}">
+                            <p class="avg-menu__link">
+                                $au{item.title}
+                            </p>
+                        </avg-drag-helper>
+                    </li>
+                </div>
             </ul>`.replace(/\$(au{)/g, '${');
 
 

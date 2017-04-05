@@ -37,6 +37,7 @@ export class VGridDragDropCol {
   private onDragoverBinded: EventListenerOrEventListenerObject;
   private onDragendBinded: EventListenerOrEventListenerObject;
   private onDragOutSideBinded: EventListenerOrEventListenerObject;
+  private onCloseMenuBinded: EventListenerOrEventListenerObject;
   private colType: string;
   private colNo: number;
   private context: ColumBindingContextObjectInterface;
@@ -82,6 +83,7 @@ export class VGridDragDropCol {
     this.onDragoverBinded = this.onDragover.bind(this);
     this.onDragendBinded = this.onDragend.bind(this);
     this.onDragOutSideBinded = this.onDragOutSide.bind(this);
+    this.onCloseMenuBinded = this.onCloseMenu.bind(this);
   }
 
 
@@ -101,7 +103,30 @@ export class VGridDragDropCol {
    *
    */
   public detached(): void {
-    //  console.log("detached")
+    // get our target data (this case: this actual column..)
+    let result = this.getTargetData(this.column);
+
+    if (result.ok && !result.panel) {
+
+      // when user starts to drag
+      this.element.removeEventListener('mousedown', this.onDragstartBinded);
+
+      // why target ? bacuse thats the entire column object no mather what user have inside
+      result.target.removeEventListener('mouseenter', this.onDragenterBinded);
+
+    }
+
+   
+    if (result.ok && result.target.nodeName === 'AVG-DRAG-HELPER') {
+
+      // when user starts to drag
+      this.element.removeEventListener('mousedown', this.onDragstartBinded);
+
+      // why target ? bacuse thats the entire column object no mather what user have inside
+      result.target.removeEventListener('mouseenter', this.onDragenterBinded);
+      result.target.removeEventListener('mousedown', this.onCloseMenuBinded);
+
+    }
   }
 
 
@@ -173,13 +198,18 @@ export class VGridDragDropCol {
 
       // why target ? bacuse thats the entire column object no mather what user have inside
       result.target.addEventListener('mouseenter', this.onDragenterBinded);
-      result.target.addEventListener('mousedown', () => {
-        this.vGrid.controller.raiseEvent("avg-close-menu");
-      });
+      result.target.addEventListener('mousedown', this.onCloseMenuBinded);
 
     }
 
   }
+
+
+
+  private onCloseMenu():void {
+     this.vGrid.controller.raiseEvent("avg-close-menu");
+  }
+
 
 
 
@@ -479,8 +509,7 @@ export class VGridDragDropCol {
         break;
     }
 
-    console.log('newColType' + newColType)
-    console.log('oldColType' + oldColType)
+    
     // a lot of repeated code... throw this in htmlHeightWidths class, so I can call it from somewhere else too?
     if (newColType === 'left' && oldColType === 'main') {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
@@ -644,7 +673,6 @@ export class VGridDragDropCol {
     }
 
     if (isOk && curTarget.nodeName === 'AVG-DRAG-HELPER') {
-      console.log("draghelper")
       curColType = curTarget.attributes.getNamedItem('avg-type').value;
       curColNo = parseInt((curTarget as any).avgConfigCol, 10);
       curContext = this.vGrid.columnBindingContext['setup' + 'main'][curColNo];
@@ -653,7 +681,6 @@ export class VGridDragDropCol {
     }
 
     if (isOk && curTarget.nodeName === 'AVG-TOP-PANEL') {
-      console.log("panel")
       isPanel = true;
     }
 
