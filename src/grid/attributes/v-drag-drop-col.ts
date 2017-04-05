@@ -160,6 +160,25 @@ export class VGridDragDropCol {
 
     }
 
+    if (result.ok && result.target.nodeName === 'AVG-DRAG-HELPER') {
+      // get column data
+      this.column = result.target;
+      this.colType = this.column.attributes.getNamedItem('avg-type').value;
+      this.colNo = parseInt((this.column as any).avgConfigCol, 10);
+      this.context = this.vGrid.columnBindingContext['setup' + 'main'][this.colNo];
+      this.columnsArray = this.vGrid.columnBindingContext['setup' + 'main'];
+
+      // when user starts to drag
+      this.element.addEventListener('mousedown', this.onDragstartBinded);
+
+      // why target ? bacuse thats the entire column object no mather what user have inside
+      result.target.addEventListener('mouseenter', this.onDragenterBinded);
+      result.target.addEventListener('mousedown', () => {
+        this.vGrid.controller.raiseEvent("avg-close-menu");
+      });
+
+    }
+
   }
 
 
@@ -324,6 +343,7 @@ export class VGridDragDropCol {
       }
     }
 
+
   }
 
 
@@ -397,6 +417,9 @@ export class VGridDragDropCol {
       case newColType === 'main' && oldColType === 'right':
       case newColType === 'left' && oldColType === 'right':
       case newColType === 'right' && oldColType === 'left':
+      case newColType === 'main' && oldColType === 'chooser':
+      case newColType === 'left' && oldColType === 'chooser':
+      case newColType === 'right' && oldColType === 'chooser':
 
         // hide column
         this.sharedContext.columnsArray[this.sharedContext.colNo].show = false;
@@ -456,6 +479,8 @@ export class VGridDragDropCol {
         break;
     }
 
+    console.log('newColType' + newColType)
+    console.log('oldColType' + oldColType)
     // a lot of repeated code... throw this in htmlHeightWidths class, so I can call it from somewhere else too?
     if (newColType === 'left' && oldColType === 'main') {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
@@ -467,6 +492,21 @@ export class VGridDragDropCol {
       heightAndWidths.avgContentMain_Left = heightAndWidths.avgContentMain_Left + width;
       heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left + width;
       heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left + width;
+    }
+
+    if (newColType === 'main' && oldColType === 'chooser') {
+      heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
+      heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
+    }
+
+    if (newColType === 'left' && oldColType === 'chooser') {
+      heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentMainScroll_Width + width;
+      heightAndWidths.avgHeaderLeft_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
+    }
+
+    if (newColType === 'right' && oldColType === 'chooser') {
+      heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentMainScroll_Width + width;
+      heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
     }
 
     if (newColType === 'main' && oldColType === 'left') {
@@ -570,6 +610,7 @@ export class VGridDragDropCol {
 
         // check if it contains our elements, or continue to next parentNode
         switch (true) {
+          case curTarget.nodeName === 'AVG-DRAG-HELPER':
           case curTarget.nodeName === 'AVG-COL':
           case curTarget.nodeName === 'AVG-TOP-PANEL':
             isOk = true;
@@ -602,7 +643,17 @@ export class VGridDragDropCol {
       curColumnsArray = this.vGrid.columnBindingContext['setup' + curColType];
     }
 
+    if (isOk && curTarget.nodeName === 'AVG-DRAG-HELPER') {
+      console.log("draghelper")
+      curColType = curTarget.attributes.getNamedItem('avg-type').value;
+      curColNo = parseInt((curTarget as any).avgConfigCol, 10);
+      curContext = this.vGrid.columnBindingContext['setup' + 'main'][curColNo];
+      curColumnsArray = this.vGrid.columnBindingContext['setup' + 'main'];
+      isPanel = true;
+    }
+
     if (isOk && curTarget.nodeName === 'AVG-TOP-PANEL') {
+      console.log("panel")
       isPanel = true;
     }
 

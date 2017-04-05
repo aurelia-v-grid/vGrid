@@ -159,13 +159,15 @@ export class VGrid {
             viewCompiler,
             container,
             viewResources,
-            this.viewSlots);
+            this.viewSlots,
+            );
 
         this.contextMenu = new ContextMenu(
             viewCompiler,
             container,
             viewResources,
-            this.viewSlots);
+            this.viewSlots,
+            this.controller);
 
         this.footer = new Footer(this.htmlCache,
             viewCompiler,

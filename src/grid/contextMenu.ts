@@ -1,6 +1,6 @@
 // tslint:disable:max-line-length
 import { ViewSlot } from 'aurelia-framework';
-import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContextInterface } from '../interfaces';
+import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContextInterface, Controller } from '../interfaces';
 
 /**
  * Creates the context menus used in the grid
@@ -17,10 +17,16 @@ export class ContextMenu {
     private left: number;
     private pinnedMenu: boolean;
     private sortMenu: boolean;
+    private columnChooser: boolean;
+    private optionsMenu: boolean;
     private filterMainMenu: boolean;
     private filterOptionsMenu: boolean;
+    private columnOptionsMenu: boolean;
     private groupbyMenu: boolean;
     private callback: Function;
+    private columnsHidden: any[];
+    private menuClickBinded: any;
+    private controller: Controller;
     private menuStrings: any = {
         close: 'Close',
         pinLeft: 'Pin left',
@@ -42,41 +48,48 @@ export class ContextMenu {
         notEqualTo: 'Not equal to',
         doesNotContain: 'Does not contain',
         beginsWith: 'Begins with',
-        endsWith: 'Ends with'
+        endsWith: 'Ends with',
+        columnChooser: 'Column Chooser'
     };
 
 
 
-    constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots) {
+    constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots, controller: Controller) {
         this.viewCompiler = viewCompiler;
         this.container = container;
         this.viewResources = viewResources;
         this.viewSlots = viewSlots;
+        this.controller = controller;
         this.setDefaults();
     }
 
 
 
-  /**
-   * todo description
-   *
-   */
+    /**
+     * todo description
+     *
+     */
     public setDefaults(): void {
         this.top = 0;
         this.left = 0;
         this.show = false;
+        this.columnChooser = true;
         this.pinnedMenu = false;
         this.sortMenu = false;
         this.filterMainMenu = false;
         this.filterOptionsMenu = false;
+        this.columnsHidden = [];
+        this.menuClickBinded = this.menuClick.bind(this)
+        this.controller.element.addEventListener('avg-close-menu', this.menuClickBinded);
+
     }
 
 
 
-  /**
-   * add the custom templates if any and overridecontext to use
-   *
-   */
+    /**
+     * add the custom templates if any and overridecontext to use
+     *
+     */
     public init(customMenuTemplates: any, overrideContext: OverrideContextInterface): void {
         this.overrideContext = overrideContext;
         let viewFactory = this.viewCompiler.compile(`<template>${this.menuHtml(customMenuTemplates)}</template>`, this.viewResources);
@@ -90,10 +103,10 @@ export class ContextMenu {
 
 
 
-  /**
-   * opens the menu
-   *
-   */
+    /**
+     * opens the menu
+     *
+     */
     public openMenu(options: {
         left: number,
         top: number,
@@ -115,39 +128,61 @@ export class ContextMenu {
 
 
 
-  /**
-   * menu click event
-   *
-   */
+    /**
+     * menu click event
+     *
+     */
     public menuClick(type: string, option: string, event: Event): void {
         switch (true) {
             case type === 'filter' && option === 'options':
                 this.showFilterOptions();
                 break;
-            case type === 'filterOption' && option === 'Back':
-                this.hideFilterOptions();
+            case type === 'column' && option === 'options':
+                this.columnsHidden = this.controller.columnBindingContext.setupmain.map((col: any, i: number) => {
+                    let main = this.controller.columnBindingContext.setupmain[i].show;
+                    let left = this.controller.columnBindingContext.setupleft[i].show;
+                    let right = this.controller.columnBindingContext.setupright[i].show;
+                    if (!main && !left && !right) {
+                        return { no: i + '', title: col.colConfig.colHeaderName };
+                    } else {
+                        return null;
+                    }
+                }).filter((x) => {
+                    let value = false;
+                    if (x) {
+                        value = true;
+                    }
+                    return value;
+                })
+
+                this.showColumnOptions();
+                break;
+            case type === 'option' && option === 'Back':
+                this.hideOptions();
                 break;
             case type === 'close' && option === 'true':
                 this.show = false;
                 break;
             default:
-                let result = this.callback(type, option, event);
-                if (result) {
+               // let result = this.callback(type, option, event);
+                //if (result) {
                     this.show = false;
                     this.pinnedMenu = false;
                     this.sortMenu = false;
+                    this.optionsMenu = false;
                     this.filterMainMenu = false;
                     this.filterOptionsMenu = false;
-                }
+                    this.columnOptionsMenu = false;
+               // }
         }
     }
 
 
 
-  /**
-   * update/translate menu strings
-   *
-   */
+    /**
+     * update/translate menu strings
+     *
+     */
     public updateMenuStrings(key: string, text: string) {
 
         if (this.menuStrings[key]) {
@@ -158,22 +193,35 @@ export class ContextMenu {
 
 
 
-  /**
-   * active the filter menu
-   *
-   */
+    /**
+     * active the filter menu
+     *
+     */
     private showFilterOptions(): void {
+        this.optionsMenu = true;
         this.filterOptionsMenu = true;
     }
 
 
-
-  /**
-   * hide the filter menu
+    /**
+   * active the column chooser menu
    *
    */
-    private hideFilterOptions(): void {
+    private showColumnOptions(): void {
+        this.optionsMenu = true;
+        this.columnOptionsMenu = true;
+    }
+
+
+
+    /**
+     * hide the filter menu
+     *
+     */
+    private hideOptions(): void {
+        this.optionsMenu = false;
         this.filterOptionsMenu = false;
+        this.columnOptionsMenu = false;
     }
 
     /*  positionMenu(x, y) {
@@ -223,7 +271,7 @@ export class ContextMenu {
             </ul>`.replace(/\$(au{)/g, '${');
 
         let menuPinned: string = customMenuTemplates.pinned ||
-            `<ul if.bind="pinnedMenu && !filterOptionsMenu" class="avg-menu__items">
+            `<ul if.bind="pinnedMenu && !optionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('pinned','left', $event)" class="avg-menu__link">
                     <i class="avg-fa avg-text"></i> $au{menuStrings.pinLeft}
@@ -237,7 +285,7 @@ export class ContextMenu {
             </ul>`.replace(/\$(au{)/g, '${');
 
         let menuGroupby: string = customMenuTemplates.groupby ||
-            `<ul if.bind="groupbyMenu && !filterOptionsMenu" class="avg-menu__items">
+            `<ul if.bind="groupbyMenu && !optionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('groupby','groupby', $event)" class="avg-menu__link">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
@@ -248,7 +296,7 @@ export class ContextMenu {
             </ul>`.replace(/\$(au{)/g, '${');
 
         let menuSort: string = customMenuTemplates.sort ||
-            `<ul if.bind="sortMenu && !filterOptionsMenu" class="avg-menu__items">
+            `<ul if.bind="sortMenu && !optionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('sort','asc', $event)" class="avg-menu__link">
                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
@@ -266,7 +314,7 @@ export class ContextMenu {
             </ul>`.replace(/\$(au{)/g, '${');
 
         let menuFilter: string = customMenuTemplates.filter ||
-            `<ul if.bind="filterMainMenu && !filterOptionsMenu" class="avg-menu__items">
+            `<ul if.bind="filterMainMenu && !optionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('filter','showall', $event)" class="avg-menu__link">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
@@ -297,10 +345,41 @@ export class ContextMenu {
                 </li>
             </ul>`.replace(/\$(au{)/g, '${');
 
+        let menuColumnChooser: string = customMenuTemplates.columnChooser ||
+            `<ul if.bind="columnChooser && !optionsMenu" class="avg-menu__items">
+          <li class="avg-menu__item">
+                <p click.delegate="menuClick('column','options', $event)" class="avg-menu__link">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                        <path d="M7.4 4.8v2.7H4.7v1h2.7v3h1v-3h2.8v-1H8.5V4.8h-1z"/>
+                      </svg> $au{menuStrings.columnChooser}
+                </p>
+                </li>
+        </ul>`.replace(/\$(au{)/g, '${');
+
+        let menuColumnChooserOptions: string = customMenuTemplates.columnChooserOptions ||
+            `<ul if.bind="columnOptionsMenu" class="avg-menu__items">
+             <li class="avg-menu__item">
+                <p click.delegate="menuClick('option','Back', $event)" class="avg-menu__link">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                       <path d="M8.7 4v1.2L5 7.5h8v1H5l3.7 2.2V12L3 8.4v-1L8.7 4z"/>
+                      </svg> $au{menuStrings.back}
+                </p>
+                </li>
+            <li class="avg-menu__item" repeat.for="item of columnsHidden">
+                <avg-drag-helper v-drag-drop-col="title:$au{item.title}" avg-type="chooser" avg-config-col="$au{item.no}">
+                    <p class="avg-menu__link">
+                        $au{item.title}
+                    </p>
+                </avg-drag-helper>
+            </li>
+            </ul>`.replace(/\$(au{)/g, '${');
+
+
+
         let menuFilterOptions: string = customMenuTemplates.filterOptions ||
             `<ul if.bind="filterOptionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
-                <p click.delegate="menuClick('filterOption','Back', $event)" class="avg-menu__link">
+                <p click.delegate="menuClick('option','Back', $event)" class="avg-menu__link">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                        <path d="M8.7 4v1.2L5 7.5h8v1H5l3.7 2.2V12L3 8.4v-1L8.7 4z"/>
                       </svg> $au{menuStrings.back}
@@ -389,7 +468,9 @@ export class ContextMenu {
             menuGroupby,
             menuSort,
             menuFilter,
+            menuColumnChooser,
             menuFilterOptions,
+            menuColumnChooserOptions,
             menuBottom
         ].join('');
 

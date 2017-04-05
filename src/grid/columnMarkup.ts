@@ -9,6 +9,7 @@ import {
   ColumnBindingContext,
   ViewSlots,
   ColConfigInterface,
+  ColumBindingContextObjectInterface,
   OverrideContextInterface
 } from '../interfaces';
 
@@ -201,21 +202,22 @@ export class ColumnMarkup {
       let showme = false;
       switch (type) {
         case 'left':
-          showme = this.colConfig[i].colPinLeft;
+          showme = !this.colConfig[i].colHidden && this.colConfig[i].colPinLeft;
           break;
         case 'main':
-          showme = !this.colConfig[i].colPinLeft && !this.colConfig[i].colPinRight;
+          showme = !this.colConfig[i].colPinLeft && !this.colConfig[i].colPinRight && !this.colConfig[i].colHidden;
           break;
         case 'right':
-          showme = this.colConfig[i].colPinRight;
+          showme = !this.colConfig[i].colHidden && this.colConfig[i].colPinRight;
           break;
         default:
       }
 
-      this.columnBindingContext['setup' + type].push({
+      this.columnBindingContext['setup' + type].push(<ColumBindingContextObjectInterface>{
         width: widthCur,
         show: showme,
-        left: leftCur
+        left: leftCur,
+        colConfig: this.colConfig[i]
       });
       if (showme) {
         leftCur = leftCur + widthCur;
