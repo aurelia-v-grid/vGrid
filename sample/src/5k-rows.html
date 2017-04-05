@@ -24,7 +24,8 @@
           col-drag-drop="title:Country x;field:country" 
           col-sort="field:country"
           col-filter="field:country;i18n.call:translate()" 
-          col-field="country">
+          col-field="country"
+          col-hidden="true">
         </v-grid-col>
         
         <v-grid-col
@@ -57,7 +58,8 @@
           col-drag-drop="title:high;field:high" 
           col-sort="field:high" 
           col-filter="field:high" 
-          col-field="high">
+          col-field="high"
+          col-hidden="true">
         </v-grid-col>
 
         <v-grid-col
@@ -68,7 +70,8 @@
           col-drag-drop="title:bool x;field:bool" 
           col-filter="field:bool" 
           col-field="bool | booleanFormatter" 
-          col-type="checkbox">
+          col-type="checkbox"
+          >
         </v-grid-col>
 
 
@@ -78,7 +81,8 @@
           col-sort="field:name" 
           col-type="image" 
           col-field="images" 
-          image-fix>
+          image-fix
+          col-hidden="true">
         </v-grid-col>
 
         <v-grid-col
