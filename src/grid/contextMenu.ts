@@ -16,8 +16,8 @@ export class ContextMenu {
     private top: number;
     private left: number;
     private pinnedMenu: boolean;
+    private hideshow:boolean;
     private sortMenu: boolean;
-    private columnChooser: boolean;
     private optionsMenu: boolean;
     private filterMainMenu: boolean;
     private filterOptionsMenu: boolean;
@@ -75,7 +75,7 @@ export class ContextMenu {
         this.top = 0;
         this.left = 0;
         this.show = false;
-        this.columnChooser = true;
+        this.hideshow = false;
         this.pinnedMenu = false;
         this.sortMenu = false;
         this.filterMainMenu = false;
@@ -111,6 +111,7 @@ export class ContextMenu {
         top: number,
         pinned?: string,
         sort?: string,
+        hideshow?: string,
         groupby?: string,
         filter?: string,
         callback?: Function
@@ -119,6 +120,7 @@ export class ContextMenu {
         this.top = options.top;
         this.pinnedMenu = options.pinned ? true : false;
         this.sortMenu = options.sort ? true : false;
+        this.hideshow = options.hideshow ? true : false;
         this.groupbyMenu = options.groupby ? true : false;
         this.filterMainMenu = options.filter ? true : false;
         this.show = true;
@@ -295,7 +297,7 @@ export class ContextMenu {
             </ul>`.replace(/\$(au{)/g, '${');
 
         let menuHide: string = customMenuTemplates.menuHide ||
-            `<ul if.bind="show && !optionsMenu" class="avg-menu__items">
+            `<ul if.bind="hideshow && !optionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('hide','hide', $event)" class="avg-menu__link">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
@@ -367,7 +369,7 @@ export class ContextMenu {
             </ul>`.replace(/\$(au{)/g, '${');
 
         let menuColumnChooser: string = customMenuTemplates.columnChooser ||
-            `<ul if.bind="columnChooser && !optionsMenu" class="avg-menu__items">
+            `<ul if.bind="hideshow && !optionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('column','options', $event)" class="avg-menu__link">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">

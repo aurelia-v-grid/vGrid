@@ -26,7 +26,7 @@ export class VGridAttributeMenu {
   @bindable private sort: string;
   @bindable private pinned: string;
   @bindable private groupby: string;
-  @bindable private chooser: string
+  @bindable private hideshow: string
   @bindable private groupbytitle: string;
   // @bindable private copypaste: string; //todo
 
@@ -137,7 +137,7 @@ export class VGridAttributeMenu {
       x.curColumnsArray.forEach((x: any) => {
         columnsArraySorted.push(x);
       });
-      
+
       //correct left
       columnsArraySorted.sort(
         (a: any, b: any) => {
@@ -229,6 +229,7 @@ export class VGridAttributeMenu {
         left: clickCoords.x,
         filter: this.filter,
         sort: this.sort,
+        hideshow: this.hideshow,
         pinned: this.pinned,
         groupby: this.groupby,
         callback: this.callbackBinded
