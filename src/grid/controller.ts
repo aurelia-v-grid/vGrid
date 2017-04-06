@@ -591,6 +591,15 @@ export class Controller {
           });
           break;
         default:
+          tempArray.push({
+            no: i,
+            set: 2,
+            colHidden: true,
+            colPinLeft: false,
+            colPinRight: false,
+            left: colContext.setupmain[i].left,
+            width: colContext.setupmain[i].width
+          });
         // need to add option for hidden column, but that is created yet...
       }
     }
@@ -611,6 +620,7 @@ export class Controller {
         colAddLabelAttributes: col.colAddLabelAttributes,
         colAddFilterAttributes: col.colAddFilterAttributes,
         colAddRowAttributes: col.colAddRowAttributes,
+        colHidden: tempArray[i].colHidden ? true : false,
         colSort: col.colSort,
         colDisplayEdit: col.colDisplayEdit,
         colFilter: col.colFilter,
