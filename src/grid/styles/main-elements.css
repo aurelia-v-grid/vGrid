@@ -5,6 +5,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  overflow: hidden;
 }
 
 .avg-default .avg-top-panel {
@@ -12,9 +13,7 @@
   background-color: rgb(240, 240, 240);
 }
 
-.avg-default .avg-header {
-  
-}
+.avg-default .avg-header {}
 
 .avg-default .avg-footer {
   border-top: 1px solid rgb(230, 230, 230);

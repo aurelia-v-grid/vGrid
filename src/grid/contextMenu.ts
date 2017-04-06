@@ -35,6 +35,7 @@ export class ContextMenu {
         sortAscending: 'Sort Ascending',
         sortDescending: 'Sort Descending',
         showAll: 'Show All',
+        hide: 'hide',
         clearCurrent: 'Clear Current',
         clearAll: 'Clear All',
         chooseOperator: 'Choose Operator',
@@ -197,8 +198,8 @@ export class ContextMenu {
     }
 
 
-    private closeMenuEvent():void {
-        this.menuClick('close','true', null);
+    private closeMenuEvent(): void {
+        this.menuClick('close', 'true', null);
     }
 
 
@@ -293,6 +294,17 @@ export class ContextMenu {
                 </li>
             </ul>`.replace(/\$(au{)/g, '${');
 
+        let menuHide: string = customMenuTemplates.menuHide ||
+            `<ul if.bind="show && !optionsMenu" class="avg-menu__items">
+                <li class="avg-menu__item">
+                <p click.delegate="menuClick('hide','hide', $event)" class="avg-menu__link">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                        <path d="M4.8 7.5h6.5v1H4.8z"/>
+                    </svg> $au{menuStrings.hide}
+                </p>
+                </li>
+            </ul>`.replace(/\$(au{)/g, '${');
+
         let menuGroupby: string = customMenuTemplates.groupby ||
             `<ul if.bind="groupbyMenu && !optionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
@@ -371,13 +383,16 @@ export class ContextMenu {
                 <p click.delegate="menuClick('option','Back', $event)" class="avg-menu__link">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                        <path d="M8.7 4v1.2L5 7.5h8v1H5l3.7 2.2V12L3 8.4v-1L8.7 4z"/>
-                      </svg> $au{menuStrings.back}
+                    </svg> $au{menuStrings.back}
                 </p>
                 </li>
                 <div repeat.for="item of columnsHidden">
                     <li class="avg-menu__item">
                         <avg-drag-helper v-drag-drop-col="title:$au{item.title}" avg-type="chooser" avg-config-col="$au{item.no}">
                             <p class="avg-menu__link">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                                    <path show.bind="!rowRef.__groupExpanded" d="M7.4 4.8v2.7H4.7v1h2.7v3h1v-3h2.8v-1H8.5V4.8h-1z"/>
+                                </svg>
                                 $au{item.title}
                             </p>
                         </avg-drag-helper>
@@ -475,6 +490,7 @@ export class ContextMenu {
         let menuAll: string = customMenuTemplates.all || [
             menuTop,
             menuClose,
+            menuHide,
             menuPinned,
             menuGroupby,
             menuSort,

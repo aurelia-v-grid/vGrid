@@ -383,7 +383,8 @@ export class VGridDragDropCol {
    *
    */
   private onDragover(event: MouseEvent): void {
-
+    event.preventDefault();
+    event.stopPropagation();
     // setting position of out dragBlock
     if (this.dragColumnBlock) {
       this.dragColumnBlock.style.top = event.clientY + 'px';

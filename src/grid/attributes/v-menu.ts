@@ -23,9 +23,10 @@ export class VGridAttributeMenu {
 
   @bindable private filter: string;
   @bindable private filterkey: string;
-  @bindable private sort: string ;
+  @bindable private sort: string;
   @bindable private pinned: string;
   @bindable private groupby: string;
+  @bindable private chooser: string
   @bindable private groupbytitle: string;
   // @bindable private copypaste: string; //todo
 
@@ -79,7 +80,7 @@ export class VGridAttributeMenu {
 
 
   /**
-   * todo description
+   * callbacks from the contextMenu class
    *
    */
   private callback(type: string, option: string, event: MouseEvent): boolean {
@@ -108,9 +109,9 @@ export class VGridAttributeMenu {
       let field: string = this.sort;
       let arr: string[] = this.sort.split(';');
       arr.forEach((x: string) => {
-          if (x.indexOf('field') !== -1) {
-            field = x.replace('field:', '');
-          }
+        if (x.indexOf('field') !== -1) {
+          field = x.replace('field:', '');
+        }
       });
 
       this.controller.attGridConnector.orderBy({
@@ -120,6 +121,68 @@ export class VGridAttributeMenu {
       document.removeEventListener('click', this.checkBinded);
       return true;
     }
+
+    if (type === 'hide') {
+
+      // get column context
+      let x = this.getColumnContext();
+
+      // get current width
+      let width = x.curColumnsArray[x.curColNo].width;
+
+      //hide it
+      x.curColumnsArray[x.curColNo].show = false;
+
+      let columnsArraySorted: any[] = [];
+      x.curColumnsArray.forEach((x: any) => {
+        columnsArraySorted.push(x);
+      });
+      
+      //correct left
+      columnsArraySorted.sort(
+        (a: any, b: any) => {
+          return a.left - b.left;
+        });
+
+      let appendValue = 0
+
+      columnsArraySorted.forEach((x: any) => {
+        if (x.show) {
+          x.left = appendValue;
+          appendValue = appendValue + x.width;
+        }
+      });
+
+      // correct container
+      if (x.curColType === 'main') {
+        this.controller.htmlHeightWidth.avgContentMainScroll_Width = this.controller.htmlHeightWidth.avgContentMainScroll_Width - width;
+        this.controller.htmlHeightWidth.avgContentHhandleScroll_Width = this.controller.htmlHeightWidth.avgContentHhandleScroll_Width - width;
+      }
+
+      if (x.curColType === 'right') {
+        this.controller.htmlHeightWidth.avgContentRight_Width = this.controller.htmlHeightWidth.avgContentRight_Width - width;
+        this.controller.htmlHeightWidth.avgHeaderRight_Width = this.controller.htmlHeightWidth.avgHeaderRight_Width - width;
+
+        this.controller.htmlHeightWidth.avgContentMain_Right = this.controller.htmlHeightWidth.avgContentMain_Right + width;
+        this.controller.htmlHeightWidth.avgHeaderMain_Right = this.controller.htmlHeightWidth.avgHeaderMain_Right + width;
+        this.controller.htmlHeightWidth.avgContentHhandle_Right = this.controller.htmlHeightWidth.avgContentHhandle_Right + width;
+      }
+
+      if (x.curColType === 'left') {
+
+        this.controller.htmlHeightWidth.avgContentLeft_Width = this.controller.htmlHeightWidth.avgContentLeft_Width - width;
+        this.controller.htmlHeightWidth.avgHeaderLeft_Width = this.controller.htmlHeightWidth.avgHeaderLeft_Width - width;
+
+        this.controller.htmlHeightWidth.avgContentMain_Left = this.controller.htmlHeightWidth.avgContentMain_Left - width;
+        this.controller.htmlHeightWidth.avgHeaderMain_Left = this.controller.htmlHeightWidth.avgHeaderMain_Left - width;
+        this.controller.htmlHeightWidth.avgContentHhandle_Left = this.controller.htmlHeightWidth.avgContentHhandle_Left - width;
+      }
+
+
+      // tell menu to close
+      return true;
+    }
+
 
     if (type === 'groupby') {
       let groupTitle = this.groupbytitle ? this.groupbytitle : this.groupby;
@@ -133,9 +196,9 @@ export class VGridAttributeMenu {
       let field: string = this.filter;
       let arr: string[] = this.filter.split(';');
       arr.forEach((x: string) => {
-          if (x.indexOf('field') !== -1) {
-            field = x.replace('field:', '');
-          }
+        if (x.indexOf('field') !== -1) {
+          field = x.replace('field:', '');
+        }
       });
 
       this.raiseEvent('filterUpdate', {
@@ -195,6 +258,57 @@ export class VGridAttributeMenu {
       x: posx,
       y: posy
     };
+  }
+
+
+  private getColumnContext(): any {
+    let curTarget: Element = this.element;
+    let count = 0;
+    let exit = true;
+    let isOk = false;
+    let curColType;
+    let curColNo;
+    let curContext;
+    let curColumnsArray;
+
+
+    while (exit) {
+      // have count, so we dont end up locking browser if anything goes really bad
+      count++;
+
+      // if we dont have target, fail!
+      if (!curTarget) {
+        exit = false;
+      } else {
+
+
+        // check if it contains our elements, or continue to next parentNode
+        switch (true) {
+          case curTarget.nodeName === 'AVG-COL':
+            isOk = true;
+            exit = false;
+            break;
+          default:
+            curTarget = (curTarget.parentNode as Element);
+            break;
+        }
+      }
+
+      // 20 times, we failed!
+      if (count > 10) {
+        exit = false;
+      }
+
+    }
+
+    if (isOk) {
+      curColType = curTarget.attributes.getNamedItem('avg-type').value;
+      curColNo = parseInt(curTarget.attributes.getNamedItem('avg-config-col').value, 10);
+      curContext = this.controller.columnBindingContext['setup' + curColType][curColNo];
+      curColumnsArray = this.controller.columnBindingContext['setup' + curColType];
+    }
+    return { curColType: curColType, curColNo: curColNo, curContext: curContext, curColumnsArray: curColumnsArray };
+
   }
 
 }

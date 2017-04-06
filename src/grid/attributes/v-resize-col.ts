@@ -130,6 +130,8 @@ export class VGridAttributesResizeCol {
    *
    */
   private onmousemove(e: MouseEvent): void {
+    e.preventDefault();
+    e.preventDefault();
     this.updateHeader(e);
   }
 
