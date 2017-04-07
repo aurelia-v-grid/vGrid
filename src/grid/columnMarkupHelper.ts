@@ -289,7 +289,7 @@ export class ColumnMarkupHelper {
   private createLabelMarkup(col: ColConfigInterface): string {
     // get the values/settings
     let filterClass = col.colFilter ? `${col.colFilterTop ? 'avg-label-bottom' : 'avg-label-top'}` : 'avg-label-full';
-    let dragDropClass = col.colDragDrop ? 'avg-vGridDragHandle' : '';
+    let dragDropClass = col.colDragDrop !== 'false' ? 'avg-vGridDragHandle' : '';
     let classname = `class="${dragDropClass} ${filterClass}"`;
     let colAddLabelAttributes = col.colAddLabelAttributes ? col.colAddLabelAttributes : '';
     let sort = col.colSort ? `v-sort="${col.colSort}"` : '';

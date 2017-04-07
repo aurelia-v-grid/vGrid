@@ -66,8 +66,8 @@ export class VGridAttributesResizeCol {
     while (this.column.nodeName !== 'AVG-COL') {
       this.column = (this.column.parentNode as HTMLElement);
     }
-    this.colType = this.column.attributes.getNamedItem('avg-type').value;
-    this.colNo = parseInt(this.column.attributes.getNamedItem('avg-config-col').value, 10);
+    this.colType = this.column.attributes.getNamedItem('data-avg-type').value;
+    this.colNo = parseInt(this.column.attributes.getNamedItem('data-avg-config-col').value, 10);
     this.context = vGrid.columnBindingContext['setup' + this.colType][this.colNo];
     this.columnsArray = vGrid.columnBindingContext['setup' + this.colType];
     this.columnBindingContext = vGrid.columnBindingContext;

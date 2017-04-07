@@ -368,7 +368,7 @@ export class ContextMenu {
                 </li>
             </ul>`.replace(/\$(au{)/g, '${');
 
-        let menuColumnChooser: string = customMenuTemplates.columnChooser ||
+        let menuColumnChooser: string = customMenuTemplates.chooser ||
             `<ul if.bind="hideshow && !optionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('column','options', $event)" class="avg-menu__link">
@@ -379,7 +379,7 @@ export class ContextMenu {
                 </li>
         </ul>`.replace(/\$(au{)/g, '${');
 
-        let menuColumnChooserOptions: string = customMenuTemplates.columnChooserOptions ||
+        let menuColumnChooserOptions: string = customMenuTemplates.chooserOptions ||
             `<ul if.bind="columnOptionsMenu" class="avg-menu__items">
              <li class="avg-menu__item">
                 <p click.delegate="menuClick('option','Back', $event)" class="avg-menu__link">
@@ -390,7 +390,7 @@ export class ContextMenu {
                 </li>
                 <div repeat.for="item of columnsHidden">
                     <li class="avg-menu__item">
-                        <avg-drag-helper v-drag-drop-col="title:$au{item.title}" avg-type="chooser" avg-config-col="$au{item.no}">
+                        <avg-drag-helper v-drag-drop-col="title.bind:item.title" data-avg-type="chooser"  data-avg-config-col="$au{item.no}">
                             <p class="avg-menu__link">
                                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                                     <path show.bind="!rowRef.__groupExpanded" d="M7.4 4.8v2.7H4.7v1h2.7v3h1v-3h2.8v-1H8.5V4.8h-1z"/>

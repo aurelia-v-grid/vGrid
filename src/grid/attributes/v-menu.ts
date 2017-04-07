@@ -215,7 +215,7 @@ export class VGridAttributeMenu {
 
 
   /**
-   * todo description
+   * calls the context menu class to open the menu
    *
    */
   private open(e: MouseEvent): void {
@@ -240,7 +240,7 @@ export class VGridAttributeMenu {
 
 
   /**
-   * todo description
+   * gets mouse position
    *
    */
   private getPosition(e: MouseEvent): any {
@@ -262,6 +262,11 @@ export class VGridAttributeMenu {
   }
 
 
+
+  /**
+   * gets column context
+   *
+   */
   private getColumnContext(): any {
     let curTarget: Element = this.element;
     let count = 0;
@@ -303,8 +308,8 @@ export class VGridAttributeMenu {
     }
 
     if (isOk) {
-      curColType = curTarget.attributes.getNamedItem('avg-type').value;
-      curColNo = parseInt(curTarget.attributes.getNamedItem('avg-config-col').value, 10);
+      curColType = curTarget.attributes.getNamedItem('data-avg-type').value;
+      curColNo = parseInt(curTarget.attributes.getNamedItem('data-avg-config-col').value, 10);
       curContext = this.controller.columnBindingContext['setup' + curColType][curColNo];
       curColumnsArray = this.controller.columnBindingContext['setup' + curColType];
     }

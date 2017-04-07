@@ -136,6 +136,7 @@ export class VGridDragDropCol {
    *
    */
   public attached(): void {
+    
 
     // get our target data (this case: this actual column..)
     let result = this.getTargetData(this.column);
@@ -143,8 +144,8 @@ export class VGridDragDropCol {
     if (result.ok && !result.panel) {
       // get column data
       this.column = result.target;
-      this.colType = this.column.attributes.getNamedItem('avg-type').value;
-      this.colNo = parseInt(this.column.attributes.getNamedItem('avg-config-col').value, 10);
+      this.colType = this.column.attributes.getNamedItem('data-avg-type').value;
+      this.colNo = parseInt(this.column.attributes.getNamedItem('data-avg-config-col').value, 10);
       this.context = this.vGrid.columnBindingContext['setup' + this.colType][this.colNo];
       this.columnsArray = this.vGrid.columnBindingContext['setup' + this.colType];
 
@@ -188,8 +189,8 @@ export class VGridDragDropCol {
     if (result.ok && result.target.nodeName === 'AVG-DRAG-HELPER') {
       // get column data
       this.column = result.target;
-      this.colType = this.column.attributes.getNamedItem('avg-type').value;
-      this.colNo = parseInt((this.column as any).avgConfigCol, 10);
+      this.colType = this.column.attributes.getNamedItem('data-avg-type').value;
+      this.colNo = parseInt(this.column.attributes.getNamedItem('data-avg-config-col').value, 10);
       this.context = this.vGrid.columnBindingContext['setup' + 'main'][this.colNo];
       this.columnsArray = this.vGrid.columnBindingContext['setup' + 'main'];
 
@@ -259,6 +260,7 @@ export class VGridDragDropCol {
     this.sharedContext.columnsArray = this.columnsArray;
     this.sharedContext.title = this.title;
     this.sharedContext.field = this.field;
+    //this.column.classList.add('avg-dragging')
 
     // build up new array we will use for setting new left
     this.sharedContext.columnsArraySorted = [];
@@ -667,15 +669,15 @@ export class VGridDragDropCol {
 
     // if ok, get variables we need
     if (isOk && curTarget.nodeName === 'AVG-COL') {
-      curColType = curTarget.attributes.getNamedItem('avg-type').value;
-      curColNo = parseInt(curTarget.attributes.getNamedItem('avg-config-col').value, 10);
+      curColType = curTarget.attributes.getNamedItem('data-avg-type').value;
+      curColNo = parseInt(curTarget.attributes.getNamedItem('data-avg-config-col').value, 10);
       curContext = this.vGrid.columnBindingContext['setup' + curColType][curColNo];
       curColumnsArray = this.vGrid.columnBindingContext['setup' + curColType];
     }
 
     if (isOk && curTarget.nodeName === 'AVG-DRAG-HELPER') {
-      curColType = curTarget.attributes.getNamedItem('avg-type').value;
-      curColNo = parseInt((curTarget as any).avgConfigCol, 10);
+      curColType = curTarget.attributes.getNamedItem('data-avg-type').value;
+      curColNo = parseInt(curTarget.attributes.getNamedItem('data-avg-config-col').value, 10);
       curContext = this.vGrid.columnBindingContext['setup' + 'main'][curColNo];
       curColumnsArray = this.vGrid.columnBindingContext['setup' + 'main'];
       isPanel = true;

@@ -260,8 +260,8 @@ export class ColumnMarkup {
 
         let template = this.colConfig[i].__colHeaderTemplateGenerated;
         let colMarkup = `<avg-col \
-                            avg-type="${type}" \
-                            avg-config-col="${i}" \
+                            data-avg-type="${type}" \
+                            data-avg-config-col="${i}" \
                             class="avg-col" \
                             if.bind="setup${type}[${i}].show" \
                             ${style}>${template}\
