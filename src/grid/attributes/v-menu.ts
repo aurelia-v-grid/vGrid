@@ -73,7 +73,7 @@ export class VGridAttributeMenu {
     let x = (e.target as HTMLElement).classList.contains('avg-menu__link');
     if (!x) {
       this.controller.contextMenu.setDefaults();
-      document.removeEventListener('click', this.checkBinded);
+      document.removeEventListener('mousedown', this.checkBinded);
     }
   }
 
@@ -227,7 +227,7 @@ export class VGridAttributeMenu {
    */
   private open(e: MouseEvent): void {
     this.check(e);
-    document.addEventListener('click', this.checkBinded);
+    document.addEventListener('mousedown', this.checkBinded);
     e.preventDefault();
     if (!this.controller.contextMenu.show) {
       let clickCoords = this.getPosition(e);
