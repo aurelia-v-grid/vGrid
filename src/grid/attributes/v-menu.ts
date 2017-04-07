@@ -140,7 +140,7 @@ export class VGridAttributeMenu {
         columnsArraySorted.push(x);
       });
 
-      if(count){
+      if(count || x.curColType !== 'main'){
       //hide it
       x.curColumnsArray[x.curColNo].show = false;
 
