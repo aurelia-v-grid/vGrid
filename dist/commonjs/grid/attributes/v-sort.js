@@ -12,9 +12,9 @@ var aurelia_framework_1 = require("aurelia-framework");
 var v_grid_1 = require("../v-grid");
 var VGridAttributesSort = (function () {
     function VGridAttributesSort(element, vGrid) {
-        this.firstTime = true;
         this.vGrid = vGrid;
         this.element = element;
+        this.firstTime = true;
     }
     VGridAttributesSort.prototype.bind = function (bindingContext, overrideContext) {
         this.bindingContext = bindingContext;

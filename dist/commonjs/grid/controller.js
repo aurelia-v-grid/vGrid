@@ -297,6 +297,15 @@ var Controller = (function () {
                     });
                     break;
                 default:
+                    tempArray.push({
+                        no: i,
+                        set: 2,
+                        colHidden: true,
+                        colPinLeft: false,
+                        colPinRight: false,
+                        left: colContext.setupmain[i].left,
+                        width: colContext.setupmain[i].width
+                    });
             }
         }
         var newColConfig = [];
@@ -312,6 +321,12 @@ var Controller = (function () {
                 colAddLabelAttributes: col.colAddLabelAttributes,
                 colAddFilterAttributes: col.colAddFilterAttributes,
                 colAddRowAttributes: col.colAddRowAttributes,
+                colFilterMenu: col.colFilterMenu,
+                colLabelMenu: col.colLabelMenu,
+                colRowMenu: col.colRowMenu,
+                colHidden: tempArray[i].colHidden ? true : false,
+                colDragDrop: col.colDragDrop,
+                colResizeable: col.colResizeable,
                 colSort: col.colSort,
                 colDisplayEdit: col.colDisplayEdit,
                 colFilter: col.colFilter,

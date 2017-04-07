@@ -31,8 +31,8 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                     while (this.column.nodeName !== 'AVG-COL') {
                         this.column = this.column.parentNode;
                     }
-                    this.colType = this.column.attributes.getNamedItem('avg-type').value;
-                    this.colNo = parseInt(this.column.attributes.getNamedItem('avg-config-col').value, 10);
+                    this.colType = this.column.attributes.getNamedItem('data-avg-type').value;
+                    this.colNo = parseInt(this.column.attributes.getNamedItem('data-avg-config-col').value, 10);
                     this.context = vGrid.columnBindingContext['setup' + this.colType][this.colNo];
                     this.columnsArray = vGrid.columnBindingContext['setup' + this.colType];
                     this.columnBindingContext = vGrid.columnBindingContext;
@@ -60,6 +60,8 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                     this.ctx.resizing = false;
                 };
                 VGridAttributesResizeCol.prototype.onmousemove = function (e) {
+                    e.preventDefault();
+                    e.preventDefault();
                     this.updateHeader(e);
                 };
                 VGridAttributesResizeCol.prototype.updateHeader = function (e) {

@@ -45,6 +45,21 @@ VGridContextmenu = __decorate([
         if (templateHTML !== '') {
             instruction.menuTemplates.groupby = templateHTML;
         }
+        template = element.getElementsByTagName('V-MENU-HIDE')[0];
+        templateHTML = template ? template.innerHTML : null;
+        if (templateHTML !== '') {
+            instruction.menuTemplates.hide = templateHTML;
+        }
+        template = element.getElementsByTagName('V-MENU-CHOOSER')[0];
+        templateHTML = template ? template.innerHTML : null;
+        if (templateHTML !== '') {
+            instruction.menuTemplates.chooser = templateHTML;
+        }
+        template = element.getElementsByTagName('V-MENU-CHOOSER-OPTIONS')[0];
+        templateHTML = template ? template.innerHTML : null;
+        if (templateHTML !== '') {
+            instruction.menuTemplates.chooserOptions = templateHTML;
+        }
         template = element.getElementsByTagName('V-MENU-SORT')[0];
         templateHTML = template ? template.innerHTML : null;
         if (templateHTML !== '') {

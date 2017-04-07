@@ -46,7 +46,7 @@ System.register(["aurelia-framework", "./columnMarkupHelper"], function (exports
                             '<path show.bind="rowRef.__groupExpanded" d="M4.8 7.5h6.5v1H4.8z"/>',
                             '<path show.bind="!rowRef.__groupExpanded" d="M7.4 4.8v2.7H4.7v1h2.7v3h1v-3h2.8v-1H8.5V4.8h-1z"/>',
                             '</svg>',
-                            '</i>&nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})',
+                            '</i>&nbsp;${rowRef.__groupName} (${rowRef.__groupTotal})'
                         ];
                         var gTemplate = this.colGroup || defaultMarkup.join('');
                         markupArray = [
@@ -103,20 +103,21 @@ System.register(["aurelia-framework", "./columnMarkupHelper"], function (exports
                         var showme = false;
                         switch (type) {
                             case 'left':
-                                showme = this.colConfig[i].colPinLeft;
+                                showme = !this.colConfig[i].colHidden && this.colConfig[i].colPinLeft;
                                 break;
                             case 'main':
-                                showme = !this.colConfig[i].colPinLeft && !this.colConfig[i].colPinRight;
+                                showme = !this.colConfig[i].colPinLeft && !this.colConfig[i].colPinRight && !this.colConfig[i].colHidden;
                                 break;
                             case 'right':
-                                showme = this.colConfig[i].colPinRight;
+                                showme = !this.colConfig[i].colHidden && this.colConfig[i].colPinRight;
                                 break;
                             default:
                         }
                         this.columnBindingContext['setup' + type].push({
                             width: widthCur,
                             show: showme,
-                            left: leftCur
+                            left: leftCur,
+                            colConfig: this.colConfig[i]
                         });
                         if (showme) {
                             leftCur = leftCur + widthCur;
@@ -148,7 +149,7 @@ System.register(["aurelia-framework", "./columnMarkupHelper"], function (exports
                                 default:
                             }
                             var template = this.colConfig[i].__colHeaderTemplateGenerated;
-                            var colMarkup = "<avg-col                             avg-type=\"" + type + "\"                             avg-config-col=\"" + i + "\"                             class=\"avg-col\"                             if.bind=\"setup" + type + "[" + i + "].show\"                             " + style + ">" + template + "                          </avg-col>";
+                            var colMarkup = "<avg-col                             data-avg-type=\"" + type + "\"                             data-avg-config-col=\"" + i + "\"                             class=\"avg-col\"                             if.bind=\"setup" + type + "[" + i + "].show\"                             " + style + ">" + template + "                          </avg-col>";
                             viewMarkup = viewMarkup + colMarkup;
                         }
                     }

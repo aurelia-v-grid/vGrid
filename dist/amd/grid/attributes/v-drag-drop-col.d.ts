@@ -17,6 +17,7 @@ export declare class VGridDragDropCol {
     private onDragoverBinded;
     private onDragendBinded;
     private onDragOutSideBinded;
+    private onCloseMenuBinded;
     private colType;
     private colNo;
     private context;
@@ -31,6 +32,7 @@ export declare class VGridDragDropCol {
     unbind(): void;
     detached(): void;
     attached(): void;
+    private onCloseMenu();
     private createDragElement();
     private onDragstart();
     private onDragOutSide(event);

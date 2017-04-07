@@ -30,18 +30,29 @@ var VGridDragDropCol = (function () {
         this.onDragoverBinded = this.onDragover.bind(this);
         this.onDragendBinded = this.onDragend.bind(this);
         this.onDragOutSideBinded = this.onDragOutSide.bind(this);
+        this.onCloseMenuBinded = this.onCloseMenu.bind(this);
     };
     VGridDragDropCol.prototype.unbind = function () {
     };
     VGridDragDropCol.prototype.detached = function () {
+        var result = this.getTargetData(this.column);
+        if (result.ok && !result.panel) {
+            this.element.removeEventListener('mousedown', this.onDragstartBinded);
+            result.target.removeEventListener('mouseenter', this.onDragenterBinded);
+        }
+        if (result.ok && result.target.nodeName === 'AVG-DRAG-HELPER') {
+            this.element.removeEventListener('mousedown', this.onDragstartBinded);
+            result.target.removeEventListener('mouseenter', this.onDragenterBinded);
+            result.target.removeEventListener('mousedown', this.onCloseMenuBinded);
+        }
     };
     VGridDragDropCol.prototype.attached = function () {
         var _this = this;
         var result = this.getTargetData(this.column);
         if (result.ok && !result.panel) {
             this.column = result.target;
-            this.colType = this.column.attributes.getNamedItem('avg-type').value;
-            this.colNo = parseInt(this.column.attributes.getNamedItem('avg-config-col').value, 10);
+            this.colType = this.column.attributes.getNamedItem('data-avg-type').value;
+            this.colNo = parseInt(this.column.attributes.getNamedItem('data-avg-config-col').value, 10);
             this.context = this.vGrid.columnBindingContext['setup' + this.colType][this.colNo];
             this.columnsArray = this.vGrid.columnBindingContext['setup' + this.colType];
             this.element.addEventListener('mousedown', this.onDragstartBinded);
@@ -67,6 +78,19 @@ var VGridDragDropCol = (function () {
                 }
             };
         }
+        if (result.ok && result.target.nodeName === 'AVG-DRAG-HELPER') {
+            this.column = result.target;
+            this.colType = this.column.attributes.getNamedItem('data-avg-type').value;
+            this.colNo = parseInt(this.column.attributes.getNamedItem('data-avg-config-col').value, 10);
+            this.context = this.vGrid.columnBindingContext['setup' + 'main'][this.colNo];
+            this.columnsArray = this.vGrid.columnBindingContext['setup' + 'main'];
+            this.element.addEventListener('mousedown', this.onDragstartBinded);
+            result.target.addEventListener('mouseenter', this.onDragenterBinded);
+            result.target.addEventListener('mousedown', this.onCloseMenuBinded);
+        }
+    };
+    VGridDragDropCol.prototype.onCloseMenu = function () {
+        this.vGrid.controller.raiseEvent("avg-close-menu");
     };
     VGridDragDropCol.prototype.createDragElement = function () {
         this.dragColumnBlock = document.createElement('div');
@@ -162,6 +186,8 @@ var VGridDragDropCol = (function () {
         }
     };
     VGridDragDropCol.prototype.onDragover = function (event) {
+        event.preventDefault();
+        event.stopPropagation();
         if (this.dragColumnBlock) {
             this.dragColumnBlock.style.top = event.clientY + 'px';
             this.dragColumnBlock.style.left = event.clientX + 'px';
@@ -188,48 +214,65 @@ var VGridDragDropCol = (function () {
         var newColType = result.colType;
         var oldColType = this.sharedContext.colType;
         var heightAndWidths = this.vGrid.htmlHeightWidth;
+        var moreThenOneMainColumn = true;
         switch (true) {
             case newColType === 'left' && oldColType === 'main':
-            case newColType === 'main' && oldColType === 'left':
             case newColType === 'right' && oldColType === 'main':
+            case newColType === 'main' && oldColType === 'left':
             case newColType === 'main' && oldColType === 'right':
             case newColType === 'left' && oldColType === 'right':
             case newColType === 'right' && oldColType === 'left':
-                this.sharedContext.columnsArray[this.sharedContext.colNo].show = false;
-                width = this.sharedContext.columnsArray[this.sharedContext.colNo].width;
-                this.sharedContext.columnsArraySorted.sort(function (a, b) {
-                    return a.left - b.left;
-                });
-                var appendValue_2 = 0;
-                this.sharedContext.columnsArraySorted.forEach(function (x) {
-                    if (x.show) {
-                        x.left = appendValue_2;
-                        appendValue_2 = appendValue_2 + x.width;
+            case newColType === 'main' && oldColType === 'chooser':
+            case newColType === 'left' && oldColType === 'chooser':
+            case newColType === 'right' && oldColType === 'chooser':
+                if (oldColType === 'main') {
+                    var count_1 = -1;
+                    this.sharedContext.columnsArray.forEach(function (x) {
+                        if (x.show) {
+                            count_1++;
+                        }
+                    });
+                    if (!count_1) {
+                        moreThenOneMainColumn = false;
                     }
-                });
-                this.sharedContext.colType = result.colType;
-                this.sharedContext.columnsArray = this.vGrid.columnBindingContext['setup' + result.colType];
-                this.sharedContext.columnsArray[this.sharedContext.colNo].show = true;
-                this.sharedContext.columnsArray[this.sharedContext.colNo].width = width;
-                this.sharedContext.columnsArraySorted = [];
-                this.sharedContext.columnsArray.forEach(function (x) {
-                    _this.sharedContext.columnsArraySorted.push(x);
-                });
-                this.sharedContext.columnsArraySorted.sort(function (a, b) {
-                    return a.left - b.left;
-                });
-                appendValue_2 = 0;
-                this.sharedContext.columnsArraySorted.forEach(function (x) {
-                    if (x.show) {
-                        x.left = appendValue_2;
-                        appendValue_2 = appendValue_2 + x.width;
-                    }
-                });
+                }
+                if (moreThenOneMainColumn) {
+                    this.sharedContext.columnsArray[this.sharedContext.colNo].show = false;
+                    width = this.sharedContext.columnsArray[this.sharedContext.colNo].width;
+                    this.sharedContext.columnsArraySorted.sort(function (a, b) {
+                        return a.left - b.left;
+                    });
+                    var appendValue_2 = 0;
+                    this.sharedContext.columnsArraySorted.forEach(function (x) {
+                        if (x.show) {
+                            x.left = appendValue_2;
+                            appendValue_2 = appendValue_2 + x.width;
+                        }
+                    });
+                    this.sharedContext.colType = result.colType;
+                    this.sharedContext.columnsArray = this.vGrid.columnBindingContext['setup' + result.colType];
+                    this.sharedContext.columnsArray[this.sharedContext.colNo].show = true;
+                    this.sharedContext.columnsArray[this.sharedContext.colNo].width = width;
+                    this.sharedContext.columnsArraySorted = [];
+                    this.sharedContext.columnsArray.forEach(function (x) {
+                        _this.sharedContext.columnsArraySorted.push(x);
+                    });
+                    this.sharedContext.columnsArraySorted.sort(function (a, b) {
+                        return a.left - b.left;
+                    });
+                    appendValue_2 = 0;
+                    this.sharedContext.columnsArraySorted.forEach(function (x) {
+                        if (x.show) {
+                            x.left = appendValue_2;
+                            appendValue_2 = appendValue_2 + x.width;
+                        }
+                    });
+                }
                 break;
             default:
                 break;
         }
-        if (newColType === 'left' && oldColType === 'main') {
+        if (newColType === 'left' && oldColType === 'main' && moreThenOneMainColumn) {
             heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
             heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width - width;
             heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentLeft_Width + width;
@@ -238,7 +281,19 @@ var VGridDragDropCol = (function () {
             heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left + width;
             heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left + width;
         }
-        if (newColType === 'main' && oldColType === 'left') {
+        if (newColType === 'main' && oldColType === 'chooser' && moreThenOneMainColumn) {
+            heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
+            heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
+        }
+        if (newColType === 'left' && oldColType === 'chooser' && moreThenOneMainColumn) {
+            heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentMainScroll_Width + width;
+            heightAndWidths.avgHeaderLeft_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
+        }
+        if (newColType === 'right' && oldColType === 'chooser' && moreThenOneMainColumn) {
+            heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentMainScroll_Width + width;
+            heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
+        }
+        if (newColType === 'main' && oldColType === 'left' && moreThenOneMainColumn) {
             heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
             heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
             heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentLeft_Width - width;
@@ -247,7 +302,7 @@ var VGridDragDropCol = (function () {
             heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left - width;
             heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left - width;
         }
-        if (newColType === 'right' && oldColType === 'main') {
+        if (newColType === 'right' && oldColType === 'main' && moreThenOneMainColumn) {
             heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
             heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width - width;
             heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width + width;
@@ -256,7 +311,7 @@ var VGridDragDropCol = (function () {
             heightAndWidths.avgHeaderMain_Right = heightAndWidths.avgHeaderMain_Right + width;
             heightAndWidths.avgContentHhandle_Right = heightAndWidths.avgContentHhandle_Right + width;
         }
-        if (newColType === 'main' && oldColType === 'right') {
+        if (newColType === 'main' && oldColType === 'right' && moreThenOneMainColumn) {
             heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
             heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
             heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width - width;
@@ -265,7 +320,7 @@ var VGridDragDropCol = (function () {
             heightAndWidths.avgHeaderMain_Right = heightAndWidths.avgHeaderMain_Right - width;
             heightAndWidths.avgContentHhandle_Right = heightAndWidths.avgContentHhandle_Right - width;
         }
-        if (newColType === 'left' && oldColType === 'right') {
+        if (newColType === 'left' && oldColType === 'right' && moreThenOneMainColumn) {
             heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width - width;
             heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgHeaderRight_Width - width;
             heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentLeft_Width + width;
@@ -277,7 +332,7 @@ var VGridDragDropCol = (function () {
             heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left + width;
             heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left + width;
         }
-        if (newColType === 'right' && oldColType === 'left') {
+        if (newColType === 'right' && oldColType === 'left' && moreThenOneMainColumn) {
             heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width + width;
             heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgHeaderRight_Width + width;
             heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentLeft_Width - width;
@@ -305,6 +360,7 @@ var VGridDragDropCol = (function () {
                     draggableTarget = curTarget;
                 }
                 switch (true) {
+                    case curTarget.nodeName === 'AVG-DRAG-HELPER':
                     case curTarget.nodeName === 'AVG-COL':
                     case curTarget.nodeName === 'AVG-TOP-PANEL':
                         isOk = true;
@@ -325,10 +381,17 @@ var VGridDragDropCol = (function () {
         var curColumnsArray = null;
         var isPanel = false;
         if (isOk && curTarget.nodeName === 'AVG-COL') {
-            curColType = curTarget.attributes.getNamedItem('avg-type').value;
-            curColNo = parseInt(curTarget.attributes.getNamedItem('avg-config-col').value, 10);
+            curColType = curTarget.attributes.getNamedItem('data-avg-type').value;
+            curColNo = parseInt(curTarget.attributes.getNamedItem('data-avg-config-col').value, 10);
             curContext = this.vGrid.columnBindingContext['setup' + curColType][curColNo];
             curColumnsArray = this.vGrid.columnBindingContext['setup' + curColType];
+        }
+        if (isOk && curTarget.nodeName === 'AVG-DRAG-HELPER') {
+            curColType = curTarget.attributes.getNamedItem('data-avg-type').value;
+            curColNo = parseInt(curTarget.attributes.getNamedItem('data-avg-config-col').value, 10);
+            curContext = this.vGrid.columnBindingContext['setup' + 'main'][curColNo];
+            curColumnsArray = this.vGrid.columnBindingContext['setup' + 'main'];
+            isPanel = true;
         }
         if (isOk && curTarget.nodeName === 'AVG-TOP-PANEL') {
             isPanel = true;

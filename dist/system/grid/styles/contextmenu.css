@@ -1,6 +1,6 @@
 .avg-default.avg-menu {
   position: absolute;
-  z-index: 10;
+  z-index: 901;
   background-color: rgb(240, 240, 240);
   min-width: 170px;
 }
@@ -12,6 +12,7 @@
 .avg-default .avg-menu__items {
   padding-left: 0;
   padding-bottom: 3px;
+  margin: 0;
 }
 
 .avg-default .avg-menu__item {

@@ -12,6 +12,7 @@ export declare class VGridAttributeMenu {
     private sort;
     private pinned;
     private groupby;
+    private hideshow;
     private groupbytitle;
     constructor(element: Element, vGrid: VGrid);
     attached(): void;
@@ -20,4 +21,5 @@ export declare class VGridAttributeMenu {
     private callback(type, option, event);
     private open(e);
     private getPosition(e);
+    private getColumnContext();
 }

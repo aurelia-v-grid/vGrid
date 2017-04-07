@@ -11,9 +11,9 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
     Object.defineProperty(exports, "__esModule", { value: true });
     var VGridAttributesSort = (function () {
         function VGridAttributesSort(element, vGrid) {
-            this.firstTime = true;
             this.vGrid = vGrid;
             this.element = element;
+            this.firstTime = true;
         }
         VGridAttributesSort.prototype.bind = function (bindingContext, overrideContext) {
             this.bindingContext = bindingContext;

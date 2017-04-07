@@ -162,7 +162,7 @@ var ColumnMarkupHelper = (function () {
     };
     ColumnMarkupHelper.prototype.createLabelMarkup = function (col) {
         var filterClass = col.colFilter ? "" + (col.colFilterTop ? 'avg-label-bottom' : 'avg-label-top') : 'avg-label-full';
-        var dragDropClass = col.colDragDrop ? 'avg-vGridDragHandle' : '';
+        var dragDropClass = col.colDragDrop !== 'false' ? 'avg-vGridDragHandle' : '';
         var classname = "class=\"" + dragDropClass + " " + filterClass + "\"";
         var colAddLabelAttributes = col.colAddLabelAttributes ? col.colAddLabelAttributes : '';
         var sort = col.colSort ? "v-sort=\"" + col.colSort + "\"" : '';

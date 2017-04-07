@@ -22,9 +22,9 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
         execute: function () {
             VGridAttributesSort = (function () {
                 function VGridAttributesSort(element, vGrid) {
-                    this.firstTime = true;
                     this.vGrid = vGrid;
                     this.element = element;
+                    this.firstTime = true;
                 }
                 VGridAttributesSort.prototype.bind = function (bindingContext, overrideContext) {
                     this.bindingContext = bindingContext;

@@ -1,4 +1,4 @@
-import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContextInterface } from '../interfaces';
+import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContextInterface, Controller } from '../interfaces';
 export declare class ContextMenu {
     show: boolean;
     private viewCompiler;
@@ -9,13 +9,19 @@ export declare class ContextMenu {
     private top;
     private left;
     private pinnedMenu;
+    private hideshow;
     private sortMenu;
+    private optionsMenu;
     private filterMainMenu;
     private filterOptionsMenu;
+    private columnOptionsMenu;
     private groupbyMenu;
     private callback;
+    private columnsHidden;
+    private closeMenuEventBinded;
+    private controller;
     private menuStrings;
-    constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots);
+    constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots, controller: Controller);
     setDefaults(): void;
     init(customMenuTemplates: any, overrideContext: OverrideContextInterface): void;
     openMenu(options: {
@@ -23,13 +29,16 @@ export declare class ContextMenu {
         top: number;
         pinned?: string;
         sort?: string;
+        hideshow?: string;
         groupby?: string;
         filter?: string;
         callback?: Function;
     }): void;
     menuClick(type: string, option: string, event: Event): void;
     updateMenuStrings(key: string, text: string): void;
+    private closeMenuEvent();
     private showFilterOptions();
-    private hideFilterOptions();
+    private showColumnOptions();
+    private hideOptions();
     private menuHtml(customMenuTemplates);
 }
