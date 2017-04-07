@@ -116,7 +116,7 @@ export class VGridDragDropCol {
 
     }
 
-   
+
     if (result.ok && result.target.nodeName === 'AVG-DRAG-HELPER') {
 
       // when user starts to drag
@@ -136,7 +136,7 @@ export class VGridDragDropCol {
    *
    */
   public attached(): void {
-    
+
 
     // get our target data (this case: this actual column..)
     let result = this.getTargetData(this.column);
@@ -207,8 +207,8 @@ export class VGridDragDropCol {
 
 
 
-  private onCloseMenu():void {
-     this.vGrid.controller.raiseEvent("avg-close-menu");
+  private onCloseMenu(): void {
+    this.vGrid.controller.raiseEvent("avg-close-menu");
   }
 
 
@@ -441,12 +441,13 @@ export class VGridDragDropCol {
     let newColType = result.colType;
     let oldColType = this.sharedContext.colType;
     let heightAndWidths = this.vGrid.htmlHeightWidth;
+    let moreThenOneMainColumn = true
 
     // chack type is one of the ones we handle
     switch (true) {
       case newColType === 'left' && oldColType === 'main':
-      case newColType === 'main' && oldColType === 'left':
       case newColType === 'right' && oldColType === 'main':
+      case newColType === 'main' && oldColType === 'left':
       case newColType === 'main' && oldColType === 'right':
       case newColType === 'left' && oldColType === 'right':
       case newColType === 'right' && oldColType === 'left':
@@ -454,57 +455,74 @@ export class VGridDragDropCol {
       case newColType === 'left' && oldColType === 'chooser':
       case newColType === 'right' && oldColType === 'chooser':
 
-        // hide column
-        this.sharedContext.columnsArray[this.sharedContext.colNo].show = false;
+        //check if more then 1 main column
+        // my main dragdrop logi fails if not
 
-        // get to width of the column we have
-        width = this.sharedContext.columnsArray[this.sharedContext.colNo].width;
+        if (oldColType === 'main') {
+          let count = -1;
+          this.sharedContext.columnsArray.forEach((x) => {
+            if (x.show) {
+              count++;
+            }
+          })
+          if (!count) {
+            moreThenOneMainColumn = false;
+          }
+        }
 
-        // sort array (I prb can remove?)
-        this.sharedContext.columnsArraySorted.sort(
-          (a, b) => {
-            return a.left - b.left;
+        if (moreThenOneMainColumn) {
+          // hide column
+          this.sharedContext.columnsArray[this.sharedContext.colNo].show = false;
+
+          // get to width of the column we have
+          width = this.sharedContext.columnsArray[this.sharedContext.colNo].width;
+
+          // sort array (I prb can remove?)
+          this.sharedContext.columnsArraySorted.sort(
+            (a, b) => {
+              return a.left - b.left;
+            });
+
+          // loop and set left/right
+          let appendValue = 0;
+          this.sharedContext.columnsArraySorted.forEach((x) => {
+            if (x.show) {
+              x.left = appendValue;
+              appendValue = appendValue + x.width;
+            }
           });
 
-        // loop and set left/right
-        let appendValue = 0;
-        this.sharedContext.columnsArraySorted.forEach((x) => {
-          if (x.show) {
-            x.left = appendValue;
-            appendValue = appendValue + x.width;
-          }
-        });
+          // set new col type
+          this.sharedContext.colType = result.colType;
+          this.sharedContext.columnsArray = this.vGrid.columnBindingContext['setup' + result.colType];
 
-        // set new col type
-        this.sharedContext.colType = result.colType;
-        this.sharedContext.columnsArray = this.vGrid.columnBindingContext['setup' + result.colType];
+          // show column
+          this.sharedContext.columnsArray[this.sharedContext.colNo].show = true;
 
-        // show column
-        this.sharedContext.columnsArray[this.sharedContext.colNo].show = true;
+          // set correct width
+          this.sharedContext.columnsArray[this.sharedContext.colNo].width = width;
 
-        // set correct width
-        this.sharedContext.columnsArray[this.sharedContext.colNo].width = width;
-
-        // set new shared column context
-        this.sharedContext.columnsArraySorted = [];
-        this.sharedContext.columnsArray.forEach((x) => {
-          this.sharedContext.columnsArraySorted.push(x);
-        });
-
-        // sort array (I prb can remove?)
-        this.sharedContext.columnsArraySorted.sort(
-          (a, b) => {
-            return a.left - b.left;
+          // set new shared column context
+          this.sharedContext.columnsArraySorted = [];
+          this.sharedContext.columnsArray.forEach((x) => {
+            this.sharedContext.columnsArraySorted.push(x);
           });
 
-        // loop and set left/right
-        appendValue = 0;
-        this.sharedContext.columnsArraySorted.forEach((x) => {
-          if (x.show) {
-            x.left = appendValue;
-            appendValue = appendValue + x.width;
-          }
-        });
+          // sort array (I prb can remove?)
+          this.sharedContext.columnsArraySorted.sort(
+            (a, b) => {
+              return a.left - b.left;
+            });
+
+          // loop and set left/right
+          appendValue = 0;
+          this.sharedContext.columnsArraySorted.forEach((x) => {
+            if (x.show) {
+              x.left = appendValue;
+              appendValue = appendValue + x.width;
+            }
+          });
+        }
 
         break;
       default:
@@ -512,9 +530,9 @@ export class VGridDragDropCol {
         break;
     }
 
-    
+
     // a lot of repeated code... throw this in htmlHeightWidths class, so I can call it from somewhere else too?
-    if (newColType === 'left' && oldColType === 'main') {
+    if (newColType === 'left' && oldColType === 'main' && moreThenOneMainColumn) {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
       heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width - width;
 
@@ -526,22 +544,22 @@ export class VGridDragDropCol {
       heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left + width;
     }
 
-    if (newColType === 'main' && oldColType === 'chooser') {
+    if (newColType === 'main' && oldColType === 'chooser' && moreThenOneMainColumn) {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
       heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
     }
 
-    if (newColType === 'left' && oldColType === 'chooser') {
+    if (newColType === 'left' && oldColType === 'chooser' && moreThenOneMainColumn) {
       heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentMainScroll_Width + width;
       heightAndWidths.avgHeaderLeft_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
     }
 
-    if (newColType === 'right' && oldColType === 'chooser') {
+    if (newColType === 'right' && oldColType === 'chooser' && moreThenOneMainColumn) {
       heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentMainScroll_Width + width;
       heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
     }
 
-    if (newColType === 'main' && oldColType === 'left') {
+    if (newColType === 'main' && oldColType === 'left' && moreThenOneMainColumn) {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
       heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
 
@@ -553,7 +571,7 @@ export class VGridDragDropCol {
       heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left - width;
     }
 
-    if (newColType === 'right' && oldColType === 'main') {
+    if (newColType === 'right' && oldColType === 'main' && moreThenOneMainColumn) {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
       heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width - width;
 
@@ -565,7 +583,7 @@ export class VGridDragDropCol {
       heightAndWidths.avgContentHhandle_Right = heightAndWidths.avgContentHhandle_Right + width;
     }
 
-    if (newColType === 'main' && oldColType === 'right') {
+    if (newColType === 'main' && oldColType === 'right' && moreThenOneMainColumn) {
       heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
       heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
 
@@ -577,7 +595,7 @@ export class VGridDragDropCol {
       heightAndWidths.avgContentHhandle_Right = heightAndWidths.avgContentHhandle_Right - width;
     }
 
-    if (newColType === 'left' && oldColType === 'right') {
+    if (newColType === 'left' && oldColType === 'right' && moreThenOneMainColumn) {
 
       heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width - width;
       heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgHeaderRight_Width - width;
@@ -594,7 +612,7 @@ export class VGridDragDropCol {
       heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left + width;
     }
 
-    if (newColType === 'right' && oldColType === 'left') {
+    if (newColType === 'right' && oldColType === 'left' && moreThenOneMainColumn) {
 
       heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width + width;
       heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgHeaderRight_Width + width;

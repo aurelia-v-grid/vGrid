@@ -169,9 +169,9 @@ export class VGridAttributeMenu {
         this.controller.htmlHeightWidth.avgContentRight_Width = this.controller.htmlHeightWidth.avgContentRight_Width - width;
         this.controller.htmlHeightWidth.avgHeaderRight_Width = this.controller.htmlHeightWidth.avgHeaderRight_Width - width;
 
-        this.controller.htmlHeightWidth.avgContentMain_Right = this.controller.htmlHeightWidth.avgContentMain_Right + width;
-        this.controller.htmlHeightWidth.avgHeaderMain_Right = this.controller.htmlHeightWidth.avgHeaderMain_Right + width;
-        this.controller.htmlHeightWidth.avgContentHhandle_Right = this.controller.htmlHeightWidth.avgContentHhandle_Right + width;
+        this.controller.htmlHeightWidth.avgContentMain_Right = this.controller.htmlHeightWidth.avgContentMain_Right - width;
+        this.controller.htmlHeightWidth.avgHeaderMain_Right = this.controller.htmlHeightWidth.avgHeaderMain_Right - width;
+        this.controller.htmlHeightWidth.avgContentHhandle_Right = this.controller.htmlHeightWidth.avgContentHhandle_Right - width;
       }
 
       if (x.curColType === 'left') {
