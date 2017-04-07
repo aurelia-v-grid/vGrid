@@ -130,13 +130,19 @@ export class VGridAttributeMenu {
       // get current width
       let width = x.curColumnsArray[x.curColNo].width;
 
-      //hide it
-      x.curColumnsArray[x.curColNo].show = false;
+      let count = -1;
 
       let columnsArraySorted: any[] = [];
       x.curColumnsArray.forEach((x: any) => {
+        if(x.show){
+          count++;
+        }
         columnsArraySorted.push(x);
       });
+
+      if(count){
+      //hide it
+      x.curColumnsArray[x.curColNo].show = false;
 
       //correct left
       columnsArraySorted.sort(
@@ -181,6 +187,7 @@ export class VGridAttributeMenu {
 
       // tell menu to close
       return true;
+      }
     }
 
 
