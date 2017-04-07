@@ -40,7 +40,7 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                     var x = e.target.classList.contains('avg-menu__link');
                     if (!x) {
                         this.controller.contextMenu.setDefaults();
-                        document.removeEventListener('click', this.checkBinded);
+                        document.removeEventListener('mousedown', this.checkBinded);
                     }
                 };
                 VGridAttributeMenu.prototype.callback = function (type, option, event) {
@@ -146,7 +146,7 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                 };
                 VGridAttributeMenu.prototype.open = function (e) {
                     this.check(e);
-                    document.addEventListener('click', this.checkBinded);
+                    document.addEventListener('mousedown', this.checkBinded);
                     e.preventDefault();
                     if (!this.controller.contextMenu.show) {
                         var clickCoords = this.getPosition(e);
