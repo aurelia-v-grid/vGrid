@@ -1,24 +1,24 @@
 import { FilterObjectInterface, EntityInterface } from '../interfaces'; // todo make a interface
 
 
-  /**
-   * filters the array
-   *
-   */
+/**
+ * filters the array
+ *
+ */
 export class ArrayFilter {
   private lastFilter: FilterObjectInterface[];
   private filterOperators: any = {
-      '=': 1,   // equal
-      '<=': 2,  // less than or equal to
-      '>=': 3,  // greater than or equal to
-      '<': 4,   // less than
-      '>': 5,   // greater than
-      '*': 6,   // contains
-      '!=': 7,  // not equal to
-      '!*': 8,  // does not contain
-      '*=': 9,  // begin with
-      '=*': 10  // end with
-    };
+    '=': 1,   // equal
+    '<=': 2,  // less than or equal to
+    '>=': 3,  // greater than or equal to
+    '<': 4,   // less than
+    '>': 5,   // greater than
+    '*': 6,   // contains
+    '!=': 7,  // not equal to
+    '!*': 8,  // does not contain
+    '*=': 9,  // begin with
+    '=*': 10  // end with
+  };
 
 
 
@@ -77,12 +77,16 @@ export class ArrayFilter {
         // set defult type
         let type: string;
         try {
-          type = typeof (data[x.attribute]);
+          if (data[x.attribute] === null || data[x.attribute] === undefined) {
+            type = 'string';
+          } else {
+            type = typeof (data[x.attribute]);
+          }
         } catch (e) {
           type = 'string';
         }
 
-        // lets set som defaults
+        // lets set some defaults
         switch (type) {
           case 'number':
             rowValue = data[x.attribute];
@@ -93,7 +97,11 @@ export class ArrayFilter {
             }
             break;
           case 'string':
-            rowValue = data[x.attribute].toLowerCase();
+            if (data[x.attribute] === null || data[x.attribute] === undefined) {
+              rowValue = ''
+            } else {
+              rowValue = data[x.attribute].toLowerCase();
+            }
             filterValue = x.value.toLowerCase();
             filterOperator = filterOperator || 9;
             newFilterOperator = filterOperator;
@@ -139,8 +147,14 @@ export class ArrayFilter {
             filterOperator = 1;
             break;
           case 'object':
-            rowValue = data[x.attribute].toISOString();
-            filterValue = new Date(x.value).toISOString(); // todo, this needs to be better...
+            //todo check if object or date..
+            try {
+              rowValue = new Date(data[x.attribute].getFullYear(), data[x.attribute].getMonth(), data[x.attribute].getDate()).getTime();
+              filterValue = new Date(x.value.getFullYear(), x.value.getMonth(), x.value.getDate()).getTime();
+            } catch (e) {
+              rowValue = 0;
+              filterValue = 1;
+            }
             filterOperator = filterOperator || 2;
             break;
           default:
