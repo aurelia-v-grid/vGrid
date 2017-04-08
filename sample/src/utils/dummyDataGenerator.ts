@@ -124,14 +124,14 @@ export class DummyDataGenerator {
 
             dummyArray.push({
                 'index': 1 * this.totalGenerated,
-                'name': this.first[random4] + ' ' + this.last[random3],
+                'name': i % 7 === 0 ? null:this.first[random4] + ' ' + this.last[random3],
                 'first': this.first[random4],
                 'last': this.last[random3],
                 'images': this.images[random4],
                 'expanded': this.expanded[random5],
                 'guid': this.guid[random1],
                 'integer': this.integer[random2],
-                'date': this.date[random3],
+                'date': i % 7 === 0 ? null:this.date[random3],
                 'shortText': this.shortText[random4],
                 'mediumText': this.mediumText[random5],
                 'longText': this.longText[random1],
@@ -143,7 +143,7 @@ export class DummyDataGenerator {
                 'email': this.email[random2],
                 'phone': this.phone[random3],
                 'color': this.color[random4],
-                'number': 1 * this.number[random4],
+                'number': i % 7 === 0 ? null:1 * this.number[random4],
                 'bool': random1 % 3 ? true : false,
                 'gender': random1 % 2 === 0 ? 'male' : 'female',
                 'high': x
