@@ -77,7 +77,7 @@ var VGridAttributeMenu = (function () {
                 }
                 columnsArraySorted_1.push(x);
             });
-            if (count_1) {
+            if (count_1 || x.curColType !== 'main') {
                 x.curColumnsArray[x.curColNo].show = false;
                 columnsArraySorted_1.sort(function (a, b) {
                     return a.left - b.left;

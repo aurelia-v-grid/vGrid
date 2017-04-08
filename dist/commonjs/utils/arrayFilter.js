@@ -37,7 +37,12 @@ var ArrayFilter = (function () {
                 };
                 var type;
                 try {
-                    type = typeof (data[x.attribute]);
+                    if (data[x.attribute] === null || data[x.attribute] === undefined) {
+                        type = 'string';
+                    }
+                    else {
+                        type = typeof (data[x.attribute]);
+                    }
                 }
                 catch (e) {
                     type = 'string';
@@ -52,7 +57,12 @@ var ArrayFilter = (function () {
                         }
                         break;
                     case 'string':
-                        rowValue = data[x.attribute].toLowerCase();
+                        if (data[x.attribute] === null || data[x.attribute] === undefined) {
+                            rowValue = '';
+                        }
+                        else {
+                            rowValue = data[x.attribute].toLowerCase();
+                        }
                         filterValue = x.value.toLowerCase();
                         filterOperator = filterOperator || 9;
                         newFilterOperator = filterOperator;
@@ -85,8 +95,14 @@ var ArrayFilter = (function () {
                         filterOperator = 1;
                         break;
                     case 'object':
-                        rowValue = data[x.attribute].toISOString();
-                        filterValue = new Date(x.value).toISOString();
+                        try {
+                            rowValue = new Date(data[x.attribute].getFullYear(), data[x.attribute].getMonth(), data[x.attribute].getDate()).getTime();
+                            filterValue = new Date(x.value.getFullYear(), x.value.getMonth(), x.value.getDate()).getTime();
+                        }
+                        catch (e) {
+                            rowValue = 0;
+                            filterValue = 1;
+                        }
                         filterOperator = filterOperator || 2;
                         break;
                     default:
