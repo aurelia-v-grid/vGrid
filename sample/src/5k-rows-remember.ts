@@ -13,7 +13,7 @@ export class Welcome {
   private myCollection: any;
   private myColumns: ColConfigInterface[];
   constructor(public dummyDataGenerator: DummyDataGenerator, public remember: Remember) {
-    this.dummyDataGenerator.generateData(5000, (data) => {
+    this.dummyDataGenerator.generateData(15000, (data) => {
       this.myCollection = data;
     });
     this.ds = new DataSource(new Selection('multiple'));
