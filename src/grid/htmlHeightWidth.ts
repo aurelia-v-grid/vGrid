@@ -125,8 +125,8 @@ export class HtmlHeightWidth {
   public getNewHeight(length: number): number {
     let lengthTotal = 0;
     if (this.controller.attVariableRowHeight) {
-       // If variable row height we need to use the
-       lengthTotal = this.controller.getRowHeightState().total;
+      // If variable row height we need to use the
+      lengthTotal = this.controller.getRowHeightState().total;
     } else {
       // if not varibale row height, we use default
       lengthTotal = this.controller.attRowHeight * length;
@@ -307,5 +307,200 @@ export class HtmlHeightWidth {
 
     return widthNoScroll - widthWithScroll;
   }
+
+
+
+  /**
+   * moves width from main to left
+   *
+   */
+  public moveWidthFromMainToLeft(width: number): void {
+    this.avgContentMainScroll_Width = this.avgContentMainScroll_Width - width;
+    this.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width - width;
+
+    this.avgContentLeft_Width = this.avgContentLeft_Width + width;
+    this.avgHeaderLeft_Width = this.avgHeaderLeft_Width + width;
+
+    this.avgContentMain_Left = this.avgContentMain_Left + width;
+    this.avgHeaderMain_Left = this.avgHeaderMain_Left + width;
+    this.avgContentHhandle_Left = this.avgContentHhandle_Left + width;
+  }
+
+
+
+  /**
+   * moves width from left to main
+   *
+   */
+  public moveWidthFromLeftToMain(width: number): void {
+    this.avgContentMainScroll_Width = this.avgContentMainScroll_Width + width;
+    this.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width + width;
+
+    this.avgContentLeft_Width = this.avgContentLeft_Width - width;
+    this.avgHeaderLeft_Width = this.avgHeaderLeft_Width - width;
+
+    this.avgContentMain_Left = this.avgContentMain_Left - width;
+    this.avgHeaderMain_Left = this.avgHeaderMain_Left - width;
+    this.avgContentHhandle_Left = this.avgContentHhandle_Left - width;
+  }
+
+
+
+  /**
+   * moves width from main to right
+   *
+   */
+  public moveWidthFromMainToRight(width: number): void {
+    this.avgContentMainScroll_Width = this.avgContentMainScroll_Width - width;
+    this.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width - width;
+
+    this.avgContentRight_Width = this.avgContentRight_Width + width;
+    this.avgHeaderRight_Width = this.avgHeaderRight_Width + width;
+
+    this.avgContentMain_Right = this.avgContentMain_Right + width;
+    this.avgHeaderMain_Right = this.avgHeaderMain_Right + width;
+    this.avgContentHhandle_Right = this.avgContentHhandle_Right + width;
+  }
+
+
+
+  /**
+   * moves width from right to main
+   *
+   */
+  public moveWidthFromRightToMain(width: number): void {
+    this.avgContentMainScroll_Width = this.avgContentMainScroll_Width + width;
+    this.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width + width;
+
+    this.avgContentRight_Width = this.avgContentRight_Width - width;
+    this.avgHeaderRight_Width = this.avgHeaderRight_Width - width;
+
+    this.avgContentMain_Right = this.avgContentMain_Right - width;
+    this.avgHeaderMain_Right = this.avgHeaderMain_Right - width;
+    this.avgContentHhandle_Right = this.avgContentHhandle_Right - width;
+  }
+
+
+
+  /**
+   * moves width from left to right
+   *
+   */
+  public moveWidthFromLeftToRight(width: number): void {
+    this.avgContentRight_Width = this.avgContentRight_Width - width;
+    this.avgHeaderRight_Width = this.avgHeaderRight_Width - width;
+
+    this.avgContentLeft_Width = this.avgContentLeft_Width + width;
+    this.avgHeaderLeft_Width = this.avgHeaderLeft_Width + width;
+
+    this.avgContentMain_Right = this.avgContentMain_Right - width;
+    this.avgHeaderMain_Right = this.avgHeaderMain_Right - width;
+    this.avgContentHhandle_Right = this.avgContentHhandle_Right - width;
+
+    this.avgContentMain_Left = this.avgContentMain_Left + width;
+    this.avgHeaderMain_Left = this.avgHeaderMain_Left + width;
+    this.avgContentHhandle_Left = this.avgContentHhandle_Left + width;
+
+  }
+
+
+
+  /**
+   * moves width from right to left
+   *
+   */
+  public moveWidthFromRightToLeft(width: number): void {
+    this.avgContentRight_Width = this.avgContentRight_Width + width;
+    this.avgHeaderRight_Width = this.avgHeaderRight_Width + width;
+
+    this.avgContentLeft_Width = this.avgContentLeft_Width - width;
+    this.avgHeaderLeft_Width = this.avgHeaderLeft_Width - width;
+
+    this.avgContentMain_Right = this.avgContentMain_Right + width;
+    this.avgHeaderMain_Right = this.avgHeaderMain_Right + width;
+    this.avgContentHhandle_Right = this.avgContentHhandle_Right + width;
+
+    this.avgContentMain_Left = this.avgContentMain_Left - width;
+    this.avgHeaderMain_Left = this.avgHeaderMain_Left - width;
+    this.avgContentHhandle_Left = this.avgContentHhandle_Left - width;
+  }
+
+
+  /**
+   * add width to left
+   *
+   */
+  public addWidthToLeft(width: number): void {
+    this.avgContentLeft_Width = this.avgContentMainScroll_Width + width;
+    this.avgHeaderLeft_Width = this.avgContentHhandleScroll_Width + width;
+
+    this.avgContentMain_Left = this.avgContentMain_Left + width;
+    this.avgHeaderMain_Left = this.avgHeaderMain_Left + width;
+    this.avgContentHhandle_Left = this.avgContentHhandle_Left + width;
+  }
+
+
+  /**
+   * add width to main
+   *
+   */
+  public addWidthToMain(width: number): void {
+    this.avgContentMainScroll_Width = this.avgContentMainScroll_Width + width;
+    this.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width + width;
+  }
+
+
+  /**
+   * add width to right
+   *
+   */
+  public addWidthToRight(width: number): void {
+    this.avgContentRight_Width = this.avgContentMainScroll_Width + width;
+    this.avgHeaderRight_Width = this.avgContentHhandleScroll_Width + width;
+
+    this.avgContentMain_Right = this.avgContentMain_Right + width;
+    this.avgHeaderMain_Right = this.avgHeaderMain_Right + width;
+    this.avgContentHhandle_Right = this.avgContentHhandle_Right + width;
+  }
+
+
+
+  /**
+   * remove width from left
+   *
+   */
+  public removeWidthFromLeft(width: number): void {
+    this.avgContentLeft_Width = this.avgContentLeft_Width - width;
+    this.avgHeaderLeft_Width = this.avgHeaderLeft_Width - width;
+
+    this.avgContentMain_Left = this.avgContentMain_Left - width;
+    this.avgHeaderMain_Left = this.avgHeaderMain_Left - width;
+    this.avgContentHhandle_Left = this.avgContentHhandle_Left - width;
+  }
+
+
+
+  /**
+   * remove width from main
+   *
+   */
+  public removeWidthFromMain(width: number): void {
+    this.avgContentMainScroll_Width = this.avgContentMainScroll_Width - width;
+    this.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width - width;
+  }
+
+  /**
+   * remove width from right
+   *
+   */
+  public removeWidthFromRight(width: number): void {
+    this.avgContentRight_Width = this.avgContentRight_Width - width;
+    this.avgHeaderRight_Width = this.avgHeaderRight_Width - width;
+
+    this.avgContentMain_Right = this.avgContentMain_Right - width;
+    this.avgHeaderMain_Right = this.avgHeaderMain_Right - width;
+    this.avgContentHhandle_Right = this.avgContentHhandle_Right - width;
+  }
+
 
 }

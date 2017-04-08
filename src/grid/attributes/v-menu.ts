@@ -88,18 +88,24 @@ export class VGridAttributeMenu {
       if (option === 'clear') {
         this.raiseEvent('filterClearCell', { attribute: this.filter.replace('rowRef.', ''), key: this.filterkey });
         document.removeEventListener('click', this.checkBinded);
+
+        // tell menu to close
         return true;
       }
 
       if (option === 'clearall') {
         this.raiseEvent('filterClearAll', {});
         document.removeEventListener('click', this.checkBinded);
+
+        // tell menu to close
         return true;
       }
 
       if (option === 'showall') {
         this.controller.attGridConnector.query(null);
         document.removeEventListener('click', this.checkBinded);
+
+        // tell menu to close
         return true;
       }
     }
@@ -119,8 +125,11 @@ export class VGridAttributeMenu {
         asc: option === 'desc' ? false : true
       }, event.shiftKey);
       document.removeEventListener('click', this.checkBinded);
+
+      // tell menu to close
       return true;
     }
+
 
     if (type === 'hide') {
 
@@ -134,59 +143,46 @@ export class VGridAttributeMenu {
 
       let columnsArraySorted: any[] = [];
       x.curColumnsArray.forEach((x: any) => {
-        if(x.show){
+        if (x.show) {
           count++;
         }
         columnsArraySorted.push(x);
       });
 
-      if(count || x.curColType !== 'main'){
-      //hide it
-      x.curColumnsArray[x.curColNo].show = false;
+      if (count || x.curColType !== 'main') {
+        //hide it
+        x.curColumnsArray[x.curColNo].show = false;
 
-      //correct left
-      columnsArraySorted.sort(
-        (a: any, b: any) => {
-          return a.left - b.left;
+        //correct left
+        columnsArraySorted.sort(
+          (a: any, b: any) => {
+            return a.left - b.left;
+          });
+
+        let appendValue = 0
+
+        columnsArraySorted.forEach((x: any) => {
+          if (x.show) {
+            x.left = appendValue;
+            appendValue = appendValue + x.width;
+          }
         });
 
-      let appendValue = 0
-
-      columnsArraySorted.forEach((x: any) => {
-        if (x.show) {
-          x.left = appendValue;
-          appendValue = appendValue + x.width;
+        // correct container
+        if (x.curColType === 'main') {
+          this.controller.htmlHeightWidth.removeWidthFromMain(width);
         }
-      });
 
-      // correct container
-      if (x.curColType === 'main') {
-        this.controller.htmlHeightWidth.avgContentMainScroll_Width = this.controller.htmlHeightWidth.avgContentMainScroll_Width - width;
-        this.controller.htmlHeightWidth.avgContentHhandleScroll_Width = this.controller.htmlHeightWidth.avgContentHhandleScroll_Width - width;
-      }
+        if (x.curColType === 'right') {
+          this.controller.htmlHeightWidth.removeWidthFromRight(width);
+        }
 
-      if (x.curColType === 'right') {
-        this.controller.htmlHeightWidth.avgContentRight_Width = this.controller.htmlHeightWidth.avgContentRight_Width - width;
-        this.controller.htmlHeightWidth.avgHeaderRight_Width = this.controller.htmlHeightWidth.avgHeaderRight_Width - width;
+        if (x.curColType === 'left') {
+          this.controller.htmlHeightWidth.removeWidthFromLeft(width);
+        }
 
-        this.controller.htmlHeightWidth.avgContentMain_Right = this.controller.htmlHeightWidth.avgContentMain_Right - width;
-        this.controller.htmlHeightWidth.avgHeaderMain_Right = this.controller.htmlHeightWidth.avgHeaderMain_Right - width;
-        this.controller.htmlHeightWidth.avgContentHhandle_Right = this.controller.htmlHeightWidth.avgContentHhandle_Right - width;
-      }
-
-      if (x.curColType === 'left') {
-
-        this.controller.htmlHeightWidth.avgContentLeft_Width = this.controller.htmlHeightWidth.avgContentLeft_Width - width;
-        this.controller.htmlHeightWidth.avgHeaderLeft_Width = this.controller.htmlHeightWidth.avgHeaderLeft_Width - width;
-
-        this.controller.htmlHeightWidth.avgContentMain_Left = this.controller.htmlHeightWidth.avgContentMain_Left - width;
-        this.controller.htmlHeightWidth.avgHeaderMain_Left = this.controller.htmlHeightWidth.avgHeaderMain_Left - width;
-        this.controller.htmlHeightWidth.avgContentHhandle_Left = this.controller.htmlHeightWidth.avgContentHhandle_Left - width;
-      }
-
-
-      // tell menu to close
-      return true;
+        // tell menu to close
+        return true;
       }
     }
 
