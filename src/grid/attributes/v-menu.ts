@@ -1,6 +1,6 @@
 import { bindable, inject, customAttribute } from 'aurelia-framework';
 import { VGrid } from '../v-grid';
-import { Controller, GroupingElements } from '../../interfaces';
+import { Controller, GroupingElements, BindingContextInterface } from '../../interfaces';
 
 
 /**
@@ -20,6 +20,8 @@ export class VGridAttributeMenu {
   private checkBinded: EventListenerOrEventListenerObject;
   private callbackBinded: Function;
   private groupingElements: GroupingElements;
+  private context: BindingContextInterface;
+
 
   @bindable private filter: string;
   @bindable private filterkey: string;
@@ -28,7 +30,7 @@ export class VGridAttributeMenu {
   @bindable private groupby: string;
   @bindable private hideshow: string
   @bindable private groupbytitle: string;
-  // @bindable private copypaste: string; //todo
+  @bindable private copypaste: string;
 
 
 
@@ -53,6 +55,11 @@ export class VGridAttributeMenu {
     this.element.addEventListener('contextmenu', this.openBinded);
   }
 
+
+
+  public bind(context: BindingContextInterface): void {
+    this.context = context;
+  }
 
 
   /**
@@ -84,6 +91,31 @@ export class VGridAttributeMenu {
    *
    */
   private callback(type: string, option: string, event: MouseEvent): boolean {
+
+    if(type=== 'copypaste'){
+
+      if(option === 'copy'){
+        this.controller.vGrid.copyPasteValueSharedContext = this.context.rowRef[this.copypaste];
+        return true
+      }
+
+      if(option === 'paste'){
+        let sel = this.context.selection;
+        let rows = sel.getSelectedRows();
+        if(rows.length <= 1){
+          this.context.rowRef[this.copypaste] = this.controller.vGrid.copyPasteValueSharedContext;
+        } else {
+         // let rows = sel.getSelectedRows();
+          // todo call gridConnector and send attribute and rows to update
+        }
+
+        
+        return true
+      }
+
+    }
+
+
     if (type === 'filter') {
       if (option === 'clear') {
         this.raiseEvent('filterClearCell', { attribute: this.filter.replace('rowRef.', ''), key: this.filterkey });
@@ -100,6 +132,8 @@ export class VGridAttributeMenu {
         // tell menu to close
         return true;
       }
+
+     
 
       if (option === 'showall') {
         this.controller.attGridConnector.query(null);
@@ -234,6 +268,7 @@ export class VGridAttributeMenu {
         sort: this.sort,
         hideshow: this.hideshow,
         pinned: this.pinned,
+        copypaste:this.copypaste,
         groupby: this.groupby,
         callback: this.callbackBinded
       });

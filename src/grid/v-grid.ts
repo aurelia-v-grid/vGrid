@@ -67,6 +67,7 @@ export class VGrid {
     public backupColConfig: ColConfigInterface[];
     public filterOperatorNames: any;
     public filterOperatorTranslationKeys: any;
+    public copyPasteValueSharedContext: any;
     public loadingScreenTemplate: string;
     public footerTemplate: string;
     public footer: Footer;
@@ -102,6 +103,7 @@ export class VGrid {
         // used by attributes for holding data
         this.dragDropAttributeSharedContext = ({} as DragDropShardContextInterface);
         this.resizeAttributeSharedContext = ({} as ResizeShardContextInterface);
+        this.copyPasteValueSharedContext = null;
 
         // use by v-grid-col element, that takes the data it gets and puts it in here
         this.colConfig = [];

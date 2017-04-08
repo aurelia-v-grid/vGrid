@@ -16,13 +16,14 @@ export class ContextMenu {
     private top: number;
     private left: number;
     private pinnedMenu: boolean;
-    private hideshow:boolean;
+    private hideshow: boolean;
     private sortMenu: boolean;
     private optionsMenu: boolean;
     private filterMainMenu: boolean;
     private filterOptionsMenu: boolean;
     private columnOptionsMenu: boolean;
     private groupbyMenu: boolean;
+    private copypasteMenu: boolean;
     private callback: Function;
     private columnsHidden: any[];
     private closeMenuEventBinded: any;
@@ -50,7 +51,9 @@ export class ContextMenu {
         doesNotContain: 'Does not contain',
         beginsWith: 'Begins with',
         endsWith: 'Ends with',
-        columnChooser: 'Column Chooser'
+        columnChooser: 'Column Chooser',
+        copy: 'Copy cell value',
+        paste: 'Paste into cell'
     };
 
 
@@ -80,6 +83,7 @@ export class ContextMenu {
         this.sortMenu = false;
         this.filterMainMenu = false;
         this.filterOptionsMenu = false;
+        this.copypasteMenu = false;
         this.columnsHidden = [];
     }
 
@@ -113,6 +117,7 @@ export class ContextMenu {
         sort?: string,
         hideshow?: string,
         groupby?: string,
+        copypaste?: string,
         filter?: string,
         callback?: Function
     }): void {
@@ -122,6 +127,7 @@ export class ContextMenu {
         this.sortMenu = options.sort ? true : false;
         this.hideshow = options.hideshow ? true : false;
         this.groupbyMenu = options.groupby ? true : false;
+        this.copypasteMenu = options.copypaste ? true : false;
         this.filterMainMenu = options.filter ? true : false;
         this.show = true;
         this.callback = options.callback;
@@ -379,6 +385,25 @@ export class ContextMenu {
                 </li>
         </ul>`.replace(/\$(au{)/g, '${');
 
+
+        let menuCopypaste: string = customMenuTemplates.menuCopypaste ||
+            `<ul if.bind="copypasteMenu && !optionsMenu" class="avg-menu__items">
+                <li class="avg-menu__item">
+                <p click.delegate="menuClick('copypaste','copy', $event)" class="avg-menu__link">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                        <path d="M7.4 4.8v2.7H4.7v1h2.7v3h1v-3h2.8v-1H8.5V4.8h-1z"/>
+                      </svg> $au{menuStrings.copy}
+                </p>
+                </li>
+                 <li class="avg-menu__item">
+                <p click.delegate="menuClick('copypaste','paste', $event)" class="avg-menu__link">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                        <path d="M7.4 4.8v2.7H4.7v1h2.7v3h1v-3h2.8v-1H8.5V4.8h-1z"/>
+                      </svg> $au{menuStrings.paste}
+                </p>
+                </li>
+        </ul>`.replace(/\$(au{)/g, '${');
+
         let menuColumnChooserOptions: string = customMenuTemplates.chooserOptions ||
             `<ul if.bind="columnOptionsMenu" class="avg-menu__items">
              <li class="avg-menu__item">
@@ -492,6 +517,7 @@ export class ContextMenu {
         let menuAll: string = customMenuTemplates.all || [
             menuTop,
             menuClose,
+            menuCopypaste,
             menuHide,
             menuPinned,
             menuGroupby,

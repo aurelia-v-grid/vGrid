@@ -84,6 +84,7 @@ export class Controller {
   public footerTemplate: string;
   public footer: Footer;
   public attVariableRowHeight: boolean;
+  public copyPasteValueSharedContext: any;
 
 
 
