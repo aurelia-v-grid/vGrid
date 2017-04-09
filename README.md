@@ -19,6 +19,15 @@
 
 
 ###Updates..
+---
+
+8 April 2017
+
+* updated demo a few days ago (copy paste cell not inn when I did it)
+* added copy/paste cell value from cell/ paste into cells in selected rows
+* hide column menu option and column chooser menu option
+* did a few css fixes in February 
+
 
 ---
 
