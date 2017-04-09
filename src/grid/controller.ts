@@ -327,6 +327,14 @@ export class Controller {
 
 
   /**
+   * calls the gridConnector to update row data
+   *
+   */
+  public updateRowData(attribute: string, data: any, rows: number[]): void {
+    this.attGridConnector.updateRowData(attribute, data, rows);
+  }
+
+  /**
    * adds to grouping
    *
    */

@@ -53,7 +53,7 @@ export class ContextMenu {
         endsWith: 'Ends with',
         columnChooser: 'Column Chooser',
         copy: 'Copy cell value',
-        paste: 'Paste into cell'
+        paste: 'Paste into cells'
     };
 
 
@@ -386,7 +386,7 @@ export class ContextMenu {
         </ul>`.replace(/\$(au{)/g, '${');
 
 
-        let menuCopypaste: string = customMenuTemplates.menuCopypaste ||
+        let menuCopypaste: string = customMenuTemplates.copypaste ||
             `<ul if.bind="copypasteMenu && !optionsMenu" class="avg-menu__items">
                 <li class="avg-menu__item">
                 <p click.delegate="menuClick('copypaste','copy', $event)" class="avg-menu__link">

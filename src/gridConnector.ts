@@ -133,7 +133,7 @@ export class GridConnector implements GridConnectorInterface {
    *
    */
   public getDatasourceLength(): number {
-      return this.datasource.length();
+    return this.datasource.length();
   }
 
 
@@ -153,7 +153,7 @@ export class GridConnector implements GridConnectorInterface {
    *
    */
   public setColConfig(colconfig: ColConfigInterface[]): void {
-      this.controller.setColumnConfig(colconfig);
+    this.controller.setColumnConfig(colconfig);
   }
 
 
@@ -229,9 +229,9 @@ export class GridConnector implements GridConnectorInterface {
    */
   public orderBy(attribute: string | SortObjectInterface, addToCurrentSort?: boolean): void {
     this.controller.setLoadingScreen(true, null, this.getDatasourceLength()).then(() => {
-       if (typeof this.datasource.orderBy === 'function') {
+      if (typeof this.datasource.orderBy === 'function') {
         this.datasource.orderBy(attribute, addToCurrentSort);
-       }
+      }
     });
   }
 
@@ -258,10 +258,24 @@ export class GridConnector implements GridConnectorInterface {
   public getCurrentOrderBy(): SortObjectInterface[] {
     if (typeof this.datasource.getCurrentOrderBy === 'function') {
       return this.datasource.getCurrentOrderBy();
-    }else {
+    } else {
       return [];
     }
   }
+
+
+
+  /**
+   * Calls the datasource to update row data
+   *
+   */
+  public updateRowData(attribute: string, data: any, rows: number[]): void {
+    if (typeof this.datasource.updateRowData === 'function') {
+      this.datasource.updateRowData(attribute, data, rows);
+
+    }
+  }
+
 
 
 

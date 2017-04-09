@@ -344,6 +344,17 @@ export class DataSource implements DatasourceInterface {
 
 
   /**
+   * updates data to rows/attribute passed in from displayedCollection
+   *
+   */
+  public updateRowData(attribute: string, data: any, rows: number[]): void {
+    let entities = this.collection.getCurrentEntities();
+    rows.forEach((x: number) => {
+      entities[x][attribute] = data;
+    })
+  }
+
+  /**
    * Groups the collection with params passed in
    *
    */

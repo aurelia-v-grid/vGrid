@@ -48,6 +48,12 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
     instruction.menuTemplates.hide = templateHTML;
   }
 
+  template = element.getElementsByTagName('V-MENU-COPYPASTE')[0];
+  templateHTML = template ? template.innerHTML : null;
+  if (templateHTML !== '') {
+    instruction.menuTemplates.copypaste = templateHTML;
+  }
+
   template = element.getElementsByTagName('V-MENU-CHOOSER')[0];
   templateHTML = template ? template.innerHTML : null;
   if (templateHTML !== '') {

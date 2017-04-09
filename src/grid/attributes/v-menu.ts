@@ -92,24 +92,23 @@ export class VGridAttributeMenu {
    */
   private callback(type: string, option: string, event: MouseEvent): boolean {
 
-    if(type=== 'copypaste'){
+    if (type === 'copypaste') {
 
-      if(option === 'copy'){
+      if (option === 'copy') {
         this.controller.vGrid.copyPasteValueSharedContext = this.context.rowRef[this.copypaste];
         return true
       }
 
-      if(option === 'paste'){
+      if (option === 'paste') {
         let sel = this.context.selection;
         let rows = sel.getSelectedRows();
-        if(rows.length <= 1){
+        if (rows.length <= 1) {
           this.context.rowRef[this.copypaste] = this.controller.vGrid.copyPasteValueSharedContext;
         } else {
-         // let rows = sel.getSelectedRows();
-          // todo call gridConnector and send attribute and rows to update
+          let rows = sel.getSelectedRows();
+          this.controller.updateRowData(this.copypaste, this.controller.vGrid.copyPasteValueSharedContext, rows);
         }
-
-        
+        // tell menu to close
         return true
       }
 
@@ -133,7 +132,7 @@ export class VGridAttributeMenu {
         return true;
       }
 
-     
+
 
       if (option === 'showall') {
         this.controller.attGridConnector.query(null);
@@ -268,7 +267,7 @@ export class VGridAttributeMenu {
         sort: this.sort,
         hideshow: this.hideshow,
         pinned: this.pinned,
-        copypaste:this.copypaste,
+        copypaste: this.copypaste,
         groupby: this.groupby,
         callback: this.callbackBinded
       });
