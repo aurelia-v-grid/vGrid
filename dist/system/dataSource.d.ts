@@ -29,6 +29,7 @@ export declare class DataSource implements DatasourceInterface {
     getCurrentOrderBy(): SortObjectInterface[];
     getCurrentFilter(): FilterObjectInterface[];
     getElement(row: number): EntityInterface;
+    updateRowData(attribute: string, data: any, rows: number[]): void;
     group(grouping: GroupingObjInterface[], keepExpanded?: boolean): void;
     groupCollapse(id: string): void;
     groupExpand(id: string): void;

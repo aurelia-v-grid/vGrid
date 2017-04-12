@@ -1,4 +1,5 @@
 import { VGrid } from '../v-grid';
+import { BindingContextInterface } from '../../interfaces';
 export declare class VGridAttributeMenu {
     private element;
     private controller;
@@ -7,6 +8,7 @@ export declare class VGridAttributeMenu {
     private checkBinded;
     private callbackBinded;
     private groupingElements;
+    private context;
     private filter;
     private filterkey;
     private sort;
@@ -14,8 +16,10 @@ export declare class VGridAttributeMenu {
     private groupby;
     private hideshow;
     private groupbytitle;
+    private copypaste;
     constructor(element: Element, vGrid: VGrid);
     attached(): void;
+    bind(context: BindingContextInterface): void;
     unbind(): void;
     private check(e);
     private callback(type, option, event);

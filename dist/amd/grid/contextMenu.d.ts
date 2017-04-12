@@ -16,6 +16,7 @@ export declare class ContextMenu {
     private filterOptionsMenu;
     private columnOptionsMenu;
     private groupbyMenu;
+    private copypasteMenu;
     private callback;
     private columnsHidden;
     private closeMenuEventBinded;
@@ -31,6 +32,7 @@ export declare class ContextMenu {
         sort?: string;
         hideshow?: string;
         groupby?: string;
+        copypaste?: string;
         filter?: string;
         callback?: Function;
     }): void;

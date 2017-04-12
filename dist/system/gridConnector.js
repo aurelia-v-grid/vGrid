@@ -117,6 +117,11 @@ System.register([], function (exports_1, context_1) {
                         return [];
                     }
                 };
+                GridConnector.prototype.updateRowData = function (attribute, data, rows) {
+                    if (typeof this.datasource.updateRowData === 'function') {
+                        this.datasource.updateRowData(attribute, data, rows);
+                    }
+                };
                 GridConnector.prototype.getCurrentFilter = function () {
                     if (typeof this.datasource.getCurrentFilter === 'function') {
                         return this.datasource.getCurrentFilter();

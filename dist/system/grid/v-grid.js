@@ -74,6 +74,7 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                     this.taskQueue = taskQueue;
                     this.dragDropAttributeSharedContext = {};
                     this.resizeAttributeSharedContext = {};
+                    this.copyPasteValueSharedContext = null;
                     this.colConfig = [];
                     this.backupColConfig = [];
                     this.colRepeater = false;

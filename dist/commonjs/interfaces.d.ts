@@ -228,6 +228,7 @@ export interface GridConnectorInterface {
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
     getRowHeightState(): any;
+    updateRowData(attribute: string, data: any, rows: number[]): void;
 }
 export interface DatasourceInterface {
     groupCollapse(id: string): void;
@@ -245,6 +246,7 @@ export interface DatasourceInterface {
     getSelection(): SelectionInterface;
     length(): number;
     getElement(row: number): EntityInterface;
+    updateRowData(attribute: string, data: any, rows: number[]): void;
 }
 export interface ControllerInterface {
     element: Element;

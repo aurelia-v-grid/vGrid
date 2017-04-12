@@ -27,6 +27,7 @@ export declare class GridConnector implements GridConnectorInterface {
     orderBy(attribute: string | SortObjectInterface, addToCurrentSort?: boolean): void;
     destroy(): void;
     getCurrentOrderBy(): SortObjectInterface[];
+    updateRowData(attribute: string, data: any, rows: number[]): void;
     getCurrentFilter(): FilterObjectInterface[];
     expandGroup(id: string): void;
     collapseGroup(id: string): void;

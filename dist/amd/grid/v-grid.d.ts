@@ -56,6 +56,7 @@ export declare class VGrid {
     backupColConfig: ColConfigInterface[];
     filterOperatorNames: any;
     filterOperatorTranslationKeys: any;
+    copyPasteValueSharedContext: any;
     loadingScreenTemplate: string;
     footerTemplate: string;
     footer: Footer;

@@ -162,6 +162,102 @@ var HtmlHeightWidth = (function () {
         outer.parentNode.removeChild(outer);
         return widthNoScroll - widthWithScroll;
     };
+    HtmlHeightWidth.prototype.moveWidthFromMainToLeft = function (width) {
+        this.avgContentMainScroll_Width = this.avgContentMainScroll_Width - width;
+        this.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width - width;
+        this.avgContentLeft_Width = this.avgContentLeft_Width + width;
+        this.avgHeaderLeft_Width = this.avgHeaderLeft_Width + width;
+        this.avgContentMain_Left = this.avgContentMain_Left + width;
+        this.avgHeaderMain_Left = this.avgHeaderMain_Left + width;
+        this.avgContentHhandle_Left = this.avgContentHhandle_Left + width;
+    };
+    HtmlHeightWidth.prototype.moveWidthFromLeftToMain = function (width) {
+        this.avgContentMainScroll_Width = this.avgContentMainScroll_Width + width;
+        this.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width + width;
+        this.avgContentLeft_Width = this.avgContentLeft_Width - width;
+        this.avgHeaderLeft_Width = this.avgHeaderLeft_Width - width;
+        this.avgContentMain_Left = this.avgContentMain_Left - width;
+        this.avgHeaderMain_Left = this.avgHeaderMain_Left - width;
+        this.avgContentHhandle_Left = this.avgContentHhandle_Left - width;
+    };
+    HtmlHeightWidth.prototype.moveWidthFromMainToRight = function (width) {
+        this.avgContentMainScroll_Width = this.avgContentMainScroll_Width - width;
+        this.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width - width;
+        this.avgContentRight_Width = this.avgContentRight_Width + width;
+        this.avgHeaderRight_Width = this.avgHeaderRight_Width + width;
+        this.avgContentMain_Right = this.avgContentMain_Right + width;
+        this.avgHeaderMain_Right = this.avgHeaderMain_Right + width;
+        this.avgContentHhandle_Right = this.avgContentHhandle_Right + width;
+    };
+    HtmlHeightWidth.prototype.moveWidthFromRightToMain = function (width) {
+        this.avgContentMainScroll_Width = this.avgContentMainScroll_Width + width;
+        this.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width + width;
+        this.avgContentRight_Width = this.avgContentRight_Width - width;
+        this.avgHeaderRight_Width = this.avgHeaderRight_Width - width;
+        this.avgContentMain_Right = this.avgContentMain_Right - width;
+        this.avgHeaderMain_Right = this.avgHeaderMain_Right - width;
+        this.avgContentHhandle_Right = this.avgContentHhandle_Right - width;
+    };
+    HtmlHeightWidth.prototype.moveWidthFromLeftToRight = function (width) {
+        this.avgContentRight_Width = this.avgContentRight_Width - width;
+        this.avgHeaderRight_Width = this.avgHeaderRight_Width - width;
+        this.avgContentLeft_Width = this.avgContentLeft_Width + width;
+        this.avgHeaderLeft_Width = this.avgHeaderLeft_Width + width;
+        this.avgContentMain_Right = this.avgContentMain_Right - width;
+        this.avgHeaderMain_Right = this.avgHeaderMain_Right - width;
+        this.avgContentHhandle_Right = this.avgContentHhandle_Right - width;
+        this.avgContentMain_Left = this.avgContentMain_Left + width;
+        this.avgHeaderMain_Left = this.avgHeaderMain_Left + width;
+        this.avgContentHhandle_Left = this.avgContentHhandle_Left + width;
+    };
+    HtmlHeightWidth.prototype.moveWidthFromRightToLeft = function (width) {
+        this.avgContentRight_Width = this.avgContentRight_Width + width;
+        this.avgHeaderRight_Width = this.avgHeaderRight_Width + width;
+        this.avgContentLeft_Width = this.avgContentLeft_Width - width;
+        this.avgHeaderLeft_Width = this.avgHeaderLeft_Width - width;
+        this.avgContentMain_Right = this.avgContentMain_Right + width;
+        this.avgHeaderMain_Right = this.avgHeaderMain_Right + width;
+        this.avgContentHhandle_Right = this.avgContentHhandle_Right + width;
+        this.avgContentMain_Left = this.avgContentMain_Left - width;
+        this.avgHeaderMain_Left = this.avgHeaderMain_Left - width;
+        this.avgContentHhandle_Left = this.avgContentHhandle_Left - width;
+    };
+    HtmlHeightWidth.prototype.addWidthToLeft = function (width) {
+        this.avgContentLeft_Width = this.avgContentMainScroll_Width + width;
+        this.avgHeaderLeft_Width = this.avgContentHhandleScroll_Width + width;
+        this.avgContentMain_Left = this.avgContentMain_Left + width;
+        this.avgHeaderMain_Left = this.avgHeaderMain_Left + width;
+        this.avgContentHhandle_Left = this.avgContentHhandle_Left + width;
+    };
+    HtmlHeightWidth.prototype.addWidthToMain = function (width) {
+        this.avgContentMainScroll_Width = this.avgContentMainScroll_Width + width;
+        this.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width + width;
+    };
+    HtmlHeightWidth.prototype.addWidthToRight = function (width) {
+        this.avgContentRight_Width = this.avgContentMainScroll_Width + width;
+        this.avgHeaderRight_Width = this.avgContentHhandleScroll_Width + width;
+        this.avgContentMain_Right = this.avgContentMain_Right + width;
+        this.avgHeaderMain_Right = this.avgHeaderMain_Right + width;
+        this.avgContentHhandle_Right = this.avgContentHhandle_Right + width;
+    };
+    HtmlHeightWidth.prototype.removeWidthFromLeft = function (width) {
+        this.avgContentLeft_Width = this.avgContentLeft_Width - width;
+        this.avgHeaderLeft_Width = this.avgHeaderLeft_Width - width;
+        this.avgContentMain_Left = this.avgContentMain_Left - width;
+        this.avgHeaderMain_Left = this.avgHeaderMain_Left - width;
+        this.avgContentHhandle_Left = this.avgContentHhandle_Left - width;
+    };
+    HtmlHeightWidth.prototype.removeWidthFromMain = function (width) {
+        this.avgContentMainScroll_Width = this.avgContentMainScroll_Width - width;
+        this.avgContentHhandleScroll_Width = this.avgContentHhandleScroll_Width - width;
+    };
+    HtmlHeightWidth.prototype.removeWidthFromRight = function (width) {
+        this.avgContentRight_Width = this.avgContentRight_Width - width;
+        this.avgHeaderRight_Width = this.avgHeaderRight_Width - width;
+        this.avgContentMain_Right = this.avgContentMain_Right - width;
+        this.avgHeaderMain_Right = this.avgHeaderMain_Right - width;
+        this.avgContentHhandle_Right = this.avgContentHhandle_Right - width;
+    };
     return HtmlHeightWidth;
 }());
 exports.HtmlHeightWidth = HtmlHeightWidth;

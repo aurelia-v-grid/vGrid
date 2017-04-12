@@ -129,6 +129,12 @@ var DataSource = (function () {
             return this.collection.getRow(row);
         }
     };
+    DataSource.prototype.updateRowData = function (attribute, data, rows) {
+        var entities = this.collection.getCurrentEntities();
+        rows.forEach(function (x) {
+            entities[x][attribute] = data;
+        });
+    };
     DataSource.prototype.group = function (grouping, keepExpanded) {
         var _this = this;
         this.arrayUtils.resetSort();

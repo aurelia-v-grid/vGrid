@@ -133,6 +133,9 @@ var Controller = (function () {
     Controller.prototype.select = function (row) {
         this.attGridConnector.select(row);
     };
+    Controller.prototype.updateRowData = function (attribute, data, rows) {
+        this.attGridConnector.updateRowData(attribute, data, rows);
+    };
     Controller.prototype.addToGrouping = function (groupObj) {
         var currentGrouping = this.attGridConnector.getGrouping();
         var exist = false;

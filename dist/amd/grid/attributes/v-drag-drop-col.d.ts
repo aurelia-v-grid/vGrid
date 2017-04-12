@@ -25,6 +25,7 @@ export declare class VGridDragDropCol {
     private isPanel;
     private dragColumnBlock;
     private mouseMoveTimer;
+    private htmlHeightWidth;
     private title;
     private field;
     constructor(element: Element, vGrid: VGrid);
@@ -33,8 +34,8 @@ export declare class VGridDragDropCol {
     detached(): void;
     attached(): void;
     private onCloseMenu();
-    private createDragElement();
-    private onDragstart();
+    private createDragElement(event);
+    private onDragstart(event);
     private onDragOutSide(event);
     private onDragenter(event);
     private onDragover(event);

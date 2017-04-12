@@ -47,6 +47,7 @@ export declare class Controller {
     footerTemplate: string;
     footer: Footer;
     attVariableRowHeight: boolean;
+    copyPasteValueSharedContext: any;
     constructor(vGrid: VGrid);
     getContext(): void;
     triggerI18N(): void;
@@ -56,6 +57,7 @@ export declare class Controller {
     expandGroup(id: string): void;
     collapseGroup(id: string): void;
     select(row: number): void;
+    updateRowData(attribute: string, data: any, rows: number[]): void;
     addToGrouping(groupObj: GroupingObjInterface): void;
     removeFromGrouping(field: string): void;
     getSelectionContext(): SelectionInterface;

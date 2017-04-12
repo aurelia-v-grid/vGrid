@@ -15,6 +15,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             this.vGridElement = vGrid.element;
             this.controller = vGrid.controller;
             this.groupingElements = vGrid.groupingElements;
+            this.htmlHeightWidth = vGrid.htmlHeightWidth;
             this.sharedContext = vGrid.dragDropAttributeSharedContext;
             this.element = element;
             this.column = this.element;
@@ -83,31 +84,37 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
                 this.colNo = parseInt(this.column.attributes.getNamedItem('data-avg-config-col').value, 10);
                 this.context = this.vGrid.columnBindingContext['setup' + 'main'][this.colNo];
                 this.columnsArray = this.vGrid.columnBindingContext['setup' + 'main'];
+                this.isPanel = true;
                 this.element.addEventListener('mousedown', this.onDragstartBinded);
                 result.target.addEventListener('mouseenter', this.onDragenterBinded);
                 result.target.addEventListener('mousedown', this.onCloseMenuBinded);
             }
         };
         VGridDragDropCol.prototype.onCloseMenu = function () {
-            this.vGrid.controller.raiseEvent("avg-close-menu");
+            this.vGrid.controller.raiseEvent('avg-close-menu');
         };
-        VGridDragDropCol.prototype.createDragElement = function () {
+        VGridDragDropCol.prototype.createDragElement = function (event) {
             this.dragColumnBlock = document.createElement('div');
             this.dragColumnBlock.classList.add(this.vGrid.attTheme);
             this.dragColumnBlock.classList.add('avg-drag');
-            this.dragColumnBlock.style.top = -1200 + 'px';
-            this.dragColumnBlock.style.left = -1200 + 'px';
+            this.dragColumnBlock.style.top = this.isPanel ? event.clientY + 'px' : -1200 + 'px';
+            this.dragColumnBlock.style.left = this.isPanel ? event.clientX + 'px' : -1200 + 'px';
             document.body.appendChild(this.dragColumnBlock);
             this.dragColumnBlock.innerHTML = this.title || this.vGrid.colConfig[this.colNo].colHeaderName;
         };
-        VGridDragDropCol.prototype.onDragstart = function () {
+        VGridDragDropCol.prototype.onDragstart = function (event) {
             var _this = this;
             document.addEventListener('mouseup', this.onDragendBinded);
             this.vGridElement.addEventListener('mouseleave', this.onDragOutSideBinded);
-            this.createDragElement();
-            this.mouseMoveTimer = setTimeout(function () {
-                document.addEventListener('mousemove', _this.onDragoverBinded, false);
-            }, 300);
+            this.createDragElement(event);
+            if (this.isPanel) {
+                document.addEventListener('mousemove', this.onDragoverBinded, false);
+            }
+            else {
+                this.mouseMoveTimer = setTimeout(function () {
+                    document.addEventListener('mousemove', _this.onDragoverBinded, false);
+                }, 300);
+            }
             this.sharedContext.dragging = true;
             this.sharedContext.colType = this.colType;
             this.sharedContext.context = this.context;
@@ -212,7 +219,6 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             var width;
             var newColType = result.colType;
             var oldColType = this.sharedContext.colType;
-            var heightAndWidths = this.vGrid.htmlHeightWidth;
             var moreThenOneMainColumn = true;
             switch (true) {
                 case newColType === 'left' && oldColType === 'main':
@@ -272,76 +278,31 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
                     break;
             }
             if (newColType === 'left' && oldColType === 'main' && moreThenOneMainColumn) {
-                heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
-                heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width - width;
-                heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentLeft_Width + width;
-                heightAndWidths.avgHeaderLeft_Width = heightAndWidths.avgHeaderLeft_Width + width;
-                heightAndWidths.avgContentMain_Left = heightAndWidths.avgContentMain_Left + width;
-                heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left + width;
-                heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left + width;
+                this.htmlHeightWidth.moveWidthFromMainToLeft(width);
             }
             if (newColType === 'main' && oldColType === 'chooser' && moreThenOneMainColumn) {
-                heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
-                heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
+                this.htmlHeightWidth.addWidthToMain(width);
             }
             if (newColType === 'left' && oldColType === 'chooser' && moreThenOneMainColumn) {
-                heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentMainScroll_Width + width;
-                heightAndWidths.avgHeaderLeft_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
+                this.htmlHeightWidth.addWidthToLeft(width);
             }
             if (newColType === 'right' && oldColType === 'chooser' && moreThenOneMainColumn) {
-                heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentMainScroll_Width + width;
-                heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
+                this.htmlHeightWidth.addWidthToRight(width);
             }
             if (newColType === 'main' && oldColType === 'left' && moreThenOneMainColumn) {
-                heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
-                heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
-                heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentLeft_Width - width;
-                heightAndWidths.avgHeaderLeft_Width = heightAndWidths.avgHeaderLeft_Width - width;
-                heightAndWidths.avgContentMain_Left = heightAndWidths.avgContentMain_Left - width;
-                heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left - width;
-                heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left - width;
+                this.htmlHeightWidth.moveWidthFromLeftToMain(width);
             }
             if (newColType === 'right' && oldColType === 'main' && moreThenOneMainColumn) {
-                heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width - width;
-                heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width - width;
-                heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width + width;
-                heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgHeaderRight_Width + width;
-                heightAndWidths.avgContentMain_Right = heightAndWidths.avgContentMain_Right + width;
-                heightAndWidths.avgHeaderMain_Right = heightAndWidths.avgHeaderMain_Right + width;
-                heightAndWidths.avgContentHhandle_Right = heightAndWidths.avgContentHhandle_Right + width;
+                this.htmlHeightWidth.moveWidthFromMainToRight(width);
             }
             if (newColType === 'main' && oldColType === 'right' && moreThenOneMainColumn) {
-                heightAndWidths.avgContentMainScroll_Width = heightAndWidths.avgContentMainScroll_Width + width;
-                heightAndWidths.avgContentHhandleScroll_Width = heightAndWidths.avgContentHhandleScroll_Width + width;
-                heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width - width;
-                heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgHeaderRight_Width - width;
-                heightAndWidths.avgContentMain_Right = heightAndWidths.avgContentMain_Right - width;
-                heightAndWidths.avgHeaderMain_Right = heightAndWidths.avgHeaderMain_Right - width;
-                heightAndWidths.avgContentHhandle_Right = heightAndWidths.avgContentHhandle_Right - width;
+                this.htmlHeightWidth.moveWidthFromRightToMain(width);
             }
             if (newColType === 'left' && oldColType === 'right' && moreThenOneMainColumn) {
-                heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width - width;
-                heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgHeaderRight_Width - width;
-                heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentLeft_Width + width;
-                heightAndWidths.avgHeaderLeft_Width = heightAndWidths.avgHeaderLeft_Width + width;
-                heightAndWidths.avgContentMain_Right = heightAndWidths.avgContentMain_Right - width;
-                heightAndWidths.avgHeaderMain_Right = heightAndWidths.avgHeaderMain_Right - width;
-                heightAndWidths.avgContentHhandle_Right = heightAndWidths.avgContentHhandle_Right - width;
-                heightAndWidths.avgContentMain_Left = heightAndWidths.avgContentMain_Left + width;
-                heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left + width;
-                heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left + width;
+                this.htmlHeightWidth.moveWidthFromLeftToRight(width);
             }
             if (newColType === 'right' && oldColType === 'left' && moreThenOneMainColumn) {
-                heightAndWidths.avgContentRight_Width = heightAndWidths.avgContentRight_Width + width;
-                heightAndWidths.avgHeaderRight_Width = heightAndWidths.avgHeaderRight_Width + width;
-                heightAndWidths.avgContentLeft_Width = heightAndWidths.avgContentLeft_Width - width;
-                heightAndWidths.avgHeaderLeft_Width = heightAndWidths.avgHeaderLeft_Width - width;
-                heightAndWidths.avgContentMain_Right = heightAndWidths.avgContentMain_Right + width;
-                heightAndWidths.avgHeaderMain_Right = heightAndWidths.avgHeaderMain_Right + width;
-                heightAndWidths.avgContentHhandle_Right = heightAndWidths.avgContentHhandle_Right + width;
-                heightAndWidths.avgContentMain_Left = heightAndWidths.avgContentMain_Left - width;
-                heightAndWidths.avgHeaderMain_Left = heightAndWidths.avgHeaderMain_Left - width;
-                heightAndWidths.avgContentHhandle_Left = heightAndWidths.avgContentHhandle_Left - width;
+                this.htmlHeightWidth.moveWidthFromRightToLeft(width);
             }
         };
         VGridDragDropCol.prototype.getTargetData = function (curTarget) {

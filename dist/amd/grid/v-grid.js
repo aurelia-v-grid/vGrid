@@ -18,6 +18,7 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
             this.taskQueue = taskQueue;
             this.dragDropAttributeSharedContext = {};
             this.resizeAttributeSharedContext = {};
+            this.copyPasteValueSharedContext = null;
             this.colConfig = [];
             this.backupColConfig = [];
             this.colRepeater = false;

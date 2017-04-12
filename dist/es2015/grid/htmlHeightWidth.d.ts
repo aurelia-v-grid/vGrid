@@ -51,4 +51,16 @@ export declare class HtmlHeightWidth {
     adjustWidthsColumns(columnBindingContext: ColumnBindingContext, groupsLength: number): void;
     setWidthFromColumnConfig(colConfig: ColConfigInterface[], groupsLength?: number): void;
     getScrollbarWidth(): number;
+    moveWidthFromMainToLeft(width: number): void;
+    moveWidthFromLeftToMain(width: number): void;
+    moveWidthFromMainToRight(width: number): void;
+    moveWidthFromRightToMain(width: number): void;
+    moveWidthFromLeftToRight(width: number): void;
+    moveWidthFromRightToLeft(width: number): void;
+    addWidthToLeft(width: number): void;
+    addWidthToMain(width: number): void;
+    addWidthToRight(width: number): void;
+    removeWidthFromLeft(width: number): void;
+    removeWidthFromMain(width: number): void;
+    removeWidthFromRight(width: number): void;
 }
