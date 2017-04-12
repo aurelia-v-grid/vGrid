@@ -28,7 +28,7 @@ export class VGridAttributeMenu {
   @bindable private sort: string;
   @bindable private pinned: string;
   @bindable private groupby: string;
-  @bindable private hideshow: string
+  @bindable private hideshow: string;
   @bindable private groupbytitle: string;
   @bindable private copypaste: string;
 
@@ -96,7 +96,7 @@ export class VGridAttributeMenu {
 
       if (option === 'copy') {
         this.controller.vGrid.copyPasteValueSharedContext = this.context.rowRef[this.copypaste];
-        return true
+        return true;
       }
 
       if (option === 'paste') {
@@ -105,11 +105,11 @@ export class VGridAttributeMenu {
         if (rows.length <= 1) {
           this.context.rowRef[this.copypaste] = this.controller.vGrid.copyPasteValueSharedContext;
         } else {
-          let rows = sel.getSelectedRows();
+          rows = sel.getSelectedRows();
           this.controller.updateRowData(this.copypaste, this.controller.vGrid.copyPasteValueSharedContext, rows);
         }
         // tell menu to close
-        return true
+        return true;
       }
 
     }
@@ -175,29 +175,29 @@ export class VGridAttributeMenu {
       let count = -1;
 
       let columnsArraySorted: any[] = [];
-      x.curColumnsArray.forEach((x: any) => {
-        if (x.show) {
+      x.curColumnsArray.forEach((xy: any) => {
+        if (xy.show) {
           count++;
         }
-        columnsArraySorted.push(x);
+        columnsArraySorted.push(xy);
       });
 
       if (count || x.curColType !== 'main') {
-        //hide it
+        // hide it
         x.curColumnsArray[x.curColNo].show = false;
 
-        //correct left
+        // correct left
         columnsArraySorted.sort(
           (a: any, b: any) => {
             return a.left - b.left;
           });
 
-        let appendValue = 0
+        let appendValue = 0;
 
-        columnsArraySorted.forEach((x: any) => {
-          if (x.show) {
-            x.left = appendValue;
-            appendValue = appendValue + x.width;
+        columnsArraySorted.forEach((xy: any) => {
+          if (xy.show) {
+            xy.left = appendValue;
+            appendValue = appendValue + xy.width;
           }
         });
 

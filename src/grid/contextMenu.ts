@@ -64,7 +64,7 @@ export class ContextMenu {
         this.viewResources = viewResources;
         this.viewSlots = viewSlots;
         this.controller = controller;
-        this.closeMenuEventBinded = this.closeMenuEvent.bind(this)
+        this.closeMenuEventBinded = this.closeMenuEvent.bind(this);
         this.controller.element.addEventListener('avg-close-menu', this.closeMenuEventBinded);
     }
 
@@ -161,7 +161,7 @@ export class ContextMenu {
                         value = true;
                     }
                     return value;
-                })
+                });
 
                 this.showColumnOptions();
                 break;
@@ -412,11 +412,11 @@ export class ContextMenu {
                        <path d="M8.7 4v1.2L5 7.5h8v1H5l3.7 2.2V12L3 8.4v-1L8.7 4z"/>
                     </svg> $au{menuStrings.back}
                 </p>
-                </li>
+              </li>
                 <div repeat.for="item of columnsHidden">
                     <li class="avg-menu__item">
                         <avg-drag-helper v-drag-drop-col="title.bind:item.title" data-avg-type="chooser"  data-avg-config-col="$au{item.no}">
-                            <p class="avg-menu__link">
+                            <p class="avg-menu__link avg-vGridDragHandle">
                                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                                     <path show.bind="!rowRef.__groupExpanded" d="M7.4 4.8v2.7H4.7v1h2.7v3h1v-3h2.8v-1H8.5V4.8h-1z"/>
                                 </svg>

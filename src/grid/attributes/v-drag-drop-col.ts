@@ -196,6 +196,7 @@ export class VGridDragDropCol {
       this.colNo = parseInt(this.column.attributes.getNamedItem('data-avg-config-col').value, 10);
       this.context = this.vGrid.columnBindingContext['setup' + 'main'][this.colNo];
       this.columnsArray = this.vGrid.columnBindingContext['setup' + 'main'];
+      this.isPanel = true;
 
       // when user starts to drag
       this.element.addEventListener('mousedown', this.onDragstartBinded);
@@ -211,7 +212,7 @@ export class VGridDragDropCol {
 
 
   private onCloseMenu(): void {
-    this.vGrid.controller.raiseEvent("avg-close-menu");
+    this.vGrid.controller.raiseEvent('avg-close-menu');
   }
 
 
@@ -221,14 +222,14 @@ export class VGridDragDropCol {
    * todo description
    *
    */
-  private createDragElement(): void {
+  private createDragElement(event: any): void {
 
     // just creates the element we drag
     this.dragColumnBlock = document.createElement('div');
     this.dragColumnBlock.classList.add(this.vGrid.attTheme);
     this.dragColumnBlock.classList.add('avg-drag');
-    this.dragColumnBlock.style.top = -1200 + 'px'; // hide it
-    this.dragColumnBlock.style.left = -1200 + 'px';
+    this.dragColumnBlock.style.top = this.isPanel ? event.clientY + 'px' : -1200 + 'px'; // hide it
+    this.dragColumnBlock.style.left = this.isPanel ? event.clientX + 'px' : -1200 + 'px';
     document.body.appendChild(this.dragColumnBlock);
 
     // <- maybe do something here, use value for custom html?
@@ -241,18 +242,23 @@ export class VGridDragDropCol {
    * todo description
    *
    */
-  private onDragstart(): void {
+  private onDragstart(event: any): void {
 
     // register mouseup, so we can exit
     document.addEventListener('mouseup', this.onDragendBinded);
     this.vGridElement.addEventListener('mouseleave', this.onDragOutSideBinded);
-    this.createDragElement();
+    this.createDragElement(event);
 
     // want to delay this a little
-    this.mouseMoveTimer = setTimeout(() => {
-      // create our element we drag with upo
+    if (this.isPanel) {
+
       document.addEventListener('mousemove', this.onDragoverBinded, false);
-    }, 300);
+    } else {
+      this.mouseMoveTimer = setTimeout(() => {
+        // create our element we drag with upo
+        document.addEventListener('mousemove', this.onDragoverBinded, false);
+      }, 300);
+    }
 
     // set our shared resources for all the drag drop so we know them when we enter another
     this.sharedContext.dragging = true;
@@ -263,7 +269,7 @@ export class VGridDragDropCol {
     this.sharedContext.columnsArray = this.columnsArray;
     this.sharedContext.title = this.title;
     this.sharedContext.field = this.field;
-    //this.column.classList.add('avg-dragging')
+    // this.column.classList.add('avg-dragging')
 
     // build up new array we will use for setting new left
     this.sharedContext.columnsArraySorted = [];
@@ -443,7 +449,7 @@ export class VGridDragDropCol {
     let width: number;
     let newColType = result.colType;
     let oldColType = this.sharedContext.colType;
-    let moreThenOneMainColumn = true
+    let moreThenOneMainColumn = true;
 
     // chack type is one of the ones we handle
     switch (true) {
@@ -457,7 +463,7 @@ export class VGridDragDropCol {
       case newColType === 'left' && oldColType === 'chooser':
       case newColType === 'right' && oldColType === 'chooser':
 
-        //check if more then 1 main column
+        // check if more then 1 main column
         // my main dragdrop logi fails if not
 
         if (oldColType === 'main') {
@@ -466,7 +472,7 @@ export class VGridDragDropCol {
             if (x.show) {
               count++;
             }
-          })
+          });
           if (!count) {
             moreThenOneMainColumn = false;
           }
@@ -547,7 +553,7 @@ export class VGridDragDropCol {
     }
 
     if (newColType === 'right' && oldColType === 'chooser' && moreThenOneMainColumn) {
-     this.htmlHeightWidth.addWidthToRight(width);
+      this.htmlHeightWidth.addWidthToRight(width);
     }
 
     if (newColType === 'main' && oldColType === 'left' && moreThenOneMainColumn) {
