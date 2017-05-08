@@ -3,7 +3,7 @@ import { GridConnector } from 'aurelia-v-grid';
 import { DataSource } from 'aurelia-v-grid';
 import { Selection, ColConfigInterface } from 'aurelia-v-grid';
 import { DummyDataGenerator } from './utils/dummyDataGenerator';
-import { Remember} from './utils/remember';
+import { Remember } from './utils/remember';
 
 @autoinject()
 export class Welcome {
@@ -34,7 +34,7 @@ export class Welcome {
     this.gridConnector.setColConfig(this.remember.columns);
   }
 
-  public useDefault(){
+  public useDefault() {
     this.gridConnector.setColConfig(null);
   }
 
