@@ -9,7 +9,8 @@ import {
   EntityInterface,
   ColConfigInterface,
   BindingContextInterface,
-  GroupingObjInterface
+  GroupingObjInterface,
+  CollectionStatusInterface
 } from './interfaces';
 
 export class GridConnector implements GridConnectorInterface {
@@ -118,7 +119,7 @@ export class GridConnector implements GridConnectorInterface {
    * Need be in custom gridConnector //Todo, check if it exsist in gridcode, so its not mandatory
    *
    */
-  public getRowHeightState(): any {
+  public getRowHeightState(): CollectionStatusInterface {
     if (typeof this.datasource.getRowHeightState === 'function') {
       return this.datasource.getRowHeightState();
     } else {

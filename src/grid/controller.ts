@@ -26,7 +26,8 @@ import {
   ResizeShardContextInterface,
   SelectionInterface,
   Footer,
-  GroupingObjInterface
+  GroupingObjInterface,
+  CollectionStatusInterface
 } from '../interfaces';
 
 /**
@@ -211,7 +212,7 @@ export class Controller {
    * get the row state from gridconnector, used for variable row height
    *
    */
-  public getRowHeightState(): any {
+  public getRowHeightState(): CollectionStatusInterface {
     return this.attGridConnector.getRowHeightState();
   }
 

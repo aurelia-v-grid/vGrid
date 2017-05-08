@@ -230,6 +230,13 @@ export interface ColumBindingContextObjectInterface {
   width: number;
 }
 
+export interface CollectionStatusInterface {
+  [key: string]: any;
+  collectionLength: number;
+  filteredCollectionLength: number;
+  selectionLength: number;
+}
+
 
 
 export interface GroupingContextInterface {

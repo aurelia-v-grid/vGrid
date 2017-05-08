@@ -7,7 +7,8 @@ import {
   SortObjectInterface,
   FilterObjectInterface,
   GroupingObjInterface,
-  DatasourceInterface
+  DatasourceInterface,
+  CollectionStatusInterface
 } from './interfaces';
 
 export class DataSource implements DatasourceInterface {
@@ -57,9 +58,12 @@ export class DataSource implements DatasourceInterface {
       this.key = config.key || '__avgKey';
       this.rowHeight = config.rowHeight || 25;
       this.groupHeight = config.groupHeight || 25;
-      this.rowHeightCallback = config.rowHeightCallback || function(data: any){data = data; };
+      this.rowHeightCallback = config.rowHeightCallback || function (): null { return null; };
     } else {
       this.key = '__avgKey';
+      this.rowHeight = 25;
+      this.groupHeight = 25;
+      this.rowHeightCallback = function (): null { return null; };
     }
 
 
@@ -548,11 +552,12 @@ export class DataSource implements DatasourceInterface {
    * Returns status(lengths) of collection/selection
    *
    */
-  public getCollectionStatus(): any {
-    const status: any = {};
-    status.collectionLength = this.mainArray ? this.mainArray.length : 0;
-    status.filteredCollectionLength = this.collection.getEntities().length;
-    status.selectionLength = this.selection.getLength();
+  public getCollectionStatus(): CollectionStatusInterface {
+    let status: CollectionStatusInterface = {
+      collectionLength: this.mainArray ? this.mainArray.length : 0,
+      filteredCollectionLength: this.collection.getEntities().length,
+      selectionLength: this.selection.getLength()
+    };
     return status;
   }
 
