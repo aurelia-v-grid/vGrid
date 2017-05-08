@@ -265,7 +265,7 @@ export class VGridAttributeMenu {
         left: clickCoords.x,
         filter: this.filter,
         sort: this.sort,
-        hideshow: this.hideshow,
+        hideshow: this.canHide() ? this.hideshow : null,
         pinned: this.pinned,
         copypaste: this.copypaste,
         groupby: this.groupby,
@@ -275,6 +275,33 @@ export class VGridAttributeMenu {
   }
 
 
+  /**
+   * returns if column can be hidden, if last in main it cant...since it will break my logic
+   *
+   */
+  private canHide(): boolean {
+     // get column context
+      let x = this.getColumnContext();
+
+      // get current width
+      let returnValue = false;
+
+      let count = -1;
+
+      let columnsArraySorted: any[] = [];
+      x.curColumnsArray.forEach((xy: any) => {
+        if (xy.show) {
+          count++;
+        }
+        columnsArraySorted.push(xy);
+      });
+
+      if (count || x.curColType !== 'main') {
+        returnValue = true;
+      }
+
+      return returnValue;
+  }
 
   /**
    * gets mouse position
