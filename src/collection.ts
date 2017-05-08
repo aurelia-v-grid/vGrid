@@ -13,6 +13,7 @@ export class Collection {
   private rowHeightArray: any[];
   private rowTopArray: any[];
   private rowHeightTotal: number;
+  private rowHeightCallback: Function;
 
 
 
@@ -29,6 +30,9 @@ export class Collection {
 
     // get groupHeight if any
     this.groupHeight = datasource.groupHeight || 25;
+
+    ///get rowHeightCallback
+    this.rowHeightCallback = datasource.rowHeightCallback;
 
     // some defaults
 
@@ -89,9 +93,10 @@ export class Collection {
       if (!rowData.__group) {
 
         // for vairble row height we need to set some defaults the grid can use when scrolling
-        this.rowHeightArray.push(this.rowHeight);
+        let rowHeight = this.rowHeightCallback(rowData) || this.rowHeight;
+        this.rowHeightArray.push(rowHeight);
         this.rowTopArray.push(this.rowHeightTotal);
-        this.rowHeightTotal = this.rowHeightTotal + this.rowHeight;
+        this.rowHeightTotal = this.rowHeightTotal + rowHeight;
 
         // push the key we need for selection
         this.keys.push(rowData[this.key]);

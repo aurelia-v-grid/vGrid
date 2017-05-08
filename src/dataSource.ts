@@ -14,6 +14,7 @@ export class DataSource implements DatasourceInterface {
   public entity: EntityInterface;
   public groupHeight: number;
   public rowHeight: number;
+  public rowHeightCallback: Function;
   private selection: Selection;
   private key: string;
   private arrayUtils: ArrayUtils;
@@ -56,6 +57,7 @@ export class DataSource implements DatasourceInterface {
       this.key = config.key || '__avgKey';
       this.rowHeight = config.rowHeight || 25;
       this.groupHeight = config.groupHeight || 25;
+      this.rowHeightCallback = config.rowHeightCallback || function(data: any){data = data; };
     } else {
       this.key = '__avgKey';
     }
