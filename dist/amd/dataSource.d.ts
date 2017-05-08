@@ -1,5 +1,5 @@
 import { Selection } from './selection';
-import { EntityInterface, DatasourceConfigInterface, SortObjectInterface, FilterObjectInterface, GroupingObjInterface, DatasourceInterface } from './interfaces';
+import { EntityInterface, DatasourceConfigInterface, SortObjectInterface, FilterObjectInterface, GroupingObjInterface, DatasourceInterface, CollectionStatusInterface } from './interfaces';
 export declare class DataSource implements DatasourceInterface {
     entity: EntityInterface;
     groupHeight: number;
@@ -38,7 +38,7 @@ export declare class DataSource implements DatasourceInterface {
     addBlankRow(): void;
     unshift(data: any): void;
     remove(rows?: any[]): any[];
-    getCollectionStatus(): any;
+    getCollectionStatus(): CollectionStatusInterface;
     setLocaleCompare(code: string, options?: any): void;
     getRowHeightState(): any;
     private getRowKey(row);

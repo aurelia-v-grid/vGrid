@@ -14,10 +14,13 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils
                 this.key = config.key || '__avgKey';
                 this.rowHeight = config.rowHeight || 25;
                 this.groupHeight = config.groupHeight || 25;
-                this.rowHeightCallback = config.rowHeightCallback || function (data) { data = data; };
+                this.rowHeightCallback = config.rowHeightCallback || function () { return null; };
             }
             else {
                 this.key = '__avgKey';
+                this.rowHeight = 25;
+                this.groupHeight = 25;
+                this.rowHeightCallback = function () { return null; };
             }
             this.eventIdCount = -1;
             this.eventCallBacks = [];
@@ -228,10 +231,11 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils
             return returnArray;
         };
         DataSource.prototype.getCollectionStatus = function () {
-            var status = {};
-            status.collectionLength = this.mainArray ? this.mainArray.length : 0;
-            status.filteredCollectionLength = this.collection.getEntities().length;
-            status.selectionLength = this.selection.getLength();
+            var status = {
+                collectionLength: this.mainArray ? this.mainArray.length : 0,
+                filteredCollectionLength: this.collection.getEntities().length,
+                selectionLength: this.selection.getLength()
+            };
             return status;
         };
         DataSource.prototype.setLocaleCompare = function (code, options) {

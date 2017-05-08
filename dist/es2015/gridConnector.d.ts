@@ -1,4 +1,4 @@
-import { SelectionInterface, GridConnectorInterface, DatasourceInterface, SortObjectInterface, FilterObjectInterface, ControllerInterface, ColConfigInterface, GroupingObjInterface } from './interfaces';
+import { SelectionInterface, GridConnectorInterface, DatasourceInterface, SortObjectInterface, FilterObjectInterface, ControllerInterface, ColConfigInterface, GroupingObjInterface, CollectionStatusInterface } from './interfaces';
 export declare class GridConnector implements GridConnectorInterface {
     private selection;
     private controller;
@@ -12,7 +12,7 @@ export declare class GridConnector implements GridConnectorInterface {
     connect(controller: ControllerInterface, create: Function): void;
     gridCreated(): void;
     select(row: number): void;
-    getRowHeightState(): any;
+    getRowHeightState(): CollectionStatusInterface;
     getDatasourceLength(): number;
     getColConfig(): ColConfigInterface[];
     setColConfig(colconfig: ColConfigInterface[]): void;

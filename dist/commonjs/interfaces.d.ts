@@ -182,6 +182,12 @@ export interface ColumBindingContextObjectInterface {
     left: number;
     width: number;
 }
+export interface CollectionStatusInterface {
+    [key: string]: any;
+    collectionLength: number;
+    filteredCollectionLength: number;
+    selectionLength: number;
+}
 export interface GroupingContextInterface {
     [key: string]: any;
     viewSlot: ViewSlot;
