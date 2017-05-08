@@ -19,7 +19,15 @@ export class Welcome {
     });
     this.ds = new DataSource(new Selection('multiple'), {
       rowHeight: 50,
-      groupHeight: 25
+      groupHeight: 25,
+      rowHeightCallback: (x)=>{
+        if(x.index % 3===0){
+          return 35;
+
+        } else {
+          return 50
+        }
+      }
     });
 
 
