@@ -13,10 +13,12 @@
   padding-left: 0;
   padding-bottom: 3px;
   margin: 0;
+  
 }
 
 .avg-default .avg-menu__item {
   list-style: none;
+  border-left: 6px solid transparent;
 }
 
 .avg-default .avg-menu__item p {

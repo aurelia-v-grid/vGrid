@@ -14,6 +14,7 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils
                 this.key = config.key || '__avgKey';
                 this.rowHeight = config.rowHeight || 25;
                 this.groupHeight = config.groupHeight || 25;
+                this.rowHeightCallback = config.rowHeightCallback || function (data) { data = data; };
             }
             else {
                 this.key = '__avgKey';

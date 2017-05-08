@@ -4,6 +4,7 @@ export declare class DataSource implements DatasourceInterface {
     entity: EntityInterface;
     groupHeight: number;
     rowHeight: number;
+    rowHeightCallback: Function;
     private selection;
     private key;
     private arrayUtils;

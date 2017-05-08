@@ -12,6 +12,7 @@ export declare class Collection {
     private rowHeightArray;
     private rowTopArray;
     private rowHeightTotal;
+    private rowHeightCallback;
     constructor(datasource: DataSource);
     setData(array: EntityInterface[], ungroupedArray?: EntityInterface[]): void;
     getRowHeightState(): any;

@@ -10,6 +10,7 @@ System.register([], function (exports_1, context_1) {
                     this.key = datasource.getKey();
                     this.rowHeight = datasource.rowHeight || 25;
                     this.groupHeight = datasource.groupHeight || 25;
+                    this.rowHeightCallback = datasource.rowHeightCallback;
                     this.displayedEntities = [];
                     this.keys = [];
                     this.count = 0;
@@ -34,9 +35,10 @@ System.register([], function (exports_1, context_1) {
                             rowData[_this.key] = _this.count;
                         }
                         if (!rowData.__group) {
-                            _this.rowHeightArray.push(_this.rowHeight);
+                            var rowHeight = _this.rowHeightCallback(rowData) || _this.rowHeight;
+                            _this.rowHeightArray.push(rowHeight);
                             _this.rowTopArray.push(_this.rowHeightTotal);
-                            _this.rowHeightTotal = _this.rowHeightTotal + _this.rowHeight;
+                            _this.rowHeightTotal = _this.rowHeightTotal + rowHeight;
                             _this.keys.push(rowData[_this.key]);
                         }
                         else {
