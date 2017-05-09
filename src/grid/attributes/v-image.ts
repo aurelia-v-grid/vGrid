@@ -29,7 +29,8 @@ export class VGridAttributesImageFix {
 
 
   /**
-   * todo description
+   * triggers when value is changed, usually when new row data is set during scrolling
+   * want to set it to blank if undefined, else user get error in console
    *
    */
   public valueChanged(newValue: string): void {
@@ -41,7 +42,7 @@ export class VGridAttributesImageFix {
 
 
   /**
-   * todo description
+   * only trigged when row is created/ grid is recreated
    *
    */
   public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {

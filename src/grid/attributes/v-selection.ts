@@ -32,7 +32,7 @@ export class VGridAttributesSelection {
 
 
   /**
-   * todo description
+   * triggers when scrolling
    *
    */
   public selectedChanged(newValue: boolean): void {
@@ -44,7 +44,7 @@ export class VGridAttributesSelection {
 
 
   /**
-   * todo description
+   * get the binding context
    *
    */
   public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
@@ -55,7 +55,9 @@ export class VGridAttributesSelection {
 
 
   /**
-   * todo description
+   * when custom element is created
+   * register click event
+   * checks if header or row in click and resonds depending on where it is
    *
    */
   public attached(): void {

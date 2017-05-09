@@ -357,7 +357,7 @@ export class DataSource implements DatasourceInterface {
     let entities = this.collection.getCurrentEntities();
     rows.forEach((x: number) => {
       entities[x][attribute] = data;
-    })
+    });
   }
 
   /**

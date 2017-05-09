@@ -34,7 +34,7 @@ export class VGridAttributesSort {
 
 
   /**
-   * todo description
+   * when row is created/binded
    *
    */
   public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
@@ -46,7 +46,7 @@ export class VGridAttributesSort {
 
 
   /**
-   * todo description
+   * when attached, generate the markup and register mousedown events to respond when user click on element
    *
    */
   public attached(): void {
@@ -77,7 +77,7 @@ export class VGridAttributesSort {
 
 
   /**
-   * todo description
+   * when deatched
    *
    */
   public detached(): void {
@@ -87,7 +87,7 @@ export class VGridAttributesSort {
 
 
   /**
-   * todo description
+   * returns markup/sort icon
    *
    */
   private getSortIconMarkup(): string {

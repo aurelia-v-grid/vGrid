@@ -76,7 +76,7 @@ export class VGridAttributesResizeCol {
 
 
   /**
-   * todo description
+   * when custom attribute is binded, only when row is created
    *
    */
   public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
@@ -87,7 +87,7 @@ export class VGridAttributesResizeCol {
 
 
   /**
-   * todo description
+   * when custom element is attaced, only when row is created
    *
    */
   public attached(): void {
@@ -113,7 +113,7 @@ export class VGridAttributesResizeCol {
 
 
   /**
-   * todo description
+   * when mousebutton is released
    *
    */
   private onmouseup(): void {
@@ -126,19 +126,19 @@ export class VGridAttributesResizeCol {
 
 
   /**
-   * todo description
+   * on mouse move we want to prevent default, then we update column depending on mouse position
    *
    */
   private onmousemove(e: MouseEvent): void {
     e.preventDefault();
-    e.preventDefault();
+    e.preventDefault(); // why 2 times?, need to test if there is a reason for me doing this... copy paste error
     this.updateHeader(e);
   }
 
 
 
   /**
-   * todo description
+   * this handles the onmouse move logic
    *
    */
   private updateHeader(e: MouseEvent): void {
@@ -211,7 +211,8 @@ export class VGridAttributesResizeCol {
 
 
   /**
-   * todo description
+   * when user clicks mouse down
+   * get all withs for all coulumns/main parts for later
    *
    */
   private onmousedown(e: MouseEvent): void {
