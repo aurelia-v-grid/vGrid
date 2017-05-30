@@ -54,7 +54,7 @@ export class LoadingScreen {
    */
   public init(overrideContext: OverrideContextInterface, loadingScreenTemplate: string): void {
     this.overrideContext = overrideContext;
-    let loadingScreentHtml = loadingScreenTemplate || `[
+    let loadingScreentHtml = loadingScreenTemplate || `
       <div class="avg-overlay" if.bind="loading">
       </div>
       <div if.two-way="loading" class="avg-progress-indicator">
