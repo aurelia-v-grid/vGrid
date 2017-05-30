@@ -157,13 +157,29 @@ var VGridAttributeMenu = (function () {
                 left: clickCoords.x,
                 filter: this.filter,
                 sort: this.sort,
-                hideshow: this.hideshow,
+                hideshow: this.canHide() ? this.hideshow : null,
                 pinned: this.pinned,
                 copypaste: this.copypaste,
                 groupby: this.groupby,
                 callback: this.callbackBinded
             });
         }
+    };
+    VGridAttributeMenu.prototype.canHide = function () {
+        var x = this.getColumnContext();
+        var returnValue = false;
+        var count = -1;
+        var columnsArraySorted = [];
+        x.curColumnsArray.forEach(function (xy) {
+            if (xy.show) {
+                count++;
+            }
+            columnsArraySorted.push(xy);
+        });
+        if (count || x.curColType !== 'main') {
+            returnValue = true;
+        }
+        return returnValue;
     };
     VGridAttributeMenu.prototype.getPosition = function (e) {
         var posx = 0;

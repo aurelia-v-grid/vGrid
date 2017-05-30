@@ -24,6 +24,7 @@ export declare class VGridAttributeMenu {
     private check(e);
     private callback(type, option, event);
     private open(e);
+    private canHide();
     private getPosition(e);
     private getColumnContext();
 }

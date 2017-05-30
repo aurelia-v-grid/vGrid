@@ -15,7 +15,7 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
         };
         LoadingScreen.prototype.init = function (overrideContext, loadingScreenTemplate) {
             this.overrideContext = overrideContext;
-            var loadingScreentHtml = loadingScreenTemplate || "[\n      <div class=\"avg-overlay\" if.bind=\"loading\">\n      </div>\n      <div if.two-way=\"loading\" class=\"avg-progress-indicator\">\n      <div class=\"avg-progress-bar\" role=\"progressbar\" style=\"width:100%\">\n      <span>$au{ loadingMessage }</span>\n      </div>\n      </div>".replace(/\$(au{)/g, '${');
+            var loadingScreentHtml = loadingScreenTemplate || "\n      <div class=\"avg-overlay\" if.bind=\"loading\">\n      </div>\n      <div if.two-way=\"loading\" class=\"avg-progress-indicator\">\n      <div class=\"avg-progress-bar\" role=\"progressbar\" style=\"width:100%\">\n      <span>$au{ loadingMessage }</span>\n      </div>\n      </div>".replace(/\$(au{)/g, '${');
             var viewFactory = this.viewCompiler.compile("<template>\n      " + loadingScreentHtml + "\n      </template>", this.viewResources);
             var view = viewFactory.create(this.container);
             var loadingScreenViewSlot = new aurelia_framework_1.ViewSlot(this.element, true);
