@@ -29,6 +29,7 @@ export class MainScrollEvents {
   private isIE11: boolean;
   private wheelEvent: string;
   private isScrollbar: boolean;
+  private passiveSupported: boolean;
 
 
 
@@ -43,14 +44,26 @@ export class MainScrollEvents {
     this.timerWheel = null;
     this.isScrollbar = false;
     this.lastTopPosition = 0;
-    this.wheelEvent = 'onwheel';
+    this.wheelEvent = 'wheel';
 
     // check if IE, need to act on another mousewheel event if so
     this.isIE11 = !!(window as any).MSInputMethodContext && !!(document as any).documentMode;
     if (this.isIE11) {
-      this.wheelEvent = 'onmousewheel';
+      this.wheelEvent = 'mousewheel';
       console.warn('IE11, why!?!?!');
     }
+
+    // check if is supported
+    this.passiveSupported = false;
+    try {
+      let options = Object.defineProperty({}, 'passive', {
+        get:  () => {
+          this.passiveSupported = true;
+        }
+      });
+
+      window.addEventListener('testavg', null, options);
+    } catch (err) { /*nothing*/}
   }
 
 
@@ -119,16 +132,29 @@ export class MainScrollEvents {
    */
   private addScrollEvents(type: string): void {
 
+    let options: any = this.passiveSupported ? { passive: true } : false;
+
     switch (type) {
       case 'all':
+        /*
+         todo, remove later when tested more
         (this.right as HTMLElement)[this.wheelEvent] = this.onWeel.bind(this);
         (this.main as HTMLElement)[this.wheelEvent] = this.onWeel.bind(this);
         (this.left as HTMLElement)[this.wheelEvent] = this.onWeel.bind(this);
-        (this.group as HTMLElement)[this.wheelEvent] = this.onWeel.bind(this);
+        (this.group as HTMLElement)[this.wheelEvent] = this.onWeel.bind(this);*/
+        this.right.addEventListener(this.wheelEvent, this.onWeel.bind(this), options);
+        this.main.addEventListener(this.wheelEvent, this.onWeel.bind(this), options);
+        this.left.addEventListener(this.wheelEvent, this.onWeel.bind(this), options);
+        this.group.addEventListener(this.wheelEvent, this.onWeel.bind(this), options);
+        this.vhandle.addEventListener('scroll', this.handleEventVhandle.bind(this), options);
+        this.hhandle.addEventListener('scroll', this.handleEventHhandle.bind(this), options);
+
+       /*
+        todo, remove later when tested more
         (this.vhandle as HTMLElement).onscroll = this.handleEventVhandle.bind(this);
-        (this.hhandle as HTMLElement).onscroll = this.handleEventHhandle.bind(this);
-        this.htmlCache.element.addEventListener('touchmove', this.touchMove.bind(this));
-        this.htmlCache.element.addEventListener('touchstart', this.touchStart.bind(this));
+        (this.hhandle as HTMLElement).onscroll = this.handleEventHhandle.bind(this);*/
+        this.htmlCache.element.addEventListener('touchmove', this.touchMove.bind(this), options);
+        this.htmlCache.element.addEventListener('touchstart', this.touchStart.bind(this), options);
         break;
       case 'wheel':
         (this.vhandle as HTMLElement).onscroll = this.handleEventVhandle.bind(this);
@@ -147,10 +173,12 @@ export class MainScrollEvents {
   private removeScrollEvents(type: string): void {
     switch (type) {
       case 'all':
-        (this.vhandle as HTMLElement).onscroll = null;
+        /*todo, remove later when tested more (this.vhandle as HTMLElement).onscroll = null;*/
+        this.vhandle.removeEventListener('onscroll', this.handleEventVhandle.bind(this));
         break;
       case 'wheel':
-        (this.vhandle as HTMLElement).onscroll = null;
+        /*todo, remove later when tested more (this.vhandle as HTMLElement).onscroll = null;*/
+        this.vhandle.removeEventListener('onscroll', this.handleEventVhandle.bind(this));
         break;
       default:
     }
