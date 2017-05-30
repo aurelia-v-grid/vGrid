@@ -119,7 +119,7 @@ export class MainScrollEvents {
 
       this.handleEventWheelScroll(deltaY);
     });
-    event.preventDefault();
+    // event.preventDefault();
     return false;
   }
 
@@ -210,7 +210,7 @@ export class MainScrollEvents {
     this.touchX = parseInt(touchobj.clientX, 10);
 
     this.handleEventWheelScroll(dist, -distX);
-    e.preventDefault();
+    // e.preventDefault();
   }
 
 
