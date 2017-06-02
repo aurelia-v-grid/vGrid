@@ -30,7 +30,11 @@ export class MainScrollEvents {
   private wheelEvent: string;
   private isScrollbar: boolean;
   private passiveSupported: boolean;
-
+  private onWeelBinded: EventListenerObject;
+  private handleEventVhandleBinded: EventListenerObject;
+  private handleEventHhandleBinded: EventListenerObject;
+  private touchMoveBinded: EventListenerObject;
+  private touchStartBinded: EventListenerObject;
 
 
   constructor(element: Element, htmlCache: HtmlCache) {
@@ -45,6 +49,11 @@ export class MainScrollEvents {
     this.isScrollbar = false;
     this.lastTopPosition = 0;
     this.wheelEvent = 'wheel';
+    this.onWeelBinded = this.onWeel.bind(this);
+    this.handleEventVhandleBinded = this.handleEventVhandle.bind(this);
+    this.handleEventHhandleBinded = this.handleEventHhandle.bind(this);
+    this.touchMoveBinded = this.touchMove.bind(this);
+    this.touchStartBinded = this.touchStart.bind(this);
 
     // check if IE, need to act on another mousewheel event if so
     this.isIE11 = !!(window as any).MSInputMethodContext && !!(document as any).documentMode;
@@ -135,29 +144,19 @@ export class MainScrollEvents {
     let options: any = this.passiveSupported ? { passive: true } : false;
 
     switch (type) {
+      
       case 'all':
-        /*
-         todo, remove later when tested more
-        (this.right as HTMLElement)[this.wheelEvent] = this.onWeel.bind(this);
-        (this.main as HTMLElement)[this.wheelEvent] = this.onWeel.bind(this);
-        (this.left as HTMLElement)[this.wheelEvent] = this.onWeel.bind(this);
-        (this.group as HTMLElement)[this.wheelEvent] = this.onWeel.bind(this);*/
-        this.right.addEventListener(this.wheelEvent, this.onWeel.bind(this), options);
-        this.main.addEventListener(this.wheelEvent, this.onWeel.bind(this), options);
-        this.left.addEventListener(this.wheelEvent, this.onWeel.bind(this), options);
-        this.group.addEventListener(this.wheelEvent, this.onWeel.bind(this), options);
-        this.vhandle.addEventListener('scroll', this.handleEventVhandle.bind(this), options);
-        this.hhandle.addEventListener('scroll', this.handleEventHhandle.bind(this), options);
-
-       /*
-        todo, remove later when tested more
-        (this.vhandle as HTMLElement).onscroll = this.handleEventVhandle.bind(this);
-        (this.hhandle as HTMLElement).onscroll = this.handleEventHhandle.bind(this);*/
-        this.htmlCache.element.addEventListener('touchmove', this.touchMove.bind(this), options);
-        this.htmlCache.element.addEventListener('touchstart', this.touchStart.bind(this), options);
+        this.right.addEventListener(this.wheelEvent, this.onWeelBinded, options);
+        this.main.addEventListener(this.wheelEvent, this.onWeelBinded, options);
+        this.left.addEventListener(this.wheelEvent, this.onWeelBinded, options);
+        this.group.addEventListener(this.wheelEvent, this.onWeelBinded, options);
+        this.vhandle.addEventListener('scroll', this.handleEventVhandleBinded, options);
+        this.hhandle.addEventListener('scroll', this.handleEventHhandleBinded, options);
+        this.htmlCache.element.addEventListener('touchmove', this.touchMoveBinded, options);
+        this.htmlCache.element.addEventListener('touchstart', this.touchStartBinded, options);
         break;
       case 'wheel':
-        (this.vhandle as HTMLElement).onscroll = this.handleEventVhandle.bind(this);
+        this.vhandle.addEventListener('scroll', this.handleEventVhandleBinded, options);
         break;
       default:
     }
@@ -173,12 +172,10 @@ export class MainScrollEvents {
   private removeScrollEvents(type: string): void {
     switch (type) {
       case 'all':
-        /*todo, remove later when tested more (this.vhandle as HTMLElement).onscroll = null;*/
-        this.vhandle.removeEventListener('onscroll', this.handleEventVhandle.bind(this));
+        this.vhandle.removeEventListener('onscroll', this.handleEventVhandleBinded);
         break;
       case 'wheel':
-        /*todo, remove later when tested more (this.vhandle as HTMLElement).onscroll = null;*/
-        this.vhandle.removeEventListener('onscroll', this.handleEventVhandle.bind(this));
+        this.vhandle.removeEventListener('onscroll', this.handleEventVhandleBinded);
         break;
       default:
     }
@@ -208,9 +205,7 @@ export class MainScrollEvents {
     let distX = parseInt(touchobj.clientX, 10) - this.touchX;
     this.touchY = parseInt(touchobj.clientY, 10);
     this.touchX = parseInt(touchobj.clientX, 10);
-
     this.handleEventWheelScroll(dist, -distX);
-    // e.preventDefault();
   }
 
 
