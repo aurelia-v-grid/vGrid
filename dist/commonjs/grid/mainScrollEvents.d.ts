@@ -21,6 +21,12 @@ export declare class MainScrollEvents {
     private isIE11;
     private wheelEvent;
     private isScrollbar;
+    private passiveSupported;
+    private onWeelBinded;
+    private handleEventVhandleBinded;
+    private handleEventHhandleBinded;
+    private touchMoveBinded;
+    private touchStartBinded;
     constructor(element: Element, htmlCache: HtmlCache);
     init(): void;
     private updateInternalHtmlCache();
