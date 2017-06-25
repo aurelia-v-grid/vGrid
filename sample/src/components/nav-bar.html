@@ -1,0 +1,19 @@
+<template>
+    <nav class="light-blue lighten-1" role="navigation">
+        <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">${router.title}</a>
+            <ul class="right hide-on-med-and-down">
+                <li repeat.for="row of router.navigation" md-waves>
+                    <a href.bind="row.href" class="${ row.isActive ? 'active' : '' }">${row.title}</a>
+                </li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li repeat.for="row of router.navigation">
+                    <a href.bind="row.href" class="${ row.isActive ? 'active' : '' }">${row.title}</a>
+                </li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+        
+    </nav>
+</template>

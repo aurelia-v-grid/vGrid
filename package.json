@@ -1,6 +1,6 @@
 {
   "name": "aurelia-v-grid",
-  "version": "1.0.0-beta.0.0.72",
+  "version": "1.0.0-beta.0.0.74",
   "description": "Aurelia-v-grid",
   "keywords": [
     "aurelia",
@@ -21,33 +21,22 @@
     "url": "https://github.com/vegarringdal/vGrid"
   },
   "scripts": {
-    "prepublish": "./node_modules/.bin/typings install"
+    "prepare": "./node_modules/.bin/typings install"
   },
   "devDependencies": {
-    "aurelia-tools": "^1.0.0",
-    "browser-sync": "^2.18.8",
-    "gulp-conventional-changelog": "^1.1.3",
-    "del": "^2.2.2",
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
-    "gulp-bump": "^2.7.0",
-    "gulp-changed": "^3.1.0",
-    "gulp-htmlmin": "^3.0.0",
-    "gulp-notify": "^3.0.0",
     "gulp-plumber": "^1.1.0",
-    "gulp-protractor": "4.1.0",
     "gulp-sourcemaps": "^2.6.0",
-    "gulp-tslint": "^8.1.0",
+    "gulp-tslint": "^8.1.1",
     "gulp-typescript": "^3.1.7",
-    "gulp-yuidoc": "^0.1.2",
-    "object.assign": "^4.0.4",
+    "merge2": "^1.0.3",
     "require-dir": "^0.3.2",
     "run-sequence": "^1.2.2",
-    "tslint": "^5.4.1",
-    "typescript": "2.3.4",
+    "tslint": "^5.4.3",
+    "typescript": "^2.3.4",
     "typings": "^2.1.1",
-    "vinyl-paths": "^2.1.0",
-    "yargs": "^8.0.1",
-    "merge2": "^1.0.3"
+    "vinyl-paths": "^2.1.0"
   },
   "jspm": {
     "registry": "npm",
@@ -58,9 +47,7 @@
     },
     "devDependencies": {}
   },
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "aurelia": {
     "usedBy": [],
     "build": {

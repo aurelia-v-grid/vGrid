@@ -4,8 +4,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
 var assign = Object.assign || require('object.assign');
 var merge = require('merge2');
-var paths = require('../pathsBuild');
-var changed = require('gulp-changed');
+var paths = require('./paths');
 var runSequence = require('run-sequence');
 
 
@@ -42,22 +41,12 @@ var tsProjectSystem = ts.createProject('./tsconfig.json', {
 function build(tsProject, outputPath) {
   var tsResult = gulp.src(paths.dtsSrc.concat(paths.source))
     .pipe(plumber())
-/*    .pipe(changed(outputPath, {
-      extension: '.ts'
-    }))
-    .pipe(sourcemaps.init({
-      loadMaps: true
-    }))*/
     .pipe(tsProject());
 
   return merge([ // Merge the two output streams, so this task is finished when the IO of both operations is done. 
       tsResult.dts.pipe(gulp.dest(outputPath)),
       tsResult.js.pipe(gulp.dest(outputPath))
     ])
-/*    .pipe(sourcemaps.write('.', {
-      includeContent: false,
-      sourceRoot: paths.root
-    }))*/
     .pipe(gulp.dest(outputPath))
 }
 
@@ -100,30 +89,11 @@ gulp.task('build-css', function () {
 });
 
 
-gulp.task('build-json', function () {
-  return gulp.src(paths.json)
-    .pipe(gulp.dest(paths.output + 'es2015'))
-    .pipe(gulp.dest(paths.output + 'commonjs'))
-    .pipe(gulp.dest(paths.output + 'amd'))
-    .pipe(gulp.dest(paths.output + 'system'));
-});
-
-
-gulp.task('build-woff2', function () {
-  return gulp.src(paths.woff2)
-    .pipe(gulp.dest(paths.output + 'es2015'))
-    .pipe(gulp.dest(paths.output + 'commonjs'))
-    .pipe(gulp.dest(paths.output + 'amd'))
-    .pipe(gulp.dest(paths.output + 'system'));
-});
-
-
-
 
 
 gulp.task('build', function (callback) {
   return runSequence(
-    'clean-build', ['build-json', 'build-woff2', 'build-css', 'build-html', 'build-es2015', 'build-amd', 'build-system', 'build-commonjs'],
+    'clean-build', ['build-css', 'build-html', 'build-es2015', 'build-amd', 'build-system', 'build-commonjs'],
     callback
   );
 });

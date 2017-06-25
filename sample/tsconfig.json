@@ -5,7 +5,7 @@
     "outDir": "dist",
     "sourceMap": true,
     "target": "es5",
-    "module": "system",
+    "module": "commonjs",
     "declaration": false,
     "noImplicitAny": false,
     "removeComments": true,
@@ -15,7 +15,6 @@
     "lib": ["es2017", "dom"],
     "baseUrl": "./",
     "paths": {
-      "src/*": ["src/*"],
       "aurelia-v-grid": ["../src"]
     }
   },

@@ -11,6 +11,7 @@ sample/node_modules
 sample/jspm_packages
 sample/bower_components
 sample/.idea
+sample/.fusebox
 sample/.DS_STORE
 sample/dist
 sample/build/reports

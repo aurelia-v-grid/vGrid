@@ -1,45 +1,20 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Aurelia</title>
-    <!--The FontAwesome version is locked at 4.6.3 in the package.json file to keep this from breaking.-->
-    <link rel="stylesheet" href="jspm_packages/npm/font-awesome@4.6.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles/styles.css">
+<head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
+    <title>Welcome to Aurelia with FuseBox</title>
+    <link href="./styles/styles.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+</head>
 
   <body aurelia-app="main">
-    <div class="splash">
-      <div class="message">Aurelia-V-Grid Sample</div>
-      <i class="fa fa-spinner fa-spin"></i>
-    </div>
-    
-    <!-- The bluebird version is locked at 4.6.3 in the package.json file to keep this from breaking -->
-    <!-- We include bluebird to bypass Edge's very slow Native Promise implementation. The Edge team -->
-    <!-- has fixed the issues with their implementation with these fixes being distributed with the  -->
-    <!-- Windows 10 Anniversary Update on 2 August 2016. Once that update has pushed out, you may    -->
-    <!-- consider removing bluebird from your project and simply using native promises if you do     -->
-    <!-- not need to support Internet Explorer.                                                      -->
-  <!--  <script src="jspm_packages/npm/bluebird@3.4.1/js/browser/bluebird.min.js"></script> -->
-    <script src="jspm_packages/system.js"></script>
-    <script src="config.js"></script>
-    <script>
-        System.import('aurelia-bootstrapper');
-        System.import("/root/package.json!text").then(function(m) {
-        var cfg = {
-           packages: {}
-        };
-        
-        
-        var package = JSON.parse(m)
-        // Create a new systemjs package with the package name
-        cfg.packages[package.name] = {
-            "main": "index"
-        };
-        System.config(cfg);
-      });
-
-
-    </script>
+    <script type="text/javascript" charset="utf-8" src="./dist/aurelia-v-grid.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./dist/vendor.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./dist/app.js"></script>
   </body>
 </html>

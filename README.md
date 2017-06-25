@@ -13,8 +13,9 @@
 
 ###How to get up and running to test sample ( clone, npm install and jspm install)
 * ```git clone https://github.com/vegarringdal/vGrid```
-* ```npm install``` on root (cd vgrid after clone)
-* ```npm install && jspm install``` under sample (not needed if you are not running sample/gulp watch)
+* enter vgrid folder
+* ```node setup```
+
 
 ###How to build and run sample
 * ```gulp watch``` to run sample, sample refreshes if you make changes to sample or grid code
@@ -23,6 +24,12 @@
 
 ###Updates..
 ---
+25 April 2017
+
+* replaced jspm sample with fusebox
+
+---
+
 
 8 April 2017
 

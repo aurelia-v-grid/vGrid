@@ -29,7 +29,8 @@
     "./custom_typings/**/*.d.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "sample"
   ],
   "atom": {
     "rewriteTsconfig": false
