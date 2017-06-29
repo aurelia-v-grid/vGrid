@@ -38,10 +38,11 @@ var injectBoostrapAndLoader =function() {
 // sample typechecker
 gulp.task('sample-typechecker', function() {
     // set correct dir first..
-    process.chdir('./sample');
+    
     var testWatch = TypeHelper({
         tsConfig: './tsconfig.json',
-        name: 'Sample Watch'
+        name: 'Sample Watch',
+        basePath:'./sample'
     })
     testWatch.runWatch('./src')
     return true; 
@@ -52,7 +53,8 @@ gulp.task('plugin-typechecker', function() {
     // set correct dir first..
     var testWatch = TypeHelper({
         tsConfig: './tsconfig.json',
-        name: 'Plugin Watch'
+        name: 'Plugin Watch',
+        basePath:'./'
     })
     testWatch.runWatch('./src')
     return true; 

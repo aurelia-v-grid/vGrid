@@ -40,7 +40,7 @@
     "bluebird": "^3.5.0",
     "fuse-box": "2.1.0",
     "fuse-box-aurelia-loader": "git://github.com/fuse-box/fuse-box-aurelia-loader.git",
-    "fuse-box-typechecker": "git://github.com/vegarringdal/fuse-box-typechecker.git",
+    "fuse-box-typechecker": "git://github.com/fuse-box/fuse-box-typechecker.git",
     "less": "^2.7.2",
     "source-map": "^0.5.6",
     "stylus": "^0.54.5",
