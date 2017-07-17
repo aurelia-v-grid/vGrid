@@ -38,7 +38,7 @@ export class VGridAttributesFilterObserver {
    *
    */
   public valueChanged(newValue: any) {
-    if (this.attribute && newValue) { // if no attibute we do not want to do anything
+    if (this.attribute && (typeof newValue !== 'undefined')) { // if no attibute we do not want to do anything
         this.updateFilter();
     }
   }
