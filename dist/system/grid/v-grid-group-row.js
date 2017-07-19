@@ -29,20 +29,20 @@ System.register(["aurelia-framework", "./v-grid"], function (exports_1, context_
                 VGridGroupRow.prototype.bind = function () {
                     this.vGrid.colGroupRow = this.rowTemplate;
                 };
+                VGridGroupRow = __decorate([
+                    aurelia_framework_1.noView(),
+                    aurelia_framework_1.customElement('v-grid-group-row'),
+                    aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
+                        compiler = null;
+                        resources = null;
+                        instruction.rowTemplate = element.innerHTML;
+                        element.innerHTML = '';
+                    }),
+                    aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
+                    __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
+                ], VGridGroupRow);
                 return VGridGroupRow;
             }());
-            VGridGroupRow = __decorate([
-                aurelia_framework_1.noView(),
-                aurelia_framework_1.customElement('v-grid-group-row'),
-                aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
-                    compiler = null;
-                    resources = null;
-                    instruction.rowTemplate = element.innerHTML;
-                    element.innerHTML = '';
-                }),
-                aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
-                __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
-            ], VGridGroupRow);
             exports_1("VGridGroupRow", VGridGroupRow);
         }
     };

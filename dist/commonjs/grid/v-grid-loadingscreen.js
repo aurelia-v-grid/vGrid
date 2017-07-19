@@ -19,18 +19,18 @@ var VGridLoadingScreen = (function () {
     VGridLoadingScreen.prototype.bind = function () {
         this.vGrid.loadingScreenTemplate = this.template;
     };
+    VGridLoadingScreen = __decorate([
+        aurelia_framework_1.noView(),
+        aurelia_framework_1.customElement('v-grid-loadingscreen'),
+        aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
+            compiler = null;
+            resources = null;
+            instruction.template = element.innerHTML;
+            element.innerHTML = '';
+        }),
+        aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
+        __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
+    ], VGridLoadingScreen);
     return VGridLoadingScreen;
 }());
-VGridLoadingScreen = __decorate([
-    aurelia_framework_1.noView(),
-    aurelia_framework_1.customElement('v-grid-loadingscreen'),
-    aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
-        compiler = null;
-        resources = null;
-        instruction.template = element.innerHTML;
-        element.innerHTML = '';
-    }),
-    aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
-    __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
-], VGridLoadingScreen);
 exports.VGridLoadingScreen = VGridLoadingScreen;

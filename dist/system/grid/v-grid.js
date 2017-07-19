@@ -184,61 +184,61 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                     }
                     return value;
                 };
+                VGrid.inject = [Element, aurelia_framework_1.ViewCompiler, aurelia_framework_1.Container, aurelia_framework_1.ViewResources, aurelia_framework_1.TaskQueue];
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-row-height' }),
+                    __metadata("design:type", Number)
+                ], VGrid.prototype, "attRowHeight", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-header-height' }),
+                    __metadata("design:type", Number)
+                ], VGrid.prototype, "attHeaderHeight", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-footer-height' }),
+                    __metadata("design:type", Number)
+                ], VGrid.prototype, "attFooterHeight", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-panel-height' }),
+                    __metadata("design:type", Number)
+                ], VGrid.prototype, "attPanelHeight", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-grid-connector' }),
+                    __metadata("design:type", Object)
+                ], VGrid.prototype, "attGridConnector", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-multi-select' }),
+                    __metadata("design:type", Boolean)
+                ], VGrid.prototype, "attMultiSelect", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-manual-sel' }),
+                    __metadata("design:type", Boolean)
+                ], VGrid.prototype, "attManualSelection", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-theme' }),
+                    __metadata("design:type", String)
+                ], VGrid.prototype, "attTheme", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-row-on-draw' }),
+                    __metadata("design:type", Function)
+                ], VGrid.prototype, "attOnRowDraw", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-columns' }),
+                    __metadata("design:type", Array)
+                ], VGrid.prototype, "attColConfig", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-i18n' }),
+                    __metadata("design:type", Function)
+                ], VGrid.prototype, "attI18N", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-data-delay' }),
+                    __metadata("design:type", Number)
+                ], VGrid.prototype, "attDataDelay", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'v-variable-row-height' }),
+                    __metadata("design:type", Boolean)
+                ], VGrid.prototype, "attVariableRowHeight", void 0);
                 return VGrid;
             }());
-            VGrid.inject = [Element, aurelia_framework_1.ViewCompiler, aurelia_framework_1.Container, aurelia_framework_1.ViewResources, aurelia_framework_1.TaskQueue];
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-row-height' }),
-                __metadata("design:type", Number)
-            ], VGrid.prototype, "attRowHeight", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-header-height' }),
-                __metadata("design:type", Number)
-            ], VGrid.prototype, "attHeaderHeight", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-footer-height' }),
-                __metadata("design:type", Number)
-            ], VGrid.prototype, "attFooterHeight", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-panel-height' }),
-                __metadata("design:type", Number)
-            ], VGrid.prototype, "attPanelHeight", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-grid-connector' }),
-                __metadata("design:type", Object)
-            ], VGrid.prototype, "attGridConnector", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-multi-select' }),
-                __metadata("design:type", Boolean)
-            ], VGrid.prototype, "attMultiSelect", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-manual-sel' }),
-                __metadata("design:type", Boolean)
-            ], VGrid.prototype, "attManualSelection", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-theme' }),
-                __metadata("design:type", String)
-            ], VGrid.prototype, "attTheme", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-row-on-draw' }),
-                __metadata("design:type", Function)
-            ], VGrid.prototype, "attOnRowDraw", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-columns' }),
-                __metadata("design:type", Array)
-            ], VGrid.prototype, "attColConfig", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-i18n' }),
-                __metadata("design:type", Function)
-            ], VGrid.prototype, "attI18N", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-data-delay' }),
-                __metadata("design:type", Number)
-            ], VGrid.prototype, "attDataDelay", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'v-variable-row-height' }),
-                __metadata("design:type", Boolean)
-            ], VGrid.prototype, "attVariableRowHeight", void 0);
             exports_1("VGrid", VGrid);
         }
     };

@@ -148,12 +148,12 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             document.addEventListener('mousemove', this.onmousemoveBinded);
             document.addEventListener('mouseup', this.onmouseupBinded);
         };
+        VGridAttributesResizeCol = __decorate([
+            aurelia_framework_1.customAttribute('v-resize-col'),
+            aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+            __metadata("design:paramtypes", [Element, v_grid_1.VGrid])
+        ], VGridAttributesResizeCol);
         return VGridAttributesResizeCol;
     }());
-    VGridAttributesResizeCol = __decorate([
-        aurelia_framework_1.customAttribute('v-resize-col'),
-        aurelia_framework_1.inject(Element, v_grid_1.VGrid),
-        __metadata("design:paramtypes", [Element, v_grid_1.VGrid])
-    ], VGridAttributesResizeCol);
     exports.VGridAttributesResizeCol = VGridAttributesResizeCol;
 });

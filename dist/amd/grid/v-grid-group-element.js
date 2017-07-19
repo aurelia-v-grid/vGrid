@@ -18,19 +18,19 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
         VGridGroupElement.prototype.bind = function () {
             this.vGrid.colGroupElement = this.rowTemplate;
         };
+        VGridGroupElement = __decorate([
+            aurelia_framework_1.noView(),
+            aurelia_framework_1.customElement('v-grid-group-element'),
+            aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
+                compiler = null;
+                resources = null;
+                instruction.rowTemplate = element.innerHTML;
+                element.innerHTML = '';
+            }),
+            aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
+            __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
+        ], VGridGroupElement);
         return VGridGroupElement;
     }());
-    VGridGroupElement = __decorate([
-        aurelia_framework_1.noView(),
-        aurelia_framework_1.customElement('v-grid-group-element'),
-        aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
-            compiler = null;
-            resources = null;
-            instruction.rowTemplate = element.innerHTML;
-            element.innerHTML = '';
-        }),
-        aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
-        __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
-    ], VGridGroupElement);
     exports.VGridGroupElement = VGridGroupElement;
 });

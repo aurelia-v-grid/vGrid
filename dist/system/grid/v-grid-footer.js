@@ -29,20 +29,20 @@ System.register(["aurelia-framework", "./v-grid"], function (exports_1, context_
                 VGridFooter.prototype.bind = function () {
                     this.vGrid.footerTemplate = this.template;
                 };
+                VGridFooter = __decorate([
+                    aurelia_framework_1.noView(),
+                    aurelia_framework_1.customElement('v-grid-footer'),
+                    aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
+                        compiler = null;
+                        resources = null;
+                        instruction.template = element.innerHTML;
+                        element.innerHTML = '';
+                    }),
+                    aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
+                    __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
+                ], VGridFooter);
                 return VGridFooter;
             }());
-            VGridFooter = __decorate([
-                aurelia_framework_1.noView(),
-                aurelia_framework_1.customElement('v-grid-footer'),
-                aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
-                    compiler = null;
-                    resources = null;
-                    instruction.template = element.innerHTML;
-                    element.innerHTML = '';
-                }),
-                aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
-                __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
-            ], VGridFooter);
             exports_1("VGridFooter", VGridFooter);
         }
     };

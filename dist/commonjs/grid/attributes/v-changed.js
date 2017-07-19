@@ -27,11 +27,11 @@ var VGridAttributesOnChange = (function () {
         this.bindingContext = bindingContext;
         this.overrideContext = overrideContext;
     };
+    VGridAttributesOnChange = __decorate([
+        aurelia_framework_1.customAttribute('v-onchange'),
+        aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+        __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
+    ], VGridAttributesOnChange);
     return VGridAttributesOnChange;
 }());
-VGridAttributesOnChange = __decorate([
-    aurelia_framework_1.customAttribute('v-onchange'),
-    aurelia_framework_1.inject(Element, v_grid_1.VGrid),
-    __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
-], VGridAttributesOnChange);
 exports.VGridAttributesOnChange = VGridAttributesOnChange;

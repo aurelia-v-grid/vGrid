@@ -77,21 +77,21 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                     });
                     return markup;
                 };
+                __decorate([
+                    aurelia_framework_1.bindable,
+                    __metadata("design:type", String)
+                ], VGridAttributesSort.prototype, "field", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable,
+                    __metadata("design:type", String)
+                ], VGridAttributesSort.prototype, "asc", void 0);
+                VGridAttributesSort = __decorate([
+                    aurelia_framework_1.customAttribute('v-sort'),
+                    aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+                    __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
+                ], VGridAttributesSort);
                 return VGridAttributesSort;
             }());
-            __decorate([
-                aurelia_framework_1.bindable,
-                __metadata("design:type", String)
-            ], VGridAttributesSort.prototype, "field", void 0);
-            __decorate([
-                aurelia_framework_1.bindable,
-                __metadata("design:type", String)
-            ], VGridAttributesSort.prototype, "asc", void 0);
-            VGridAttributesSort = __decorate([
-                aurelia_framework_1.customAttribute('v-sort'),
-                aurelia_framework_1.inject(Element, v_grid_1.VGrid),
-                __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
-            ], VGridAttributesSort);
             exports_1("VGridAttributesSort", VGridAttributesSort);
         }
     };

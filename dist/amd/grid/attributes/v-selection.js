@@ -51,20 +51,20 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
                 }
             };
         };
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", Boolean)
+        ], VGridAttributesSelection.prototype, "selected", void 0);
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", String)
+        ], VGridAttributesSelection.prototype, "type", void 0);
+        VGridAttributesSelection = __decorate([
+            aurelia_framework_1.customAttribute('v-selection'),
+            aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+            __metadata("design:paramtypes", [HTMLInputElement, v_grid_1.VGrid])
+        ], VGridAttributesSelection);
         return VGridAttributesSelection;
     }());
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", Boolean)
-    ], VGridAttributesSelection.prototype, "selected", void 0);
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", String)
-    ], VGridAttributesSelection.prototype, "type", void 0);
-    VGridAttributesSelection = __decorate([
-        aurelia_framework_1.customAttribute('v-selection'),
-        aurelia_framework_1.inject(Element, v_grid_1.VGrid),
-        __metadata("design:paramtypes", [HTMLInputElement, v_grid_1.VGrid])
-    ], VGridAttributesSelection);
     exports.VGridAttributesSelection = VGridAttributesSelection;
 });

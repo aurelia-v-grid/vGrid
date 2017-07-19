@@ -378,21 +378,21 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                         panel: isPanel
                     };
                 };
+                __decorate([
+                    aurelia_framework_1.bindable,
+                    __metadata("design:type", String)
+                ], VGridDragDropCol.prototype, "title", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable,
+                    __metadata("design:type", String)
+                ], VGridDragDropCol.prototype, "field", void 0);
+                VGridDragDropCol = __decorate([
+                    aurelia_framework_1.customAttribute('v-drag-drop-col'),
+                    aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+                    __metadata("design:paramtypes", [Element, v_grid_1.VGrid])
+                ], VGridDragDropCol);
                 return VGridDragDropCol;
             }());
-            __decorate([
-                aurelia_framework_1.bindable,
-                __metadata("design:type", String)
-            ], VGridDragDropCol.prototype, "title", void 0);
-            __decorate([
-                aurelia_framework_1.bindable,
-                __metadata("design:type", String)
-            ], VGridDragDropCol.prototype, "field", void 0);
-            VGridDragDropCol = __decorate([
-                aurelia_framework_1.customAttribute('v-drag-drop-col'),
-                aurelia_framework_1.inject(Element, v_grid_1.VGrid),
-                __metadata("design:paramtypes", [Element, v_grid_1.VGrid])
-            ], VGridDragDropCol);
             exports_1("VGridDragDropCol", VGridDragDropCol);
         }
     };

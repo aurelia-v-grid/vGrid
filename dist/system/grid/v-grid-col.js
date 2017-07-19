@@ -75,109 +75,109 @@ System.register(["aurelia-framework", "./v-grid"], function (exports_1, context_
                     }
                     return value;
                 };
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-width' }),
+                    __metadata("design:type", Number)
+                ], VGridElementColConfig.prototype, "colWidth", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-field' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colField", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-header-name' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colHeaderName", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-sort' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colSort", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-pin-left' }),
+                    __metadata("design:type", Boolean)
+                ], VGridElementColConfig.prototype, "colPinLeft", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-pin-right' }),
+                    __metadata("design:type", Boolean)
+                ], VGridElementColConfig.prototype, "colPinRight", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-filter' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colFilter", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-filter-top' }),
+                    __metadata("design:type", Boolean)
+                ], VGridElementColConfig.prototype, "colFilterTop", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-add-label-attributes' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colAddLabelAttributes", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-add-filter-attributes' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colAddFilterAttributes", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-add-row-attributes' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colAddRowAttributes", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-type' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colType", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-filter-menu' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colFilterMenu", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-label-menu' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colLabelMenu", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-row-menu' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colRowMenu", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-hidden' }),
+                    __metadata("design:type", Boolean)
+                ], VGridElementColConfig.prototype, "colHidden", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-drag-drop' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colDragDrop", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-resizeable' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colResizeable", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ attribute: 'col-display-edit' }),
+                    __metadata("design:type", String)
+                ], VGridElementColConfig.prototype, "colDisplayEdit", void 0);
+                VGridElementColConfig = __decorate([
+                    aurelia_framework_1.noView(),
+                    aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
+                        compiler = null;
+                        resources = null;
+                        var headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
+                        var headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
+                        if (headerTemplateHtml !== '') {
+                            instruction.colHeaderTemplate = headerTemplateHtml;
+                        }
+                        var rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
+                        var rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
+                        if (rowTemplateHtml !== '') {
+                            instruction.colRowTemplate = rowTemplateHtml;
+                        }
+                        element.innerHTML = '';
+                        var css = element.getAttribute('col-css');
+                        if (css) {
+                            instruction.colCss = css;
+                        }
+                    }),
+                    aurelia_framework_1.customElement('v-grid-col'),
+                    aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
+                    __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
+                ], VGridElementColConfig);
                 return VGridElementColConfig;
             }());
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-width' }),
-                __metadata("design:type", Number)
-            ], VGridElementColConfig.prototype, "colWidth", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-field' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colField", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-header-name' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colHeaderName", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-sort' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colSort", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-pin-left' }),
-                __metadata("design:type", Boolean)
-            ], VGridElementColConfig.prototype, "colPinLeft", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-pin-right' }),
-                __metadata("design:type", Boolean)
-            ], VGridElementColConfig.prototype, "colPinRight", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-filter' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colFilter", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-filter-top' }),
-                __metadata("design:type", Boolean)
-            ], VGridElementColConfig.prototype, "colFilterTop", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-add-label-attributes' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colAddLabelAttributes", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-add-filter-attributes' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colAddFilterAttributes", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-add-row-attributes' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colAddRowAttributes", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-type' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colType", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-filter-menu' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colFilterMenu", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-label-menu' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colLabelMenu", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-row-menu' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colRowMenu", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-hidden' }),
-                __metadata("design:type", Boolean)
-            ], VGridElementColConfig.prototype, "colHidden", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-drag-drop' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colDragDrop", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-resizeable' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colResizeable", void 0);
-            __decorate([
-                aurelia_framework_1.bindable({ attribute: 'col-display-edit' }),
-                __metadata("design:type", String)
-            ], VGridElementColConfig.prototype, "colDisplayEdit", void 0);
-            VGridElementColConfig = __decorate([
-                aurelia_framework_1.noView(),
-                aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
-                    compiler = null;
-                    resources = null;
-                    var headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
-                    var headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
-                    if (headerTemplateHtml !== '') {
-                        instruction.colHeaderTemplate = headerTemplateHtml;
-                    }
-                    var rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
-                    var rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
-                    if (rowTemplateHtml !== '') {
-                        instruction.colRowTemplate = rowTemplateHtml;
-                    }
-                    element.innerHTML = '';
-                    var css = element.getAttribute('col-css');
-                    if (css) {
-                        instruction.colCss = css;
-                    }
-                }),
-                aurelia_framework_1.customElement('v-grid-col'),
-                aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
-                __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
-            ], VGridElementColConfig);
             exports_1("VGridElementColConfig", VGridElementColConfig);
         }
     };

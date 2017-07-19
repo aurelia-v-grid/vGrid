@@ -70,29 +70,29 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
                     var valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
                     return valueConverter(value);
                 };
+                __decorate([
+                    aurelia_framework_1.bindable,
+                    __metadata("design:type", String)
+                ], VGridAttributesDataHandler.prototype, "field", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable,
+                    __metadata("design:type", String)
+                ], VGridAttributesDataHandler.prototype, "value", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable,
+                    __metadata("design:type", String)
+                ], VGridAttributesDataHandler.prototype, "display", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable,
+                    __metadata("design:type", String)
+                ], VGridAttributesDataHandler.prototype, "edit", void 0);
+                VGridAttributesDataHandler = __decorate([
+                    aurelia_framework_1.customAttribute('v-data-handler'),
+                    aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+                    __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
+                ], VGridAttributesDataHandler);
                 return VGridAttributesDataHandler;
             }());
-            __decorate([
-                aurelia_framework_1.bindable,
-                __metadata("design:type", String)
-            ], VGridAttributesDataHandler.prototype, "field", void 0);
-            __decorate([
-                aurelia_framework_1.bindable,
-                __metadata("design:type", String)
-            ], VGridAttributesDataHandler.prototype, "value", void 0);
-            __decorate([
-                aurelia_framework_1.bindable,
-                __metadata("design:type", String)
-            ], VGridAttributesDataHandler.prototype, "display", void 0);
-            __decorate([
-                aurelia_framework_1.bindable,
-                __metadata("design:type", String)
-            ], VGridAttributesDataHandler.prototype, "edit", void 0);
-            VGridAttributesDataHandler = __decorate([
-                aurelia_framework_1.customAttribute('v-data-handler'),
-                aurelia_framework_1.inject(Element, v_grid_1.VGrid),
-                __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
-            ], VGridAttributesDataHandler);
             exports_1("VGridAttributesDataHandler", VGridAttributesDataHandler);
         }
     };

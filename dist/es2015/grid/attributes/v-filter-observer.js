@@ -15,7 +15,7 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             this.element = element;
         }
         VGridAttributesFilterObserver.prototype.valueChanged = function (newValue) {
-            if (this.attribute && newValue) {
+            if (this.attribute && (typeof newValue !== 'undefined')) {
                 this.updateFilter();
             }
         };
@@ -64,28 +64,28 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             var valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
             return valueConverter(value);
         };
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", String)
+        ], VGridAttributesFilterObserver.prototype, "field", void 0);
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", String)
+        ], VGridAttributesFilterObserver.prototype, "operator", void 0);
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", String)
+        ], VGridAttributesFilterObserver.prototype, "converter", void 0);
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", String)
+        ], VGridAttributesFilterObserver.prototype, "value", void 0);
+        VGridAttributesFilterObserver = __decorate([
+            aurelia_framework_1.customAttribute('v-filter-observer'),
+            aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+            __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
+        ], VGridAttributesFilterObserver);
         return VGridAttributesFilterObserver;
     }());
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", String)
-    ], VGridAttributesFilterObserver.prototype, "field", void 0);
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", String)
-    ], VGridAttributesFilterObserver.prototype, "operator", void 0);
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", String)
-    ], VGridAttributesFilterObserver.prototype, "converter", void 0);
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", String)
-    ], VGridAttributesFilterObserver.prototype, "value", void 0);
-    VGridAttributesFilterObserver = __decorate([
-        aurelia_framework_1.customAttribute('v-filter-observer'),
-        aurelia_framework_1.inject(Element, v_grid_1.VGrid),
-        __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
-    ], VGridAttributesFilterObserver);
     exports.VGridAttributesFilterObserver = VGridAttributesFilterObserver;
 });

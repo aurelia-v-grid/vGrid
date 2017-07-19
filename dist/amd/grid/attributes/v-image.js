@@ -25,12 +25,12 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             this.element.src = '';
             this.element.src = this.value || '';
         };
+        VGridAttributesImageFix = __decorate([
+            aurelia_framework_1.customAttribute('v-image-fix'),
+            aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+            __metadata("design:paramtypes", [HTMLImageElement, v_grid_1.VGrid])
+        ], VGridAttributesImageFix);
         return VGridAttributesImageFix;
     }());
-    VGridAttributesImageFix = __decorate([
-        aurelia_framework_1.customAttribute('v-image-fix'),
-        aurelia_framework_1.inject(Element, v_grid_1.VGrid),
-        __metadata("design:paramtypes", [HTMLImageElement, v_grid_1.VGrid])
-    ], VGridAttributesImageFix);
     exports.VGridAttributesImageFix = VGridAttributesImageFix;
 });

@@ -32,32 +32,32 @@ System.register(["aurelia-framework", "./v-grid"], function (exports_1, context_
                     this.vGrid.colRepeatRowTemplate = this.rowTemplate;
                     this.vGrid.colRepeatRowHeaderTemplate = this.headerTemplate;
                 };
+                VGridElementRowRepeat = __decorate([
+                    aurelia_framework_1.noView(),
+                    aurelia_framework_1.customElement('v-grid-row-repeat'),
+                    aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
+                        compiler = null;
+                        resources = null;
+                        var headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
+                        var headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
+                        if (headerTemplateHtml !== '') {
+                            instruction.headerTemplate = headerTemplateHtml;
+                        }
+                        var rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
+                        var rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
+                        if (rowTemplateHtml !== '') {
+                            instruction.rowTemplate = rowTemplateHtml;
+                        }
+                        if (!rowTemplateHtml) {
+                            instruction.rowTemplate = element.innerHTML;
+                        }
+                        element.innerHTML = '';
+                    }),
+                    aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
+                    __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
+                ], VGridElementRowRepeat);
                 return VGridElementRowRepeat;
             }());
-            VGridElementRowRepeat = __decorate([
-                aurelia_framework_1.noView(),
-                aurelia_framework_1.customElement('v-grid-row-repeat'),
-                aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
-                    compiler = null;
-                    resources = null;
-                    var headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
-                    var headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
-                    if (headerTemplateHtml !== '') {
-                        instruction.headerTemplate = headerTemplateHtml;
-                    }
-                    var rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
-                    var rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
-                    if (rowTemplateHtml !== '') {
-                        instruction.rowTemplate = rowTemplateHtml;
-                    }
-                    if (!rowTemplateHtml) {
-                        instruction.rowTemplate = element.innerHTML;
-                    }
-                    element.innerHTML = '';
-                }),
-                aurelia_framework_1.inject(Element, v_grid_1.VGrid, aurelia_framework_1.TargetInstruction),
-                __metadata("design:paramtypes", [Element, v_grid_1.VGrid, Object])
-            ], VGridElementRowRepeat);
             exports_1("VGridElementRowRepeat", VGridElementRowRepeat);
         }
     };

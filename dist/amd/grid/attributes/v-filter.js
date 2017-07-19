@@ -163,32 +163,32 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
             var valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
             return valueConverter(value);
         };
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", String)
+        ], VGridAttributesFilter.prototype, "field", void 0);
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", String)
+        ], VGridAttributesFilter.prototype, "operator", void 0);
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", String)
+        ], VGridAttributesFilter.prototype, "converter", void 0);
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", String)
+        ], VGridAttributesFilter.prototype, "keydown", void 0);
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", String)
+        ], VGridAttributesFilter.prototype, "key", void 0);
+        VGridAttributesFilter = __decorate([
+            aurelia_framework_1.customAttribute('v-filter'),
+            aurelia_framework_1.inject(Element, v_grid_1.VGrid),
+            __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
+        ], VGridAttributesFilter);
         return VGridAttributesFilter;
     }());
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", String)
-    ], VGridAttributesFilter.prototype, "field", void 0);
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", String)
-    ], VGridAttributesFilter.prototype, "operator", void 0);
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", String)
-    ], VGridAttributesFilter.prototype, "converter", void 0);
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", String)
-    ], VGridAttributesFilter.prototype, "keydown", void 0);
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", String)
-    ], VGridAttributesFilter.prototype, "key", void 0);
-    VGridAttributesFilter = __decorate([
-        aurelia_framework_1.customAttribute('v-filter'),
-        aurelia_framework_1.inject(Element, v_grid_1.VGrid),
-        __metadata("design:paramtypes", [HTMLElement, v_grid_1.VGrid])
-    ], VGridAttributesFilter);
     exports.VGridAttributesFilter = VGridAttributesFilter;
 });
