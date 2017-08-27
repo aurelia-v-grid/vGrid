@@ -108,37 +108,41 @@
           
         </v-grid>
       </div>
-
+      
       <div class="col-md-6 col-12">
-        <div class="row container-fluid">
+        <div class="row">
           <button type="button" class="btn btn-secondary" click.delegate="translate()">trigger translate</button>
           <button type="button" class="btn btn-secondary" click.delegate="replace(5)">set collection to 5</button>
           <button type="button" class="btn btn-secondary" click.delegate="replace(15)">set collection to 15</button>
+          <button type="button" class="btn btn-secondary" click.delegate="replace(100)">set collection to 100</button>
+          <button type="button" class="btn btn-secondary" click.delegate="replace(1000)">set collection to 1000</button>
         </div>
-        <div class="row container-fluid">
-          <button type="button" class="btn btn-secondary" click.delegate="add(15)">add 5 to collection</button>
-          <button type="button" class="btn btn-secondary" click.delegate="addNew()">addnewblank</button>
-          <button type="button" class="btn btn-secondary" click.delegate="addNew('data')">add new (not blank)</button>
+        <div class="row">
+            <button type="button" class="btn btn-secondary" click.delegate="add(5)">add 5 to collection</button>
+            <button type="button" class="btn btn-secondary" click.delegate="add(100)">add 100 to collection</button>
+            <button type="button" class="btn btn-secondary" click.delegate="add(10000)">add 10000 to collection</button>
+            <button type="button" class="btn btn-secondary" click.delegate="addNew()">addnewblank</button>
+            <button type="button" class="btn btn-secondary" click.delegate="addNew('data')">add new (not blank)</button>
         </div>
-        <div class="row container-fluid">
+        <div class="row">
           <button type="button" class="btn btn-secondary" click.delegate="refresh()">refresh</button>
           <button type="button" class="btn btn-secondary" click.delegate="refresh(10)">refresh and add data</button>
           <button type="button" class="btn btn-secondary" click.delegate="remove()">delete selected rows</button>
         </div>
-        <div class="row container-fluid">
+        <div class="row">
           <button type="button" class="btn btn-secondary" click.delegate="filterByCode()">filterByCode</button>
           <button type="button" class="btn btn-secondary" click.delegate="setLocal('nb-NO')">setLocal nb-NO</button>
           <button type="button" class="btn btn-secondary" click.delegate="setLocal()">filterByCode nothing</button>
         </div>
-        <div class="row container-fluid">
+        <div class="row">
           <label for="input1">ds.entity.number</label>
           <input disabled.bind="!ds.entity" value.bind="ds.entity.number" class="form-control" id="input1" placeholder="number">
         </div>
-        <div class="row container-fluid">
+        <div class="row">
           <label for="input1">ds.entity.high</label>
           <input disabled.bind="!ds.entity" value.bind="ds.entity.high" class="form-control" id="input1" placeholder="high">
         </div>
-        <div class="row container-fluid">
+        <div class="row">
           <label class="form-check-label">
             <input disabled.bind="!ds.entity" checked.bind="ds.entity.bool" type="checkbox" class="form-check-input">
             ds.entity.bool
