@@ -21,13 +21,13 @@ export class Page1 {
         this.ds = new DataSource(new Selection('multiple'), {
             rowHeight: 50,
             groupHeight: 25,
-            rowHeightCallback: (x: any) => {
+            /* rowHeightCallback: (x: any) => {
                 if (x.index % 3 === 0) {
                     return 35;
                 } else {
                     return 50;
                 }
-            }
+            } */
         });
 
 

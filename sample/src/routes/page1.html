@@ -2,14 +2,14 @@
   <section>
     <require from="../utils/valueConverter"></require>
     <div class="row">
-      <div class="col s5">
+      <div class="col-md-6 col-12">
         <v-grid v-multi-select="true" v-grid-connector.bind="gridConnector" v-row-height="25" v-header-height="50" v-panel-height="25"
           v-footer-height="25" v-row-onclick.delegate="singleClick($event.detail)" v-row-ondblclick.delegate="dblClick($event.detail)"
-          v-variable-row-height="true" v-row-on-draw.call="onRowDraw($event)" style="height:400px">
+          v-variable-row-height="true" v-row-on-draw.call="onRowDraw($event)" style="height:600px; border: 1px solid rgb(230, 230, 230);">
 
           <v-grid-col col-filter-menu="filter:country" col-label-menu="sort:country;groupby:country;groupbytitle:countryT" col-width="100"
             col-drag-drop="title:Country x;field:country" col-sort="field:country" col-filter="field:country;i18n.call:translate()"
-            col-field="country" col-hidden="true">
+            col-field="country" >
           </v-grid-col>
 
           <v-grid-col col-filter-menu="filter:index;filterkey:less" col-header-name="index" col-label-menu="sort:index" col-width="100"
@@ -24,7 +24,7 @@
 
           <v-grid-col col-filter-menu="filter:high" col-label-menu="sort:high;groupby:high" col-filter-menu="filter:high" col-row-menu="copypaste:high"
             col-width="100" col-drag-drop="title:high;field:high" col-sort="field:high" col-filter="field:high" col-field="high"
-            col-hidden="true">
+            >
           </v-grid-col>
 
           <v-grid-col col-filter-menu="filter:bool" col-row-menu="copypaste:bool" col-label-menu="sort:bool;groupby:bool;hideshow:true"
@@ -48,30 +48,40 @@
         </v-grid>
       </div>
 
-      <div class="col s6">
-        <div class="row">
-          <button class="waves-effect waves-light btn" click.delegate="translate()">trigger translate</button>
-          <button class="waves-effect waves-light btn" click.delegate="replace(5)">set collection to 5</button>
-
-          <button class="waves-effect waves-light btn" click.delegate="replace(15)">set collection to 15</button>
+      <div class="col-md-6 col-12">
+        <div class="row container-fluid">
+          <button type="button" class="btn btn-secondary" click.delegate="translate()">trigger translate</button>
+          <button type="button" class="btn btn-secondary" click.delegate="replace(5)">set collection to 5</button>
+          <button type="button" class="btn btn-secondary" click.delegate="replace(15)">set collection to 15</button>
         </div>
-        <div class="row">
-          <button class="waves-effect waves-light btn" click.delegate="add(15)">add 5 to collection</button>
-          <button class="waves-effect waves-light btn" click.delegate="addNew()">addnewblank</button>
-          <button class="waves-effect waves-light btn" click.delegate="addNew('data')">add new (not blank)</button>
+        <div class="row container-fluid">
+          <button type="button" class="btn btn-secondary"click.delegate="add(15)">add 5 to collection</button>
+          <button type="button" class="btn btn-secondary" click.delegate="addNew()">addnewblank</button>
+          <button type="button" class="btn btn-secondary" click.delegate="addNew('data')">add new (not blank)</button>
         </div>
-        <div class="row">
-          <button class="waves-effect waves-light btn" click.delegate="refresh()">refresh</button>
-          <button class="waves-effect waves-light btn" click.delegate="refresh(10)">refresh and add data</button>
-          <button class="waves-effect waves-light btn" click.delegate="remove()">delete selected rows</button>
+        <div class="row container-fluid">
+          <button type="button" class="btn btn-secondary" click.delegate="refresh()">refresh</button>
+          <button type="button"  class="btn btn-secondary" click.delegate="refresh(10)">refresh and add data</button>
+          <button type="button" class="btn btn-secondary" click.delegate="remove()">delete selected rows</button>
         </div>
-        <div class="row">
-          <button class="waves-effect waves-light btn" click.delegate="filterByCode()">filterByCode</button>
-          <button class="waves-effect waves-light btn" click.delegate="setLocal('nb-NO')">setLocal nb-NO</button>
-          <button class="waves-effect waves-light btn" click.delegate="setLocal()">filterByCode nothing</button>
+        <div class="row container-fluid">
+          <button type="button" class="btn btn-secondary" click.delegate="filterByCode()">filterByCode</button>
+          <button type="button" class="btn btn-secondary" click.delegate="setLocal('nb-NO')">setLocal nb-NO</button>
+          <button type="button" class="btn btn-secondary" click.delegate="setLocal()">filterByCode nothing</button>
         </div>
-        <div class="row">
-          <input value.bind="ds.entity.number">
+        <div class="row container-fluid">
+          <label for="input1">ds.entity.number</label>
+          <input disabled.bind="!ds.entity" value.bind="ds.entity.number" class="form-control" id="input1"  placeholder="number">
+        </div>
+        <div class="row container-fluid">
+          <label for="input1">ds.entity.high</label>
+          <input disabled.bind="!ds.entity" value.bind="ds.entity.high" class="form-control" id="input1"  placeholder="high">
+        </div>
+        <div class="row container-fluid">
+          <label class="form-check-label">
+            <input disabled.bind="!ds.entity" checked.bind="ds.entity.bool" type="checkbox" class="form-check-input">
+            ds.entity.bool
+          </label>
         </div>
 
       </div>
