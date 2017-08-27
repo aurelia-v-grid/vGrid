@@ -436,15 +436,17 @@ export class RowScrollEvents {
       this.setRowHeight(row, currentRow);
       this.setRowTopValueVariableRowHeight(row, currentRowTop);
       row.row = currentRow;
-      currentRowTop = currentRowTop + rowHeightState.rows[currentRow];
+      currentRowTop = currentRowTop + rowHeightState.rows[currentRow]; 
     };
 
     // for setting before (when hitting bottom)
     let setBefore = (no: number) => {
       let row = this.rowCache[no];
-      this.setRowHeight(row, currentRow);
-      firstRowTop = firstRowTop - rowHeightState.rows[currentRow];
-      this.setRowTopValueVariableRowHeight(row, firstRowTop);
+      // use firstrow, and go back 1
+      firstRow--;
+      firstRowTop = firstRowTop - rowHeightState.rows[firstRow];
+      this.setRowHeight(row, rowHeightState.top[firstRow]);
+      this.setRowTopValueVariableRowHeight(row, firstRowTop);    
     };
 
     // for setting before (when hitting bottom)
