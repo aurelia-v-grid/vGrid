@@ -200,7 +200,7 @@ export class ContextMenu {
     public updateMenuStrings(key: string, text: string) {
 
         if (this.menuStrings[key]) {
-            this.menuStrings[key] = text;
+            this.menuStrings[key] = text || this.menuStrings[key];
         }
 
     }
