@@ -278,8 +278,9 @@ System.register([], function (exports_1, context_1) {
                     };
                     var setBefore = function (no) {
                         var row = _this.rowCache[no];
-                        _this.setRowHeight(row, currentRow);
-                        firstRowTop = firstRowTop - rowHeightState.rows[currentRow];
+                        firstRow--;
+                        firstRowTop = firstRowTop - rowHeightState.rows[firstRow];
+                        _this.setRowHeight(row, rowHeightState.top[firstRow]);
                         _this.setRowTopValueVariableRowHeight(row, firstRowTop);
                     };
                     var setHiddenFromView = function (no) {

@@ -132,7 +132,7 @@ System.register(["aurelia-framework"], function (exports_1, context_1) {
                 };
                 ContextMenu.prototype.updateMenuStrings = function (key, text) {
                     if (this.menuStrings[key]) {
-                        this.menuStrings[key] = text;
+                        this.menuStrings[key] = text || this.menuStrings[key];
                     }
                 };
                 ContextMenu.prototype.closeMenuEvent = function () {

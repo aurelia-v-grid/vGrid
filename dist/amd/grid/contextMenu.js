@@ -124,7 +124,7 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
         };
         ContextMenu.prototype.updateMenuStrings = function (key, text) {
             if (this.menuStrings[key]) {
-                this.menuStrings[key] = text;
+                this.menuStrings[key] = text || this.menuStrings[key];
             }
         };
         ContextMenu.prototype.closeMenuEvent = function () {
