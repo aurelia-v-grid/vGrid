@@ -14,11 +14,15 @@ export class Page1 {
     private testString: string;
     private myCollection: any;
     private columns: any;
+    private showgrid: any;
 
     constructor(public router: Router, public dummyDataGenerator: DummyDataGenerator) {
         this.dummyDataGenerator.generateData(10, (data: any) => {
             this.myCollection = data;
         });
+
+        this.showgrid = true;
+
         this.ds = new DataSource(new Selection('multiple'), {
             rowHeight: 50,
             groupHeight: 25,
