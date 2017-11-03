@@ -144,11 +144,11 @@ export class Page1 {
 
     }
 
-    public hide() {
-        this.showgrid = false
+    public hidebtn() {
+        this.showgrid = false;
     }
 
-    public show() {
+    public showbtn() {
         this.showgrid = true;
     }
 
