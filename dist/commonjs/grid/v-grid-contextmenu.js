@@ -23,8 +23,8 @@ var VGridContextmenu = (function () {
         aurelia_framework_1.noView(),
         aurelia_framework_1.customElement('v-grid-contextmenu'),
         aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
-            compiler = null;
-            resources = null;
+            compiler = compiler;
+            resources = resources;
             instruction.menuTemplates = {};
             var template;
             var templateHTML;

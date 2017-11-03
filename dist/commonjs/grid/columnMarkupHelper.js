@@ -43,7 +43,7 @@ var ColumnMarkupHelper = (function () {
             switch (col.colType) {
                 case 'selection':
                     labelHeader = '';
-                    inputHeader = "<input \n            class=\"avg-row-checkbox-100\" \n            v-selection=\"type:header;selected.bind:selected\" \n            type=\"checkbox\">";
+                    inputHeader = "<input\n            class=\"avg-row-checkbox-100\"\n            v-selection=\"type:header;selected.bind:selected\"\n            type=\"checkbox\">";
                     break;
                 case 'image':
                     inputHeader = '<p class="avg-label-top"></p>';
@@ -69,7 +69,7 @@ var ColumnMarkupHelper = (function () {
         if (!col.colRowTemplate) {
             switch (col.colType) {
                 case 'selection':
-                    col.colRowTemplate = "<input \n            v-key-move \n            class=\"avg-row-checkbox-100\"  \n            v-selection=\"type:row;selected.bind:selected\" \n            type=\"checkbox\" >";
+                    col.colRowTemplate = "<input\n            v-key-move\n            class=\"avg-row-checkbox-100\"\n            v-selection=\"type:row;selected.bind:selected\"\n            type=\"checkbox\" >";
                     break;
                 case 'image':
                     this.createImageRowMarkup(col);
@@ -105,7 +105,6 @@ var ColumnMarkupHelper = (function () {
         }
         return returnValue;
     };
-    ;
     ColumnMarkupHelper.prototype.checkAttribute = function (attribute) {
         var value = attribute;
         if (attribute) {
@@ -129,14 +128,14 @@ var ColumnMarkupHelper = (function () {
         var colRowMenu = col.colRowMenu ? "v-menu=\"" + col.colRowMenu + "\"" : '';
         var colCss = col.colCss ? "css=\"" + col.colCss + "\"" : '';
         if (col.colType === 'checkbox') {
-            col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colAddRowAttributes + " \n        " + colRowMenu + "  \n        checked.bind=\"" + col.colField + "\">";
+            col.__colRowTemplateGenerated = "<input\n        " + colCss + "\n        " + colClass + "\n        " + colType + "\n        " + colAddRowAttributes + "\n        " + colRowMenu + "\n        checked.bind=\"" + col.colField + "\">";
         }
         else {
             var binding = "value.bind=\"" + col.colField + "\"";
             if (col.colDisplayEdit) {
                 binding = "v-data-handler=\"value.bind:" + col.colField + ";" + col.colDisplayEdit + "\"";
             }
-            col.__colRowTemplateGenerated = "<input \n        " + colCss + " \n        " + colClass + " \n        " + colType + " \n        " + colRowMenu + "\n        " + colAddRowAttributes + "  \n        " + binding + ">";
+            col.__colRowTemplateGenerated = "<input\n        " + colCss + "\n        " + colClass + "\n        " + colType + "\n        " + colRowMenu + "\n        " + colAddRowAttributes + "\n        " + binding + ">";
         }
     };
     ColumnMarkupHelper.prototype.createInputHeaderMarkup = function (col) {
@@ -170,7 +169,7 @@ var ColumnMarkupHelper = (function () {
         var colDragDrop = col.colDragDrop !== 'false' ? "v-drag-drop-col=\"" + col.colDragDrop + "\"" : '';
         var colResizeable = col.colResizeable !== 'false' ? "v-resize-col" : '';
         var extraAttributes = colDragDrop + " " + colResizeable + " " + colLabelMenu;
-        return "<p \n      " + extraAttributes + " \n      " + classname + " \n      " + sort + " \n      " + colAddLabelAttributes + ">\n      " + col.colHeaderName + "\n      </p>";
+        return "<p\n      " + extraAttributes + "\n      " + classname + "\n      " + sort + "\n      " + colAddLabelAttributes + ">\n      " + col.colHeaderName + "\n      </p>";
     };
     return ColumnMarkupHelper;
 }());

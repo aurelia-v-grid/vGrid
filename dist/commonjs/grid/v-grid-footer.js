@@ -23,8 +23,8 @@ var VGridFooter = (function () {
         aurelia_framework_1.noView(),
         aurelia_framework_1.customElement('v-grid-footer'),
         aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
-            compiler = null;
-            resources = null;
+            compiler = compiler;
+            resources = resources;
             instruction.template = element.innerHTML;
             element.innerHTML = '';
         }),

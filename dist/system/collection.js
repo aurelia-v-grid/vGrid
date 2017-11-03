@@ -6,7 +6,6 @@ System.register([], function (exports_1, context_1) {
         execute: function () {
             Collection = (function () {
                 function Collection(datasource) {
-                    this.datasource = datasource;
                     this.key = datasource.getKey();
                     this.rowHeight = datasource.rowHeight || 25;
                     this.groupHeight = datasource.groupHeight || 25;

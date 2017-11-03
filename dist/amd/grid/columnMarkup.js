@@ -163,10 +163,10 @@ define(["require", "exports", "aurelia-framework", "./columnMarkupHelper"], func
             var viewFactoryRight = this.getRowViews('right');
             var viewFactoryGroup = this.getRowViews('group');
             for (var i = 0; i < this.rowLength; i++) {
-                this.viewSlots.leftRowViewSlots[i] = this.createViewSlot(this.leftRows[i], viewFactoryLeft);
-                this.viewSlots.mainRowViewSlots[i] = this.createViewSlot(this.mainRows[i], viewFactoryMain);
-                this.viewSlots.rightRowViewSlots[i] = this.createViewSlot(this.rightRows[i], viewFactoryRight);
-                this.viewSlots.groupRowViewSlots[i] = this.createViewSlot(this.groupRows[i], viewFactoryGroup);
+                this.viewSlots.leftRowViewSlots[i] = this.createViewSlot(this.htmlCache.rowCache[i].left, viewFactoryLeft);
+                this.viewSlots.mainRowViewSlots[i] = this.createViewSlot(this.htmlCache.rowCache[i].main, viewFactoryMain);
+                this.viewSlots.rightRowViewSlots[i] = this.createViewSlot(this.htmlCache.rowCache[i].right, viewFactoryRight);
+                this.viewSlots.groupRowViewSlots[i] = this.createViewSlot(this.htmlCache.rowCache[i].group, viewFactoryGroup);
                 this.htmlCache.rowCache[i].leftRowViewSlot = this.viewSlots.leftRowViewSlots[i];
                 this.htmlCache.rowCache[i].mainRowViewSlot = this.viewSlots.mainRowViewSlots[i];
                 this.htmlCache.rowCache[i].rightRowViewSlot = this.viewSlots.rightRowViewSlots[i];

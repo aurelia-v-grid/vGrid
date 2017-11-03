@@ -16,8 +16,8 @@ var RowMarkup = (function () {
         var markupGroup = '';
         for (var i = 0; i < 40; i++) {
             var translateY = this.rowHeight * i;
-            var avgRowMarkup = "\n        <avg-row \n          class=\"avg-row\" \n          style=\"height:" + this.rowHeight + "px; \n            transform:translate3d(0px, " + translateY + "px, 0px);\n            z-index:5;\" \n          row=\"" + i + "\">\n        </avg-row>";
-            var avgRowMarkupGroup = "\n        <avg-row \n          class=\"avg-row-helper\" \n          style=\"height:" + this.rowHeight + "px; \n            transform:translate3d(0px, " + translateY + "px, 0px);\n            z-index:5;\" \n          row=\"" + i + "\">\n        </avg-row>";
+            var avgRowMarkup = "\n        <avg-row\n          class=\"avg-row\"\n          style=\"height:" + this.rowHeight + "px;\n            transform:translate3d(0px, " + translateY + "px, 0px);\n            z-index:5;\"\n          row=\"" + i + "\">\n        </avg-row>";
+            var avgRowMarkupGroup = "\n        <avg-row\n          class=\"avg-row-helper\"\n          style=\"height:" + this.rowHeight + "px;\n            transform:translate3d(0px, " + translateY + "px, 0px);\n            z-index:5;\"\n          row=\"" + i + "\">\n        </avg-row>";
             markupLeft = markupLeft + avgRowMarkup;
             markupMain = markupMain + avgRowMarkup;
             markupRight = markupRight + avgRowMarkup;

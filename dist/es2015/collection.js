@@ -2,7 +2,6 @@ define(["require", "exports"], function (require, exports) {
     Object.defineProperty(exports, "__esModule", { value: true });
     var Collection = (function () {
         function Collection(datasource) {
-            this.datasource = datasource;
             this.key = datasource.getKey();
             this.rowHeight = datasource.rowHeight || 25;
             this.groupHeight = datasource.groupHeight || 25;

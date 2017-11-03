@@ -80,7 +80,8 @@ define(["require", "exports"], function (require, exports) {
             if (this.attI18N) {
                 keys.forEach(function (key) {
                     if (_this.vGrid.filterOperatorTranslationKeys[key]) {
-                        _this.vGrid.filterOperatorNames[_this.vGrid.filterOperatorTranslationKeys[key]] = _this.attI18N(key) || _this.vGrid.filterOperatorNames[_this.vGrid.filterOperatorTranslationKeys[key]];
+                        _this.vGrid.filterOperatorNames[_this.vGrid.filterOperatorTranslationKeys[key]] =
+                            _this.attI18N(key) || _this.vGrid.filterOperatorNames[_this.vGrid.filterOperatorTranslationKeys[key]];
                     }
                     _this.contextMenu.updateMenuStrings(key, _this.attI18N(key));
                 });

@@ -10,7 +10,7 @@ define(["require", "exports", "./selection", "./collection", "./utils/arrayUtils
             this.key = null;
             this.mainArray = null;
             this.config = config;
-            if (config) {
+            if (this.config) {
                 this.key = config.key || '__avgKey';
                 this.rowHeight = config.rowHeight || 25;
                 this.groupHeight = config.groupHeight || 25;

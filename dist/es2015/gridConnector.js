@@ -6,7 +6,7 @@ define(["require", "exports"], function (require, exports) {
             this.controller = null;
             this.datasource = datasource;
             this.selection = selection || datasource.getSelection();
-            this.errorhandler = errorHandler || null;
+            this.errorhandler = errorHandler || this.errorhandler;
         }
         GridConnector.prototype.setInitTop = function (top) {
             this.initTop = top;

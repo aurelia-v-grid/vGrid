@@ -25,8 +25,8 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
             aurelia_framework_1.noView(),
             aurelia_framework_1.customElement('v-grid-row-repeat'),
             aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
-                compiler = null;
-                resources = null;
+                compiler = compiler;
+                resources = resources;
                 var headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
                 var headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
                 if (headerTemplateHtml !== '') {

@@ -7,7 +7,6 @@ export declare class Collection {
     private keys;
     private key;
     private count;
-    private datasource;
     private ungroupedArray;
     private rowHeightArray;
     private rowTopArray;

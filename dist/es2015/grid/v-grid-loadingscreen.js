@@ -22,8 +22,8 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
             aurelia_framework_1.noView(),
             aurelia_framework_1.customElement('v-grid-loadingscreen'),
             aurelia_framework_1.processContent(function (compiler, resources, element, instruction) {
-                compiler = null;
-                resources = null;
+                compiler = compiler;
+                resources = resources;
                 instruction.template = element.innerHTML;
                 element.innerHTML = '';
             }),
