@@ -81,6 +81,7 @@
   padding-top: 5px;
   text-align: center;
   overflow: hidden;
+  user-select: none;
 }
 
 .avg-default .avg-label-top {
@@ -95,6 +96,7 @@
   padding-top: 5px;
   text-align: center;
   overflow: hidden;
+  user-select: none;
 }
 
 /*.avg-default .avg-label-top p {
@@ -116,4 +118,5 @@
   margin: 0 !important;
   padding-top: 5px;
   text-align: center;
+  user-select: none;
 }
