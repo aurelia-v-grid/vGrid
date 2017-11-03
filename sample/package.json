@@ -39,14 +39,16 @@
     "aurelia-templating": "^1.6.0",
     "bluebird": "^3.5.1",
     "fuse-box": "2.3.3",
-    "fuse-box-aurelia-loader": "git://github.com/fuse-box/fuse-box-aurelia-loader.git#2.0.0",
-    "fuse-box-typechecker": "git://github.com/fuse-box/fuse-box-typechecker.git#2.6.0",
     "less": "^2.7.2",
     "source-map": "^0.6.1",
     "stylus": "^0.54.5",
     "tslint": "^5.8.0",
-    "typescript": "2.5.3",
+    "typescript": "2.6.1",
     "typings": "^2.1.1",
     "whatwg-fetch": "^2.0.3"
+  },
+  "dependencies": {
+    "fuse-box-aurelia-loader": "^2.0.1",
+    "fuse-box-typechecker": "^2.6.1"
   }
 }

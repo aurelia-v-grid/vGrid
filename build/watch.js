@@ -54,6 +54,7 @@ gulp.task('plugin-typechecker', function() {
     var testWatch = TypeHelper({
         tsConfig: './tsconfig.json',
         name: 'Plugin Watch',
+        tsLint:'./tslint.json',
         basePath:'./'
     })
     testWatch.runWatch('./src')
