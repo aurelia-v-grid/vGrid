@@ -157,11 +157,14 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
                             }
                             _this.controller.getContext();
                             _this.controller.createGrid();
+                            _this.viewSlots.bindAndAttachColumns(_this.overrideContext, _this.columnBindingContext, _this.attGridConnector.getSelection());
+                            setTimeout(function () {
+                                _this.controller.udateHorizontalScroller();
+                            }, 50);
                         }
-                        _this.viewSlots.bindAndAttachColumns(_this.overrideContext, _this.columnBindingContext, _this.attGridConnector.getSelection());
-                        setTimeout(function () {
-                            _this.controller.udateHorizontalScroller();
-                        }, 50);
+                        else {
+                            _this.controller.setColumnConfig(_this.controller.getColumnConfig());
+                        }
                         _this.attGridConnector.gridCreated();
                     });
                 };
