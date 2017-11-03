@@ -13,9 +13,10 @@ export class Page1 {
     private dsEventID: number;
     private testString: string;
     private myCollection: any;
+    private columns: any;
 
     constructor(public router: Router, public dummyDataGenerator: DummyDataGenerator) {
-        this.dummyDataGenerator.generateData(10000, (data: any) => {
+        this.dummyDataGenerator.generateData(10, (data: any) => {
             this.myCollection = data;
         });
         this.ds = new DataSource(new Selection('multiple'), {
@@ -137,5 +138,25 @@ export class Page1 {
             this.ds.refresh();
         }
 
+    }
+
+    public hide() {
+        this.showgrid = false
+    }
+
+    public show() {
+        this.showgrid = true;
+    }
+
+    public default() {
+        this.gridConnector.setColConfig(null);
+    }
+
+    public load() {
+        this.gridConnector.setColConfig(this.columns);
+    }
+
+    public  save() {
+        this.columns = this.gridConnector.getColConfig();
     }
 }
