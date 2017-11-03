@@ -53,20 +53,20 @@ export class RowMarkup {
       let translateY = this.rowHeight * i;
 
       let avgRowMarkup = `
-        <avg-row 
-          class="avg-row" 
-          style="height:${this.rowHeight}px; 
+        <avg-row
+          class="avg-row"
+          style="height:${this.rowHeight}px;
             transform:translate3d(0px, ${translateY}px, 0px);
-            z-index:5;" 
+            z-index:5;"
           row="${i}">
         </avg-row>`;
 
       let avgRowMarkupGroup = `
-        <avg-row 
-          class="avg-row-helper" 
-          style="height:${this.rowHeight}px; 
+        <avg-row
+          class="avg-row-helper"
+          style="height:${this.rowHeight}px;
             transform:translate3d(0px, ${translateY}px, 0px);
-            z-index:5;" 
+            z-index:5;"
           row="${i}">
         </avg-row>`;
 

@@ -194,7 +194,8 @@ export class Controller {
     if (this.attI18N) {
       keys.forEach((key: string) => {
         if (this.vGrid.filterOperatorTranslationKeys[key]) {
-          this.vGrid.filterOperatorNames[this.vGrid.filterOperatorTranslationKeys[key]] = this.attI18N(key) || this.vGrid.filterOperatorNames[this.vGrid.filterOperatorTranslationKeys[key]];
+          this.vGrid.filterOperatorNames[this.vGrid.filterOperatorTranslationKeys[key]] =
+            this.attI18N(key) || this.vGrid.filterOperatorNames[this.vGrid.filterOperatorTranslationKeys[key]];
         }
         this.contextMenu.updateMenuStrings(key, this.attI18N(key));
       });

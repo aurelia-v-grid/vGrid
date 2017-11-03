@@ -161,8 +161,7 @@ export class VGrid {
             viewCompiler,
             container,
             viewResources,
-            this.viewSlots,
-            );
+            this.viewSlots);
 
         this.contextMenu = new ContextMenu(
             viewCompiler,

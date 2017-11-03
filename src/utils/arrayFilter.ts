@@ -98,7 +98,7 @@ export class ArrayFilter {
             break;
           case 'string':
             if (data[x.attribute] === null || data[x.attribute] === undefined) {
-              rowValue = ''
+              rowValue = '';
             } else {
               rowValue = data[x.attribute].toLowerCase();
             }
@@ -147,7 +147,7 @@ export class ArrayFilter {
             filterOperator = 1;
             break;
           case 'object':
-            //todo check if object or date..
+            // todo check if object or date..
             try {
               rowValue = new Date(data[x.attribute].getFullYear(), data[x.attribute].getMonth(), data[x.attribute].getDate()).getTime();
               filterValue = new Date(x.value.getFullYear(), x.value.getMonth(), x.value.getDate()).getTime();

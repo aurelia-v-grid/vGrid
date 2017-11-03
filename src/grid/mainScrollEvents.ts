@@ -144,7 +144,7 @@ export class MainScrollEvents {
     let options: any = this.passiveSupported ? { passive: true } : false;
 
     switch (type) {
-      
+
       case 'all':
         this.right.addEventListener(this.wheelEvent, this.onWeelBinded, options);
         this.main.addEventListener(this.wheelEvent, this.onWeelBinded, options);

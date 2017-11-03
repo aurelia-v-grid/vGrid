@@ -31,7 +31,7 @@ export class Collection {
     // get groupHeight if any
     this.groupHeight = datasource.groupHeight || 25;
 
-    ///get rowHeightCallback
+    // get rowHeightCallback
     this.rowHeightCallback = datasource.rowHeightCallback;
 
     // some defaults

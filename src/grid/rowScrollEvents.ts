@@ -436,7 +436,7 @@ export class RowScrollEvents {
       this.setRowHeight(row, currentRow);
       this.setRowTopValueVariableRowHeight(row, currentRowTop);
       row.row = currentRow;
-      currentRowTop = currentRowTop + rowHeightState.rows[currentRow]; 
+      currentRowTop = currentRowTop + rowHeightState.rows[currentRow];
     };
 
     // for setting before (when hitting bottom)
@@ -446,7 +446,7 @@ export class RowScrollEvents {
       firstRow--;
       firstRowTop = firstRowTop - rowHeightState.rows[firstRow];
       this.setRowHeight(row, rowHeightState.top[firstRow]);
-      this.setRowTopValueVariableRowHeight(row, firstRowTop);    
+      this.setRowTopValueVariableRowHeight(row, firstRowTop);
     };
 
     // for setting before (when hitting bottom)

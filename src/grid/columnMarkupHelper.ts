@@ -72,9 +72,9 @@ export class ColumnMarkupHelper {
         case 'selection':
           // set template
           labelHeader = '';
-          inputHeader = `<input 
-            class="avg-row-checkbox-100" 
-            v-selection="type:header;selected.bind:selected" 
+          inputHeader = `<input
+            class="avg-row-checkbox-100"
+            v-selection="type:header;selected.bind:selected"
             type="checkbox">`;
           break;
         case 'image':
@@ -110,10 +110,10 @@ export class ColumnMarkupHelper {
       switch (col.colType) {
         case 'selection':
           // set template
-          col.colRowTemplate = `<input 
-            v-key-move 
-            class="avg-row-checkbox-100"  
-            v-selection="type:row;selected.bind:selected" 
+          col.colRowTemplate = `<input
+            v-key-move
+            class="avg-row-checkbox-100"
+            v-selection="type:row;selected.bind:selected"
             type="checkbox" >`;
           break;
         case 'image':
@@ -159,7 +159,7 @@ export class ColumnMarkupHelper {
       }
     }
     return returnValue;
-  };
+  }
 
 
 
@@ -214,12 +214,12 @@ export class ColumnMarkupHelper {
     // is it a checkbox?
     // todo: adding the observer part without choice, maybe param for that?
     if (col.colType === 'checkbox') {
-      col.__colRowTemplateGenerated = `<input 
-        ${colCss} 
-        ${colClass} 
-        ${colType} 
-        ${colAddRowAttributes} 
-        ${colRowMenu}  
+      col.__colRowTemplateGenerated = `<input
+        ${colCss}
+        ${colClass}
+        ${colType}
+        ${colAddRowAttributes}
+        ${colRowMenu}
         checked.bind="${col.colField}">`;
     } else {
 
@@ -229,12 +229,12 @@ export class ColumnMarkupHelper {
         binding = `v-data-handler="value.bind:${col.colField};${col.colDisplayEdit}"`;
       }
 
-      col.__colRowTemplateGenerated = `<input 
-        ${colCss} 
-        ${colClass} 
-        ${colType} 
+      col.__colRowTemplateGenerated = `<input
+        ${colCss}
+        ${colClass}
+        ${colType}
         ${colRowMenu}
-        ${colAddRowAttributes}  
+        ${colAddRowAttributes}
         ${binding}>`;
     }
   }
@@ -300,10 +300,10 @@ export class ColumnMarkupHelper {
 
     // apply magic
     // todo, atm Im adding resize columns and dragdrop columns, should this be a choice?
-    return `<p 
-      ${extraAttributes} 
-      ${classname} 
-      ${sort} 
+    return `<p
+      ${extraAttributes}
+      ${classname}
+      ${sort}
       ${colAddLabelAttributes}>
       ${col.colHeaderName}
       </p>`;
