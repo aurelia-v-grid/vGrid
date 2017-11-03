@@ -104,30 +104,32 @@ export class VGridElementColConfig {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
-    this.vGrid.colConfig.push(({
-      colWidth: this.colWidth ? this.colWidth * 1 : 100,
-      colRowTemplate: this.colRowTemplate,
-      colHeaderTemplate: this.colHeaderTemplate,
-      colField: this.colField,
-      colPinLeft: this.checkBool(this.colPinLeft),
-      colPinRight: this.checkBool(this.colPinRight),
-      colHeaderName: this.colHeaderName,
-      colFilterMenu: this.colFilterMenu,
-      colLabelMenu: this.colLabelMenu,
-      colRowMenu: this.colRowMenu,
-      colHidden: this.checkBool(this.colHidden),
-      colDragDrop: this.colDragDrop,
-      colResizeable: this.colResizeable,
-      colAddLabelAttributes: this.colAddLabelAttributes,
-      colAddFilterAttributes: this.colAddFilterAttributes,
-      colAddRowAttributes: this.colAddRowAttributes,
-      colSort: this.colSort,
-      colDisplayEdit: this.colDisplayEdit,
-      colFilter: this.colFilter,
-      colFilterTop: this.checkBool(this.colFilterTop),
-      colCss: this.colCss,
-      colType: this.colType || 'text'
-    } as ColConfigInterface));
+    if (this.vGrid.newGrid) {
+      this.vGrid.colConfig.push(({
+        colWidth: this.colWidth ? this.colWidth * 1 : 100,
+        colRowTemplate: this.colRowTemplate,
+        colHeaderTemplate: this.colHeaderTemplate,
+        colField: this.colField,
+        colPinLeft: this.checkBool(this.colPinLeft),
+        colPinRight: this.checkBool(this.colPinRight),
+        colHeaderName: this.colHeaderName,
+        colFilterMenu: this.colFilterMenu,
+        colLabelMenu: this.colLabelMenu,
+        colRowMenu: this.colRowMenu,
+        colHidden: this.checkBool(this.colHidden),
+        colDragDrop: this.colDragDrop,
+        colResizeable: this.colResizeable,
+        colAddLabelAttributes: this.colAddLabelAttributes,
+        colAddFilterAttributes: this.colAddFilterAttributes,
+        colAddRowAttributes: this.colAddRowAttributes,
+        colSort: this.colSort,
+        colDisplayEdit: this.colDisplayEdit,
+        colFilter: this.colFilter,
+        colFilterTop: this.checkBool(this.colFilterTop),
+        colCss: this.colCss,
+        colType: this.colType || 'text'
+      } as ColConfigInterface));
+    }
   }
 
 
