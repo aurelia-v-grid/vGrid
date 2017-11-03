@@ -258,23 +258,28 @@ export class VGrid {
                 }
                 this.controller.getContext();
                 this.controller.createGrid();
+
+
+
+
+                // bind columns
+                this.viewSlots.bindAndAttachColumns(
+                    this.overrideContext,
+                    this.columnBindingContext,
+                    this.attGridConnector.getSelection());
+
+                // update horizontal scroller
+                // todo, use TaskQueue
+                setTimeout(() => {
+                    this.controller.udateHorizontalScroller();
+                }, 50);
+            } else {
+                this.controller.setColumnConfig(this.controller.getColumnConfig());
+                // todo: should I bind the main, grouping and loading screen here?
+                // connect gridConnector to this controler
             }
-
-            // bind columns
-            this.viewSlots.bindAndAttachColumns(
-                this.overrideContext,
-                this.columnBindingContext,
-                this.attGridConnector.getSelection());
-
-            // update horizontal scroller
-            // todo, use TaskQueue
-            setTimeout(() => {
-               this.controller.udateHorizontalScroller();
-            }, 50);
-
-            // todo: should I bind the main, grouping and loading screen here?
-            // connect gridConnector to this controler
             this.attGridConnector.gridCreated();
+
 
         });
     }
