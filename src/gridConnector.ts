@@ -32,7 +32,7 @@ export class GridConnector implements GridConnectorInterface {
     this.controller = null;
     this.datasource = datasource;
     this.selection = selection || datasource.getSelection();
-    this.errorhandler = errorHandler || null;
+    this.errorhandler = errorHandler || this.errorhandler;
   }
 
 

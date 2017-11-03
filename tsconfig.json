@@ -14,7 +14,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": false,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "allowUnreachableCode":false,
     "removeComments": true,
     "emitDecoratorMetadata": true,

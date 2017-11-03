@@ -16,8 +16,8 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
   instruction: CustomBehaviorInstruction) => {
 
   // dont use
-  compiler = null;
-  resources = null;
+  compiler = compiler;
+  resources = resources;
 
   instruction.menuTemplates = {};
   let template: any;

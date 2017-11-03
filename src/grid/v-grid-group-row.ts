@@ -19,8 +19,8 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
   instruction: CustomBehaviorInstruction) => {
 
   // dont use
-  compiler = null;
-  resources = null;
+  compiler = compiler;
+  resources = resources;
 
   // get html markup, this will be added to our viewport when we create it
   instruction.rowTemplate = element.innerHTML;

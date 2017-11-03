@@ -25,8 +25,8 @@ import {
   instruction: CustomBehaviorInstruction) => {
 
   // dont use
-  compiler = null;
-  resources = null;
+  compiler = compiler;
+  resources = resources;
 
   // check if any header template is added, if so add to instruction for use
   let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];

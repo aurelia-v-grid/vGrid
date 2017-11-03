@@ -8,7 +8,7 @@ export class Collection {
   private keys: string[];
   private key: string;
   private count: number;
-  private datasource: DataSource;
+
   private ungroupedArray: EntityInterface[];
   private rowHeightArray: any[];
   private rowTopArray: any[];
@@ -22,7 +22,7 @@ export class Collection {
    *
    */
   constructor(datasource: DataSource) {
-    this.datasource = datasource;
+
     this.key = datasource.getKey();
 
     // get rowHeight if any

@@ -54,7 +54,7 @@ export class DataSource implements DatasourceInterface {
 
     // configuration
     this.config = config;
-    if (config) {
+    if (this.config) {
       this.key = config.key || '__avgKey';
       this.rowHeight = config.rowHeight || 25;
       this.groupHeight = config.groupHeight || 25;
