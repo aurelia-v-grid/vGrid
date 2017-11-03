@@ -55,7 +55,8 @@ gulp.task('plugin-typechecker', function() {
         tsConfig: './tsconfig.json',
         name: 'Plugin Watch',
         tsLint:'./tslint.json',
-        basePath:'./'
+        basePath:'./',
+        yellowOnLint: true
     })
     testWatch.runWatch('./src')
     return true; 

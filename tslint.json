@@ -74,7 +74,7 @@
       "check-operator",
       "check-separator",
       "check-type"
-    ],
-    "interface-name": [true, "always-prefix"]
+    ] //,
+    // "interface-name": [false, "always-prefix"]
   }
 }
