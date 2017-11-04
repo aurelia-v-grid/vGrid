@@ -11,7 +11,7 @@ export class App {
                 name: 'page1',
                 moduleId: './routes/page1',
                 nav: true,
-                title: 'Page1',
+                title: 'Simple columns',
                 settings: { auth: false}
             },
             {
@@ -19,7 +19,7 @@ export class App {
                 name: 'page2',
                 moduleId: './routes/page2',
                 nav: true,
-                title: 'Page2',
+                title: 'Custom columns',
                 settings: { auth: true}
             },
             {
@@ -27,7 +27,7 @@ export class App {
                 name: 'page3',
                 moduleId: './routes/page3',
                 nav: true,
-                title: 'Page3',
+                title: 'Row repeat',
                 settings: { auth: false}
             }
         ]);

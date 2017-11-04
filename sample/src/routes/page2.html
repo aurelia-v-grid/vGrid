@@ -1,3 +1,53 @@
 <template>
-     ${title}
+    <section>
+        <require from="../utils/valueConverter"></require>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <v-grid if.bind="showgrid" v-multi-select="true" v-grid-connector.bind="gridConnector" v-row-height="25" v-header-height="50"
+                    v-panel-height="25" v-footer-height="25" v style="height:600px; border: 1px solid rgb(230, 230, 230);">
+
+
+                    <!-- mix normal and custom columns -->
+
+                    <!-- simple column -->
+
+                    <v-grid-col col-filter-menu="filter:high" col-label-menu="sort:high;groupby:high" col-filter-menu="filter:high" col-row-menu="copypaste:high"
+                        col-width="100" col-drag-drop="title:high;field:high" col-sort="field:high" col-filter="field:high" col-field="high">
+                    </v-grid-col>
+
+
+                    <v-grid-col col-filter-menu="filter:bool" col-row-menu="copypaste:bool" col-label-menu="sort:bool;groupby:bool;hideshow:true"
+                        col-width="100" col-sort="field:bool" col-drag-drop="title:bool x;field:bool" col-filter="field:bool"
+                        col-field="bool | booleanFormatter" col-type="checkbox">
+                    </v-grid-col>
+
+                    <!-- custom -->
+
+                    <v-grid-col col-width="200">
+                        <v-header-template>
+                            <p class="avg-label-top" v-drag-drop-col="title:Full Name; field:name">Custom colum row and header</p>
+                            <input v-resize-col class="avg-row-checkbox-50" v-selection="header" type="checkbox">
+                        </v-header-template>
+                        <v-row-template>
+                            <input class="avg-row-checkbox-100" v-selection="row" type="checkbox" checked.bind="rowRef.bool">
+                        </v-row-template>
+                    </v-grid-col>
+
+
+                    <!-- custom row only -->
+
+                    <v-grid-col col-width="90" col-field="bool" col-header-name="Custom colum row only">
+                            <v-row-template>
+                                <input class="avg-row-checkbox-100" v-selection="row" type="checkbox" checked.bind="rowRef.bool">
+                            </v-row-template>
+                    </v-grid-col>
+
+
+                </v-grid>
+
+
+
+
+            </div>
+    </section>
 </template>
