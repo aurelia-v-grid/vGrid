@@ -167,6 +167,8 @@ export class ColumnMarkup {
           let template = this.colConfig[i].__colRowTemplateGenerated;
           let colMarkup = `<avg-col \
                               class="avg-col" \
+                              data-avg-type="${type}" \
+                              data-avg-config-col="${i}" \
                               if.bind="setup${type}[${i}].show && rowRef.__group !== true" ${style}>${template}\
                           </avg-col>`;
 
