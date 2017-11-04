@@ -36,10 +36,12 @@
 
                     <!-- custom row only -->
 
-                    <v-grid-col col-width="90" col-field="bool" col-header-name="Custom colum row only">
-                            <v-row-template>
-                                <input class="avg-row-checkbox-100" v-selection="row" type="checkbox" checked.bind="rowRef.bool">
-                            </v-row-template>
+                    <v-grid-col col-filter-menu="filter:bool" col-row-menu="copypaste:bool" col-header-name="custom row only" col-label-menu="sort:bool;groupby:bool;hideshow:true"
+                        col-width="100" col-sort="field:bool" col-drag-drop="title:bool x;field:bool" col-filter="field:bool"
+                        col-field="bool | booleanFormatter" col-type="checkbox">
+                        <v-row-template>
+                            <p class="avg-row-checkbox-100" v-selection="row">${rowRef.bool}</p>
+                        </v-row-template>
                     </v-grid-col>
 
 
