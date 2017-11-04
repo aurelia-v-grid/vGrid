@@ -7,8 +7,8 @@
           v-panel-height="25" v-footer-height="25" v-row-onclick.delegate="singleClick($event.detail)" v-row-ondblclick.delegate="dblClick($event.detail)"
           v-variable-row-height="true" v-i18n.call="translateI18n($event)" v-row-on-draw.call="onRowDraw($event)" style="height:600px; border: 1px solid rgb(230, 230, 230);">
 
-          <v-grid-col col-filter-menu="filter:country" col-label-menu="sort:country;groupby:country;groupbytitle:countryT" col-width="100"
-            col-drag-drop="title:Country x;field:country" col-sort="field:country" col-filter="field:country;" col-field="country">
+          <v-grid-col col-filter-menu="filter:country" col-label-menu="sort:country;groupby:country;groupbytitle:country" col-width="100"
+            col-drag-drop="title:Country;field:country" col-sort="field:country" col-filter="field:country;" col-field="country">
           </v-grid-col>
 
           <v-grid-col col-filter-menu="filter:index;filterkey:less" col-header-name="index" col-label-menu="sort:index" col-width="100"

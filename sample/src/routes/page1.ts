@@ -32,7 +32,7 @@ export class Page1 {
                 } else {
                     return 50;
                 }
-            } */
+            }*/
         });
 
 
@@ -47,28 +47,44 @@ export class Page1 {
     }
 
 
+
+
     public dsEvents(e) {
         // console.log(e)
         // console.log(this.ds.getCollectionStatus());
         return true;
     }
 
+
+
+
     // this is the i18N translation
     public translateI18n(key: string) {
         return this.testString;
     }
 
+
+
+
     public singleClick(event) {
         // console.log(event);
     }
+
+
 
     public setLocal(code: string): void {
         this.ds.setLocaleCompare(code);
     }
 
+
+
+
     public dblClick(event) {
         // console.log(event);
     }
+
+
+
 
     public onRowDraw(data) {
 
@@ -86,10 +102,15 @@ export class Page1 {
     }
 
 
+
+
     public deactivate() {
         console.log('deactivate');
         this.dummyDataGenerator.rowTop = this.gridConnector.getTopRow() * 25;
     }
+
+
+
 
     // this is called by my button... not very good
     public translate() {
@@ -102,12 +123,17 @@ export class Page1 {
         this.gridConnector.triggerI18n();
     }
 
+
+
+
     public replace(x: any) {
         this.dummyDataGenerator.generateData(x, (data: any) => {
             this.myCollection = data;
         });
         this.ds.setArray(this.myCollection);
     }
+
+
 
     public add(x: any) {
         this.dummyDataGenerator.generateData(x, (data: any) => {
@@ -116,14 +142,19 @@ export class Page1 {
     }
 
 
+
     public filterByCode() {
-        this.ds.query([{ attribute: 'index', operator: '>', value: 5 }, { attribute: 'index', operator: '<', value: 10 }]);
+        this.ds.query([{ attribute: 'index', operator: '>', value: 5, key: 'less' }, { attribute: 'index', operator: '<', value: 10, key: 'greater' }]);
         this.gridConnector.raiseEvent('filterUpdateValues');
     }
+
+
 
     public remove() {
         console.log(this.ds.remove(this.gridConnector.getSelection().getSelectedRows()));
     }
+
+
 
     public addNew(data?: any) {
         if (!data) {
@@ -144,21 +175,37 @@ export class Page1 {
 
     }
 
+
+
+
     public hidebtn() {
         this.showgrid = false;
     }
+
+
+
 
     public showbtn() {
         this.showgrid = true;
     }
 
+
+
+
     public default() {
         this.gridConnector.setColConfig(null);
     }
 
+
+
+
+
     public load() {
         this.gridConnector.setColConfig(this.columns);
     }
+
+
+
 
     public  save() {
         this.columns = this.gridConnector.getColConfig();
