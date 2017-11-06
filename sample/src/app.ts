@@ -29,6 +29,14 @@ export class App {
                 nav: true,
                 title: 'Row repeat',
                 settings: { auth: false}
+            },
+            {
+                route: 'page4',
+                name: 'page4',
+                moduleId: './routes/page4',
+                nav: true,
+                title: 'Simple columns - manual select',
+                settings: { auth: false}
             }
         ]);
         this.router = router;
