@@ -72,7 +72,7 @@ define(["require", "exports", "aurelia-framework", "./columnMarkupHelper"], func
                             default:
                         }
                         var template = this.colConfig[i].__colRowTemplateGenerated;
-                        var colMarkup = "<avg-col                               class=\"avg-col\"                               if.bind=\"setup" + type + "[" + i + "].show && rowRef.__group !== true\" " + style + ">" + template + "                          </avg-col>";
+                        var colMarkup = "<avg-col                               class=\"avg-col\"                               data-avg-type=\"" + type + "\"                               data-avg-config-col=\"" + i + "\"                               if.bind=\"setup" + type + "[" + i + "].show && rowRef.__group !== true\" " + style + ">" + template + "                          </avg-col>";
                         viewMarkup = viewMarkup + colMarkup;
                     }
                 }
