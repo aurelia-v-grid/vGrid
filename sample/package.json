@@ -1,6 +1,6 @@
 {
   "name": "aurelia-skeleton-navigation-typescript-fusebox",
-  "version": "1.0.4",
+  "version": "1.0.0",
   "description": "A starter kit for building a standard navigation-style app with Aurelia and TypeScript and fusebox.",
   "keywords": [
     "aurelia",
@@ -45,9 +45,7 @@
     "tslint": "^5.8.0",
     "typescript": "2.6.1",
     "typings": "^2.1.1",
-    "whatwg-fetch": "^2.0.3"
-  },
-  "dependencies": {
+    "whatwg-fetch": "^2.0.3",
     "fuse-box-aurelia-loader": "^2.0.1",
     "fuse-box-typechecker": "^2.6.1"
   }
