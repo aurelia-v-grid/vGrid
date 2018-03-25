@@ -1,4 +1,4 @@
-import { bindable, ViewCompiler, Container, ViewResources, TaskQueue } from 'aurelia-framework';
+import { bindable, ViewCompiler, Container, ViewResources, TaskQueue, customElement } from 'aurelia-framework';
 import { MainMarkup } from './mainMarkup';
 import { MainScrollEvents } from './mainScrollEvents';
 import { RowMarkup } from './rowMarkup';
@@ -30,6 +30,7 @@ import {
  * Custom Element <v-grid>
  *
  */
+@customElement('v-grid')
 export class VGrid {
     public static inject = [Element, ViewCompiler, Container, ViewResources, TaskQueue];
     public element: Element;
