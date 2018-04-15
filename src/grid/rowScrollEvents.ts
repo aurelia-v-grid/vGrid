@@ -130,6 +130,8 @@ export class RowScrollEvents {
    */
   private onScroll(event: CustomEvent): void {
     let isDown = event.detail.isDown;
+    event.preventDefault();
+    event.stopPropagation();
     let isScrollBarScrolling = event.detail.isScrollBarScrolling;
     let newTopPosition = event.detail.newTopPosition;
     if (this.largeScroll || isScrollBarScrolling) {

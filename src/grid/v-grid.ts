@@ -74,6 +74,7 @@ export class VGrid {
     public footer: Footer;
 
     @bindable({ attribute: 'v-row-height' }) public attRowHeight: number;
+    @bindable({ attribute: 'v-skip-passive' }) public attSkipPassive: boolean;
     @bindable({ attribute: 'v-header-height' }) public attHeaderHeight: number;
     @bindable({ attribute: 'v-footer-height' }) public attFooterHeight: number;
     @bindable({ attribute: 'v-panel-height' }) public attPanelHeight: number;
@@ -136,7 +137,7 @@ export class VGrid {
             this.htmlHeightWidth,
             this.viewSlots);
 
-        this.mainScrollEvents = new MainScrollEvents(element, this.htmlCache);
+        this.mainScrollEvents = new MainScrollEvents(element, this.htmlCache, this.controller);
         this.rowMarkup = new RowMarkup(element, this.htmlCache);
         this.rowScrollEvents = new RowScrollEvents(element, this.htmlCache, this.controller);
         this.rowClickHandler = new RowClickHandler(element, this.htmlCache);
@@ -221,6 +222,7 @@ export class VGrid {
         this.attMultiSelect = this.checkBool(this.attMultiSelect);
         this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
         this.attVariableRowHeight = this.attVariableRowHeight ? this.checkBool(this.attVariableRowHeight) : null;
+        this.attSkipPassive = this.attSkipPassive ? this.checkBool(this.attSkipPassive) : null;
         this.attTheme = this.attTheme || 'avg-default';
         this.element.classList.add(this.attTheme);
         this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;

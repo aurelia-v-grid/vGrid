@@ -76,6 +76,7 @@ export class Controller {
   public attFooterHeight: number;
   public attPanelHeight: number;
   public attMultiSelect: boolean;
+  public attSkipPassive: boolean;
   public attManualSelection: boolean;
   public attGridConnector: GridConnectorInterface;
   public attOnRowDraw: Function;
@@ -156,6 +157,7 @@ export class Controller {
     this.attI18N = c.attI18N;
     this.attDataDelay = c.attDataDelay;
     this.attVariableRowHeight = c.attVariableRowHeight;
+    this.attSkipPassive = c.attSkipPassive;
 
   }
 

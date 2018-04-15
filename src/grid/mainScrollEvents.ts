@@ -1,4 +1,5 @@
 import { HtmlCache } from './htmlCache';
+import { Controller } from './controller';
 
 /**
  * This takes care of the scrolling part
@@ -35,9 +36,10 @@ export class MainScrollEvents {
   private handleEventHhandleBinded: EventListenerObject;
   private touchMoveBinded: EventListenerObject;
   private touchStartBinded: EventListenerObject;
+  private controller: Controller;
 
 
-  constructor(element: Element, htmlCache: HtmlCache) {
+  constructor(element: Element, htmlCache: HtmlCache, controller: Controller) {
     this.element = element;
     this.htmlCache = htmlCache;
     this.timerLeft = null;
@@ -54,6 +56,7 @@ export class MainScrollEvents {
     this.handleEventHhandleBinded = this.handleEventHhandle.bind(this);
     this.touchMoveBinded = this.touchMove.bind(this);
     this.touchStartBinded = this.touchStart.bind(this);
+    this.controller = controller;
 
     // check if IE, need to act on another mousewheel event if so
     this.isIE11 = !!(window as any).MSInputMethodContext && !!(document as any).documentMode;
@@ -64,15 +67,6 @@ export class MainScrollEvents {
 
     // check if is supported
     this.passiveSupported = false;
-    try {
-      let options = Object.defineProperty({}, 'passive', {
-        get:  () => {
-          this.passiveSupported = true;
-        }
-      });
-
-      window.addEventListener('testavg', null, options);
-    } catch (err) { /*nothing*/}
   }
 
 
@@ -82,6 +76,15 @@ export class MainScrollEvents {
    */
   public init(): void {
     this.updateInternalHtmlCache();
+    try {
+      let options = Object.defineProperty({}, 'passive', {
+        get: () => {
+          this.passiveSupported = this.controller.attSkipPassive ? false : true;
+        }
+      });
+
+      window.addEventListener('testavg', null, options);
+    } catch (err) { /*nothing*/ }
     this.addScrollEvents('all');
   }
 
@@ -108,6 +111,11 @@ export class MainScrollEvents {
    *
    */
   private onWeel(event: MouseWheelEvent): boolean {
+    /* console.log("test") */
+    if (this.controller.attSkipPassive) {
+      event.preventDefault();
+    }
+
 
     if (this.vhandle.scrollHeight === (this.vhandle.parentNode as HTMLElement).clientHeight) {
       return false;
@@ -200,6 +208,9 @@ export class MainScrollEvents {
    *
    */
   private touchMove(e: any) {
+    if (this.controller.attSkipPassive) {
+      event.preventDefault();
+    }
     let touchobj = e.changedTouches[0];
     let dist = this.touchY - parseInt(touchobj.clientY, 10);
     let distX = parseInt(touchobj.clientX, 10) - this.touchX;

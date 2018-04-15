@@ -3,7 +3,7 @@
     <require from="../utils/valueConverter"></require>
     <div class="row">
       <div class="col-md-6 col-12">
-        <v-grid if.bind="showgrid" v-multi-select="true" v-grid-connector.bind="gridConnector" v-row-height="25" v-header-height="50"
+        <v-grid v-skip-passive="true" if.bind="showgrid" v-multi-select="true" v-grid-connector.bind="gridConnector" v-row-height="25" v-header-height="50"
           v-panel-height="25" v-footer-height="25" v-row-onclick.delegate="singleClick($event.detail)" v-row-ondblclick.delegate="dblClick($event.detail)"
           v-variable-row-height="true" v-i18n.call="translateI18n($event)" v-row-on-draw.call="onRowDraw($event)" style="height:600px; border: 1px solid rgb(230, 230, 230);">
 
