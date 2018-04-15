@@ -1,4 +1,5 @@
 import { HtmlCache } from './htmlCache';
+import { Controller } from './controller';
 export declare class MainScrollEvents {
     private element;
     private timerLeft;
@@ -27,7 +28,8 @@ export declare class MainScrollEvents {
     private handleEventHhandleBinded;
     private touchMoveBinded;
     private touchStartBinded;
-    constructor(element: Element, htmlCache: HtmlCache);
+    private controller;
+    constructor(element: Element, htmlCache: HtmlCache, controller: Controller);
     init(): void;
     private updateInternalHtmlCache();
     private onWeel(event);

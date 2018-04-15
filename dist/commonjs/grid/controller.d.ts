@@ -38,6 +38,7 @@ export declare class Controller {
     attFooterHeight: number;
     attPanelHeight: number;
     attMultiSelect: boolean;
+    attSkipPassive: boolean;
     attManualSelection: boolean;
     attGridConnector: GridConnectorInterface;
     attOnRowDraw: Function;

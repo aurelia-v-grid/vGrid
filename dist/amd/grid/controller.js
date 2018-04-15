@@ -50,6 +50,7 @@ define(["require", "exports"], function (require, exports) {
             this.attI18N = c.attI18N;
             this.attDataDelay = c.attDataDelay;
             this.attVariableRowHeight = c.attVariableRowHeight;
+            this.attSkipPassive = c.attSkipPassive;
         };
         Controller.prototype.triggerI18N = function () {
             var _this = this;

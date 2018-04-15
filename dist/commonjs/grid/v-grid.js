@@ -53,7 +53,7 @@ var VGrid = (function () {
         this.columnBindingContext = new columnBindingContext_1.ColumnBindingContext(this.controller);
         this.rowDataBinder = new rowDataBinder_1.RowDataBinder(element, this.controller);
         this.mainMarkup = new mainMarkup_1.MainMarkup(element, viewCompiler, container, viewResources, this.htmlHeightWidth, this.viewSlots);
-        this.mainScrollEvents = new mainScrollEvents_1.MainScrollEvents(element, this.htmlCache);
+        this.mainScrollEvents = new mainScrollEvents_1.MainScrollEvents(element, this.htmlCache, this.controller);
         this.rowMarkup = new rowMarkup_1.RowMarkup(element, this.htmlCache);
         this.rowScrollEvents = new rowScrollEvents_1.RowScrollEvents(element, this.htmlCache, this.controller);
         this.rowClickHandler = new rowClickHandler_1.RowClickHandler(element, this.htmlCache);
@@ -98,6 +98,7 @@ var VGrid = (function () {
         this.attMultiSelect = this.checkBool(this.attMultiSelect);
         this.attManualSelection = this.attManualSelection ? this.checkBool(this.attManualSelection) : null;
         this.attVariableRowHeight = this.attVariableRowHeight ? this.checkBool(this.attVariableRowHeight) : null;
+        this.attSkipPassive = this.attSkipPassive ? this.checkBool(this.attSkipPassive) : null;
         this.attTheme = this.attTheme || 'avg-default';
         this.element.classList.add(this.attTheme);
         this.attOnRowDraw = typeof this.attOnRowDraw === 'function' ? this.attOnRowDraw : null;
@@ -153,6 +154,10 @@ var VGrid = (function () {
         __metadata("design:type", Number)
     ], VGrid.prototype, "attRowHeight", void 0);
     __decorate([
+        aurelia_framework_1.bindable({ attribute: 'v-skip-passive' }),
+        __metadata("design:type", Boolean)
+    ], VGrid.prototype, "attSkipPassive", void 0);
+    __decorate([
         aurelia_framework_1.bindable({ attribute: 'v-header-height' }),
         __metadata("design:type", Number)
     ], VGrid.prototype, "attHeaderHeight", void 0);
@@ -200,6 +205,14 @@ var VGrid = (function () {
         aurelia_framework_1.bindable({ attribute: 'v-variable-row-height' }),
         __metadata("design:type", Boolean)
     ], VGrid.prototype, "attVariableRowHeight", void 0);
+    VGrid = __decorate([
+        aurelia_framework_1.customElement('v-grid'),
+        __metadata("design:paramtypes", [Element,
+            aurelia_framework_1.ViewCompiler,
+            aurelia_framework_1.Container,
+            aurelia_framework_1.ViewResources,
+            aurelia_framework_1.TaskQueue])
+    ], VGrid);
     return VGrid;
 }());
 exports.VGrid = VGrid;

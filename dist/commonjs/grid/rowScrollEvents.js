@@ -57,6 +57,8 @@ var RowScrollEvents = (function () {
     RowScrollEvents.prototype.onScroll = function (event) {
         var _this = this;
         var isDown = event.detail.isDown;
+        event.preventDefault();
+        event.stopPropagation();
         var isScrollBarScrolling = event.detail.isScrollBarScrolling;
         var newTopPosition = event.detail.newTopPosition;
         if (this.largeScroll || isScrollBarScrolling) {

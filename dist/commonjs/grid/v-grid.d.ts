@@ -61,6 +61,7 @@ export declare class VGrid {
     footerTemplate: string;
     footer: Footer;
     attRowHeight: number;
+    attSkipPassive: boolean;
     attHeaderHeight: number;
     attFooterHeight: number;
     attPanelHeight: number;

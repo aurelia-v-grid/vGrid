@@ -5,8 +5,7 @@ System.register([], function (exports_1, context_1) {
         setters: [],
         execute: function () {
             MainScrollEvents = (function () {
-                function MainScrollEvents(element, htmlCache) {
-                    var _this = this;
+                function MainScrollEvents(element, htmlCache, controller) {
                     this.element = element;
                     this.htmlCache = htmlCache;
                     this.timerLeft = null;
@@ -23,24 +22,26 @@ System.register([], function (exports_1, context_1) {
                     this.handleEventHhandleBinded = this.handleEventHhandle.bind(this);
                     this.touchMoveBinded = this.touchMove.bind(this);
                     this.touchStartBinded = this.touchStart.bind(this);
+                    this.controller = controller;
                     this.isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
                     if (this.isIE11) {
                         this.wheelEvent = 'mousewheel';
                         console.warn('IE11, why!?!?!');
                     }
                     this.passiveSupported = false;
+                }
+                MainScrollEvents.prototype.init = function () {
+                    var _this = this;
+                    this.updateInternalHtmlCache();
                     try {
                         var options = Object.defineProperty({}, 'passive', {
                             get: function () {
-                                _this.passiveSupported = true;
+                                _this.passiveSupported = _this.controller.attSkipPassive ? false : true;
                             }
                         });
                         window.addEventListener('testavg', null, options);
                     }
                     catch (err) { }
-                }
-                MainScrollEvents.prototype.init = function () {
-                    this.updateInternalHtmlCache();
                     this.addScrollEvents('all');
                 };
                 MainScrollEvents.prototype.updateInternalHtmlCache = function () {
@@ -54,6 +55,9 @@ System.register([], function (exports_1, context_1) {
                 };
                 MainScrollEvents.prototype.onWeel = function (event) {
                     var _this = this;
+                    if (this.controller.attSkipPassive) {
+                        event.preventDefault();
+                    }
                     if (this.vhandle.scrollHeight === this.vhandle.parentNode.clientHeight) {
                         return false;
                     }
@@ -110,6 +114,9 @@ System.register([], function (exports_1, context_1) {
                     this.touchX = parseInt(touchobj.clientX, 10);
                 };
                 MainScrollEvents.prototype.touchMove = function (e) {
+                    if (this.controller.attSkipPassive) {
+                        event.preventDefault();
+                    }
                     var touchobj = e.changedTouches[0];
                     var dist = this.touchY - parseInt(touchobj.clientY, 10);
                     var distX = parseInt(touchobj.clientX, 10) - this.touchX;
