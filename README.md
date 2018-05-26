@@ -2,9 +2,10 @@
 
 ![Image of grid](https://github.com/vegarringdal/vGrid/blob/dev-rebuild/images/sample.gif)
 
-### How to install(docs):
 
-* https://vegarringdal.gitbooks.io/dev-rebuild/content/chap15/
+### Docs
+* https://vgrid.gitbook.io/docs/
+
 
 
 ### Demo:
