@@ -3,7 +3,7 @@ var Transpile = require('fuse-box-typechecker').TypeHelper
 const { task, src } = require('fuse-box/sparky');
 
 // configure
-var runWith = function (outDir, moduleType) {
+var transpileTo = function (outDir, moduleType) {
     var transpile = Transpile({
         tsConfig: './tsconfig.build.json',
         basePath: './',
@@ -22,12 +22,16 @@ var runWith = function (outDir, moduleType) {
     return transpile.runSync();
 }
 
-var errors = runWith('dist/commonjs/', 'commonjs');
+var errors = transpileTo('dist/commonjs/', 'commonjs');
 
-
+// if commonjs had no errors then we do amd/system and copy css/html
 if (!errors) {
-    runWith('dist/amd/', 'amd');
-    runWith('dist/system/', 'system');
+
+    // transpile too
+    transpileTo('dist/amd/', 'amd');
+    transpileTo('dist/system/', 'system');
+
+
     task('default', () => {
         src('**/*.*', { base: 'src/aurelia-v-grid' })
             .clean('distTS/')
