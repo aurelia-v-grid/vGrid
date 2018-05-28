@@ -15,6 +15,7 @@ var transpileTo = function (outDir, moduleType) {
         clearOnEmit: true
     });
 
+    transpile.options.tsConfigJsonContent.compilerOptions.rootDir = "src/aurelia-v-grid";
     transpile.options.tsConfigJsonContent.compilerOptions.outDir = outDir;
     transpile.options.tsConfigJsonContent.compilerOptions.module = moduleType;
     transpile.options.tsConfigJsonContent.paths = {};
