@@ -84,3 +84,4 @@ var VGridAttributesDataHandler = (function () {
     return VGridAttributesDataHandler;
 }());
 exports.VGridAttributesDataHandler = VGridAttributesDataHandler;
+//# sourceMappingURL=v-data-handler.js.map

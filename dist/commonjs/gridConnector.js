@@ -216,3 +216,4 @@ var GridConnector = (function () {
     return GridConnector;
 }());
 exports.GridConnector = GridConnector;
+//# sourceMappingURL=gridConnector.js.map

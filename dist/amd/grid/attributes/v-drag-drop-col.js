@@ -384,3 +384,4 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
     }());
     exports.VGridDragDropCol = VGridDragDropCol;
 });
+//# sourceMappingURL=v-drag-drop-col.js.map

@@ -91,3 +91,4 @@ var VGridContextmenu = (function () {
     return VGridContextmenu;
 }());
 exports.VGridContextmenu = VGridContextmenu;
+//# sourceMappingURL=v-grid-contextmenu.js.map

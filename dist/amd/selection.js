@@ -129,3 +129,4 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.Selection = Selection;
 });
+//# sourceMappingURL=selection.js.map

@@ -171,3 +171,4 @@ var VGridElementColConfig = (function () {
     return VGridElementColConfig;
 }());
 exports.VGridElementColConfig = VGridElementColConfig;
+//# sourceMappingURL=v-grid-col.js.map

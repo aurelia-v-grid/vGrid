@@ -34,3 +34,4 @@ var VGridAttributesImageFix = (function () {
     return VGridAttributesImageFix;
 }());
 exports.VGridAttributesImageFix = VGridAttributesImageFix;
+//# sourceMappingURL=v-image.js.map

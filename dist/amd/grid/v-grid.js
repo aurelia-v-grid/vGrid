@@ -201,3 +201,4 @@ define(["require", "exports", "aurelia-framework", "./mainMarkup", "./mainScroll
     }());
     exports.VGrid = VGrid;
 });
+//# sourceMappingURL=v-grid.js.map

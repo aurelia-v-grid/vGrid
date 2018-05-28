@@ -157,3 +157,4 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
     }());
     exports.VGridAttributesResizeCol = VGridAttributesResizeCol;
 });
+//# sourceMappingURL=v-resize-col.js.map

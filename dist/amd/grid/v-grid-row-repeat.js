@@ -49,3 +49,4 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
     }());
     exports.VGridElementRowRepeat = VGridElementRowRepeat;
 });
+//# sourceMappingURL=v-grid-row-repeat.js.map

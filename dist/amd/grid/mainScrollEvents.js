@@ -211,3 +211,4 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.MainScrollEvents = MainScrollEvents;
 });
+//# sourceMappingURL=mainScrollEvents.js.map

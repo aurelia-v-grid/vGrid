@@ -157,3 +157,4 @@ var VGridAttributesResizeCol = (function () {
     return VGridAttributesResizeCol;
 }());
 exports.VGridAttributesResizeCol = VGridAttributesResizeCol;
+//# sourceMappingURL=v-resize-col.js.map

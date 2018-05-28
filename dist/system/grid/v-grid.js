@@ -259,3 +259,4 @@ System.register(["aurelia-framework", "./mainMarkup", "./mainScrollEvents", "./r
         }
     };
 });
+//# sourceMappingURL=v-grid.js.map

@@ -216,3 +216,4 @@ System.register(["aurelia-framework", "./columnMarkupHelper"], function (exports
         }
     };
 });
+//# sourceMappingURL=columnMarkup.js.map

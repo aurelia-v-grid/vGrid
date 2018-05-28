@@ -263,3 +263,4 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.HtmlHeightWidth = HtmlHeightWidth;
 });
+//# sourceMappingURL=htmlHeightWidth.js.map

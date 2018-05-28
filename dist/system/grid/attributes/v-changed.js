@@ -48,3 +48,4 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
         }
     };
 });
+//# sourceMappingURL=v-changed.js.map

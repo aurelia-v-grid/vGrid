@@ -274,3 +274,4 @@ var VGridAttributeMenu = (function () {
     return VGridAttributeMenu;
 }());
 exports.VGridAttributeMenu = VGridAttributeMenu;
+//# sourceMappingURL=v-menu.js.map

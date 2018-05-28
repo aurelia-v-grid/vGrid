@@ -91,3 +91,4 @@ define(["require", "exports", "aurelia-framework", "./v-grid"], function (requir
     }());
     exports.VGridContextmenu = VGridContextmenu;
 });
+//# sourceMappingURL=v-grid-contextmenu.js.map

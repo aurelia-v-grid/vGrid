@@ -35,3 +35,4 @@ var VGridAttributesOnChange = (function () {
     return VGridAttributesOnChange;
 }());
 exports.VGridAttributesOnChange = VGridAttributesOnChange;
+//# sourceMappingURL=v-changed.js.map

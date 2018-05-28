@@ -24,3 +24,4 @@ define(["require", "exports", "aurelia-framework", "./mainMarkupHtmlString"], fu
     }());
     exports.MainMarkup = MainMarkup;
 });
+//# sourceMappingURL=mainMarkup.js.map

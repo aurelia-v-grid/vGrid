@@ -47,3 +47,4 @@ System.register(["aurelia-framework", "./v-grid"], function (exports_1, context_
         }
     };
 });
+//# sourceMappingURL=v-grid-loadingscreen.js.map

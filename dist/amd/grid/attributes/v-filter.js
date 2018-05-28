@@ -192,3 +192,4 @@ define(["require", "exports", "aurelia-framework", "../v-grid"], function (requi
     }());
     exports.VGridAttributesFilter = VGridAttributesFilter;
 });
+//# sourceMappingURL=v-filter.js.map

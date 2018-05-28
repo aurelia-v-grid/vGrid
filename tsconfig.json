@@ -5,7 +5,7 @@
     "outDir": "dist/",
     "sourceMap": true,
     "target": "es5",
-    "module": "amd",
+    "module": "commonjs",
     "declaration": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -15,22 +15,29 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": false,
     "noUnusedLocals": false,
-    "allowUnreachableCode":false,
+    "allowUnreachableCode": false,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "lib": ["es2017", "dom"]
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "aurelia-v-grid": [
+        "./src/aurelia-v-grid"
+      ]
+    }
   },
   "filesGlob": [
-    "./src/**/*.ts",
-    "./test/**/*.ts",
-    "./typings/index.d.ts",
-    "./custom_typings/**/*.d.ts"
+    "./src/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "sample"
+    "dist",
+    "distTS"
   ],
   "atom": {
     "rewriteTsconfig": false

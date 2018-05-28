@@ -34,3 +34,4 @@ var VGridGroupElement = (function () {
     return VGridGroupElement;
 }());
 exports.VGridGroupElement = VGridGroupElement;
+//# sourceMappingURL=v-grid-group-element.js.map

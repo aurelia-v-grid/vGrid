@@ -83,3 +83,4 @@ var VGridAttributesSort = (function () {
     return VGridAttributesSort;
 }());
 exports.VGridAttributesSort = VGridAttributesSort;
+//# sourceMappingURL=v-sort.js.map

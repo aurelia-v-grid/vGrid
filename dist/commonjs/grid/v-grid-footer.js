@@ -34,3 +34,4 @@ var VGridFooter = (function () {
     return VGridFooter;
 }());
 exports.VGridFooter = VGridFooter;
+//# sourceMappingURL=v-grid-footer.js.map

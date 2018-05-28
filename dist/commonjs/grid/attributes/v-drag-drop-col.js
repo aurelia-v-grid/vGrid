@@ -384,3 +384,4 @@ var VGridDragDropCol = (function () {
     return VGridDragDropCol;
 }());
 exports.VGridDragDropCol = VGridDragDropCol;
+//# sourceMappingURL=v-drag-drop-col.js.map

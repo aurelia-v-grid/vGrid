@@ -267,3 +267,4 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.RowClickHandler = RowClickHandler;
 });
+//# sourceMappingURL=rowClickHandler.js.map

@@ -89,3 +89,4 @@ var VGridAttributesFilterObserver = (function () {
     return VGridAttributesFilterObserver;
 }());
 exports.VGridAttributesFilterObserver = VGridAttributesFilterObserver;
+//# sourceMappingURL=v-filter-observer.js.map
