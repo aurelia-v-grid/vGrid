@@ -16,6 +16,8 @@
   "author": "Vegar Ringdal (vegar.ringdal@gmail.com)",
   "main": "dist/commonjs/index.js",
   "typings": "dist/commonjs/index.d.ts",
+  "ts:main": "distTS/index.ts",
+  "types": "dist/commonjs/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/vegarringdal/vGrid"

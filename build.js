@@ -1,94 +1,53 @@
-const { FuseBox, QuantumPlugin, WebIndexPlugin, Sparky, HTMLPlugin, CSSPlugin } = require("fuse-box");
+//get type helper
+var Transpile = require('fuse-box-typechecker').TypeHelper
+const { task, src } = require('fuse-box/sparky');
 
-// get typechecker 
-const typechecker = require('fuse-box-typechecker').TypeHelper({
-    tsConfig: './tsconfig.json',
-    name: 'src',
-    basePath: './',
-    tsLint: './tslint.json',
-    yellowOnLint: true,
-    shortenFilenames:true
-})
+// configure
+var runWith = function (outDir, moduleType) {
+    var transpile = Transpile({
+        tsConfig: './tsconfig.build.json',
+        basePath: './',
+        tsLint: './tslint.json',
+        name: `building:${moduleType}, at: ${outDir}`,
+        shortenFilenames: true,
+        yellowOnLint: true,
+        emit: true,
+        clearOnEmit: true
+    });
 
-// create thread
-typechecker.createThread();
-
-
-let runTypeChecker = () => {
-    // same color..
-    console.log(`\x1b[36m%s\x1b[0m`, `app bundled- running type check`);
-    
-    //call thread
-    typechecker.inspectCodeWithWorker(Object.assign(typechecker.options, { quit: false, type: 'watch' }));
-    typechecker.printResultWithWorker();
-
+    transpile.options.tsConfigJsonContent.compilerOptions.outDir = outDir;
+    transpile.options.tsConfigJsonContent.compilerOptions.module = moduleType;
+    transpile.options.tsConfigJsonContent.paths = {};
+    transpile.options.tsConfigJsonContent.exclude = ['node_modules', 'dist', 'src/sample', 'dev', 'distTS'];
+    return transpile.runSync();
 }
 
-// variables
-let fuse, bundle;
-let isProduction = false;
-let target = "browser@es6";
-let bundleName = "app";
-
-let instructions = `
-    > sample/main.ts 
-    + **/*.{ts,html,css} 
-    + fuse-box-css
-    + mframejs`;
-
-let webIndexTemplate =
-    `<!DOCTYPE html>
-    <html>
-        <head>
-        <meta charset="utf-8">
-        <title>mframejs</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link  href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
-        <link  href="//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
-        <!-- Import the custom Bootstrap 4 theme from our hosted CDN -->
-        <link  rel="stylesheet" href="//demo.productionready.io/main.css">
-    
-        
-    </head>
-    <body>
-    </body>
-    <script type="text/javascript" charset="utf-8" src="./app.js"></script>
-    </html>`
+var errors = runWith('dist/commonjs/', 'commonjs');
 
 
-Sparky.task("config", () => {
-    fuse = FuseBox.init({
-        homeDir: "src",
-        globals: { 'default': '*' }, // we need to expore index in our bundles
-        target: target,
-        output: "dev/$name.js",
-        cache: false,
-        log: false,
-        tsConfig: [{ target: bundleName }], // override tsConfig
-        alias: { mframejs: "~/mframejs" },
-        plugins: [
-            CSSPlugin(),
-            HTMLPlugin(),
-            WebIndexPlugin({ templateString: webIndexTemplate })
-        ]
-    })
+if (!errors) {
+    runWith('dist/amd/', 'amd');
+    runWith('dist/system/', 'system');
+    task('default', () => {
+        src('**/*.*', { base: 'src/aurelia-v-grid' })
+            .clean('distTS/')
+            .dest('distTS/')
+            .exec();
 
-    fuse.bundle(bundleName)
-        .instructions(instructions)
-        .sourceMaps(true)
-        .watch()
-        .completed(proc => {
-            runTypeChecker();
-        });
-});
+        src('**/*.*', { base: 'src/aurelia-v-grid/grid/styles' })
+            .clean('dist/commonjs/grid/styles/')
+            .dest('dist/commonjs/grid/styles')
+            .exec();
 
+        src('**/*.*', { base: 'src/aurelia-v-grid/grid/styles' })
+            .clean('dist/amd/grid/styles/')
+            .dest('dist/amd/grid/styles')
+            .exec();
 
-Sparky.task("clean", () => {
-    return Sparky.src("dev/").clean("dev/");
-});
+        src('**/*.*', { base: 'src/aurelia-v-grid/grid/styles' })
+            .clean('dist/system/grid/styles/')
+            .dest('dist/system/grid/styles')
+            .exec();
+    });
 
-
-Sparky.task("default", ["clean", "config"], () => {
-    fuse.dev();
-    fuse.run();
-});
+}

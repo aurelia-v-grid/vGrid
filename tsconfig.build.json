@@ -1,8 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": "src/",
-    "outDir": "dist/",
+    "rootDir": "src/aurelia-v-grid",
+    "outDir": "dist/commonjs/",
     "sourceMap": true,
     "target": "es5",
     "module": "commonjs",
@@ -15,17 +15,17 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": false,
     "noUnusedLocals": false,
-    "allowUnreachableCode":false,
+    "allowUnreachableCode": false,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "baseUrl": "./",
     "paths": {
-      "vgrid": [
-        "./src/plugin"
-      ]
     }
   },
   "filesGlob": [
@@ -34,6 +34,8 @@
   "exclude": [
     "node_modules",
     "dist",
+    "src/sample",
+    "dev",
     "distTS"
   ],
   "atom": {

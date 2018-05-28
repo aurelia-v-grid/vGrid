@@ -1,0 +1,38 @@
+
+.avg-default .avg-fa-sort-number[data-vgridsort]:after {
+  font: x-small;
+  font-size: 8px;
+  content: attr(data-vgridsort);
+}
+
+
+.avg-default .icon {
+  /* Lets the icon inherit the text color. */
+  fill: currentColor;
+
+  /* Inherit the text’s size too. Also allows sizing
+     the icon by changing its font-size. */
+  width: 1em;
+  height: 1em;
+
+  /* Nice visual alignment for icons alongside text.
+     (I got a few questions about this and: with most
+     fonts and styles, this works better than just
+     vertical-align:middle. Try it and see what you
+     like best. */
+  vertical-align: -0.15em;
+
+  /* Paths and strokes that overflow the viewBox can
+     show in IE. If you use normalize.css, it already
+     sets this. */
+  overflow: hidden;
+}
+
+.avg-default .iconhidden{
+  display:none
+}
+
+.avg-grouping:hover .iconhidden { display:block; }
+    
+
+ 
