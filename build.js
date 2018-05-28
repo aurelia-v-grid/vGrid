@@ -34,6 +34,7 @@ if (!errors) {
             .dest('distTS/')
             .exec();
 
+        // css
         src('**/*.*', { base: 'src/aurelia-v-grid/grid/styles' })
             .clean('dist/commonjs/grid/styles/')
             .dest('dist/commonjs/grid/styles')
@@ -47,6 +48,19 @@ if (!errors) {
         src('**/*.*', { base: 'src/aurelia-v-grid/grid/styles' })
             .clean('dist/system/grid/styles/')
             .dest('dist/system/grid/styles')
+            .exec();
+
+        // html
+        src('**/*.html', { base: 'src/aurelia-v-grid/grid' })
+            .dest('dist/commonjs/grid/')
+            .exec();
+
+        src('**/*.html', { base: 'src/aurelia-v-grid/grid' })
+            .dest('dist/amd/grid/')
+            .exec();
+
+        src('**/*.html', { base: 'src/aurelia-v-grid/grid/' })
+            .dest('dist/system/grid/')
             .exec();
     });
 
