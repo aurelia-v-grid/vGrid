@@ -35,22 +35,22 @@ if (!errors) {
             .exec();
 
         // css
-        src('**/*.*', { base: 'src/aurelia-v-grid/grid/styles' })
-            .clean('dist/commonjs/grid/styles/')
+        src('./dist/**/*.*').clean('*.css')
+        src('**/*.css', { base: 'src/aurelia-v-grid/grid/styles' })
             .dest('dist/commonjs/grid/styles')
             .exec();
 
-        src('**/*.*', { base: 'src/aurelia-v-grid/grid/styles' })
-            .clean('dist/amd/grid/styles/')
+        src('**/*.css', { base: 'src/aurelia-v-grid/grid/styles' })
             .dest('dist/amd/grid/styles')
             .exec();
 
-        src('**/*.*', { base: 'src/aurelia-v-grid/grid/styles' })
-            .clean('dist/system/grid/styles/')
+        src('**/*.css', { base: 'src/aurelia-v-grid/grid/styles' })
             .dest('dist/system/grid/styles')
             .exec();
 
         // html
+        src('./dist/**/*.*').clean('*.html')
+
         src('**/*.html', { base: 'src/aurelia-v-grid/grid' })
             .dest('dist/commonjs/grid/')
             .exec();
