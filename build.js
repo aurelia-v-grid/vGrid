@@ -5,7 +5,7 @@ const { task, src } = require('fuse-box/sparky');
 // configure
 var transpileTo = function (outDir, moduleType) {
     var transpile = Transpile({
-        tsConfig: './tsconfig.build.json',
+        tsConfig: './tsconfig.json',
         basePath: './',
         tsLint: './tslint.json',
         name: `building:${moduleType}, at: ${outDir}`,
