@@ -15,19 +15,16 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": false,
     "noUnusedLocals": false,
-    "allowUnreachableCode": false,
+    "allowUnreachableCode":false,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2017", "dom"],
     "baseUrl": "./",
     "paths": {
-      "aurelia-v-grid": [
-        "./src/aurelia-v-grid"
+      "vgrid": [
+        "./src/plugin"
       ]
     }
   },
