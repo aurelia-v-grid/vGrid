@@ -61,8 +61,7 @@ let instructions = `
     + aurelia-event-aggregator 
     + aurelia-history-browser 
     + aurelia-templating-router
-    + fuse-box-aurelia-loader
-    + aurelia-v-grid`;
+    + fuse-box-aurelia-loader`;
 
 let webIndexTemplate =
     `<!DOCTYPE html>
