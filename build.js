@@ -31,6 +31,7 @@ if (!errors) {
     // transpile too
     transpileTo('dist/amd/', 'amd');
     transpileTo('dist/system/', 'system');
+    transpileTo('dist/es2015/', 'es2015');
 
 
     task('default', () => {
@@ -45,10 +46,11 @@ if (!errors) {
         src('./dist/**/*.*').clean('*.css')
 
         //copy
-        src('**/*.css', { base: 'src/aurelia-v-grid/grid/styles' })
-            .dest('dist/commonjs/grid/styles')
-            .dest('dist/amd/grid/styles')
-            .dest('dist/system/grid/styles')
+        src('**/*.css', { base: 'src/aurelia-v-grid' })
+            .dest('dist/commonjs/')
+            .dest('dist/amd/')
+            .dest('dist/system/')
+            .dest('dist/es2015/')
             .exec();
 
 
@@ -59,10 +61,11 @@ if (!errors) {
         src('./dist/**/*.*').clean('*.html')
 
         // copy
-        src('**/*.html', { base: 'src/aurelia-v-grid/grid' })
-            .dest('dist/commonjs/grid/')
-            .dest('dist/amd/grid/')
-            .dest('dist/system/grid/')
+        src('**/*.html', { base: 'src/aurelia-v-grid' })
+            .dest('dist/commonjs/')
+            .dest('dist/amd/')
+            .dest('dist/system/')
+            .dest('dist/es2015/')
             .exec();
 
     });
