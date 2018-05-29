@@ -1,6 +1,7 @@
 //get type helper
 var Transpile = require('fuse-box-typechecker').TypeHelper
 const { task, src } = require('fuse-box/sparky');
+const packageName = require('./package.json').name;
 
 // configure
 var transpileTo = function (outDir, moduleType) {
@@ -15,7 +16,7 @@ var transpileTo = function (outDir, moduleType) {
         clearOnEmit: true
     });
 
-    transpile.options.tsConfigJsonContent.compilerOptions.rootDir = "src/aurelia-v-grid";
+    transpile.options.tsConfigJsonContent.compilerOptions.rootDir = `src/${packageName}`;
     transpile.options.tsConfigJsonContent.compilerOptions.outDir = outDir;
     transpile.options.tsConfigJsonContent.compilerOptions.module = moduleType;
     transpile.options.tsConfigJsonContent.paths = {};
@@ -41,7 +42,7 @@ if (!errors) {
         // ts code
         // ------------------------------------------
 
-        src('**/*.*', { base: 'src/aurelia-v-grid' })
+        src('**/*.*', { base: `src/${packageName}` })
             .clean('distTS/')
             .dest('distTS/')
             .exec();
@@ -56,7 +57,7 @@ if (!errors) {
         src('./dist/**/*.*').clean('*.css')
 
         //copy
-        src('**/*.css', { base: 'src/aurelia-v-grid' })
+        src('**/*.css', { base: `src/${packageName}` })
             .dest('dist/commonjs/')
             .dest('dist/amd/')
             .dest('dist/system/')
@@ -73,7 +74,7 @@ if (!errors) {
         src('./dist/**/*.*').clean('*.html')
 
         // copy
-        src('**/*.html', { base: 'src/aurelia-v-grid' })
+        src('**/*.html', { base: `src/${packageName}` })
             .dest('dist/commonjs/')
             .dest('dist/amd/')
             .dest('dist/system/')
