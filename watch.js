@@ -1,4 +1,6 @@
 const { FuseBox, QuantumPlugin, WebIndexPlugin, Sparky, HTMLPlugin, CSSPlugin } = require("fuse-box");
+const packageName = require('./package.json').name;
+
 
 // get typechecker 
 const typechecker = require('fuse-box-typechecker').TypeHelper({
@@ -89,8 +91,11 @@ Sparky.task("config", () => {
         output: "dev/$name.js",
         cache: false,
         log: false,
-        tsConfig: [{ target: bundleName }], // override tsConfig
-        alias: { "aurelia-v-grid": "~/aurelia-v-grid" },
+        tsConfig: [{ // override tsConfig
+            target: bundleName 
+            // todo: override path, not possible atm (only in typechecker...)
+        }],  
+        alias: { [packageName]: `~/${packageName}` }, // <- why cant I have `~/plugin` <-is that a bug ?
         plugins: [
             injectBoostrapAndLoader(),
             CSSPlugin(),
