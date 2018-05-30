@@ -14,7 +14,11 @@ const typechecker = require('fuse-box-typechecker').TypeHelper({
 
 // create thread
 typechecker.createThread();
-
+typechecker.options.tsConfigJsonContent.compilerOptions.paths = {
+    [packageName]: [
+        `./src/${packageName}`
+    ]
+}
 
 let runTypeChecker = () => {
     // same color..
@@ -92,9 +96,14 @@ Sparky.task("config", () => {
         cache: false,
         log: false,
         tsConfig: [{ // override tsConfig
-            target: bundleName 
+            target: bundleName,
+            "paths": {
+                [packageName]: [
+                    `./src/${packageName}`
+                ]
+            }
             // todo: override path, not possible atm (only in typechecker...)
-        }],  
+        }],
         alias: { [packageName]: `~/${packageName}` }, // <- why cant I have `~/plugin` <-is that a bug ?
         plugins: [
             injectBoostrapAndLoader(),
@@ -123,3 +132,10 @@ Sparky.task("default", ["clean", "config"], () => {
     fuse.dev();
     fuse.run();
 });
+
+
+// load
+var TypeHelper = require('fuse-box-typechecker').TypeHelper
+// it checks entire program every time
+// see interface at bottom at readme for all options
+

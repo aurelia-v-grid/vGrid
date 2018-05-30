@@ -26,9 +26,6 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "aurelia-v-grid": [
-        "./src/aurelia-v-grid"
-      ]
     }
   },
   "filesGlob": [
