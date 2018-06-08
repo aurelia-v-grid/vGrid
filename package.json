@@ -8,9 +8,9 @@
     "aurelia-v-grid",
     "typescript"
   ],
-  "homepage": "https://github.com/vegarringdal/vGrid",
+  "homepage": "https://github.com/aurelia-v-grid/vGrid",
   "bugs": {
-    "url": "https://github.com/vegarringdal/vGrid/issues"
+    "url": "https://github.com/aurelia-v-grid/vGrid/issues"
   },
   "license": "MIT",
   "author": "Vegar Ringdal (vegar.ringdal@gmail.com)",
@@ -20,7 +20,7 @@
   "types": "dist/commonjs/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vegarringdal/vGrid"
+    "url": "https://github.com/aurelia-v-grid/vGrid"
   },
   "scripts": {},
   "devDependencies": {
