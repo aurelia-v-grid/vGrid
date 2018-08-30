@@ -16,7 +16,7 @@
 ---
 
 ### Demo:
-* [demo link](https://vegarringdal.github.io/vGridDemo/) (not updated all the time, not very fancy atm)
+* [demo link](https://aurelia-v-grid.github.io/vGridDemo/) (not updated all the time, not very fancy atm)
 
 ---
 
