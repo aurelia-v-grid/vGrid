@@ -1,6 +1,6 @@
 System.register(["aurelia-framework", "./columnMarkupHelper"], function (exports_1, context_1) {
-    var __moduleName = context_1 && context_1.id;
     var aurelia_framework_1, columnMarkupHelper_1, ColumnMarkup;
+    var __moduleName = context_1 && context_1.id;
     return {
         setters: [
             function (aurelia_framework_1_1) {

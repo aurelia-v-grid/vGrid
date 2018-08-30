@@ -1,6 +1,6 @@
 System.register(["./selection", "./collection", "./utils/arrayUtils"], function (exports_1, context_1) {
-    var __moduleName = context_1 && context_1.id;
     var selection_1, collection_1, arrayUtils_1, DataSource;
+    var __moduleName = context_1 && context_1.id;
     return {
         setters: [
             function (selection_1_1) {

@@ -33,13 +33,13 @@ export declare class VGridDragDropCol {
     unbind(): void;
     detached(): void;
     attached(): void;
-    private onCloseMenu();
-    private createDragElement(event);
-    private onDragstart(event);
-    private onDragOutSide(event);
-    private onDragenter(event);
-    private onDragover(event);
-    private onDragend();
-    private switchColumns(result);
-    private getTargetData(curTarget);
+    private onCloseMenu;
+    private createDragElement;
+    private onDragstart;
+    private onDragOutSide;
+    private onDragenter;
+    private onDragover;
+    private onDragend;
+    private switchColumns;
+    private getTargetData;
 }

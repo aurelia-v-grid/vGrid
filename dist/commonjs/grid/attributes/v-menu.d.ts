@@ -21,10 +21,10 @@ export declare class VGridAttributeMenu {
     attached(): void;
     bind(context: BindingContextInterface): void;
     unbind(): void;
-    private check(e);
-    private callback(type, option, event);
-    private open(e);
-    private canHide();
-    private getPosition(e);
-    private getColumnContext();
+    private check;
+    private callback;
+    private open;
+    private canHide;
+    private getPosition;
+    private getColumnContext;
 }

@@ -38,9 +38,9 @@ export declare class ContextMenu {
     }): void;
     menuClick(type: string, option: string, event: Event): void;
     updateMenuStrings(key: string, text: string): void;
-    private closeMenuEvent();
-    private showFilterOptions();
-    private showColumnOptions();
-    private hideOptions();
-    private menuHtml(customMenuTemplates);
+    private closeMenuEvent;
+    private showFilterOptions;
+    private showColumnOptions;
+    private hideOptions;
+    private menuHtml;
 }

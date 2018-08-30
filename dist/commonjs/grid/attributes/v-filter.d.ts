@@ -20,8 +20,8 @@ export declare class VGridAttributesFilter {
     getOperatorName(operator: string): string;
     attached(): void;
     bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
-    private getValue();
-    private resetValue();
-    private updateFilter(curFilter);
-    private valueConverters(value);
+    private getValue;
+    private resetValue;
+    private updateFilter;
+    private valueConverters;
 }

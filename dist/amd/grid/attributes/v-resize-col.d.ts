@@ -37,8 +37,8 @@ export declare class VGridAttributesResizeCol {
     constructor(element: Element, vGrid: VGrid);
     bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
     attached(): void;
-    private onmouseup();
-    private onmousemove(e);
-    private updateHeader(e);
-    private onmousedown(e);
+    private onmouseup;
+    private onmousemove;
+    private updateHeader;
+    private onmousedown;
 }

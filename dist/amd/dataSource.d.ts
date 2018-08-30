@@ -41,7 +41,7 @@ export declare class DataSource implements DatasourceInterface {
     getCollectionStatus(): CollectionStatusInterface;
     setLocaleCompare(code: string, options?: any): void;
     getRowHeightState(): any;
-    private getRowKey(row);
-    private getRowKeys();
-    private selectionEventCallback(e);
+    private getRowKey;
+    private getRowKeys;
+    private selectionEventCallback;
 }

@@ -9,6 +9,6 @@ export declare class RowMarkup {
     private rowHeight;
     constructor(element: Element, htmlCache: HtmlCache);
     init(rowHeight: number): void;
-    private generateRows();
-    private updateInternalHtmlCache();
+    private generateRows;
+    private updateInternalHtmlCache;
 }

@@ -29,5 +29,5 @@ export declare class VGridElementColConfig {
     private colDisplayEdit;
     constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction);
     bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
-    private checkBool(value);
+    private checkBool;
 }

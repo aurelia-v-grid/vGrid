@@ -1,6 +1,6 @@
 System.register(["./arrayFilter", "./arraySort", "./arrayGrouping"], function (exports_1, context_1) {
-    var __moduleName = context_1 && context_1.id;
     var arrayFilter_1, arraySort_1, arrayGrouping_1, ArrayUtils;
+    var __moduleName = context_1 && context_1.id;
     return {
         setters: [
             function (arrayFilter_1_1) {

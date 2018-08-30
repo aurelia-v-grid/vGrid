@@ -14,15 +14,15 @@ export declare class RowClickHandler {
     updateSelectionOnAllRows(): void;
     getSelectionMode(): string;
     removeEventlistener(): void;
-    private addEventlistener();
-    private getCache(target);
-    private singleClick(event);
-    private doubleClick(event);
-    private isSelected(row);
-    private deSelect(row);
-    private select(row, addToSelection);
-    private selectRange(start, end);
-    private getSelectedRows();
-    private setSelectedRows(newRows);
-    private highlightRow(e, currentRow);
+    private addEventlistener;
+    private getCache;
+    private singleClick;
+    private doubleClick;
+    private isSelected;
+    private deSelect;
+    private select;
+    private selectRange;
+    private getSelectedRows;
+    private setSelectedRows;
+    private highlightRow;
 }

@@ -9,6 +9,6 @@ export declare class ArrayGrouping {
     getGrouping(): GroupingObjInterface[];
     expand(id: string, array?: Set<string>): EntityInterface[];
     collapse(id: string): EntityInterface[];
-    private groupMain(array, groupBy, groupNo);
-    private groupChildren(childGroupArray, groupBy, groupNo);
+    private groupMain;
+    private groupChildren;
 }

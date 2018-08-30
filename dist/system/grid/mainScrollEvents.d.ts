@@ -31,15 +31,15 @@ export declare class MainScrollEvents {
     private controller;
     constructor(element: Element, htmlCache: HtmlCache, controller: Controller);
     init(): void;
-    private updateInternalHtmlCache();
-    private onWeel(event);
-    private addScrollEvents(type);
-    private removeScrollEvents(type);
-    private touchStart(e);
-    private touchMove(e);
-    private handleEventWheelScroll(newTopPosition, left?);
-    private handleEventVhandle();
-    private handleEventHhandle();
-    private checkScroll(newTopPosition);
-    private triggerGridScrollEvent(scrollbarScrolling, down, topPosition);
+    private updateInternalHtmlCache;
+    private onWeel;
+    private addScrollEvents;
+    private removeScrollEvents;
+    private touchStart;
+    private touchMove;
+    private handleEventWheelScroll;
+    private handleEventVhandle;
+    private handleEventHhandle;
+    private checkScroll;
+    private triggerGridScrollEvent;
 }

@@ -20,5 +20,5 @@ export declare class VGridAttributesDataHandler {
     onBlur(): void;
     onChanged(): void;
     bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
-    private valueConverters(value);
+    private valueConverters;
 }

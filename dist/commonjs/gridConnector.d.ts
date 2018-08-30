@@ -34,6 +34,6 @@ export declare class GridConnector implements GridConnectorInterface {
     getTopRow(): number;
     triggerI18n(): void;
     raiseEvent(name: string, data?: {}): void;
-    private eventHandler(event);
-    private getRowProperties(obj);
+    private eventHandler;
+    private getRowProperties;
 }

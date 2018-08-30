@@ -8,8 +8,8 @@ System.register(["aurelia-framework", "../v-grid"], function (exports_1, context
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __moduleName = context_1 && context_1.id;
     var aurelia_framework_1, v_grid_1, VGridDragDropCol;
+    var __moduleName = context_1 && context_1.id;
     return {
         setters: [
             function (aurelia_framework_1_1) {

@@ -1,4 +1,4 @@
-const { FuseBox, QuantumPlugin, WebIndexPlugin, Sparky, HTMLPlugin, CSSPlugin } = require("fuse-box");
+const { FuseBox, WebIndexPlugin, Sparky, HTMLPlugin, CSSPlugin } = require("fuse-box");
 const packageName = require('./package.json').name;
 
 

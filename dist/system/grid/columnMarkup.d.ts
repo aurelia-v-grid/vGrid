@@ -29,10 +29,10 @@ export declare class ColumnMarkup {
     private rowLength;
     constructor(element: Element, viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, htmlCache: HtmlCache, viewSlots: ViewSlots, columnBindingContext: ColumnBindingContext);
     init(colConfig: ColConfigInterface[], overrideContext: OverrideContextInterface, colRepeater: boolean, colRepeatRowTemplate: string, colRepeatRowHeaderTemplate: string, colGroup: string): void;
-    private getRowViews(type);
-    private createColSetupContext(type);
-    private getHeaderViews(type);
-    private generateColumns();
-    private createViewSlot(element, viewFactory);
-    private updateInternalHtmlCache();
+    private getRowViews;
+    private createColSetupContext;
+    private getHeaderViews;
+    private generateColumns;
+    private createViewSlot;
+    private updateInternalHtmlCache;
 }

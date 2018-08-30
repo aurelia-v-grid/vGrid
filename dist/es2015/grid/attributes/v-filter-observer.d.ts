@@ -16,7 +16,7 @@ export declare class VGridAttributesFilterObserver {
     constructor(element: HTMLElement, vGrid: VGrid);
     valueChanged(newValue: any): void;
     bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
-    private getValue();
-    private updateFilter();
-    private valueConverters(value);
+    private getValue;
+    private updateFilter;
+    private valueConverters;
 }

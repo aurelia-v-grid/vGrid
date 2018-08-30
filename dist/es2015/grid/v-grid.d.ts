@@ -78,5 +78,5 @@ export declare class VGrid {
     bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void;
     unbind(): void;
     attached(): void;
-    private checkBool(value);
+    private checkBool;
 }
