@@ -8,7 +8,16 @@ import { VGrid } from './v-grid';
  *
  */
 
-@customElement('v-grid-contextmenu')
+
+@customElement({
+  name: 'v-grid-contextmenu',
+  templateOrNode: '',
+  build: {
+    required: true,
+    compiler: 'default'
+  },
+  instructions: []
+})
 @inject(Element, VGrid)
 export class VGridContextmenu {
   private element: Element;

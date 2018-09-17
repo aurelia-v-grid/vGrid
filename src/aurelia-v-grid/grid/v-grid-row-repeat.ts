@@ -10,7 +10,15 @@ import { VGrid } from './v-grid';
  * Thisone is useful for when you need to for repeated
  *
  */
-@customElement('v-grid-row-repeat')
+@customElement({
+  name: 'v-grid-row-repeat',
+  templateOrNode: '',
+  build: {
+    required: true,
+    compiler: 'default'
+  },
+  instructions: []
+})
 @inject(Element, VGrid)
 export class VGridElementRowRepeat {
   private element: Element;

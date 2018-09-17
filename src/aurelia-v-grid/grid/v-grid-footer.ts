@@ -9,7 +9,16 @@ import { VGrid } from './v-grid';
  * This is used for creating custom footer markup
  *
  */
-@customElement('v-grid-footer')
+
+@customElement({
+  name: 'v-grid-footer',
+  templateOrNode: '',
+  build: {
+    required: true,
+    compiler: 'default'
+  },
+  instructions: []
+})
 @inject(Element, VGrid)
 export class VGridFooter {
   private element: Element;

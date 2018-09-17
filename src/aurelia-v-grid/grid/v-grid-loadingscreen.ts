@@ -9,7 +9,16 @@ import { VGrid } from './v-grid';
  *
  */
 
-@customElement('v-grid-loadingscreen')
+
+@customElement({
+  name: 'v-grid-loadingscreen',
+  templateOrNode: '',
+  build: {
+    required: true,
+    compiler: 'default'
+  },
+  instructions: []
+})
 @inject(Element, VGrid)
 export class VGridLoadingScreen {
   private element: Element;

@@ -26,13 +26,28 @@ import {
 } from '../interfaces';
 import { inject } from '@aurelia/kernel';
 
-
+import './styles/main-element-tags.css';
+import './styles/main-elements.css';
+import './styles/contextmenu.css';
+import './styles/dragAndResize.css';
+import './styles/loader.css';
+import './styles/icons.css';
+import './styles/grouping.css';
+import './styles/cellsAndLabels.css';
 
 /**
  * Custom Element <v-grid>
  *
  */
-@customElement('v-grid')
+@customElement({
+    name: 'v-grid',
+    templateOrNode: '',
+    build: {
+        required: true,
+        compiler: 'default'
+    },
+    instructions: []
+})
 @inject(Element, ITemplateCompiler, IContainer, IResourceDescriptions)
 export class VGrid {
     public element: Element;

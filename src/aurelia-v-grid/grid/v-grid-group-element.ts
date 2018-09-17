@@ -10,7 +10,16 @@ import { VGrid } from './v-grid';
  * The ones in the top panel
  *
  */
-@customElement('v-grid-group-element')
+
+@customElement({
+  name: 'v-grid-group-element',
+  templateOrNode: '',
+  build: {
+    required: true,
+    compiler: 'default'
+  },
+  instructions: []
+})
 @inject(Element, VGrid)
 export class VGridGroupElement {
   private element: Element;

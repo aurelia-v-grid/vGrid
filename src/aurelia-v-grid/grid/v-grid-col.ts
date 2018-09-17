@@ -14,7 +14,15 @@ import {
  * This is used for creating the simple html columns
  *
  */
-@customElement('v-grid-col')
+@customElement({
+  name: 'v-grid-col',
+  templateOrNode: '',
+  build: {
+    required: true,
+    compiler: 'default'
+  },
+  instructions: []
+})
 @inject(Element, VGrid)
 export class VGridElementColConfig {
   private vGrid: VGrid;

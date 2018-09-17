@@ -1,5 +1,5 @@
 import {
-  ViewSlot,
+  ViewSlot, // RenderLocation <- ?
   BindingContextInterface,
   HeaderCacheInterface,
   RowCacheInterface,
@@ -81,7 +81,7 @@ export class ViewSlots {
 
     for (let i = 0; i < this.rowCache.length; i++) {
       // one for each row.
-      context = ({rowRef: {}, tempRef: {}} as BindingContextInterface);
+      context = ({ rowRef: {}, tempRef: {} } as BindingContextInterface);
 
       this.rowCache[i].bindingContext = context;
       this.rowCache[i].parentOverrideContext = {
@@ -155,7 +155,7 @@ export class ViewSlots {
     this.rightHeaderViewSlot.unbind();
     this.rightHeaderViewSlot.detached();
 
-     // todo loading screen and footer, or grouping elements?
+    // todo loading screen and footer, or grouping elements?
 
   }
 
