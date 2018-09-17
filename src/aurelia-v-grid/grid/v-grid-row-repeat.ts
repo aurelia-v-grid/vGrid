@@ -1,6 +1,6 @@
-import { inject, noView, customElement, processContent, TargetInstruction } from 'aurelia-framework';
+import { customElement } from '@aurelia/runtime';
+import { inject } from '@aurelia/kernel';
 import { VGrid } from './v-grid';
-import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
 
 /**
@@ -10,52 +10,32 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
  * Thisone is useful for when you need to for repeated
  *
  */
-@noView()
 @customElement('v-grid-row-repeat')
-@processContent((
-  compiler: ViewCompiler,
-  resources: ViewResources,
-  element: Element,
-  instruction: CustomBehaviorInstruction) => {
-
-  // dont use
-  compiler = compiler;
-  resources = resources;
-
-  // check if any header template is added, if so add to instruction for use
-  let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
-  let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
-  if (headerTemplateHtml !== '') {
-    instruction.headerTemplate = headerTemplateHtml;
-  }
-
-  // check if any row template is added, if so add to instruction for use
-  let rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
-  let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
-  if (rowTemplateHtml !== '') {
-    instruction.rowTemplate = rowTemplateHtml;
-  }
-
-  // if we didnt get anything we use it all
-  if (!rowTemplateHtml) {
-    instruction.rowTemplate = element.innerHTML;
-  }
-
-  element.innerHTML = '';
-
-})
-@inject(Element, VGrid, TargetInstruction)
+@inject(Element, VGrid)
 export class VGridElementRowRepeat {
   private element: Element;
   private vGrid: VGrid;
   private rowTemplate: string;
   private headerTemplate: string;
 
-  constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
+  constructor(element: Element, vGrid: VGrid) {
     this.element = element;
     this.vGrid = vGrid;
-    this.rowTemplate = targetInstruction.elementInstruction.rowTemplate;
-    this.headerTemplate = targetInstruction.elementInstruction.headerTemplate;
+
+    let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
+    let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
+    if (headerTemplateHtml !== '') {
+      this.headerTemplate = headerTemplateHtml;
+    }
+
+    // check if any row template is added, if so add to instruction for use
+    let rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
+    let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
+    if (rowTemplateHtml !== '') {
+      this.rowTemplate = rowTemplateHtml;
+    }
+
+    element.innerHTML = '';
 
   }
 

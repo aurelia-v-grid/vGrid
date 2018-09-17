@@ -1,6 +1,8 @@
-import { ViewSlot, TargetInstruction, BehaviorInstruction } from 'aurelia-framework';
 import { GroupingElements } from './grid/groupingElements';
-export * from 'aurelia-framework';
+import { RenderLocation } from '@aurelia/runtime'; // need to check where this is..
+export * from '@aurelia/runtime'; // todo, remove...
+export * from '@aurelia/jit'; // todo, remove...
+export * from '@aurelia/kernel'; // todo, remove...
 export { HtmlCache } from './grid/htmlCache';
 export { Controller } from './grid/controller';
 export { MainMarkup } from './grid/mainMarkup';
@@ -36,10 +38,10 @@ export interface RowCacheInterface {
   bindingContext: BindingContextInterface;
   overrideContext: any;
   parentOverrideContext: any;
-  leftRowViewSlot: ViewSlot;
-  mainRowViewSlot: ViewSlot;
-  rightRowViewSlot: ViewSlot;
-  groupRowViewSlot: ViewSlot;
+  leftRowViewSlot: RenderLocation;
+  mainRowViewSlot: RenderLocation;
+  rightRowViewSlot: RenderLocation;
+  groupRowViewSlot: RenderLocation;
   selection: SelectionInterface;
   row: number;
   top: number;
@@ -58,10 +60,10 @@ export interface HeaderCacheInterface {
   bindingContext: BindingContextInterface;
   overrideContext: any;
   parentOverrideContext: any;
-  leftRowViewSlot: ViewSlot;
-  mainRowViewSlot: ViewSlot;
-  rightRowViewSlot: ViewSlot;
-  groupRowViewSlot: ViewSlot;
+  leftRowViewSlot: RenderLocation;
+  mainRowViewSlot: RenderLocation;
+  rightRowViewSlot: RenderLocation;
+  groupRowViewSlot: RenderLocation;
 }
 
 
@@ -154,30 +156,6 @@ export interface DatasourceConfigInterface {
 
 
 
-export interface CustomTargetInstruction extends TargetInstruction {
-  [key: string]: any;
-  colHeaderTemplate?: string;
-  colRowTemplate?: string;
-  colCss?: string;
-  headerTemplate?: string;
-  rowTemplate?: string;
-  template?: string;
-  elementInstruction: CustomBehaviorInstruction;
-}
-
-
-
-export interface CustomBehaviorInstruction extends BehaviorInstruction {
-  [key: string]: any;
-  colHeaderTemplate?: string;
-  colRowTemplate?: string;
-  colCss?: string;
-  headerTemplate?: string;
-  rowTemplate?: string;
-  template?: string;
-  menuTemplates?: any;
-}
-
 
 
 export interface BindingContextInterface {
@@ -241,7 +219,7 @@ export interface CollectionStatusInterface {
 
 export interface GroupingContextInterface {
   [key: string]: any;
-  viewSlot: ViewSlot;
+  viewSlot: RenderLocation;
   name: string;
   field: string;
   remove: Function;

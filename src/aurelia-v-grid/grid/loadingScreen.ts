@@ -1,5 +1,5 @@
-import { ViewSlot } from 'aurelia-framework';
-import { ViewCompiler, Container, ViewResources, ViewSlots } from '../interfaces';
+import { ViewSlot } from '@aurelia/runtime';
+import { ITemplateCompiler, IContainer, IResourceDescriptions, ViewSlots } from '../interfaces';
 import { OverrideContextInterface } from '../interfaces';
 
 /**
@@ -10,9 +10,9 @@ import { OverrideContextInterface } from '../interfaces';
 export class LoadingScreen {
   private element: Element;
   private viewSlots: ViewSlots;
-  private viewCompiler: ViewCompiler;
-  private container: Container;
-  private viewResources: ViewResources;
+  private ITemplateCompiler: ITemplateCompiler;
+  private IContainer: IContainer;
+  private IResourceDescriptions: IResourceDescriptions;
   private loading: boolean;
   private loadingMessage: string;
   private overrideContext: OverrideContextInterface;
@@ -21,17 +21,17 @@ export class LoadingScreen {
 
   constructor(
     element: Element,
-    viewCompiler: ViewCompiler,
-    container: Container,
-    viewResources: ViewResources,
+    ITemplateCompiler: ITemplateCompiler,
+    IContainer: IContainer,
+    IResourceDescriptions: IResourceDescriptions,
     viewSlots: ViewSlots
   ) {
     this.element = element;
     this.viewSlots = viewSlots;
-    this.viewCompiler = viewCompiler;
-    this.container = container;
+    this.ITemplateCompiler = ITemplateCompiler;
+    this.IContainer = IContainer;
 
-    this.viewResources = viewResources;
+    this.IResourceDescriptions = IResourceDescriptions;
     this.loading = false;
     this.loadingMessage = 'Loading';
   }
@@ -63,13 +63,13 @@ export class LoadingScreen {
       </div>
       </div>`.replace(/\$(au{)/g, '${');
 
-    let viewFactory = this.viewCompiler.compile(
+    let viewFactory = this.ITemplateCompiler.compile(
       `<template>
       ${loadingScreentHtml}
       </template>`,
-      this.viewResources);
+      this.IResourceDescriptions);
 
-    let view = viewFactory.create(this.container);
+    let view = viewFactory.create(this.IContainer);
     let loadingScreenViewSlot = new ViewSlot(this.element, true);
     loadingScreenViewSlot.add(view);
 

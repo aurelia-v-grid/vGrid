@@ -1,6 +1,7 @@
-import { inject, customAttribute} from 'aurelia-framework';
+import { customAttribute } from '@aurelia/runtime';
+import { inject } from '@aurelia/kernel';
 import { VGrid } from '../v-grid';
-import { BindingContextInterface, OverrideContextInterface} from '../../interfaces';
+import { BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 
 // todo: look at adding option to disable this ?
 
@@ -28,10 +29,10 @@ export class VGridAttributesOnChange {
 
 
 
-  /**
-   * todo description
-   *
-   */
+    /**
+     * todo description
+     *
+     */
     public attached() {
         if (!this.element.onchange) {
             this.element.onchange = this.onChanged.bind(this);
@@ -40,20 +41,20 @@ export class VGridAttributesOnChange {
 
 
 
-  /**
-   * todo description
-   *
-   */
+    /**
+     * todo description
+     *
+     */
     public onChanged() {
         this.vGrid.controller.rowDataBinder.rebindRowNo(this.bindingContext.row);
     }
 
 
 
-  /**
-   * todo description
-   *
-   */
+    /**
+     * todo description
+     *
+     */
     public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
         this.bindingContext = bindingContext;
         this.overrideContext = overrideContext;

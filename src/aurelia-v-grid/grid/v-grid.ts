@@ -1,4 +1,5 @@
-import { bindable, ViewCompiler, Container, ViewResources, TaskQueue, customElement } from 'aurelia-framework';
+import { bindable, customElement, IResourceDescriptions, ITemplateCompiler } from '@aurelia/runtime';
+import { IContainer } from '@aurelia/kernel';
 import { MainMarkup } from './mainMarkup';
 import { MainScrollEvents } from './mainScrollEvents';
 import { RowMarkup } from './rowMarkup';
@@ -23,6 +24,7 @@ import {
     BindingContextInterface,
     OverrideContextInterface
 } from '../interfaces';
+import { inject } from '@aurelia/kernel';
 
 
 
@@ -31,13 +33,13 @@ import {
  *
  */
 @customElement('v-grid')
+@inject(Element, ITemplateCompiler, IContainer, IResourceDescriptions)
 export class VGrid {
-    public static inject = [Element, ViewCompiler, Container, ViewResources, TaskQueue];
     public element: Element;
-    public viewCompiler: ViewCompiler;
-    public container: Container;
-    public viewResources: ViewResources;
-    public taskQueue: TaskQueue;
+    public ITemplateCompiler: ITemplateCompiler;
+    public IContainer: IContainer;
+    public IResourceDescriptions: IResourceDescriptions;
+
     public dragDropAttributeSharedContext: DragDropShardContextInterface;
     public resizeAttributeSharedContext: ResizeShardContextInterface;
     public colConfig: ColConfigInterface[];
@@ -90,17 +92,16 @@ export class VGrid {
 
     constructor(
         element: Element,
-        viewCompiler: ViewCompiler,
-        container: Container,
-        viewResources: ViewResources,
-        taskQueue: TaskQueue) {
+        ITemplateCompiler: ITemplateCompiler,
+        IContainer: IContainer,
+        IResourceDescriptions: IResourceDescriptions) {
 
         // injected variables
         this.element = element;
-        this.viewCompiler = viewCompiler;
-        this.container = container;
-        this.viewResources = viewResources;
-        this.taskQueue = taskQueue;
+        this.ITemplateCompiler = ITemplateCompiler;
+        this.IContainer = IContainer;
+        this.IResourceDescriptions = IResourceDescriptions;
+
 
         // used by attributes for holding data
         this.dragDropAttributeSharedContext = ({} as DragDropShardContextInterface);
@@ -131,9 +132,9 @@ export class VGrid {
         this.rowDataBinder = new RowDataBinder(element, this.controller);
         this.mainMarkup = new MainMarkup(
             element,
-            viewCompiler,
-            container,
-            viewResources,
+            ITemplateCompiler,
+            IContainer,
+            IResourceDescriptions,
             this.htmlHeightWidth,
             this.viewSlots);
 
@@ -143,39 +144,39 @@ export class VGrid {
         this.rowClickHandler = new RowClickHandler(element, this.htmlCache);
         this.columnMarkup = new ColumnMarkup(
             element,
-            viewCompiler,
-            container,
-            viewResources,
+            ITemplateCompiler,
+            IContainer,
+            IResourceDescriptions,
             this.htmlCache,
             this.viewSlots,
             this.columnBindingContext);
 
         this.groupingElements = new GroupingElements(
             element,
-            viewCompiler,
-            container,
-            viewResources,
+            ITemplateCompiler,
+            IContainer,
+            IResourceDescriptions,
             this.htmlCache,
             this.viewSlots,
             this.columnBindingContext);
 
         this.loadingScreen = new LoadingScreen(element,
-            viewCompiler,
-            container,
-            viewResources,
+            ITemplateCompiler,
+            IContainer,
+            IResourceDescriptions,
             this.viewSlots);
 
         this.contextMenu = new ContextMenu(
-            viewCompiler,
-            container,
-            viewResources,
+            ITemplateCompiler,
+            IContainer,
+            IResourceDescriptions,
             this.viewSlots,
             this.controller);
 
         this.footer = new Footer(this.htmlCache,
-            viewCompiler,
-            container,
-            viewResources,
+            ITemplateCompiler,
+            IContainer,
+            IResourceDescriptions,
             this.viewSlots);
 
         this.filterOperatorNames = {

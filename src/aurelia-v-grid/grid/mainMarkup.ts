@@ -1,9 +1,9 @@
-import { ViewSlot } from 'aurelia-framework';
+import { ViewSlot } from '@aurelia/runtime';
 import { MainMarkupHtmlString } from './mainMarkupHtmlString';
 import {
-  ViewCompiler,
-  Container,
-  ViewResources,
+  ITemplateCompiler,
+  IContainer,
+  IResourceDescriptions,
   ViewFactory,
   View,
   ViewSlots,
@@ -19,9 +19,9 @@ import {
  */
 export class MainMarkup {
   private element: Element;
-  private viewCompiler: ViewCompiler;
-  private container: Container;
-  private viewResources: ViewResources;
+  private ITemplateCompiler: ITemplateCompiler;
+  private IContainer: IContainer;
+  private IResourceDescriptions: IResourceDescriptions;
   private htmlHeightWidth: HtmlHeightWidth;
   private viewSlots: ViewSlots;
   private viewFactory: ViewFactory;
@@ -31,17 +31,17 @@ export class MainMarkup {
 
   constructor(
     element: Element,
-    viewCompiler: ViewCompiler,
-    container: Container,
-    viewResources: ViewResources,
+    ITemplateCompiler: ITemplateCompiler,
+    IContainer: IContainer,
+    IResourceDescriptions: IResourceDescriptions,
     htmlHeightWidth: HtmlHeightWidth,
     viewSlots: ViewSlots) {
 
     this.element = element;
 
-    this.viewCompiler = viewCompiler;
-    this.container = container;
-    this.viewResources = viewResources;
+    this.ITemplateCompiler = ITemplateCompiler;
+    this.IContainer = IContainer;
+    this.IResourceDescriptions = IResourceDescriptions;
 
     this.htmlHeightWidth = htmlHeightWidth;
     this.viewSlots = viewSlots;
@@ -56,10 +56,10 @@ export class MainMarkup {
    */
   public generateMainMarkup(): void {
 
-    this.viewFactory = this.viewCompiler.compile(
-      '<template>' + MainMarkupHtmlString + '</template>', this.viewResources);
+    this.viewFactory = this.ITemplateCompiler.compile(
+      '<template>' + MainMarkupHtmlString + '</template>', this.IResourceDescriptions);
 
-    this.view = this.viewFactory.create(this.container);
+    this.view = this.viewFactory.create(this.IContainer);
     this.viewSlots.mainViewSlot = new ViewSlot(this.element, true);
     this.viewSlots.mainViewSlot.add(this.view);
 

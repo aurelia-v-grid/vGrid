@@ -1,4 +1,5 @@
-import { inject, customAttribute, bindable } from 'aurelia-framework';
+import { customAttribute, bindable } from '@aurelia/runtime';
+import { inject } from '@aurelia/kernel';
 import { VGrid } from '../v-grid';
 import { BindingContextInterface, OverrideContextInterface, FilterObjectInterface } from '../../interfaces';
 
@@ -39,7 +40,7 @@ export class VGridAttributesFilterObserver {
    */
   public valueChanged(newValue: any) {
     if (this.attribute && (typeof newValue !== 'undefined')) { // if no attibute we do not want to do anything
-        this.updateFilter();
+      this.updateFilter();
     }
   }
 
@@ -66,7 +67,7 @@ export class VGridAttributesFilterObserver {
    *
    */
   private getValue(): any {
-      return this.valueFormater ? this.valueFormater.fromView(this.value) : this.value;
+    return this.valueFormater ? this.valueFormater.fromView(this.value) : this.value;
   }
 
 
@@ -119,7 +120,7 @@ export class VGridAttributesFilterObserver {
    *
    */
   private valueConverters(value: string): { fromView: Function; toView: Function } {
-    let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
+    let valueConverter = this.vGrid.IResourceDescriptions.getValueConverter.bind(this.vGrid.IResourceDescriptions);
     return valueConverter(value);
   }
 

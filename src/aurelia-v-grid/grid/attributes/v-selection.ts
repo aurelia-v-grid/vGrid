@@ -1,4 +1,5 @@
-import { bindable, inject, customAttribute } from 'aurelia-framework';
+import { bindable, customAttribute } from '@aurelia/runtime';
+import { inject } from '@aurelia/kernel';
 import { VGrid } from '../v-grid';
 import { Controller, BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 

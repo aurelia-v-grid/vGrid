@@ -1,4 +1,5 @@
-import { inject, customAttribute, bindable } from 'aurelia-framework';
+import { customAttribute, bindable } from '@aurelia/runtime';
+import { inject } from '@aurelia/kernel';
 import { VGrid } from '../v-grid';
 import { BindingContextInterface, OverrideContextInterface, FilterObjectInterface } from '../../interfaces';
 
@@ -66,25 +67,25 @@ export class VGridAttributesFilter {
       });
 
       this.vGrid.element.addEventListener('filterUpdateValues', () => {
-      let curFilter = this.vGrid.attGridConnector.getCurrentFilter();
-      curFilter.forEach((f: any) => {
-          if (f.attribute === this.attribute  && f.key === this.key) {
+        let curFilter = this.vGrid.attGridConnector.getCurrentFilter();
+        curFilter.forEach((f: any) => {
+          if (f.attribute === this.attribute && f.key === this.key) {
             (this.element as HTMLInputElement).value = f.value;
             this.filterOperator = f.operator;
             (this.element as HTMLInputElement).placeholder =
-            this.getOperatorName(this.filterOperator);
-            }
-         });
+              this.getOperatorName(this.filterOperator);
+          }
+        });
       });
 
       this.vGrid.element.addEventListener('filterTranslation', () => {
-          (this.element as HTMLInputElement).placeholder =
-            this.getOperatorName(this.filterOperator);
-          this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
+        (this.element as HTMLInputElement).placeholder =
+          this.getOperatorName(this.filterOperator);
+        this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
       });
 
       this.vGrid.element.addEventListener('filterClearCell', (e: CustomEvent) => {
-        if (e.detail.attribute === this.attribute  && e.detail.key === this.key) {
+        if (e.detail.attribute === this.attribute && e.detail.key === this.key) {
           this.resetValue();
           this.updateFilter(this.vGrid.attGridConnector.getCurrentFilter());
         }
@@ -120,7 +121,7 @@ export class VGridAttributesFilter {
 
       } else {
         // set default!
-        (this.element as HTMLInputElement).indeterminate  = true;
+        (this.element as HTMLInputElement).indeterminate = true;
         (this.element as HTMLElement).style.opacity = '0.3';
         // is checkbox
         this.element.onclick = () => {
@@ -234,7 +235,7 @@ export class VGridAttributesFilter {
       // we didnt find filter, lets add one
       if (this.getValue() !== '') {
         curFilter.push({
-          key : this.key,
+          key: this.key,
           attribute: this.attribute,
           operator: this.filterOperator,
           value: this.getValue()
@@ -251,7 +252,7 @@ export class VGridAttributesFilter {
    *
    */
   private valueConverters(value: string): { fromView: Function; toView: Function } {
-    let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
+    let valueConverter = this.vGrid.IResourceDescriptions.getValueConverter.bind(this.vGrid.IResourceDescriptions);
     return valueConverter(value);
   }
 

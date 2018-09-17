@@ -1,8 +1,8 @@
-import { ViewSlot } from 'aurelia-framework';
+import { ViewSlot } from '@aurelia/runtime';
 import {
-  ViewCompiler,
-  Container,
-  ViewResources,
+  ITemplateCompiler,
+  IContainer,
+  IResourceDescriptions,
   HtmlCache,
   ColumnBindingContext,
   ViewSlots,
@@ -50,9 +50,9 @@ export class GroupingElements {
   private element: Element;
   private htmlCache: HtmlCache;
   private viewSlots: ViewSlots;
-  private viewCompiler: ViewCompiler;
-  private container: Container;
-  private viewResources: ViewResources;
+  private ITemplateCompiler: ITemplateCompiler;
+  private IContainer: IContainer;
+  private IResourceDescriptions: IResourceDescriptions;
   private groupContext: GroupingContextInterface;
   private lastAdded: string;
   private colGroupElement: string;
@@ -62,9 +62,9 @@ export class GroupingElements {
 
   constructor(
     element: Element,
-    viewCompiler: ViewCompiler,
-    container: Container,
-    viewResources: ViewResources,
+    ITemplateCompiler: ITemplateCompiler,
+    IContainer: IContainer,
+    IResourceDescriptions: IResourceDescriptions,
     htmlCache: HtmlCache,
     viewSlots: ViewSlots,
     columnBindingContext: ColumnBindingContext) {
@@ -73,9 +73,9 @@ export class GroupingElements {
     this.element = element;
     this.htmlCache = htmlCache;
     this.viewSlots = viewSlots;
-    this.viewCompiler = viewCompiler;
-    this.container = container;
-    this.viewResources = viewResources;
+    this.ITemplateCompiler = ITemplateCompiler;
+    this.IContainer = IContainer;
+    this.IResourceDescriptions = IResourceDescriptions;
     this.columnBindingContext = columnBindingContext;
 
     // group context
@@ -128,8 +128,8 @@ export class GroupingElements {
           </p>
          </div>`;
 
-      const viewFactory = this.viewCompiler.compile(`<template>${viewMarkup}</template>`, this.viewResources);
-      const view = viewFactory.create(this.container);
+      const viewFactory = this.ITemplateCompiler.compile(`<template>${viewMarkup}</template>`, this.IResourceDescriptions);
+      const view = viewFactory.create(this.IContainer);
       const viewSlot = new ViewSlot(this.avgTopPanel, true);
       viewSlot.add(view);
       this.groupContext[field].viewSlot = viewSlot;

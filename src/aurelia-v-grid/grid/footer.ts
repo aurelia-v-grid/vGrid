@@ -1,6 +1,6 @@
-import { ViewSlot } from 'aurelia-framework';
-import { ViewCompiler, Container, ViewResources, ViewSlots } from '../interfaces';
-import { OverrideContextInterface , HtmlCache} from '../interfaces';
+import { ViewSlot } from '@aurelia/runtime';
+import { ITemplateCompiler, IContainer, IResourceDescriptions, ViewSlots } from '../interfaces';
+import { OverrideContextInterface, HtmlCache } from '../interfaces';
 
 /**
  * Creates the footer viewport
@@ -9,25 +9,25 @@ import { OverrideContextInterface , HtmlCache} from '../interfaces';
 export class Footer {
   private htmlCache: HtmlCache;
   private viewSlots: ViewSlots;
-  private viewCompiler: ViewCompiler;
-  private container: Container;
-  private viewResources: ViewResources;
+  private ITemplateCompiler: ITemplateCompiler;
+  private IContainer: IContainer;
+  private IResourceDescriptions: IResourceDescriptions;
   private overrideContext: OverrideContextInterface;
 
 
 
   constructor(
     htmlCache: HtmlCache,
-    viewCompiler: ViewCompiler,
-    container: Container,
-    viewResources: ViewResources,
+    ITemplateCompiler: ITemplateCompiler,
+    IContainer: IContainer,
+    IResourceDescriptions: IResourceDescriptions,
     viewSlots: ViewSlots
   ) {
     this.htmlCache = htmlCache;
     this.viewSlots = viewSlots;
-    this.viewCompiler = viewCompiler;
-    this.container = container;
-    this.viewResources = viewResources;
+    this.ITemplateCompiler = ITemplateCompiler;
+    this.IContainer = IContainer;
+    this.IResourceDescriptions = IResourceDescriptions;
   }
 
 
@@ -40,13 +40,13 @@ export class Footer {
     this.overrideContext = overrideContext;
     let footerTemplate = footerStringTemplate || ``.replace(/\$(au{)/g, '${');
 
-    let viewFactory = this.viewCompiler.compile(
+    let viewFactory = this.ITemplateCompiler.compile(
       `<template>
       ${footerTemplate}
       </template>`,
-      this.viewResources);
+      this.IResourceDescriptions);
 
-    let view = viewFactory.create(this.container);
+    let view = viewFactory.create(this.IContainer);
     let footerViewSlot = new ViewSlot(this.htmlCache.avg_footer, true);
     footerViewSlot.add(view);
 

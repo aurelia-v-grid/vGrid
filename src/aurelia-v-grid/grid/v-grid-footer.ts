@@ -1,6 +1,6 @@
-import { inject, noView, customElement, processContent, TargetInstruction } from 'aurelia-framework';
+import { customElement } from '@aurelia/runtime';
+import { inject } from '@aurelia/kernel';
 import { VGrid } from './v-grid';
-import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorInstruction } from '../interfaces';
 
 
 
@@ -9,24 +9,8 @@ import { ViewCompiler, ViewResources, CustomTargetInstruction, CustomBehaviorIns
  * This is used for creating custom footer markup
  *
  */
-@noView()
 @customElement('v-grid-footer')
-@processContent((
-  compiler: ViewCompiler,
-  resources: ViewResources,
-  element: Element,
-  instruction: CustomBehaviorInstruction) => {
-
-  // dont use
-  compiler = compiler;
-  resources = resources;
-
-  // get html markup, this will be added to our viewport when we create it
-  instruction.template = element.innerHTML;
-  element.innerHTML = '';
-
-})
-@inject(Element, VGrid, TargetInstruction)
+@inject(Element, VGrid)
 export class VGridFooter {
   private element: Element;
   private vGrid: VGrid;
@@ -34,10 +18,11 @@ export class VGridFooter {
 
 
 
-  constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
+  constructor(element: Element, vGrid: VGrid) {
     this.element = element;
     this.vGrid = vGrid;
-    this.template = targetInstruction.elementInstruction.template;
+    this.template = element.innerHTML;
+    element.innerHTML = '';
 
   }
 

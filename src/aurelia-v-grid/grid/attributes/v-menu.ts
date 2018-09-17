@@ -1,4 +1,5 @@
-import { bindable, inject, customAttribute } from 'aurelia-framework';
+import { bindable, customAttribute } from '@aurelia/runtime';
+import { inject } from '@aurelia/kernel';
 import { VGrid } from '../v-grid';
 import { Controller, GroupingElements, BindingContextInterface } from '../../interfaces';
 
@@ -201,7 +202,7 @@ export class VGridAttributeMenu {
           }
         });
 
-        // correct container
+        // correct IContainer
         if (x.curColType === 'main') {
           this.controller.htmlHeightWidth.removeWidthFromMain(width);
         }
@@ -280,27 +281,27 @@ export class VGridAttributeMenu {
    *
    */
   private canHide(): boolean {
-     // get column context
-      let x = this.getColumnContext();
+    // get column context
+    let x = this.getColumnContext();
 
-      // get current width
-      let returnValue = false;
+    // get current width
+    let returnValue = false;
 
-      let count = -1;
+    let count = -1;
 
-      let columnsArraySorted: any[] = [];
-      x.curColumnsArray.forEach((xy: any) => {
-        if (xy.show) {
-          count++;
-        }
-        columnsArraySorted.push(xy);
-      });
-
-      if (count || x.curColType !== 'main') {
-        returnValue = true;
+    let columnsArraySorted: any[] = [];
+    x.curColumnsArray.forEach((xy: any) => {
+      if (xy.show) {
+        count++;
       }
+      columnsArraySorted.push(xy);
+    });
 
-      return returnValue;
+    if (count || x.curColType !== 'main') {
+      returnValue = true;
+    }
+
+    return returnValue;
   }
 
   /**

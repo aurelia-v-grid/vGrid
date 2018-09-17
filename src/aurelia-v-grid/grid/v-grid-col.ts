@@ -1,12 +1,9 @@
-import { inject, noView, customElement, bindable, processContent, TargetInstruction } from 'aurelia-framework';
+import { bindable, customElement } from '@aurelia/runtime';
+import { inject } from '@aurelia/kernel';
 import { VGrid } from './v-grid';
 import {
-  ViewCompiler,
-  ViewResources,
   ColConfigInterface,
   BindingContextInterface,
-  CustomTargetInstruction,
-  CustomBehaviorInstruction,
   OverrideContextInterface
 } from '../interfaces';
 
@@ -17,43 +14,8 @@ import {
  * This is used for creating the simple html columns
  *
  */
-@noView()
-@processContent((
-  compiler: ViewCompiler,
-  resources: ViewResources,
-  element: HTMLElement,
-  instruction: CustomBehaviorInstruction) => {
-
-  // dont use
-  compiler = compiler;
-  resources = resources;
-
-  // check if any header template is added, if so add to instruction for use
-  let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
-  let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
-  if (headerTemplateHtml !== '') {
-    instruction.colHeaderTemplate = headerTemplateHtml;
-  }
-
-  // check if any row template is added, if so add to instruction for use
-  let rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
-  let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
-  if (rowTemplateHtml !== '') {
-    instruction.colRowTemplate = rowTemplateHtml;
-  }
-
-  // clear the innerhtml, not needed, and we dont want it there messing up stuff
-  element.innerHTML = '';
-
-  // we want to get this css attribute and use if later
-  let css = element.getAttribute('col-css');
-  if (css) {
-    instruction.colCss = css;
-  }
-
-})
 @customElement('v-grid-col')
-@inject(Element, VGrid, TargetInstruction)
+@inject(Element, VGrid)
 export class VGridElementColConfig {
   private vGrid: VGrid;
   private element: Element;
@@ -85,12 +47,31 @@ export class VGridElementColConfig {
 
 
 
-  constructor(element: Element, vGrid: VGrid, targetInstruction: CustomTargetInstruction) {
+  constructor(element: Element, vGrid: VGrid) {
     this.vGrid = vGrid;
     this.element = element;
-    this.colRowTemplate = targetInstruction.elementInstruction.colRowTemplate;
-    this.colHeaderTemplate = targetInstruction.elementInstruction.colHeaderTemplate;
-    this.colCss = targetInstruction.elementInstruction.colCss;
+
+    let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
+    let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
+    if (headerTemplateHtml !== '') {
+      this.colHeaderTemplate = headerTemplateHtml;
+    }
+
+    // check if any row template is added, if so add to instruction for use
+    let rowTemplateElement = element.getElementsByTagName('V-ROW-TEMPLATE')[0];
+    let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
+    if (rowTemplateHtml !== '') {
+      this.colRowTemplate = rowTemplateHtml;
+    }
+
+    // clear the innerhtml, not needed, and we dont want it there messing up stuff
+    element.innerHTML = '';
+
+    // we want to get this css attribute and use if later
+    let css = element.getAttribute('col-css');
+    if (css) {
+      this.colCss = css;
+    }
   }
 
 

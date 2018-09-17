@@ -1,9 +1,9 @@
-import { ViewSlot } from 'aurelia-framework';
+import { ViewSlot } from '@aurelia/jit';
 import { ColumnMarkupHelper } from './columnMarkupHelper';
 import {
-  ViewCompiler,
-  Container,
-  ViewResources,
+  ITemplateCompiler,
+  IContainer,
+  IResourceDescriptions,
   ViewFactory,
   HtmlCache,
   ColumnBindingContext,
@@ -25,9 +25,9 @@ export class ColumnMarkup {
   private viewSlots: ViewSlots;
   private columnBindingContext: ColumnBindingContext;
   private markupHelper: ColumnMarkupHelper;
-  private viewCompiler: ViewCompiler;
-  private container: Container;
-  private viewResources: ViewResources;
+  private ITemplateCompiler: ITemplateCompiler;
+  private IContainer: IContainer;
+  private IResourceDescriptions: IResourceDescriptions;
   private overrideContext: OverrideContextInterface;
   private colConfig: ColConfigInterface[];
   private configLength: number;
@@ -52,9 +52,9 @@ export class ColumnMarkup {
 
   constructor(
     element: Element,
-    viewCompiler: ViewCompiler,
-    container: Container,
-    viewResources: ViewResources,
+    ITemplateCompiler: ITemplateCompiler,
+    IContainer: IContainer,
+    IResourceDescriptions: IResourceDescriptions,
     htmlCache: HtmlCache,
     viewSlots: ViewSlots,
     columnBindingContext: ColumnBindingContext
@@ -65,18 +65,18 @@ export class ColumnMarkup {
     this.viewSlots = viewSlots;
     this.columnBindingContext = columnBindingContext;
     this.markupHelper = new ColumnMarkupHelper();
-    this.viewCompiler = viewCompiler;
-    this.container = container;
-    this.viewResources = viewResources;
+    this.ITemplateCompiler = ITemplateCompiler;
+    this.IContainer = IContainer;
+    this.IResourceDescriptions = IResourceDescriptions;
 
   }
 
 
 
-/**
- *  sets needed context/data and generates the columns needed
- *
- */
+  /**
+   *  sets needed context/data and generates the columns needed
+   *
+   */
   public init(
     colConfig: ColConfigInterface[],
     overrideContext: OverrideContextInterface,
@@ -102,10 +102,10 @@ export class ColumnMarkup {
 
 
 
-/**
- *  returns the row view using the viewCompiler and markup needed
- *
- */
+  /**
+   *  returns the row view using the ITemplateCompiler and markup needed
+   *
+   */
   private getRowViews(type: string): ViewFactory {
     let viewMarkup = '';
     let markupArray: string[] = [];
@@ -185,16 +185,16 @@ export class ColumnMarkup {
       class="avg-col-grouping" \
       css="left:0px;width:${rowRef.__groupLvl ? rowRef.__groupLvl *15:0}px"></avg-col>';
     }
-    return this.viewCompiler.compile(`<template>${groupingBlock + viewMarkup}</template>`, this.viewResources);
+    return this.ITemplateCompiler.compile(`<template>${groupingBlock + viewMarkup}</template>`, this.IResourceDescriptions);
   }
 
 
 
-/**
- *  create coluumn context that will be used to control the width & left style of them
- *  It will also control if they are visible or hidden
- *
- */
+  /**
+   *  create coluumn context that will be used to control the width & left style of them
+   *  It will also control if they are visible or hidden
+   *
+   */
   private createColSetupContext(type: string): void {
 
     let leftCur = 0;
@@ -230,10 +230,10 @@ export class ColumnMarkup {
 
 
 
-/**
- *  returns the header view using the viewCompiler and markup needed
- *
- */
+  /**
+   *  returns the header view using the ITemplateCompiler and markup needed
+   *
+   */
   private getHeaderViews(type: string): ViewFactory {
     let viewMarkup = '';
 
@@ -282,16 +282,16 @@ export class ColumnMarkup {
                        </avg-col>';
     }
 
-    return this.viewCompiler.compile(`<template>${groupingBlock + viewMarkup}</template>`, this.viewResources);
+    return this.ITemplateCompiler.compile(`<template>${groupingBlock + viewMarkup}</template>`, this.IResourceDescriptions);
 
   }
 
 
 
-/**
- *  starts to generate the needed columns
- *
- */
+  /**
+   *  starts to generate the needed columns
+   *
+   */
   private generateColumns(): void {
 
     if (this.columnBindingContext.setupmain.length === 0) {
@@ -329,13 +329,13 @@ export class ColumnMarkup {
 
 
 
-/**
- *  creates a viewslot and adds the view using the viewFactory
- *
- */
+  /**
+   *  creates a viewslot and adds the view using the viewFactory
+   *
+   */
   private createViewSlot(element: Element, viewFactory: ViewFactory): ViewSlot {
 
-    let view = viewFactory.create(this.container); // <<< time consumer, I should rebuild ?
+    let view = viewFactory.create(this.IContainer); // <<< time consumer, I should rebuild ?
     let viewSlot = new ViewSlot(element, true);
     viewSlot.add(view);
     return viewSlot;
@@ -343,10 +343,10 @@ export class ColumnMarkup {
 
 
 
-/**
- *  gets the html markup from the htmlCache and sets it to this class instance
- *
- */
+  /**
+   *  gets the html markup from the htmlCache and sets it to this class instance
+   *
+   */
   private updateInternalHtmlCache(): void {
     this.leftScroll = this.htmlCache.avg_content_left_scroll;
     this.mainScroll = this.htmlCache.avg_content_main_scroll;

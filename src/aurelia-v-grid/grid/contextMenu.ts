@@ -1,6 +1,6 @@
 // tslint:disable:max-line-length
-import { ViewSlot } from 'aurelia-framework';
-import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContextInterface, Controller } from '../interfaces';
+import { ViewSlot } from '@aurelia/runtime';
+import { ITemplateCompiler, IContainer, IResourceDescriptions, ViewSlots, OverrideContextInterface, Controller } from '../interfaces';
 
 /**
  * Creates the context menus used in the grid
@@ -8,9 +8,9 @@ import { ViewCompiler, Container, ViewResources, ViewSlots, OverrideContextInter
  */
 export class ContextMenu {
     public show: boolean;
-    private viewCompiler: ViewCompiler;
-    private container: Container;
-    private viewResources: ViewResources;
+    private ITemplateCompiler: ITemplateCompiler;
+    private IContainer: IContainer;
+    private IResourceDescriptions: IResourceDescriptions;
     private viewSlots: ViewSlots;
     private overrideContext: OverrideContextInterface;
     private top: number;
@@ -58,10 +58,10 @@ export class ContextMenu {
 
 
 
-    constructor(viewCompiler: ViewCompiler, container: Container, viewResources: ViewResources, viewSlots: ViewSlots, controller: Controller) {
-        this.viewCompiler = viewCompiler;
-        this.container = container;
-        this.viewResources = viewResources;
+    constructor(ITemplateCompiler: ITemplateCompiler, IContainer: IContainer, IResourceDescriptions: IResourceDescriptions, viewSlots: ViewSlots, controller: Controller) {
+        this.ITemplateCompiler = ITemplateCompiler;
+        this.IContainer = IContainer;
+        this.IResourceDescriptions = IResourceDescriptions;
         this.viewSlots = viewSlots;
         this.controller = controller;
         this.closeMenuEventBinded = this.closeMenuEvent.bind(this);
@@ -95,8 +95,8 @@ export class ContextMenu {
      */
     public init(customMenuTemplates: any, overrideContext: OverrideContextInterface): void {
         this.overrideContext = overrideContext;
-        let viewFactory = this.viewCompiler.compile(`<template>${this.menuHtml(customMenuTemplates)}</template>`, this.viewResources);
-        let view = viewFactory.create(this.container);
+        let viewFactory = this.ITemplateCompiler.compile(`<template>${this.menuHtml(customMenuTemplates)}</template>`, this.IResourceDescriptions);
+        let view = viewFactory.create(this.IContainer);
         let viewSlot: ViewSlot = new ViewSlot(document.body, true);
         viewSlot.add(view);
         this.viewSlots.contextMenu = viewSlot;

@@ -1,4 +1,5 @@
-import { inject, customAttribute } from 'aurelia-framework';
+import { customAttribute } from '@aurelia/runtime';
+import { inject } from '@aurelia/kernel';
 import { VGrid } from '../v-grid';
 import {
   ResizeShardContextInterface,

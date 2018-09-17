@@ -1,7 +1,7 @@
 import {
-  ViewCompiler,
-  ViewResources,
-  Container,
+  ITemplateCompiler,
+  IResourceDescriptions,
+  IContainer,
   TaskQueue,
   MainMarkup,
   MainScrollEvents,
@@ -55,9 +55,9 @@ export class Controller {
   public contextMenu: ContextMenu;
   public htmlcolumnMarkupCache: ColumnMarkup;
   public element: Element;
-  public viewCompiler: ViewCompiler;
-  public container: Container;
-  public viewResources: ViewResources;
+  public ITemplateCompiler: ITemplateCompiler;
+  public IContainer: IContainer;
+  public IResourceDescriptions: IResourceDescriptions;
   public taskQueue: TaskQueue;
   public dragDropAttributeSharedContext: DragDropShardContextInterface;
   public resizeAttributeSharedContext: ResizeShardContextInterface;
@@ -120,9 +120,9 @@ export class Controller {
     this.footerTemplate = c.footerTemplate;
 
     // aurelia classes
-    this.viewCompiler = c.viewCompiler;
-    this.container = c.container;
-    this.viewResources = c.viewResources;
+    this.ITemplateCompiler = c.ITemplateCompiler;
+    this.IContainer = c.IContainer;
+    this.IResourceDescriptions = c.IResourceDescriptions;
     this.taskQueue = c.taskQueue;
 
     // classes

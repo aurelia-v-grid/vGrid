@@ -1,4 +1,5 @@
-import { inject, customAttribute, bindable } from 'aurelia-framework';
+import { customAttribute, bindable } from '@aurelia/runtime';
+import { inject } from '@aurelia/kernel';
 import { VGrid } from '../v-grid';
 import { BindingContextInterface, OverrideContextInterface } from '../../interfaces';
 
@@ -123,7 +124,7 @@ export class VGridAttributesDataHandler {
      *
      */
     private valueConverters(value: string): { fromView: Function; toView: Function } {
-        let valueConverter = this.vGrid.viewResources.getValueConverter.bind(this.vGrid.viewResources);
+        let valueConverter = this.vGrid.IResourceDescriptions.getValueConverter.bind(this.vGrid.IResourceDescriptions);
         return valueConverter(value);
     }
 }
