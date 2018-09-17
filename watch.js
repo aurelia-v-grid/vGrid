@@ -26,6 +26,7 @@ let run = (production) => {
         alias: { "aurelia-v-grid": "aurelia-v-grid" },
         runAllMatchedPlugins: true,
         cache: false,
+        log: false,
         sourceMaps: { project: true, vendor: true },
         plugins: [
             HTMLPlugin(),
