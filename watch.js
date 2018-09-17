@@ -1,4 +1,4 @@
-const { FuseBox, HTMLPlugin, EnvPlugin, UglifyJSPlugin, QuantumPlugin, WebIndexPlugin, CSSPlugin } = require("fuse-box");
+const { FuseBox, HTMLPlugin, WebIndexPlugin, CSSPlugin } = require("fuse-box");
 const { src, task } = require("fuse-box/sparky");
 
 let run = (production) => {
@@ -8,6 +8,8 @@ let run = (production) => {
         output: 'dev/$name.js',
         alias: { "aurelia-v-grid": "aurelia-v-grid" },
         runAllMatchedPlugins: true,
+        cache: false,
+        sourceMaps: { project: true, vendor: true },
         plugins: [
             HTMLPlugin(),
             CSSPlugin(),

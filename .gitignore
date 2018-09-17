@@ -2,6 +2,7 @@ node_modules
 jspm_packages
 bower_components
 .idea
+.fusebox
 .DS_STORE
 build/reports
 typings/
