@@ -1,4 +1,4 @@
-import { ViewSlot } from '@aurelia/runtime';
+import { RenderLocation } from '@aurelia/kernel';
 import { ITemplateCompiler, IContainer, IResourceDescriptions, ViewSlots } from '../interfaces';
 import { OverrideContextInterface, HtmlCache } from '../interfaces';
 
@@ -47,7 +47,7 @@ export class Footer {
       this.IResourceDescriptions);
 
     let view = viewFactory.create(this.IContainer);
-    let footerViewSlot = new ViewSlot(this.htmlCache.avg_footer, true);
+    let footerViewSlot = new RenderLocation(this.htmlCache.avg_footer, true);
     footerViewSlot.add(view);
 
     // bind
