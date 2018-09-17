@@ -25,9 +25,9 @@ export class ColumnMarkup {
   private viewSlots: ViewSlots;
   private columnBindingContext: ColumnBindingContext;
   private markupHelper: ColumnMarkupHelper;
-  private ITemplateCompiler: ITemplateCompiler;
-  private IContainer: IContainer;
-  private IResourceDescriptions: IResourceDescriptions;
+  private iTemplateCompiler: ITemplateCompiler;
+  private iContainer: IContainer;
+  private iResourceDescriptions: IResourceDescriptions;
   private overrideContext: OverrideContextInterface;
   private colConfig: ColConfigInterface[];
   private configLength: number;
@@ -52,9 +52,9 @@ export class ColumnMarkup {
 
   constructor(
     element: Element,
-    ITemplateCompiler: ITemplateCompiler,
-    IContainer: IContainer,
-    IResourceDescriptions: IResourceDescriptions,
+    iTemplateCompiler: ITemplateCompiler,
+    iContainer: IContainer,
+    iResourceDescriptions: IResourceDescriptions,
     htmlCache: HtmlCache,
     viewSlots: ViewSlots,
     columnBindingContext: ColumnBindingContext
@@ -65,9 +65,9 @@ export class ColumnMarkup {
     this.viewSlots = viewSlots;
     this.columnBindingContext = columnBindingContext;
     this.markupHelper = new ColumnMarkupHelper();
-    this.ITemplateCompiler = ITemplateCompiler;
-    this.IContainer = IContainer;
-    this.IResourceDescriptions = IResourceDescriptions;
+    this.iTemplateCompiler = iTemplateCompiler;
+    this.iContainer = IContainer;
+    this.iResourceDescriptions = iResourceDescriptions;
 
   }
 
@@ -185,7 +185,7 @@ export class ColumnMarkup {
       class="avg-col-grouping" \
       css="left:0px;width:${rowRef.__groupLvl ? rowRef.__groupLvl *15:0}px"></avg-col>';
     }
-    return this.ITemplateCompiler.compile(`<template>${groupingBlock + viewMarkup}</template>`, this.IResourceDescriptions);
+    return this.iTemplateCompiler.compile(`<template>${groupingBlock + viewMarkup}</template>`, this.iResourceDescriptions);
   }
 
 
@@ -282,7 +282,7 @@ export class ColumnMarkup {
                        </avg-col>';
     }
 
-    return this.ITemplateCompiler.compile(`<template>${groupingBlock + viewMarkup}</template>`, this.IResourceDescriptions);
+    return this.iTemplateCompiler.compile(`<template>${groupingBlock + viewMarkup}</template>`, this.iResourceDescriptions);
 
   }
 
@@ -335,7 +335,7 @@ export class ColumnMarkup {
    */
   private createViewSlot(element: Element, viewFactory: ViewFactory): ViewSlot {
 
-    let view = viewFactory.create(this.IContainer); // <<< time consumer, I should rebuild ?
+    let view = viewFactory.create(this.iContainer); // <<< time consumer, I should rebuild ?
     let viewSlot = new ViewSlot(element, true);
     viewSlot.add(view);
     return viewSlot;

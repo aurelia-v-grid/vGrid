@@ -31,17 +31,17 @@ export class MainMarkup {
 
   constructor(
     element: Element,
-    ITemplateCompiler: ITemplateCompiler,
-    IContainer: IContainer,
-    IResourceDescriptions: IResourceDescriptions,
+    iTemplateCompiler: ITemplateCompiler,
+    iContainer: IContainer,
+    iResourceDescriptions: IResourceDescriptions,
     htmlHeightWidth: HtmlHeightWidth,
     viewSlots: ViewSlots) {
 
     this.element = element;
 
-    this.ITemplateCompiler = ITemplateCompiler;
-    this.IContainer = IContainer;
-    this.IResourceDescriptions = IResourceDescriptions;
+    this.ITemplateCompiler = iTemplateCompiler;
+    this.IContainer = iContainer;
+    this.IResourceDescriptions = iResourceDescriptions;
 
     this.htmlHeightWidth = htmlHeightWidth;
     this.viewSlots = viewSlots;

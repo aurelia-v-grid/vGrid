@@ -1,4 +1,5 @@
 import { customElement } from '@aurelia/runtime';
+// @ts-ignore
 import view from './app.html';
 
 @customElement({

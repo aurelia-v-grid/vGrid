@@ -58,10 +58,10 @@ export class ContextMenu {
 
 
 
-    constructor(ITemplateCompiler: ITemplateCompiler, IContainer: IContainer, IResourceDescriptions: IResourceDescriptions, viewSlots: ViewSlots, controller: Controller) {
-        this.ITemplateCompiler = ITemplateCompiler;
-        this.IContainer = IContainer;
-        this.IResourceDescriptions = IResourceDescriptions;
+    constructor(iTemplateCompiler: ITemplateCompiler, iContainer: IContainer, iResourceDescriptions: IResourceDescriptions, viewSlots: ViewSlots, controller: Controller) {
+        this.ITemplateCompiler = iTemplateCompiler;
+        this.IContainer = iContainer;
+        this.IResourceDescriptions = iResourceDescriptions;
         this.viewSlots = viewSlots;
         this.controller = controller;
         this.closeMenuEventBinded = this.closeMenuEvent.bind(this);

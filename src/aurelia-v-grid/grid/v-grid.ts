@@ -92,15 +92,15 @@ export class VGrid {
 
     constructor(
         element: Element,
-        ITemplateCompiler: ITemplateCompiler,
-        IContainer: IContainer,
-        IResourceDescriptions: IResourceDescriptions) {
+        iTemplateCompiler: ITemplateCompiler,
+        iContainer: IContainer,
+        iResourceDescriptions: IResourceDescriptions) {
 
         // injected variables
         this.element = element;
-        this.ITemplateCompiler = ITemplateCompiler;
-        this.IContainer = IContainer;
-        this.IResourceDescriptions = IResourceDescriptions;
+        this.ITemplateCompiler = iTemplateCompiler;
+        this.IContainer = iContainer;
+        this.IResourceDescriptions = iResourceDescriptions;
 
 
         // used by attributes for holding data
@@ -132,9 +132,9 @@ export class VGrid {
         this.rowDataBinder = new RowDataBinder(element, this.controller);
         this.mainMarkup = new MainMarkup(
             element,
-            ITemplateCompiler,
-            IContainer,
-            IResourceDescriptions,
+            iTemplateCompiler,
+            iContainer,
+            iResourceDescriptions,
             this.htmlHeightWidth,
             this.viewSlots);
 
@@ -144,39 +144,39 @@ export class VGrid {
         this.rowClickHandler = new RowClickHandler(element, this.htmlCache);
         this.columnMarkup = new ColumnMarkup(
             element,
-            ITemplateCompiler,
-            IContainer,
-            IResourceDescriptions,
+            iTemplateCompiler,
+            iContainer,
+            iResourceDescriptions,
             this.htmlCache,
             this.viewSlots,
             this.columnBindingContext);
 
         this.groupingElements = new GroupingElements(
             element,
-            ITemplateCompiler,
-            IContainer,
-            IResourceDescriptions,
+            iTemplateCompiler,
+            iContainer,
+            iResourceDescriptions,
             this.htmlCache,
             this.viewSlots,
             this.columnBindingContext);
 
         this.loadingScreen = new LoadingScreen(element,
-            ITemplateCompiler,
-            IContainer,
-            IResourceDescriptions,
+            iTemplateCompiler,
+            iContainer,
+            iResourceDescriptions,
             this.viewSlots);
 
         this.contextMenu = new ContextMenu(
-            ITemplateCompiler,
-            IContainer,
-            IResourceDescriptions,
+            iTemplateCompiler,
+            iContainer,
+            iResourceDescriptions,
             this.viewSlots,
             this.controller);
 
         this.footer = new Footer(this.htmlCache,
-            ITemplateCompiler,
-            IContainer,
-            IResourceDescriptions,
+            iTemplateCompiler,
+            iContainer,
+            iResourceDescriptions,
             this.viewSlots);
 
         this.filterOperatorNames = {

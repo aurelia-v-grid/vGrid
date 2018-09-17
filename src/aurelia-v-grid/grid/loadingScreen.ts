@@ -21,17 +21,17 @@ export class LoadingScreen {
 
   constructor(
     element: Element,
-    ITemplateCompiler: ITemplateCompiler,
-    IContainer: IContainer,
-    IResourceDescriptions: IResourceDescriptions,
+    iTemplateCompiler: ITemplateCompiler,
+    iContainer: IContainer,
+    iResourceDescriptions: IResourceDescriptions,
     viewSlots: ViewSlots
   ) {
     this.element = element;
     this.viewSlots = viewSlots;
-    this.ITemplateCompiler = ITemplateCompiler;
-    this.IContainer = IContainer;
+    this.ITemplateCompiler = iTemplateCompiler;
+    this.IContainer = iContainer;
 
-    this.IResourceDescriptions = IResourceDescriptions;
+    this.IResourceDescriptions = iResourceDescriptions;
     this.loading = false;
     this.loadingMessage = 'Loading';
   }

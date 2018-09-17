@@ -18,16 +18,16 @@ export class Footer {
 
   constructor(
     htmlCache: HtmlCache,
-    ITemplateCompiler: ITemplateCompiler,
-    IContainer: IContainer,
-    IResourceDescriptions: IResourceDescriptions,
+    iTemplateCompiler: ITemplateCompiler,
+    iContainer: IContainer,
+    iResourceDescriptions: IResourceDescriptions,
     viewSlots: ViewSlots
   ) {
     this.htmlCache = htmlCache;
     this.viewSlots = viewSlots;
-    this.ITemplateCompiler = ITemplateCompiler;
-    this.IContainer = IContainer;
-    this.IResourceDescriptions = IResourceDescriptions;
+    this.ITemplateCompiler = iTemplateCompiler;
+    this.IContainer = iContainer;
+    this.IResourceDescriptions = iResourceDescriptions;
   }
 
 

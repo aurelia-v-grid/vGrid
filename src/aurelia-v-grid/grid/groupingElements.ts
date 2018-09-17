@@ -62,9 +62,9 @@ export class GroupingElements {
 
   constructor(
     element: Element,
-    ITemplateCompiler: ITemplateCompiler,
-    IContainer: IContainer,
-    IResourceDescriptions: IResourceDescriptions,
+    iTemplateCompiler: ITemplateCompiler,
+    iContainer: IContainer,
+    iResourceDescriptions: IResourceDescriptions,
     htmlCache: HtmlCache,
     viewSlots: ViewSlots,
     columnBindingContext: ColumnBindingContext) {
@@ -73,9 +73,9 @@ export class GroupingElements {
     this.element = element;
     this.htmlCache = htmlCache;
     this.viewSlots = viewSlots;
-    this.ITemplateCompiler = ITemplateCompiler;
-    this.IContainer = IContainer;
-    this.IResourceDescriptions = IResourceDescriptions;
+    this.ITemplateCompiler = iTemplateCompiler;
+    this.IContainer = iContainer;
+    this.IResourceDescriptions = iResourceDescriptions;
     this.columnBindingContext = columnBindingContext;
 
     // group context
