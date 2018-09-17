@@ -1,0 +1,86 @@
+{
+  "tree": {
+    "@aurelia/jit@0.0.0": {
+      "deps": {},
+      "name": "@aurelia/jit",
+      "version": "0.0.0"
+    },
+    "@aurelia/runtime@0.0.0": {
+      "deps": {},
+      "name": "@aurelia/runtime",
+      "version": "0.0.0"
+    },
+    "aurelia-framework@0.0.0": {
+      "deps": {},
+      "name": "aurelia-framework",
+      "version": "0.0.0"
+    },
+    "fuse-box-css@0.0.1": {
+      "deps": {},
+      "name": "fuse-box-css",
+      "version": "0.0.1"
+    },
+    "@aurelia/jit@0.2.0-dev.20180917": {
+      "deps": {
+        "@aurelia/runtime@0.2.0-dev.20180917": {
+          "deps": {
+            "@aurelia/kernel@0.2.0-dev.20180917": {
+              "deps": {},
+              "name": "@aurelia/kernel",
+              "version": "0.2.0-dev.20180917"
+            }
+          },
+          "name": "@aurelia/runtime",
+          "version": "0.2.0-dev.20180917"
+        }
+      },
+      "name": "@aurelia/jit",
+      "version": "0.2.0-dev.20180917"
+    }
+  },
+  "flat": {
+    "@aurelia/jit@0.0.0": {
+      "name": "@aurelia/jit",
+      "version": "0.0.0",
+      "files": []
+    },
+    "@aurelia/runtime@0.0.0": {
+      "name": "@aurelia/runtime",
+      "version": "0.0.0",
+      "files": []
+    },
+    "aurelia-framework@0.0.0": {
+      "name": "aurelia-framework",
+      "version": "0.0.0",
+      "files": []
+    },
+    "fuse-box-css@0.0.1": {
+      "name": "fuse-box-css",
+      "version": "0.0.1",
+      "files": [
+        "index.js"
+      ]
+    },
+    "@aurelia/jit@0.2.0-dev.20180917": {
+      "name": "@aurelia/jit",
+      "version": "0.2.0-dev.20180917",
+      "files": [
+        "dist/index.umd.js"
+      ]
+    },
+    "@aurelia/runtime@0.2.0-dev.20180917": {
+      "name": "@aurelia/runtime",
+      "version": "0.2.0-dev.20180917",
+      "files": [
+        "dist/index.umd.js"
+      ]
+    },
+    "@aurelia/kernel@0.2.0-dev.20180917": {
+      "name": "@aurelia/kernel",
+      "version": "0.2.0-dev.20180917",
+      "files": [
+        "dist/index.umd.js"
+      ]
+    }
+  }
+}

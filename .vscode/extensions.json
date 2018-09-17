@@ -1,9 +1,12 @@
 {
   "recommendations": [
+    "eamodio.gitlens",
     "eg2.tslint",
-    "joelday.docthis",
     "pflannery.vscode-versionlens",
     "patrys.vscode-code-outline",
-    "christian-kohler.path-intellisense"
+    "msjsdiag.debugger-for-chrome",
+    "msjsdiag.debugger-for-edge",
+    "Gruntfuggly.todo-tree",
+    "tobermory.es6-string-html"
   ]
 }

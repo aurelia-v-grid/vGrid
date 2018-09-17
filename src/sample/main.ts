@@ -1,11 +1,10 @@
-import './styles.css';
-import { Aurelia } from 'aurelia-framework';
+import { BasicConfiguration } from '@aurelia/jit';
+import { configure } from './aurelia-v-grid/index';
+import { Aurelia } from '@aurelia/runtime';
+import { App } from './app';
 
-export async function configure(aurelia: Aurelia) {
-  aurelia.use
-    .standardConfiguration()
-    .developmentLogging()
-    .plugin('aurelia-v-grid');
-  await aurelia.start();
-  await aurelia.setRoot('sample/app');
-}
+
+window['au'] = new Aurelia()
+  .register(BasicConfiguration)
+  .app({ host: document.querySelector('app'), component: new App() })
+  .start();
