@@ -2,7 +2,6 @@ import {
   ITemplateCompiler,
   IResourceDescriptions,
   IContainer,
-  TaskQueue,
   MainMarkup,
   MainScrollEvents,
   ColumnMarkup,
@@ -58,7 +57,6 @@ export class Controller {
   public ITemplateCompiler: ITemplateCompiler;
   public IContainer: IContainer;
   public IResourceDescriptions: IResourceDescriptions;
-  public taskQueue: TaskQueue;
   public dragDropAttributeSharedContext: DragDropShardContextInterface;
   public resizeAttributeSharedContext: ResizeShardContextInterface;
   public colConfig: ColConfigInterface[];
@@ -123,7 +121,7 @@ export class Controller {
     this.ITemplateCompiler = c.ITemplateCompiler;
     this.IContainer = c.IContainer;
     this.IResourceDescriptions = c.IResourceDescriptions;
-    this.taskQueue = c.taskQueue;
+
 
     // classes
     this.htmlCache = c.htmlCache;
