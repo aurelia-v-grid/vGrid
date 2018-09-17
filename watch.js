@@ -23,7 +23,7 @@ let run = (production) => {
         target: "browser@es6",
         homeDir: 'src',
         output: 'dev/$name.js',
-        alias: { "aurelia-v-grid": "aurelia-v-grid" },
+        alias: { "aurelia-v-grid": "~/aurelia-v-grid" },
         runAllMatchedPlugins: true,
         cache: false,
         log: false,
@@ -38,7 +38,9 @@ let run = (production) => {
         ]
     });
     fuse.bundle("app")
-        .instructions(` > sample/main.ts + **/*.{ts,html,css}`)
+        .instructions(`
+            > sample/main.ts 
+            + **/*.{ts,html,css}`)
         .watch()
         .completed(proc => {
             console.log(`\x1b[36m%s\x1b[0m`, `app bundled- running type check`);
