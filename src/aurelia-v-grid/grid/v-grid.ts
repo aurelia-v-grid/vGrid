@@ -1,4 +1,4 @@
-import { bindable, customElement, IResourceDescriptions, ITemplateCompiler } from '@aurelia/runtime';
+import { bindable, customElement, /*IResourceDescriptions not working,*/ ITemplateCompiler } from '@aurelia/runtime';
 import { IContainer } from '@aurelia/kernel';
 import { MainMarkup } from './mainMarkup';
 import { MainScrollEvents } from './mainScrollEvents';
@@ -48,12 +48,12 @@ import './styles/cellsAndLabels.css';
     },
     instructions: []
 })
-@inject(Element, ITemplateCompiler, IContainer, IResourceDescriptions)
+@inject(Element, ITemplateCompiler, IContainer)
 export class VGrid {
     public element: Element;
     public ITemplateCompiler: ITemplateCompiler;
     public IContainer: IContainer;
-    public IResourceDescriptions: IResourceDescriptions;
+    public IResourceDescriptions: any; // : IResourceDescriptions;
 
     public dragDropAttributeSharedContext: DragDropShardContextInterface;
     public resizeAttributeSharedContext: ResizeShardContextInterface;
@@ -108,9 +108,9 @@ export class VGrid {
     constructor(
         element: Element,
         iTemplateCompiler: ITemplateCompiler,
-        iContainer: IContainer,
-        iResourceDescriptions: IResourceDescriptions) {
-
+        iContainer: IContainer/*,
+        iResourceDescriptions: IResourceDescriptions*/) {
+        const iResourceDescriptions = {}; // TODO figure out why, need to talk to fkleuver/#98
         // injected variables
         this.element = element;
         this.ITemplateCompiler = iTemplateCompiler;

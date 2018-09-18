@@ -1,3 +1,10 @@
 <template>
   <div>${message}</div>
+  <v-grid v-multi-select="true" v-grid-connector.bind="gridConnector" v-row-height="25" v-header-height="50"
+    v-panel-height="25" v-footer-height="25" style="height:400px;width:400px">
+    <!--  <v-grid-col col-field="bool | booleanConverter"></v-grid-col>
+    <v-grid-col col-filter-menu="filter:country" col-field="country"></v-grid-col>
+    <v-grid-col col-field="name"></v-grid-col>
+    <v-grid-col col-field="number  | numberConverter"></v-grid-col> -->
+  </v-grid>
 </template>
