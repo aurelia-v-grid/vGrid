@@ -1,6 +1,6 @@
 import { bindable, customElement } from '@aurelia/runtime';
 import { inject } from '@aurelia/kernel';
-import { VGrid } from './v-grid';
+// import { VGrid } from './v-grid';
 import {
   ColConfigInterface,
   BindingContextInterface,
@@ -23,9 +23,9 @@ import {
   },
   instructions: []
 })
-@inject(Element, VGrid)
+@inject(Element /*, VGrid*/)
 export class VGridElementColConfig {
-  private vGrid: VGrid;
+  // private vGrid: VGrid;
   private element: Element;
   private colRowTemplate: string;
   private colHeaderTemplate: string;
@@ -55,8 +55,8 @@ export class VGridElementColConfig {
 
 
 
-  constructor(element: Element, vGrid: VGrid) {
-    this.vGrid = vGrid;
+  constructor(element: Element/*, vGrid: VGrid*/) {
+    // this.vGrid = vGrid; <- injecting parent breaks it
     this.element = element;
 
     let headerTemplateElement = element.getElementsByTagName('V-HEADER-TEMPLATE')[0];
@@ -89,11 +89,12 @@ export class VGridElementColConfig {
    * We add this to the vGrid class colConfig to use later when grid is generated
    *
    */
-  public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
+  public bound(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
 
-    if (this.vGrid.newGrid) {
+    // skip for now... binable isnt trigged somehow
+    /* if (this.vGrid.newGrid) {
       this.vGrid.colConfig.push(({
         colWidth: this.colWidth ? this.colWidth * 1 : 100,
         colRowTemplate: this.colRowTemplate,
@@ -118,7 +119,7 @@ export class VGridElementColConfig {
         colCss: this.colCss,
         colType: this.colType || 'text'
       } as ColConfigInterface));
-    }
+    } */
   }
 
 
