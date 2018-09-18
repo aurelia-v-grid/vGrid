@@ -221,9 +221,17 @@ export class VGrid {
         };
     }
 
+    public attaching(xx: any) {
+        // xx = "app", guess this is kinda my binding context ?
+        debugger;
+    }
 
+    public bound(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
 
-    public bind(bindingContext: BindingContextInterface, overrideContext: OverrideContextInterface): void {
+        // ISSUES vNEXT
+        // I only get a number in binding context ? really weird :-)
+        // bu I get parent context in attaching
+        debugger;
 
         // binding contexts, will need some for the views we create
         this.bindingContext = bindingContext;
